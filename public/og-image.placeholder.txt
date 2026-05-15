@@ -1,0 +1,2 @@
+Replace this with og-image.png (1200×630) for social sharing previews.
+Referenced in app/layout.tsx Open Graph and Twitter metadata.

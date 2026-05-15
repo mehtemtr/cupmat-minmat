@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MinMat Sayı Avı</title>
+<link rel="icon" href="icon.png">
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+}
+<div id="loadingScreen">
+  <div class="logo">
+    MinMat
+    <span>Sayı Avı</span>
+  </div>
+</div>
+
+
+
+.screen{
+  display:none;
+
+  position:absolute;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100vh;
+
+  display:flex;
+  flex-direction:column;
+
+  align-items:center;      /* 🔥 ORTA YATAY */
+  justify-content:center;  /* 🔥 ORTA DİKEY */
+
+  pointer-events:none;
+}
+
+button{
+  margin:10px;
+  padding:12px 20px;
+
+  border:none;
+  border-radius:12px;
+
+  background:linear-gradient(135deg,#22d3ee,#6366f1);
+  color:white;
+
+  font-size:16px;
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+button:hover{
+  background:#60a5fa;
+  opacity:0.9;
+  transform:scale(1.05);
+}
+#grid{
+  display:grid;
+  gap:10px;
+  justify-content:center;
+  margin-top:30px;
+
+  background: rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:15px;
+  backdrop-filter: blur(5px);
+}
+#modeText{
+  margin-top:5px;
+  font-size:18px;
+  color:#facc15;
+}
+.card{
+  width:70px;
+  height:70px;
+
+  background:#333;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:10px;
+  cursor:pointer;
+
+  perspective:800px;
+
+  font-weight:bold;
+  font-size:18px;
+
+  transition:transform 0.2s ease;
+   box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+.card.open{
+  background:#64748b;
+}
+.top-bar {
+  position: relative;
+  z-index: 1;
+  background: red;
+}
+.card:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 15px rgba(0,0,0,0.5);
+}
+.card {
+  position: relative;
+  z-index: 5;
+}
+.card.matched .back{
+  background:#22c55e !important;
+  color:white;
+}
+
+.inner{
+  width:100%;
+  height:100%;
+  transition: transform 0.5s ease;
+  transform-style:preserve-3d;
+  position:relative;
+}
+
+.card.open .inner{
+  transform:rotateY(180deg);
+}
+
+.front, .back{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  backface-visibility:hidden;
+  border-radius:10px;
+}
+
+.front{
+   background:url("icon.png") center/80% no-repeat;
+}
+
+.back{
+  background:linear-gradient(135deg,#67e8f9,#c4b5fd);
+  color:#0f172a;
+  transform:rotateY(180deg);
+}
+#scoreBox{
+  margin-top:10px;
+  font-size:20px;
+  
+}
+
+
+#effects{
+  position:absolute;
+  top:50%;
+  left:50%;
+  pointer-events:none;
+}
+
+.scoreEffect{
+  position:absolute;
+  color:yellow;
+  font-size:24px;
+  animation:fly 1s ease forwards;
+}
+
+@keyframes fly{
+  0%{opacity:1; transform:translate(-50%,-50%);}
+  100%{opacity:0; transform:translate(-50%,-120px);}
+}
+
+#levelPopup{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.5);
+  background:#222;
+  color:#fff;
+  padding:20px 40px;
+  border-radius:15px;
+  font-size:30px;
+  opacity:0;
+  transition:0.4s;
+}
+
+#levelPopup.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+#livesBox{
+  margin-top:5px;
+  font-size:22px;
+}
+#gameOverScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+
+  background:#111;
+  color:white;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.hasSub{
+  position:relative;
+  padding:5px;
+}
+
+.subMenu{
+  display:none;
+  position:absolute;
+  left:100%;
+  top:0;
+  background:#1e293b;
+  padding:10px;
+  border-radius:8px;
+}
+
+.hasSub:hover .subMenu{
+  display:block;
+}
+
+#menuScreen{
+  background:#0f172a;
+  color:white;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+#menuScreen button{
+  width:200px;
+  font-size:18px;
+}
+
+#lobbyScreen{
+  display:flex;
+  flex-direction:column;
+  align-items:center;      /* 🔥 EKLE */
+  justify-content:center;  /* 🔥 EKLE */
+  background:#f1f5f9;
+}
+
+#lobbyScreen h2{
+  margin-bottom:20px;
+}
+
+#lobbyScreen button{
+  width:180px;
+}
+
+#gameScreen{
+   background:linear-gradient(180deg,#1e293b,#334155);
+  display:flex;
+  flex-direction:column;
+}
+
+/* üst bar */
+#gameTop{
+  display:flex;
+  align-items:center;   /* 🔥 DİKEY ORTALAR */
+  gap:15px;
+  padding:10px;
+}
+#gameTop span{
+   background:rgba(255,255,255,0.1);
+  padding:6px 10px;
+  border-radius:10px;
+  color:#ffffff;
+}
+
+#timeBox{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  background:rgba(255,255,255,0.08);
+  padding:6px 14px;
+  border-radius:12px;
+
+  color:white;
+}
+
+#time{
+  font-size:30px;
+  font-weight:bold;
+  color:#facc15;
+
+  background:none;   /* 🔥 önemli */
+  padding:0;         /* 🔥 varsa kaldır */
+}
+#gameArea{
+  color:white;
+}
+
+#wrongBar{
+  width: 120px;
+  height: 10px;
+  background: #333;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 5px auto; /* ortalar ve alta alır */
+}
+
+
+#wrongFill{
+  height: 100%;
+  width: 0%;
+  background: red;
+  transition: 0.3s;
+}
+/* oyun alanı */
+#gameArea{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+#gameButtons{
+  position:absolute;
+  top:10px;
+  left:10px;
+  display:flex;
+  gap:10px;
+}
+#gameScreen button{
+  align-self:center;
+}
+/* ayar paneli */
+#settingsPanel{
+  position:fixed;
+  top:60px;
+  left:10px;
+
+  background:#1e293b;
+  color:white;
+
+  padding:15px;
+  border-radius:12px;
+
+  width:180px;
+  display:none;
+  pointer-events:none;
+  z-index:999;
+}
+
+#settingsPanel.open{
+  display:block;
+  pointer-events:auto;
+}
+
+#settingsPanel button{
+  width:100%;
+  margin:4px 0;
+}
+
+#settingsPanel strong{
+  display:block;
+  margin-top:10px;
+  color:#facc15;
+}
+
+.logo{
+  font-size:48px;
+  font-weight:bold;
+
+  background:linear-gradient(90deg,#22d3ee,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  text-align:center;
+}
+
+.logo span{
+  display:block;
+  font-size:20px;
+  color:#facc15;
+  margin-top:5px;
+}
+
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+
+  background:#0f172a;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:9999;
+}
+
+.logo{
+  font-size:48px;
+  font-weight:bold;
+
+  background:linear-gradient(90deg,#22d3ee,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:fadeIn 1s ease;
+}
+
+.logo span{
+  display:block;
+  font-size:20px;
+  color:#facc15;
+  text-align:center;
+}
+#leaderboard{
+  margin-top:15px;
+  font-size:16px;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.8);}
+  to{opacity:1; transform:scale(1);}
+}
+
+.gameTitle{
+  font-size:28px;
+  font-weight:bold;
+
+  background:linear-gradient(90deg,#22d3ee,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+#gameTop{
+  display:flex;
+  justify-content:center; /* 🔥 ORTALA */
+  gap:15px;
+  padding:10px;
+}
+
+#score
+  color:#facc15;
+  font-weight:bold;
+}
+#playerBox{
+  font-size:18px;
+  color:#38bdf8;
+  margin-bottom:5px;
+}
+#time{
+  font-size:26px;
+  font-weight:bold;
+  color:#facc15;
+}
+.titleIcon{
+  width:32px;   /* 🔥 küçülttük */
+  height:32px;
+  margin-right:8px;
+  vertical-align:middle;
+}
+.locked{
+  background:#555 !important;  /* gri zemin */
+  opacity:0.5;                /* soluk görünüm */
+  cursor:not-allowed;         /* yasak işareti */
+  pointer-events:none;        /* tıklanamaz */
+}
+#playerName{
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+
+  width:180px;
+  text-align:center;
+
+  margin-bottom:10px;
+}
+
+#unlockPopup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%) scale(0.5);
+  background:#16a34a;
+  color:white;
+  padding:20px 30px;
+  border-radius:12px;
+  font-size:20px;
+  opacity:0;
+  z-index:9999;
+  transition: all 0.4s ease;
+}
+
+#unlockPopup.show{
+  opacity:1;
+  transform:translate(-50%, -50%) scale(1);
+}
+#topBar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#topBar span{
+  background: rgba(255,255,255,0.1);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+#score{
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffd54f;
+  text-shadow: 0 0 5px rgba(255, 213, 79, 0.7);
+}
+
+.scoreRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px;
+  margin:4px 0;
+  border-radius:10px;
+  background:rgba(255,255,255,0.05);
+  font-size:13px;
+}
+
+.rank{ width:30px; }
+.name{ width:80px; font-weight:bold; }
+.date{ width:60px; font-size:11px; opacity:0.6; }
+.mode{ width:70px; }
+.level{ width:50px; }
+.score{ width:80px; text-align:right; color:gold; font-weight:bold; }
+
+
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+
+
+<div id="lobbyScreen" class="screen">
+  <input id="playerName" placeholder="Adını gir..." />
+  <button onclick="confirmPlayer()">Kullanıcıyı Onayla</button>
+  <button onclick="startGame()">🎮 Oyna</button>
+  <button type="button" onclick="toggleSettings(event)">⚙️ Ayarlar</button>
+  
+  <button onclick="window.location.href='/'" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-top: 40px; width: 220px; font-weight: bold;">🏠 Ana Sayfaya Dön</button>
+</div>
+
+<div id="gameScreen" class="screen">
+
+  <!-- 🔹 ÜST BAR -->
+<div id="gameTop">
+  <button onclick="goLobby()">🏠 Menü</button>
+  <button onclick="startGame()">🔄 Yeniden</button>
+  <button id="settingsBtn" onclick="toggleSettings(event)">⚙️</button>
+
+  <div id="timeBox">⏱️ <span id="time">30</span></div>
+</div>
+
+ 
+
+  <!-- 🔹 OYUN ALANI -->
+  <div id="gameArea">
+
+    <h2 class="gameTitle">
+  <img src="icon.png" class="titleIcon">
+  MinMat
+</h2>
+<div id="topBar">
+  <span id="levelText"></span>
+  <span id="livesBox"></span>
+ <span id="score"></span>
+   <span id="playerNameText"></span>
+ 
+
+</div>
+    <div id="wrongBar">
+  <div id="wrongFill"></div>
+</div>
+  <div id="modeText">Mod: Topla</div>
+    <div id="grid"></div>
+
+  </div>
+
+  <div id="effects"></div>
+  <div id="levelPopup">LEVEL 1</div>
+
+</div>
+
+<div id="gameOverScreen" class="screen">
+
+  <h1>💀 Oyun Bitti</h1>
+<p>Oyuncu: <span id="finalName"></span></p>
+  <p>Skorun: <span id="finalScore">0</span></p>
+<div id="leaderboard"></div>
+  <button onclick="startGame()">🔄 Tekrar Oyna</button>
+  <button onclick="goLobby()">🏠 Menü</button>
+  
+</div>
+  
+
+<!-- 🔹 AYAR PANELİ -->
+  <div id="settingsPanel">
+
+    <h3>⚙️ Ayarlar</h3>
+
+    <div>
+      <strong>Dil</strong><br>
+      <button onclick="setLang('tr')">Türkçe</button>
+      <button onclick="setLang('en')">English</button>
+    </div>
+
+    <div style="margin-top:10px;">
+      <strong>Kategori</strong><br>
+<button id="btnAdd" onclick="setMode('add')">Topla</button>
+<button id="btnSub" class="locked" onclick="setMode('sub')">Çıkar</button>
+<button id="btnMul" class="locked" onclick="setMode('mul')">Çarp</button>
+<button id="btnDiv" class="locked" onclick="setMode('div')">Böl</button>
+<button onclick="setMode('mix')">Karışık</button>
+    </div>
+
+    <div style="margin-top:10px;">
+      <strong>Ses</strong><br>
+      <button onclick="toggleSound()">Aç / Kapat</button>
+    </div>
+
+    <button onclick="closeSettings()">Kapat</button>
+
+  </div>
+
+<div id="unlockPopup">
+
+  🎉 Yeni kategori açıldı!
+</div>
+<script>
+window.onerror = function(msg, url, line){
+  alert("HATA: " + msg + " | satır: " + line);
+};
+
+/* =====================
+   GLOBAL
+===================== */
+let players = JSON.parse(localStorage.getItem("players")) || {};
+
+
+let playerName = "Misafir";
+  let level=1, score=0, combo=0, lives=3;
+  let wrongStreak = 0;
+let timeLeft=30, timer;
+let gameMode = "add"; // add, sub, mul, div, mix
+let cards=[];
+let first=null, second=null;
+let lock=false, matched=0;
+let wrongCount = 0;
+let progress = {
+  add: 1,
+  sub: 0,
+  mul: 0,
+  div: 0
+};
+
+let saved = JSON.parse(localStorage.getItem("progress"));
+if(saved){
+  progress = saved;
+}
+function rand(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/* =====================
+   SORU
+===================== */
+function createQuestion(){
+
+  let min = 1;
+  let max = level * 5;// 🔥 level ile artan zorluk
+
+  let mode = gameMode;
+
+  // 🔀 MIX MOD
+  if(mode === "mix"){
+    let modes = ["add","sub","mul","div"];
+    let unlocked = modes.filter(m => isModeUnlocked(m));
+
+    if(unlocked.length === 0){
+      mode = "add";
+    }else{
+      mode = unlocked[Math.floor(Math.random() * unlocked.length)];
+    }
+  }
+
+  let a, b;
+
+  // ➕ TOPLAMA
+  if(mode === "add"){
+    a = rand(min, max);
+    b = rand(min, max);
+  }
+
+  // ➖ ÇIKARMA
+  else if(mode === "sub"){
+    a = rand(min, max);
+    b = rand(min, max);
+
+    if(a < b){
+      [a, b] = [b, a]; // negatif engelle
+    }
+  }
+
+  // ✖ ÇARPMA
+  else if(mode === "mul"){
+    let m;
+
+    if(level <= 2) m = 5;
+    else if(level <= 4) m = 6;
+    else if(level <= 6) m = 8;
+    else m = 10;
+
+    a = rand(1, m);
+    b = rand(1, m);
+  }
+
+  // ➗ BÖLME
+  else if(mode === "div"){
+    let m = 5 + level;
+
+    b = rand(1, m);
+    a = b * rand(1, m); // tam bölünsün
+  }
+
+  return {a, b, mode};
+}
+function buildQuestion(a,b,mode){
+
+  // ➕ TOPLAMA
+  if(mode === "add"){
+    return {q: `${a} + ${b}`, ans: a + b};
+  }
+
+  // ➖ ÇIKARMA
+  if(mode === "sub"){
+    return {q: `${a} - ${b}`, ans: a - b};
+  }
+
+  // ✖ ÇARPMA
+  if(mode === "mul"){
+    return {q: `${a} × ${b}`, ans: a * b};
+  }
+
+  // ➗ BÖLME
+  if(mode === "div"){
+    return {q: `${a} / ${b}`, ans: a / b};
+    
+  }
+}
+/* =====================
+   KARTLAR
+===================== */
+function createCards(){
+
+  let pairCount = level + 2;
+
+  let arr = [];
+  let used = new Set();
+
+  for(let i=0; i<pairCount; i++){
+
+    let q;
+    let tries = 0;
+
+    do{
+      let nums = createQuestion();
+      q = buildQuestion(nums.a, nums.b, nums.mode);
+      tries++;
+    }while(used.has(q.ans) && tries < 20);
+
+    if(!q) continue;
+
+    used.add(q.ans);
+
+    arr.push({text:q.q, match:q.ans});
+    arr.push({text:q.ans, match:q.q});
+  }
+
+  cards = arr.sort(()=>0.5 - Math.random());
+
+  let cols = Math.ceil(Math.sqrt(pairCount * 2));
+  document.getElementById("grid").style.gridTemplateColumns = `repeat(${cols},70px)`;
+}
+/* =====================
+   RENDER
+===================== */
+function render(){
+
+  let g=document.getElementById("grid");
+  g.style.display = "grid";
+  g.innerHTML="";
+
+  cards.forEach(c=>{
+
+    let d=document.createElement("div");
+    d.className="card";
+
+d.innerHTML=`
+  <div class="inner">
+    <div class="front"></div>
+    <div class="back">${c.text}</div>
+  </div>
+`;
+
+    d.onclick=()=>flip(d,c);
+
+    g.appendChild(d);
+
+    c.div = d;
+  });
+  
+}
+
+function flip(div,card){
+    if(lock) return;
+if(isGameOver) return;
+  if(lock || div.classList.contains("open")) return;
+
+  div.classList.add("open");
+
+  if(!first){
+    first = {div, card};
+    return;
+  }
+
+  if(!second){
+    second = {div, card};
+    lock = true;
+
+    setTimeout(check,500);
+  }
+}
+
+function check(){
+  if(isGameOver) return;
+
+  let f = first;
+  let s = second;
+
+  let isMatch =
+    String(f.card.match) === String(s.card.text) ||
+    String(s.card.match) === String(f.card.text);
+
+  // 🔥 EŞLEŞME VAR
+  if(isMatch){
+
+    f.div.classList.add("matched");
+    s.div.classList.add("matched");
+
+    matched += 2;
+    combo++;
+// 🔥 COMBO EFEKTİ
+if(combo > 1){
+  showScoreEffect("🔥 x" + combo);
+}
+    // ❤️ CAN BONUS (TEK YERDE)
+    if((combo === 4 || combo === 7 || combo === 9) && lives < 5){
+      lives++;
+      updateLivesUI();
+      showScoreEffect("+❤️");
+    }
+
+    wrongCount = 0;
+updateWrongBar();
+
+    // 🎯 PUAN
+    let basePoint = getCardBasePoint(gameMode);
+    let comboBonus = Math.min(combo * 5, 25);
+    let gained = (basePoint + comboBonus) * level;
+
+    score += gained;
+    showScoreEffect("+" + gained);
+
+    // 🎁 ÖZEL KART
+    applySpecial(f.card.special);
+
+    // 🏁 LEVEL BİTTİ
+    if(matched === cards.length){
+
+      setTimeout(()=>{
+
+        let timeBonus = timeLeft * 5;
+        let levelBonus = level * 50;
+
+        score += timeBonus + levelBonus;
+
+        showScoreEffect("+" + timeBonus + " ⏱️");
+        showScoreEffect("+" + levelBonus + " ⭐");
+
+        // 🔥 LEVEL SİSTEMİ
+        let prev = progress[gameMode] || 1; // 🔥 eski level
+level++;
+
+let now = level;
+
+progress[gameMode] = now;
+checkUnlocks();
+// 🔓 KİLİT AÇMA (LEVEL 3 BİTİNCE)
+if(gameMode === "add" && prev < 3 && now === 4){
+  showUnlock("Yeni kategori açıldı: Çıkarma!");
+}
+
+if(gameMode === "sub" && prev < 3 && now === 4){
+  showUnlock("Yeni kategori açıldı: Çarpma!");
+}
+
+if(gameMode === "mul" && prev < 3 && now === 4){
+  showUnlock("Yeni kategori açıldı: Bölme!");
+}
+
+localStorage.setItem("players", JSON.stringify(players));
+
+//3 level = progress[gameMode];
+updateLevelUI();
+        showLevelPopup();
+        updateCategoryUI();
+        startLevel();
+
+      },500);
+    }
+
+    // 🔥 RESET (eşleşme sonrası)
+    first = null;
+    second = null;
+    lock = false;
+  }
+
+  // ❌ EŞLEŞME YOK
+  else {
+
+    lock = true;
+
+    setTimeout(()=>{
+
+      f.div.classList.remove("open");
+      s.div.classList.remove("open");
+
+      combo = 0;
+            score -= 3;
+      showScoreEffect("-3");
+
+      wrongCount++;
+updateWrongBar();
+
+if(wrongCount >= 3){
+  lives--;
+  updateLivesUI();
+  showScoreEffect("-❤️");
+
+  wrongCount = 0;
+  updateWrongBar();
+}
+      // ❤️ CAN AZALT
+
+
+      // 💀 GAME OVER
+      if(lives <= 0){
+        first = null;
+        second = null;
+        lock = false;
+        gameOver();
+        return;
+      }
+
+      // 🔥 RESET
+      first = null;
+      second = null;
+      lock = false;
+
+    },800);
+
+    return;
+  }
+
+  // 🔄 UI GÜNCELLE
+  document.getElementById("score").innerText = "⭐ " + score;
+  
+}
+function startLevel(){
+
+  clearInterval(timer); // 🔥 eski timerı durdur
+
+  cards = [];
+  matched = 0;
+  combo = 0;
+  wrongCount = 0;
+
+  let pairs = level + 2;
+
+  createCards(pairs); // 🔥 önce kartlar
+
+  // 🔥 sonra süre hesapla
+  let timePerMatch = Math.max(9 - (level * 0.5), 5);
+  timeLeft = Math.floor((cards.length / 2) * timePerMatch);
+
+  updateTimeUI(); // 🔥 süreyi ekrana bas
+
+  startTimer();   // 🔥 EN SON timer başlasın
+
+  render();
+}
+
+function startGame(){
+
+  // 🔥 ekranı aç
+  showScreen("gameScreen");
+  document.getElementById("gameOverScreen").style.display = "none";
+
+  document.getElementById("playerNameText").innerText = playerName;
+
+  // 🔥 oyun state reset
+  resetGame();
+
+  isGameOver = false;
+  wrongCount = 0;
+updateWrongBar();
+  // 🔥 level doğru yerden gelsin
+  //3 level = progress[gameMode] || 1;
+
+  // 🔥 temel değerler
+  score = 0;
+  combo = 0;
+  lives = 3;
+  wrongStreak = 0;
+
+  // 🔥 kart sistemi
+  cards = [];
+  first = null;
+  second = null;
+  lock = false;
+  matched = 0;
+
+  // 🔥 UI
+  document.getElementById("score").innerText = score;
+  updateLivesUI();
+  updateLevelUI();
+  updateCategoryUI();
+  updateModeText();
+
+  // 🔥 level başlat
+  startLevel();
+
+  document.getElementById("grid").style.display = "grid";
+
+  console.log("START GAME");
+}
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>{
+    s.style.display = "none";
+  });
+
+  document.getElementById(id).style.display = "flex";
+}
+
+
+
+function goLobby(){
+  showScreen("lobbyScreen");
+}
+
+function goGame(){
+  showScreen("gameScreen");
+}
+window.onload = function(){
+  let loading = document.getElementById("loadingScreen");
+
+  if(loading){
+    setTimeout(()=>{
+      loading.style.display = "none";
+      goLobby(); // 🔥 loading bittikten sonra
+    },1000);
+  }else{
+    goLobby();
+  }
+};
+
+function calculateScore(){
+
+  let base = 10;
+
+  let multiplier = 1 + (combo * 0.5); // x1, x1.5, x2, x2.5...
+
+  return Math.floor(base * multiplier);
+}
+
+function showScoreEffect(value){
+
+  let e = document.createElement("div");
+  e.className = "scoreEffect";
+
+  if(combo > 1){
+    e.innerText = "+" + value + " 🔥x" + combo;
+  }else{
+    e.innerText = "+" + value;
+  }
+
+  document.getElementById("effects").appendChild(e);
+
+  setTimeout(()=> e.remove(),1000);
+}
+
+function showLevelPopup(){
+
+  let el = document.getElementById("levelPopup");
+
+  el.innerText = "LEVEL " + level;
+
+  el.classList.add("show");
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  },2000);
+}
+
+function updateLivesUI(){
+
+  let text = "";
+
+  for(let i=0;i<lives;i++){
+    text += "❤️";
+  }
+
+  document.getElementById("livesBox").innerText = text;
+}
+
+function gameOver(){
+  console.log("GAME OVER ÇAĞRILDI");
+  if(isGameOver) return;
+
+  isGameOver = true;
+
+  first = null;
+  second = null;
+  lock = true;
+
+  document.getElementById("finalName").innerText = playerName;
+  document.getElementById("finalScore").innerText = score;
+
+  saveScore();           // 🔥 ÖNCE kaydet
+renderLeaderboard();   // 🔥 sonra tabloyu çiz
+showScreen("gameOverScreen");
+}
+
+function setMode(m){
+    if(m === "sub" && progress.add < 3){
+    alert("Önce Topla Level 3");
+    return;
+  }
+
+  if(m === "mul" && progress.sub < 3){
+    alert("Önce Çıkarma Level 3");
+    return;
+  }
+
+  if(m === "div" && progress.mul < 3){
+    alert("Önce Çarpma Level 3");
+    return;
+  }
+
+  if(m === "mix" && progress.div < 3){
+    alert("Önce Bölme Level 3");
+    return;
+  }
+
+  gameMode = m;
+}
+
+function resetGame(){
+  level = 1;
+  score = 0;
+  lives = 3;
+  combo = 0;
+  matched = 0;
+  wrongCount = 0;
+
+  first = null;
+  second = null;
+  lock = false;
+
+  cards = []; // 🔥 kritik
+
+  document.getElementById("score").innerText = score;
+  updateLivesUI();
+
+  document.getElementById("grid").innerHTML = ""; // 🔥 kritik
+   progress.sub = 0;
+  progress.mul = 0;
+  progress.div = 0;
+
+}
+
+function toggleSettings(e){
+   e.stopPropagation();
+   let panel = document.getElementById("settingsPanel");
+   panel.classList.toggle("open");
+ }
+
+document.addEventListener("click", function(e){
+  let panel = document.getElementById("settingsPanel");
+
+  if(!panel.contains(e.target) && e.target.id !== "settingsBtn"){
+    panel.classList.remove("open");
+  }
+});
+function closeSettings(){
+  document.getElementById("settingsPanel").classList.remove("open");
+}
+
+let soundOn = true;
+
+function toggleSound(){
+  soundOn = !soundOn;
+  alert("Ses: " + (soundOn ? "Açık" : "Kapalı"));
+}
+
+
+document.addEventListener("click", function(e){
+
+  const panel = document.getElementById("settingsPanel");
+  const btn = document.getElementById("settingsBtn");
+
+  if(panel.classList.contains("open")){
+    if(!panel.contains(e.target) && !btn.contains(e.target)){
+      panel.classList.remove("open");
+    }
+  }
+
+});
+
+document.getElementById("settingsBtn").addEventListener("click", function(e){
+
+  const panel = document.getElementById("settingsPanel");
+
+  panel.classList.toggle("open");
+
+  updateCategoryUI(); // 🔥 bu bizim fix
+
+  e.stopPropagation();
+});
+
+/* =====================
+  PUAN SİSTEMİ 03052026 2218
+===================== */
+function getCardBasePoint(mode){
+  switch(mode){
+    case "add": return 10;
+    case "sub": return 11;
+    case "mul": return 12;
+    case "div": return 13;
+    case "mix": return 15;
+    default: return 10;
+  }
+}
+
+/* =====================
+ CAN + ÖZEL KART (ŞİMDİLİK SADECE CAN) 03052026 2218
+===================== */
+function applySpecial(type){
+
+  if(!type) return;
+
+  if(type === "plusTime") timeLeft += 5;
+  if(type === "minusTime") timeLeft -= 5;
+
+  if(type === "plusScore") score += 20;
+  if(type === "minusScore") score -= 15;
+
+  if(type === "plusCan"){
+    if(lives < 4){
+      lives++;
+      updateLivesUI();
+    }
+  }
+
+  if(type === "minusCan"){
+    if(lives > 1){
+      lives--;
+      updateLivesUI();
+    } else {
+      timeLeft -= 5; // 🔥 SENİN İSTEDİĞİN
+      if(timeLeft < 0) timeLeft = 0;
+    }
+  }
+}
+
+/* =====================
+   03052026 2244
+===================== */
+function updateTimeUI(){
+  document.getElementById("time").innerText = timeLeft;
+}
+
+/* =====================
+   03052026 2245
+===================== */
+function startTimer(){
+
+  clearInterval(timer); // 🔥 en kritik satır
+
+  timer = setInterval(()=>{
+    timeLeft--;
+    updateTimeUI();
+
+    if(timeLeft <= 0){
+      clearInterval(timer);
+      gameOver();
+    }
+
+  },1000);
+}
+
+/* =====================
+   04052026 1715
+===================== */
+function saveScore(){
+
+  let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+  let newScore = {
+    name: playerName,
+    score: score,
+    level: level,
+    mode: gameMode,
+    date: new Date().toLocaleDateString()
+  };
+
+  let existing = scores.find(s => s.name === playerName);
+
+  if(existing){
+    if(score > existing.score){
+      existing.score = score;
+      existing.level = level;
+      existing.mode = gameMode;
+      existing.date = newScore.date;
+    }
+  }else{
+    scores.push(newScore);
+  }
+
+  scores.sort((a,b)=> b.score - a.score);
+  scores = scores.slice(0,10);
+
+  localStorage.setItem("scores", JSON.stringify(scores));
+}
+/* =====================
+   03052026 2218
+===================== */
+function renderLeaderboard(){
+
+  let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+  let html = "<h3>🏆 En İyi Skorlar</h3>";
+
+  scores.forEach((s,i)=>{
+
+    let medal = "";
+
+    if(i === 0) medal = "🥇";
+    else if(i === 1) medal = "🥈";
+    else if(i === 2) medal = "🥉";
+    else medal = (i+1) + ".";
+
+    html += `
+      <div class="scoreRow">
+        <span class="rank">${medal}</span>
+        <span class="name">${s.name}</span>
+        <span class="date">${s.date}</span>
+        <span class="mode">${modeName(s.mode)}</span>
+        <span class="level">Lv${s.level}</span>
+        <span class="score">⭐ ${s.score}</span>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("leaderboard").innerHTML = html;
+}
+
+/* =====================
+   03052026 2218
+===================== */
+function setMode(mode){
+
+  // 🔒 KİLİT KONTROL
+
+  if(mode === "sub" && progress.add < 3){
+    alert("Önce Toplama Level 3 olmalı!");
+    return;
+  }
+
+  if(mode === "mul" && progress.sub < 3){
+    alert("Önce Çıkarma Level 3 olmalı!");
+    return;
+  }
+
+  if(mode === "div" && progress.mul < 3){
+    alert("Önce Çarpma Level 3 olmalı!");
+    return;
+  }
+
+  // 🔥 aynı mod seçildiyse boşuna restart yapma
+  if(gameMode === mode){
+    return;
+  }
+
+  gameMode = mode;
+
+  const modeNames = {
+    add: "Toplama",
+    sub: "Çıkarma",
+    mul: "Çarpma",
+    div: "Bölme",
+    mix: "Karışık"
+  };
+
+  let text = document.getElementById("modeText");
+
+  if(text){
+    text.innerText = "Mod: " + modeNames[mode];
+  }
+
+  // 🔥 kategori değişince oyun sıfırlansın
+  startGame();
+
+  console.log("Seçilen mod:", mode);
+}
+
+/* =====================
+   03052026 2218
+===================== */
+function startGameWithName(){
+
+  if(!playerName){
+    alert("Önce kullanıcı seç!");
+    return;
+  }
+
+  score = 0;
+  lives = 3;
+  combo = 0;
+  wrongStreak = 0;
+  initGameState(); // 🔥 EKLENDİ
+  startGame();
+}
+
+function isModeUnlocked(mode){
+
+  // 🔥 oyuncu seçilmeden önce HER ŞEY KİLİTLİ (sadece toplama açık)
+  if(!progress || Object.keys(progress).length === 0){
+    return mode === "add";
+  }
+
+  let add = progress.add || 0;
+  let sub = progress.sub || 0;
+  let mul = progress.mul || 0;
+
+  if(mode === "add") return true;
+  if(mode === "sub") return add >= 4;
+  if(mode === "mul") return sub >= 4;
+  if(mode === "div") return mul >= 4;
+
+  return false;
+}
+function checkUnlocks(){
+
+  if(progress.add === 4){
+    showUnlock("Yeni kategori açıldı: Çıkarma!");
+  }
+
+  if(progress.sub === 4){
+    showUnlock("Yeni kategori açıldı: Çarpma!");
+  }
+
+  if(progress.mul === 4){
+    showUnlock("Yeni kategori açıldı: Bölme!");
+  }
+
+}
+function updateCategoryUI(){
+
+  let map = {
+    add: "btnAdd",
+    sub: "btnSub",
+    mul: "btnMul",
+    div: "btnDiv"
+  };
+
+  for(let key in map){
+
+    let btn = document.getElementById(map[key]);
+
+    if(!btn) continue;
+
+    if(!isModeUnlocked(key)){
+      btn.classList.add("locked");
+    }else{
+      btn.classList.remove("locked");
+    }
+  }
+}
+
+function showUnlock(text){
+
+  let popup = document.getElementById("unlockPopup");
+
+  popup.innerText = "🎉 " + text;
+
+  // 🔥 animasyonu başlat
+  popup.classList.add("show");
+
+  // 🔥 2 saniye sonra kapat
+  setTimeout(()=>{
+    popup.classList.remove("show");
+  },2000);
+}
+function updateLevelUI(){
+  let el = document.getElementById("levelText");
+  if(el){
+    el.innerText = "Level: " + level;
+  }
+}
+function confirmPlayer(){
+
+  let input = document.getElementById("playerName");
+  let newName = input.value.trim() || "Misafir";
+
+  playerName = newName;
+
+  // 🔥 yeni oyuncu mu?
+  if(!players[playerName]){
+    players[playerName] = {
+      add: 1,
+      sub: 0,
+      mul: 0,
+      div: 0
+    };
+  }
+
+  // 🔥 progress bağla
+  progress = players[playerName];
+
+  // 🔥 HER ZAMAN toplama ile başla
+  gameMode = "add";
+
+  // 🔥 MODE TEXT GÜNCELLE (tek yerden)
+  updateModeText();
+
+  // 🔥 level ayarla
+  //3 level = progress.add || 1;
+
+  // 🔥 UI güncelle
+  updateLevelUI();
+  updateCategoryUI();
+
+  document.getElementById("playerNameText").innerText = playerName;
+
+  console.log("Aktif oyuncu:", playerName, progress);
+}
+
+function updateModeText(){
+  const modeNames = {
+    add: "Toplama",
+    sub: "Çıkarma",
+    mul: "Çarpma",
+    div: "Bölme",
+    mix: "Karışık"
+  };
+
+  let text = document.getElementById("modeText");
+  if(text){
+    text.innerText = "Mod: " + modeNames[gameMode];
+  }
+}
+
+function initGameState(){
+
+  // 🔥 kategori başlangıç
+  gameMode = "add";
+
+  // 🔥 level başlangıç
+  level = 1;
+
+  // 🔥 progress reset (sadece yeni oyuncuysa yapılmalı)
+  if(!players[playerName]){
+    players[playerName] = {
+      add: 1,
+      sub: 0,
+      mul: 0,
+      div: 0
+    };
+  }
+
+  progress = players[playerName];
+
+  // 🔥 kart sistemi reset
+  cards = [];
+  matched = 0;
+  first = null;
+  second = null;
+  lock = false;
+
+  // 🔥 skor sistemi
+  score = 0;
+  combo = 0;
+  lives = 3;
+  wrongStreak = 0;
+
+  // 🔥 UI temizle
+  document.getElementById("grid").innerHTML = "";
+  document.getElementById("score").innerText = score;
+
+  updateLivesUI();
+  updateLevelUI();
+  updateCategoryUI();
+  updateModeText();
+}
+
+function updateWrongBar(){
+  let percent = (wrongCount / 3) * 100;
+  document.getElementById("wrongFill").style.width = percent + "%";
+}
+
+function modeName(m){
+  if(m === "add") return "Toplama";
+  if(m === "sub") return "Çıkarma";
+  if(m === "mul") return "Çarpma";
+  if(m === "div") return "Bölme";
+  if(m === "mix") return "Karışık";
+  return m;
+}
+</script>
+
+</body>
+</html>

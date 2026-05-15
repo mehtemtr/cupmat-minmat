@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "FIFA Dünya Kupası 2026 | ABD · Kanada · Meksika",
+    "description": "FIFA Dünya Kupası 2026'nın nihai rehberi — 48 takım, 12 grup, üç ev sahibi ülke. 11 Haziran 2026 açılış vuruşuna geri sayım.",
+    "ogTitle": "FIFA Dünya Kupası 2026 — Dünyanın En Büyük Şovu",
+    "ogDescription": "48 takım. 12 grup. 3 ev sahibi ülke. 11 Haziran 2026'ya geri sayım başladı."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "teams": "Takımlar",
+    "groups": "Gruplar",
+    "venues": "Mekanlar",
+    "predictions": "Tahminler"
+  },
+  "hero": {
+    "badge": "FIFA Dünya Kupası 2026",
+    "title": "Dünya",
+    "titleHighlight": "Birleşiyor",
+    "subtitle": "ABD · Kanada · Meksika — üç ülke, bir turnuva, tarih yazılıyor.",
+    "ctaPrimary": "Turnuvayı Keşfet",
+    "ctaSecondary": "Tahmin Yap",
+    "minMatPromo": "Maç saatini beklerken zihnini canlandır! 🧠 MinMat Matematik ve Hafıza Oyunumuzu dene.",
+    "cupMatPromo": "Futbol bilgin yapay zekadan daha mı iyi? 🏆 CupMat ile Dünya Kupası tahminlerini hemen yap!",
+    "comingSoon": "Çok Yakında ⌛",
+    "players": "Futbolcu Bilgileri",
+    "countries": "Ülke Detayları",
+    "referees": "Hakem İstatistikleri"
+  },
+  "countdown": {
+    "label": "Açılışa kalan",
+    "days": "Gün",
+    "hours": "Saat",
+    "minutes": "Dakika",
+    "seconds": "Saniye",
+    "targetDate": "11 Haziran 2026"
+  },
+  "overview": {
+    "sectionTitle": "Turnuvaya Genel Bakış",
+    "sectionSubtitle": "Şimdiye kadarki en büyük Dünya Kupası — genişletilmiş format, üç ev sahibi, unutulmaz anlar sizi bekliyor.",
+    "teams": {
+      "value": "48",
+      "label": "Takım",
+      "description": "Dünya Kupası tarihinin en geniş kadrosu"
+    },
+    "groups": {
+      "value": "12",
+      "label": "Grup",
+      "description": "Her grupta dörtlü eleme usulü"
+    },
+    "hosts": {
+      "value": "3",
+      "label": "Ev Sahibi Ülke",
+      "description": "ABD, Kanada ve Meksika bir arada"
+    }
+  },
+  "hosts": {
+    "usa": "Amerika Birleşik Devletleri",
+    "canada": "Kanada",
+    "mexico": "Meksika"
+  },
+  "teams": {
+    "title": "Katılan Takımlar",
+    "subtitle": "A–L gruplarındaki 48 ülke, FIFA sıralaması ve kadro detayları.",
+    "group": "Grup",
+    "manager": "Teknik Direktör",
+    "squad": "Kadro",
+    "years": "yaş"
+  },
+  "groups": {
+    "title": "Gruplar ve Puan Durumu",
+    "subtitle": "Sonuçlar girildikçe tablolar puan, averaj ve atılan gole göre anında güncellenir.",
+    "group": "Grup",
+    "team": "Takım",
+    "enterResults": "Maç Sonuçlarını Gir",
+    "resultsHint": "Skorları güncelleyin — 12 gruptaki sıralama anında yeniden hesaplanır."
+  },
+  "venues": {
+    "title": "Ev Sahibi Stadyumlar",
+    "subtitle": "Kuzey Amerika'daki 16 resmi stadyum — kapasite, konum ve maç programı.",
+    "capacity": "koltuk",
+    "matches": "maç"
+  },
+  "predictions": {
+    "title": "Tahminler ve Liderlik Tablosu",
+    "subtitle": "Grup skorlarını adım adım gönderin, Son 32 ağacını açın ve küresel sıralamada yarışın.",
+    "aiToggle": "Yapay Zeka Tahmini (GPT-5.4)",
+    "yourPoints": "Puanınız",
+    "groupStep": "Grup",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "displayName": "Görünen ad",
+    "applyScores": "Tahminleri puan durumuna uygula",
+    "submitLeaderboard": "Liderlik tablosuna gönder",
+    "knockoutTitle": "Son 32 Turu Ağacı",
+    "knockoutLocked": "Tüm grup tahminlerini tamamlayıp skorları uygulayın — eleme ağacı açılacak.",
+    "leaderboard": "Liderlik Tablosu",
+    "loading": "Yükleniyor…",
+    "tbd": "Belirlenecek",
+    "simulateLive": "Canlı Haber Simüle Et",
+    "liveUpdate": "Canlı Haber Güncellemesi",
+    "winProb": "Kazanma İhtimali",
+    "confidence": "Yapay Zeka Güveni",
+    "reset": "Tahminleri Temizle",
+    "champion": "ŞAMPİYON",
+    "completed": "2026 DÜNYA KUPASI TAMAMLANDI!",
+    "et": "UZATMALAR",
+    "penalties": "PENALTILAR",
+    "aiRoundPredict": "YZ Tahmini Yap",
+    "played": "(OYNANDI)",
+    "userLabel": "KULLANICI",
+    "aiLabel": "YZ TAHMİNİ"
+  },
+  "footer": {
+    "tagline": "FIFA Dünya Kupası 2026 — Oyunun aşkı için.",
+    "rights": "Tüm hakları saklıdır. FIFA ile bağlantılı değildir."
+  },
+  "language": {
+    "toggle": "Dil",
+    "en": "English",
+    "tr": "Türkçe"
+  }
+}

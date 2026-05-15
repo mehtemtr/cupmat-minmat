@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "title": "FIFA World Cup 2026 | USA · Canada · Mexico",
+    "description": "Your ultimate guide to FIFA World Cup 2026 — 48 teams, 12 groups, three host nations. Follow the countdown to kickoff on June 11, 2026.",
+    "ogTitle": "FIFA World Cup 2026 — The Greatest Show on Earth",
+    "ogDescription": "48 teams. 12 groups. 3 host countries. The countdown to June 11, 2026 has begun."
+  },
+  "nav": {
+    "home": "Home",
+    "teams": "Teams",
+    "groups": "Groups",
+    "venues": "Stadiums",
+    "predictions": "Predictions"
+  },
+  "hero": {
+    "badge": "FIFA World Cup 2026",
+    "title": "The World",
+    "titleHighlight": "Unites",
+    "subtitle": "USA · Canada · Mexico — three nations, one tournament, history in the making.",
+    "ctaPrimary": "Explore Tournament",
+    "ctaSecondary": "Make Predictions",
+    "minMatPromo": "Refresh your mind while waiting for the match! 🧠 Try our MinMat Math and Memory Game.",
+    "cupMatPromo": "Is your football knowledge better than AI? 🏆 Make your World Cup predictions with CupMat now!",
+    "comingSoon": "Coming Soon ⌛",
+    "players": "Player Info",
+    "countries": "Country Details",
+    "referees": "Referee Stats"
+  },
+  "countdown": {
+    "label": "Kickoff in",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "targetDate": "June 11, 2026"
+  },
+  "overview": {
+    "sectionTitle": "Tournament at a Glance",
+    "sectionSubtitle": "The biggest World Cup ever — expanded format, three host nations, unforgettable moments ahead.",
+    "teams": {
+      "value": "48",
+      "label": "Teams",
+      "description": "Largest field in World Cup history"
+    },
+    "groups": {
+      "value": "12",
+      "label": "Groups",
+      "description": "Round-robin group stage format"
+    },
+    "hosts": {
+      "value": "3",
+      "label": "Host Countries",
+      "description": "USA, Canada & Mexico united"
+    }
+  },
+  "hosts": {
+    "usa": "United States",
+    "canada": "Canada",
+    "mexico": "Mexico"
+  },
+  "teams": {
+    "title": "Qualified Teams",
+    "subtitle": "All 48 nations grouped A–L with FIFA rankings and full squad metadata.",
+    "group": "Group",
+    "manager": "Head Coach",
+    "squad": "Squad",
+    "years": "yrs"
+  },
+  "groups": {
+    "title": "Groups & Standings",
+    "subtitle": "Live tables auto-sort by points, goal difference, and goals scored as results are entered.",
+    "group": "Group",
+    "team": "Team",
+    "enterResults": "Enter Match Results",
+    "resultsHint": "Update scores below — standings reorder instantly across all 12 groups."
+  },
+  "venues": {
+    "title": "Host Stadiums",
+    "subtitle": "16 official venues across North America — capacity, location, and tournament schedule.",
+    "capacity": "seats",
+    "matches": "matches"
+  },
+  "predictions": {
+    "title": "Predictions & Leaderboard",
+    "subtitle": "Submit group scores step-by-step, unlock the Round of 32, and compete on the global leaderboard.",
+    "aiToggle": "AI Prediction (GPT-5.4)",
+    "yourPoints": "Your points",
+    "groupStep": "Group",
+    "prev": "Previous",
+    "next": "Next",
+    "displayName": "Display name",
+    "applyScores": "Apply predictions to standings",
+    "submitLeaderboard": "Submit to leaderboard",
+    "knockoutTitle": "Round of 32 Bracket",
+    "knockoutLocked": "Complete all group predictions and apply scores to unlock the knockout tree.",
+    "leaderboard": "Leaderboard",
+    "loading": "Loading…",
+    "tbd": "TBD",
+    "simulateLive": "Simulate Live News",
+    "liveUpdate": "Live News Update",
+    "winProb": "Win Probability",
+    "confidence": "AI Confidence",
+    "reset": "Reset Predictions",
+    "champion": "CHAMPION",
+    "completed": "2026 WORLD CUP COMPLETED!",
+    "et": "EXTRA TIME",
+    "penalties": "PENALTIES",
+    "aiRoundPredict": "AI Predict this round",
+    "played": "(PLAYED)",
+    "userLabel": "USER",
+    "aiLabel": "AI PREDICTION"
+  },
+  "footer": {
+    "tagline": "FIFA World Cup 2026 — For the love of the game.",
+    "rights": "All rights reserved. Not affiliated with FIFA."
+  },
+  "language": {
+    "toggle": "Language",
+    "en": "English",
+    "tr": "Türkçe"
+  }
+}
