@@ -11,6 +11,7 @@
     "validate:teams": "npx tsx scripts/validate-teams.ts"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.3.4",
     "lucide-react": "^0.511.0",
     "next": "^15.3.2",
     "react": "^19.1.0",

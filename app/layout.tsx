@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import { DynamicMeta } from "@/components/DynamicMeta";
+import { ClerkProvider } from "@clerk/nextjs";
 import { defaultLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n/types";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import "./globals.css";
@@ -90,17 +91,19 @@ export default async function RootLayout({
   const locale = await getInitialLocale();
 
   return (
-    <html lang={locale} className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
-      >
-        <Providers initialLocale={locale}>
-          <DynamicMeta />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang={locale} className="dark">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
+        >
+          <Providers initialLocale={locale}>
+            <DynamicMeta />
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

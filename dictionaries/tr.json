@@ -10,7 +10,9 @@
     "teams": "Takımlar",
     "groups": "Gruplar",
     "venues": "Mekanlar",
-    "predictions": "Tahminler"
+    "predictions": "Tahminler",
+    "signin": "Giriş Yap",
+    "signout": "Çıkış Yap"
   },
   "hero": {
     "badge": "FIFA Dünya Kupası 2026",

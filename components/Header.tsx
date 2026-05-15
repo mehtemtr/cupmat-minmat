@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe, Home, Menu, Trophy, X } from "lucide-react";
 import { useState } from "react";
+import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import type { Locale } from "@/lib/i18n/types";
 
@@ -88,6 +89,23 @@ export function Header() {
             </span>
             <span className="sm:hidden uppercase">{locale}</span>
           </button>
+          
+          <SignedIn>
+            <UserButton 
+              appearance={{
+                elements: {
+                  avatarBox: "h-9 w-9 rounded-lg border border-white/10 hover:border-emerald-400/40 transition-colors"
+                }
+              }}
+            />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-bold text-[#060b14] hover:bg-emerald-400 transition-colors">
+                {t("nav.signin") || "Giriş Yap"}
+              </button>
+            </SignInButton>
+          </SignedOut>
 
           <button
             type="button"

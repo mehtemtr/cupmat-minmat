@@ -10,7 +10,9 @@
     "teams": "Teams",
     "groups": "Groups",
     "venues": "Stadiums",
-    "predictions": "Predictions"
+    "predictions": "Predictions",
+    "signin": "Sign In",
+    "signout": "Sign Out"
   },
   "hero": {
     "badge": "FIFA World Cup 2026",
