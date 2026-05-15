@@ -1,4 +1,4 @@
-import type { AiAnalysis, MatchResult } from "@/lib/types/tournament";
+import type { AiAnalysis, MatchResult, MatchPrediction } from "@/lib/types/tournament";
 import { getTeamById } from "@/data/teams";
 import type { Locale } from "@/lib/i18n/types";
 
@@ -21,9 +21,9 @@ const LIVE_NEWS_EVENTS_EN = [
 export function simulateLiveUpdate(
   currentAnalysis: AiAnalysis,
   match: MatchResult,
-  currentPrediction: { home: number; away: number },
+  currentPrediction: MatchPrediction,
   locale: Locale
-): { updatedAnalysis: AiAnalysis; updatedPrediction: { home: number; away: number } } {
+): { updatedAnalysis: AiAnalysis; updatedPrediction: MatchPrediction } {
   const isTr = locale === "tr";
   const events = isTr ? LIVE_NEWS_EVENTS_TR : LIVE_NEWS_EVENTS_EN;
   const event = events[Math.floor(Math.random() * events.length)];
@@ -63,7 +63,7 @@ export function simulateLiveUpdate(
     }
   }
   
-  const updatedPrediction = { home: newH, away: newA };
+  const updatedPrediction: MatchPrediction = { ...currentPrediction, home: newH, away: newA, source: "ai" };
   
   const newsPrefix = isTr 
     ? `🔴 CANLI HABER (${affectedName}): ${event.news}` 

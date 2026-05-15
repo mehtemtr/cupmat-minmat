@@ -10,12 +10,7 @@ body{
   margin:0;
   font-family:sans-serif;
 }
-<div id="loadingScreen">
-  <div class="logo">
-    MinMat
-    <span>Sayı Avı</span>
-  </div>
-</div>
+
 
 
 
@@ -451,7 +446,7 @@ button:hover{
   padding:10px;
 }
 
-#score
+#score {
   color:#facc15;
   font-weight:bold;
 }
@@ -554,6 +549,13 @@ button:hover{
 </head>
 
 <body>
+
+<div id="loadingScreen">
+  <div class="logo">
+    MinMat
+    <span>Sayı Avı</span>
+  </div>
+</div>
 
 <!-- MENU -->
 
@@ -679,6 +681,7 @@ let progress = {
   mul: 0,
   div: 0
 };
+let isGameOver = false;
 
 let saved = JSON.parse(localStorage.getItem("progress"));
 if(saved){
@@ -1038,32 +1041,6 @@ function startGame(){
   // 🔥 oyun state reset
   resetGame();
 
-  isGameOver = false;
-  wrongCount = 0;
-updateWrongBar();
-  // 🔥 level doğru yerden gelsin
-  //3 level = progress[gameMode] || 1;
-
-  // 🔥 temel değerler
-  score = 0;
-  combo = 0;
-  lives = 3;
-  wrongStreak = 0;
-
-  // 🔥 kart sistemi
-  cards = [];
-  first = null;
-  second = null;
-  lock = false;
-  matched = 0;
-
-  // 🔥 UI
-  document.getElementById("score").innerText = score;
-  updateLivesUI();
-  updateLevelUI();
-  updateCategoryUI();
-  updateModeText();
-
   // 🔥 level başlat
   startLevel();
 
@@ -1168,52 +1145,32 @@ renderLeaderboard();   // 🔥 sonra tabloyu çiz
 showScreen("gameOverScreen");
 }
 
-function setMode(m){
-    if(m === "sub" && progress.add < 3){
-    alert("Önce Topla Level 3");
-    return;
-  }
 
-  if(m === "mul" && progress.sub < 3){
-    alert("Önce Çıkarma Level 3");
-    return;
-  }
-
-  if(m === "div" && progress.mul < 3){
-    alert("Önce Çarpma Level 3");
-    return;
-  }
-
-  if(m === "mix" && progress.div < 3){
-    alert("Önce Bölme Level 3");
-    return;
-  }
-
-  gameMode = m;
-}
 
 function resetGame(){
+  isGameOver = false;
   level = 1;
   score = 0;
   lives = 3;
   combo = 0;
   matched = 0;
   wrongCount = 0;
+  wrongStreak = 0;
 
   first = null;
   second = null;
   lock = false;
 
-  cards = []; // 🔥 kritik
+  cards = [];
 
   document.getElementById("score").innerText = score;
   updateLivesUI();
+  updateLevelUI();
+  updateCategoryUI();
+  updateModeText();
+  updateWrongBar();
 
-  document.getElementById("grid").innerHTML = ""; // 🔥 kritik
-   progress.sub = 0;
-  progress.mul = 0;
-  progress.div = 0;
-
+  document.getElementById("grid").innerHTML = "";
 }
 
 function toggleSettings(e){

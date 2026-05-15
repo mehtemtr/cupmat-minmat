@@ -5,7 +5,8 @@ import { Bot, Calendar, Trophy, User } from "lucide-react";
 import { useTournament } from "@/contexts/TournamentContext";
 import { getTeamById, getTeamName } from "@/data/teams";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
-import type { KnockoutMatch } from "@/lib/types/tournament";
+import type { KnockoutMatch, MatchPrediction, Team } from "@/lib/types/tournament";
+import type { Locale } from "@/lib/i18n/types";
 
 type KnockoutBracketProps = {
   unlocked: boolean;
@@ -88,10 +89,16 @@ function KnockoutMatchCard({
   t,
 }: {
   match: KnockoutMatch;
-  predictions: any;
-  setPrediction: any;
-  locale: any;
-  t: any;
+  predictions: Record<string, MatchPrediction>;
+  setPrediction: (
+    matchId: string,
+    home: number,
+    away: number,
+    et?: { home: number; away: number },
+    pen?: { home: number; away: number }
+  ) => void;
+  locale: Locale;
+  t: (key: string) => string;
 }) {
   const home = match.homeTeamId ? getTeamById(match.homeTeamId) : null;
   const away = match.awayTeamId ? getTeamById(match.awayTeamId) : null;
@@ -166,7 +173,7 @@ function KnockoutMatchCard({
   );
 }
 
-function TeamRow({ team, locale, score, onChange }: { team: any, locale: any, score: number | undefined, onChange: (v: number) => void }) {
+function TeamRow({ team, locale, score, onChange }: { team: Team | null | undefined, locale: Locale, score: number | undefined, onChange: (v: number) => void }) {
   if (!team) {
     return (
       <div className="flex items-center justify-between opacity-30">

@@ -12,6 +12,7 @@ import type {
   AiAnalysis,
   GroupId,
   KnockoutMatch,
+  MatchPrediction,
   MatchResult,
 } from "@/lib/types/tournament";
 import { generateGroupFixtures } from "@/lib/fixtures";
@@ -32,18 +33,7 @@ const VERSION_KEY = "wc2026-tournament-version";
 
 type TournamentState = {
   matches: MatchResult[];
-  predictions: Record<
-    string,
-    {
-      home: number;
-      away: number;
-      homeET?: number;
-      awayET?: number;
-      homePen?: number;
-      awayPen?: number;
-      source: "user" | "ai";
-    }
-  >;
+  predictions: Record<string, MatchPrediction>;
   displayName: string;
   aiEnabled: boolean;
   aiAnalyses: AiAnalysis[];
@@ -64,21 +54,10 @@ function initMatchesFromStorage(): MatchResult[] {
   return sanitizeStoredMatches(saved.matches);
 }
 
-type TournamentContextValue = {
+export type TournamentContextValue = {
   ready: boolean;
   matches: MatchResult[];
-  predictions: Record<
-    string,
-    {
-      home: number;
-      away: number;
-      homeET?: number;
-      awayET?: number;
-      homePen?: number;
-      awayPen?: number;
-      source: "user" | "ai";
-    }
-  >;
+  predictions: Record<string, MatchPrediction>;
   displayName: string;
   aiEnabled: boolean;
   aiAnalyses: AiAnalysis[];
@@ -100,7 +79,7 @@ type TournamentContextValue = {
   resetPredictions: () => void;
   setDisplayName: (name: string) => void;
   applyPredictionsToMatches: () => void;
-  toggleAiPredictions: () => void;
+  toggleAiPredictions: (targetMatchIds?: string[]) => void;
   simulateRandomLiveNews: (currentGroup: GroupId) => void;
   submitToLeaderboard: () => Promise<void>;
   predictionPoints: number;

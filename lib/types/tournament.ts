@@ -96,21 +96,21 @@ export type KnockoutMatch = {
   date: string;
 };
 
+export type MatchPrediction = {
+  home: number;
+  away: number;
+  homeET?: number;
+  awayET?: number;
+  homePen?: number;
+  awayPen?: number;
+  source: "user" | "ai";
+};
+
+
 export type PredictionSubmission = {
   userId: string;
   displayName: string;
-  matchPredictions: Record<
-    string,
-    {
-      home: number;
-      away: number;
-      homeET?: number;
-      awayET?: number;
-      homePen?: number;
-      awayPen?: number;
-      source: "user" | "ai";
-    }
-  >;
+  matchPredictions: Record<string, MatchPrediction>;
   points: number;
   groupsComplete: boolean;
   submittedAt: string;

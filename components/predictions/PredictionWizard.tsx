@@ -153,8 +153,6 @@ export function PredictionWizard() {
           ))}
         </div>
 
-        </div>
-
         {/* MinMat Promo Banner */}
         <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-6 backdrop-blur-sm">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
