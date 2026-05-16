@@ -18,10 +18,13 @@ export default function EntryPage() {
         <header className="mb-16 text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
             <Sparkles className="h-4 w-4" />
-            CupMat & MinMat Ecosystem
+            Statmatik
           </div>
-          <h1 className="text-4xl font-black tracking-tighter text-white sm:text-6xl md:text-7xl">
-            Seçiminizi <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">Yapın</span>
+          <h1 className="max-w-5xl mx-auto text-3xl font-black tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
+            Futbol matematiktir, matematik her şey. <br />
+            <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
+              Futbolun matematiğini statmatik.com ile çöz!
+            </span>
           </h1>
         </header>
 

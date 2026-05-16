@@ -46,13 +46,13 @@ export async function generateMetadata(): Promise<Metadata> {
       "football",
       "soccer",
     ],
-    authors: [{ name: "World Cup 2026" }],
+    authors: [{ name: "Statmatik" }],
     openGraph: {
       type: "website",
       locale: locale === "tr" ? "tr_TR" : "en_US",
       alternateLocale: locale === "tr" ? ["en_US"] : ["tr_TR"],
       url: siteUrl,
-      siteName: "FIFA World Cup 2026",
+      siteName: "FIFA World Cup 2026 - Statmatik",
       title: dict.meta.ogTitle,
       description: dict.meta.ogDescription,
       images: [
