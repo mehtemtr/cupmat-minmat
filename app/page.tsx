@@ -15,17 +15,26 @@ export default function EntryPage() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent" />
       
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-20">
-        <header className="mb-16 text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
-            <Sparkles className="h-4 w-4" />
-            Statmatik
+        <header className="mb-16 w-full">
+          <div className="mb-8 flex justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
+              <Sparkles className="h-4 w-4" />
+              Statmatik
+            </div>
           </div>
-          <h1 className="max-w-5xl mx-auto text-3xl font-black tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
-            Futbol matematiktir, matematik her şey. <br />
-            <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-              Futbolun matematiğini statmatik.com ile çöz!
-            </span>
-          </h1>
+          
+          <div className="relative flex overflow-x-hidden border-y border-white/5 bg-white/[0.02] py-6">
+            <div className="animate-marquee flex whitespace-nowrap gap-12">
+              {[1, 2, 3, 4].map((i) => (
+                <h1 key={i} className="text-2xl font-black tracking-tight text-white uppercase sm:text-4xl">
+                  Futbol matematiktir, matematik her şey.{" "}
+                  <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
+                    Futbolun matematiğini statmatik.com ile çöz!
+                  </span>
+                </h1>
+              ))}
+            </div>
+          </div>
         </header>
 
         <div className="grid w-full gap-8 md:grid-cols-2">
