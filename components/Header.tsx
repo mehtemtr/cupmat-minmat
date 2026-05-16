@@ -6,7 +6,7 @@ import { Globe, Home, Menu, Trophy, X } from "lucide-react";
 import { useState } from "react";
 import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
-import type { Locale } from "@/lib/i18n/types";
+import { locales, type Locale } from "@/lib/i18n/types";
 
 const navKeys = [
   { href: "/cupmat", key: "nav.home" },
@@ -27,8 +27,9 @@ export function Header() {
   if (pathname === "/") return null;
 
   const toggleLocale = () => {
-    const next: Locale = locale === "en" ? "tr" : "en";
-    setLocale(next);
+    const currentIndex = locales.indexOf(locale);
+    const nextIndex = (currentIndex + 1) % locales.length;
+    setLocale(locales[nextIndex]);
   };
 
   return (
@@ -86,7 +87,7 @@ export function Header() {
           >
             <Globe className="h-4 w-4 text-emerald-400" />
             <span className="hidden sm:inline">
-              {locale === "en" ? t("language.tr") : t("language.en")}
+              {t(`language.${locale}`)}
             </span>
             <span className="sm:hidden uppercase">{locale}</span>
           </button>

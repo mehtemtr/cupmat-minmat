@@ -26,7 +26,12 @@
     "comingSoon": "Çok Yakında ⌛",
     "players": "Futbolcu Bilgileri",
     "countries": "Ülke Detayları",
-    "referees": "Hakem İstatistikleri"
+    "referees": "Hakem İstatistikleri",
+    "slogan": "Futbol matematiktir, matematik her şey. Futbolun matematiğini statmatik.com ile çöz!",
+    "cupMatDesc": "Yapay zeka destekli, dünya kupasıyla ilgili her şey!",
+    "minMatDesc": "Sizin ve çocuklarınızın hafızadan hesap yapmasını kolaylaştıracak zeka oyunu!",
+    "playStart": "Kupayı Gör",
+    "mindRefresh": "Zihnini Canlandır"
   },
   "countdown": {
     "label": "Açılışa kalan",
@@ -119,6 +124,9 @@
   "language": {
     "toggle": "Dil",
     "en": "English",
-    "tr": "Türkçe"
+    "tr": "Türkçe",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
   }
 }

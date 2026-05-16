@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "title": "FIFA Fussball-Weltmeisterschaft 2026 - Statmatik",
+    "description": "Der ultimative Leitfaden zur FIFA Fussball-Weltmeisterschaft 2026 — 48 Teams, 12 Gruppen, drei Gastländer. Countdown zum Anpfiff am 11. Juni 2026.",
+    "ogTitle": "FIFA Fussball-Weltmeisterschaft 2026 — Die größte Show der Welt",
+    "ogDescription": "48 Teams. 12 Gruppen. 3 Gastländer. Der Countdown zum 11. Juni 2026 hat begonnen."
+  },
+  "nav": {
+    "home": "Startseite",
+    "teams": "Teams",
+    "groups": "Gruppen",
+    "venues": "Spielorte",
+    "predictions": "Prognosen",
+    "signin": "Anmelden",
+    "signout": "Abmelden"
+  },
+  "hero": {
+    "badge": "FIFA Fussball-Weltmeisterschaft 2026",
+    "title": "Die Welt",
+    "titleHighlight": "Vereint sich",
+    "subtitle": "USA · Kanada · Mexiko — drei Länder, ein Turnier, Geschichte wird geschrieben.",
+    "ctaPrimary": "Turnier erkunden",
+    "ctaSecondary": "Prognose erstellen",
+    "minMatPromo": "Erfrischen Sie Ihren Geist, während Sie auf das Spiel warten! 🧠 Probieren Sie unser MinMat Mathematik- und Gedächtnisspiel aus.",
+    "cupMatPromo": "Sind Ihre Fussballkenntnisse besser als die der KI? 🏆 Erstellen Sie jetzt Ihre WM-Prognosen mit CupMat!",
+    "comingSoon": "Demnächst ⌛",
+    "players": "Spielerinfos",
+    "countries": "Länderdetails",
+    "referees": "Schiedsrichterstatistiken",
+    "slogan": "Fußball ist Mathematik, Mathematik ist alles. Lösen Sie die Mathematik des Fußballs mit statmatik.com!",
+    "cupMatDesc": "Alles über die Weltmeisterschaft mit KI-Unterstützung!",
+    "minMatDesc": "Ein Gehirntraining, das Ihnen und Ihren Kindern das Kopfrechnen erleichtert!",
+    "playStart": "Pokal ansehen",
+    "mindRefresh": "Geist Beleben"
+  },
+  "countdown": {
+    "label": "Zeit bis zum Anpfiff",
+    "days": "Tage",
+    "hours": "Stunden",
+    "minutes": "Minuten",
+    "seconds": "Sekunden",
+    "targetDate": "11. Juni 2026"
+  },
+  "overview": {
+    "sectionTitle": "Turnierübersicht",
+    "sectionSubtitle": "Die größte Weltmeisterschaft aller Zeiten — erweitertes Format, drei Gastgeber, unvergessliche Momente erwarten Sie.",
+    "teams": {
+      "value": "48",
+      "label": "Teams",
+      "description": "Das größte Aufgebot in der Geschichte der Weltmeisterschaft"
+    },
+    "groups": {
+      "value": "12",
+      "label": "Gruppen",
+      "description": "Vierergruppen in der Vorrunde"
+    },
+    "hosts": {
+      "value": "3",
+      "label": "Gastgeberländer",
+      "description": "USA, Kanada und Mexiko gemeinsam"
+    }
+  },
+  "hosts": {
+    "usa": "Vereinigte Staaten",
+    "canada": "Kanada",
+    "mexico": "Mexiko"
+  },
+  "teams": {
+    "title": "Teilnehmende Teams",
+    "subtitle": "48 Länder in den Gruppen A–L, FIFA-Ranking und Kaderdetails.",
+    "group": "Gruppe",
+    "manager": "Trainer",
+    "squad": "Kader",
+    "years": "Jahre"
+  },
+  "groups": {
+    "title": "Gruppen und Tabellen",
+    "subtitle": "Tabellen werden sofort nach Punkten, Tordifferenz und erzielten Toren aktualisiert, sobald Ergebnisse eingegeben werden.",
+    "group": "Gruppe",
+    "team": "Team",
+    "enterResults": "Ergebnisse eingeben",
+    "resultsHint": "Aktualisieren Sie die Spielstände — die Ranglisten in den 12 Gruppen werden sofort neu berechnet."
+  },
+  "venues": {
+    "title": "Host-Stadien",
+    "subtitle": "16 offizielle Stadien in Nordamerika — Kapazität, Standort und Spielplan.",
+    "capacity": "Plätze",
+    "matches": "Spiele"
+  },
+  "predictions": {
+    "title": "Prognosen und Bestenliste",
+    "subtitle": "Senden Sie Gruppenergebnisse Schritt für Schritt ab, schalten Sie den Turnierbaum frei und messen Sie sich im globalen Ranking.",
+    "aiToggle": "KI-Prognose (GPT-5.4)",
+    "yourPoints": "Ihre Punkte",
+    "groupStep": "Gruppe",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "displayName": "Anzeigename",
+    "applyScores": "Prognosen auf Tabellen anwenden",
+    "submitLeaderboard": "An Bestenliste senden",
+    "knockoutTitle": "Turnierbaum der Runde der letzten 32",
+    "knockoutLocked": "Schließen Sie alle Gruppenprognosen ab und wenden Sie die Ergebnisse an — der Turnierbaum wird freigeschaltet.",
+    "leaderboard": "Bestenliste",
+    "loading": "Laden…",
+    "tbd": "Noch offen",
+    "simulateLive": "Live-News simulieren",
+    "liveUpdate": "Live-News-Update",
+    "winProb": "Siegwahrscheinlichkeit",
+    "confidence": "KI-Vertrauen",
+    "reset": "Prognosen zurücksetzen",
+    "champion": "WELTMEISTER",
+    "completed": "WM 2026 ABGESCHLOSSEN!",
+    "et": "VERLÄNGERUNG",
+    "penalties": "ELFMETERSCHIESSEN",
+    "aiRoundPredict": "KI-Vorhersage",
+    "played": "(GESPIELT)",
+    "userLabel": "BENUTZER",
+    "aiLabel": "KI-PROGNOSE"
+  },
+  "footer": {
+    "tagline": "FIFA Fussball-Weltmeisterschaft 2026 — Aus Liebe zum Spiel.",
+    "rights": "Alle Rechte vorbehalten. Nicht mit der FIFA verbunden."
+  },
+  "language": {
+    "toggle": "Sprache",
+    "en": "English",
+    "tr": "Türkçe",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  }
+}

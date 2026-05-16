@@ -1,15 +1,15 @@
 {
   "meta": {
     "title": "FIFA World Cup 2026 - Statmatik",
-    "description": "Your ultimate guide to FIFA World Cup 2026 — 48 teams, 12 groups, three host nations. Follow the countdown to kickoff on June 11, 2026.",
-    "ogTitle": "FIFA World Cup 2026 — The Greatest Show on Earth",
-    "ogDescription": "48 teams. 12 groups. 3 host countries. The countdown to June 11, 2026 has begun."
+    "description": "The ultimate guide to the FIFA World Cup 2026 — 48 teams, 12 groups, three host nations. Countdown to the June 11, 2026 kickoff.",
+    "ogTitle": "FIFA World Cup 2026 — The World's Biggest Show",
+    "ogDescription": "48 teams. 12 groups. 3 host countries. Countdown to June 11, 2026 has begun."
   },
   "nav": {
     "home": "Home",
     "teams": "Teams",
     "groups": "Groups",
-    "venues": "Stadiums",
+    "venues": "Venues",
     "predictions": "Predictions",
     "signin": "Sign In",
     "signout": "Sign Out"
@@ -20,16 +20,21 @@
     "titleHighlight": "Unites",
     "subtitle": "USA · Canada · Mexico — three nations, one tournament, history in the making.",
     "ctaPrimary": "Explore Tournament",
-    "ctaSecondary": "Make Predictions",
-    "minMatPromo": "Refresh your mind while waiting for the match! 🧠 Try our MinMat Math and Memory Game.",
+    "ctaSecondary": "Make Prediction",
+    "minMatPromo": "Refresh your mind while waiting for the match! 🧠 Try our MinMat Math & Memory Game.",
     "cupMatPromo": "Is your football knowledge better than AI? 🏆 Make your World Cup predictions with CupMat now!",
     "comingSoon": "Coming Soon ⌛",
     "players": "Player Info",
     "countries": "Country Details",
-    "referees": "Referee Stats"
+    "referees": "Referee Stats",
+    "slogan": "Football is math, math is everything. Solve the math of football with statmatik.com!",
+    "cupMatDesc": "AI-powered, everything about the World Cup!",
+    "minMatDesc": "Brain game that will make it easier for you and your children to calculate from memory!",
+    "playStart": "Explore the Cup",
+    "mindRefresh": "Refresh Your Mind"
   },
   "countdown": {
-    "label": "Kickoff in",
+    "label": "Time until kickoff",
     "days": "Days",
     "hours": "Hours",
     "minutes": "Minutes",
@@ -37,22 +42,22 @@
     "targetDate": "June 11, 2026"
   },
   "overview": {
-    "sectionTitle": "Tournament at a Glance",
-    "sectionSubtitle": "The biggest World Cup ever — expanded format, three host nations, unforgettable moments ahead.",
+    "sectionTitle": "Tournament Overview",
+    "sectionSubtitle": "The largest World Cup ever — expanded format, three hosts, unforgettable moments await.",
     "teams": {
       "value": "48",
       "label": "Teams",
-      "description": "Largest field in World Cup history"
+      "description": "The largest field in World Cup history"
     },
     "groups": {
       "value": "12",
       "label": "Groups",
-      "description": "Round-robin group stage format"
+      "description": "Round-robin of four in each group"
     },
     "hosts": {
       "value": "3",
-      "label": "Host Countries",
-      "description": "USA, Canada & Mexico united"
+      "label": "Host Nations",
+      "description": "USA, Canada, and Mexico together"
     }
   },
   "hosts": {
@@ -61,40 +66,40 @@
     "mexico": "Mexico"
   },
   "teams": {
-    "title": "Qualified Teams",
-    "subtitle": "All 48 nations grouped A–L with FIFA rankings and full squad metadata.",
+    "title": "Participating Teams",
+    "subtitle": "48 nations across groups A–L, FIFA ranking, and squad details.",
     "group": "Group",
-    "manager": "Head Coach",
+    "manager": "Manager",
     "squad": "Squad",
-    "years": "yrs"
+    "years": "years"
   },
   "groups": {
     "title": "Groups & Standings",
-    "subtitle": "Live tables auto-sort by points, goal difference, and goals scored as results are entered.",
+    "subtitle": "Tables update instantly by points, GD, and goals scored as results are entered.",
     "group": "Group",
     "team": "Team",
     "enterResults": "Enter Match Results",
-    "resultsHint": "Update scores below — standings reorder instantly across all 12 groups."
+    "resultsHint": "Update the scores — standings across 12 groups are recalculated instantly."
   },
   "venues": {
     "title": "Host Stadiums",
-    "subtitle": "16 official venues across North America — capacity, location, and tournament schedule.",
+    "subtitle": "16 official stadiums across North America — capacity, location, and match schedule.",
     "capacity": "seats",
     "matches": "matches"
   },
   "predictions": {
     "title": "Predictions & Leaderboard",
-    "subtitle": "Submit group scores step-by-step, unlock the Round of 32, and compete on the global leaderboard.",
+    "subtitle": "Submit group scores step-by-step, unlock the Round of 32 bracket, and compete in the global ranking.",
     "aiToggle": "AI Prediction (GPT-5.4)",
-    "yourPoints": "Your points",
+    "yourPoints": "Your Points",
     "groupStep": "Group",
-    "prev": "Previous",
+    "prev": "Prev",
     "next": "Next",
     "displayName": "Display name",
     "applyScores": "Apply predictions to standings",
     "submitLeaderboard": "Submit to leaderboard",
     "knockoutTitle": "Round of 32 Bracket",
-    "knockoutLocked": "Complete all group predictions and apply scores to unlock the knockout tree.",
+    "knockoutLocked": "Complete all group predictions and apply scores — the knockout bracket will unlock.",
     "leaderboard": "Leaderboard",
     "loading": "Loading…",
     "tbd": "TBD",
@@ -102,12 +107,12 @@
     "liveUpdate": "Live News Update",
     "winProb": "Win Probability",
     "confidence": "AI Confidence",
-    "reset": "Reset Predictions",
+    "reset": "Clear Predictions",
     "champion": "CHAMPION",
     "completed": "2026 WORLD CUP COMPLETED!",
     "et": "EXTRA TIME",
     "penalties": "PENALTIES",
-    "aiRoundPredict": "AI Predict this round",
+    "aiRoundPredict": "Predict with AI",
     "played": "(PLAYED)",
     "userLabel": "USER",
     "aiLabel": "AI PREDICTION"
@@ -119,6 +124,9 @@
   "language": {
     "toggle": "Language",
     "en": "English",
-    "tr": "Türkçe"
+    "tr": "Türkçe",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
   }
 }

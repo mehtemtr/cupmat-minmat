@@ -65,7 +65,7 @@ export function SplashGate({ children }: { children: React.ReactNode }) {
               <>
                 <h1 className="mb-12 text-4xl font-extrabold uppercase tracking-widest text-white sm:text-6xl md:text-7xl">
                   <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-emerald-600 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(52,211,153,0.4)]">
-                    Fıfa World Cup
+                    {t("hero.badge")}
                   </span>
                   <br />
                   <span className="text-3xl sm:text-5xl md:text-6xl text-zinc-100 drop-shadow-lg">
@@ -94,7 +94,7 @@ export function SplashGate({ children }: { children: React.ReactNode }) {
                 >
                   <span className="absolute inset-0 h-full w-full bg-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <Play className="h-6 w-6 fill-[#04080e] transition-transform duration-300 group-hover:translate-x-1" />
-                  <span className="text-lg tracking-wide uppercase">KUPAYI GÖR</span>
+                  <span className="text-lg tracking-wide uppercase">{t("hero.playStart")}</span>
                 </button>
               </>
             )}

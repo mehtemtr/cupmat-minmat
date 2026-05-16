@@ -13,8 +13,11 @@ import { defaultLocale, LOCALE_COOKIE } from "@/lib/i18n/types";
 import { getNestedValue } from "@/lib/i18n/nested";
 import en from "@/dictionaries/en.json";
 import tr from "@/dictionaries/tr.json";
+import es from "@/dictionaries/es.json";
+import fr from "@/dictionaries/fr.json";
+import de from "@/dictionaries/de.json";
 
-const dictionaries: Record<Locale, Dictionary> = { en, tr };
+const dictionaries: Record<Locale, Dictionary> = { en, tr, es, fr, de };
 
 type LocaleContextValue = {
   locale: Locale;
@@ -25,17 +28,32 @@ type LocaleContextValue = {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-function readCookieLocale(): Locale | null {
+function readPersistedLocale(): Locale | null {
   if (typeof document === "undefined") return null;
+  
+  // Try cookie first
   const match = document.cookie.match(
     new RegExp(`(?:^|; )${LOCALE_COOKIE}=([^;]*)`),
   );
-  const value = match?.[1];
-  return value === "en" || value === "tr" ? value : null;
+  const cookieValue = match?.[1];
+  if (cookieValue && ["en", "tr", "es", "fr", "de"].includes(cookieValue)) {
+    return cookieValue as Locale;
+  }
+
+  // Try localStorage
+  const localValue = localStorage.getItem(LOCALE_COOKIE);
+  if (localValue && ["en", "tr", "es", "fr", "de"].includes(localValue)) {
+    return localValue as Locale;
+  }
+
+  return null;
 }
 
 function persistLocale(locale: Locale) {
+  // Save to cookie
   document.cookie = `${LOCALE_COOKIE}=${locale};path=/;max-age=31536000;SameSite=Lax`;
+  // Save to localStorage for sync with MinMat
+  localStorage.setItem(LOCALE_COOKIE, locale);
   document.documentElement.lang = locale;
 }
 
@@ -52,7 +70,7 @@ export function LocaleProvider({
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const saved = readCookieLocale();
+    const saved = readPersistedLocale();
     if (saved) {
       setLocaleState(saved);
     }

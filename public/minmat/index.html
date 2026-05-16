@@ -635,10 +635,13 @@ button:hover{
 
     <h3>⚙️ Ayarlar</h3>
 
-    <div>
-      <strong>Dil</strong><br>
-      <button onclick="setLang('tr')">Türkçe</button>
-      <button onclick="setLang('en')">English</button>
+    <div style="margin-top:10px;">
+      <strong>Dil / Language</strong><br>
+      <button onclick="setLang('tr')">TR</button>
+      <button onclick="setLang('en')">EN</button>
+      <button onclick="setLang('es')">ES</button>
+      <button onclick="setLang('fr')">FR</button>
+      <button onclick="setLang('de')">DE</button>
     </div>
 
     <div style="margin-top:10px;">
@@ -668,9 +671,238 @@ window.onerror = function(msg, url, line){
   alert("HATA: " + msg + " | satır: " + line);
 };
 
-/* =====================
-   GLOBAL
-===================== */
+let currentLang = localStorage.getItem("wc2026-locale") || localStorage.getItem("minmat_lang") || "tr";
+const LOCALE_COOKIE = "wc2026-locale";
+
+const translations = {
+  tr: {
+    confirmPlayer: "Kullanıcıyı Onayla",
+    play: "🎮 Oyna",
+    settings: "⚙️ Ayarlar",
+    backHome: "🏠 Ana Sayfaya Dön",
+    menu: "🏠 Menü",
+    restart: "🔄 Yeniden",
+    level: "Seviye",
+    gameOver: "💀 Oyun Bitti",
+    player: "Oyuncu",
+    scoreLabel: "Skorun",
+    playAgain: "🔄 Tekrar Oyna",
+    settingsTitle: "⚙️ Ayarlar",
+    lang: "Dil",
+    category: "Kategori",
+    sound: "Ses",
+    close: "Kapat",
+    add: "Toplama",
+    sub: "Çıkarma",
+    mul: "Çarpma",
+    div: "Bölme",
+    mix: "Karışık",
+    unlock: "Yeni kategori açıldı!",
+    soundAlert: "Ses: ",
+    on: "Açık",
+    off: "Kapalı",
+    placeholder: "Adını gir...",
+    modeAlert: "Önce {prev} Level 3 olmalı!",
+    score: "Skor"
+  },
+  en: {
+    confirmPlayer: "Confirm User",
+    play: "🎮 Play",
+    settings: "⚙️ Settings",
+    backHome: "🏠 Back to Home",
+    menu: "🏠 Menu",
+    restart: "🔄 Restart",
+    level: "Level",
+    gameOver: "💀 Game Over",
+    player: "Player",
+    scoreLabel: "Your Score",
+    playAgain: "🔄 Play Again",
+    settingsTitle: "⚙️ Settings",
+    lang: "Language",
+    category: "Category",
+    sound: "Sound",
+    close: "Close",
+    add: "Addition",
+    sub: "Subtraction",
+    mul: "Multiplication",
+    div: "Division",
+    mix: "Mixed",
+    unlock: "New category unlocked!",
+    soundAlert: "Sound: ",
+    on: "On",
+    off: "Off",
+    placeholder: "Enter name...",
+    modeAlert: "First {prev} must be Level 3!",
+    score: "Score"
+  },
+  es: {
+    confirmPlayer: "Confirmar Usuario",
+    play: "🎮 Jugar",
+    settings: "⚙️ Ajustes",
+    backHome: "🏠 Ir al Inicio",
+    menu: "🏠 Menú",
+    restart: "🔄 Reiniciar",
+    level: "Nivel",
+    gameOver: "💀 Juego Terminado",
+    player: "Jugador",
+    scoreLabel: "Tu Puntuación",
+    playAgain: "🔄 Jugar de Nuevo",
+    settingsTitle: "⚙️ Ajustes",
+    lang: "Idioma",
+    category: "Categoría",
+    sound: "Sonido",
+    close: "Cerrar",
+    add: "Suma",
+    sub: "Resta",
+    mul: "Multiplicación",
+    div: "División",
+    mix: "Mezcla",
+    unlock: "¡Nueva categoría desbloqueada!",
+    soundAlert: "Sonido: ",
+    on: "Activado",
+    off: "Desactivado",
+    placeholder: "Ingresa nombre...",
+    modeAlert: "¡Primero {prev} debe ser Nivel 3!",
+    score: "Puntuación"
+  },
+  fr: {
+    confirmPlayer: "Confirmer l'utilisateur",
+    play: "🎮 Jouer",
+    settings: "⚙️ Paramètres",
+    backHome: "🏠 Retour à l'accueil",
+    menu: "🏠 Menu",
+    restart: "🔄 Recommencer",
+    level: "Niveau",
+    gameOver: "💀 Jeu Terminé",
+    player: "Joueur",
+    scoreLabel: "Votre Score",
+    playAgain: "🔄 Rejouer",
+    settingsTitle: "⚙️ Paramètres",
+    lang: "Langue",
+    category: "Catégorie",
+    sound: "Son",
+    close: "Fermer",
+    add: "Addition",
+    sub: "Soustraction",
+    mul: "Multiplication",
+    div: "Division",
+    mix: "Mélange",
+    unlock: "Nouvelle catégorie débloquée !",
+    soundAlert: "Son : ",
+    on: "Activé",
+    off: "Désactivé",
+    placeholder: "Entrez un nom...",
+    modeAlert: "D'abord {prev} doit être Niveau 3 !",
+    score: "Score"
+  },
+  de: {
+    confirmPlayer: "Benutzer bestätigen",
+    play: "🎮 Spielen",
+    settings: "⚙️ Einstellungen",
+    backHome: "🏠 Zur Startseite",
+    menu: "🏠 Menü",
+    restart: "🔄 Neustart",
+    level: "Level",
+    gameOver: "💀 Spiel vorbei",
+    player: "Spieler",
+    scoreLabel: "Dein Punktestand",
+    playAgain: "🔄 Erneut spielen",
+    settingsTitle: "⚙️ Einstellungen",
+    lang: "Sprache",
+    category: "Kategorie",
+    sound: "Ton",
+    close: "Schließen",
+    add: "Addition",
+    sub: "Subtraktion",
+    mul: "Multiplikation",
+    div: "Division",
+    mix: "Mischung",
+    unlock: "Neue Kategorie freigeschaltet!",
+    soundAlert: "Ton: ",
+    on: "An",
+    off: "Aus",
+    placeholder: "Namen eingeben...",
+    modeAlert: "Zuerst muss {prev} Level 3 sein!",
+    score: "Punkte"
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem("minmat_lang", lang);
+  localStorage.setItem(LOCALE_COOKIE, lang);
+  document.cookie = `${LOCALE_COOKIE}=${lang};path=/;max-age=31536000;SameSite=Lax`;
+  updateTranslations();
+}
+
+function updateTranslations() {
+  const t = translations[currentLang];
+  
+  // Lobby
+  const playerNameInput = document.getElementById("playerName");
+  if (playerNameInput) playerNameInput.placeholder = t.placeholder;
+  
+  const confirmBtn = document.querySelector("#lobbyScreen button:nth-of-type(1)");
+  if (confirmBtn) confirmBtn.innerText = t.confirmPlayer;
+  
+  const playBtn = document.querySelector("#lobbyScreen button:nth-of-type(2)");
+  if (playBtn) playBtn.innerText = t.play;
+  
+  const lobbySettingsBtn = document.querySelector("#lobbyScreen button:nth-of-type(3)");
+  if (lobbySettingsBtn) lobbySettingsBtn.innerText = t.settings;
+  
+  const backHomeBtn = document.querySelector("#lobbyScreen button:nth-of-type(4)");
+  if (backHomeBtn) backHomeBtn.innerText = t.backHome;
+
+  // Game Screen
+  const menuBtn = document.querySelector("#gameTop button:nth-of-type(1)");
+  if (menuBtn) menuBtn.innerText = t.menu;
+  
+  const restartBtn = document.querySelector("#gameTop button:nth-of-type(2)");
+  if (restartBtn) restartBtn.innerText = t.restart;
+
+  // Settings Panel
+  const settingsH3 = document.querySelector("#settingsPanel h3");
+  if (settingsH3) settingsH3.innerText = t.settingsTitle;
+  
+  const settingsDivs = document.querySelectorAll("#settingsPanel div strong");
+  if (settingsDivs[0]) settingsDivs[0].innerText = t.lang;
+  if (settingsDivs[1]) settingsDivs[1].innerText = t.category;
+  if (settingsDivs[2]) settingsDivs[2].innerText = t.sound;
+  
+  if (document.getElementById("btnAdd")) document.getElementById("btnAdd").innerText = t.add;
+  if (document.getElementById("btnSub")) document.getElementById("btnSub").innerText = t.sub;
+  if (document.getElementById("btnMul")) document.getElementById("btnMul").innerText = t.mul;
+  if (document.getElementById("btnDiv")) document.getElementById("btnDiv").innerText = t.div;
+  const mixBtn = document.querySelector("#settingsPanel button[onclick=\"setMode('mix')\"]");
+  if (mixBtn) mixBtn.innerText = t.mix;
+  
+  const soundBtn = document.querySelector("#settingsPanel button[onclick=\"toggleSound()\"]");
+  if (soundBtn) soundBtn.innerText = t.sound + ": " + (soundOn ? t.on : t.off);
+
+  const closeBtn = document.querySelector("#settingsPanel button[onclick=\"closeSettings()\"]");
+  if (closeBtn) closeBtn.innerText = t.close;
+
+  // Game Over Screen
+  const gameOverH1 = document.querySelector("#gameOverScreen h1");
+  if (gameOverH1) gameOverH1.innerText = t.gameOver;
+  
+  const finalNameP = document.querySelector("#gameOverScreen p:nth-of-type(1)");
+  if (finalNameP) finalNameP.innerHTML = t.player + ": <span id=\"finalName\">" + playerName + "</span>";
+  
+  const finalScoreP = document.querySelector("#gameOverScreen p:nth-of-type(2)");
+  if (finalScoreP) finalScoreP.innerHTML = t.scoreLabel + ": <span id=\"finalScore\">" + score + "</span>";
+  
+  const playAgainBtn = document.querySelector("#gameOverScreen button:nth-of-type(1)");
+  if (playAgainBtn) playAgainBtn.innerText = t.playAgain;
+  
+  const gameOverMenuBtn = document.querySelector("#gameOverScreen button:nth-of-type(2)");
+  if (gameOverMenuBtn) gameOverMenuBtn.innerText = t.menu;
+
+  updateModeText();
+  updateLevelUI();
+}
+
 let players = JSON.parse(localStorage.getItem("players")) || {};
 
 
@@ -1076,6 +1308,8 @@ function goGame(){
 window.onload = function(){
   let loading = document.getElementById("loadingScreen");
 
+  updateTranslations(); // Başlangıçta dili uygula
+
   if(loading){
     setTimeout(()=>{
       loading.style.display = "none";
@@ -1114,8 +1348,9 @@ function showScoreEffect(value){
 function showLevelPopup(){
 
   let el = document.getElementById("levelPopup");
+  const t = translations[currentLang];
 
-  el.innerText = "LEVEL " + level;
+  el.innerText = t.level.toUpperCase() + " " + level;
 
   el.classList.add("show");
 
@@ -1145,8 +1380,7 @@ function gameOver(){
   second = null;
   lock = true;
 
-  document.getElementById("finalName").innerText = playerName;
-  document.getElementById("finalScore").innerText = score;
+  updateTranslations(); // Puan ve ismi güncellemek için
 
   saveScore();           // 🔥 ÖNCE kaydet
 renderLeaderboard();   // 🔥 sonra tabloyu çiz
@@ -1202,7 +1436,9 @@ let soundOn = true;
 
 function toggleSound(){
   soundOn = !soundOn;
-  alert("Ses: " + (soundOn ? "Açık" : "Kapalı"));
+  const t = translations[currentLang];
+  alert(t.soundAlert + (soundOn ? t.on : t.off));
+  updateTranslations();
 }
 
 
@@ -1374,19 +1610,20 @@ function renderLeaderboard(){
 function setMode(mode){
 
   // 🔒 KİLİT KONTROL
+  const t = translations[currentLang];
 
   if(mode === "sub" && progress.add < 3){
-    alert("Önce Toplama Level 3 olmalı!");
+    alert(t.modeAlert.replace("{prev}", t.add));
     return;
   }
 
   if(mode === "mul" && progress.sub < 3){
-    alert("Önce Çıkarma Level 3 olmalı!");
+    alert(t.modeAlert.replace("{prev}", t.sub));
     return;
   }
 
   if(mode === "div" && progress.mul < 3){
-    alert("Önce Çarpma Level 3 olmalı!");
+    alert(t.modeAlert.replace("{prev}", t.mul));
     return;
   }
 
@@ -1397,19 +1634,7 @@ function setMode(mode){
 
   gameMode = mode;
 
-  const modeNames = {
-    add: "Toplama",
-    sub: "Çıkarma",
-    mul: "Çarpma",
-    div: "Bölme",
-    mix: "Karışık"
-  };
-
-  let text = document.getElementById("modeText");
-
-  if(text){
-    text.innerText = "Mod: " + modeNames[mode];
-  }
+  updateModeText();
 
   // 🔥 kategori değişince oyun sıfırlansın
   startGame();
@@ -1423,7 +1648,8 @@ function setMode(mode){
 function startGameWithName(){
 
   if(!playerName){
-    alert("Önce kullanıcı seç!");
+    const t = translations[currentLang];
+    alert(t.confirmPlayer + "!");
     return;
   }
 
@@ -1507,8 +1733,9 @@ function showUnlock(text){
 }
 function updateLevelUI(){
   let el = document.getElementById("levelText");
+  const t = translations[currentLang];
   if(el){
-    el.innerText = "Level: " + level;
+    el.innerText = t.level + ": " + level;
   }
 }
 function confirmPlayer(){
@@ -1550,17 +1777,18 @@ function confirmPlayer(){
 }
 
 function updateModeText(){
+  const t = translations[currentLang];
   const modeNames = {
-    add: "Toplama",
-    sub: "Çıkarma",
-    mul: "Çarpma",
-    div: "Bölme",
-    mix: "Karışık"
+    add: t.add,
+    sub: t.sub,
+    mul: t.mul,
+    div: t.div,
+    mix: t.mix
   };
 
   let text = document.getElementById("modeText");
   if(text){
-    text.innerText = "Mod: " + modeNames[gameMode];
+    text.innerText = (currentLang === "tr" ? "Mod: " : "Mode: ") + modeNames[gameMode];
   }
 }
 
@@ -1613,11 +1841,12 @@ function updateWrongBar(){
 }
 
 function modeName(m){
-  if(m === "add") return "Toplama";
-  if(m === "sub") return "Çıkarma";
-  if(m === "mul") return "Çarpma";
-  if(m === "div") return "Bölme";
-  if(m === "mix") return "Karışık";
+  const t = translations[currentLang];
+  if(m === "add") return t.add;
+  if(m === "sub") return t.sub;
+  if(m === "mul") return t.mul;
+  if(m === "div") return t.div;
+  if(m === "mix") return t.mix;
   return m;
 }
 </script>

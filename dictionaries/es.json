@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "title": "FIFA World Cup 2026 - Statmatik",
+    "description": "La guía definitiva de la Copa Mundial de la FIFA 2026 — 48 equipos, 12 grupos, tres países anfitriones. Cuenta atrás para el inicio el 11 de junio de 2026.",
+    "ogTitle": "Copa Mundial de la FIFA 2026 — El espectáculo más grande del mundo",
+    "ogDescription": "48 equipos. 12 grupos. 3 países anfitriones. La cuenta atrás para el 11 de junio de 2026 ha comenzado."
+  },
+  "nav": {
+    "home": "Inicio",
+    "teams": "Equipos",
+    "groups": "Grupos",
+    "venues": "Sedes",
+    "predictions": "Predicciones",
+    "signin": "Iniciar sesión",
+    "signout": "Cerrar sesión"
+  },
+  "hero": {
+    "badge": "Copa Mundial de la FIFA 2026",
+    "title": "El mundo",
+    "titleHighlight": "Se une",
+    "subtitle": "EE. UU. · Canadá · México — tres países, un torneo, se está haciendo historia.",
+    "ctaPrimary": "Explorar el torneo",
+    "ctaSecondary": "Hacer predicción",
+    "minMatPromo": "¡Refresca tu mente mientras esperas el partido! 🧠 Prueba nuestro juego de matemáticas y memoria MinMat.",
+    "cupMatPromo": "¿Es tu conocimiento futbolístico mejor que la IA? 🏆 ¡Haz tus predicciones de la Copa del Mundo con CupMat ahora!",
+    "comingSoon": "Próximamente ⌛",
+    "players": "Información de jugadores",
+    "countries": "Detalles del país",
+    "referees": "Estadísticas de árbitros",
+    "slogan": "El fútbol es matemática, la matemática lo es todo. ¡Resuelve la matemática del fútbol con statmatik.com!",
+    "cupMatDesc": "¡Todo sobre la Copa del Mundo con tecnología de IA!",
+    "minMatDesc": "¡Juego mental que facilitará el cálculo mental para ti y tus hijos!",
+    "playStart": "Ver la Copa",
+    "mindRefresh": "Refresca tu Mente"
+  },
+  "countdown": {
+    "label": "Tiempo hasta el inicio",
+    "days": "Días",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "seconds": "Segundos",
+    "targetDate": "11 de junio de 2026"
+  },
+  "overview": {
+    "sectionTitle": "Resumen del torneo",
+    "sectionSubtitle": "La Copa del Mundo más grande de la historia — formato ampliado, tres anfitriones, momentos inolvidables te esperan.",
+    "teams": {
+      "value": "48",
+      "label": "Equipos",
+      "description": "El plantel más grande en la historia de la Copa del Mundo"
+    },
+    "groups": {
+      "value": "12",
+      "label": "Grupos",
+      "description": "Eliminatorias de cuatro en cada grupo"
+    },
+    "hosts": {
+      "value": "3",
+      "label": "Países anfitriones",
+      "description": "EE. UU., Canadá y México juntos"
+    }
+  },
+  "hosts": {
+    "usa": "Estados Unidos",
+    "canada": "Canadá",
+    "mexico": "México"
+  },
+  "teams": {
+    "title": "Equipos participantes",
+    "subtitle": "48 países en los grupos A–L, ranking FIFA y detalles del plantel.",
+    "group": "Grupo",
+    "manager": "Entrenador",
+    "squad": "Plantilla",
+    "years": "años"
+  },
+  "groups": {
+    "title": "Grupos y posiciones",
+    "subtitle": "Las tablas se actualizan instantáneamente por puntos, diferencia de goles y goles anotados a medida que se ingresan los resultados.",
+    "group": "Grupo",
+    "team": "Equipo",
+    "enterResults": "Ingresar resultados",
+    "resultsHint": "Actualiza los marcadores — las posiciones en los 12 grupos se recalculan al instante."
+  },
+  "venues": {
+    "title": "Estadios anfitriones",
+    "subtitle": "16 estadios oficiales en América del Norte — capacidad, ubicación y calendario de partidos.",
+    "capacity": "asientos",
+    "matches": "partidos"
+  },
+  "predictions": {
+    "title": "Predicciones y tabla de clasificación",
+    "subtitle": "Envía los marcadores de grupo paso a paso, desbloquea el cuadro de dieciseisavos y compite en el ranking global.",
+    "aiToggle": "Predicción de IA (GPT-5.4)",
+    "yourPoints": "Tus puntos",
+    "groupStep": "Grupo",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "displayName": "Nombre de usuario",
+    "applyScores": "Aplicar predicciones a las posiciones",
+    "submitLeaderboard": "Enviar a la tabla de clasificación",
+    "knockoutTitle": "Cuadro de dieciseisavos de final",
+    "knockoutLocked": "Completa todas las predicciones de grupo y aplica los marcadores — el cuadro de eliminatorias se desbloqueará.",
+    "leaderboard": "Tabla de clasificación",
+    "loading": "Cargando…",
+    "tbd": "Por determinar",
+    "simulateLive": "Simular noticias en vivo",
+    "liveUpdate": "Actualización de noticias en vivo",
+    "winProb": "Probabilidad de ganar",
+    "confidence": "Confianza de la IA",
+    "reset": "Limpiar predicciones",
+    "champion": "CAMPEÓN",
+    "completed": "¡COPA MUNDIAL 2026 COMPLETADA!",
+    "et": "TIEMPO EXTRA",
+    "penalties": "PENALTIS",
+    "aiRoundPredict": "Predecir con IA",
+    "played": "(JUGADO)",
+    "userLabel": "USUARIO",
+    "aiLabel": "PREDICCIÓN IA"
+  },
+  "footer": {
+    "tagline": "Copa Mundial de la FIFA 2026 — Por amor al juego.",
+    "rights": "Todos los derechos reservados. No afiliado con la FIFA."
+  },
+  "language": {
+    "toggle": "Idioma",
+    "en": "English",
+    "tr": "Türkçe",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  }
+}
