@@ -301,7 +301,7 @@ const seeds: TeamSeed[] = [
     players: [
       { name: "Hakan Çalhanoğlu", position: "MF", club: "Inter Milan", age: 32 },
       { name: "Arda Güler", position: "MF", club: "Real Madrid", age: 20 },
-      { name: "Orkun Kökçü", position: "MF", club: "Benfica", age: 24 },
+      { name: "Orkun Kökçü", position: "MF", club: "Besiktas", age: 24 },
       { name: "Kerem Aktürkoğlu", position: "FW", club: "Galatasaray", age: 26 },
       { name: "Merih Demiral", position: "DF", club: "Al Ahli", age: 27 },
       { name: "Uğurcan Çakır", position: "GK", club: "Trabzonspor", age: 29 },
