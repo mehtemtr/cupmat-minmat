@@ -1,4 +1,5 @@
 import type { GroupId, Team } from "@/lib/types/tournament";
+import { Locale } from "@/lib/i18n/types";
 import { getDrawOrder } from "@/data/official-groups";
 import { validateTeamsData } from "@/data/validate-teams";
 
@@ -971,8 +972,9 @@ export function getTeamsByGroup(group: GroupId): Team[] {
   );
 }
 
-export function getTeamName(team: Team, locale: "en" | "tr"): string {
-  return locale === "tr" ? team.nameTr : team.nameEn;
+export function getTeamName(team: Team, locale: Locale): string {
+  if (locale === "tr") return team.nameTr;
+  return team.nameEn;
 }
 
 /** Bump when official draw changes — clears stale browser tournament cache */
