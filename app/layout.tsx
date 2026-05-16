@@ -8,6 +8,7 @@ import { DynamicMeta } from "@/components/DynamicMeta";
 import { ClerkProvider } from "@clerk/nextjs";
 import { defaultLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n/types";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -97,6 +98,9 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
         >
           <Providers initialLocale={locale}>
+            {process.env.NEXT_PUBLIC_GA_ID && (
+              <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+            )}
             <DynamicMeta />
             <Header />
             <main>{children}</main>
