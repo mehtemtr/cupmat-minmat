@@ -849,6 +849,14 @@
       filter: brightness(1.1);
     }
 
+    .menuLeaderboardBtn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
     .menuHomeBtn {
       width: 100%;
       padding: 12px;
@@ -984,7 +992,7 @@
       <p class="menuSub" id="menuSub">Sayı Avı</p>
       <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
       <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
-      <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu">🏆 Puan Tablosu</button>
+      <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
       <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
     </div>
   </div>
@@ -1426,7 +1434,28 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", applyLang);
+    document.addEventListener("DOMContentLoaded", () => {
+      applyLang();
+      let input = document.getElementById("playerInput");
+      if (input) {
+        let lastName = localStorage.getItem("minmat_last_name") || "";
+        input.value = lastName;
+        input.addEventListener("input", checkInput);
+        checkInput();
+      }
+    });
+
+    function checkInput() {
+      let input = document.getElementById("playerInput");
+      let btnLeaderboard = document.getElementById("btnLeaderboardMenu");
+      if (!input || !btnLeaderboard) return;
+      let val = input.value.trim();
+      if (val.length >= 3) {
+        btnLeaderboard.disabled = false;
+      } else {
+        btnLeaderboard.disabled = true;
+      }
+    }
 
     function backToMenu() {
       clearInterval(timer);
@@ -1541,6 +1570,7 @@
         alert(t("nameErr"));
         return;
       }
+      localStorage.setItem("minmat_last_name", playerName);
       isGameOver = false;
       isGameOverSaved = false;
       score = 0;
