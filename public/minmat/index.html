@@ -1,1846 +1,1965 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MinMat – Sayı Avı</title>
-
-<!-- Google Analytics (GA4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-GMHYYVM3BK');
-</script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-<style>
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
-html,body{
-  margin:0;
-  height:100%;
-  font-family:'Inter',sans-serif;
-  background:#04080e;
-  color:white;
-}
-
-.screen{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100vh;
-
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-}
-
-.active{
-  display:flex;
-}
-
-#grid{
-  display:grid;
-  gap:10px;
-  margin-top:20px;
-}
-
-.card{
-  width:100%;
-  aspect-ratio:1;
-  perspective:800px;
-  cursor:pointer;
-  touch-action: manipulation;
-    user-select:none;
-}
-
-.inner{
-  width:100%;
-  height:100%;
-  position:relative;
-  transform-style:preserve-3d;
-  transition: transform 0.5s;
-}
-
-.card.open .inner{
-  transform: rotateY(180deg);
-}
-
-.front, .back{
-  position:absolute;
-  width:100%;
-  height:100%;
-  border-radius:10px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  backface-visibility:hidden;
-  font-weight:bold;
-  font-size:18px;
-}
-
-/* 🔥 KAPALI HAL (ikon) */
-.front{
-  background:#334155 url("icon.png") center/60% no-repeat;
-}
-
-/* 🔥 AÇILINCA */
-.back{
-  background:#22c55e;
-  color:white;
-  transform: rotateY(180deg);
-}
-
-button{
-  background:#1e293b;
-  color:white;
-  border:none;
-  border-radius:8px;
-  padding:8px 12px;
-  cursor:pointer;
-  font-size:16px;
-  font-family:'Inter',sans-serif;
-  transition:all 0.2s;
-}
-button:hover{
-  background:#334155;
-  transform:translateY(-1px);
-}
-#modeBox button{
-  width:45px;
-  height:45px;
-  font-size:20px;
-}
-#topBar{
-  display:flex;
-  flex-direction:column;
-
-  gap:8px;
-
-  width:100%;
-}
-.topRow{
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  gap:20px;
-
-  width:100%;
-}
-#gameOverScreen{
-  background:#04080e;
-  overflow-y:auto;
-  padding:20px 10px;
-}
-
-#effects{
-  position:fixed;
-  top:50%;
-  left:50%;
-  pointer-events:none;
-}
-
-.effectText{
-  position:absolute;
-  color:#facc15;
-  font-size:24px;
-  font-weight:bold;
-  transform:translate(-50%,-50%);
-  animation:fly 1s ease forwards;
-}
-
-@keyframes fly{
-  0%{opacity:1; transform:translate(-50%,-50%);}
-  100%{opacity:0; transform:translate(-50%,-120px);}
-}
-
-.card{
-  width:70px;
-  height:70px;
-  background:#334155;
-  border-radius:10px;
-  cursor:pointer;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-weight:bold;
-  font-size:18px;
-
-  background-image:url("icon.png"); /* 🔥 EKLE */
-  background-size:60%;
-  background-repeat:no-repeat;
-  background-position:center;
-
-  color:transparent; /* 🔥 yazı gizli */
-}
-
-.card.open{
-  background:#22c55e;
-  color:white; /* 🔥 açılınca görünür */
-  background-image:none; /* 🔥 ikon gider */
-}
-
-.effect{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  color:yellow;
-  font-size:30px;
-  font-weight:bold;
-  pointer-events:none;
-  animation: pop 0.8s ease;
-}
-
-@keyframes pop{
-  0%{transform:translate(-50%,-50%) scale(0.5); opacity:0;}
-  50%{transform:translate(-50%,-60%) scale(1.2); opacity:1;}
-  100%{transform:translate(-50%,-80%) scale(1); opacity:0;}
-}
-.heartPop{
-  animation: heartPop 0.8s ease;
-}
-
-@keyframes heartPop{
-  0%{transform:scale(1);}
-  40%{transform:scale(1.4);}
-  70%{transform:scale(1.2);}
-  100%{transform:scale(1);}
-}
-
-.timeWarning{
-  animation: blink 0.6s infinite;
-  color: red !important;
-}
-
-@keyframes blink{
-  0%{opacity:1;}
-  50%{opacity:0.3;}
-  100%{opacity:1;}
-}
-
-.scoreRow{
-  display:grid;
-  grid-template-columns:40px 80px 70px 80px 60px 80px;
-  gap:5px;
-
-  align-items:center;
-
-  padding:8px;
-  margin:4px 0;
-
-  border-radius:10px;
-  background:rgba(255,255,255,0.08);
-
-  font-size:13px;
-}
-
-.scoreHead{
-  font-weight:bold;
-  color:#facc15;
-}
-.screen.active{
-  display:flex;
-}
-
-.firstPlace{
-  background:linear-gradient(90deg,#facc15,#ca8a04);
-  color:black;
-  font-weight:bold;
-  transform:scale(1.03);
-}
-
-.secondPlace{
-  background:linear-gradient(90deg,#a855f7,#6d28d9);
-  font-weight:bold;
-}
-
-.thirdPlace{
-  background:linear-gradient(90deg,#f97316,#ea580c);
-  font-weight:bold;
-}
-
-.retryBtn{
-  width:100%;
-  max-width:480px;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  color:white;
-  font-size:17px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:10px;
-  transition:all 0.25s;
-  font-family:'Inter',sans-serif;
-  letter-spacing:0.5px;
-}
-.retryBtn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 25px rgba(34,197,94,0.35);
-  filter:brightness(1.1);
-}
-
-#playerInput{
-  margin-bottom:18px;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:12px;
-  padding:12px 16px;
-  color:white;
-  font-size:16px;
-  font-family:'Inter',sans-serif;
-  outline:none;
-  width:280px;
-  transition:border 0.3s;
-}
-#playerInput:focus{
-  border-color:#22c55e;
-  box-shadow:0 0 15px rgba(34,197,94,0.15);
-}
-#playerInput::placeholder{
-  color:rgba(255,255,255,0.35);
-}
-
-#playerBar{
-  display:flex;
-  gap:14px;
-
-  margin-bottom:12px;
-
-  font-size:18px;
-  font-weight:bold;
-}
-
-#playerBar span{
-  background:rgba(255,255,255,0.08);
-
-  padding:8px 14px;
-
-  border-radius:12px;
-}
-
-#levelEffect{
-  position:fixed;
-
-  top:50%;
-  left:50%;
-
-  transform:translate(-50%,-50%);
-
-  font-size:48px;
-  font-weight:bold;
-
-  color:#facc15;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  text-shadow:0 0 20px #facc15;
-
-  z-index:9999;
-}
-
-.levelAnim{
-  animation:levelPop 1s ease;
-}
-
-@keyframes levelPop{
-
-  0%{
-    opacity:0;
-    transform:translate(-50%,-50%) scale(0.5);
-  }
-
-  30%{
-    opacity:1;
-    transform:translate(-50%,-50%) scale(1.2);
-  }
-
-  100%{
-    opacity:0;
-    transform:translate(-50%,-50%) scale(1);
-  }
-}
-#pauseBtn{
-  border:none;
-
-  background:rgba(255,255,255,0.08);
-
-  color:white;
-
-  font-size:20px;
-
-  border-radius:10px;
-
-  padding:6px 10px;
-
-  cursor:pointer;
-}
-
-/* Sağ üst köşedeki şık minimal responsive butonlar */
-.topRightNav {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  display: flex;
-  gap: 10px;
-  z-index: 10000;
-}
-.topRightBtn {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  padding: 0;
-}
-.topRightBtn:hover {
-  transform: translateY(-2px) scale(1.05);
-  border-color: #22c55e;
-  box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
-  background: rgba(34, 197, 94, 0.15);
-}
-
-/* Şık Pop-up (Modal) Tasarımı */
-.modal-backdrop {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(4, 8, 14, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 11000;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.modal-backdrop.active {
-  display: flex;
-  opacity: 1;
-}
-.modal-container {
-  background: linear-gradient(145deg, #0f172a, #04080e);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  width: 90%;
-  max-width: 580px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.1);
-  position: relative;
-  transform: scale(0.9);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  font-family: 'Inter', sans-serif;
-  box-sizing: border-box;
-}
-.modal-backdrop.active .modal-container {
-  transform: scale(1);
-}
-.modal-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 15px;
-}
-.modal-logo {
-  width: 42px;
-  height: 42px;
-  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5));
-}
-.modal-title {
-  font-size: 22px;
-  font-weight: 900;
-  background: linear-gradient(135deg, #38bdf8, #22c55e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
-  letter-spacing: 0.5px;
-}
-.modal-body {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #cbd5e1;
-}
-.modal-section-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: #38bdf8;
-  margin-top: 25px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.modal-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-}
-.modal-list li {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-.modal-list li::before {
-  content: "•";
-  color: #22c55e;
-  font-weight: bold;
-}
-/* Özel Anma Köşesi Kartı */
-.memorial-card {
-  background: linear-gradient(135deg, rgba(234, 179, 8, 0.07), rgba(234, 179, 8, 0.02));
-  border: 1px dashed rgba(234, 179, 8, 0.4);
-  border-radius: 16px;
-  padding: 20px;
-  margin: 20px 0;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(234, 179, 8, 0.05);
-}
-.memorial-title {
-  font-size: 14px;
-  font-weight: 800;
-  color: #facc15;
-  letter-spacing: 1.5px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.memorial-names {
-  font-size: 15px;
-  font-weight: 700;
-  color: #fef08a;
-  line-height: 1.8;
-  text-shadow: 0 0 8px rgba(254, 240, 138, 0.2);
-}
-.memorial-footer {
-  font-size: 12px;
-  font-style: italic;
-  color: #a1a1aa;
-  margin-top: 10px;
-}
-.modal-footer-btn-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 25px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 15px;
-}
-.modal-close-btn {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 24px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.25s;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-  font-family: 'Inter', sans-serif;
-}
-.modal-close-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
-  filter: brightness(1.1);
-}
-#gameTitle{
-  text-align:center;
-
-  margin-bottom:10px;
-}
-
-#gameTitle h2{
-  margin:0;
-
-  font-size:28px;
-
-  color:gold;
-}
-
-#gameTitle p{
-  margin:0;
-  font-size:14px;
-  opacity:0.8;
-}
-
-.modeLocked{
-  opacity:0.35;
-  cursor:not-allowed !important;
-  position:relative;
-}
-.modeLocked::after{
-  content:'🔒';
-  position:absolute;
-  top:-6px;
-  right:-6px;
-  font-size:12px;
-}
-.modeActive{
-  background:linear-gradient(135deg,#22c55e,#16a34a) !important;
-  box-shadow:0 0 10px rgba(34,197,94,0.4);
-}
-#modeBox{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:6px;
-}
-
-/* === CUPMAT STYLE MENU === */
-#menuScreen{
-  background:#04080e;
-  position:relative;
-  overflow:hidden;
-}
-#menuScreen::before{
-  content:'';
-  position:absolute;
-  top:-50%;right:-30%;
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(34,197,94,0.08),transparent 70%);
-  pointer-events:none;
-}
-#menuScreen::after{
-  content:'';
-  position:absolute;
-  bottom:-40%;left:-20%;
-  width:500px;height:500px;
-  background:radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%);
-  pointer-events:none;
-}
-.menuCard{
-  position:relative;
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:24px;
-  background:#060b14;
-  padding:40px 32px 32px;
-  text-align:center;
-  width:340px;
-  max-width:90vw;
-  transition:transform 0.3s;
-}
-.menuCard:hover{
-  transform:translateY(-4px);
-}
-.menuCard::before{
-  content:'';
-  position:absolute;
-  inset:-1px;
-  border-radius:24px;
-  background:linear-gradient(135deg,rgba(34,197,94,0.25),rgba(59,130,246,0.15));
-  opacity:0.3;
-  z-index:-1;
-  filter:blur(12px);
-  transition:opacity 0.4s;
-}
-.menuCard:hover::before{
-  opacity:0.6;
-}
-.menuLogo{
-  width:80px;height:80px;
-  margin:0 auto 16px;
-  border-radius:20px;
-  background:rgba(34,197,94,0.1);
-  border:1px solid rgba(34,197,94,0.2);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 30px rgba(34,197,94,0.1);
-  animation:float 4s ease-in-out infinite;
-}
-.menuLogo img{
-  width:50px;height:50px;
-  object-fit:contain;
-}
-.menuTitle{
-  font-size:36px;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:-1px;
-  margin:0 0 6px;
-  background:linear-gradient(135deg,#fff,#94a3b8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.menuSub{
-  color:#94a3b8;
-  font-size:15px;
-  margin:0 0 24px;
-}
-.menuStartBtn{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  color:white;
-  font-size:17px;
-  font-weight:700;
-  cursor:pointer;
-  transition:all 0.25s;
-  font-family:'Inter',sans-serif;
-  letter-spacing:0.5px;
-}
-.menuStartBtn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 25px rgba(34,197,94,0.35);
-  filter:brightness(1.1);
-}
-.menuHomeBtn{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:14px;
-  background:transparent;
-  color:#94a3b8;
-  font-size:14px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all 0.25s;
-  font-family:'Inter',sans-serif;
-}
-.menuHomeBtn:hover{
-  border-color:rgba(99,102,241,0.4);
-  background:rgba(99,102,241,0.08);
-  color:white;
-}
-
-/* === LANG TOGGLE === */
-.langToggle{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(6,11,20,0.8);
-  backdrop-filter:blur(12px);
-  padding:6px 14px;
-  cursor:pointer;
-  font-size:13px;
-  font-weight:700;
-  color:#94a3b8;
-  transition:all 0.25s;
-}
-.langToggle:hover{
-  border-color:rgba(34,197,94,0.4);
-  background:rgba(34,197,94,0.08);
-  color:white;
-}
-.langToggle .langIcon{
-  font-size:15px;
-}
-
-/* === NAV BAR (game & gameover) === */
-.screenNav{
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-.navBtn{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:8px 14px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.05);
-  color:#94a3b8;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all 0.25s;
-  font-family:'Inter',sans-serif;
-}
-.navBtn:hover{
-  border-color:rgba(34,197,94,0.4);
-  background:rgba(34,197,94,0.08);
-  color:white;
-  transform:translateY(-1px);
-}
-.menuLangRow{
-  display:flex;
-  gap:6px;
-  justify-content:center;
-  margin-bottom:20px;
-}
-.menuLangBtn{
-  width:38px;height:38px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.04);
-  font-size:20px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:all 0.2s;
-  padding:0;
-}
-.menuLangBtn:hover,.menuLangBtn.activeLang{
-  border-color:rgba(34,197,94,0.5);
-  background:rgba(34,197,94,0.12);
-  transform:scale(1.08);
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MinMat – Sayı Avı</title>
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-GMHYYVM3BK');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-8px)
+      }
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: #04080e;
+      color: white;
+    }
+
+    .screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    #grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .card {
+      width: 100%;
+      aspect-ratio: 1;
+      perspective: 800px;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+    }
+
+    .inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+
+    .card.open .inner {
+      transform: rotateY(180deg);
+    }
+
+    .front,
+    .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      backface-visibility: hidden;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    /* 🔥 KAPALI HAL (ikon) */
+    .front {
+      background: #334155 url("icon.png") center/60% no-repeat;
+    }
+
+    /* 🔥 AÇILINCA */
+    .back {
+      background: #22c55e;
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    button {
+      background: #1e293b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #334155;
+      transform: translateY(-1px);
+    }
+
+    #modeBox button {
+      width: 45px;
+      height: 45px;
+      font-size: 20px;
+    }
+
+    #topBar {
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+
+      width: 100%;
+    }
+
+    .topRow {
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 20px;
+
+      width: 100%;
+    }
+
+    #gameOverScreen {
+      background: #04080e;
+      overflow-y: auto;
+      padding: 20px 10px;
+    }
+
+    #effects {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      pointer-events: none;
+    }
+
+    .effectText {
+      position: absolute;
+      color: #facc15;
+      font-size: 24px;
+      font-weight: bold;
+      transform: translate(-50%, -50%);
+      animation: fly 1s ease forwards;
+    }
+
+    @keyframes fly {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -120px);
+      }
+    }
+
+    .card {
+      width: 70px;
+      height: 70px;
+      background: #334155;
+      border-radius: 10px;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: bold;
+      font-size: 18px;
+
+      background-image: url("icon.png");
+      /* 🔥 EKLE */
+      background-size: 60%;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      color: transparent;
+      /* 🔥 yazı gizli */
+    }
+
+    .card.open {
+      background: #22c55e;
+      color: white;
+      /* 🔥 açılınca görünür */
+      background-image: none;
+      /* 🔥 ikon gider */
+    }
+
+    .effect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: yellow;
+      font-size: 30px;
+      font-weight: bold;
+      pointer-events: none;
+      animation: pop 0.8s ease;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(-50%, -60%) scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(-50%, -80%) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .heartPop {
+      animation: heartPop 0.8s ease;
+    }
+
+    @keyframes heartPop {
+      0% {
+        transform: scale(1);
+      }
+
+      40% {
+        transform: scale(1.4);
+      }
+
+      70% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .timeWarning {
+      animation: blink 0.6s infinite;
+      color: red !important;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .scoreRow {
+      display: grid;
+      grid-template-columns: 40px 80px 70px 80px 60px 80px;
+      gap: 5px;
+
+      align-items: center;
+
+      padding: 8px;
+      margin: 4px 0;
+
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+
+      font-size: 13px;
+    }
+
+    .scoreHead {
+      font-weight: bold;
+      color: #facc15;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .firstPlace {
+      background: linear-gradient(90deg, #facc15, #ca8a04);
+      color: black;
+      font-weight: bold;
+      transform: scale(1.03);
+    }
+
+    .secondPlace {
+      background: linear-gradient(90deg, #a855f7, #6d28d9);
+      font-weight: bold;
+    }
+
+    .thirdPlace {
+      background: linear-gradient(90deg, #f97316, #ea580c);
+      font-weight: bold;
+    }
+
+    .retryBtn {
+      width: 100%;
+      max-width: 480px;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .retryBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.35);
+      filter: brightness(1.1);
+    }
+
+    #playerInput {
+      margin-bottom: 18px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: white;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      width: 280px;
+      transition: border 0.3s;
+    }
+
+    #playerInput:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
+    }
+
+    #playerInput::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    #playerBar {
+      display: flex;
+      gap: 14px;
+
+      margin-bottom: 12px;
+
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #playerBar span {
+      background: rgba(255, 255, 255, 0.08);
+
+      padding: 8px 14px;
+
+      border-radius: 12px;
+    }
+
+    #levelEffect {
+      position: fixed;
+
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      font-size: 48px;
+      font-weight: bold;
+
+      color: #facc15;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      text-shadow: 0 0 20px #facc15;
+
+      z-index: 9999;
+    }
+
+    .levelAnim {
+      animation: levelPop 1s ease;
+    }
+
+    @keyframes levelPop {
+
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+
+      30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    #pauseBtn {
+      border: none;
+
+      background: rgba(255, 255, 255, 0.08);
+
+      color: white;
+
+      font-size: 20px;
+
+      border-radius: 10px;
+
+      padding: 6px 10px;
+
+      cursor: pointer;
+    }
+
+    /* Sağ üst köşedeki şık minimal responsive butonlar */
+    .topRightNav {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 10px;
+      z-index: 10000;
+    }
+
+    .topRightBtn {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 0;
+    }
+
+    .topRightBtn:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: #22c55e;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    /* Şık Pop-up (Modal) Tasarımı */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(4, 8, 14, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 11000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-container {
+      background: linear-gradient(145deg, #0f172a, #04080e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      width: 90%;
+      max-width: 650px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.1);
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+    }
+
+    .modal-backdrop.active .modal-container {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
+    }
+
+    .modal-logo {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5));
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #38bdf8, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-body {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    .modal-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .modal-list li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .modal-list li::before {
+      content: "•";
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    /* Özel Anma Köşesi Kartı */
+    .memorial-card {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.07), rgba(234, 179, 8, 0.02));
+      border: 1px dashed rgba(234, 179, 8, 0.4);
+      border-radius: 16px;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(234, 179, 8, 0.05);
+    }
+
+    .memorial-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #facc15;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .memorial-names {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fef08a;
+      line-height: 1.7;
+      text-shadow: 0 0 8px rgba(254, 240, 138, 0.2);
+    }
+
+    .memorial-footer {
+      font-size: 11px;
+      font-style: italic;
+      color: #a1a1aa;
+      margin-top: 8px;
+    }
+
+    .modal-footer-btn-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+    }
+
+    .modal-close-btn {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .modal-close-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+      filter: brightness(1.1);
+    }
+
+    #gameTitle {
+      text-align: center;
+
+      margin-bottom: 10px;
+    }
+
+    #gameTitle h2 {
+      margin: 0;
+
+      font-size: 28px;
+
+      color: gold;
+    }
+
+    #gameTitle p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .modeLocked {
+      opacity: 0.35;
+      cursor: not-allowed !important;
+      position: relative;
+    }
+
+    .modeLocked::after {
+      content: '🔒';
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      font-size: 12px;
+    }
+
+    .modeActive {
+      background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+
+    #modeBox {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    /* === CUPMAT STYLE MENU === */
+    #menuScreen {
+      background: #04080e;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #menuScreen::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    #menuScreen::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .menuCard {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      background: #060b14;
+      padding: 40px 32px 32px;
+      text-align: center;
+      width: 340px;
+      max-width: 90vw;
+      transition: transform 0.3s;
+    }
+
+    .menuCard:hover {
+      transform: translateY(-4px);
+    }
+
+    .menuCard::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(59, 130, 246, 0.15));
+      opacity: 0.3;
+      z-index: -1;
+      filter: blur(12px);
+      transition: opacity 0.4s;
+    }
+
+    .menuCard:hover::before {
+      opacity: 0.6;
+    }
+
+    .menuLogo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      border-radius: 20px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.1);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .menuLogo img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .menuTitle {
+      font-size: 36px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      margin: 0 0 6px;
+      background: linear-gradient(135deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .menuSub {
+      color: #94a3b8;
+      font-size: 15px;
+      margin: 0 0 24px;
+    }
+
+    .menuStartBtn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .menuStartBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.35);
+      filter: brightness(1.1);
+    }
+
+    .menuHomeBtn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .menuHomeBtn:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(99, 102, 241, 0.08);
+      color: white;
+    }
+
+    /* === LANG TOGGLE === */
+    .langToggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(6, 11, 20, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+      transition: all 0.25s;
+    }
+
+    .langToggle:hover {
+      border-color: rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.08);
+      color: white;
+    }
+
+    .langToggle .langIcon {
+      font-size: 15px;
+    }
+
+    /* === NAV BAR (game & gameover) === */
+    .screenNav {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .navBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .navBtn:hover {
+      border-color: rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.08);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .menuLangRow {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .menuLangBtn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 0;
+    }
+
+    .menuLangBtn:hover,
+    .menuLangBtn.activeLang {
+      border-color: rgba(34, 197, 94, 0.5);
+      background: rgba(34, 197, 94, 0.12);
+      transform: scale(1.08);
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="topRightNav">
-  <button class="topRightBtn" onclick="openAbout()" title="Hakkında">ℹ️</button>
-  <button class="topRightBtn" onclick="openHelp()" title="Yardım">❓</button>
-</div>
+  <div class="topRightNav">
+    <button class="topRightBtn" onclick="openAbout()" title="Hakkında">ℹ️</button>
+    <button class="topRightBtn" onclick="openHelp()" title="Yardım">❓</button>
+  </div>
 
-<!-- MENU -->
-<div id="menuScreen" class="screen active">
-  <div class="menuCard">
-    <div class="menuLangRow" id="menuLangRow">
-      <button class="menuLangBtn" onclick="setLang('tr')">🇹🇷</button>
-      <button class="menuLangBtn" onclick="setLang('en')">🇬🇧</button>
-      <button class="menuLangBtn" onclick="setLang('de')">🇩🇪</button>
-      <button class="menuLangBtn" onclick="setLang('fr')">🇫🇷</button>
-      <button class="menuLangBtn" onclick="setLang('es')">🇪🇸</button>
+  <!-- MENU -->
+  <div id="menuScreen" class="screen active">
+    <div class="menuCard">
+      <div class="menuLangRow" id="menuLangRow">
+        <button class="menuLangBtn" onclick="setLang('tr')">🇹🇷</button>
+        <button class="menuLangBtn" onclick="setLang('en')">🇬🇧</button>
+        <button class="menuLangBtn" onclick="setLang('de')">🇩🇪</button>
+        <button class="menuLangBtn" onclick="setLang('fr')">🇫🇷</button>
+        <button class="menuLangBtn" onclick="setLang('es')">🇪🇸</button>
+      </div>
+      <div class="menuLogo">
+        <img src="icon.png" alt="MinMat">
+      </div>
+      <h1 class="menuTitle">MinMat</h1>
+      <p class="menuSub" id="menuSub">Sayı Avı</p>
+      <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
+      <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
+      <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
     </div>
-    <div class="menuLogo">
-      <img src="icon.png" alt="MinMat">
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen" class="screen">
+    <div id="gameTitle">
+
+      <h2>MinMat</h2>
+
+      <p id="gameSubtitle">Sayı Avı</p>
+
     </div>
-    <h1 class="menuTitle">MinMat</h1>
-    <p class="menuSub" id="menuSub">Sayı Avı</p>
-    <input
-      id="playerInput"
-      type="text"
-      maxlength="20"
-      placeholder="İsmini yaz..."
-    >
-    <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
-    <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
-  </div>
-</div>
+    <div id="playerBar">
 
-<!-- GAME -->
-<div id="gameScreen" class="screen">
-<div id="gameTitle">
+      <span id="playerText">👤 Oyuncu</span>
 
-  <h2>MinMat</h2>
+      <span id="modeText">🎯 Topla</span>
 
-  <p id="gameSubtitle">Sayı Avı</p>
-
-</div>
-<div id="playerBar">
-
-  <span id="playerText">👤 Oyuncu</span>
-
-  <span id="modeText">🎯 Topla</span>
-
-</div>
-<div id="topBar">
-
-  <div class="topRow">
-
-    <span id="score">⭐ 0</span>
-
-    <span id="time">⏱️ 30</span>
-
-    <span id="levelLabel">Tur 1</span>
-
-    <button id="pauseBtn"
-      onclick="togglePause()">
-      ⏸️
-    </button>
-
-  </div>
-
-  <div class="topRow">
-
-    <span id="lives">❤️❤️❤️</span>
-
-    <span id="wrongBar">⚠️ 0/3</span>
-
-    <span id="combo">🔥 0</span>
-
-  </div>
-
-</div>
-
-<div id="modeBox">
-  <button id="modeBtn_add" onclick="setMode('add')">➕</button>
-  <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
-  <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
-  <button id="modeBtn_div" onclick="setMode('div')">/</button>
-  <button id="modeBtn_mix" onclick="setMode('mix')">🎲</button>
-</div>
-
-<div class="screenNav">
-  <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText">Menü</span></button>
-  <button class="navBtn langToggle" onclick="cycleLang()">
-    <span class="langIcon">🌐</span>
-    <span id="gameLangLabel">TR</span>
-  </button>
-</div>
-
-<div id="grid"></div>
-</div>
-<div id="levelEffect"></div>
-<!-- GAME OVER -->
-<div id="gameOverScreen" class="screen">
-
-  <h1 id="gameOverTitle">Oyun Bitti</h1>
-
-  <p><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
-
-  <div id="scoreFilters">
-
-    <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">
-      Hepsi
-    </button>
-
-    <button onclick="setLeaderboardFilter('add')">
-      ➕
-    </button>
-
-    <button onclick="setLeaderboardFilter('sub')">
-      ➖
-    </button>
-
-    <button onclick="setLeaderboardFilter('mul')">
-      ✖️
-    </button>
-
-    <button onclick="setLeaderboardFilter('div')">
-      /
-    </button>
-
-    <button onclick="setLeaderboardFilter('mix')">
-      🎲
-    </button>
-
-  </div>
-
-  <div id="leaderboard"></div>
-
-  <button class="retryBtn" onclick="startGame()" id="btnRetry">
-    🔄 Bir Daha
-  </button>
-
-  <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
-    <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText2">Menü</span></button>
-    <button class="navBtn langToggle" onclick="cycleLang()">
-      <span class="langIcon">🌐</span>
-      <span id="goLangLabel">TR</span>
-    </button>
-  </div>
-
-</div>
-<div id="effects"></div>
-
-<!-- HAKKINDA MODAL -->
-<div id="aboutModal" class="modal-backdrop" onclick="closeModal('aboutModal')">
-  <div class="modal-container" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <img src="icon.png" class="modal-logo" alt="MahT Logo">
-      <h2 class="modal-title">MahT Oyun Atölyesi</h2>
     </div>
-    <div class="modal-body">
-      <p>Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.</p>
-      
-      <div class="modal-section-title">🚀 Yapımcı Stüdyo</div>
-      <p style="margin:0 0 10px 15px; font-weight:600; color:white;">MahT Oyun Stüdyosu</p>
-      
-      <div class="modal-section-title">💻 Geliştirici Ekibi</div>
-      <p style="margin:0 0 10px 15px; font-weight:600; color:white;">M. Alperen Temizel & Fatih Temizel</p>
-      
-      <div class="modal-section-title">📌 Sürüm</div>
-      <p style="margin:0 0 10px 15px; color:#94a3b8;">v1.0.0 (Mayıs 2026)</p>
-      
-      <div class="memorial-card">
-        <div class="memorial-title">✨ Anısına, Saygıyla ve Sevgiyle ✨</div>
-        <div class="memorial-names">
-          Mehmet Ali KILIÇ • Hayri TEMİZEL<br>
-          Lütfiye TEMİZEL • Hüseyin TEMİZEL<br>
-          Şükran TEMİZEL • Abdurrahman TEMİZEL
+    <div id="topBar">
+
+      <div class="topRow">
+
+        <span id="score">⭐ 0</span>
+
+        <span id="time">⏱️ 30</span>
+
+        <span id="levelLabel">Tur 1</span>
+
+        <button id="pauseBtn" onclick="togglePause()">
+          ⏸️
+        </button>
+
+      </div>
+
+      <div class="topRow">
+
+        <span id="lives">❤️❤️❤️</span>
+
+        <span id="wrongBar">⚠️ 0/3</span>
+
+        <span id="combo">🔥 0</span>
+
+      </div>
+
+    </div>
+
+    <div id="modeBox">
+      <button id="modeBtn_add" onclick="setMode('add')">➕</button>
+      <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
+      <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
+      <button id="modeBtn_div" onclick="setMode('div')">/</button>
+      <button id="modeBtn_mix" onclick="setMode('mix')">🎲</button>
+    </div>
+
+    <div class="screenNav">
+      <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText">Menü</span></button>
+      <button class="navBtn langToggle" onclick="cycleLang()">
+        <span class="langIcon">🌐</span>
+        <span id="gameLangLabel">TR</span>
+      </button>
+    </div>
+
+    <div id="grid"></div>
+  </div>
+  <div id="levelEffect"></div>
+  <!-- GAME OVER -->
+  <div id="gameOverScreen" class="screen">
+
+    <h1 id="gameOverTitle">Oyun Bitti</h1>
+
+    <p><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
+
+    <div id="scoreFilters">
+
+      <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">
+        Hepsi
+      </button>
+
+      <button onclick="setLeaderboardFilter('add')">
+        ➕
+      </button>
+
+      <button onclick="setLeaderboardFilter('sub')">
+        ➖
+      </button>
+
+      <button onclick="setLeaderboardFilter('mul')">
+        ✖️
+      </button>
+
+      <button onclick="setLeaderboardFilter('div')">
+        /
+      </button>
+
+      <button onclick="setLeaderboardFilter('mix')">
+        🎲
+      </button>
+
+    </div>
+
+    <div id="leaderboard"></div>
+
+    <button class="retryBtn" onclick="startGame()" id="btnRetry">
+      🔄 Bir Daha
+    </button>
+
+    <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
+      <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText2">Menü</span></button>
+      <button class="navBtn langToggle" onclick="cycleLang()">
+        <span class="langIcon">🌐</span>
+        <span id="goLangLabel">TR</span>
+      </button>
+    </div>
+
+  </div>
+  <div id="effects"></div>
+
+  <!-- HAKKINDA MODAL -->
+  <div id="aboutModal" class="modal-backdrop" onclick="closeModal('aboutModal')">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <img src="icon.png" class="modal-logo" alt="MahT Logo">
+        <h2 class="modal-title">MahT Oyun Atölyesi</h2>
+      </div>
+      <div class="modal-body">
+        <p>Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek
+          amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.</p>
+
+        <div class="modal-section-title">🚀 Yapımcı Stüdyo</div>
+        <p style="margin:0 0 10px 15px; font-weight:600; color:white;">MahT Oyun Stüdyosu</p>
+
+        <div class="modal-section-title">💻 Geliştirici Ekibi</div>
+        <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mehmet Ali Hayri Temizel & Mehtap Temizel & Harun
+          Temizel</p>
+
+        <div class="modal-section-title">📌 Sürüm</div>
+        <p style="margin:0 0 10px 15px; color:#94a3b8;">v1.0.0 (Mayıs 2026)</p>
+
+        <div class="memorial-card">
+          <div class="memorial-title">✨ Anılarına, Saygı Sevgi ve Rahmetle ✨</div>
+          <div class="memorial-names">
+            Mehmet Ali KILIÇ • Hayri TEMİZEL<br>
+            Lütfiye TEMİZEL • Hüseyin TEMİZEL<br>
+            Şükran TEMİZEL • Abdurrahman Hayri TEMİZEL
+          </div>
+          <div class="memorial-footer">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
         </div>
-        <div class="memorial-footer">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
+      </div>
+      <div class="modal-footer-btn-container">
+        <button class="modal-close-btn" onclick="closeModal('aboutModal')">❌ Kapat</button>
       </div>
     </div>
-    <div class="modal-footer-btn-container">
-      <button class="modal-close-btn" onclick="closeModal('aboutModal')">❌ Kapat</button>
+  </div>
+
+  <!-- YARDIM MODAL -->
+  <div id="helpModal" class="modal-backdrop" onclick="closeModal('helpModal')">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span style="font-size:32px; filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5));">❓</span>
+        <h2 class="modal-title">Nasıl Oynanır?</h2>
+      </div>
+      <div class="modal-body">
+        <ul class="modal-list">
+          <li><strong>Mod Seçimi:</strong> Ana menüden oynamak istediğiniz matematik modunu (Toplama, Çıkarma, Çarpma,
+            Bölme veya Karışık) seçin.</li>
+          <li><strong>Eşleştirme:</strong> Ekranda gizlenen sayıları (örneğin işlem kartı "4 + 5" ile sonuç kartı "9")
+            doğru eşleştirerek sayı avını başlatın.</li>
+          <li><strong>Seviye Atlama:</strong> Süre bitmeden ve canlarınızı (❤️) tüketmeden tüm eşleşmeleri tamamlayarak
+            bir sonraki seviyeye geçin.</li>
+          <li><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi
+            otomatik olarak açılır! Sırasıyla diğer modların kilidini açarak devam edin.</li>
+        </ul>
+      </div>
+      <div class="modal-footer-btn-container">
+        <button class="modal-close-btn" onclick="closeModal('helpModal')">❌ Kapat</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- YARDIM MODAL -->
-<div id="helpModal" class="modal-backdrop" onclick="closeModal('helpModal')">
-  <div class="modal-container" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <span style="font-size:32px; filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5));">❓</span>
-      <h2 class="modal-title">Nasıl Oynanır?</h2>
-    </div>
-    <div class="modal-body">
-      <ul class="modal-list">
-        <li><strong>Mod Seçimi:</strong> Ana menüden oynamak istediğiniz matematik modunu (Toplama, Çıkarma, Çarpma, Bölme veya Karışık) seçin.</li>
-        <li><strong>Eşleştirme:</strong> Ekranda gizlenen sayıları (örneğin işlem kartı "4 + 5" ile sonuç kartı "9") doğru eşleştirerek sayı avını başlatın.</li>
-        <li><strong>Seviye Atlama:</strong> Süre bitmeden ve canlarınızı (❤️) tüketmeden tüm eşleşmeleri tamamlayarak bir sonraki seviyeye geçin.</li>
-        <li><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi otomatik olarak açılır! Sırasıyla diğer modların kilidini açarak devam edin.</li>
-      </ul>
-    </div>
-    <div class="modal-footer-btn-container">
-      <button class="modal-close-btn" onclick="closeModal('helpModal')">❌ Kapat</button>
-    </div>
-  </div>
-</div>
+  <script>
+    /* ===== DIL / LANGUAGE ===== */
+    let currentLang = localStorage.getItem("wc2026-locale") || localStorage.getItem("minmat_lang") || "tr";
 
-<script>
-/* ===== DIL / LANGUAGE ===== */
-let currentLang = localStorage.getItem("wc2026-locale") || localStorage.getItem("minmat_lang") || "tr";
+    const translations = {
+      tr: {
+        placeholder: "İsmini yaz...",
+        start: "Başla",
+        home: "🏠 Ana Sayfaya Dön",
+        gameOver: "Oyun Bitti",
+        score: "Puan",
+        again: "🔄 Bir Daha",
+        leaderAll: "🏆 En İyi Puanlar",
+        leaderAdd: "🏆 Topla Puanları",
+        leaderSub: "🏆 Çıkar Puanları",
+        leaderMul: "🏆 Çarp Puanları",
+        leaderDiv: "🏆 Böl Puanları",
+        leaderMix: "🏆 4 İşlem Puanları",
+        colName: "Ad",
+        colDate: "Tarih",
+        colCat: "Kategori",
+        colRound: "Tur",
+        colScore: "Puan",
+        modeAdd: "Toplama",
+        modeSub: "Çıkarma",
+        modeMul: "Çarpma",
+        modeDiv: "Bölme",
+        modeMix: "4 İşlem",
+        shortAdd: "Topla",
+        shortSub: "Çıkar",
+        shortMul: "Çarp",
+        shortDiv: "Böl",
+        shortMix: "4 İşlem",
+        round: "Tur",
+        nameErr: "İsim en az 3 karakter olmalı",
+        guest: "Misafir",
+        menu: "Menü",
+        subtitle: "Sayı Avı",
+        all: "Hepsi"
+      },
+      en: {
+        placeholder: "Enter your name...",
+        start: "Start",
+        home: "🏠 Back to Home",
+        gameOver: "Game Over",
+        score: "Score",
+        again: "🔄 Play Again",
+        leaderAll: "🏆 Best Scores",
+        leaderAdd: "🏆 Addition Scores",
+        leaderSub: "🏆 Subtraction Scores",
+        leaderMul: "🏆 Multiplication Scores",
+        leaderDiv: "🏆 Division Scores",
+        leaderMix: "🏆 Mixed Scores",
+        colName: "Name",
+        colDate: "Date",
+        colCat: "Category",
+        colRound: "Round",
+        colScore: "Score",
+        modeAdd: "Addition",
+        modeSub: "Subtraction",
+        modeMul: "Multiplication",
+        modeDiv: "Division",
+        modeMix: "Mixed",
+        shortAdd: "Add",
+        shortSub: "Sub",
+        shortMul: "Mul",
+        shortDiv: "Div",
+        shortMix: "Mixed",
+        round: "Round",
+        nameErr: "Name must be at least 3 characters",
+        guest: "Guest",
+        menu: "Menu",
+        subtitle: "Number Hunt",
+        all: "All"
+      },
+      de: {
+        placeholder: "Name eingeben...",
+        start: "Starten",
+        home: "🏠 Zurück zur Startseite",
+        gameOver: "Spiel Vorbei",
+        score: "Punkte",
+        again: "🔄 Nochmal",
+        leaderAll: "🏆 Beste Punkte",
+        leaderAdd: "🏆 Addition Punkte",
+        leaderSub: "🏆 Subtraktion Punkte",
+        leaderMul: "🏆 Multiplikation Punkte",
+        leaderDiv: "🏆 Division Punkte",
+        leaderMix: "🏆 Gemischt Punkte",
+        colName: "Name",
+        colDate: "Datum",
+        colCat: "Kategorie",
+        colRound: "Runde",
+        colScore: "Punkte",
+        modeAdd: "Addition",
+        modeSub: "Subtraktion",
+        modeMul: "Multiplikation",
+        modeDiv: "Division",
+        modeMix: "Gemischt",
+        shortAdd: "Add",
+        shortSub: "Sub",
+        shortMul: "Mul",
+        shortDiv: "Div",
+        shortMix: "Mix",
+        round: "Runde",
+        nameErr: "Name muss mindestens 3 Zeichen haben",
+        guest: "Gast",
+        menu: "Menü",
+        subtitle: "Zahlen Jagd",
+        all: "Alle"
+      },
+      fr: {
+        placeholder: "Entrez votre nom...",
+        start: "Commencer",
+        home: "🏠 Retour à l'accueil",
+        gameOver: "Jeu Terminé",
+        score: "Score",
+        again: "🔄 Rejouer",
+        leaderAll: "🏆 Meilleurs Scores",
+        leaderAdd: "🏆 Scores Addition",
+        leaderSub: "🏆 Scores Soustraction",
+        leaderMul: "🏆 Scores Multiplication",
+        leaderDiv: "🏆 Scores Division",
+        leaderMix: "🏆 Scores Mixte",
+        colName: "Nom",
+        colDate: "Date",
+        colCat: "Catégorie",
+        colRound: "Tour",
+        colScore: "Score",
+        modeAdd: "Addition",
+        modeSub: "Soustraction",
+        modeMul: "Multiplication",
+        modeDiv: "Division",
+        modeMix: "Mixte",
+        shortAdd: "Add",
+        shortSub: "Sub",
+        shortMul: "Mul",
+        shortDiv: "Div",
+        shortMix: "Mix",
+        round: "Tour",
+        nameErr: "Le nom doit comporter au moins 3 caractères",
+        guest: "Invité",
+        menu: "Menu",
+        subtitle: "Chasse aux Nombres",
+        all: "Tous"
+      },
+      es: {
+        placeholder: "Ingresa tu nombre...",
+        start: "Comenzar",
+        home: "🏠 Ir al Inicio",
+        gameOver: "Juego Terminado",
+        score: "Puntuación",
+        again: "🔄 Jugar de Nuevo",
+        leaderAll: "🏆 Mejores Puntuaciones",
+        leaderAdd: "🏆 Puntos Suma",
+        leaderSub: "🏆 Puntos Resta",
+        leaderMul: "🏆 Puntos Multiplicación",
+        leaderDiv: "🏆 Puntos División",
+        leaderMix: "🏆 Puntos Mixto",
+        colName: "Nombre",
+        colDate: "Fecha",
+        colCat: "Categoría",
+        colRound: "Ronda",
+        colScore: "Puntos",
+        modeAdd: "Suma",
+        modeSub: "Resta",
+        modeMul: "Multiplicación",
+        modeDiv: "División",
+        modeMix: "Mixto",
+        shortAdd: "Suma",
+        shortSub: "Resta",
+        shortMul: "Mult",
+        shortDiv: "Div",
+        shortMix: "Mix",
+        round: "Ronda",
+        nameErr: "El nombre debe tener al menos 3 caracteres",
+        guest: "Invitado",
+        menu: "Menú",
+        subtitle: "Caza de Números",
+        all: "Todos"
+      }
+    };
 
-const translations = {
-  tr: {
-    placeholder:"İsmini yaz...",
-    start:"Başla",
-    home:"🏠 Ana Sayfaya Dön",
-    gameOver:"Oyun Bitti",
-    score:"Puan",
-    again:"🔄 Bir Daha",
-    leaderAll:"🏆 En İyi Puanlar",
-    leaderAdd:"🏆 Topla Puanları",
-    leaderSub:"🏆 Çıkar Puanları",
-    leaderMul:"🏆 Çarp Puanları",
-    leaderDiv:"🏆 Böl Puanları",
-    leaderMix:"🏆 4 İşlem Puanları",
-    colName:"Ad",
-    colDate:"Tarih",
-    colCat:"Kategori",
-    colRound:"Tur",
-    colScore:"Puan",
-    modeAdd:"Toplama",
-    modeSub:"Çıkarma",
-    modeMul:"Çarpma",
-    modeDiv:"Bölme",
-    modeMix:"4 İşlem",
-    shortAdd:"Topla",
-    shortSub:"Çıkar",
-    shortMul:"Çarp",
-    shortDiv:"Böl",
-    shortMix:"4 İşlem",
-    round:"Tur",
-    nameErr:"İsim en az 3 karakter olmalı",
-    guest:"Misafir",
-    menu:"Menü",
-    subtitle:"Sayı Avı",
-    all:"Hepsi"
-  },
-  en: {
-    placeholder:"Enter your name...",
-    start:"Start",
-    home:"🏠 Back to Home",
-    gameOver:"Game Over",
-    score:"Score",
-    again:"🔄 Play Again",
-    leaderAll:"🏆 Best Scores",
-    leaderAdd:"🏆 Addition Scores",
-    leaderSub:"🏆 Subtraction Scores",
-    leaderMul:"🏆 Multiplication Scores",
-    leaderDiv:"🏆 Division Scores",
-    leaderMix:"🏆 Mixed Scores",
-    colName:"Name",
-    colDate:"Date",
-    colCat:"Category",
-    colRound:"Round",
-    colScore:"Score",
-    modeAdd:"Addition",
-    modeSub:"Subtraction",
-    modeMul:"Multiplication",
-    modeDiv:"Division",
-    modeMix:"Mixed",
-    shortAdd:"Add",
-    shortSub:"Sub",
-    shortMul:"Mul",
-    shortDiv:"Div",
-    shortMix:"Mixed",
-    round:"Round",
-    nameErr:"Name must be at least 3 characters",
-    guest:"Guest",
-    menu:"Menu",
-    subtitle:"Number Hunt",
-    all:"All"
-  },
-  de: {
-    placeholder:"Name eingeben...",
-    start:"Starten",
-    home:"🏠 Zurück zur Startseite",
-    gameOver:"Spiel Vorbei",
-    score:"Punkte",
-    again:"🔄 Nochmal",
-    leaderAll:"🏆 Beste Punkte",
-    leaderAdd:"🏆 Addition Punkte",
-    leaderSub:"🏆 Subtraktion Punkte",
-    leaderMul:"🏆 Multiplikation Punkte",
-    leaderDiv:"🏆 Division Punkte",
-    leaderMix:"🏆 Gemischt Punkte",
-    colName:"Name",
-    colDate:"Datum",
-    colCat:"Kategorie",
-    colRound:"Runde",
-    colScore:"Punkte",
-    modeAdd:"Addition",
-    modeSub:"Subtraktion",
-    modeMul:"Multiplikation",
-    modeDiv:"Division",
-    modeMix:"Gemischt",
-    shortAdd:"Add",
-    shortSub:"Sub",
-    shortMul:"Mul",
-    shortDiv:"Div",
-    shortMix:"Mix",
-    round:"Runde",
-    nameErr:"Name muss mindestens 3 Zeichen haben",
-    guest:"Gast",
-    menu:"Menü",
-    subtitle:"Zahlen Jagd",
-    all:"Alle"
-  },
-  fr: {
-    placeholder:"Entrez votre nom...",
-    start:"Commencer",
-    home:"🏠 Retour à l'accueil",
-    gameOver:"Jeu Terminé",
-    score:"Score",
-    again:"🔄 Rejouer",
-    leaderAll:"🏆 Meilleurs Scores",
-    leaderAdd:"🏆 Scores Addition",
-    leaderSub:"🏆 Scores Soustraction",
-    leaderMul:"🏆 Scores Multiplication",
-    leaderDiv:"🏆 Scores Division",
-    leaderMix:"🏆 Scores Mixte",
-    colName:"Nom",
-    colDate:"Date",
-    colCat:"Catégorie",
-    colRound:"Tour",
-    colScore:"Score",
-    modeAdd:"Addition",
-    modeSub:"Soustraction",
-    modeMul:"Multiplication",
-    modeDiv:"Division",
-    modeMix:"Mixte",
-    shortAdd:"Add",
-    shortSub:"Sub",
-    shortMul:"Mul",
-    shortDiv:"Div",
-    shortMix:"Mix",
-    round:"Tour",
-    nameErr:"Le nom doit comporter au moins 3 caractères",
-    guest:"Invité",
-    menu:"Menu",
-    subtitle:"Chasse aux Nombres",
-    all:"Tous"
-  },
-  es: {
-    placeholder:"Ingresa tu nombre...",
-    start:"Comenzar",
-    home:"🏠 Ir al Inicio",
-    gameOver:"Juego Terminado",
-    score:"Puntuación",
-    again:"🔄 Jugar de Nuevo",
-    leaderAll:"🏆 Mejores Puntuaciones",
-    leaderAdd:"🏆 Puntos Suma",
-    leaderSub:"🏆 Puntos Resta",
-    leaderMul:"🏆 Puntos Multiplicación",
-    leaderDiv:"🏆 Puntos División",
-    leaderMix:"🏆 Puntos Mixto",
-    colName:"Nombre",
-    colDate:"Fecha",
-    colCat:"Categoría",
-    colRound:"Ronda",
-    colScore:"Puntos",
-    modeAdd:"Suma",
-    modeSub:"Resta",
-    modeMul:"Multiplicación",
-    modeDiv:"División",
-    modeMix:"Mixto",
-    shortAdd:"Suma",
-    shortSub:"Resta",
-    shortMul:"Mult",
-    shortDiv:"Div",
-    shortMix:"Mix",
-    round:"Ronda",
-    nameErr:"El nombre debe tener al menos 3 caracteres",
-    guest:"Invitado",
-    menu:"Menú",
-    subtitle:"Caza de Números",
-    all:"Todos"
-  }
-};
-
-function t(key){
-  let lang = translations[currentLang] || translations["tr"];
-  return lang[key] || translations["tr"][key] || key;
-}
-
-function setLang(lang){
-  currentLang = lang;
-  localStorage.setItem("wc2026-locale", lang);
-  localStorage.setItem("minmat_lang", lang);
-  applyLang();
-}
-
-function applyLang(){
-  let pi = document.getElementById("playerInput");
-  if(pi) pi.placeholder = t("placeholder");
-  let bs = document.getElementById("btnStart");
-  if(bs) bs.innerText = t("start");
-  let bh = document.getElementById("btnHome");
-  if(bh) bh.innerText = t("home");
-  let go = document.getElementById("gameOverTitle");
-  if(go) go.innerText = t("gameOver");
-  let ra = document.getElementById("btnRetry");
-  if(ra) ra.innerText = t("again");
-
-  // new elements
-  let ms = document.getElementById("menuSub");
-  if(ms) ms.innerText = t("subtitle");
-  let nm = document.getElementById("navMenuText");
-  if(nm) nm.innerText = t("menu");
-  let nm2 = document.getElementById("navMenuText2");
-  if(nm2) nm2.innerText = t("menu");
-
-  let langUp = currentLang.toUpperCase();
-  let gl = document.getElementById("gameLangLabel");
-  if(gl) gl.innerText = langUp;
-  let gol = document.getElementById("goLangLabel");
-  if(gol) gol.innerText = langUp;
-
-  // game screen elements
-  let gs = document.getElementById("gameSubtitle");
-  if(gs) gs.innerText = t("subtitle");
-  let mt = document.getElementById("modeText");
-  if(mt) mt.innerText = "🎯 " + shortModeName(gameMode);
-
-  // highlight active lang button in menu
-  document.querySelectorAll(".menuLangBtn").forEach((btn,i) => {
-    let langs = ["tr","en","de","fr","es"];
-    if(langs[i] === currentLang){
-      btn.classList.add("activeLang");
-    } else {
-      btn.classList.remove("activeLang");
+    function t(key) {
+      let lang = translations[currentLang] || translations["tr"];
+      return lang[key] || translations["tr"][key] || key;
     }
-  });
 
-  // game over screen elements
-  let got = document.getElementById("gameOverTitle");
-  if(got) got.innerText = t("gameOver");
-  let sl = document.getElementById("scoreLabel");
-  if(sl) sl.innerText = t("score");
-  let fa = document.getElementById("btnFilterAll");
-  if(fa) fa.innerText = t("all");
-
-  // re-render leaderboard if visible
-  if(document.getElementById("gameOverScreen").classList.contains("active")){
-    renderLeaderboard();
-  }
-}
-
-document.addEventListener("DOMContentLoaded", applyLang);
-
-function backToMenu(){
-  clearInterval(timer);
-  isGameOver = true;
-  show("menuScreen");
-}
-
-function cycleLang(){
-  let langs = ["tr","en","de","fr","es"];
-  let idx = langs.indexOf(currentLang);
-  let next = langs[(idx + 1) % langs.length];
-  setLang(next);
-}
-
-function openAbout(){
-  if (document.getElementById("gameScreen").classList.contains("active") && !isPaused) {
-    togglePause();
-  }
-  document.getElementById("aboutModal").classList.add("active");
-}
-
-function openHelp(){
-  if (document.getElementById("gameScreen").classList.contains("active") && !isPaused) {
-    togglePause();
-  }
-  document.getElementById("helpModal").classList.add("active");
-}
-
-function closeModal(modalId){
-  document.getElementById(modalId).classList.remove("active");
-  if (document.getElementById("gameScreen").classList.contains("active") && isPaused) {
-    togglePause();
-  }
-}
-/* ========================= */
-
-/* GLOBAL */
-let score=0;
-let lives=3;
-let level=1;
-
-let wrongCount = 0;
-let gameMode = "add"; // add, sub, mul, div
-let first=null;
-let lock=false;
-
-let matched=0;
-let totalPairs=0;
-let leaderboardFilter = "all";
-let timeLeft=0;
-let timer=null;
-let combo = 0;
-let isGameOver = false;
-let isGameOverSaved = false;
-let playerName = "Adsız";
-let isPaused = false;
-
-/* === UNLOCK SİSTEMİ === */
-function getMaxLevel(mode){
-  return parseInt(localStorage.getItem("minmat_maxLevel_" + mode)) || 1;
-}
-
-function updateMaxLevel(mode, lvl){
-  let current = getMaxLevel(mode);
-  if(lvl > current){
-    localStorage.setItem("minmat_maxLevel_" + mode, lvl);
-    updateModeButtons();
-  }
-}
-
-function isModeUnlocked(mode){
-  if(mode === "add") return true;
-  if(mode === "sub") return getMaxLevel("add") >= 4;
-  if(mode === "mul") return getMaxLevel("sub") >= 4;
-  if(mode === "div") return getMaxLevel("mul") >= 4;
-  if(mode === "mix") return getMaxLevel("div") >= 4;
-  return false;
-}
-
-function updateModeButtons(){
-  let modes = ["add","sub","mul","div","mix"];
-  modes.forEach(m => {
-    let btn = document.getElementById("modeBtn_" + m);
-    if(!btn) return;
-    if(isModeUnlocked(m)){
-      btn.classList.remove("modeLocked");
-      btn.disabled = false;
-    } else {
-      btn.classList.add("modeLocked");
-      btn.disabled = true;
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem("wc2026-locale", lang);
+      localStorage.setItem("minmat_lang", lang);
+      applyLang();
     }
-    // aktif mod vurgusu
-    if(m === gameMode){
-      btn.classList.add("modeActive");
-    } else {
-      btn.classList.remove("modeActive");
+
+    function applyLang() {
+      let pi = document.getElementById("playerInput");
+      if (pi) pi.placeholder = t("placeholder");
+      let bs = document.getElementById("btnStart");
+      if (bs) bs.innerText = t("start");
+      let bh = document.getElementById("btnHome");
+      if (bh) bh.innerText = t("home");
+      let go = document.getElementById("gameOverTitle");
+      if (go) go.innerText = t("gameOver");
+      let ra = document.getElementById("btnRetry");
+      if (ra) ra.innerText = t("again");
+
+      // new elements
+      let ms = document.getElementById("menuSub");
+      if (ms) ms.innerText = t("subtitle");
+      let nm = document.getElementById("navMenuText");
+      if (nm) nm.innerText = t("menu");
+      let nm2 = document.getElementById("navMenuText2");
+      if (nm2) nm2.innerText = t("menu");
+
+      let langUp = currentLang.toUpperCase();
+      let gl = document.getElementById("gameLangLabel");
+      if (gl) gl.innerText = langUp;
+      let gol = document.getElementById("goLangLabel");
+      if (gol) gol.innerText = langUp;
+
+      // game screen elements
+      let gs = document.getElementById("gameSubtitle");
+      if (gs) gs.innerText = t("subtitle");
+      let mt = document.getElementById("modeText");
+      if (mt) mt.innerText = "🎯 " + shortModeName(gameMode);
+
+      // highlight active lang button in menu
+      document.querySelectorAll(".menuLangBtn").forEach((btn, i) => {
+        let langs = ["tr", "en", "de", "fr", "es"];
+        if (langs[i] === currentLang) {
+          btn.classList.add("activeLang");
+        } else {
+          btn.classList.remove("activeLang");
+        }
+      });
+
+      // game over screen elements
+      let got = document.getElementById("gameOverTitle");
+      if (got) got.innerText = t("gameOver");
+      let sl = document.getElementById("scoreLabel");
+      if (sl) sl.innerText = t("score");
+      let fa = document.getElementById("btnFilterAll");
+      if (fa) fa.innerText = t("all");
+
+      // re-render leaderboard if visible
+      if (document.getElementById("gameOverScreen").classList.contains("active")) {
+        renderLeaderboard();
+      }
     }
-  });
-}
-/* ekran */
-function show(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
 
-/* oyun başlat */
-function startGame(){
-  playerName =
-  document.getElementById("playerInput").value.trim();
+    document.addEventListener("DOMContentLoaded", applyLang);
 
-if(playerName.length < 3){
-  alert(t("nameErr"));
-  return;
-}
-  isGameOver = false;
-  isGameOverSaved = false;
-  score=0;
-lives = 3;
-updateLivesUI();
-  level=1;
-document.getElementById("playerText")
-  .innerText = "👤 " + playerName;
-
-document.getElementById("modeText")
-  .innerText = "🎯 " + shortModeName(gameMode);
-  startLevel();
-  show("gameScreen");
-  updateModeButtons();
-}
-
-/* level başlat */
-function startLevel(){
-  lock = false;
-  first = null;
-  matched=0;
-
-  createCards();
-let pairs = totalPairs / 2;
-
-// her eşleşme için süre (level arttıkça azalır)
-let timePerPair = Math.max(8 - level * 0.5, 4);
-
-timeLeft = Math.floor(pairs * timePerPair);
-
-updateUI();
-startTimer();
-
-showEffect(t("round") + " " + level);
-  // süre (level arttıkça zorlaşır)
-  
-  if(level === 1){
-  timeLeft = 30;
-}else{
-  timeLeft += 3;
-}
-
-  updateUI();
-  startTimer();
-}
-
-/* timer */
-function startTimer(){
-
-  clearInterval(timer);
-
-  timer = setInterval(()=>{
-timeLeft--;
-
-updateUI();
-
-let timeEl = document.getElementById("time");
-
-if(timeLeft <= 5){
-  timeEl.classList.add("timeWarning");
-}else{
-  timeEl.classList.remove("timeWarning");
-}
-
-if(timeLeft <= 0){
-
-  clearInterval(timer);
-
-  timeLeft = 0;
-
-  updateUI();
-
-  console.log("GAME OVER");
-
-  gameOver();
-
-  return;
-}
-  },1000);
-}
-
-/* UI */
-function updateUI(){
-  document.getElementById("score").innerText="⭐ "+score;
-  document.getElementById("levelLabel").innerText=t("round")+" "+level;
-  document.getElementById("time").innerText="⏱️ "+timeLeft;
-  document.getElementById("combo").innerText="🔥 " + combo;
-
-  let hearts="";
-  for(let i=0;i<lives;i++) hearts+="❤️";
-  document.getElementById("lives").innerText=hearts;
-}
-
-/* kart oluştur */
-function createCards(){
-let a,b,question,answer;
-  let pairCount = level + 2;
-  totalPairs = pairCount * 2;
-
-  let arr = [];
-let used = new Set();
-  
-for(let i=0;i<pairCount;i++){
-let currentMode = gameMode;
-
-if(gameMode === "mix"){
-
-  let modes = ["add","sub","mul","div"];
-
-  currentMode =
-    modes[Math.floor(Math.random()*modes.length)];
-}
-  let tries = 0;
-
-  do{
-    let currentMode = gameMode;
-
-if(gameMode === "mix"){
-
-  let modes = ["add","sub","mul","div"];
-
-  currentMode =
-    modes[Math.floor(Math.random()*modes.length)];
-}
-    if(currentMode === "add"){
-let max = level * 5;
-
-if(max > 50){
-  max = 50;
-}
-
-a = rand(1,max);
-b = rand(1,max);
-      question = a + " + " + b;
-      answer = a + b;
+    function backToMenu() {
+      clearInterval(timer);
+      isGameOver = true;
+      show("menuScreen");
     }
-    else if(currentMode === "sub"){
-      a = rand(1, level*5);
-      b = rand(1, level*5);
-      if(a < b){ let t=a; a=b; b=t; }
-      question = a + " - " + b;
-      answer = a - b;
+
+    function cycleLang() {
+      let langs = ["tr", "en", "de", "fr", "es"];
+      let idx = langs.indexOf(currentLang);
+      let next = langs[(idx + 1) % langs.length];
+      setLang(next);
     }
-    else if(currentMode === "mul"){
-let mulMax = 3 + level * 2;
 
-if(mulMax > 12){
-  mulMax = 12;
-}
-
-a = rand(1,mulMax);
-b = rand(1,mulMax);
-      question = a + " × " + b;
-      answer = a * b;
+    function openAbout() {
+      if (document.getElementById("gameScreen").classList.contains("active") && !isPaused) {
+        togglePause();
+      }
+      document.getElementById("aboutModal").classList.add("active");
     }
-    else if(currentMode === "div"){
 
-  let divMax = 3 + level;
+    function openHelp() {
+      if (document.getElementById("gameScreen").classList.contains("active") && !isPaused) {
+        togglePause();
+      }
+      document.getElementById("helpModal").classList.add("active");
+    }
 
-  if(divMax > 12){
-    divMax = 12;
-  }
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove("active");
+      if (document.getElementById("gameScreen").classList.contains("active") && isPaused) {
+        togglePause();
+      }
+    }
+    /* ========================= */
 
-  answer = rand(1,divMax);
+    /* GLOBAL */
+    let score = 0;
+    let lives = 3;
+    let level = 1;
 
-  b = rand(1,divMax);
+    let wrongCount = 0;
+    let gameMode = "add"; // add, sub, mul, div
+    let first = null;
+    let lock = false;
 
-  a = answer * b;
+    let matched = 0;
+    let totalPairs = 0;
+    let leaderboardFilter = "all";
+    let timeLeft = 0;
+    let timer = null;
+    let combo = 0;
+    let isGameOver = false;
+    let isGameOverSaved = false;
+    let playerName = "Adsız";
+    let isPaused = false;
 
-  question = a + " / " + b;
-}
+    /* === UNLOCK SİSTEMİ === */
+    function getMaxLevel(mode) {
+      return parseInt(localStorage.getItem("minmat_maxLevel_" + mode)) || 1;
+    }
 
-    tries++;
+    function updateMaxLevel(mode, lvl) {
+      let current = getMaxLevel(mode);
+      if (lvl > current) {
+        localStorage.setItem("minmat_maxLevel_" + mode, lvl);
+        updateModeButtons();
+      }
+    }
 
-  }while(used.has(answer) && tries < 50);
+    function isModeUnlocked(mode) {
+      if (mode === "add") return true;
+      if (mode === "sub") return getMaxLevel("add") >= 4;
+      if (mode === "mul") return getMaxLevel("sub") >= 4;
+      if (mode === "div") return getMaxLevel("mul") >= 4;
+      if (mode === "mix") return getMaxLevel("div") >= 4;
+      return false;
+    }
 
-  used.add(answer);
+    function updateModeButtons() {
+      let modes = ["add", "sub", "mul", "div", "mix"];
+      modes.forEach(m => {
+        let btn = document.getElementById("modeBtn_" + m);
+        if (!btn) return;
+        if (isModeUnlocked(m)) {
+          btn.classList.remove("modeLocked");
+          btn.disabled = false;
+        } else {
+          btn.classList.add("modeLocked");
+          btn.disabled = true;
+        }
+        // aktif mod vurgusu
+        if (m === gameMode) {
+          btn.classList.add("modeActive");
+        } else {
+          btn.classList.remove("modeActive");
+        }
+      });
+    }
+    /* ekran */
+    function show(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
 
-  arr.push({text:question, match:answer});
-  arr.push({text:answer, match:question});
-}
+    /* oyun başlat */
+    function startGame() {
+      playerName =
+        document.getElementById("playerInput").value.trim();
 
-  arr.sort(()=>0.5-Math.random());
+      if (playerName.length < 3) {
+        alert(t("nameErr"));
+        return;
+      }
+      isGameOver = false;
+      isGameOverSaved = false;
+      score = 0;
+      lives = 3;
+      updateLivesUI();
+      level = 1;
+      document.getElementById("playerText")
+        .innerText = "👤 " + playerName;
 
-  let grid=document.getElementById("grid");
-  grid.innerHTML="";
+      document.getElementById("modeText")
+        .innerText = "🎯 " + shortModeName(gameMode);
+      startLevel();
+      show("gameScreen");
+      updateModeButtons();
+    }
 
-  let cols = Math.ceil(Math.sqrt(arr.length));
-  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-let size = Math.max(70 - level*2, 40);
-document.querySelectorAll(".card").forEach(c=>{
-  c.style.width = size + "px";
-  c.style.height = size + "px";
-});
+    /* level başlat */
+    function startLevel() {
+      lock = false;
+      first = null;
+      matched = 0;
 
-lock = false;
-first = null;
-arr.forEach(card=>{
-  let div=document.createElement("div");
-  div.className="card";
+      createCards();
+      let pairs = totalPairs / 2;
 
-  div.innerHTML = `
+      // her eşleşme için süre (level arttıkça azalır)
+      let timePerPair = Math.max(8 - level * 0.5, 4);
+
+      timeLeft = Math.floor(pairs * timePerPair);
+
+      updateUI();
+      startTimer();
+
+      showEffect(t("round") + " " + level);
+      // süre (level arttıkça zorlaşır)
+
+      if (level === 1) {
+        timeLeft = 30;
+      } else {
+        timeLeft += 3;
+      }
+
+      updateUI();
+      startTimer();
+    }
+
+    /* timer */
+    function startTimer() {
+
+      clearInterval(timer);
+
+      timer = setInterval(() => {
+        timeLeft--;
+
+        updateUI();
+
+        let timeEl = document.getElementById("time");
+
+        if (timeLeft <= 5) {
+          timeEl.classList.add("timeWarning");
+        } else {
+          timeEl.classList.remove("timeWarning");
+        }
+
+        if (timeLeft <= 0) {
+
+          clearInterval(timer);
+
+          timeLeft = 0;
+
+          updateUI();
+
+          console.log("GAME OVER");
+
+          gameOver();
+
+          return;
+        }
+      }, 1000);
+    }
+
+    /* UI */
+    function updateUI() {
+      document.getElementById("score").innerText = "⭐ " + score;
+      document.getElementById("levelLabel").innerText = t("round") + " " + level;
+      document.getElementById("time").innerText = "⏱️ " + timeLeft;
+      document.getElementById("combo").innerText = "🔥 " + combo;
+
+      let hearts = "";
+      for (let i = 0; i < lives; i++) hearts += "❤️";
+      document.getElementById("lives").innerText = hearts;
+    }
+
+    /* kart oluştur */
+    function createCards() {
+      let a, b, question, answer;
+      let pairCount = level + 2;
+      totalPairs = pairCount * 2;
+
+      let arr = [];
+      let used = new Set();
+
+      for (let i = 0; i < pairCount; i++) {
+        let currentMode = gameMode;
+
+        if (gameMode === "mix") {
+
+          let modes = ["add", "sub", "mul", "div"];
+
+          currentMode =
+            modes[Math.floor(Math.random() * modes.length)];
+        }
+        let tries = 0;
+
+        do {
+          let currentMode = gameMode;
+
+          if (gameMode === "mix") {
+
+            let modes = ["add", "sub", "mul", "div"];
+
+            currentMode =
+              modes[Math.floor(Math.random() * modes.length)];
+          }
+          if (currentMode === "add") {
+            let max = level * 5;
+
+            if (max > 50) {
+              max = 50;
+            }
+
+            a = rand(1, max);
+            b = rand(1, max);
+            question = a + " + " + b;
+            answer = a + b;
+          }
+          else if (currentMode === "sub") {
+            a = rand(1, level * 5);
+            b = rand(1, level * 5);
+            if (a < b) { let t = a; a = b; b = t; }
+            question = a + " - " + b;
+            answer = a - b;
+          }
+          else if (currentMode === "mul") {
+            let mulMax = 3 + level * 2;
+
+            if (mulMax > 12) {
+              mulMax = 12;
+            }
+
+            a = rand(1, mulMax);
+            b = rand(1, mulMax);
+            question = a + " × " + b;
+            answer = a * b;
+          }
+          else if (currentMode === "div") {
+
+            let divMax = 3 + level;
+
+            if (divMax > 12) {
+              divMax = 12;
+            }
+
+            answer = rand(1, divMax);
+
+            b = rand(1, divMax);
+
+            a = answer * b;
+
+            question = a + " / " + b;
+          }
+
+          tries++;
+
+        } while (used.has(answer) && tries < 50);
+
+        used.add(answer);
+
+        arr.push({ text: question, match: answer });
+        arr.push({ text: answer, match: question });
+      }
+
+      arr.sort(() => 0.5 - Math.random());
+
+      let grid = document.getElementById("grid");
+      grid.innerHTML = "";
+
+      let cols = Math.ceil(Math.sqrt(arr.length));
+      grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      let size = Math.max(70 - level * 2, 40);
+      document.querySelectorAll(".card").forEach(c => {
+        c.style.width = size + "px";
+        c.style.height = size + "px";
+      });
+
+      lock = false;
+      first = null;
+      arr.forEach(card => {
+        let div = document.createElement("div");
+        div.className = "card";
+
+        div.innerHTML = `
     <div class="inner">
       <div class="front"></div>
       <div class="back">${card.text}</div>
     </div>
   `;
 
-  div.onclick=()=>flip(div,card);
+        div.onclick = () => flip(div, card);
 
-  grid.appendChild(div);
-});
-}
-
-/* flip */
-function flip(div,card){
-if(isGameOver) return;
-  if(isPaused) return;
-  if(lock || div.classList.contains("open")) return;
-
-  div.classList.add("open");
-
-  if(!first){
-    first = {div,card};
-    return;
-  }
-
-  lock = true;
-
-  let match =
-    String(first.card.match) === String(card.text) ||
-    String(card.match) === String(first.card.text);
-
-  // ✅ DOĞRU EŞLEŞME
-  if(match){
-
-    combo++;
-wrongCount = 0;
-
-document.getElementById("wrongBar")
-  .innerText = "⚠️ 0/3";
-    // ❤️ CAN BONUS
-    if((combo === 4 || combo === 7 || combo === 9) && lives < 5){
-      lives++;
-      animateLives();
+        grid.appendChild(div);
+      });
     }
 
-    // 🔥 KOMBO
-    if(combo >= 3){
-      showEffect("🔥 KOMBO x" + combo);
-    }
+    /* flip */
+    function flip(div, card) {
+      if (isGameOver) return;
+      if (isPaused) return;
+      if (lock || div.classList.contains("open")) return;
 
-    let baseScore = 10;
+      div.classList.add("open");
 
-if(gameMode === "sub"){
-  baseScore = 11;
-}
-else if(gameMode === "mul"){
-  baseScore = 12;
-}
-else if(gameMode === "div"){
-  baseScore = 13;
-}
-else if(gameMode === "mix"){
-  baseScore = 15;
-}
-
-let comboBonus =
-  Math.max(combo - 1, 0);
-
-let gained =
-  baseScore +
-  level +
-  comboBonus;
-
-score += gained;
-    matched += 2;
-
-    // 🔄 yanlış sayacı sıfırla
-    wrongCount = 0;
-
-    reset();
-
-    if(matched === totalPairs){
-      clearInterval(timer);
-      setTimeout(()=>{
-        level++;
-        updateMaxLevel(gameMode, level);
-        showLevelEffect();
-        startLevel();
-      },500);
-    }
-
-  }
-
-  // ❌ YANLIŞ EŞLEŞME
-  else{
-
-    combo = 0;
-
-    wrongCount++;
-document.getElementById("wrongBar")
-  .innerText =
-  "⚠️ " + wrongCount + "/3";
-    if(wrongCount >= 3){
-      lives--;
-      wrongCount = 0;
-      document.getElementById("wrongBar")
-  .innerText = "⚠️ 0/3";
-      animateLives();
-    }
-
-    setTimeout(()=>{
-
-      div.classList.remove("open");
-      first.div.classList.remove("open");
-
-      if(lives <= 0){
-        gameOver();
+      if (!first) {
+        first = { div, card };
         return;
       }
 
-      reset();
+      lock = true;
 
-    },600);
-  }
+      let match =
+        String(first.card.match) === String(card.text) ||
+        String(card.match) === String(first.card.text);
 
-  updateUI();
-}
+      // ✅ DOĞRU EŞLEŞME
+      if (match) {
 
-/* reset */
-function reset(){
-  first=null;
-  lock=false;
-}
+        combo++;
+        wrongCount = 0;
 
-/* game over */
-function gameOver(){
+        document.getElementById("wrongBar")
+          .innerText = "⚠️ 0/3";
+        // ❤️ CAN BONUS
+        if ((combo === 4 || combo === 7 || combo === 9) && lives < 5) {
+          lives++;
+          animateLives();
+        }
 
-  if(isGameOver) return;
+        // 🔥 KOMBO
+        if (combo >= 3) {
+          showEffect("🔥 KOMBO x" + combo);
+        }
 
-  isGameOver = true;
+        let baseScore = 10;
 
-  clearInterval(timer);
+        if (gameMode === "sub") {
+          baseScore = 11;
+        }
+        else if (gameMode === "mul") {
+          baseScore = 12;
+        }
+        else if (gameMode === "div") {
+          baseScore = 13;
+        }
+        else if (gameMode === "mix") {
+          baseScore = 15;
+        }
 
-  lock = true;
+        let comboBonus =
+          Math.max(combo - 1, 0);
 
-  document.getElementById("finalScore").innerText = score;
+        let gained =
+          baseScore +
+          level +
+          comboBonus;
 
-  saveScore();
+        score += gained;
+        matched += 2;
 
-  renderLeaderboard();
+        // 🔄 yanlış sayacı sıfırla
+        wrongCount = 0;
 
-  document.querySelectorAll(".screen").forEach(s=>{
-    s.classList.remove("active");
-  });
+        reset();
 
-  document.getElementById("gameOverScreen")
-    .classList.add("active");
-}
+        if (matched === totalPairs) {
+          clearInterval(timer);
+          setTimeout(() => {
+            level++;
+            updateMaxLevel(gameMode, level);
+            showLevelEffect();
+            startLevel();
+          }, 500);
+        }
+
+      }
+
+      // ❌ YANLIŞ EŞLEŞME
+      else {
+
+        combo = 0;
+
+        wrongCount++;
+        document.getElementById("wrongBar")
+          .innerText =
+          "⚠️ " + wrongCount + "/3";
+        if (wrongCount >= 3) {
+          lives--;
+          wrongCount = 0;
+          document.getElementById("wrongBar")
+            .innerText = "⚠️ 0/3";
+          animateLives();
+        }
+
+        setTimeout(() => {
+
+          div.classList.remove("open");
+          first.div.classList.remove("open");
+
+          if (lives <= 0) {
+            gameOver();
+            return;
+          }
+
+          reset();
+
+        }, 600);
+      }
+
+      updateUI();
+    }
+
+    /* reset */
+    function reset() {
+      first = null;
+      lock = false;
+    }
+
+    /* game over */
+    function gameOver() {
+
+      if (isGameOver) return;
+
+      isGameOver = true;
+
+      clearInterval(timer);
+
+      lock = true;
+
+      document.getElementById("finalScore").innerText = score;
+
+      saveScore();
+
+      renderLeaderboard();
+
+      document.querySelectorAll(".screen").forEach(s => {
+        s.classList.remove("active");
+      });
+
+      document.getElementById("gameOverScreen")
+        .classList.add("active");
+    }
 
 
-function setMode(m){
-  if(!isModeUnlocked(m)){
-    let needed = {sub:"add", mul:"sub", div:"mul", mix:"div"};
-    let prev = needed[m];
-    let prevName = shortModeName(prev);
-    alert(prevName + " " + t("round") + " 4 ❗");
-    return;
-  }
-  gameMode = m;
-  updateModeButtons();
-  startGame();
-}
+    function setMode(m) {
+      if (!isModeUnlocked(m)) {
+        let needed = { sub: "add", mul: "sub", div: "mul", mix: "div" };
+        let prev = needed[m];
+        let prevName = shortModeName(prev);
+        alert(prevName + " " + t("round") + " 4 ❗");
+        return;
+      }
+      gameMode = m;
+      updateModeButtons();
+      startGame();
+    }
 
-function rand(min,max){
-  return Math.floor(Math.random()*(max-min+1))+min;
-}
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
-function updateLivesUI(){
-  let text = "";
-  for(let i=0;i<lives;i++){
-    text += "❤️";
-  }
-  document.getElementById("lives").innerText = text;
-}
+    function updateLivesUI() {
+      let text = "";
+      for (let i = 0; i < lives; i++) {
+        text += "❤️";
+      }
+      document.getElementById("lives").innerText = text;
+    }
 
-function showEffect(text){
+    function showEffect(text) {
 
-  let e = document.createElement("div");
-  e.className = "effect";
-  e.innerText = text;
+      let e = document.createElement("div");
+      e.className = "effect";
+      e.innerText = text;
 
-  document.body.appendChild(e);
+      document.body.appendChild(e);
 
-  setTimeout(()=>{
-    e.remove();
-  },800);
-}
+      setTimeout(() => {
+        e.remove();
+      }, 800);
+    }
 
-function animateLives(){
-  let el = document.getElementById("lives");
-  if(!el) return;
+    function animateLives() {
+      let el = document.getElementById("lives");
+      if (!el) return;
 
-  el.classList.add("heartPop");
+      el.classList.add("heartPop");
 
-  setTimeout(()=>{
-    el.classList.remove("heartPop");
-  },800);
-}
+      setTimeout(() => {
+        el.classList.remove("heartPop");
+      }, 800);
+    }
 
-function saveScore(){
+    function saveScore() {
 
-  let scores =
-    JSON.parse(localStorage.getItem("scores")) || [];
-    
-if(isGameOverSaved) return;
+      let scores =
+        JSON.parse(localStorage.getItem("scores")) || [];
 
-isGameOverSaved = true;
-  scores.push({
-    name: playerName || t("guest"),
-    score: score,
-    level: level,
-    mode: gameMode,
-    date: new Date().toLocaleDateString()
-  });
+      if (isGameOverSaved) return;
 
-  scores.sort((a,b)=> b.score - a.score);
+      isGameOverSaved = true;
+      scores.push({
+        name: playerName || t("guest"),
+        score: score,
+        level: level,
+        mode: gameMode,
+        date: new Date().toLocaleDateString()
+      });
 
-  scores = scores.slice(0,10);
+      scores.sort((a, b) => b.score - a.score);
 
-  localStorage.setItem("scores", JSON.stringify(scores));
-}
+      scores = scores.slice(0, 10);
 
-function renderLeaderboard(){
+      localStorage.setItem("scores", JSON.stringify(scores));
+    }
 
-  let filterKey = "leaderAll";
-  if(leaderboardFilter === "add") filterKey = "leaderAdd";
-  else if(leaderboardFilter === "sub") filterKey = "leaderSub";
-  else if(leaderboardFilter === "mul") filterKey = "leaderMul";
-  else if(leaderboardFilter === "div") filterKey = "leaderDiv";
-  else if(leaderboardFilter === "mix") filterKey = "leaderMix";
+    function renderLeaderboard() {
 
-  let titleText = t(filterKey);
+      let filterKey = "leaderAll";
+      if (leaderboardFilter === "add") filterKey = "leaderAdd";
+      else if (leaderboardFilter === "sub") filterKey = "leaderSub";
+      else if (leaderboardFilter === "mul") filterKey = "leaderMul";
+      else if (leaderboardFilter === "div") filterKey = "leaderDiv";
+      else if (leaderboardFilter === "mix") filterKey = "leaderMix";
 
-  let scores =
-    JSON.parse(localStorage.getItem("scores")) || [];
-if(leaderboardFilter !== "all"){
-  scores = scores.filter(
-    s => s.mode === leaderboardFilter
-  );
-}
-  let html = `
+      let titleText = t(filterKey);
+
+      let scores =
+        JSON.parse(localStorage.getItem("scores")) || [];
+      if (leaderboardFilter !== "all") {
+        scores = scores.filter(
+          s => s.mode === leaderboardFilter
+        );
+      }
+      let html = `
 
   <h3 id="leaderboardTitle">
 ${titleText}
@@ -1856,21 +1975,21 @@ ${titleText}
   </div>
   `;
 
-  scores.forEach((s,i)=>{
+      scores.forEach((s, i) => {
 
-    let medal = i + 1;
+        let medal = i + 1;
 
-    if(i === 0) medal = "🏆";
-if(i === 1) medal = "⚡";
-if(i === 2) medal = "🔥";
+        if (i === 0) medal = "🏆";
+        if (i === 1) medal = "⚡";
+        if (i === 2) medal = "🔥";
 
-let cls = "";
+        let cls = "";
 
-if(i === 0) cls = "firstPlace";
-if(i === 1) cls = "secondPlace";
-if(i === 2) cls = "thirdPlace";
+        if (i === 0) cls = "firstPlace";
+        if (i === 1) cls = "secondPlace";
+        if (i === 2) cls = "thirdPlace";
 
-html += `
+        html += `
 <div class="scoreRow ${cls}">
       <span>${medal}</span>
       <span>${s.name}</span>
@@ -1880,73 +1999,74 @@ html += `
       <span>⭐ ${s.score}</span>
     </div>
     `;
-  });
+      });
 
-  document.getElementById("leaderboard").innerHTML = html;
-}
+      document.getElementById("leaderboard").innerHTML = html;
+    }
 
-function setLeaderboardFilter(mode){
+    function setLeaderboardFilter(mode) {
 
-  leaderboardFilter = mode;
+      leaderboardFilter = mode;
 
-  renderLeaderboard();
-}
+      renderLeaderboard();
+    }
 
-function modeName(mode){
-  if(mode === "add") return t("modeAdd");
-  if(mode === "sub") return t("modeSub");
-  if(mode === "mul") return t("modeMul");
-  if(mode === "div") return t("modeDiv");
-  if(mode === "mix") return t("modeMix");
-  return "-";
-}
+    function modeName(mode) {
+      if (mode === "add") return t("modeAdd");
+      if (mode === "sub") return t("modeSub");
+      if (mode === "mul") return t("modeMul");
+      if (mode === "div") return t("modeDiv");
+      if (mode === "mix") return t("modeMix");
+      return "-";
+    }
 
-function shortModeName(mode){
-  if(mode === "add") return t("shortAdd");
-  if(mode === "sub") return t("shortSub");
-  if(mode === "mul") return t("shortMul");
-  if(mode === "div") return t("shortDiv");
-  if(mode === "mix") return t("shortMix");
-  return "-";
-}
-function showLevelEffect(){
+    function shortModeName(mode) {
+      if (mode === "add") return t("shortAdd");
+      if (mode === "sub") return t("shortSub");
+      if (mode === "mul") return t("shortMul");
+      if (mode === "div") return t("shortDiv");
+      if (mode === "mix") return t("shortMix");
+      return "-";
+    }
+    function showLevelEffect() {
 
-  let e = document.getElementById("levelEffect");
+      let e = document.getElementById("levelEffect");
 
-  e.innerText = t("round") + " " + level;
+      e.innerText = t("round") + " " + level;
 
-  e.classList.remove("levelAnim");
+      e.classList.remove("levelAnim");
 
-  void e.offsetWidth;
+      void e.offsetWidth;
 
-  e.classList.add("levelAnim");
-}
+      e.classList.add("levelAnim");
+    }
 
-function togglePause(){
+    function togglePause() {
 
-  if(isGameOver) return;
+      if (isGameOver) return;
 
-  isPaused = !isPaused;
+      isPaused = !isPaused;
 
-  let btn =
-    document.getElementById("pauseBtn");
+      let btn =
+        document.getElementById("pauseBtn");
 
-  if(isPaused){
+      if (isPaused) {
 
-    clearInterval(timer);
+        clearInterval(timer);
 
-    btn.innerText = "▶️";
+        btn.innerText = "▶️";
 
-  }else{
+      } else {
 
-    startTimer();
+        startTimer();
 
-    btn.innerText = "⏸️";
-  }
-}
+        btn.innerText = "⏸️";
+      }
+    }
 
 
-</script>
+  </script>
 
 </body>
+
 </html>
