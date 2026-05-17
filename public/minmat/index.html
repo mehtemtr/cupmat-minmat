@@ -2,174 +2,161 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-GMHYYVM3BK');
-  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MinMat – Sayı Avı</title>
 
-<title>MinMat Sayı Avı</title>
-<link rel="icon" href="icon.png">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GMHYYVM3BK');
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;
-  font-family:sans-serif;
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
-
-
-
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Inter',sans-serif;
+  background:#04080e;
+  color:white;
+}
 
 .screen{
   display:none;
-
-  position:absolute;
+  position:fixed;
   top:0;
   left:0;
-
   width:100%;
   height:100vh;
 
-  display:flex;
+  justify-content:center;
+  align-items:center;
   flex-direction:column;
-
-  align-items:center;      /* 🔥 ORTA YATAY */
-  justify-content:center;  /* 🔥 ORTA DİKEY */
 }
 
-button{
-  margin:10px;
-  padding:12px 20px;
-
-  border:none;
-  border-radius:12px;
-
-  background:linear-gradient(135deg,#22d3ee,#6366f1);
-  color:white;
-
-  font-size:16px;
-  cursor:pointer;
-
-  transition:0.2s;
+.active{
+  display:flex;
 }
 
-button:hover{
-  background:#60a5fa;
-  opacity:0.9;
-  transform:scale(1.05);
-}
 #grid{
   display:grid;
   gap:10px;
-  justify-content:center;
-  margin-top:30px;
+  margin-top:20px;
+}
 
-  background: rgba(255,255,255,0.05);
-  padding:20px;
-  border-radius:15px;
-  backdrop-filter: blur(5px);
-}
-#modeText{
-  margin-top:5px;
-  font-size:18px;
-  color:#facc15;
-}
 .card{
-  width:70px;
-  height:70px;
-
-  background:#333;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:10px;
-  cursor:pointer;
-
+  width:100%;
+  aspect-ratio:1;
   perspective:800px;
-
-  font-weight:bold;
-  font-size:18px;
-
-  transition:transform 0.2s ease;
-   box-shadow:0 4px 10px rgba(0,0,0,0.3);
-}
-.card.open{
-  background:#64748b;
-}
-.top-bar {
-  position: relative;
-  z-index: 1;
-  background: red;
-}
-.card:hover{
-  transform:scale(1.05);
-  box-shadow:0 6px 15px rgba(0,0,0,0.5);
-}
-.card {
-  position: relative;
-  z-index: 5;
-}
-.card.matched .back{
-  background:#22c55e !important;
-  color:white;
+  cursor:pointer;
+  touch-action: manipulation;
+    user-select:none;
 }
 
 .inner{
   width:100%;
   height:100%;
-  transition: transform 0.5s ease;
-  transform-style:preserve-3d;
   position:relative;
+  transform-style:preserve-3d;
+  transition: transform 0.5s;
 }
 
 .card.open .inner{
-  transform:rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .front, .back{
   position:absolute;
   width:100%;
   height:100%;
+  border-radius:10px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   backface-visibility:hidden;
-  border-radius:10px;
+  font-weight:bold;
+  font-size:18px;
 }
 
+/* 🔥 KAPALI HAL (ikon) */
 .front{
-   background:url("icon.png") center/80% no-repeat;
+  background:#334155 url("icon.png") center/60% no-repeat;
 }
 
+/* 🔥 AÇILINCA */
 .back{
-  background:linear-gradient(135deg,#67e8f9,#c4b5fd);
-  color:#0f172a;
-  transform:rotateY(180deg);
-}
-#scoreBox{
-  margin-top:10px;
-  font-size:20px;
-  
+  background:#22c55e;
+  color:white;
+  transform: rotateY(180deg);
 }
 
+button{
+  background:#1e293b;
+  color:white;
+  border:none;
+  border-radius:8px;
+  padding:8px 12px;
+  cursor:pointer;
+  font-size:16px;
+  font-family:'Inter',sans-serif;
+  transition:all 0.2s;
+}
+button:hover{
+  background:#334155;
+  transform:translateY(-1px);
+}
+#modeBox button{
+  width:45px;
+  height:45px;
+  font-size:20px;
+}
+#topBar{
+  display:flex;
+  flex-direction:column;
+
+  gap:8px;
+
+  width:100%;
+}
+.topRow{
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:20px;
+
+  width:100%;
+}
+#gameOverScreen{
+  background:#04080e;
+  overflow-y:auto;
+  padding:20px 10px;
+}
 
 #effects{
-  position:absolute;
+  position:fixed;
   top:50%;
   left:50%;
   pointer-events:none;
 }
 
-.scoreEffect{
+.effectText{
   position:absolute;
-  color:yellow;
+  color:#facc15;
   font-size:24px;
+  font-weight:bold;
+  transform:translate(-50%,-50%);
   animation:fly 1s ease forwards;
 }
 
@@ -178,1677 +165,1520 @@ button:hover{
   100%{opacity:0; transform:translate(-50%,-120px);}
 }
 
-#levelPopup{
-  position:absolute;
+.card{
+  width:70px;
+  height:70px;
+  background:#334155;
+  border-radius:10px;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:bold;
+  font-size:18px;
+
+  background-image:url("icon.png"); /* 🔥 EKLE */
+  background-size:60%;
+  background-repeat:no-repeat;
+  background-position:center;
+
+  color:transparent; /* 🔥 yazı gizli */
+}
+
+.card.open{
+  background:#22c55e;
+  color:white; /* 🔥 açılınca görünür */
+  background-image:none; /* 🔥 ikon gider */
+}
+
+.effect{
+  position:fixed;
   top:50%;
   left:50%;
-  transform:translate(-50%,-50%) scale(0.5);
-  background:#222;
-  color:#fff;
-  padding:20px 40px;
-  border-radius:15px;
-  font-size:30px;
-  opacity:0;
-  transition:0.4s;
-}
-
-#levelPopup.show{
-  opacity:1;
-  transform:translate(-50%,-50%) scale(1);
-}
-#livesBox{
-  margin-top:5px;
-  font-size:22px;
-}
-#gameOverScreen{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100vh;
-
-  background:#111;
-  color:white;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-.hasSub{
-  position:relative;
-  padding:5px;
-}
-
-.subMenu{
-  display:none;
-  position:absolute;
-  left:100%;
-  top:0;
-  background:#1e293b;
-  padding:10px;
-  border-radius:8px;
-}
-
-.hasSub:hover .subMenu{
-  display:block;
-}
-
-#menuScreen{
-  background:#0f172a;
-  color:white;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-#menuScreen button{
-  width:200px;
-  font-size:18px;
-}
-
-#lobbyScreen{
-  display:flex;
-  flex-direction:column;
-  align-items:center;      /* 🔥 EKLE */
-  justify-content:center;  /* 🔥 EKLE */
-  background:#f1f5f9;
-}
-
-#lobbyScreen h2{
-  margin-bottom:20px;
-}
-
-#lobbyScreen button{
-  width:180px;
-}
-
-#gameScreen{
-   background:linear-gradient(180deg,#1e293b,#334155);
-  display:flex;
-  flex-direction:column;
-}
-
-/* üst bar */
-#gameTop{
-  display:flex;
-  align-items:center;   /* 🔥 DİKEY ORTALAR */
-  gap:15px;
-  padding:10px;
-}
-#gameTop span{
-   background:rgba(255,255,255,0.1);
-  padding:6px 10px;
-  border-radius:10px;
-  color:#ffffff;
-}
-
-#timeBox{
-  display:flex;
-  align-items:center;
-  gap:8px;
-
-  background:rgba(255,255,255,0.08);
-  padding:6px 14px;
-  border-radius:12px;
-
-  color:white;
-}
-
-#time{
+  transform:translate(-50%,-50%);
+  color:yellow;
   font-size:30px;
   font-weight:bold;
-  color:#facc15;
-
-  background:none;   /* 🔥 önemli */
-  padding:0;         /* 🔥 varsa kaldır */
-}
-#gameArea{
-  color:white;
-}
-
-#wrongBar{
-  width: 120px;
-  height: 10px;
-  background: #333;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 5px auto; /* ortalar ve alta alır */
-}
-
-
-#wrongFill{
-  height: 100%;
-  width: 0%;
-  background: red;
-  transition: 0.3s;
-}
-/* oyun alanı */
-#gameArea{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-#gameButtons{
-  position:absolute;
-  top:10px;
-  left:10px;
-  display:flex;
-  gap:10px;
-}
-#gameScreen button{
-  align-self:center;
-}
-/* ayar paneli */
-#settingsPanel{
-  position:fixed;
-  top:60px;
-  left:10px;
-
-  background:#1e293b;
-  color:white;
-
-  padding:15px;
-  border-radius:12px;
-
-  width:180px;
-  display:none;
   pointer-events:none;
-  z-index:999;
+  animation: pop 0.8s ease;
 }
 
-#settingsPanel.open{
-  display:block;
-  pointer-events:auto;
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(0.5); opacity:0;}
+  50%{transform:translate(-50%,-60%) scale(1.2); opacity:1;}
+  100%{transform:translate(-50%,-80%) scale(1); opacity:0;}
+}
+.heartPop{
+  animation: heartPop 0.8s ease;
 }
 
-#settingsPanel button{
-  width:100%;
+@keyframes heartPop{
+  0%{transform:scale(1);}
+  40%{transform:scale(1.4);}
+  70%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+.timeWarning{
+  animation: blink 0.6s infinite;
+  color: red !important;
+}
+
+@keyframes blink{
+  0%{opacity:1;}
+  50%{opacity:0.3;}
+  100%{opacity:1;}
+}
+
+.scoreRow{
+  display:grid;
+  grid-template-columns:40px 80px 70px 80px 60px 80px;
+  gap:5px;
+
+  align-items:center;
+
+  padding:8px;
   margin:4px 0;
+
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+
+  font-size:13px;
 }
 
-#settingsPanel strong{
-  display:block;
-  margin-top:10px;
+.scoreHead{
+  font-weight:bold;
   color:#facc15;
 }
+.screen.active{
+  display:flex;
+}
 
-.logo{
+.firstPlace{
+  background:linear-gradient(90deg,#facc15,#ca8a04);
+  color:black;
+  font-weight:bold;
+  transform:scale(1.03);
+}
+
+.secondPlace{
+  background:linear-gradient(90deg,#a855f7,#6d28d9);
+  font-weight:bold;
+}
+
+.thirdPlace{
+  background:linear-gradient(90deg,#f97316,#ea580c);
+  font-weight:bold;
+}
+
+.retryBtn{
+  width:100%;
+  max-width:480px;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:white;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:10px;
+  transition:all 0.25s;
+  font-family:'Inter',sans-serif;
+  letter-spacing:0.5px;
+}
+.retryBtn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(34,197,94,0.35);
+  filter:brightness(1.1);
+}
+
+#playerInput{
+  margin-bottom:18px;
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:12px;
+  padding:12px 16px;
+  color:white;
+  font-size:16px;
+  font-family:'Inter',sans-serif;
+  outline:none;
+  width:280px;
+  transition:border 0.3s;
+}
+#playerInput:focus{
+  border-color:#22c55e;
+  box-shadow:0 0 15px rgba(34,197,94,0.15);
+}
+#playerInput::placeholder{
+  color:rgba(255,255,255,0.35);
+}
+
+#playerBar{
+  display:flex;
+  gap:14px;
+
+  margin-bottom:12px;
+
+  font-size:18px;
+  font-weight:bold;
+}
+
+#playerBar span{
+  background:rgba(255,255,255,0.08);
+
+  padding:8px 14px;
+
+  border-radius:12px;
+}
+
+#levelEffect{
+  position:fixed;
+
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
   font-size:48px;
   font-weight:bold;
 
-  background:linear-gradient(90deg,#22d3ee,#6366f1);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  text-align:center;
-}
-
-.logo span{
-  display:block;
-  font-size:20px;
   color:#facc15;
-  margin-top:5px;
-}
 
-#loadingScreen{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100vh;
+  opacity:0;
 
-  background:#0f172a;
+  pointer-events:none;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  text-shadow:0 0 20px #facc15;
 
   z-index:9999;
 }
 
-.logo{
-  font-size:48px;
-  font-weight:bold;
-
-  background:linear-gradient(90deg,#22d3ee,#6366f1);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:fadeIn 1s ease;
+.levelAnim{
+  animation:levelPop 1s ease;
 }
 
-.logo span{
-  display:block;
-  font-size:20px;
-  color:#facc15;
-  text-align:center;
-}
-#leaderboard{
-  margin-top:15px;
-  font-size:16px;
-}
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(0.8);}
-  to{opacity:1; transform:scale(1);}
-}
+@keyframes levelPop{
 
-.gameTitle{
-  font-size:28px;
-  font-weight:bold;
+  0%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0.5);
+  }
 
-  background:linear-gradient(90deg,#22d3ee,#6366f1);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+  30%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1.2);
+  }
 
-#gameTop{
-  display:flex;
-  justify-content:center; /* 🔥 ORTALA */
-  gap:15px;
-  padding:10px;
+  100%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(1);
+  }
 }
-
-#score {
-  color:#facc15;
-  font-weight:bold;
-}
-#playerBox{
-  font-size:18px;
-  color:#38bdf8;
-  margin-bottom:5px;
-}
-#time{
-  font-size:26px;
-  font-weight:bold;
-  color:#facc15;
-}
-.titleIcon{
-  width:32px;   /* 🔥 küçülttük */
-  height:32px;
-  margin-right:8px;
-  vertical-align:middle;
-}
-.locked{
-  background:#555 !important;  /* gri zemin */
-  opacity:0.5;                /* soluk görünüm */
-  cursor:not-allowed;         /* yasak işareti */
-  pointer-events:none;        /* tıklanamaz */
-}
-#playerName{
-  padding:10px;
-  border-radius:10px;
+#pauseBtn{
   border:none;
-  outline:none;
 
-  width:180px;
+  background:rgba(255,255,255,0.08);
+
+  color:white;
+
+  font-size:20px;
+
+  border-radius:10px;
+
+  padding:6px 10px;
+
+  cursor:pointer;
+}
+#gameTitle{
   text-align:center;
 
   margin-bottom:10px;
 }
 
-#unlockPopup{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%) scale(0.5);
-  background:#16a34a;
+#gameTitle h2{
+  margin:0;
+
+  font-size:28px;
+
+  color:gold;
+}
+
+#gameTitle p{
+  margin:0;
+  font-size:14px;
+  opacity:0.8;
+}
+
+.modeLocked{
+  opacity:0.35;
+  cursor:not-allowed !important;
+  position:relative;
+}
+.modeLocked::after{
+  content:'🔒';
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  font-size:12px;
+}
+.modeActive{
+  background:linear-gradient(135deg,#22c55e,#16a34a) !important;
+  box-shadow:0 0 10px rgba(34,197,94,0.4);
+}
+#modeBox{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:6px;
+}
+
+/* === CUPMAT STYLE MENU === */
+#menuScreen{
+  background:#04080e;
+  position:relative;
+  overflow:hidden;
+}
+#menuScreen::before{
+  content:'';
+  position:absolute;
+  top:-50%;right:-30%;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(34,197,94,0.08),transparent 70%);
+  pointer-events:none;
+}
+#menuScreen::after{
+  content:'';
+  position:absolute;
+  bottom:-40%;left:-20%;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%);
+  pointer-events:none;
+}
+.menuCard{
+  position:relative;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:24px;
+  background:#060b14;
+  padding:40px 32px 32px;
+  text-align:center;
+  width:340px;
+  max-width:90vw;
+  transition:transform 0.3s;
+}
+.menuCard:hover{
+  transform:translateY(-4px);
+}
+.menuCard::before{
+  content:'';
+  position:absolute;
+  inset:-1px;
+  border-radius:24px;
+  background:linear-gradient(135deg,rgba(34,197,94,0.25),rgba(59,130,246,0.15));
+  opacity:0.3;
+  z-index:-1;
+  filter:blur(12px);
+  transition:opacity 0.4s;
+}
+.menuCard:hover::before{
+  opacity:0.6;
+}
+.menuLogo{
+  width:80px;height:80px;
+  margin:0 auto 16px;
+  border-radius:20px;
+  background:rgba(34,197,94,0.1);
+  border:1px solid rgba(34,197,94,0.2);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 30px rgba(34,197,94,0.1);
+  animation:float 4s ease-in-out infinite;
+}
+.menuLogo img{
+  width:50px;height:50px;
+  object-fit:contain;
+}
+.menuTitle{
+  font-size:36px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+  margin:0 0 6px;
+  background:linear-gradient(135deg,#fff,#94a3b8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.menuSub{
+  color:#94a3b8;
+  font-size:15px;
+  margin:0 0 24px;
+}
+.menuStartBtn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
   color:white;
-  padding:20px 30px;
-  border-radius:12px;
-  font-size:20px;
-  opacity:0;
-  z-index:9999;
-  transition: all 0.4s ease;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all 0.25s;
+  font-family:'Inter',sans-serif;
+  letter-spacing:0.5px;
+}
+.menuStartBtn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(34,197,94,0.35);
+  filter:brightness(1.1);
+}
+.menuHomeBtn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  background:transparent;
+  color:#94a3b8;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s;
+  font-family:'Inter',sans-serif;
+}
+.menuHomeBtn:hover{
+  border-color:rgba(99,102,241,0.4);
+  background:rgba(99,102,241,0.08);
+  color:white;
 }
 
-#unlockPopup.show{
-  opacity:1;
-  transform:translate(-50%, -50%) scale(1);
-}
-#topBar{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-#topBar span{
-  background: rgba(255,255,255,0.1);
-  padding: 5px 10px;
-  border-radius: 8px;
-}
-
-#score{
-  font-size: 22px;
-  font-weight: bold;
-  color: #ffd54f;
-  text-shadow: 0 0 5px rgba(255, 213, 79, 0.7);
-}
-
-.scoreRow{
+/* === LANG TOGGLE === */
+.langToggle{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:8px;
-  margin:4px 0;
-  border-radius:10px;
-  background:rgba(255,255,255,0.05);
+  gap:8px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(6,11,20,0.8);
+  backdrop-filter:blur(12px);
+  padding:6px 14px;
+  cursor:pointer;
   font-size:13px;
+  font-weight:700;
+  color:#94a3b8;
+  transition:all 0.25s;
+}
+.langToggle:hover{
+  border-color:rgba(34,197,94,0.4);
+  background:rgba(34,197,94,0.08);
+  color:white;
+}
+.langToggle .langIcon{
+  font-size:15px;
 }
 
-.rank{ width:30px; }
-.name{ width:80px; font-weight:bold; }
-.date{ width:60px; font-size:11px; opacity:0.6; }
-.mode{ width:70px; }
-.level{ width:50px; }
-.score{ width:80px; text-align:right; color:gold; font-weight:bold; }
-
+/* === NAV BAR (game & gameover) === */
+.screenNav{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.navBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s;
+  font-family:'Inter',sans-serif;
+}
+.navBtn:hover{
+  border-color:rgba(34,197,94,0.4);
+  background:rgba(34,197,94,0.08);
+  color:white;
+  transform:translateY(-1px);
+}
+.menuLangRow{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  margin-bottom:20px;
+}
+.menuLangBtn{
+  width:38px;height:38px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);
+  font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:all 0.2s;
+  padding:0;
+}
+.menuLangBtn:hover,.menuLangBtn.activeLang{
+  border-color:rgba(34,197,94,0.5);
+  background:rgba(34,197,94,0.12);
+  transform:scale(1.08);
+}
 
 </style>
 </head>
 
 <body>
 
-<div id="loadingScreen">
-  <div class="logo">
-    MinMat
-    <span>Sayı Avı</span>
-  </div>
-</div>
-
 <!-- MENU -->
-
-
-<div id="lobbyScreen" class="screen">
-  <input id="playerName" placeholder="Adını gir..." />
-  <button onclick="confirmPlayer()">Kullanıcıyı Onayla</button>
-  <button onclick="startGame()">🎮 Oyna</button>
-  <button type="button" onclick="toggleSettings(event)">⚙️ Ayarlar</button>
-  
-  <button onclick="window.location.href='/'" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-top: 40px; width: 220px; font-weight: bold;">🏠 Ana Sayfaya Dön</button>
+<div id="menuScreen" class="screen active">
+  <div class="menuCard">
+    <div class="menuLangRow" id="menuLangRow">
+      <button class="menuLangBtn" onclick="setLang('tr')">🇹🇷</button>
+      <button class="menuLangBtn" onclick="setLang('en')">🇬🇧</button>
+      <button class="menuLangBtn" onclick="setLang('de')">🇩🇪</button>
+      <button class="menuLangBtn" onclick="setLang('fr')">🇫🇷</button>
+      <button class="menuLangBtn" onclick="setLang('es')">🇪🇸</button>
+    </div>
+    <div class="menuLogo">
+      <img src="icon.png" alt="MinMat">
+    </div>
+    <h1 class="menuTitle">MinMat</h1>
+    <p class="menuSub" id="menuSub">Sayı Avı</p>
+    <input
+      id="playerInput"
+      type="text"
+      maxlength="20"
+      placeholder="İsmini yaz..."
+    >
+    <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
+    <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
+  </div>
 </div>
 
+<!-- GAME -->
 <div id="gameScreen" class="screen">
+<div id="gameTitle">
 
-  <!-- 🔹 ÜST BAR -->
-<div id="gameTop">
-  <button onclick="goLobby()">🏠 Menü</button>
-  <button onclick="startGame()">🔄 Yeniden</button>
-  <button id="settingsBtn" onclick="toggleSettings(event)">⚙️</button>
+  <h2>MinMat</h2>
 
-  <div id="timeBox">⏱️ <span id="time">30</span></div>
+  <p id="gameSubtitle">Sayı Avı</p>
+
 </div>
+<div id="playerBar">
 
- 
+  <span id="playerText">👤 Oyuncu</span>
 
-  <!-- 🔹 OYUN ALANI -->
-  <div id="gameArea">
+  <span id="modeText">🎯 Topla</span>
 
-    <h2 class="gameTitle">
-  <img src="icon.png" class="titleIcon">
-  MinMat
-</h2>
+</div>
 <div id="topBar">
-  <span id="levelText"></span>
-  <span id="livesBox"></span>
- <span id="score"></span>
-   <span id="playerNameText"></span>
- 
 
-</div>
-    <div id="wrongBar">
-  <div id="wrongFill"></div>
-</div>
-  <div id="modeText">Mod: Topla</div>
-    <div id="grid"></div>
+  <div class="topRow">
+
+    <span id="score">⭐ 0</span>
+
+    <span id="time">⏱️ 30</span>
+
+    <span id="levelLabel">Tur 1</span>
+
+    <button id="pauseBtn"
+      onclick="togglePause()">
+      ⏸️
+    </button>
 
   </div>
 
-  <div id="effects"></div>
-  <div id="levelPopup">LEVEL 1</div>
+  <div class="topRow">
+
+    <span id="lives">❤️❤️❤️</span>
+
+    <span id="wrongBar">⚠️ 0/3</span>
+
+    <span id="combo">🔥 0</span>
+
+  </div>
 
 </div>
 
+<div id="modeBox">
+  <button id="modeBtn_add" onclick="setMode('add')">➕</button>
+  <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
+  <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
+  <button id="modeBtn_div" onclick="setMode('div')">/</button>
+  <button id="modeBtn_mix" onclick="setMode('mix')">🎲</button>
+</div>
+
+<div class="screenNav">
+  <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText">Menü</span></button>
+  <button class="navBtn langToggle" onclick="cycleLang()">
+    <span class="langIcon">🌐</span>
+    <span id="gameLangLabel">TR</span>
+  </button>
+</div>
+
+<div id="grid"></div>
+</div>
+<div id="levelEffect"></div>
+<!-- GAME OVER -->
 <div id="gameOverScreen" class="screen">
 
-  <h1>💀 Oyun Bitti</h1>
-<p>Oyuncu: <span id="finalName"></span></p>
-  <p>Skorun: <span id="finalScore">0</span></p>
-<div id="leaderboard"></div>
-  <button onclick="startGame()">🔄 Tekrar Oyna</button>
-  <button onclick="goLobby()">🏠 Menü</button>
-  
-</div>
-  
+  <h1 id="gameOverTitle">Oyun Bitti</h1>
 
-<!-- 🔹 AYAR PANELİ -->
-  <div id="settingsPanel">
+  <p><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
 
-    <h3>⚙️ Ayarlar</h3>
+  <div id="scoreFilters">
 
-    <div style="margin-top:10px;">
-      <strong>Dil / Language</strong><br>
-      <button onclick="setLang('tr')">TR</button>
-      <button onclick="setLang('en')">EN</button>
-      <button onclick="setLang('es')">ES</button>
-      <button onclick="setLang('fr')">FR</button>
-      <button onclick="setLang('de')">DE</button>
-    </div>
+    <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">
+      Hepsi
+    </button>
 
-    <div style="margin-top:10px;">
-      <strong>Kategori</strong><br>
-<button id="btnAdd" onclick="setMode('add')">Topla</button>
-<button id="btnSub" class="locked" onclick="setMode('sub')">Çıkar</button>
-<button id="btnMul" class="locked" onclick="setMode('mul')">Çarp</button>
-<button id="btnDiv" class="locked" onclick="setMode('div')">Böl</button>
-<button onclick="setMode('mix')">Karışık</button>
-    </div>
+    <button onclick="setLeaderboardFilter('add')">
+      ➕
+    </button>
 
-    <div style="margin-top:10px;">
-      <strong>Ses</strong><br>
-      <button onclick="toggleSound()">Aç / Kapat</button>
-    </div>
+    <button onclick="setLeaderboardFilter('sub')">
+      ➖
+    </button>
 
-    <button onclick="closeSettings()">Kapat</button>
+    <button onclick="setLeaderboardFilter('mul')">
+      ✖️
+    </button>
+
+    <button onclick="setLeaderboardFilter('div')">
+      /
+    </button>
+
+    <button onclick="setLeaderboardFilter('mix')">
+      🎲
+    </button>
 
   </div>
 
-<div id="unlockPopup">
+  <div id="leaderboard"></div>
 
-  🎉 Yeni kategori açıldı!
+  <button class="retryBtn" onclick="startGame()" id="btnRetry">
+    🔄 Bir Daha
+  </button>
+
+  <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
+    <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText2">Menü</span></button>
+    <button class="navBtn langToggle" onclick="cycleLang()">
+      <span class="langIcon">🌐</span>
+      <span id="goLangLabel">TR</span>
+    </button>
+  </div>
+
 </div>
+<div id="effects"></div>
 <script>
-window.onerror = function(msg, url, line){
-  alert("HATA: " + msg + " | satır: " + line);
-};
-
+/* ===== DIL / LANGUAGE ===== */
 let currentLang = localStorage.getItem("wc2026-locale") || localStorage.getItem("minmat_lang") || "tr";
-const LOCALE_COOKIE = "wc2026-locale";
 
 const translations = {
   tr: {
-    confirmPlayer: "Kullanıcıyı Onayla",
-    play: "🎮 Oyna",
-    settings: "⚙️ Ayarlar",
-    backHome: "🏠 Ana Sayfaya Dön",
-    menu: "🏠 Menü",
-    restart: "🔄 Yeniden",
-    level: "Seviye",
-    gameOver: "💀 Oyun Bitti",
-    player: "Oyuncu",
-    scoreLabel: "Skorun",
-    playAgain: "🔄 Tekrar Oyna",
-    settingsTitle: "⚙️ Ayarlar",
-    lang: "Dil",
-    category: "Kategori",
-    sound: "Ses",
-    close: "Kapat",
-    add: "Toplama",
-    sub: "Çıkarma",
-    mul: "Çarpma",
-    div: "Bölme",
-    mix: "Karışık",
-    unlock: "Yeni kategori açıldı!",
-    soundAlert: "Ses: ",
-    on: "Açık",
-    off: "Kapalı",
-    placeholder: "Adını gir...",
-    modeAlert: "Önce {prev} Level 3 olmalı!",
-    score: "Skor"
+    placeholder:"İsmini yaz...",
+    start:"Başla",
+    home:"🏠 Ana Sayfaya Dön",
+    gameOver:"Oyun Bitti",
+    score:"Puan",
+    again:"🔄 Bir Daha",
+    leaderAll:"🏆 En İyi Puanlar",
+    leaderAdd:"🏆 Topla Puanları",
+    leaderSub:"🏆 Çıkar Puanları",
+    leaderMul:"🏆 Çarp Puanları",
+    leaderDiv:"🏆 Böl Puanları",
+    leaderMix:"🏆 4 İşlem Puanları",
+    colName:"Ad",
+    colDate:"Tarih",
+    colCat:"Kategori",
+    colRound:"Tur",
+    colScore:"Puan",
+    modeAdd:"Toplama",
+    modeSub:"Çıkarma",
+    modeMul:"Çarpma",
+    modeDiv:"Bölme",
+    modeMix:"4 İşlem",
+    shortAdd:"Topla",
+    shortSub:"Çıkar",
+    shortMul:"Çarp",
+    shortDiv:"Böl",
+    shortMix:"4 İşlem",
+    round:"Tur",
+    nameErr:"İsim en az 3 karakter olmalı",
+    guest:"Misafir",
+    menu:"Menü",
+    subtitle:"Sayı Avı",
+    all:"Hepsi"
   },
   en: {
-    confirmPlayer: "Confirm User",
-    play: "🎮 Play",
-    settings: "⚙️ Settings",
-    backHome: "🏠 Back to Home",
-    menu: "🏠 Menu",
-    restart: "🔄 Restart",
-    level: "Level",
-    gameOver: "💀 Game Over",
-    player: "Player",
-    scoreLabel: "Your Score",
-    playAgain: "🔄 Play Again",
-    settingsTitle: "⚙️ Settings",
-    lang: "Language",
-    category: "Category",
-    sound: "Sound",
-    close: "Close",
-    add: "Addition",
-    sub: "Subtraction",
-    mul: "Multiplication",
-    div: "Division",
-    mix: "Mixed",
-    unlock: "New category unlocked!",
-    soundAlert: "Sound: ",
-    on: "On",
-    off: "Off",
-    placeholder: "Enter name...",
-    modeAlert: "First {prev} must be Level 3!",
-    score: "Score"
-  },
-  es: {
-    confirmPlayer: "Confirmar Usuario",
-    play: "🎮 Jugar",
-    settings: "⚙️ Ajustes",
-    backHome: "🏠 Ir al Inicio",
-    menu: "🏠 Menú",
-    restart: "🔄 Reiniciar",
-    level: "Nivel",
-    gameOver: "💀 Juego Terminado",
-    player: "Jugador",
-    scoreLabel: "Tu Puntuación",
-    playAgain: "🔄 Jugar de Nuevo",
-    settingsTitle: "⚙️ Ajustes",
-    lang: "Idioma",
-    category: "Categoría",
-    sound: "Sonido",
-    close: "Cerrar",
-    add: "Suma",
-    sub: "Resta",
-    mul: "Multiplicación",
-    div: "División",
-    mix: "Mezcla",
-    unlock: "¡Nueva categoría desbloqueada!",
-    soundAlert: "Sonido: ",
-    on: "Activado",
-    off: "Desactivado",
-    placeholder: "Ingresa nombre...",
-    modeAlert: "¡Primero {prev} debe ser Nivel 3!",
-    score: "Puntuación"
-  },
-  fr: {
-    confirmPlayer: "Confirmer l'utilisateur",
-    play: "🎮 Jouer",
-    settings: "⚙️ Paramètres",
-    backHome: "🏠 Retour à l'accueil",
-    menu: "🏠 Menu",
-    restart: "🔄 Recommencer",
-    level: "Niveau",
-    gameOver: "💀 Jeu Terminé",
-    player: "Joueur",
-    scoreLabel: "Votre Score",
-    playAgain: "🔄 Rejouer",
-    settingsTitle: "⚙️ Paramètres",
-    lang: "Langue",
-    category: "Catégorie",
-    sound: "Son",
-    close: "Fermer",
-    add: "Addition",
-    sub: "Soustraction",
-    mul: "Multiplication",
-    div: "Division",
-    mix: "Mélange",
-    unlock: "Nouvelle catégorie débloquée !",
-    soundAlert: "Son : ",
-    on: "Activé",
-    off: "Désactivé",
-    placeholder: "Entrez un nom...",
-    modeAlert: "D'abord {prev} doit être Niveau 3 !",
-    score: "Score"
+    placeholder:"Enter your name...",
+    start:"Start",
+    home:"🏠 Back to Home",
+    gameOver:"Game Over",
+    score:"Score",
+    again:"🔄 Play Again",
+    leaderAll:"🏆 Best Scores",
+    leaderAdd:"🏆 Addition Scores",
+    leaderSub:"🏆 Subtraction Scores",
+    leaderMul:"🏆 Multiplication Scores",
+    leaderDiv:"🏆 Division Scores",
+    leaderMix:"🏆 Mixed Scores",
+    colName:"Name",
+    colDate:"Date",
+    colCat:"Category",
+    colRound:"Round",
+    colScore:"Score",
+    modeAdd:"Addition",
+    modeSub:"Subtraction",
+    modeMul:"Multiplication",
+    modeDiv:"Division",
+    modeMix:"Mixed",
+    shortAdd:"Add",
+    shortSub:"Sub",
+    shortMul:"Mul",
+    shortDiv:"Div",
+    shortMix:"Mixed",
+    round:"Round",
+    nameErr:"Name must be at least 3 characters",
+    guest:"Guest",
+    menu:"Menu",
+    subtitle:"Number Hunt",
+    all:"All"
   },
   de: {
-    confirmPlayer: "Benutzer bestätigen",
-    play: "🎮 Spielen",
-    settings: "⚙️ Einstellungen",
-    backHome: "🏠 Zur Startseite",
-    menu: "🏠 Menü",
-    restart: "🔄 Neustart",
-    level: "Level",
-    gameOver: "💀 Spiel vorbei",
-    player: "Spieler",
-    scoreLabel: "Dein Punktestand",
-    playAgain: "🔄 Erneut spielen",
-    settingsTitle: "⚙️ Einstellungen",
-    lang: "Sprache",
-    category: "Kategorie",
-    sound: "Ton",
-    close: "Schließen",
-    add: "Addition",
-    sub: "Subtraktion",
-    mul: "Multiplikation",
-    div: "Division",
-    mix: "Mischung",
-    unlock: "Neue Kategorie freigeschaltet!",
-    soundAlert: "Ton: ",
-    on: "An",
-    off: "Aus",
-    placeholder: "Namen eingeben...",
-    modeAlert: "Zuerst muss {prev} Level 3 sein!",
-    score: "Punkte"
+    placeholder:"Name eingeben...",
+    start:"Starten",
+    home:"🏠 Zurück zur Startseite",
+    gameOver:"Spiel Vorbei",
+    score:"Punkte",
+    again:"🔄 Nochmal",
+    leaderAll:"🏆 Beste Punkte",
+    leaderAdd:"🏆 Addition Punkte",
+    leaderSub:"🏆 Subtraktion Punkte",
+    leaderMul:"🏆 Multiplikation Punkte",
+    leaderDiv:"🏆 Division Punkte",
+    leaderMix:"🏆 Gemischt Punkte",
+    colName:"Name",
+    colDate:"Datum",
+    colCat:"Kategorie",
+    colRound:"Runde",
+    colScore:"Punkte",
+    modeAdd:"Addition",
+    modeSub:"Subtraktion",
+    modeMul:"Multiplikation",
+    modeDiv:"Division",
+    modeMix:"Gemischt",
+    shortAdd:"Add",
+    shortSub:"Sub",
+    shortMul:"Mul",
+    shortDiv:"Div",
+    shortMix:"Mix",
+    round:"Runde",
+    nameErr:"Name muss mindestens 3 Zeichen haben",
+    guest:"Gast",
+    menu:"Menü",
+    subtitle:"Zahlen Jagd",
+    all:"Alle"
+  },
+  fr: {
+    placeholder:"Entrez votre nom...",
+    start:"Commencer",
+    home:"🏠 Retour à l'accueil",
+    gameOver:"Jeu Terminé",
+    score:"Score",
+    again:"🔄 Rejouer",
+    leaderAll:"🏆 Meilleurs Scores",
+    leaderAdd:"🏆 Scores Addition",
+    leaderSub:"🏆 Scores Soustraction",
+    leaderMul:"🏆 Scores Multiplication",
+    leaderDiv:"🏆 Scores Division",
+    leaderMix:"🏆 Scores Mixte",
+    colName:"Nom",
+    colDate:"Date",
+    colCat:"Catégorie",
+    colRound:"Tour",
+    colScore:"Score",
+    modeAdd:"Addition",
+    modeSub:"Soustraction",
+    modeMul:"Multiplication",
+    modeDiv:"Division",
+    modeMix:"Mixte",
+    shortAdd:"Add",
+    shortSub:"Sub",
+    shortMul:"Mul",
+    shortDiv:"Div",
+    shortMix:"Mix",
+    round:"Tour",
+    nameErr:"Le nom doit comporter au moins 3 caractères",
+    guest:"Invité",
+    menu:"Menu",
+    subtitle:"Chasse aux Nombres",
+    all:"Tous"
+  },
+  es: {
+    placeholder:"Ingresa tu nombre...",
+    start:"Comenzar",
+    home:"🏠 Ir al Inicio",
+    gameOver:"Juego Terminado",
+    score:"Puntuación",
+    again:"🔄 Jugar de Nuevo",
+    leaderAll:"🏆 Mejores Puntuaciones",
+    leaderAdd:"🏆 Puntos Suma",
+    leaderSub:"🏆 Puntos Resta",
+    leaderMul:"🏆 Puntos Multiplicación",
+    leaderDiv:"🏆 Puntos División",
+    leaderMix:"🏆 Puntos Mixto",
+    colName:"Nombre",
+    colDate:"Fecha",
+    colCat:"Categoría",
+    colRound:"Ronda",
+    colScore:"Puntos",
+    modeAdd:"Suma",
+    modeSub:"Resta",
+    modeMul:"Multiplicación",
+    modeDiv:"División",
+    modeMix:"Mixto",
+    shortAdd:"Suma",
+    shortSub:"Resta",
+    shortMul:"Mult",
+    shortDiv:"Div",
+    shortMix:"Mix",
+    round:"Ronda",
+    nameErr:"El nombre debe tener al menos 3 caracteres",
+    guest:"Invitado",
+    menu:"Menú",
+    subtitle:"Caza de Números",
+    all:"Todos"
   }
 };
 
-function setLang(lang) {
+function t(key){
+  let lang = translations[currentLang] || translations["tr"];
+  return lang[key] || translations["tr"][key] || key;
+}
+
+function setLang(lang){
   currentLang = lang;
+  localStorage.setItem("wc2026-locale", lang);
   localStorage.setItem("minmat_lang", lang);
-  localStorage.setItem(LOCALE_COOKIE, lang);
-  document.cookie = `${LOCALE_COOKIE}=${lang};path=/;max-age=31536000;SameSite=Lax`;
-  updateTranslations();
+  applyLang();
 }
 
-function updateTranslations() {
-  const t = translations[currentLang];
-  
-  // Lobby
-  const playerNameInput = document.getElementById("playerName");
-  if (playerNameInput) playerNameInput.placeholder = t.placeholder;
-  
-  const confirmBtn = document.querySelector("#lobbyScreen button:nth-of-type(1)");
-  if (confirmBtn) confirmBtn.innerText = t.confirmPlayer;
-  
-  const playBtn = document.querySelector("#lobbyScreen button:nth-of-type(2)");
-  if (playBtn) playBtn.innerText = t.play;
-  
-  const lobbySettingsBtn = document.querySelector("#lobbyScreen button:nth-of-type(3)");
-  if (lobbySettingsBtn) lobbySettingsBtn.innerText = t.settings;
-  
-  const backHomeBtn = document.querySelector("#lobbyScreen button:nth-of-type(4)");
-  if (backHomeBtn) backHomeBtn.innerText = t.backHome;
+function applyLang(){
+  let pi = document.getElementById("playerInput");
+  if(pi) pi.placeholder = t("placeholder");
+  let bs = document.getElementById("btnStart");
+  if(bs) bs.innerText = t("start");
+  let bh = document.getElementById("btnHome");
+  if(bh) bh.innerText = t("home");
+  let go = document.getElementById("gameOverTitle");
+  if(go) go.innerText = t("gameOver");
+  let ra = document.getElementById("btnRetry");
+  if(ra) ra.innerText = t("again");
 
-  // Game Screen
-  const menuBtn = document.querySelector("#gameTop button:nth-of-type(1)");
-  if (menuBtn) menuBtn.innerText = t.menu;
-  
-  const restartBtn = document.querySelector("#gameTop button:nth-of-type(2)");
-  if (restartBtn) restartBtn.innerText = t.restart;
+  // new elements
+  let ms = document.getElementById("menuSub");
+  if(ms) ms.innerText = t("subtitle");
+  let nm = document.getElementById("navMenuText");
+  if(nm) nm.innerText = t("menu");
+  let nm2 = document.getElementById("navMenuText2");
+  if(nm2) nm2.innerText = t("menu");
 
-  // Settings Panel
-  const settingsH3 = document.querySelector("#settingsPanel h3");
-  if (settingsH3) settingsH3.innerText = t.settingsTitle;
-  
-  const settingsDivs = document.querySelectorAll("#settingsPanel div strong");
-  if (settingsDivs[0]) settingsDivs[0].innerText = t.lang;
-  if (settingsDivs[1]) settingsDivs[1].innerText = t.category;
-  if (settingsDivs[2]) settingsDivs[2].innerText = t.sound;
-  
-  if (document.getElementById("btnAdd")) document.getElementById("btnAdd").innerText = t.add;
-  if (document.getElementById("btnSub")) document.getElementById("btnSub").innerText = t.sub;
-  if (document.getElementById("btnMul")) document.getElementById("btnMul").innerText = t.mul;
-  if (document.getElementById("btnDiv")) document.getElementById("btnDiv").innerText = t.div;
-  const mixBtn = document.querySelector("#settingsPanel button[onclick=\"setMode('mix')\"]");
-  if (mixBtn) mixBtn.innerText = t.mix;
-  
-  const soundBtn = document.querySelector("#settingsPanel button[onclick=\"toggleSound()\"]");
-  if (soundBtn) soundBtn.innerText = t.sound + ": " + (soundOn ? t.on : t.off);
+  let langUp = currentLang.toUpperCase();
+  let gl = document.getElementById("gameLangLabel");
+  if(gl) gl.innerText = langUp;
+  let gol = document.getElementById("goLangLabel");
+  if(gol) gol.innerText = langUp;
 
-  const closeBtn = document.querySelector("#settingsPanel button[onclick=\"closeSettings()\"]");
-  if (closeBtn) closeBtn.innerText = t.close;
+  // game screen elements
+  let gs = document.getElementById("gameSubtitle");
+  if(gs) gs.innerText = t("subtitle");
+  let mt = document.getElementById("modeText");
+  if(mt) mt.innerText = "🎯 " + shortModeName(gameMode);
 
-  // Game Over Screen
-  const gameOverH1 = document.querySelector("#gameOverScreen h1");
-  if (gameOverH1) gameOverH1.innerText = t.gameOver;
-  
-  const finalNameP = document.querySelector("#gameOverScreen p:nth-of-type(1)");
-  if (finalNameP) finalNameP.innerHTML = t.player + ": <span id=\"finalName\">" + playerName + "</span>";
-  
-  const finalScoreP = document.querySelector("#gameOverScreen p:nth-of-type(2)");
-  if (finalScoreP) finalScoreP.innerHTML = t.scoreLabel + ": <span id=\"finalScore\">" + score + "</span>";
-  
-  const playAgainBtn = document.querySelector("#gameOverScreen button:nth-of-type(1)");
-  if (playAgainBtn) playAgainBtn.innerText = t.playAgain;
-  
-  const gameOverMenuBtn = document.querySelector("#gameOverScreen button:nth-of-type(2)");
-  if (gameOverMenuBtn) gameOverMenuBtn.innerText = t.menu;
+  // highlight active lang button in menu
+  document.querySelectorAll(".menuLangBtn").forEach((btn,i) => {
+    let langs = ["tr","en","de","fr","es"];
+    if(langs[i] === currentLang){
+      btn.classList.add("activeLang");
+    } else {
+      btn.classList.remove("activeLang");
+    }
+  });
 
-  updateModeText();
-  updateLevelUI();
+  // game over screen elements
+  let got = document.getElementById("gameOverTitle");
+  if(got) got.innerText = t("gameOver");
+  let sl = document.getElementById("scoreLabel");
+  if(sl) sl.innerText = t("score");
+  let fa = document.getElementById("btnFilterAll");
+  if(fa) fa.innerText = t("all");
+
+  // re-render leaderboard if visible
+  if(document.getElementById("gameOverScreen").classList.contains("active")){
+    renderLeaderboard();
+  }
 }
 
-let players = JSON.parse(localStorage.getItem("players")) || {};
+document.addEventListener("DOMContentLoaded", applyLang);
 
+function backToMenu(){
+  clearInterval(timer);
+  isGameOver = true;
+  show("menuScreen");
+}
 
-let playerName = "Misafir";
-  let level=1, score=0, combo=0, lives=3;
-  let wrongStreak = 0;
-let timeLeft=30, timer;
-let gameMode = "add"; // add, sub, mul, div, mix
-let cards=[];
-let first=null, second=null;
-let lock=false, matched=0;
+function cycleLang(){
+  let langs = ["tr","en","de","fr","es"];
+  let idx = langs.indexOf(currentLang);
+  let next = langs[(idx + 1) % langs.length];
+  setLang(next);
+}
+/* ========================= */
+
+/* GLOBAL */
+let score=0;
+let lives=3;
+let level=1;
+
 let wrongCount = 0;
-let progress = {
-  add: 1,
-  sub: 0,
-  mul: 0,
-  div: 0
-};
+let gameMode = "add"; // add, sub, mul, div
+let first=null;
+let lock=false;
+
+let matched=0;
+let totalPairs=0;
+let leaderboardFilter = "all";
+let timeLeft=0;
+let timer=null;
+let combo = 0;
 let isGameOver = false;
+let isGameOverSaved = false;
+let playerName = "Adsız";
+let isPaused = false;
 
-let saved = JSON.parse(localStorage.getItem("progress"));
-if(saved){
-  progress = saved;
+/* === UNLOCK SİSTEMİ === */
+function getMaxLevel(mode){
+  return parseInt(localStorage.getItem("minmat_maxLevel_" + mode)) || 1;
 }
-function rand(min, max){
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+
+function updateMaxLevel(mode, lvl){
+  let current = getMaxLevel(mode);
+  if(lvl > current){
+    localStorage.setItem("minmat_maxLevel_" + mode, lvl);
+    updateModeButtons();
+  }
 }
 
-/* =====================
-   SORU
-===================== */
-function createQuestion(){
+function isModeUnlocked(mode){
+  if(mode === "add") return true;
+  if(mode === "sub") return getMaxLevel("add") >= 4;
+  if(mode === "mul") return getMaxLevel("sub") >= 4;
+  if(mode === "div") return getMaxLevel("mul") >= 4;
+  if(mode === "mix") return getMaxLevel("div") >= 4;
+  return false;
+}
 
-  let min = 1;
-  let max = level * 5;// 🔥 level ile artan zorluk
-
-  let mode = gameMode;
-
-  // 🔀 MIX MOD
-  if(mode === "mix"){
-    let modes = ["add","sub","mul","div"];
-    let unlocked = modes.filter(m => isModeUnlocked(m));
-
-    if(unlocked.length === 0){
-      mode = "add";
-    }else{
-      mode = unlocked[Math.floor(Math.random() * unlocked.length)];
+function updateModeButtons(){
+  let modes = ["add","sub","mul","div","mix"];
+  modes.forEach(m => {
+    let btn = document.getElementById("modeBtn_" + m);
+    if(!btn) return;
+    if(isModeUnlocked(m)){
+      btn.classList.remove("modeLocked");
+      btn.disabled = false;
+    } else {
+      btn.classList.add("modeLocked");
+      btn.disabled = true;
     }
-  }
-
-  let a, b;
-
-  // ➕ TOPLAMA
-  if(mode === "add"){
-    a = rand(min, max);
-    b = rand(min, max);
-  }
-
-  // ➖ ÇIKARMA
-  else if(mode === "sub"){
-    a = rand(min, max);
-    b = rand(min, max);
-
-    if(a < b){
-      [a, b] = [b, a]; // negatif engelle
+    // aktif mod vurgusu
+    if(m === gameMode){
+      btn.classList.add("modeActive");
+    } else {
+      btn.classList.remove("modeActive");
     }
-  }
-
-  // ✖ ÇARPMA
-  else if(mode === "mul"){
-    let m;
-
-    if(level <= 2) m = 5;
-    else if(level <= 4) m = 6;
-    else if(level <= 6) m = 8;
-    else m = 10;
-
-    a = rand(1, m);
-    b = rand(1, m);
-  }
-
-  // ➗ BÖLME
-  else if(mode === "div"){
-    let m = 5 + level;
-
-    b = rand(1, m);
-    a = b * rand(1, m); // tam bölünsün
-  }
-
-  return {a, b, mode};
+  });
 }
-function buildQuestion(a,b,mode){
-
-  // ➕ TOPLAMA
-  if(mode === "add"){
-    return {q: `${a} + ${b}`, ans: a + b};
-  }
-
-  // ➖ ÇIKARMA
-  if(mode === "sub"){
-    return {q: `${a} - ${b}`, ans: a - b};
-  }
-
-  // ✖ ÇARPMA
-  if(mode === "mul"){
-    return {q: `${a} × ${b}`, ans: a * b};
-  }
-
-  // ➗ BÖLME
-  if(mode === "div"){
-    return {q: `${a} / ${b}`, ans: a / b};
-    
-  }
+/* ekran */
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
-/* =====================
-   KARTLAR
-===================== */
+
+/* oyun başlat */
+function startGame(){
+  playerName =
+  document.getElementById("playerInput").value.trim();
+
+if(playerName.length < 3){
+  alert(t("nameErr"));
+  return;
+}
+  isGameOver = false;
+  isGameOverSaved = false;
+  score=0;
+lives = 3;
+updateLivesUI();
+  level=1;
+document.getElementById("playerText")
+  .innerText = "👤 " + playerName;
+
+document.getElementById("modeText")
+  .innerText = "🎯 " + shortModeName(gameMode);
+  startLevel();
+  show("gameScreen");
+  updateModeButtons();
+}
+
+/* level başlat */
+function startLevel(){
+  lock = false;
+  first = null;
+  matched=0;
+
+  createCards();
+let pairs = totalPairs / 2;
+
+// her eşleşme için süre (level arttıkça azalır)
+let timePerPair = Math.max(8 - level * 0.5, 4);
+
+timeLeft = Math.floor(pairs * timePerPair);
+
+updateUI();
+startTimer();
+
+showEffect(t("round") + " " + level);
+  // süre (level arttıkça zorlaşır)
+  
+  if(level === 1){
+  timeLeft = 30;
+}else{
+  timeLeft += 3;
+}
+
+  updateUI();
+  startTimer();
+}
+
+/* timer */
+function startTimer(){
+
+  clearInterval(timer);
+
+  timer = setInterval(()=>{
+timeLeft--;
+
+updateUI();
+
+let timeEl = document.getElementById("time");
+
+if(timeLeft <= 5){
+  timeEl.classList.add("timeWarning");
+}else{
+  timeEl.classList.remove("timeWarning");
+}
+
+if(timeLeft <= 0){
+
+  clearInterval(timer);
+
+  timeLeft = 0;
+
+  updateUI();
+
+  console.log("GAME OVER");
+
+  gameOver();
+
+  return;
+}
+  },1000);
+}
+
+/* UI */
+function updateUI(){
+  document.getElementById("score").innerText="⭐ "+score;
+  document.getElementById("levelLabel").innerText=t("round")+" "+level;
+  document.getElementById("time").innerText="⏱️ "+timeLeft;
+  document.getElementById("combo").innerText="🔥 " + combo;
+
+  let hearts="";
+  for(let i=0;i<lives;i++) hearts+="❤️";
+  document.getElementById("lives").innerText=hearts;
+}
+
+/* kart oluştur */
 function createCards(){
-
+let a,b,question,answer;
   let pairCount = level + 2;
+  totalPairs = pairCount * 2;
 
   let arr = [];
-  let used = new Set();
+let used = new Set();
+  
+for(let i=0;i<pairCount;i++){
+let currentMode = gameMode;
 
-  for(let i=0; i<pairCount; i++){
+if(gameMode === "mix"){
 
-    let q;
-    let tries = 0;
+  let modes = ["add","sub","mul","div"];
 
-    do{
-      let nums = createQuestion();
-      q = buildQuestion(nums.a, nums.b, nums.mode);
-      tries++;
-    }while(used.has(q.ans) && tries < 20);
+  currentMode =
+    modes[Math.floor(Math.random()*modes.length)];
+}
+  let tries = 0;
 
-    if(!q) continue;
+  do{
+    let currentMode = gameMode;
 
-    used.add(q.ans);
+if(gameMode === "mix"){
 
-    arr.push({text:q.q, match:q.ans});
-    arr.push({text:q.ans, match:q.q});
+  let modes = ["add","sub","mul","div"];
+
+  currentMode =
+    modes[Math.floor(Math.random()*modes.length)];
+}
+    if(currentMode === "add"){
+let max = level * 5;
+
+if(max > 50){
+  max = 50;
+}
+
+a = rand(1,max);
+b = rand(1,max);
+      question = a + " + " + b;
+      answer = a + b;
+    }
+    else if(currentMode === "sub"){
+      a = rand(1, level*5);
+      b = rand(1, level*5);
+      if(a < b){ let t=a; a=b; b=t; }
+      question = a + " - " + b;
+      answer = a - b;
+    }
+    else if(currentMode === "mul"){
+let mulMax = 3 + level * 2;
+
+if(mulMax > 12){
+  mulMax = 12;
+}
+
+a = rand(1,mulMax);
+b = rand(1,mulMax);
+      question = a + " × " + b;
+      answer = a * b;
+    }
+    else if(currentMode === "div"){
+
+  let divMax = 3 + level;
+
+  if(divMax > 12){
+    divMax = 12;
   }
 
-  cards = arr.sort(()=>0.5 - Math.random());
+  answer = rand(1,divMax);
 
-  let cols = Math.ceil(Math.sqrt(pairCount * 2));
-  document.getElementById("grid").style.gridTemplateColumns = `repeat(${cols},70px)`;
-}
-/* =====================
-   RENDER
-===================== */
-function render(){
+  b = rand(1,divMax);
 
-  let g=document.getElementById("grid");
-  g.style.display = "grid";
-  g.innerHTML="";
+  a = answer * b;
 
-  cards.forEach(c=>{
-
-    let d=document.createElement("div");
-    d.className="card";
-
-d.innerHTML=`
-  <div class="inner">
-    <div class="front"></div>
-    <div class="back">${c.text}</div>
-  </div>
-`;
-
-    d.onclick=()=>flip(d,c);
-
-    g.appendChild(d);
-
-    c.div = d;
-  });
-  
+  question = a + " / " + b;
 }
 
+    tries++;
+
+  }while(used.has(answer) && tries < 50);
+
+  used.add(answer);
+
+  arr.push({text:question, match:answer});
+  arr.push({text:answer, match:question});
+}
+
+  arr.sort(()=>0.5-Math.random());
+
+  let grid=document.getElementById("grid");
+  grid.innerHTML="";
+
+  let cols = Math.ceil(Math.sqrt(arr.length));
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+let size = Math.max(70 - level*2, 40);
+document.querySelectorAll(".card").forEach(c=>{
+  c.style.width = size + "px";
+  c.style.height = size + "px";
+});
+
+lock = false;
+first = null;
+arr.forEach(card=>{
+  let div=document.createElement("div");
+  div.className="card";
+
+  div.innerHTML = `
+    <div class="inner">
+      <div class="front"></div>
+      <div class="back">${card.text}</div>
+    </div>
+  `;
+
+  div.onclick=()=>flip(div,card);
+
+  grid.appendChild(div);
+});
+}
+
+/* flip */
 function flip(div,card){
-    if(lock) return;
 if(isGameOver) return;
+  if(isPaused) return;
   if(lock || div.classList.contains("open")) return;
 
   div.classList.add("open");
 
   if(!first){
-    first = {div, card};
+    first = {div,card};
     return;
   }
 
-  if(!second){
-    second = {div, card};
-    lock = true;
+  lock = true;
 
-    setTimeout(check,500);
-  }
-}
+  let match =
+    String(first.card.match) === String(card.text) ||
+    String(card.match) === String(first.card.text);
 
-function check(){
-  if(isGameOver) return;
+  // ✅ DOĞRU EŞLEŞME
+  if(match){
 
-  let f = first;
-  let s = second;
-
-  let isMatch =
-    String(f.card.match) === String(s.card.text) ||
-    String(s.card.match) === String(f.card.text);
-
-  // 🔥 EŞLEŞME VAR
-  if(isMatch){
-
-    f.div.classList.add("matched");
-    s.div.classList.add("matched");
-
-    matched += 2;
     combo++;
-// 🔥 COMBO EFEKTİ
-if(combo > 1){
-  showScoreEffect("🔥 x" + combo);
-}
-    // ❤️ CAN BONUS (TEK YERDE)
+wrongCount = 0;
+
+document.getElementById("wrongBar")
+  .innerText = "⚠️ 0/3";
+    // ❤️ CAN BONUS
     if((combo === 4 || combo === 7 || combo === 9) && lives < 5){
       lives++;
-      updateLivesUI();
-      showScoreEffect("+❤️");
+      animateLives();
     }
 
+    // 🔥 KOMBO
+    if(combo >= 3){
+      showEffect("🔥 KOMBO x" + combo);
+    }
+
+    let baseScore = 10;
+
+if(gameMode === "sub"){
+  baseScore = 11;
+}
+else if(gameMode === "mul"){
+  baseScore = 12;
+}
+else if(gameMode === "div"){
+  baseScore = 13;
+}
+else if(gameMode === "mix"){
+  baseScore = 15;
+}
+
+let comboBonus =
+  Math.max(combo - 1, 0);
+
+let gained =
+  baseScore +
+  level +
+  comboBonus;
+
+score += gained;
+    matched += 2;
+
+    // 🔄 yanlış sayacı sıfırla
     wrongCount = 0;
-updateWrongBar();
 
-    // 🎯 PUAN
-    let basePoint = getCardBasePoint(gameMode);
-    let comboBonus = Math.min(combo * 5, 25);
-    let gained = (basePoint + comboBonus) * level;
+    reset();
 
-    score += gained;
-    showScoreEffect("+" + gained);
-
-    // 🎁 ÖZEL KART
-    applySpecial(f.card.special);
-
-    // 🏁 LEVEL BİTTİ
-    if(matched === cards.length){
-
+    if(matched === totalPairs){
+      clearInterval(timer);
       setTimeout(()=>{
-
-        let timeBonus = timeLeft * 5;
-        let levelBonus = level * 50;
-
-        score += timeBonus + levelBonus;
-
-        showScoreEffect("+" + timeBonus + " ⏱️");
-        showScoreEffect("+" + levelBonus + " ⭐");
-
-        // 🔥 LEVEL SİSTEMİ
-        let prev = progress[gameMode] || 1; // 🔥 eski level
-level++;
-
-let now = level;
-
-progress[gameMode] = now;
-checkUnlocks();
-// 🔓 KİLİT AÇMA (LEVEL 3 BİTİNCE)
-if(gameMode === "add" && prev < 3 && now === 4){
-  showUnlock("Yeni kategori açıldı: Çıkarma!");
-}
-
-if(gameMode === "sub" && prev < 3 && now === 4){
-  showUnlock("Yeni kategori açıldı: Çarpma!");
-}
-
-if(gameMode === "mul" && prev < 3 && now === 4){
-  showUnlock("Yeni kategori açıldı: Bölme!");
-}
-
-localStorage.setItem("players", JSON.stringify(players));
-
-//3 level = progress[gameMode];
-updateLevelUI();
-        showLevelPopup();
-        updateCategoryUI();
+        level++;
+        updateMaxLevel(gameMode, level);
+        showLevelEffect();
         startLevel();
-
       },500);
     }
 
-    // 🔥 RESET (eşleşme sonrası)
-    first = null;
-    second = null;
-    lock = false;
   }
 
-  // ❌ EŞLEŞME YOK
-  else {
+  // ❌ YANLIŞ EŞLEŞME
+  else{
 
-    lock = true;
+    combo = 0;
+
+    wrongCount++;
+document.getElementById("wrongBar")
+  .innerText =
+  "⚠️ " + wrongCount + "/3";
+    if(wrongCount >= 3){
+      lives--;
+      wrongCount = 0;
+      document.getElementById("wrongBar")
+  .innerText = "⚠️ 0/3";
+      animateLives();
+    }
 
     setTimeout(()=>{
 
-      f.div.classList.remove("open");
-      s.div.classList.remove("open");
+      div.classList.remove("open");
+      first.div.classList.remove("open");
 
-      combo = 0;
-            score -= 3;
-      showScoreEffect("-3");
-
-      wrongCount++;
-updateWrongBar();
-
-if(wrongCount >= 3){
-  lives--;
-  updateLivesUI();
-  showScoreEffect("-❤️");
-
-  wrongCount = 0;
-  updateWrongBar();
-}
-      // ❤️ CAN AZALT
-
-
-      // 💀 GAME OVER
       if(lives <= 0){
-        first = null;
-        second = null;
-        lock = false;
         gameOver();
         return;
       }
 
-      // 🔥 RESET
-      first = null;
-      second = null;
-      lock = false;
+      reset();
 
-    },800);
-
-    return;
+    },600);
   }
 
-  // 🔄 UI GÜNCELLE
-  document.getElementById("score").innerText = "⭐ " + score;
-  
-}
-function startLevel(){
-
-  clearInterval(timer); // 🔥 eski timerı durdur
-
-  cards = [];
-  matched = 0;
-  combo = 0;
-  wrongCount = 0;
-
-  let pairs = level + 2;
-
-  createCards(pairs); // 🔥 önce kartlar
-
-  // 🔥 sonra süre hesapla
-  let timePerMatch = Math.max(9 - (level * 0.5), 5);
-  timeLeft = Math.floor((cards.length / 2) * timePerMatch);
-
-  updateTimeUI(); // 🔥 süreyi ekrana bas
-
-  startTimer();   // 🔥 EN SON timer başlasın
-
-  render();
+  updateUI();
 }
 
-function startGame(){
-
-  // 🔥 ekranı aç
-  showScreen("gameScreen");
-  document.getElementById("gameOverScreen").style.display = "none";
-
-  document.getElementById("playerNameText").innerText = playerName;
-
-  // 🔥 oyun state reset
-  resetGame();
-
-  // 🔥 level başlat
-  startLevel();
-
-  document.getElementById("grid").style.display = "grid";
-
-  console.log("START GAME");
-}
-function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>{
-    s.style.display = "none";
-  });
-
-  document.getElementById(id).style.display = "flex";
+/* reset */
+function reset(){
+  first=null;
+  lock=false;
 }
 
-
-
-function goLobby(){
-  showScreen("lobbyScreen");
-}
-
-function goGame(){
-  showScreen("gameScreen");
-}
-window.onload = function(){
-  let loading = document.getElementById("loadingScreen");
-
-  updateTranslations(); // Başlangıçta dili uygula
-
-  if(loading){
-    setTimeout(()=>{
-      loading.style.display = "none";
-      goLobby(); // 🔥 loading bittikten sonra
-    },1000);
-  }else{
-    goLobby();
-  }
-};
-
-function calculateScore(){
-
-  let base = 10;
-
-  let multiplier = 1 + (combo * 0.5); // x1, x1.5, x2, x2.5...
-
-  return Math.floor(base * multiplier);
-}
-
-function showScoreEffect(value){
-
-  let e = document.createElement("div");
-  e.className = "scoreEffect";
-
-  if(combo > 1){
-    e.innerText = "+" + value + " 🔥x" + combo;
-  }else{
-    e.innerText = "+" + value;
-  }
-
-  document.getElementById("effects").appendChild(e);
-
-  setTimeout(()=> e.remove(),1000);
-}
-
-function showLevelPopup(){
-
-  let el = document.getElementById("levelPopup");
-  const t = translations[currentLang];
-
-  el.innerText = t.level.toUpperCase() + " " + level;
-
-  el.classList.add("show");
-
-  setTimeout(()=>{
-    el.classList.remove("show");
-  },2000);
-}
-
-function updateLivesUI(){
-
-  let text = "";
-
-  for(let i=0;i<lives;i++){
-    text += "❤️";
-  }
-
-  document.getElementById("livesBox").innerText = text;
-}
-
+/* game over */
 function gameOver(){
-  console.log("GAME OVER ÇAĞRILDI");
+
   if(isGameOver) return;
 
   isGameOver = true;
 
-  first = null;
-  second = null;
+  clearInterval(timer);
+
   lock = true;
 
-  updateTranslations(); // Puan ve ismi güncellemek için
+  document.getElementById("finalScore").innerText = score;
 
-  saveScore();           // 🔥 ÖNCE kaydet
-renderLeaderboard();   // 🔥 sonra tabloyu çiz
-showScreen("gameOverScreen");
+  saveScore();
+
+  renderLeaderboard();
+
+  document.querySelectorAll(".screen").forEach(s=>{
+    s.classList.remove("active");
+  });
+
+  document.getElementById("gameOverScreen")
+    .classList.add("active");
 }
 
 
-
-function resetGame(){
-  isGameOver = false;
-  level = 1;
-  score = 0;
-  lives = 3;
-  combo = 0;
-  matched = 0;
-  wrongCount = 0;
-  wrongStreak = 0;
-
-  first = null;
-  second = null;
-  lock = false;
-
-  cards = [];
-
-  document.getElementById("score").innerText = score;
-  updateLivesUI();
-  updateLevelUI();
-  updateCategoryUI();
-  updateModeText();
-  updateWrongBar();
-
-  document.getElementById("grid").innerHTML = "";
-}
-
-function toggleSettings(e){
-   e.stopPropagation();
-   let panel = document.getElementById("settingsPanel");
-   panel.classList.toggle("open");
- }
-
-document.addEventListener("click", function(e){
-  let panel = document.getElementById("settingsPanel");
-
-  if(!panel.contains(e.target) && e.target.id !== "settingsBtn"){
-    panel.classList.remove("open");
+function setMode(m){
+  if(!isModeUnlocked(m)){
+    let needed = {sub:"add", mul:"sub", div:"mul", mix:"div"};
+    let prev = needed[m];
+    let prevName = shortModeName(prev);
+    alert(prevName + " " + t("round") + " 4 ❗");
+    return;
   }
-});
-function closeSettings(){
-  document.getElementById("settingsPanel").classList.remove("open");
+  gameMode = m;
+  updateModeButtons();
+  startGame();
 }
 
-let soundOn = true;
-
-function toggleSound(){
-  soundOn = !soundOn;
-  const t = translations[currentLang];
-  alert(t.soundAlert + (soundOn ? t.on : t.off));
-  updateTranslations();
+function rand(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
 }
 
-
-document.addEventListener("click", function(e){
-
-  const panel = document.getElementById("settingsPanel");
-  const btn = document.getElementById("settingsBtn");
-
-  if(panel.classList.contains("open")){
-    if(!panel.contains(e.target) && !btn.contains(e.target)){
-      panel.classList.remove("open");
-    }
+function updateLivesUI(){
+  let text = "";
+  for(let i=0;i<lives;i++){
+    text += "❤️";
   }
-
-});
-
-document.getElementById("settingsBtn").addEventListener("click", function(e){
-
-  const panel = document.getElementById("settingsPanel");
-
-  panel.classList.toggle("open");
-
-  updateCategoryUI(); // 🔥 bu bizim fix
-
-  e.stopPropagation();
-});
-
-/* =====================
-  PUAN SİSTEMİ 03052026 2218
-===================== */
-function getCardBasePoint(mode){
-  switch(mode){
-    case "add": return 10;
-    case "sub": return 11;
-    case "mul": return 12;
-    case "div": return 13;
-    case "mix": return 15;
-    default: return 10;
-  }
+  document.getElementById("lives").innerText = text;
 }
 
-/* =====================
- CAN + ÖZEL KART (ŞİMDİLİK SADECE CAN) 03052026 2218
-===================== */
-function applySpecial(type){
+function showEffect(text){
 
-  if(!type) return;
+  let e = document.createElement("div");
+  e.className = "effect";
+  e.innerText = text;
 
-  if(type === "plusTime") timeLeft += 5;
-  if(type === "minusTime") timeLeft -= 5;
+  document.body.appendChild(e);
 
-  if(type === "plusScore") score += 20;
-  if(type === "minusScore") score -= 15;
-
-  if(type === "plusCan"){
-    if(lives < 4){
-      lives++;
-      updateLivesUI();
-    }
-  }
-
-  if(type === "minusCan"){
-    if(lives > 1){
-      lives--;
-      updateLivesUI();
-    } else {
-      timeLeft -= 5; // 🔥 SENİN İSTEDİĞİN
-      if(timeLeft < 0) timeLeft = 0;
-    }
-  }
+  setTimeout(()=>{
+    e.remove();
+  },800);
 }
 
-/* =====================
-   03052026 2244
-===================== */
-function updateTimeUI(){
-  document.getElementById("time").innerText = timeLeft;
+function animateLives(){
+  let el = document.getElementById("lives");
+  if(!el) return;
+
+  el.classList.add("heartPop");
+
+  setTimeout(()=>{
+    el.classList.remove("heartPop");
+  },800);
 }
 
-/* =====================
-   03052026 2245
-===================== */
-function startTimer(){
-
-  clearInterval(timer); // 🔥 en kritik satır
-
-  timer = setInterval(()=>{
-    timeLeft--;
-    updateTimeUI();
-
-    if(timeLeft <= 0){
-      clearInterval(timer);
-      gameOver();
-    }
-
-  },1000);
-}
-
-/* =====================
-   04052026 1715
-===================== */
 function saveScore(){
 
-  let scores = JSON.parse(localStorage.getItem("scores")) || [];
+  let scores =
+    JSON.parse(localStorage.getItem("scores")) || [];
+    
+if(isGameOverSaved) return;
 
-  let newScore = {
-    name: playerName,
+isGameOverSaved = true;
+  scores.push({
+    name: playerName || t("guest"),
     score: score,
     level: level,
     mode: gameMode,
     date: new Date().toLocaleDateString()
-  };
-
-  let existing = scores.find(s => s.name === playerName);
-
-  if(existing){
-    if(score > existing.score){
-      existing.score = score;
-      existing.level = level;
-      existing.mode = gameMode;
-      existing.date = newScore.date;
-    }
-  }else{
-    scores.push(newScore);
-  }
+  });
 
   scores.sort((a,b)=> b.score - a.score);
+
   scores = scores.slice(0,10);
 
   localStorage.setItem("scores", JSON.stringify(scores));
 }
-/* =====================
-   03052026 2218
-===================== */
+
 function renderLeaderboard(){
 
-  let scores = JSON.parse(localStorage.getItem("scores")) || [];
+  let filterKey = "leaderAll";
+  if(leaderboardFilter === "add") filterKey = "leaderAdd";
+  else if(leaderboardFilter === "sub") filterKey = "leaderSub";
+  else if(leaderboardFilter === "mul") filterKey = "leaderMul";
+  else if(leaderboardFilter === "div") filterKey = "leaderDiv";
+  else if(leaderboardFilter === "mix") filterKey = "leaderMix";
 
-  let html = "<h3>🏆 En İyi Skorlar</h3>";
+  let titleText = t(filterKey);
+
+  let scores =
+    JSON.parse(localStorage.getItem("scores")) || [];
+if(leaderboardFilter !== "all"){
+  scores = scores.filter(
+    s => s.mode === leaderboardFilter
+  );
+}
+  let html = `
+
+  <h3 id="leaderboardTitle">
+${titleText}
+</h3>
+
+  <div class="scoreRow scoreHead">
+    <span>#</span>
+    <span>${t("colName")}</span>
+    <span>${t("colDate")}</span>
+    <span>${t("colCat")}</span>
+    <span>${t("colRound")}</span>
+    <span>${t("colScore")}</span>
+  </div>
+  `;
 
   scores.forEach((s,i)=>{
 
-    let medal = "";
+    let medal = i + 1;
 
-    if(i === 0) medal = "🥇";
-    else if(i === 1) medal = "🥈";
-    else if(i === 2) medal = "🥉";
-    else medal = (i+1) + ".";
+    if(i === 0) medal = "🏆";
+if(i === 1) medal = "⚡";
+if(i === 2) medal = "🔥";
 
-    html += `
-      <div class="scoreRow">
-        <span class="rank">${medal}</span>
-        <span class="name">${s.name}</span>
-        <span class="date">${s.date}</span>
-        <span class="mode">${modeName(s.mode)}</span>
-        <span class="level">Lv${s.level}</span>
-        <span class="score">⭐ ${s.score}</span>
-      </div>
+let cls = "";
+
+if(i === 0) cls = "firstPlace";
+if(i === 1) cls = "secondPlace";
+if(i === 2) cls = "thirdPlace";
+
+html += `
+<div class="scoreRow ${cls}">
+      <span>${medal}</span>
+      <span>${s.name}</span>
+      <span>${s.date}</span>
+      <span>${modeName(s.mode)}</span>
+      <span>Lv${s.level}</span>
+      <span>⭐ ${s.score}</span>
+    </div>
     `;
-
   });
 
   document.getElementById("leaderboard").innerHTML = html;
 }
 
-/* =====================
-   03052026 2218
-===================== */
-function setMode(mode){
+function setLeaderboardFilter(mode){
 
-  // 🔒 KİLİT KONTROL
-  const t = translations[currentLang];
+  leaderboardFilter = mode;
 
-  if(mode === "sub" && progress.add < 3){
-    alert(t.modeAlert.replace("{prev}", t.add));
-    return;
-  }
-
-  if(mode === "mul" && progress.sub < 3){
-    alert(t.modeAlert.replace("{prev}", t.sub));
-    return;
-  }
-
-  if(mode === "div" && progress.mul < 3){
-    alert(t.modeAlert.replace("{prev}", t.mul));
-    return;
-  }
-
-  // 🔥 aynı mod seçildiyse boşuna restart yapma
-  if(gameMode === mode){
-    return;
-  }
-
-  gameMode = mode;
-
-  updateModeText();
-
-  // 🔥 kategori değişince oyun sıfırlansın
-  startGame();
-
-  console.log("Seçilen mod:", mode);
+  renderLeaderboard();
 }
 
-/* =====================
-   03052026 2218
-===================== */
-function startGameWithName(){
-
-  if(!playerName){
-    const t = translations[currentLang];
-    alert(t.confirmPlayer + "!");
-    return;
-  }
-
-  score = 0;
-  lives = 3;
-  combo = 0;
-  wrongStreak = 0;
-  initGameState(); // 🔥 EKLENDİ
-  startGame();
+function modeName(mode){
+  if(mode === "add") return t("modeAdd");
+  if(mode === "sub") return t("modeSub");
+  if(mode === "mul") return t("modeMul");
+  if(mode === "div") return t("modeDiv");
+  if(mode === "mix") return t("modeMix");
+  return "-";
 }
 
-function isModeUnlocked(mode){
-
-  // 🔥 oyuncu seçilmeden önce HER ŞEY KİLİTLİ (sadece toplama açık)
-  if(!progress || Object.keys(progress).length === 0){
-    return mode === "add";
-  }
-
-  let add = progress.add || 0;
-  let sub = progress.sub || 0;
-  let mul = progress.mul || 0;
-
-  if(mode === "add") return true;
-  if(mode === "sub") return add >= 4;
-  if(mode === "mul") return sub >= 4;
-  if(mode === "div") return mul >= 4;
-
-  return false;
+function shortModeName(mode){
+  if(mode === "add") return t("shortAdd");
+  if(mode === "sub") return t("shortSub");
+  if(mode === "mul") return t("shortMul");
+  if(mode === "div") return t("shortDiv");
+  if(mode === "mix") return t("shortMix");
+  return "-";
 }
-function checkUnlocks(){
+function showLevelEffect(){
 
-  if(progress.add === 4){
-    showUnlock("Yeni kategori açıldı: Çıkarma!");
-  }
+  let e = document.getElementById("levelEffect");
 
-  if(progress.sub === 4){
-    showUnlock("Yeni kategori açıldı: Çarpma!");
-  }
+  e.innerText = t("round") + " " + level;
 
-  if(progress.mul === 4){
-    showUnlock("Yeni kategori açıldı: Bölme!");
-  }
+  e.classList.remove("levelAnim");
 
+  void e.offsetWidth;
+
+  e.classList.add("levelAnim");
 }
-function updateCategoryUI(){
 
-  let map = {
-    add: "btnAdd",
-    sub: "btnSub",
-    mul: "btnMul",
-    div: "btnDiv"
-  };
+function togglePause(){
 
-  for(let key in map){
+  if(isGameOver) return;
 
-    let btn = document.getElementById(map[key]);
+  isPaused = !isPaused;
 
-    if(!btn) continue;
+  let btn =
+    document.getElementById("pauseBtn");
 
-    if(!isModeUnlocked(key)){
-      btn.classList.add("locked");
-    }else{
-      btn.classList.remove("locked");
-    }
+  if(isPaused){
+
+    clearInterval(timer);
+
+    btn.innerText = "▶️";
+
+  }else{
+
+    startTimer();
+
+    btn.innerText = "⏸️";
   }
 }
 
-function showUnlock(text){
 
-  let popup = document.getElementById("unlockPopup");
-
-  popup.innerText = "🎉 " + text;
-
-  // 🔥 animasyonu başlat
-  popup.classList.add("show");
-
-  // 🔥 2 saniye sonra kapat
-  setTimeout(()=>{
-    popup.classList.remove("show");
-  },2000);
-}
-function updateLevelUI(){
-  let el = document.getElementById("levelText");
-  const t = translations[currentLang];
-  if(el){
-    el.innerText = t.level + ": " + level;
-  }
-}
-function confirmPlayer(){
-
-  let input = document.getElementById("playerName");
-  let newName = input.value.trim() || "Misafir";
-
-  playerName = newName;
-
-  // 🔥 yeni oyuncu mu?
-  if(!players[playerName]){
-    players[playerName] = {
-      add: 1,
-      sub: 0,
-      mul: 0,
-      div: 0
-    };
-  }
-
-  // 🔥 progress bağla
-  progress = players[playerName];
-
-  // 🔥 HER ZAMAN toplama ile başla
-  gameMode = "add";
-
-  // 🔥 MODE TEXT GÜNCELLE (tek yerden)
-  updateModeText();
-
-  // 🔥 level ayarla
-  //3 level = progress.add || 1;
-
-  // 🔥 UI güncelle
-  updateLevelUI();
-  updateCategoryUI();
-
-  document.getElementById("playerNameText").innerText = playerName;
-
-  console.log("Aktif oyuncu:", playerName, progress);
-}
-
-function updateModeText(){
-  const t = translations[currentLang];
-  const modeNames = {
-    add: t.add,
-    sub: t.sub,
-    mul: t.mul,
-    div: t.div,
-    mix: t.mix
-  };
-
-  let text = document.getElementById("modeText");
-  if(text){
-    text.innerText = (currentLang === "tr" ? "Mod: " : "Mode: ") + modeNames[gameMode];
-  }
-}
-
-function initGameState(){
-
-  // 🔥 kategori başlangıç
-  gameMode = "add";
-
-  // 🔥 level başlangıç
-  level = 1;
-
-  // 🔥 progress reset (sadece yeni oyuncuysa yapılmalı)
-  if(!players[playerName]){
-    players[playerName] = {
-      add: 1,
-      sub: 0,
-      mul: 0,
-      div: 0
-    };
-  }
-
-  progress = players[playerName];
-
-  // 🔥 kart sistemi reset
-  cards = [];
-  matched = 0;
-  first = null;
-  second = null;
-  lock = false;
-
-  // 🔥 skor sistemi
-  score = 0;
-  combo = 0;
-  lives = 3;
-  wrongStreak = 0;
-
-  // 🔥 UI temizle
-  document.getElementById("grid").innerHTML = "";
-  document.getElementById("score").innerText = score;
-
-  updateLivesUI();
-  updateLevelUI();
-  updateCategoryUI();
-  updateModeText();
-}
-
-function updateWrongBar(){
-  let percent = (wrongCount / 3) * 100;
-  document.getElementById("wrongFill").style.width = percent + "%";
-}
-
-function modeName(m){
-  const t = translations[currentLang];
-  if(m === "add") return t.add;
-  if(m === "sub") return t.sub;
-  if(m === "mul") return t.mul;
-  if(m === "div") return t.div;
-  if(m === "mix") return t.mix;
-  return m;
-}
 </script>
 
 </body>
