@@ -37,6 +37,13 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title: dict.meta.title,
     description: dict.meta.description,
+    manifest: "/manifest.json",
+    themeColor: "#04080e",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: "MahT",
+    },
     keywords: [
       "FIFA World Cup 2026",
       "World Cup",
