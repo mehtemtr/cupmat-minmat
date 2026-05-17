@@ -288,7 +288,7 @@ export function Header() {
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Global Rekabet:</strong> Kazandığınız puanlarla <strong>Puan Durumu</strong> liderlik tablosunda diğer oyuncularla yarışın, CupMat 2026'nın şampiyonu siz olun!
+                    <strong>Global Rekabet:</strong> Kazandığınız puanlarla <strong>Puan Durumu</strong> liderlik tablosunda diğer oyuncularla yarışın, {"CupMat 2026'nın"} şampiyonu siz olun!
                   </span>
                 </li>
               </ul>
