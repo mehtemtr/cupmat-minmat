@@ -826,6 +826,29 @@
       filter: brightness(1.1);
     }
 
+    .menuLeaderboardBtn {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+    }
+
+    .menuLeaderboardBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
+      filter: brightness(1.1);
+    }
+
     .menuHomeBtn {
       width: 100%;
       padding: 12px;
@@ -961,6 +984,7 @@
       <p class="menuSub" id="menuSub">Sayı Avı</p>
       <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
       <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
+      <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu">🏆 Puan Tablosu</button>
       <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
     </div>
   </div>
@@ -1019,6 +1043,7 @@
 
     <div class="screenNav">
       <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText">Menü</span></button>
+      <button class="navBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardGame">🏆 Puan Tablosu</button>
       <button class="navBtn langToggle" onclick="cycleLang()">
         <span class="langIcon">🌐</span>
         <span id="gameLangLabel">TR</span>
@@ -1033,7 +1058,7 @@
 
     <h1 id="gameOverTitle">Oyun Bitti</h1>
 
-    <p><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
+    <p id="finalScoreRow"><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
 
     <div id="scoreFilters">
 
@@ -1151,6 +1176,7 @@
         placeholder: "İsmini yaz...",
         start: "Başla",
         home: "🏠 Ana Sayfaya Dön",
+        puanTablosu: "🏆 Puan Tablosu",
         gameOver: "Oyun Bitti",
         score: "Puan",
         again: "🔄 Bir Daha",
@@ -1186,6 +1212,7 @@
         placeholder: "Enter your name...",
         start: "Start",
         home: "🏠 Back to Home",
+        puanTablosu: "🏆 Leaderboard",
         gameOver: "Game Over",
         score: "Score",
         again: "🔄 Play Again",
@@ -1221,6 +1248,7 @@
         placeholder: "Name eingeben...",
         start: "Starten",
         home: "🏠 Zurück zur Startseite",
+        puanTablosu: "🏆 Bestenliste",
         gameOver: "Spiel Vorbei",
         score: "Punkte",
         again: "🔄 Nochmal",
@@ -1256,6 +1284,7 @@
         placeholder: "Entrez votre nom...",
         start: "Commencer",
         home: "🏠 Retour à l'accueil",
+        puanTablosu: "🏆 Classement",
         gameOver: "Jeu Terminé",
         score: "Score",
         again: "🔄 Rejouer",
@@ -1291,6 +1320,7 @@
         placeholder: "Ingresa tu nombre...",
         start: "Comenzar",
         home: "🏠 Ir al Inicio",
+        puanTablosu: "🏆 Clasificación",
         gameOver: "Juego Terminado",
         score: "Puntuación",
         again: "🔄 Jugar de Nuevo",
@@ -1343,6 +1373,10 @@
       if (bs) bs.innerText = t("start");
       let bh = document.getElementById("btnHome");
       if (bh) bh.innerText = t("home");
+      let blm = document.getElementById("btnLeaderboardMenu");
+      if (blm) blm.innerText = t("puanTablosu");
+      let blg = document.getElementById("btnLeaderboardGame");
+      if (blg) blg.innerText = t("puanTablosu");
       let go = document.getElementById("gameOverTitle");
       if (go) go.innerText = t("gameOver");
       let ra = document.getElementById("btnRetry");
@@ -1845,29 +1879,41 @@
 
     /* game over */
     function gameOver() {
-
       if (isGameOver) return;
-
       isGameOver = true;
-
       clearInterval(timer);
-
       lock = true;
 
-      document.getElementById("finalScore").innerText = score;
+      // Ensure Game Over title and score row are shown
+      document.getElementById("gameOverTitle").innerText = t("gameOver");
+      let scoreRow = document.getElementById("finalScoreRow");
+      if (scoreRow) scoreRow.style.display = "block";
 
+      document.getElementById("finalScore").innerText = score;
       saveScore();
+
+      document.querySelectorAll(".screen").forEach(s => {
+        s.classList.remove("active");
+      });
+      document.getElementById("gameOverScreen").classList.add("active");
+    }
+
+    function showLeaderboardDirectly() {
+      clearInterval(timer);
+      isGameOver = true;
+
+      // Set screen title to Leaderboard and hide personal score row
+      document.getElementById("gameOverTitle").innerText = t("leaderAll");
+      let scoreRow = document.getElementById("finalScoreRow");
+      if (scoreRow) scoreRow.style.display = "none";
 
       renderLeaderboard();
 
       document.querySelectorAll(".screen").forEach(s => {
         s.classList.remove("active");
       });
-
-      document.getElementById("gameOverScreen")
-        .classList.add("active");
+      document.getElementById("gameOverScreen").classList.add("active");
     }
-
 
     function setMode(m) {
       if (!isModeUnlocked(m)) {
@@ -1895,13 +1941,10 @@
     }
 
     function showEffect(text) {
-
       let e = document.createElement("div");
       e.className = "effect";
       e.innerText = text;
-
       document.body.appendChild(e);
-
       setTimeout(() => {
         e.remove();
       }, 800);
@@ -1910,39 +1953,43 @@
     function animateLives() {
       let el = document.getElementById("lives");
       if (!el) return;
-
       el.classList.add("heartPop");
-
       setTimeout(() => {
         el.classList.remove("heartPop");
       }, 800);
     }
 
-    function saveScore() {
-
-      let scores =
-        JSON.parse(localStorage.getItem("scores")) || [];
-
+    async function saveScore() {
       if (isGameOverSaved) return;
-
       isGameOverSaved = true;
-      scores.push({
+
+      const scoreEntry = {
         name: playerName || t("guest"),
         score: score,
         level: level,
         mode: gameMode,
-        date: new Date().toLocaleDateString()
-      });
+        date: new Date().toLocaleDateString("tr-TR")
+      };
 
-      scores.sort((a, b) => b.score - a.score);
+      try {
+        const response = await fetch("/api/minmat-leaderboard", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(scoreEntry)
+        });
+        if (!response.ok) {
+          console.error("Failed to save score to global leaderboard");
+        }
+      } catch (error) {
+        console.error("Failed to POST global score:", error);
+      }
 
-      scores = scores.slice(0, 10);
-
-      localStorage.setItem("scores", JSON.stringify(scores));
+      renderLeaderboard();
     }
 
-    function renderLeaderboard() {
-
+    async function renderLeaderboard() {
       let filterKey = "leaderAll";
       if (leaderboardFilter === "add") filterKey = "leaderAdd";
       else if (leaderboardFilter === "sub") filterKey = "leaderSub";
@@ -1952,62 +1999,81 @@
 
       let titleText = t(filterKey);
 
-      let scores =
-        JSON.parse(localStorage.getItem("scores")) || [];
+      document.getElementById("leaderboard").innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">⏳ Yükleniyor... / Loading...</div>`;
+
+      let scores = [];
+      try {
+        const response = await fetch("/api/minmat-leaderboard");
+        if (response.ok) {
+          const data = await response.json();
+          scores = data.leaderboard || [];
+        }
+      } catch (error) {
+        console.error("Failed to fetch global leaderboard:", error);
+        scores = JSON.parse(localStorage.getItem("scores")) || [];
+      }
+
       if (leaderboardFilter !== "all") {
         scores = scores.filter(
           s => s.mode === leaderboardFilter
         );
       }
+
       let html = `
-
-  <h3 id="leaderboardTitle">
-${titleText}
-</h3>
-
-  <div class="scoreRow scoreHead">
-    <span>#</span>
-    <span>${t("colName")}</span>
-    <span>${t("colDate")}</span>
-    <span>${t("colCat")}</span>
-    <span>${t("colRound")}</span>
-    <span>${t("colScore")}</span>
-  </div>
-  `;
+      <h3 id="leaderboardTitle">
+        ${titleText}
+      </h3>
+      <div class="scoreRow scoreHead">
+        <span>#</span>
+        <span>${t("colName")}</span>
+        <span>${t("colDate")}</span>
+        <span>${t("colCat")}</span>
+        <span>${t("colRound")}</span>
+        <span>${t("colScore")}</span>
+      </div>
+      `;
 
       scores.forEach((s, i) => {
-
         let medal = i + 1;
-
         if (i === 0) medal = "🏆";
         if (i === 1) medal = "⚡";
         if (i === 2) medal = "🔥";
 
         let cls = "";
-
         if (i === 0) cls = "firstPlace";
         if (i === 1) cls = "secondPlace";
         if (i === 2) cls = "thirdPlace";
 
         html += `
-<div class="scoreRow ${cls}">
-      <span>${medal}</span>
-      <span>${s.name}</span>
-      <span>${s.date}</span>
-      <span>${modeName(s.mode)}</span>
-      <span>Lv${s.level}</span>
-      <span>⭐ ${s.score}</span>
-    </div>
-    `;
+        <div class="scoreRow ${cls}">
+          <span>${medal}</span>
+          <span>${escapeHTML(s.name)}</span>
+          <span>${escapeHTML(s.date)}</span>
+          <span>${modeName(s.mode)}</span>
+          <span>Lv${s.level}</span>
+          <span>⭐ ${s.score}</span>
+        </div>
+        `;
       });
 
       document.getElementById("leaderboard").innerHTML = html;
     }
 
+    function escapeHTML(str) {
+      if (!str) return "";
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+
     function setLeaderboardFilter(mode) {
-
       leaderboardFilter = mode;
-
       renderLeaderboard();
     }
 
@@ -2028,38 +2094,24 @@ ${titleText}
       if (mode === "mix") return t("shortMix");
       return "-";
     }
+
     function showLevelEffect() {
-
       let e = document.getElementById("levelEffect");
-
       e.innerText = t("round") + " " + level;
-
       e.classList.remove("levelAnim");
-
       void e.offsetWidth;
-
       e.classList.add("levelAnim");
     }
 
     function togglePause() {
-
       if (isGameOver) return;
-
       isPaused = !isPaused;
-
-      let btn =
-        document.getElementById("pauseBtn");
-
+      let btn = document.getElementById("pauseBtn");
       if (isPaused) {
-
         clearInterval(timer);
-
         btn.innerText = "▶️";
-
       } else {
-
         startTimer();
-
         btn.innerText = "⏸️";
       }
     }
