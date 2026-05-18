@@ -180,9 +180,11 @@ export function Header() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3.5 border-b border-white/10 pb-4 mb-5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/25">
-                <Trophy className="h-6 w-6 text-[#060b14]" strokeWidth={2.5} />
-              </span>
+              <img 
+                src="/icon.png" 
+                alt="MahTEM Logo" 
+                className="h-11 w-11 rounded-xl object-contain border border-white/10 bg-white/5 shadow-lg shadow-emerald-500/25"
+              />
               <h2 className="text-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
                 MahTEM Oyun Atölyesi
               </h2>
