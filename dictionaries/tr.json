@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "FIFA World Cup 2026 - Statmatik",
-    "description": "FIFA Dünya Kupası 2026'nın nihai rehberi — 48 takım, 12 grup, üç ev sahibi ülke. 11 Haziran 2026 açılış vuruşuna geri sayım.",
-    "ogTitle": "FIFA Dünya Kupası 2026 — Dünyanın En Büyük Şovu",
+    "title": "StatMatik — 2026 Dünya Şampiyonası",
+    "description": "2026 Dünya Şampiyonası'nın nihai rehberi — 48 takım, 12 grup, üç ev sahibi ülke. 11 Haziran 2026 açılış vuruşuna geri sayım.",
+    "ogTitle": "2026 Dünya Şampiyonası — Dünyanın En Büyük Şovu",
     "ogDescription": "48 takım. 12 grup. 3 ev sahibi ülke. 11 Haziran 2026'ya geri sayım başladı."
   },
   "nav": {
@@ -14,23 +14,25 @@
     "leaderboard": "Sıralama",
     "footballers": "Futbolcular",
     "signin": "Giriş Yap",
-    "signout": "Çıkış Yap"
+    "signout": "Çıkış Yap",
+    "logoTitle": "CupMat — 2026 Dünya Şampiyonası Özel Ekranı"
   },
   "hero": {
-    "badge": "FIFA Dünya Kupası 2026",
+    "badge": "StatMatik — 2026 Dünya Şampiyonası",
+    "mainBadge": "StatMatik — 2026 Dünya Şampiyonası & Matematik Oyun Alanı",
     "title": "Dünya",
     "titleHighlight": "Birleşiyor",
     "subtitle": "ABD · Kanada · Meksika — üç ülke, bir turnuva, tarih yazılıyor.",
     "ctaPrimary": "Turnuvayı Keşfet",
     "ctaSecondary": "Tahmin Yap",
     "minMatPromo": "Maç saatini beklerken zihnini canlandır! 🧠 MinMat Matematik ve Hafıza Oyunumuzu dene.",
-    "cupMatPromo": "Futbol bilgin yapay zekadan daha mı iyi? 🏆 CupMat ile Dünya Kupası tahminlerini hemen yap!",
+    "cupMatPromo": "Futbol bilgin yapay zekadan daha mı iyi? 🏆 CupMat ile 2026 Dünya Şampiyonası tahminlerini hemen yap!",
     "comingSoon": "Çok Yakında ⌛",
     "players": "Futbolcu Bilgileri",
     "countries": "Ülke Detayları",
     "referees": "Hakem İstatistikleri",
     "slogan": "Futbol matematiktir, matematik her şey. Futbolun matematiğini statmatik.com ile çöz!",
-    "cupMatDesc": "Yapay zeka destekli, dünya kupasıyla ilgili her şey!",
+    "cupMatDesc": "Yapay zeka destekli, 2026 Dünya Şampiyonası ile ilgili her şey!",
     "minMatDesc": "Sizin ve çocuklarınızın hafızadan hesap yapmasını kolaylaştıracak zeka oyunu!",
     "playStart": "Kupayı Gör",
     "mindRefresh": "Zihnini Canlandır"
@@ -49,7 +51,7 @@
     "teams": {
       "value": "48",
       "label": "Takım",
-      "description": "Dünya Kupası tarihinin en geniş kadrosu"
+      "description": "Dünya Şampiyonası tarihinin en geniş kadrosu"
     },
     "groups": {
       "value": "12",
@@ -69,7 +71,7 @@
   },
   "teams": {
     "title": "Katılan Takımlar",
-    "subtitle": "A–L gruplarındaki 48 ülke, FIFA sıralaması ve kadro detayları.",
+    "subtitle": "A–L gruplarındaki 48 ülke, dünya sıralaması ve kadro detayları.",
     "group": "Grup",
     "manager": "Teknik Direktör",
     "squad": "Kadro",
@@ -111,7 +113,7 @@
     "confidence": "Yapay Zeka Güveni",
     "reset": "Tahminleri Temizle",
     "champion": "ŞAMPİYON",
-    "completed": "2026 DÜNYA KUPASI TAMAMLANDI!",
+    "completed": "2026 DÜNYA ŞAMPİYONASI TAMAMLANDI!",
     "et": "UZATMALAR",
     "penalties": "PENALTILAR",
     "aiRoundPredict": "YZ Tahmini Yap",
@@ -120,8 +122,8 @@
     "aiLabel": "YZ TAHMİNİ"
   },
   "footer": {
-    "tagline": "FIFA Dünya Kupası 2026 — Oyunun aşkı için.",
-    "rights": "Tüm hakları saklıdır. FIFA ile bağlantılı değildir."
+    "tagline": "2026 Dünya Şampiyonası — Oyunun aşkı için.",
+    "rights": "Tüm hakları saklıdır."
   },
   "language": {
     "toggle": "Dil",

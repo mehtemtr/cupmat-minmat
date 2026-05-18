@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "FIFA World Cup 2026 - Statmatik",
-    "description": "The ultimate guide to the FIFA World Cup 2026 — 48 teams, 12 groups, three host nations. Countdown to the June 11, 2026 kickoff.",
-    "ogTitle": "FIFA World Cup 2026 — The World's Biggest Show",
+    "title": "StatMatik — 2026 World Championship",
+    "description": "The ultimate guide to the 2026 World Championship — 48 teams, 12 groups, three host nations. Countdown to the June 11, 2026 kickoff.",
+    "ogTitle": "2026 World Championship — The World's Biggest Show",
     "ogDescription": "48 teams. 12 groups. 3 host countries. Countdown to June 11, 2026 has begun."
   },
   "nav": {
@@ -14,23 +14,25 @@
     "leaderboard": "Leaderboard",
     "footballers": "Footballers",
     "signin": "Sign In",
-    "signout": "Sign Out"
+    "signout": "Sign Out",
+    "logoTitle": "CupMat — 2026 World Championship Special Screen"
   },
   "hero": {
-    "badge": "FIFA World Cup 2026",
+    "badge": "StatMatik — 2026 World Championship",
+    "mainBadge": "StatMatik — 2026 World Championship & Math Playground",
     "title": "The World",
     "titleHighlight": "Unites",
     "subtitle": "USA · Canada · Mexico — three nations, one tournament, history in the making.",
     "ctaPrimary": "Explore Tournament",
     "ctaSecondary": "Make Prediction",
     "minMatPromo": "Refresh your mind while waiting for the match! 🧠 Try our MinMat Math & Memory Game.",
-    "cupMatPromo": "Is your football knowledge better than AI? 🏆 Make your World Cup predictions with CupMat now!",
+    "cupMatPromo": "Is your football knowledge better than AI? 🏆 Make your 2026 World Championship predictions with CupMat now!",
     "comingSoon": "Coming Soon ⌛",
     "players": "Player Info",
     "countries": "Country Details",
     "referees": "Referee Stats",
     "slogan": "Football is math, math is everything. Solve the math of football with statmatik.com!",
-    "cupMatDesc": "AI-powered, everything about the World Cup!",
+    "cupMatDesc": "AI-powered, everything about the 2026 World Championship!",
     "minMatDesc": "Brain game that will make it easier for you and your children to calculate from memory!",
     "playStart": "Explore the Cup",
     "mindRefresh": "Refresh Your Mind"
@@ -49,7 +51,7 @@
     "teams": {
       "value": "48",
       "label": "Teams",
-      "description": "The largest field in World Cup history"
+      "description": "The largest field in World Championship history"
     },
     "groups": {
       "value": "12",
@@ -69,7 +71,7 @@
   },
   "teams": {
     "title": "Participating Teams",
-    "subtitle": "48 nations across groups A–L, FIFA ranking, and squad details.",
+    "subtitle": "48 nations across groups A–L, world ranking, and squad details.",
     "group": "Group",
     "manager": "Manager",
     "squad": "Squad",
@@ -111,7 +113,7 @@
     "confidence": "AI Confidence",
     "reset": "Clear Predictions",
     "champion": "CHAMPION",
-    "completed": "2026 WORLD CUP COMPLETED!",
+    "completed": "2026 WORLD CHAMPIONSHIP COMPLETED!",
     "et": "EXTRA TIME",
     "penalties": "PENALTIES",
     "aiRoundPredict": "Predict with AI",
@@ -120,8 +122,8 @@
     "aiLabel": "AI PREDICTION"
   },
   "footer": {
-    "tagline": "FIFA World Cup 2026 — For the love of the game.",
-    "rights": "All rights reserved. Not affiliated with FIFA."
+    "tagline": "2026 World Championship — For the love of the game.",
+    "rights": "All rights reserved."
   },
   "language": {
     "toggle": "Language",

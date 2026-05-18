@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "FIFA Fussball-Weltmeisterschaft 2026 - Statmatik",
-    "description": "Der ultimative Leitfaden zur FIFA Fussball-Weltmeisterschaft 2026 — 48 Teams, 12 Gruppen, drei Gastländer. Countdown zum Anpfiff am 11. Juni 2026.",
-    "ogTitle": "FIFA Fussball-Weltmeisterschaft 2026 — Die größte Show der Welt",
+    "title": "StatMatik — 2026 Weltmeisterschaft",
+    "description": "Der ultimative Leitfaden zur 2026 Weltmeisterschaft — 48 Teams, 12 Gruppen, drei Gastländer. Countdown zum Anpfiff am 11. Juni 2026.",
+    "ogTitle": "2026 Weltmeisterschaft — Die größte Show der Welt",
     "ogDescription": "48 Teams. 12 Gruppen. 3 Gastländer. Der Countdown zum 11. Juni 2026 hat begonnen."
   },
   "nav": {
@@ -14,23 +14,25 @@
     "leaderboard": "Bestenliste",
     "footballers": "Spieler",
     "signin": "Anmelden",
-    "signout": "Abmelden"
+    "signout": "Abmelden",
+    "logoTitle": "CupMat — 2026 Weltmeisterschaft Spezial-Bildschirm"
   },
   "hero": {
-    "badge": "FIFA Fussball-Weltmeisterschaft 2026",
+    "badge": "StatMatik — 2026 Weltmeisterschaft",
+    "mainBadge": "StatMatik — 2026 Weltmeisterschaft & Mathe-Spielplatz",
     "title": "Die Welt",
     "titleHighlight": "Vereint sich",
     "subtitle": "USA · Kanada · Mexiko — drei Länder, ein Turnier, Geschichte wird geschrieben.",
     "ctaPrimary": "Turnier erkunden",
     "ctaSecondary": "Prognose erstellen",
     "minMatPromo": "Erfrischen Sie Ihren Geist, während Sie auf das Spiel warten! 🧠 Probieren Sie unser MinMat Mathematik- und Gedächtnisspiel aus.",
-    "cupMatPromo": "Sind Ihre Fussballkenntnisse besser als die der KI? 🏆 Erstellen Sie jetzt Ihre WM-Prognosen mit CupMat!",
+    "cupMatPromo": "Sind Ihre Fussballkenntnisse besser als die der KI? 🏆 Erstellen Sie jetzt Ihre 2026 Weltmeisterschaft-Prognosen mit CupMat!",
     "comingSoon": "Demnächst ⌛",
     "players": "Spielerinfos",
     "countries": "Länderdetails",
     "referees": "Schiedsrichterstatistiken",
     "slogan": "Fußball ist Mathematik, Mathematik ist alles. Lösen Sie die Mathematik des Fußballs mit statmatik.com!",
-    "cupMatDesc": "Alles über die Weltmeisterschaft mit KI-Unterstützung!",
+    "cupMatDesc": "KI-Unterstützung, alles über die 2026 Weltmeisterschaft!",
     "minMatDesc": "Ein Gehirntraining, das Ihnen und Ihren Kindern das Kopfrechnen erleichtert!",
     "playStart": "Pokal ansehen",
     "mindRefresh": "Geist Beleben"
@@ -69,7 +71,7 @@
   },
   "teams": {
     "title": "Teilnehmende Teams",
-    "subtitle": "48 Länder in den Gruppen A–L, FIFA-Ranking und Kaderdetails.",
+    "subtitle": "48 Länder in den Gruppen A–L, Weltrangliste und Kaderdetails.",
     "group": "Gruppe",
     "manager": "Trainer",
     "squad": "Kader",
@@ -111,7 +113,7 @@
     "confidence": "KI-Vertrauen",
     "reset": "Prognosen zurücksetzen",
     "champion": "WELTMEISTER",
-    "completed": "WM 2026 ABGESCHLOSSEN!",
+    "completed": "2026 WELTMEISTERSCHAFT ABGESCHLOSSEN!",
     "et": "VERLÄNGERUNG",
     "penalties": "ELFMETERSCHIESSEN",
     "aiRoundPredict": "KI-Vorhersage",
@@ -120,8 +122,8 @@
     "aiLabel": "KI-PROGNOSE"
   },
   "footer": {
-    "tagline": "FIFA Fussball-Weltmeisterschaft 2026 — Aus Liebe zum Spiel.",
-    "rights": "Alle Rechte vorbehalten. Nicht mit der FIFA verbunden."
+    "tagline": "2026 Weltmeisterschaft — Aus Liebe zum Spiel.",
+    "rights": "Alle Rechte vorbehalten."
   },
   "language": {
     "toggle": "Sprache",

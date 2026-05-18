@@ -46,8 +46,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "MahTEM",
     },
     keywords: [
-      "FIFA World Cup 2026",
-      "World Cup",
+      "2026 World Championship",
+      "World Championship",
       "USA",
       "Canada",
       "Mexico",
@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: locale === "tr" ? "tr_TR" : "en_US",
       alternateLocale: locale === "tr" ? ["en_US"] : ["tr_TR"],
       url: siteUrl,
-      siteName: "FIFA World Cup 2026 - Statmatik",
+      siteName: "StatMatik — 2026 World Championship & Math Playground",
       title: dict.meta.ogTitle,
       description: dict.meta.ogDescription,
       images: [

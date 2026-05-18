@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "FIFA World Cup 2026 - Statmatik",
-    "description": "La guía definitiva de la Copa Mundial de la FIFA 2026 — 48 equipos, 12 grupos, tres países anfitriones. Cuenta atrás para el inicio el 11 de junio de 2026.",
-    "ogTitle": "Copa Mundial de la FIFA 2026 — El espectáculo más grande del mundo",
+    "title": "StatMatik — Campeonato Mundial 2026",
+    "description": "La guía definitiva del Campeonato Mundial 2026 — 48 equipos, 12 grupos, tres países anfitriones. Cuenta atrás para el inicio el 11 de junio de 2026.",
+    "ogTitle": "Campeonato Mundial 2026 — El espectáculo más grande del mundo",
     "ogDescription": "48 equipos. 12 grupos. 3 países anfitriones. La cuenta atrás para el 11 de junio de 2026 ha comenzado."
   },
   "nav": {
@@ -14,23 +14,25 @@
     "leaderboard": "Clasificación",
     "footballers": "Futbolistas",
     "signin": "Iniciar sesión",
-    "signout": "Cerrar sesión"
+    "signout": "Cerrar sesión",
+    "logoTitle": "CupMat — Pantalla Especial del Campeonato Mundial 2026"
   },
   "hero": {
-    "badge": "Copa Mundial de la FIFA 2026",
+    "badge": "StatMatik — Campeonato Mundial 2026",
+    "mainBadge": "StatMatik — Campeonato Mundial 2026 & Patio de Juegos de Matemáticas",
     "title": "El mundo",
     "titleHighlight": "Se une",
     "subtitle": "EE. UU. · Canadá · México — tres países, un torneo, se está haciendo historia.",
     "ctaPrimary": "Explorar el torneo",
     "ctaSecondary": "Hacer predicción",
     "minMatPromo": "¡Refresca tu mente mientras esperas el partido! 🧠 Prueba nuestro juego de matemáticas y memoria MinMat.",
-    "cupMatPromo": "¿Es tu conocimiento futbolístico mejor que la IA? 🏆 ¡Haz tus predicciones de la Copa del Mundo con CupMat ahora!",
+    "cupMatPromo": "¿Es tu conocimiento futbolístico mejor que la IA? 🏆 ¡Haz tus predicciones del Campeonato Mundial 2026 con CupMat ahora!",
     "comingSoon": "Próximamente ⌛",
     "players": "Información de jugadores",
     "countries": "Detalles del país",
     "referees": "Estadísticas de árbitros",
     "slogan": "El fútbol es matemática, la matemática lo es todo. ¡Resuelve la matemática del fútbol con statmatik.com!",
-    "cupMatDesc": "¡Todo sobre la Copa del Mundo con tecnología de IA!",
+    "cupMatDesc": "¡Todo sobre el Campeonato Mundial 2026 con tecnología de IA!",
     "minMatDesc": "¡Juego mental que facilitará el cálculo mental para ti y tus hijos!",
     "playStart": "Ver la Copa",
     "mindRefresh": "Refresca tu Mente"
@@ -45,11 +47,11 @@
   },
   "overview": {
     "sectionTitle": "Resumen del torneo",
-    "sectionSubtitle": "La Copa del Mundo más grande de la historia — formato ampliado, tres anfitriones, momentos inolvidables te esperan.",
+    "sectionSubtitle": "El Campeonato Mundial más grande de la historia — formato ampliado, tres anfitriones, momentos inolvidables te esperan.",
     "teams": {
       "value": "48",
       "label": "Equipos",
-      "description": "El plantel más grande en la historia de la Copa del Mundo"
+      "description": "El plantel más grande en la historia del Campeonato Mundial"
     },
     "groups": {
       "value": "12",
@@ -69,7 +71,7 @@
   },
   "teams": {
     "title": "Equipos participantes",
-    "subtitle": "48 países en los grupos A–L, ranking FIFA y detalles del plantel.",
+    "subtitle": "48 países en los grupos A–L, ranking mundial y detalles del plantel.",
     "group": "Grupo",
     "manager": "Entrenador",
     "squad": "Plantilla",
@@ -111,7 +113,7 @@
     "confidence": "Confianza de la IA",
     "reset": "Limpiar predicciones",
     "champion": "CAMPEÓN",
-    "completed": "¡COPA MUNDIAL 2026 COMPLETADA!",
+    "completed": "¡CAMPEONATO MUNDIAL 2026 COMPLETADO!",
     "et": "TIEMPO EXTRA",
     "penalties": "PENALTIS",
     "aiRoundPredict": "Predecir con IA",
@@ -120,8 +122,8 @@
     "aiLabel": "PREDICCIÓN IA"
   },
   "footer": {
-    "tagline": "Copa Mundial de la FIFA 2026 — Por amor al juego.",
-    "rights": "Todos los derechos reservados. No afiliado con la FIFA."
+    "tagline": "Campeonato Mundial 2026 — Por amor al juego.",
+    "rights": "Todos los derechos reservados."
   },
   "language": {
     "toggle": "Idioma",

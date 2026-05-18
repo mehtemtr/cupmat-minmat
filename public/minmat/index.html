@@ -38,111 +38,7 @@
       color: white;
     }
 
-    /* Teaser Overlay Styles */
-    .teaser-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: rgba(4, 8, 14, 0.95);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      text-align: center;
-    }
-    
-    .teaser-card {
-      position: relative;
-      max-width: 480px;
-      width: 100%;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      background: linear-gradient(180deg, rgba(6, 11, 20, 0.9) 0%, rgba(9, 9, 11, 0.8) 100%);
-      padding: 32px;
-      border-radius: 24px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-    
-    .teaser-gift {
-      font-size: 40px;
-      animation: bounceTeaser 2s infinite;
-    }
-    
-    .teaser-card h2 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      background: linear-gradient(to right, #ffffff, #e2e8f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .teaser-card p {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #cbd5e1;
-      max-width: 380px;
-    }
-    
-    .teaser-timer-box {
-      width: 100%;
-      background: #09090b;
-      border: 1px solid #18181b;
-      border-radius: 16px;
-      padding: 16px;
-      box-sizing: border-box;
-      box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-    }
-    
-    .teaser-timer-title {
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      color: #71717a;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    
-    .teaser-timer-val {
-      font-size: 16px;
-      font-weight: 900;
-      color: #fbbf24;
-      font-family: monospace;
-      letter-spacing: 0.5px;
-      text-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
-    }
-    
-    .teaser-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      background: #ef4444;
-      color: white;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.2);
-      transition: all 0.2s;
-    }
-    
-    .teaser-btn:hover {
-      background: #dc2626;
-      transform: scale(1.02);
-    }
-    
-    @keyframes bounceTeaser {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+
 
     .screen {
       display: none;
@@ -1108,22 +1004,7 @@
     <button class="topRightBtn" onclick="openHelp()" title="Yardım">❓</button>
   </div>
 
-  <!-- 19 MAYIS LAUNCH TEASER OVERLAY -->
-  <div id="teaserOverlay" class="teaser-overlay">
-    <div class="teaser-card">
-      <span class="teaser-gift">🎁</span>
-      <h2 id="teaserTitle">Büyük Sürprizi Bekleyin!</h2>
-      <p id="teaserDesc">19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı özel sürprizimiz ve çok hoşunuza gidecek gizemli bayram hediyemiz saat 00:00'da açılıyor! Ne olduğunu merak ediyorsanız geri sayımı kaçırmayın, çok seveceksiniz...</p>
-      
-      <!-- Live Countdown Timer -->
-      <div class="teaser-timer-box">
-        <div class="teaser-timer-title" id="teaserTimerTitle">⌛ GERİ SAYIM BAŞLADI</div>
-        <div class="teaser-timer-val" id="teaserCountdownText">00 Saat 00 Dakika 00 Saniye</div>
-      </div>
-      
-      <button class="teaser-btn" onclick="dismissTeaser()">🚀 Sürprizi Beklemeden Başla</button>
-    </div>
-  </div>
+
 
   <!-- MENU -->
   <div id="menuScreen" class="screen active">
@@ -1138,8 +1019,8 @@
       <div class="menuLogo">
         <img src="icon.png" alt="MinMat">
       </div>
-      <h1 class="menuTitle">MinMat</h1>
-      <p class="menuSub" id="menuSub">Sayı Avı</p>
+      <h1 class="menuTitle" style="display: none;">MinMat</h1>
+      <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 24px;">MinMat — Zeka ve Matematik Oyunu</p>
       <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
       <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
       <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
@@ -1151,9 +1032,9 @@
   <div id="gameScreen" class="screen">
     <div id="gameTitle">
 
-      <h2>MinMat</h2>
+      <h2 style="display: none;">MinMat</h2>
 
-      <p id="gameSubtitle">Sayı Avı</p>
+      <p id="gameSubtitle" style="font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px;">MinMat — Zeka ve Matematik Oyunu</p>
 
     </div>
     <div id="playerBar">
@@ -1327,68 +1208,7 @@
   </div>
 
   <script>
-    /* ===== 19 MAYIS LAUNCH TEASER ===== */
-    let isTeaserDismissed = false;
 
-    function initTeaser() {
-      // 00:00 Turkey time tonight (May 19 00:00) is 2026-05-18T21:00:00Z in UTC!
-      const targetUtc = Date.UTC(2026, 4, 18, 21, 0, 0); // May is index 4
-      
-      const overlay = document.getElementById("teaserOverlay");
-      const countdownEl = document.getElementById("teaserCountdownText");
-
-      function update() {
-        const now = Date.now();
-        const diff = targetUtc - now;
-
-        if (diff <= 0) {
-          overlay.style.display = "none";
-          return;
-        }
-
-        if (!isTeaserDismissed) {
-          overlay.style.display = "flex";
-        }
-
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        const pad = (num) => String(num).padStart(2, "0");
-        
-        // Multi-language support inside the teaser!
-        const hLabel = currentLang === "tr" ? "Saat" : "Hours";
-        const mLabel = currentLang === "tr" ? "Dakika" : "Minutes";
-        const sLabel = currentLang === "tr" ? "Saniye" : "Seconds";
-        
-        if (currentLang !== "tr") {
-          document.getElementById("teaserTitle").innerText = "Wait for the Big Surprise!";
-          document.getElementById("teaserDesc").innerText = "Our May 19th Commemoration of Atatürk, Youth and Sports Day special surprise and a mysterious holiday gift that you will love opens at 00:00! If you are curious about what it is, do not miss the countdown...";
-          document.getElementById("teaserTimerTitle").innerText = "⌛ COUNTDOWN RUNNING";
-          document.querySelector(".teaser-btn").innerText = "🚀 Start Without Waiting";
-        } else {
-          document.getElementById("teaserTitle").innerText = "Büyük Sürprizi Bekleyin!";
-          document.getElementById("teaserDesc").innerText = "19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı özel sürprizimiz ve çok hoşunuza gidecek gizemli bayram hediyemiz saat 00:00'da açılıyor! Ne olduğunu merak ediyorsanız geri sayımı kaçırmayın, çok seveceksiniz...";
-          document.getElementById("teaserTimerTitle").innerText = "⌛ GERİ SAYIM BAŞLADI";
-          document.querySelector(".teaser-btn").innerText = "🚀 Sürprizi Beklemeden Başla";
-        }
-
-        countdownEl.innerText = `${pad(hours)} ${hLabel} ${pad(minutes)} ${mLabel} ${pad(seconds)} ${sLabel}`;
-      }
-
-      update();
-      const interval = setInterval(update, 1000);
-    }
-
-    function dismissTeaser() {
-      isTeaserDismissed = true;
-      document.getElementById("teaserOverlay").style.display = "none";
-    }
-
-    // Call initTeaser when DOM is loaded
-    document.addEventListener("DOMContentLoaded", () => {
-      initTeaser();
-    });
 
     /* ===== DIL / LANGUAGE ===== */
     let currentLang = localStorage.getItem("wc2026-locale") || localStorage.getItem("minmat_lang") || "tr";
@@ -1427,7 +1247,7 @@
         nameErr: "İsim en az 3 karakter olmalı",
         guest: "Misafir",
         menu: "Menü",
-        subtitle: "Sayı Avı",
+        subtitle: "MinMat — Zeka ve Matematik Oyunu",
         all: "Hepsi"
       },
       en: {
@@ -1463,7 +1283,7 @@
         nameErr: "Name must be at least 3 characters",
         guest: "Guest",
         menu: "Menu",
-        subtitle: "Number Hunt",
+        subtitle: "MinMat — Brain & Math Game",
         all: "All"
       },
       de: {
@@ -1499,7 +1319,7 @@
         nameErr: "Name muss mindestens 3 Zeichen haben",
         guest: "Gast",
         menu: "Menü",
-        subtitle: "Zahlen Jagd",
+        subtitle: "MinMat — Gehirn- & Mathe-Spiel",
         all: "Alle"
       },
       fr: {
@@ -1535,7 +1355,7 @@
         nameErr: "Le nom doit comporter au moins 3 caractères",
         guest: "Invité",
         menu: "Menu",
-        subtitle: "Chasse aux Nombres",
+        subtitle: "MinMat — Jeu de Cerveau & de Mathématiques",
         all: "Tous"
       },
       es: {
@@ -1571,7 +1391,7 @@
         nameErr: "El nombre debe tener al menos 3 caracteres",
         guest: "Invitado",
         menu: "Menú",
-        subtitle: "Caza de Números",
+        subtitle: "MinMat — Juego de Cerebro y Matemáticas",
         all: "Todos"
       }
     };

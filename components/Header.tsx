@@ -152,7 +152,7 @@ export function Header() {
               <Trophy className="h-5 w-5 text-[#060b14]" strokeWidth={2.5} />
             </span>
             <span className="hidden font-bold tracking-tight sm:block">
-              CupMat <span className="text-emerald-400">2026</span>
+              {t("nav.logoTitle")}
             </span>
           </Link>
           </div>

@@ -11,37 +11,7 @@ export default function EntryPage() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
 
-  const [showTeaser, setShowTeaser] = useState(false);
-  const [countdownText, setCountdownText] = useState("");
-  const [dismissed, setDismissed] = useState(false);
 
-  useEffect(() => {
-    // 00:00 Turkey time tonight (May 19 00:00) is 2026-05-18T21:00:00Z in UTC!
-    const targetUtc = Date.UTC(2026, 4, 18, 21, 0, 0); // Month is 0-indexed (4 is May)
-    
-    const updateCountdown = () => {
-      const now = Date.now();
-      const diff = targetUtc - now;
-      
-      if (diff <= 0) {
-        setShowTeaser(false);
-        return;
-      }
-      
-      setShowTeaser(true);
-      
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      
-      const pad = (num: number) => String(num).padStart(2, "0");
-      setCountdownText(`${pad(hours)} Saat ${pad(minutes)} Dakika ${pad(seconds)} Saniye`);
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   const toggleLocale = () => {
     const currentIndex = locales.indexOf(locale);
@@ -51,54 +21,7 @@ export default function EntryPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#04080e] selection:bg-emerald-500/30">
-      {/* 19 Mayıs Launch Teaser Overlay */}
-      {showTeaser && !dismissed && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#04080e]/95 backdrop-blur-2xl p-6 text-center animate-fadeIn">
-          {/* Visual glow effects */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-red-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse" />
-          <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-600/10 rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="relative max-w-xl w-full border border-red-500/20 bg-gradient-to-b from-[#060b14]/90 to-zinc-950/80 p-8 sm:p-10 rounded-3xl shadow-2xl flex flex-col items-center gap-6">
-            <span className="text-[40px] animate-bounce">🎁</span>
-            
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
-              {locale === "tr" ? "Büyük Sürprizi Bekleyin!" : "Wait for the Big Surprise!"}
-            </h2>
-            
-            <p className="text-zinc-300 text-sm leading-relaxed max-w-md">
-              {locale === "tr" 
-                ? "19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı özel sürprizimiz ve çok hoşunuza gidecek gizemli bayram hediyemiz saat 00:00'da açılıyor! Ne olduğunu merak ediyorsanız geri sayımı kaçırmayın, çok seveceksiniz..."
-                : "Our May 19th Commemoration of Atatürk, Youth and Sports Day special surprise and a mysterious holiday gift that you will love opens at 00:00! If you are curious about what it is, do not miss the countdown..."
-              }
-            </p>
-
-            {/* Live Countdown Timer */}
-            <div className="w-full bg-zinc-950 border border-zinc-900 rounded-2xl py-4 px-6 shadow-inner relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-amber-500/5 opacity-50 pointer-events-none" />
-              <div className="text-[10px] text-zinc-500 font-extrabold uppercase tracking-widest mb-1.5">
-                {locale === "tr" ? "⌛ GERİ SAYIM BAŞLADI" : "⌛ COUNTDOWN RUNNING"}
-              </div>
-              <div className="text-lg sm:text-xl font-black text-amber-400 font-mono tracking-wider drop-shadow-[0_0_10px_rgba(245,158,11,0.2)]">
-                {countdownText}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full mt-2">
-              <button
-                onClick={() => setDismissed(true)}
-                className="flex-1 px-5 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs transition duration-300 shadow-lg shadow-red-600/20 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                🚀 {locale === "tr" ? "Sürprizi Beklemeden Giriş Yap" : "Enter Without Waiting"}
-              </button>
-            </div>
-            
-            <span className="text-[9px] text-zinc-600 font-bold tracking-wider uppercase">
-              {locale === "tr" ? "statmatik.com • cupmat" : "statmatik.com • cupmat"}
-            </span>
-          </div>
-        </div>
-      )}
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent" />
@@ -119,7 +42,7 @@ export default function EntryPage() {
           <div className="mb-8 flex justify-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
               <Sparkles className="h-4 w-4" />
-              {t("hero.badge")}
+              {t("hero.mainBadge")}
             </div>
           </div>
           

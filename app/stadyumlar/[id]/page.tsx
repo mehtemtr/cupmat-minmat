@@ -121,14 +121,13 @@ const localDict = {
   }
 };
 
-// Localized architectural profiles for major stadiums
 const stadiumArchitectures: Record<string, Record<string, string>> = {
   metlife: {
-    tr: "Modern çelik ve cam dış cephesiyle bilinen devasa stadyum, New York silüetine bakan açık hava mimarisine sahiptir. 82.500 kişilik dev kapasitesiyle 2026 Dünya Kupası'nın büyük finaline ev sahipliği yapacaktır.",
-    en: "Known for its modern steel and glass facade, this massive open-air stadium boasts premium views of the New York skyline. With a giant capacity of 82,500, it is proud to host the grand final of the 2026 World Cup.",
+    tr: "Modern çelik ve cam dış cephesiyle bilinen devasa stadyum, New York silüetine bakan açık hava mimarisine sahiptir. 82.500 kişilik dev kapasitesiyle 2026 Dünya Şampiyonası'nın büyük finaline ev sahipliği yapacaktır.",
+    en: "Known for its modern steel and glass facade, this massive open-air stadium boasts premium views of the New York skyline. With a giant capacity of 82,500, it is proud to host the grand final of the 2026 World Championship.",
     es: "Conocido por su moderna fachada de acero y vidrio, este enorme estadio al aire libre ofrece vistas premium de la ciudad de Nueva York. Con su gran capacidad, albergará la gran final.",
     fr: "Célèbre pour sa façade en acier et verre, ce stade à ciel ouvert offre une vue panoramique unique sur New York. Fort de ses 82 500 places, il accueillera la grande finale du tournoi.",
-    de: "Dieses riesige Open-Air-Stadion ist für seine moderne Stahl- und Glasfassade bekannt und bietet erstklassige Ausblicke auf die Skyline. Es hat die Ehre, das große Finale der WM 2026 auszurichten."
+    de: "Dieses riesige Open-Air-Stadion ist für seine moderne Stahl- und Glasfassade bekannt und bietet erstklassige Ausblicke auf die Skyline. Es hat die Ehre, das große Finale der Weltmeisterschaft 2026 auszurichten."
   },
   sofi: {
     tr: "Fütüristik şeffaf çatısı, dev çift taraflı askılı 'Infinity Screen' ekranı ve yarı açık kanyon mimarisi ile stadyum tasarımında devrim yaratmıştır. Los Angeles kıyılarından esen serin okyanus rüzgarlarını içeri alacak şekilde tasarlanmıştır.",
@@ -138,11 +137,11 @@ const stadiumArchitectures: Record<string, Record<string, string>> = {
     de: "Revolutionäre halboffene Stadionarchitektur mit einem futuristischen lichtdurchlässigen Dach und dem riesigen doppelseitigen 'Infinity Screen', der für optimales Entertainment sorgt."
   },
   azteca: {
-    tr: "Dünya futbolunun kutsal mabetlerinden olan Estadio Azteca, Pelé (1970) ve Maradona'nın (1986) kupayı kaldırdığı tarihi stadyumdur. 2026'da 3. kez Dünya Kupası maçına ev sahipliği yapacak ilk stadyum unvanını alacaktır.",
-    en: "One of the holy temples of world football, Estadio Azteca is the historic venue where Pelé (1970) and Maradona (1986) lifted the trophy. In 2026, it will become the first stadium to host World Cup matches in three separate editions.",
+    tr: "Dünya futbolunun kutsal mabetlerinden olan Estadio Azteca, Pelé (1970) ve Maradona'nın (1986) kupayı kaldırdığı tarihi stadyumdur. 2026'da 3. kez Dünya Şampiyonası maçına ev sahipliği yapacak ilk stadyum unvanını alacaktır.",
+    en: "One of the holy temples of world football, Estadio Azteca is the historic venue where Pelé (1970) and Maradona (1986) lifted the trophy. In 2026, it will become the first stadium to host World Championship matches in three separate editions.",
     es: "Uno de los templos sagrados del fútbol mundial, el Estadio Azteca es la sede histórica donde Pelé (1970) y Maradona (1986) se coronaron campeones. En 2026 será el primero en recibir partidos por tercera vez.",
-    fr: "Temple sacré du football, l'Estadio Azteca est le lieu mythique où Pelé (1970) et Maradona (1986) ont soulevé le trophée. Il deviendra le premier stade à accueillir la Coupe du Monde pour la troisième fois.",
-    de: "Als einer der heiligen Tempel des Weltfußballs ist das Estadio Azteca der historische Ort, an dem Pelé (1970) und Maradona (1986) die Trophäe hoben. 2026 schreibt es als dreifacher WM-Gastgeber erneut Geschichte."
+    fr: "Temple sacré du football, l'Estadio Azteca est le lieu mythique où Pelé (1970) et Maradona (1986) ont soulevé le trophée. Il deviendra le premier stade à accueillir le Championnat du Monde pour la troisième fois.",
+    de: "Als einer der heiligen Tempel des Weltfußballs ist das Estadio Azteca der historische Ort, an dem Pelé (1970) und Maradona (1986) die Trophäe hoben. 2026 schreibt es als dreifacher Weltmeisterschafts-Gastgeber erneut Geschichte."
   }
 };
 
@@ -152,11 +151,11 @@ function getArchitectureDesc(stadiumId: string, nameEn: string, activeLang: stri
   if (custom && custom[activeLang]) return custom[activeLang];
 
   const fallbacks: Record<string, string> = {
-    tr: `${nameEn}, 2026 FIFA Dünya Kupası standartlarına uygun olarak tasarlanmış, son teknoloji iklimlendirme ünitelerine, çevre dostu yeşil enerji sertifikasına ve izleyicilerin sahayı engelsiz görebileceği modern tribün açılarına sahip premium bir stadyumdur.`,
-    en: `${nameEn} is a premium stadium designed in full compliance with 2026 FIFA World Cup standards. It features state-of-the-art climate control systems, eco-friendly green energy certification, and modern sightline engineering for perfect pitch views.`,
-    es: `${nameEn} es un estadio premium diseñado de conformidad con los estándares de la Copa Mundial 2026. Cuenta con control climático de vanguardia, certificación ecológica y visibilidad óptima de la cancha.`,
-    fr: `${nameEn} est un stade haut de gamme conforme aux exigences de la Coupe du Monde 2026. Il intègre des technologies de pointe, une certification éco-durable et une visibilité parfaite sur le terrain.`,
-    de: `${nameEn} ist ein erstklassiges Stadion, das in voller Übereinstimmung mit den FIFA-WM-Richtlinien gebaut wurde. Es verfügt über modernste Klimatechnik, Ökostrom-Zertifikate und beste Sichtverhältnisse.`
+    tr: `${nameEn}, 2026 Dünya Şampiyonası standartlarına uygun olarak tasarlanmış, son teknoloji iklimlendirme ünitelerine, çevre dostu yeşil enerji sertifikasına ve izleyicilerin sahayı engelsiz görebileceği modern tribün açılarına sahip premium bir stadyumdur.`,
+    en: `${nameEn} is a premium stadium designed in full compliance with 2026 World Championship standards. It features state-of-the-art climate control systems, eco-friendly green energy certification, and modern sightline engineering for perfect pitch views.`,
+    es: `${nameEn} es un estadio premium diseñado de conformidad con los estándares del Campeonato Mundial 2026. Cuenta con control climático de vanguardia, certificación ecológica y visibilidad óptima de la cancha.`,
+    fr: `${nameEn} est un stade haut de gamme conforme aux exigences du Championnat du Monde 2026. Il intègre des technologies de pointe, une certification éco-durable et une visibilité parfaite sur le terrain.`,
+    de: `${nameEn} ist ein erstklassiges Stadion, das in voller Übereinstimmung mit den Weltmeisterschafts-Richtlinien gebaut wurde. Es verfügt über modernste Klimatechnik, Ökostrom-Zertifikate und beste Sichtverhältnisse.`
   };
   return fallbacks[activeLang] || fallbacks["en"];
 }

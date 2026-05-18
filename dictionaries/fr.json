@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Coupe du Monde de la FIFA 2026 - Statmatik",
-    "description": "Le guide ultime de la Coupe du Monde de la FIFA 2026 — 48 équipes, 12 groupes, trois pays hôtes. Compte à rebours avant le coup d'envoi le 11 juin 2026.",
-    "ogTitle": "Coupe du Monde de la FIFA 2026 — Le plus grand spectacle au monde",
+    "title": "StatMatik — Championnat du Monde 2026",
+    "description": "Le guide ultime du Championnat du Monde 2026 — 48 équipes, 12 groupes, trois pays hôtes. Compte à rebours avant le coup d'envoi le 11 juin 2026.",
+    "ogTitle": "Championnat du Monde 2026 — Le plus grand spectacle au monde",
     "ogDescription": "48 équipes. 12 groupes. 3 pays hôtes. Le compte à rebours pour le 11 juin 2026 a commencé."
   },
   "nav": {
@@ -14,23 +14,25 @@
     "leaderboard": "Classement",
     "footballers": "Joueurs",
     "signin": "Se connecter",
-    "signout": "Se déconnecter"
+    "signout": "Se déconnecter",
+    "logoTitle": "CupMat — Écran Spécial Championnat du Monde 2026"
   },
   "hero": {
-    "badge": "Coupe du Monde de la FIFA 2026",
+    "badge": "StatMatik — Championnat du Monde 2026",
+    "mainBadge": "StatMatik — Championnat du Monde 2026 & Espace de Jeux Mathématiques",
     "title": "Le monde",
     "titleHighlight": "S'unit",
     "subtitle": "États-Unis · Canada · Mexique — trois pays, un tournoi, l'histoire s'écrit.",
     "ctaPrimary": "Explorer le tournoi",
     "ctaSecondary": "Faire une prévision",
     "minMatPromo": "Rafraîchissez votre esprit en attendant le match ! 🧠 Essayez notre jeu de mathématiques et de mémoire MinMat.",
-    "cupMatPromo": "Votre connaissance du football est-elle meilleure que l'IA ? 🏆 Faites vos prévisions pour la Coupe du Monde avec CupMat dès maintenant !",
+    "cupMatPromo": "Votre connaissance du football est-elle meilleure que l'IA ? 🏆 Faites vos prévisions pour le Championnat du Monde 2026 avec CupMat dès maintenant !",
     "comingSoon": "Bientôt disponible ⌛",
     "players": "Infos joueurs",
     "countries": "Détails du pays",
     "referees": "Stats arbitres",
     "slogan": "Le football est mathématique, la mathématique est tout. Résolvez la mathématique du football avec statmatik.com !",
-    "cupMatDesc": "Tout sur la Coupe du Monde grâce à l'IA !",
+    "cupMatDesc": "Tout sur le Championnat du Monde 2026 grâce à l'IA !",
     "minMatDesc": "Un jeu cérébral qui facilitera le calcul mental pour vous et vos enfants !",
     "playStart": "Voir la Coupe",
     "mindRefresh": "Rafraîchissez votre Esprit"
@@ -45,11 +47,11 @@
   },
   "overview": {
     "sectionTitle": "Aperçu du tournoi",
-    "sectionSubtitle": "La plus grande Coupe du Monde de l'histoire — format élargi, trois hôtes, des moments inoubliables vous attendent.",
+    "sectionSubtitle": "Le plus grand Championnat du Monde de l'histoire — format élargi, trois hôtes, des moments inoubliables vous attendent.",
     "teams": {
       "value": "48",
       "label": "Équipes",
-      "description": "Le plus grand effectif de l'histoire de la Coupe du Monde"
+      "description": "Le plus grand plateau de l'histoire du Championnat du Monde"
     },
     "groups": {
       "value": "12",
@@ -69,7 +71,7 @@
   },
   "teams": {
     "title": "Équipes participantes",
-    "subtitle": "48 pays dans les groupes A–L, classement FIFA et détails de l'effectif.",
+    "subtitle": "48 pays dans les groupes A–L, classement mondial et détails de l'effectif.",
     "group": "Groupe",
     "manager": "Sélectionneur",
     "squad": "Effectif",
@@ -111,7 +113,7 @@
     "confidence": "Confiance de l'IA",
     "reset": "Réinitialiser les prévisions",
     "champion": "CHAMPION",
-    "completed": "COUPE DU MONDE 2026 TERMINÉE !",
+    "completed": "CHAMPIONNAT DU MONDE 2026 TERMINÉ !",
     "et": "PROLONGATIONS",
     "penalties": "TIRS AU BUT",
     "aiRoundPredict": "Prédiction IA",
@@ -120,8 +122,8 @@
     "aiLabel": "PRÉDICTION IA"
   },
   "footer": {
-    "tagline": "Coupe du Monde de la FIFA 2026 — Pour l'amour du jeu.",
-    "rights": "Tous droits réservés. Non affilié à la FIFA."
+    "tagline": "Championnat du Monde 2026 — Pour l'amour du jeu.",
+    "rights": "Tous droits réservés."
   },
   "language": {
     "toggle": "Langue",
