@@ -186,7 +186,7 @@ export function Header() {
                 className="h-11 w-11 rounded-xl object-contain border border-white/10 bg-white/5 shadow-lg shadow-emerald-500/25"
               />
               <h2 className="text-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
-                MahTEM Oyun Atölyesi
+                MahTEM
               </h2>
             </div>
             
