@@ -106,9 +106,7 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
         >
           <Providers initialLocale={locale}>
-            {process.env.NEXT_PUBLIC_GA_ID && (
-              <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-            )}
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || "G-GMHYYVM3BK"} />
             <DynamicMeta />
             <Header />
             <GamificationManager />
