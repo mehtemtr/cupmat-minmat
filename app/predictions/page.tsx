@@ -1,21 +1,19 @@
 "use client";
 
-import { PageShell } from "@/components/PageShell";
-import { TournamentGate } from "@/components/TournamentGate";
-import { PredictionWizard } from "@/components/predictions/PredictionWizard";
-import { useTranslation } from "@/contexts/LocaleContext";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function PredictionsPage() {
-  const { t } = useTranslation();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/tahminler");
+  }, [router]);
 
   return (
-    <PageShell
-      title={t("predictions.title")}
-      subtitle={t("predictions.subtitle")}
-    >
-      <TournamentGate>
-        <PredictionWizard />
-      </TournamentGate>
-    </PageShell>
+    <div className="flex flex-col items-center justify-center py-20 text-emerald-400 font-extrabold gap-4">
+      <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <p className="animate-pulse">Yönlendiriliyorsunuz...</p>
+    </div>
   );
 }

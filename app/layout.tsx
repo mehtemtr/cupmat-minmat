@@ -9,6 +9,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { defaultLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n/types";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { GamificationManager } from "@/components/GamificationManager";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -110,6 +111,7 @@ export default async function RootLayout({
             )}
             <DynamicMeta />
             <Header />
+            <GamificationManager />
             <main>{children}</main>
             <Footer />
           </Providers>

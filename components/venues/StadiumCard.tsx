@@ -1,5 +1,4 @@
-"use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import { MapPin, Users, Calendar, X, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
@@ -13,6 +12,7 @@ type StadiumCardProps = {
 };
 
 export function StadiumCard({ stadium }: StadiumCardProps) {
+  const router = useRouter();
   const { locale } = useLocale();
   const { t } = useTranslation();
   
@@ -150,6 +150,18 @@ export function StadiumCard({ stadium }: StadiumCardProps) {
               <p className="mt-2 text-zinc-400">
                 {city}, {country} — {t("venues.capacity")}: {(stadium?.capacity ?? 0).toLocaleString(locale === "tr" ? "tr-TR" : "en-US")}
               </p>
+              <div className="mt-4 flex justify-center">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsModalOpen(false);
+                    router.push(`/stadyumlar/${stadium.id}`);
+                  }}
+                  className="px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold transition-all shadow-lg hover:shadow-emerald-500/20 text-sm"
+                >
+                  {locale === "tr" ? "Detayları İncele →" : "View Stadium Details →"}
+                </button>
+              </div>
             </div>
           </div>
         </div>

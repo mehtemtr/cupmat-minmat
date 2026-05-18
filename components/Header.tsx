@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe, Home, Menu, Trophy, X, Info, HelpCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { locales, type Locale } from "@/lib/i18n/types";
@@ -11,19 +11,111 @@ import { locales, type Locale } from "@/lib/i18n/types";
 const navKeys = [
   { href: "/cupmat", key: "nav.home" },
   { href: "/teams", key: "nav.teams" },
+  { href: "/futbolcular", key: "nav.footballers" },
   { href: "/groups", key: "nav.groups" },
   { href: "/venues", key: "nav.venues" },
-  { href: "/predictions", key: "nav.predictions" },
+  { href: "/tahminler", key: "nav.predictions" },
+  { href: "/leaderboard", key: "nav.leaderboard" },
 ] as const;
 
 export function Header() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
-  const { isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [taraftarPuani, setTaraftarPuani] = useState<number | null>(null);
+
+  // Fetch initial gamification points
+  useEffect(() => {
+    if (!isSignedIn || !user) return;
+
+    const fetchPoints = async () => {
+      try {
+        const res = await fetch(`/api/gamification?userId=${user.id}`);
+        const data = await res.json();
+        if (data.success && data.profile) {
+          setTaraftarPuani(data.profile.taraftarPuani);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("minmat_last_name", data.profile.displayName);
+          }
+        }
+      } catch (err) {
+        console.error("Fetch points error:", err);
+      }
+    };
+
+    fetchPoints();
+  }, [isSignedIn, user]);
+
+  // Listen to point updates from the timer manager
+  useEffect(() => {
+    const handlePointsUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && typeof customEvent.detail.points === "number") {
+        setTaraftarPuani(customEvent.detail.points);
+      }
+    };
+
+    window.addEventListener("taraftar-puan-guncellendi", handlePointsUpdate);
+    return () => window.removeEventListener("taraftar-puan-guncellendi", handlePointsUpdate);
+  }, []);
+
+  const handleAboutOpen = async () => {
+    setAboutOpen(true);
+    if (isSignedIn && user) {
+      try {
+        const res = await fetch("/api/gamification", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user.id,
+            displayName: user.fullName || user.username || "Kullanıcı",
+            action: "about_clicked",
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.dispatchEvent(
+            new CustomEvent("taraftar-puan-guncellendi", {
+              detail: { points: data.profile.taraftarPuani, toast: data.message },
+            })
+          );
+        }
+      } catch (err) {
+        console.error("About gamification error:", err);
+      }
+    }
+  };
+
+  const handleHelpOpen = async () => {
+    setHelpOpen(true);
+    if (isSignedIn && user) {
+      try {
+        const res = await fetch("/api/gamification", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user.id,
+            displayName: user.fullName || user.username || "Kullanıcı",
+            action: "help_clicked",
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.dispatchEvent(
+            new CustomEvent("taraftar-puan-guncellendi", {
+              detail: { points: data.profile.taraftarPuani, toast: data.message },
+            })
+          );
+        }
+      } catch (err) {
+        console.error("Help gamification error:", err);
+      }
+    }
+  };
 
   // Hide header on portal page
   if (pathname === "/") return null;
@@ -85,7 +177,7 @@ export function Header() {
             {/* Hakkında (ℹ️) Butonu */}
             <button
               type="button"
-              onClick={() => setAboutOpen(true)}
+              onClick={handleAboutOpen}
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
               title="Hakkında"
             >
@@ -95,7 +187,7 @@ export function Header() {
             {/* Yardım (❓) Butonu */}
             <button
               type="button"
-              onClick={() => setHelpOpen(true)}
+              onClick={handleHelpOpen}
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
               title="Yardım"
             >
@@ -116,15 +208,22 @@ export function Header() {
             </button>
             
             {isSignedIn ? (
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "h-9 w-9 rounded-lg border border-white/10 hover:border-emerald-400/40 transition-colors"
-                  }
-                }}
-              />
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs sm:text-sm font-semibold text-zinc-200 shadow-md transition hover:border-emerald-400/30">
+                  <span className="text-yellow-400 animate-pulse">⭐</span>
+                  <span className="hidden sm:inline text-zinc-400">Puanım:</span>
+                  <span className="text-emerald-400 font-bold">{taraftarPuani !== null ? taraftarPuani : "..."}</span>
+                </div>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-9 w-9 rounded-lg border border-white/10 hover:border-emerald-400/40 transition-colors"
+                    }
+                  }}
+                />
+              </div>
             ) : (
-              <SignInButton mode="modal">
+              <SignInButton mode="modal" forceRedirectUrl="/tahminler">
                 <button className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-bold text-[#060b14] hover:bg-emerald-400 transition-colors">
                   {t("nav.signin") || "Giriş Yap"}
                 </button>

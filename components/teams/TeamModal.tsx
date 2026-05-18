@@ -1,5 +1,4 @@
-"use client";
-
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { X, User, Users } from "lucide-react";
 import type { Team } from "@/lib/types/tournament";
@@ -12,6 +11,7 @@ type TeamModalProps = {
 };
 
 export function TeamModal({ team, onClose }: TeamModalProps) {
+  const router = useRouter();
   const { locale } = useLocale();
   const { t } = useTranslation();
 
@@ -79,14 +79,18 @@ export function TeamModal({ team, onClose }: TeamModalProps) {
               <Users className="h-4 w-4" />
               {t("teams.squad")}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 mb-6">
               {team.players.map((player) => (
                 <li
                   key={player.id}
-                  className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3"
+                  onClick={() => {
+                    onClose();
+                    router.push(`/futbolcular/${player.id}`);
+                  }}
+                  className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3 hover:bg-white/[0.06] hover:border-emerald-500/35 transition-all cursor-pointer shadow-md active:scale-[0.98]"
                 >
                   <div>
-                    <p className="font-medium text-white">{player.name}</p>
+                    <p className="font-semibold text-white hover:text-emerald-400 transition-colors">{player.name}</p>
                     <p className="text-xs text-zinc-500">
                       {player.position} · {player.club}
                     </p>
@@ -95,6 +99,16 @@ export function TeamModal({ team, onClose }: TeamModalProps) {
                 </li>
               ))}
             </ul>
+
+            <button
+              onClick={() => {
+                onClose();
+                router.push(`/ulkeler/${team.id}`);
+              }}
+              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold transition-all shadow-lg hover:shadow-emerald-500/20 text-sm text-center block"
+            >
+              {locale === "tr" ? "Ülke Tarihi ve Detayları →" : "View Country Details & History →"}
+            </button>
           </section>
         </div>
       </div>

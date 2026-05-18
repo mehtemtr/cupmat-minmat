@@ -6,12 +6,14 @@ import { GROUP_IDS } from "@/lib/types/tournament";
 import { getTeamById, getTeamName } from "@/data/teams";
 import { useGroupStandings } from "@/contexts/TournamentContext";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
+import { useRouter } from "next/navigation";
 
 type GroupTableProps = {
   group: GroupId;
 };
 
 export function GroupTable({ group }: GroupTableProps) {
+  const router = useRouter();
   const standings = useGroupStandings(group);
   const { locale } = useLocale();
   const { t } = useTranslation();
@@ -55,8 +57,12 @@ export function GroupTable({ group }: GroupTableProps) {
                     {index + 1}
                   </td>
                   <td className="px-3 py-2">
-                    <div className="flex items-center gap-2">
-                      <div className="relative h-5 w-7 shrink-0 overflow-hidden rounded">
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/ulkeler/${team.id}`)}
+                      className="flex items-center gap-2 hover:text-emerald-400 text-left transition-all cursor-pointer group active:scale-[0.98]"
+                    >
+                      <div className="relative h-5 w-7 shrink-0 overflow-hidden rounded ring-1 ring-white/10 group-hover:ring-emerald-500/35 transition-all">
                         <Image
                           src={team.flagUrl}
                           alt=""
@@ -65,10 +71,10 @@ export function GroupTable({ group }: GroupTableProps) {
                           unoptimized
                         />
                       </div>
-                      <span className="truncate font-medium text-white">
+                      <span className="truncate font-medium text-white group-hover:text-emerald-400 transition-colors">
                         {getTeamName(team, locale)}
                       </span>
-                    </div>
+                    </button>
                   </td>
                   <td className="px-2 py-2 text-center text-zinc-400">
                     {row.played}

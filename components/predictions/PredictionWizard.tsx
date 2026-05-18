@@ -87,7 +87,10 @@ export function PredictionWizard() {
             <div className="flex flex-col items-center justify-center rounded-[calc(1rem-1px)] bg-[#060b14] py-8 text-center">
               <Trophy className="mb-4 h-16 w-16 text-amber-400" />
               <h2 className="mb-2 text-3xl font-black tracking-tighter text-white">
-                🏆 {t("predictions.champion")}: {getTeamName(getTeamById(winnerTeamId)!, locale).toUpperCase()}
+                🏆 {t("predictions.champion")}: {(() => {
+                  const team = getTeamById(winnerTeamId);
+                  return team ? getTeamName(team, locale).toUpperCase() : "TBD";
+                })()}
               </h2>
               <p className="text-amber-200/60">{t("predictions.completed")}</p>
             </div>
@@ -332,27 +335,70 @@ export function PredictionWizard() {
           <KnockoutBracket unlocked={knockoutUnlocked} />
         </div>
 
-        {/* Future Proofing: Coming Soon Section */}
+        {/* Future Proofing: Coming Soon & Active Features Section */}
         <div className="grid gap-4 sm:grid-cols-3">
-          {[
-            { key: "players", label: t("hero.players") },
-            { key: "countries", label: t("hero.countries") },
-            { key: "referees", label: t("hero.referees") }
-          ].map((item) => (
-            <div
-              key={item.key}
-              className="group relative cursor-not-allowed rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition-all"
-            >
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-bold text-zinc-600">{t("hero.comingSoon")}</span>
-                <Lock className="h-3.5 w-3.5 text-zinc-700" />
-              </div>
-              <h5 className="font-semibold text-zinc-500">{item.label}</h5>
-              <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/5">
-                <div className="h-full w-1/3 bg-emerald-500/20 transition-all group-hover:w-1/2" />
-              </div>
+          {/* Players: Unlocked and Linked to Footballers */}
+          <Link
+            href="/futbolcular"
+            className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition-all hover:border-emerald-500/30 hover:bg-emerald-500/5 cursor-pointer block text-left animate-pulse-slow"
+          >
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-bold text-emerald-400">AKTİF 🚀</span>
+              <span className="text-emerald-400 text-sm">→</span>
             </div>
-          ))}
+            <h5 className="font-semibold text-white group-hover:text-emerald-400 transition-colors">
+              {t("hero.players")}
+            </h5>
+            <p className="text-[10px] text-zinc-500 mt-1 leading-snug">
+              Turnuvadaki tüm futbolcuların listesi, istatistikleri ve keşif ödülleri.
+            </p>
+          </Link>
+
+          {/* Countries: Unlocked and Linked to Teams */}
+          <Link
+            href="/teams"
+            className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition-all hover:border-emerald-500/30 hover:bg-emerald-500/5 cursor-pointer block text-left"
+          >
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-bold text-emerald-400">AKTİF 🚀</span>
+              <span className="text-emerald-400 text-sm">→</span>
+            </div>
+            <h5 className="font-semibold text-white group-hover:text-emerald-400 transition-colors">
+              {t("hero.countries")}
+            </h5>
+            <p className="text-[10px] text-zinc-500 mt-1 leading-snug">
+              48 ülkenin detaylı kadroları, başarıları ve tarihi.
+            </p>
+          </Link>
+
+          {/* Referees: Unlocked with direct links */}
+          <div
+            className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition-all hover:border-yellow-500/30 hover:bg-yellow-500/5 cursor-default text-left"
+          >
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-bold text-yellow-400">AKTİF 🚀</span>
+              <span className="text-yellow-400 text-sm">★</span>
+            </div>
+            <h5 className="font-semibold text-white">
+              {t("hero.referees")}
+            </h5>
+            <div className="mt-2 space-y-1 border-t border-white/5 pt-2">
+              {[
+                { id: "meler", name: "H. Umut Meler (TR)" },
+                { id: "marciniak", name: "S. Marciniak (PL)" },
+                { id: "taylor", name: "A. Taylor (UK)" },
+                { id: "turpin", name: "C. Turpin (FR)" }
+              ].map((ref) => (
+                <Link
+                  key={ref.id}
+                  href={`/hakemler/${ref.id}`}
+                  className="block text-left text-[11px] text-zinc-400 hover:text-yellow-400 hover:underline transition-colors truncate"
+                >
+                  ⚽ {ref.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

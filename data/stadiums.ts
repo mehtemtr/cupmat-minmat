@@ -48,9 +48,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 16",
     imageGradient: "from-purple-600/30 to-violet-900/20",
     images: [
-      "https://images.unsplash.com/photo-1518091043644-c1d445e4d20c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1519315901367-f34f858fa334?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1595171730410-671239fc414c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1614251147571-b0db37c35f29?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1563844528129-067e06a61f8d?auto=format&fit=crop&w=800&q=80"
     ],
   },
   {
@@ -105,9 +105,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 32",
     imageGradient: "from-orange-600/30 to-red-900/20",
     images: [
-      "https://images.unsplash.com/photo-1521056787327-165dc2a3280f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1563844528129-067e06a61f8d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518605368461-1ee1262d08a0?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1504156806644-d021c3b17403?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80"
     ],
   },
   {
@@ -143,9 +143,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 16",
     imageGradient: "from-rose-600/30 to-pink-900/20",
     images: [
-      "https://images.unsplash.com/photo-1512413914565-d01c6ff964e5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1580130281326-9551c9a51791?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
     ],
   },
   {
@@ -181,9 +181,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-blue-500/30 to-navy-900/20",
     images: [
-      "https://images.unsplash.com/photo-1518091043644-c1d445e4d20c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1519315901367-f34f858fa334?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1568194157720-8ece7b1fc0d1?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1518091043644-c1d445e4d20c?auto=format&fit=crop&w=800&q=80"
     ],
   },
   {
@@ -238,8 +238,8 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Tarihi mekan · Grup ve eleme",
     imageGradient: "from-lime-600/30 to-green-900/20",
     images: [
-      "https://images.unsplash.com/photo-1521056787327-165dc2a3280f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1563844528129-067e06a61f8d?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1624823183493-6a978f877ca6?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1518605368461-1ee1262d08a0?auto=format&fit=crop&w=800&q=80"
     ],
   },
@@ -276,9 +276,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-fuchsia-600/30 to-purple-900/20",
     images: [
-      "https://images.unsplash.com/photo-1512413914565-d01c6ff964e5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1606925797300-0b35e9d17400?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80"
     ],
   },
   {
@@ -314,7 +314,7 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Eleme",
     imageGradient: "from-indigo-600/30 to-blue-900/20",
     images: [
-      "https://images.unsplash.com/photo-1518091043644-c1d445e4d20c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519760791241-114a260f001e?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1519315901367-f34f858fa334?auto=format&fit=crop&w=800&q=80"
     ],

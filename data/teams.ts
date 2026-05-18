@@ -368,7 +368,7 @@ const seeds: TeamSeed[] = [
       { name: "Orkun Kökçü", position: "MF", club: "Besiktas", age: 24 },
       { name: "Kerem Aktürkoğlu", position: "FW", club: "Galatasaray", age: 26 },
       { name: "Merih Demiral", position: "DF", club: "Al Ahli", age: 27 },
-      { name: "Uğurcan Çakır", position: "GK", club: "Trabzonspor", age: 29 },
+      { name: "Uğurcan Çakır", position: "GK", club: "Galatasaray", age: 29 },
     ],
   },
   // Group E
@@ -946,6 +946,49 @@ const seeds: TeamSeed[] = [
   },
 ];
 
+export function sortPlayersWithBjkBias(players: any[]): any[] {
+  const isBjk = (club: string) => {
+    if (!club) return false;
+    const c = club.toLowerCase();
+    return c.includes("beşiktaş") || c.includes("besiktas") || c === "bjk";
+  };
+  
+  const isGs = (club: string) => {
+    if (!club) return false;
+    const c = club.toLowerCase();
+    return c.includes("galatasaray") || c === "gs" || c.includes("g.saray");
+  };
+
+  const bjkPlayers = players.filter(p => isBjk(p.club));
+  const gsPlayers = players.filter(p => isGs(p.club));
+  const otherPlayers = players.filter(p => !isBjk(p.club) && !isGs(p.club));
+
+  const result: any[] = [...bjkPlayers];
+
+  if (gsPlayers.length > 0) {
+    const buffersNeeded = Math.max(0, gsPlayers.length - 1);
+    const actualBuffersCount = Math.min(buffersNeeded, otherPlayers.length);
+    
+    // Extract buffer players from the end of otherPlayers to keep early stars top-aligned
+    const buffers = otherPlayers.splice(otherPlayers.length - actualBuffersCount);
+    
+    const interleavedBottom: any[] = [];
+    for (let i = 0; i < gsPlayers.length; i++) {
+      interleavedBottom.push(gsPlayers[i]);
+      if (i < actualBuffersCount) {
+        interleavedBottom.push(buffers[i]);
+      }
+    }
+    
+    result.push(...otherPlayers);
+    result.push(...interleavedBottom);
+  } else {
+    result.push(...otherPlayers);
+  }
+
+  return result;
+}
+
 export const TEAMS: Team[] = seeds.map((s) => ({
   id: s.id,
   code: s.code,
@@ -957,7 +1000,7 @@ export const TEAMS: Team[] = seeds.map((s) => ({
   confederation: s.confederation,
   flagUrl: flag(s.code),
   manager: s.manager,
-  players: squad(s.id, s.players),
+  players: sortPlayersWithBjkBias(squad(s.id, s.players)),
 }));
 
 validateTeamsData(TEAMS);
@@ -975,6 +1018,18 @@ export function getTeamsByGroup(group: GroupId): Team[] {
 export function getTeamName(team: Team, locale: Locale): string {
   if (locale === "tr") return team.nameTr;
   return team.nameEn;
+}
+
+export function getAllPlayers() {
+  return TEAMS.flatMap((team) =>
+    team.players.map((player) => ({
+      ...player,
+      teamId: team.id,
+      teamNameEn: team.nameEn,
+      teamNameTr: team.nameTr,
+      teamFlagUrl: team.flagUrl,
+    }))
+  );
 }
 
 /** Bump when official draw changes — clears stale browser tournament cache */

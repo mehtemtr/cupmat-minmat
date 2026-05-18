@@ -58,3 +58,30 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px) scale(0.9);
+    filter: blur(4px);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    filter: blur(0);
+  }
+  85% {
+    opacity: 1;
+    transform: translate(-50%, -15px) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -30px) scale(0.95);
+    filter: blur(2px);
+  }
+}
+
+.animate-float-up {
+  animation: floatUp 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
