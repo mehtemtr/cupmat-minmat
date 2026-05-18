@@ -184,7 +184,7 @@ export function Header() {
                 <Trophy className="h-6 w-6 text-[#060b14]" strokeWidth={2.5} />
               </span>
               <h2 className="text-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
-                MahT Oyun Atölyesi
+                MahTEM Oyun Atölyesi
               </h2>
             </div>
             
@@ -197,7 +197,7 @@ export function Header() {
                 <h3 className="text-[15px] font-bold text-sky-400 flex items-center gap-2 mb-1.5">
                   🚀 Yapımcı Stüdyo
                 </h3>
-                <p className="ml-4 font-semibold text-white">MahT Oyun Stüdyosu</p>
+                <p className="ml-4 font-semibold text-white">MahTEM Oyun Stüdyosu</p>
               </div>
               
               <div>

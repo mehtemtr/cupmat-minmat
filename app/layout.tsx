@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
     appleWebApp: {
       capable: true,
       statusBarStyle: "black-translucent",
-      title: "MahT",
+      title: "MahTEM",
     },
     keywords: [
       "FIFA World Cup 2026",

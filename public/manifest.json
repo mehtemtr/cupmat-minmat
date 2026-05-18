@@ -1,6 +1,6 @@
 {
-  "name": "MahT Oyun Atölyesi",
-  "short_name": "MahT",
+  "name": "MahTEM Oyun Atölyesi",
+  "short_name": "MahTEM",
   "description": "CupMat & MinMat Entegrasyonlu Matematik, Zeka ve Rekabet Platformu",
   "start_url": "/",
   "display": "standalone",
