@@ -7,11 +7,207 @@ import { useTranslation, useLocale } from "@/contexts/LocaleContext";
 import { locales, type Locale } from "@/lib/i18n/types";
 import { Trophy, Sparkles, ChevronRight, Calculator, Activity, Globe } from "lucide-react";
 
+function BirthdayCake() {
+  const [isBlownOut, setIsBlownOut] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  useEffect(() => {
+    if (isBlownOut) {
+      setShowConfetti(true);
+      const timer = setTimeout(() => setShowConfetti(false), 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [isBlownOut]);
+
+  // Automatic blow out after 5.5 seconds for demo, or click to blow out
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsBlownOut(true);
+    }, 5500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleReset = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsBlownOut(false);
+    setShowConfetti(false);
+    // Restart automatic blowout
+    setTimeout(() => setIsBlownOut(true), 5500);
+  };
+
+  return (
+    <div 
+      onClick={() => setIsBlownOut(true)}
+      className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[5/4] max-w-[380px] rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.25)] bg-[#070b13] flex flex-col items-center justify-center p-4 cursor-pointer select-none group/cake transition-all duration-300 hover:border-pink-500/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.35)]"
+    >
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes flicker {
+          0% { transform: scale(1) rotate(-1.5deg); filter: drop-shadow(0 0 3px #f59e0b); }
+          50% { transform: scale(1.15) rotate(2deg) translateY(-1px); filter: drop-shadow(0 0 6px #f97316); }
+          100% { transform: scale(1) rotate(-0.5deg); filter: drop-shadow(0 0 3px #ef4444); }
+        }
+        .flame {
+          animation: flicker 0.6s infinite ease-in-out;
+          transform-origin: bottom center;
+        }
+        @keyframes puff {
+          0% { transform: scale(1) translateY(0); opacity: 1; }
+          100% { transform: scale(1.8) translateY(-25px); opacity: 0; }
+        }
+        .smoke {
+          animation: puff 0.9s forwards ease-out;
+          transform-origin: center;
+        }
+        @keyframes float-confetti {
+          0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(220px) rotate(360deg); opacity: 0; }
+        }
+        .confetti-piece {
+          position: absolute;
+          width: 7px;
+          height: 7px;
+          animation: float-confetti 3.5s infinite linear;
+        }
+      `}} />
+
+      {/* Confetti overlay */}
+      {showConfetti && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+          {[...Array(18)].map((_, i) => {
+            const colors = ['bg-pink-500', 'bg-purple-500', 'bg-yellow-400', 'bg-sky-400', 'bg-emerald-400', 'bg-orange-400'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const style = {
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 2.5}s`,
+              transform: `rotate(${Math.random() * 360}deg)`,
+            };
+            return <div key={i} className={`confetti-piece rounded-sm ${randomColor}`} style={style} />;
+          })}
+        </div>
+      )}
+
+      {/* Wind / Blow animation overlay */}
+      {!isBlownOut && (
+        <div className="absolute top-4 right-4 text-zinc-400/40 text-lg font-bold animate-pulse z-10 pointer-events-none flex items-center gap-1">
+          <span>🌬️</span>
+          <span className="text-[10px] tracking-widest uppercase font-black">Üfleniyor...</span>
+        </div>
+      )}
+
+      {/* Main SVG Graphic */}
+      <svg viewBox="0 0 200 200" className="w-[85%] h-[85%] z-10">
+        {/* Cake Stand */}
+        <path d="M 40 160 L 160 160 L 150 170 L 50 170 Z" fill="#1e293b" />
+        <rect x="95" y="170" width="10" height="15" fill="#334155" />
+        <ellipse cx="100" cy="185" rx="35" ry="5" fill="#1e293b" />
+
+        {/* Cake Tier 1 (Base) */}
+        <rect x="50" y="110" width="100" height="50" rx="6" fill="#311042" />
+        {/* Cream / Drip on Tier 1 */}
+        <path d="M 50 115 Q 60 123 70 115 Q 80 123 90 115 Q 100 123 110 115 Q 120 123 130 115 Q 140 123 150 115 L 150 110 L 50 110 Z" fill="#9d174d" />
+
+        {/* Cake Tier 2 (Top) */}
+        <rect x="65" y="70" width="70" height="40" rx="4" fill="#4c1d95" />
+        {/* Cream / Drip on Tier 2 */}
+        <path d="M 65 74 Q 72 80 79 74 Q 86 80 93 74 Q 100 80 107 74 Q 114 80 121 74 Q 128 80 135 74 L 135 70 L 65 70 Z" fill="#be185d" />
+
+        {/* 12 Candles */}
+        {[
+          { x: 72, h: 22 }, { x: 77, h: 20 }, { x: 82, h: 24 }, { x: 87, h: 21 },
+          { x: 92, h: 23 }, { x: 97, h: 20 }, { x: 102, h: 20 }, { x: 107, h: 23 },
+          { x: 112, h: 21 }, { x: 117, h: 24 }, { x: 122, h: 20 }, { x: 127, h: 22 }
+        ].map((c, idx) => {
+          const candleY = 70 - c.h;
+          const candleColor = idx % 3 === 0 ? "#facc15" : idx % 3 === 1 ? "#38bdf8" : "#fb7185";
+          return (
+            <g key={idx}>
+              {/* Candle Body */}
+              <rect x={c.x} y={candleY} width="3.2" height={c.h} fill={candleColor} rx="1" />
+              {/* Wick */}
+              <line x1={c.x + 1.6} y1={candleY} x2={c.x + 1.6} y2={candleY - 3} stroke="#94a3b8" strokeWidth="1" />
+              
+              {/* Flame or Smoke */}
+              {!isBlownOut ? (
+                // Flame
+                <path 
+                  d={`M ${c.x + 1.6} ${candleY - 3} C ${c.x - 1.4} ${candleY - 7} ${c.x + 4.6} ${candleY - 7} ${c.x + 1.6} ${candleY - 12} C ${c.x - 1.4} ${candleY - 7} ${c.x + 4.6} ${candleY - 7} ${c.x + 1.6} ${candleY - 3}`}
+                  fill="#f59e0b"
+                  className="flame"
+                  style={{ animationDelay: `${idx * 0.05}s` }}
+                />
+              ) : (
+                // Smoke trail (appears once when blown out)
+                <path
+                  d={`M ${c.x + 1.6} ${candleY - 3} Q ${c.x - 2} ${candleY - 8} ${c.x + 2} ${candleY - 13}`}
+                  stroke="#64748b"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  fill="none"
+                  className="smoke"
+                  style={{ animationDelay: `${idx * 0.03}s` }}
+                />
+              )}
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Info / Reset Button */}
+      <div className="absolute bottom-3 left-0 right-0 text-center z-20">
+        {isBlownOut ? (
+          <button 
+            onClick={handleReset}
+            className="inline-flex items-center gap-1.5 px-3 py-1 text-xs rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30 hover:bg-pink-500/40 transition active:scale-95 font-semibold"
+          >
+            <span>🔄</span>
+            <span>Tekrar Üfle</span>
+          </button>
+        ) : (
+          <span className="text-[9px] text-zinc-400/50 uppercase tracking-widest font-black animate-pulse">
+            Söndürmek için pastaya tıkla! 👆
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
+  const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday">("none");
 
+  useEffect(() => {
+    const checkDate = () => {
+      // Check query parameter for easy testing: ?preview=birthday or ?preview=19mayis
+      const urlParams = new URLSearchParams(window.location.search);
+      const preview = urlParams.get("preview");
+      if (preview === "birthday") {
+        setActiveBanner("birthday");
+        return;
+      }
+      if (preview === "19mayis") {
+        setActiveBanner("19mayis");
+        return;
+      }
 
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth(); // 4 = May (0-indexed)
+      const date = now.getDate();
+
+      if (year === 2026 && month === 4 && date === 19) {
+        setActiveBanner("19mayis");
+      } else if (year === 2026 && month === 4 && date === 20) {
+        setActiveBanner("birthday");
+      } else {
+        setActiveBanner("none");
+      }
+    };
+    checkDate();
+    const interval = setInterval(checkDate, 20000);
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleLocale = () => {
     const currentIndex = locales.indexOf(locale);
@@ -60,58 +256,125 @@ export default function EntryPage() {
           </div>
         </header>
 
-        {/* 19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı Special Banner */}
-        <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-r from-red-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-red-500/30">
-          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 to-amber-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
-          <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-            
-            {/* Celebration Image */}
-            <div className="w-full md:w-[42%] flex justify-center relative">
-              <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[5/4] max-w-[380px] rounded-2xl overflow-hidden border border-red-500/30 shadow-[0_0_30px_rgba(239,68,68,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
-                <img
-                  src="/19_mayis_celebration.png"
-                  alt="19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı"
-                  className="w-full h-full object-cover select-none pointer-events-none"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-transparent" />
-              </div>
-            </div>
-
-            {/* Celebration Message */}
-            <div className="w-full md:w-[58%] text-center md:text-left flex flex-col justify-center">
-              <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-black text-red-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
-                {"🇹🇷 19 MAYIS ÖZEL"}
-              </span>
+        {/* Dynamic Celebrations Section */}
+        {activeBanner === "19mayis" && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-r from-red-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-red-500/30">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 to-amber-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
               
-              <h2 className="text-xl sm:text-2xl font-black text-white leading-tight mb-3">
-                {locale === "tr" ? (
-                  <>{`19 Mayıs Atatürk'ü Anma,`}<br />{`Gençlik ve Spor Bayramı Kutlu Olsun!`}</>
-                ) : (
-                  <>{`Commemoration of Atatürk,`}<br />{`Youth and Sports Day Happy May 19th!`}</>
-                )}
-              </h2>
-
-              <p className="text-sm text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
-                {locale === "tr" ? (
-                  "Gazi Mustafa Kemal Atatürk'ün Samsun'a çıkışıyla yaktığı bağımsızlık meşalesini bugün de aynı coşku ve inançla taşıyoruz. Atatürk'ün Türk gençliğine armağan ettiği bu kutlu bayram hepimize kutlu olsun!"
-                ) : (
-                  "We carry the independence torch lit by Gazi Mustafa Kemal Atatürk with his landing in Samsun, with the same enthusiasm and faith today. Happy May 19th to all of us!"
-                )}
-              </p>
-
-              {/* Quote Block */}
-              <div className="relative border-l-2 border-amber-500/60 pl-4 py-1.5 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
-                <p className="text-xs sm:text-sm font-medium italic text-amber-300 leading-snug">
-                  {"\"Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir. Muhtaç olduğun kudret, damarlarındaki asil kanda mevcuttur!\""}
-                </p>
-                <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
-                  {"— MUSTAFA KEMAL ATATÜRK"}
-                </span>
+              {/* Celebration Image */}
+              <div className="w-full md:w-[42%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[5/4] max-w-[380px] rounded-2xl overflow-hidden border border-red-500/30 shadow-[0_0_30px_rgba(239,68,68,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/19_mayis_celebration.png"
+                    alt="19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramı"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-transparent" />
+                </div>
               </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[58%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-black text-red-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇹🇷 19 MAYIS ÖZEL"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`19 Mayıs Atatürk'ü Anma,`}<br />{`Gençlik ve Spor Bayramı Kutlu Olsun!`}</>
+                  ) : (
+                    <>{`Commemoration of Atatürk,`}<br />{`Youth and Sports Day Happy May 19th!`}</>
+                  )}
+                </h2>
+
+                <p className="text-sm text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Gazi Mustafa Kemal Atatürk'ün Samsun'a çıkışıyla yaktığı bağımsızlık meşalesini bugün de aynı coşku ve inançla taşıyoruz. Atatürk'ün Türk gençliğine armağan ettiği bu kutlu bayram hepimize kutlu olsun!"
+                  ) : (
+                    "We carry the independence torch lit by Gazi Mustafa Kemal Atatürk with his landing in Samsun, with the same enthusiasm and faith today. Happy May 19th to all of us!"
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-amber-500/60 pl-4 py-1.5 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-amber-300 leading-snug">
+                    {"\"Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir. Muhtaç olduğun kudret, damarlarındaki asil kanda mevcuttur!\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— MUSTAFA KEMAL ATATÜRK"}
+                  </span>
+                </div>
+              </div>
+              
             </div>
-            
           </div>
-        </div>
+        )}
+
+        {activeBanner === "birthday" && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-pink-500/20 bg-gradient-to-r from-purple-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-pink-500/30">
+            
+            {/* Custom Animations for Birthday Balloons */}
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes float-balloon {
+                0% { transform: translateY(150px) scale(0.6) rotate(0deg); opacity: 0; }
+                15% { opacity: 0.6; }
+                85% { opacity: 0.6; }
+                100% { transform: translateY(-380px) scale(1.1) rotate(25deg); opacity: 0; }
+              }
+              .balloon-1 { animation: float-balloon 8s infinite ease-in-out; left: 10%; animation-delay: 0s; }
+              .balloon-2 { animation: float-balloon 11s infinite ease-in-out; left: 25%; animation-delay: 3s; }
+              .balloon-3 { animation: float-balloon 7s infinite ease-in-out; left: 48%; animation-delay: 1s; }
+              .balloon-4 { animation: float-balloon 9s infinite ease-in-out; left: 72%; animation-delay: 4.5s; }
+              .balloon-5 { animation: float-balloon 12s infinite ease-in-out; left: 88%; animation-delay: 1.5s; }
+            `}} />
+
+            {/* Balloon Particles container */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+              <span className="absolute text-3xl balloon-1 select-none">🎈</span>
+              <span className="absolute text-4xl balloon-2 select-none">🎁</span>
+              <span className="absolute text-3xl balloon-3 select-none">🎈</span>
+              <span className="absolute text-2xl balloon-4 select-none">✨</span>
+              <span className="absolute text-4xl balloon-5 select-none">🎈</span>
+            </div>
+
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-pink-600 to-purple-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+            
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8 z-10">
+              
+              {/* Celebration Interactive Component */}
+              <div className="w-full md:w-[42%] flex justify-center relative">
+                <BirthdayCake />
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[58%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-pink-500/30 bg-pink-500/10 px-3.5 py-1 text-xs font-black text-pink-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🎉 DOĞUM GÜNÜ ÖZEL"}
+                </span>
+                
+                <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-3">
+                  {"İyi ki Doğdun! 🎂"}
+                </h2>
+
+                <p className="text-base sm:text-lg text-zinc-200 font-semibold leading-relaxed mb-4 max-w-[580px]">
+                  {"En kıymetlimiz Mehmet Ali Hayri, yeni yaşının sana her zaman sağlık, mutluluk ve başarı getirmesini diliyoruz."}
+                </p>
+
+                {/* Love quote / signature block */}
+                <div className="relative border-l-2 border-pink-500/60 pl-4 py-1.5 bg-pink-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-sm font-bold text-pink-300 leading-snug">
+                    {"Seni çok seviyoruz! İyi ki varsın! ❤️"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-pink-400 uppercase mt-2">
+                    {"— AİLEN"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
 
         <div className="grid w-full gap-8 md:grid-cols-2">
           {/* CupMat Card */}
