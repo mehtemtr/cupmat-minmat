@@ -14,6 +14,10 @@ export interface UserActivity {
   mevcutPeriyotPuani: number;      // Current 3-day period score
   genelTahminHakkiKullanildi: boolean; // 1-time free initial predictions used
   minmatOyunSayisiBugun: number;   // Number of Minmat games played today
+  lastClerkLoginAt: string | null;  // Last Clerk email login timestamp
+  activeSecondsInPeriod: number;    // Seconds tracked in the current period
+  cupMatRewardSeconds: number;      // Bonus seconds per Minmat level from CupMat rank
+  cupMatRewardPoints: number;       // Bonus points per Minmat level from CupMat rank
 }
 
 export interface GecmisSampiyon {
@@ -57,6 +61,10 @@ async function getStore(): Promise<GamificationStore> {
         mevcutPeriyotPuani: 23,
         genelTahminHakkiKullanildi: false,
         minmatOyunSayisiBugun: 6,
+        lastClerkLoginAt: null,
+        activeSecondsInPeriod: 0,
+        cupMatRewardSeconds: 0,
+        cupMatRewardPoints: 0,
       },
       {
         userId: "demo-2",
@@ -71,6 +79,10 @@ async function getStore(): Promise<GamificationStore> {
         mevcutPeriyotPuani: 19,
         genelTahminHakkiKullanildi: false,
         minmatOyunSayisiBugun: 3,
+        lastClerkLoginAt: null,
+        activeSecondsInPeriod: 0,
+        cupMatRewardSeconds: 0,
+        cupMatRewardPoints: 0,
       }
     ],
     gecmisSampiyonlar: [
@@ -116,7 +128,75 @@ export async function checkAndResetPeriod(): Promise<void> {
       });
     });
 
-    // 3. Reset logic, keeping Kara at 23 and Kartal at 19
+    // Email-login eligibility for this period
+    const periodStart = new Date(store.periodEnd);
+    periodStart.setDate(periodStart.getDate() - 3);
+    const compareStart = new Date(periodStart);
+    compareStart.setHours(0, 0, 0, 0); // Normalize to midnight to include start day
+
+    const emailEligible = (u: UserActivity) => {
+      return u.userId.startsWith("user_");
+    };
+
+    // 3. Apply CupMat -> MinMat bonuses (seconds/points per level)
+    const cupTop = [...store.userActivities]
+      .filter(emailEligible)
+      .sort((a, b) => b.taraftarPuani - a.taraftarPuani)
+      .slice(0, 3);
+    if (cupTop[0]) cupTop[0].cupMatRewardSeconds += 10; // +10 sec per level
+    if (cupTop[1]) cupTop[1].cupMatRewardPoints += 5;   // +5 pt per level
+    if (cupTop[2]) cupTop[2].cupMatRewardPoints += 2;   // +2 pt per level
+
+    // 4. Apply MinMat -> CupMat global point bonuses
+    const { getMinMatLeaderboard } = await import("@/lib/store/minmat-leaderboard-store");
+    const minMatScores = await getMinMatLeaderboard();
+
+    // Helper to parse dates in DD.MM.YYYY or ISO format
+    const parseTrDate = (dateStr: string): Date => {
+      if (!dateStr) return new Date(0);
+      if (dateStr.includes("-")) return new Date(dateStr);
+      const parts = dateStr.split(".");
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
+      }
+      const d = new Date(dateStr);
+      return isNaN(d.getTime()) ? new Date(0) : d;
+    };
+
+    // Filter scores within the current period
+    const periodScores = minMatScores.filter(s => {
+      const scoreDate = parseTrDate(s.date);
+      return scoreDate >= compareStart;
+    });
+
+    // Get max score per eligible user
+    const minMatMaxScores: Record<string, number> = {};
+    const eligibleNames = new Set(store.userActivities.filter(emailEligible).map(u => u.displayName));
+    
+    for (const s of periodScores) {
+      if (eligibleNames.has(s.name)) {
+        minMatMaxScores[s.name] = Math.max(minMatMaxScores[s.name] || 0, s.score);
+      }
+    }
+
+    // Sort users by their max score
+    const minTopNames = Object.entries(minMatMaxScores)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 3)
+      .map(([name]) => name);
+
+    const minRewards = [50, 30, 15];
+    minTopNames.forEach((name, idx) => {
+      const u = store.userActivities.find(act => act.displayName === name);
+      if (u) {
+        u.taraftarPuani += minRewards[idx];
+      }
+    });
+
+    // 5. Reset logic, keeping demo users at their hard-coded scores
     store.userActivities.forEach((u) => {
       if (u.displayName === "Kara") {
         u.mevcutPeriyotPuani = 23;
@@ -129,9 +209,12 @@ export async function checkAndResetPeriod(): Promise<void> {
       }
       u.tahminGuncellemeHakki = 0;
       u.minmatEkSure = 0;
+      u.activeSecondsInPeriod = 0;
+      u.cupMatRewardSeconds = 0;
+      u.cupMatRewardPoints = 0;
     });
 
-    // 4. Schedule the next 3-day reset period
+    // 6. Schedule the next 3-day reset period
     const newEnd = new Date();
     newEnd.setDate(newEnd.getDate() + 3);
     store.periodEnd = newEnd.toISOString();
@@ -160,6 +243,10 @@ export async function getOrCreateProfile(userId: string, displayName?: string): 
       mevcutPeriyotPuani: 0,
       genelTahminHakkiKullanildi: false,
       minmatOyunSayisiBugun: 0,
+      lastClerkLoginAt: null,
+      activeSecondsInPeriod: 0,
+      cupMatRewardSeconds: 0,
+      cupMatRewardPoints: 0,
     };
     store.userActivities.push(profile);
     await saveStore(store);
@@ -201,6 +288,108 @@ export async function getGecmisSampiyonlar(): Promise<GecmisSampiyon[]> {
   return store.gecmisSampiyonlar;
 }
 
+// Reward leaderboard entry
+export interface RewardEntry {
+  displayName: string;
+  score: number;
+  rank: number;
+  reward: string; // human-readable reward description
+}
+
+// Get reward leaderboards for the current period (email-eligible users only)
+export async function getRewardLeaderboards(): Promise<{
+  cupMatRewards: RewardEntry[];
+  minMatRewards: RewardEntry[];
+}> {
+  await checkAndResetPeriod();
+  const store = await getStore();
+  const predictions = await getLeaderboard();
+
+  // Determine period start
+  const periodStart = new Date(store.periodEnd);
+  periodStart.setDate(periodStart.getDate() - 3);
+  const compareStart = new Date(periodStart);
+  compareStart.setHours(0, 0, 0, 0); // Normalize to midnight to include start day
+
+  // Eligibility: any Clerk user (email logged-in user)
+  const eligible = store.userActivities.filter((u) => {
+    return u.userId.startsWith("user_");
+  });
+
+  // CupMat reward table: ranked by combined period score (same as main leaderboard)
+  const cupMatSorted = [...eligible]
+    .map((u) => {
+      const predPoints = predictions.find((p) => p.userId === u.userId)?.points || 0;
+      return { ...u, combinedScore: u.mevcutPeriyotPuani + predPoints * 10 };
+    })
+    .sort((a, b) => b.combinedScore - a.combinedScore);
+
+  const cupMatRewardLabels = [
+    "MinMat'ta her seviyede +10 saniye",
+    "MinMat'ta her seviyede +5 puan",
+    "MinMat'ta her seviyede +2 puan",
+  ];
+
+  const cupMatRewards: RewardEntry[] = cupMatSorted.map((u, i) => ({
+    displayName: u.displayName,
+    score: u.combinedScore,
+    rank: i + 1,
+    reward: i < 3 ? cupMatRewardLabels[i] : "",
+  }));
+
+  // MinMat reward table: ranked by maximum score in this period
+  const { getMinMatLeaderboard } = await import("@/lib/store/minmat-leaderboard-store");
+  const minMatScores = await getMinMatLeaderboard();
+
+  // Helper to parse dates in DD.MM.YYYY or ISO format
+  const parseTrDate = (dateStr: string): Date => {
+    if (!dateStr) return new Date(0);
+    if (dateStr.includes("-")) return new Date(dateStr);
+    const parts = dateStr.split(".");
+    if (parts.length === 3) {
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    }
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? new Date(0) : d;
+  };
+
+  // Filter scores within the current period
+  const periodScores = minMatScores.filter(s => {
+    const scoreDate = parseTrDate(s.date);
+    return scoreDate >= compareStart;
+  });
+
+  // Build max score map for eligible users
+  const eligibleNames = new Set(eligible.map((u) => u.displayName));
+  const minMatMaxScores: Record<string, number> = {};
+  for (const s of periodScores) {
+    if (eligibleNames.has(s.name)) {
+      minMatMaxScores[s.name] = Math.max(minMatMaxScores[s.name] || 0, s.score);
+    }
+  }
+
+  const minMatSorted = Object.entries(minMatMaxScores)
+    .sort(([, a], [, b]) => b - a);
+
+  const minMatRewardLabels = [
+    "CupMat'ta +50 global puan",
+    "CupMat'ta +30 global puan",
+    "CupMat'ta +15 global puan",
+  ];
+
+  const minMatRewards: RewardEntry[] = minMatSorted.map(([name, score], i) => ({
+    displayName: name,
+    score,
+    rank: i + 1,
+    reward: i < 3 ? minMatRewardLabels[i] : "",
+  }));
+
+  return { cupMatRewards, minMatRewards };
+}
+
 // Process gamification action
 export async function handleGamificationAction(
   userId: string,
@@ -232,22 +421,25 @@ export async function handleGamificationAction(
 
   switch (action) {
     case "login": {
-      if (profile.sonGirisTarihi !== todayStr) {
-        profile.sonGirisTarihi = todayStr;
-        profile.gunlukGirisSayisi = 1;
-        profile.yardimTiklandi = false;
-        profile.hakkindaTiklandi = false;
-        profile.minmatOyunSayisiBugun = 0;
+        if (profile.sonGirisTarihi !== todayStr) {
+          profile.sonGirisTarihi = todayStr;
+          profile.gunlukGirisSayisi = 1;
+          profile.yardimTiklandi = false;
+          profile.hakkindaTiklandi = false;
+          profile.minmatOyunSayisiBugun = 0;
 
-        profile.taraftarPuani += 10;
-        profile.mevcutPeriyotPuani += 10;
-        profile.minmatEkSure += 2; // +2 seconds daily reward
-        message = "Günlük giriş ödülü kazanıldı: +10 Taraftar Puanı, +2sn MinMat Süresi!";
-      } else {
-        profile.gunlukGirisSayisi += 1;
-        message = "Günlük giriş sayacı güncellendi.";
-      }
-      break;
+          profile.taraftarPuani += 10;
+          profile.mevcutPeriyotPuani += 10;
+          profile.minmatEkSure += 2; // +2 seconds daily reward
+          // Record email login timestamp
+          profile.lastClerkLoginAt = new Date().toISOString();
+          message = "Günlük giriş ödülü kazanıldı: +10 Taraftar Puanı, +2sn MinMat Süresi!";
+        } else {
+          profile.gunlukGirisSayisi += 1;
+          // If already logged in via email earlier, keep timestamp unchanged
+          message = "Günlük giriş sayacı güncellendi.";
+        }
+        break;
     }
 
     case "stay_30s": {

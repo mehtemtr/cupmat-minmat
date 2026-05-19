@@ -5,6 +5,7 @@ import {
   type MinMatScore,
 } from "@/lib/store/minmat-leaderboard-store";
 import { awardPredictionRightByName, registerMinMatGamePlayed } from "@/lib/store/gamification-store";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
@@ -18,14 +19,21 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const user = await currentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized. Please login to save scores." }, { status: 401 });
+    }
+
     const body = (await request.json()) as Partial<MinMatScore>;
 
-    if (!body.name || typeof body.score !== "number" || typeof body.level !== "number" || !body.mode) {
+    if (typeof body.score !== "number" || typeof body.level !== "number" || !body.mode) {
       return NextResponse.json({ error: "Invalid score payload" }, { status: 400 });
     }
 
+    const verifiedName = user.fullName || user.username || "Oyuncu";
+
     const entry: MinMatScore = {
-      name: body.name.trim().substring(0, 30),
+      name: verifiedName.trim().substring(0, 30),
       score: body.score,
       level: body.level,
       mode: body.mode,

@@ -7,6 +7,7 @@ import {
   handleGamificationAction,
   forceResetPeriod,
   getProfileByDisplayName,
+  getRewardLeaderboards,
 } from "@/lib/store/gamification-store";
 
 export async function GET(request: Request) {
@@ -25,6 +26,7 @@ export async function GET(request: Request) {
     const leaderboard = await getGamificationLeaderboard();
     const gecmisSampiyonlar = await getGecmisSampiyonlar();
     const periodEnd = await getPeriodEnd();
+    const { cupMatRewards, minMatRewards } = await getRewardLeaderboards();
 
     return NextResponse.json({
       success: true,
@@ -32,6 +34,8 @@ export async function GET(request: Request) {
       leaderboard,
       gecmisSampiyonlar,
       periodEnd,
+      cupMatRewards,
+      minMatRewards,
     });
   } catch (error) {
     console.error("GET Gamification error:", error);

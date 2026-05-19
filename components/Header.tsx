@@ -366,7 +366,7 @@ export function Header() {
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Giriş Yap:</strong> Tahmin yapabilmek ve global liderlik tablosunda yerinizi alabilmek için sağ üst köşedeki <strong>Giriş Yap</strong> butonunu kullanarak Clerk güvencesiyle hesabınızı oluşturun veya giriş yapın.
+                    <strong>Giriş Yap:</strong> Tahmin yapabilmek, puanlarınızı kaydetmek ve global liderlik tablosunda yerinizi alabilmek için sağ üst köşedeki <strong>Giriş Yap</strong> butonunu kullanarak Clerk güvencesiyle hesabınızı oluşturun veya giriş yapın.
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">
@@ -378,7 +378,7 @@ export function Header() {
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Puan Kazan:</strong> Gerçek hayattaki maçlar oynandıkça ve sonuçlar girildikçe puanlarınız otomatik olarak hesaplanır:
+                    <strong>Maç Sonu Puanları:</strong> Gerçek hayattaki maçlar oynandıkça ve sonuçlar girildikçe puanlarınız otomatik olarak hesaplanır:
                   </span>
                 </li>
                 <div className="ml-6 border-l-2 border-emerald-500/40 pl-4 py-1 space-y-1 text-zinc-400">
@@ -386,10 +386,35 @@ export function Header() {
                   <div>⚡ <strong>Doğru Kazanan & Fark:</strong> 3 Puan (Örn: 2-0 tahmin ettiniz, maç 3-1 bitti)</div>
                   <div>🔥 <strong>Sadece Doğru Kazanan:</strong> 2 Puan (Örn: 1-0 tahmin ettiniz, maç 3-0 bitti)</div>
                 </div>
+
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Global Rekabet:</strong> Kazandığınız puanlarla <strong>Puan Durumu</strong> liderlik tablosunda diğer oyuncularla yarışın, {"CupMat 2026'nın"} şampiyonu siz olun!
+                    <strong>Aktif Katılım ve Ek Puanlar:</strong> Sitede gezinerek ve aktif kalarak ekstra <strong>Taraftar Puanı</strong> ve MinMat zeka oyununda kullanabileceğiniz <strong>Ek Süreler (⏱️)</strong> kazanabilirsiniz:
+                  </span>
+                </li>
+                <div className="ml-6 border-l-2 border-indigo-500/40 pl-4 py-1 space-y-1 text-zinc-400">
+                  <div>📅 <strong>Günlük Giriş Ödülü:</strong> Günde 1 kez giriş yapınca <strong>+10 Taraftar Puanı</strong> ve <strong>+2 saniye MinMat süresi</strong>.</div>
+                  <div>ℹ️ <strong>Keşif Ödülleri (Hakkında/Yardım):</strong> Günde 1 kez Hakkında ve Yardım pencerelerini incelediğinizde <strong>+5 Puan</strong>.</div>
+                  <div>⏳ <strong>Gezinme Sayacı (Ana Sayfalar):</strong> Takımlar, Futbolcular, Gruplar, Stadyumlar ve Tahminler sayfalarında 30 saniye kaldığınızda sayfa altındaki sayaç tamamlanır ve <strong>+10 Taraftar Puanı</strong> ile <strong>+2 saniye MinMat ek süresi</strong> kazanırsınız.</div>
+                  <div>📄 <strong>Detay Keşfi (Alt Sayfalar):</strong> Futbolcu, ülke, hakem ve stadyum detay sayfalarında 10 saniye kaldığınızda sayaç tamamlanır ve <strong>+1 Taraftar Puanı</strong> kazanırsınız.</div>
+                </div>
+
+                <li className="flex items-start gap-2.5">
+                  <span className="text-emerald-400 font-bold mt-0.5">•</span>
+                  <span>
+                    <strong>MinMat Zeka Oyunu ve Tahmin Güncelleme:</strong> CupMat tahminlerinizi kaydettikten sonra değiştirmek için <strong>Güncelleme Anahtarı (🔑)</strong> gerekir:
+                  </span>
+                </li>
+                <div className="ml-6 border-l-2 border-yellow-500/40 pl-4 py-1 space-y-1 text-zinc-400">
+                  <div>🔑 <strong>Anahtar Kazanma:</strong> MinMat oyununu oynayıp 30 puan veya üzeri skor elde ettiğiniz her oyun için <strong>+1 Tahmin Güncelleme Anahtarı</strong> kazanırsınız.</div>
+                  <div>⏱️ <strong>Ek Süre Kullanımı:</strong> MinMat oyununda zorlandığınızda, CupMat ile kazandığınız ek süreleri (⏱️) harcayarak oyuna ek süreyle başlayabilir ve daha kolay rekor kırabilirsiniz!</div>
+                </div>
+
+                <li className="flex items-start gap-2.5">
+                  <span className="text-emerald-400 font-bold mt-0.5">•</span>
+                  <span>
+                    <strong>Global Rekabet:</strong> Kazandığınız toplam puanlarla <strong>Puan Durumu</strong> liderlik tablosunda diğer oyuncularla yarışın, {"CupMat 2026'nın"} şampiyonu siz olun!
                   </span>
                 </li>
               </ul>

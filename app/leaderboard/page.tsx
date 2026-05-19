@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useUser, SignInButton } from "@clerk/nextjs";
-import { Trophy, ShieldAlert, Award, Calendar, Timer, User } from "lucide-react";
-import type { UserActivity, GecmisSampiyon } from "@/lib/store/gamification-store";
+import { Trophy, ShieldAlert, Award, Calendar, Timer, User, Gift } from "lucide-react";
+import type { UserActivity, GecmisSampiyon, RewardEntry } from "@/lib/store/gamification-store";
 
 export default function LeaderboardPage() {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -12,6 +12,8 @@ export default function LeaderboardPage() {
   const [periodEnd, setPeriodEnd] = useState<string>("");
   const [countdown, setCountdown] = useState<string>("");
   const [myProfile, setMyProfile] = useState<UserActivity | null>(null);
+  const [cupMatRewards, setCupMatRewards] = useState<RewardEntry[]>([]);
+  const [minMatRewards, setMinMatRewards] = useState<RewardEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch Leaderboard & Profile Data
@@ -31,6 +33,8 @@ export default function LeaderboardPage() {
           setLeaderboard(data.leaderboard || []);
           setGecmisSampiyonlar(data.gecmisSampiyonlar || []);
           setPeriodEnd(data.periodEnd || "");
+          setCupMatRewards(data.cupMatRewards || []);
+          setMinMatRewards(data.minMatRewards || []);
           if (data.profile) {
             setMyProfile(data.profile);
           }
@@ -227,8 +231,104 @@ export default function LeaderboardPage() {
             )}
           </div>
 
-          {/* Past Champions Section (Vitrin / Şeref Kürsüsü) */}
+          {/* Sidebar: Reward Tables + Past Champions */}
           <div className="space-y-6">
+
+            {/* CupMat Ödül Sıralaması */}
+            <div className="rounded-2xl border border-amber-500/20 bg-gradient-to-b from-amber-500/5 to-[#060b14]/50 p-6 shadow-xl backdrop-blur-md">
+              <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-white sm:text-xl">
+                <Gift className="h-5 w-5 text-amber-400" />
+                CupMat Ödül Sıralaması
+              </h2>
+              <p className="mb-4 text-xs text-zinc-400">
+                Periyot sonunda ilk 3&apos;e girenlere MinMat ödülleri verilir. Sadece e-posta ile giriş yapanlar dahildir.
+              </p>
+              {cupMatRewards.length === 0 ? (
+                <div className="py-6 text-center text-sm text-zinc-500">
+                  Bu periyotta henüz uygun kullanıcı yok.
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {cupMatRewards.slice(0, 10).map((entry) => (
+                    <div
+                      key={entry.displayName}
+                      className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ${
+                        entry.rank <= 3
+                          ? "border border-amber-500/20 bg-amber-500/10"
+                          : "border border-white/5 bg-white/5"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                          entry.rank === 1 ? "bg-yellow-400 text-black" :
+                          entry.rank === 2 ? "bg-zinc-300 text-black" :
+                          entry.rank === 3 ? "bg-amber-600 text-white" :
+                          "bg-white/10 text-zinc-500"
+                        }`}>
+                          {entry.rank}
+                        </span>
+                        <span className="font-medium text-zinc-200 truncate max-w-[100px]">{entry.displayName}</span>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-mono text-xs font-bold text-white">{entry.score} <span className="text-zinc-500 font-normal">P</span></div>
+                        {entry.reward && (
+                          <div className="text-[10px] text-amber-400 mt-0.5">{entry.reward}</div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* MinMat Ödül Sıralaması */}
+            <div className="rounded-2xl border border-purple-500/20 bg-gradient-to-b from-purple-500/5 to-[#060b14]/50 p-6 shadow-xl backdrop-blur-md">
+              <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-white sm:text-xl">
+                <Gift className="h-5 w-5 text-purple-400" />
+                MinMat Ödül Sıralaması
+              </h2>
+              <p className="mb-4 text-xs text-zinc-400">
+                Periyot sonunda MinMat&apos;ta ilk 3&apos;e girenlere CupMat global puan ödülleri verilir.
+              </p>
+              {minMatRewards.length === 0 ? (
+                <div className="py-6 text-center text-sm text-zinc-500">
+                  Bu periyotta henüz uygun kullanıcı yok.
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {minMatRewards.slice(0, 10).map((entry) => (
+                    <div
+                      key={entry.displayName}
+                      className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ${
+                        entry.rank <= 3
+                          ? "border border-purple-500/20 bg-purple-500/10"
+                          : "border border-white/5 bg-white/5"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                          entry.rank === 1 ? "bg-yellow-400 text-black" :
+                          entry.rank === 2 ? "bg-zinc-300 text-black" :
+                          entry.rank === 3 ? "bg-amber-600 text-white" :
+                          "bg-white/10 text-zinc-500"
+                        }`}>
+                          {entry.rank}
+                        </span>
+                        <span className="font-medium text-zinc-200 truncate max-w-[100px]">{entry.displayName}</span>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-mono text-xs font-bold text-white">{entry.score} <span className="text-zinc-500 font-normal">P</span></div>
+                        {entry.reward && (
+                          <div className="text-[10px] text-purple-400 mt-0.5">{entry.reward}</div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Past Champions Section (Vitrin / Şeref Kürsüsü) */}
             <div className="rounded-2xl border border-white/10 bg-[#060b14]/50 p-6 shadow-xl backdrop-blur-md">
               <h2 className="mb-6 flex items-center gap-2.5 text-lg font-bold text-white sm:text-xl">
                 <Award className="h-5.5 w-5.5 text-emerald-400" />
