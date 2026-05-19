@@ -1,4 +1,5 @@
 {
+  "id": "com.statmatik.app",
   "name": "MahTEM Yazılım",
   "short_name": "MahTEM",
   "description": "CupMat & MinMat Entegrasyonlu Matematik, Zeka ve Rekabet Platformu",
@@ -10,14 +11,35 @@
   "icons": [
     {
       "src": "/icon.png",
-      "sizes": "512x512",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
