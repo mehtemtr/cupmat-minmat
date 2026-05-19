@@ -3,6 +3,8 @@ import { TEAMS, getAllPlayers } from "@/data/teams";
 import { STADIUMS } from "@/data/stadiums";
 import { REFEREES } from "@/data/referees";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://statmatik.com";
 
