@@ -1,5 +1,4 @@
-import fs from "fs";
-import path from "path";
+import { kv } from "@vercel/kv";
 
 export interface MinMatScore {
   name: string;
@@ -9,60 +8,41 @@ export interface MinMatScore {
   date: string;
 }
 
-const FILE_PATH = path.join(process.cwd(), "data", "minmat-leaderboard.json");
+const KV_KEY = "minmat_leaderboard";
 
-const globalStore = globalThis as unknown as {
-  minmatLeaderboard?: MinMatScore[];
-};
-
-function getStore(): MinMatScore[] {
-  if (globalStore.minmatLeaderboard) {
-    return globalStore.minmatLeaderboard;
-  }
-
-  // Try to load from local file first
+async function getStore(): Promise<MinMatScore[]> {
   try {
-    if (fs.existsSync(FILE_PATH)) {
-      const data = fs.readFileSync(FILE_PATH, "utf-8");
-      globalStore.minmatLeaderboard = JSON.parse(data) as MinMatScore[];
-      return globalStore.minmatLeaderboard!;
-    }
+    const data = await kv.get<MinMatScore[]>(KV_KEY);
+    if (data) return data;
   } catch (error) {
-    console.error("Failed to load minmat leaderboard from file", error);
+    console.error("KV Error loading minmat leaderboard:", error);
   }
 
-  // Initial seed data
-  globalStore.minmatLeaderboard = [
+  const defaultLeaderboard: MinMatScore[] = [
     { name: "Alperen", score: 150, level: 5, mode: "mix", date: new Date().toLocaleDateString("tr-TR") },
     { name: "Harun", score: 120, level: 4, mode: "mul", date: new Date().toLocaleDateString("tr-TR") },
     { name: "Mehtap", score: 90, level: 3, mode: "add", date: new Date().toLocaleDateString("tr-TR") }
   ];
-  saveToFile(globalStore.minmatLeaderboard);
-  return globalStore.minmatLeaderboard;
+  return defaultLeaderboard;
 }
 
-function saveToFile(scores: MinMatScore[]) {
+async function saveStore(scores: MinMatScore[]) {
   try {
-    const dir = path.dirname(FILE_PATH);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(FILE_PATH, JSON.stringify(scores, null, 2), "utf-8");
+    await kv.set(KV_KEY, scores);
   } catch (error) {
-    console.error("Failed to save minmat leaderboard to file", error);
+    console.error("KV Error saving minmat leaderboard:", error);
   }
 }
 
-export function getMinMatLeaderboard(): MinMatScore[] {
-  return [...getStore()].sort((a, b) => b.score - a.score);
+export async function getMinMatLeaderboard(): Promise<MinMatScore[]> {
+  const store = await getStore();
+  return store.sort((a, b) => b.score - a.score);
 }
 
-export function addMinMatScore(entry: MinMatScore): void {
-  const store = getStore();
+export async function addMinMatScore(entry: MinMatScore): Promise<void> {
+  const store = await getStore();
   store.push(entry);
-  // Sort and keep top 50 scores globally
   store.sort((a, b) => b.score - a.score);
   const trimmed = store.slice(0, 50);
-  globalStore.minmatLeaderboard = trimmed;
-  saveToFile(trimmed);
+  await saveStore(trimmed);
 }

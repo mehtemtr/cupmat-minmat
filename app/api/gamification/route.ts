@@ -17,14 +17,14 @@ export async function GET(request: Request) {
 
     let profile = null;
     if (userId) {
-      profile = getOrCreateProfile(userId, displayName);
+      profile = await getOrCreateProfile(userId, displayName);
     } else if (displayName) {
-      profile = getProfileByDisplayName(displayName);
+      profile = await getProfileByDisplayName(displayName);
     }
 
-    const leaderboard = getGamificationLeaderboard();
-    const gecmisSampiyonlar = getGecmisSampiyonlar();
-    const periodEnd = getPeriodEnd();
+    const leaderboard = await getGamificationLeaderboard();
+    const gecmisSampiyonlar = await getGecmisSampiyonlar();
+    const periodEnd = await getPeriodEnd();
 
     return NextResponse.json({
       success: true,
@@ -46,12 +46,12 @@ export async function POST(request: Request) {
 
     // Support admin/testing trigger for manual periyot reset
     if (forceReset) {
-      forceResetPeriod();
+      await forceResetPeriod();
       return NextResponse.json({
         success: true,
         message: "Liderlik tablosu periyodu manuel olarak sıfırlandı!",
-        leaderboard: getGamificationLeaderboard(),
-        gecmisSampiyonlar: getGecmisSampiyonlar(),
+        leaderboard: await getGamificationLeaderboard(),
+        gecmisSampiyonlar: await getGecmisSampiyonlar(),
       });
     }
 
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = handleGamificationAction(userId, action, amount, displayName);
+    const result = await handleGamificationAction(userId, action, amount, displayName);
 
     if (!result.success) {
       return NextResponse.json(
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       success: true,
       profile: result.profile,
       message: result.message,
-      leaderboard: getGamificationLeaderboard(),
+      leaderboard: await getGamificationLeaderboard(),
     });
   } catch (error) {
     console.error("POST Gamification error:", error);

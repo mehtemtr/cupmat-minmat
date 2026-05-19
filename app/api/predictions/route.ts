@@ -13,8 +13,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "userId parametresi zorunludur" }, { status: 400 });
     }
 
-    const profile = getOrCreateProfile(userId);
-    const leaderboard = getLeaderboard();
+    const profile = await getOrCreateProfile(userId);
+    const leaderboard = await getLeaderboard();
     const submission = leaderboard.find((s) => s.userId === userId);
 
     return NextResponse.json({
@@ -37,8 +37,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Geçersiz istek parametreleri" }, { status: 400 });
     }
 
-    const profile = getOrCreateProfile(userId, displayName);
-    const leaderboard = getLeaderboard();
+    const profile = await getOrCreateProfile(userId, displayName);
+    const leaderboard = await getLeaderboard();
     const existingSubmission = leaderboard.find((s) => s.userId === userId);
 
     // Get current fixtures to check match start lockouts
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
         submittedAt: new Date().toISOString(),
       };
 
-      upsertSubmission(updatedEntry);
+      await upsertSubmission(updatedEntry);
 
       return NextResponse.json({
         success: true,
@@ -148,7 +148,7 @@ export async function POST(request: Request) {
       submittedAt: new Date().toISOString(),
     };
 
-    upsertSubmission(newEntry);
+    await upsertSubmission(newEntry);
 
     return NextResponse.json({
       success: true,

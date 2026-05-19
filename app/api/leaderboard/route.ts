@@ -6,7 +6,7 @@ import {
 import type { PredictionSubmission } from "@/lib/types/tournament";
 
 export async function GET() {
-  return NextResponse.json({ leaderboard: getLeaderboard() });
+  return NextResponse.json({ leaderboard: await getLeaderboard() });
 }
 
 export async function POST(request: Request) {
@@ -25,6 +25,6 @@ export async function POST(request: Request) {
     submittedAt: new Date().toISOString(),
   };
 
-  upsertSubmission(entry);
+  await upsertSubmission(entry);
   return NextResponse.json({ success: true, entry });
 }

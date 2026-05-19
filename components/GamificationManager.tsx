@@ -54,6 +54,16 @@ export function GamificationManager() {
   const dict = localDict[activeLang];
 
   const [toast, setToast] = useState<ToastMessage | null>(null);
+  const [showMigrationModal, setShowMigrationModal] = useState(false);
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hasSeen = localStorage.getItem("statmatik_migration_notice_seen");
+      if (!hasSeen) {
+        setShowMigrationModal(true);
+      }
+    }
+  }, []);
   
   // Page stay timer states
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
@@ -252,13 +262,98 @@ export function GamificationManager() {
     return () => window.removeEventListener("taraftar-puan-guncellendi", handleGlobalEvent);
   }, []);
 
-  if (!isSignedIn || !user) return null;
+  // Dismiss handler
+  const dismissMigrationModal = () => {
+    localStorage.setItem("statmatik_migration_notice_seen", "true");
+    setShowMigrationModal(false);
+  };
+
+  const renderMigrationModal = () => {
+    if (!showMigrationModal) return null;
+    const modalTitle = locale === "tr" ? "Puan Sistemi ve Güncelleme Hakkında" : "About Score System & Migration";
+    const modalButton = locale === "tr" ? "Anladım ve Keşfet" : "Understand and Explore";
+
+    return (
+      <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200">
+        <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-gradient-to-br from-[#0f172a] to-[#04080e] p-6 sm:p-8 shadow-2xl shadow-emerald-500/5 animate-in zoom-in-95 duration-200">
+          
+          <div className="flex items-center gap-3.5 border-b border-white/10 pb-4 mb-5">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/25 text-2xl animate-bounce">
+              📢
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
+              {modalTitle}
+            </h2>
+          </div>
+
+          <div className="text-sm sm:text-base leading-relaxed text-zinc-300 space-y-4 font-medium">
+            {locale === "tr" ? (
+              <>
+                <p className="font-semibold text-white">Değerli Statmatik Kullanıcıları,</p>
+                <p>
+                  Sizlere daha kesintisiz, hızlı ve küresel standartlarda bir deneyim sunabilmek adına Statmatik mobil uygulamamızı tamamladık ve yayına hazırladık.
+                </p>
+                <p>
+                  Bu büyük altyapı geçişi kapsamında, daha önce cihazınızda yerel (lokal) olarak tutulan puanlama sistemimizi, tüm dünyayla entegre çalışacak şekilde küresel (bulut) sunucularımıza taşıdık.
+                </p>
+                <p className="border-l-2 border-amber-500/50 pl-4 py-1.5 bg-amber-500/5 rounded-r-xl text-amber-200 font-semibold">
+                  Bu teknik zorunluluk ve veritabanı senkronizasyonu nedeniyle, eski yerel puanlar sıfırlanmak durumunda kalmıştır. Yaşanan bu durumdan dolayı tüm kullanıcılarımızdan özür dileriz.
+                </p>
+                <p>
+                  Yeni küresel sistem sayesinde puanlarınız artık asla kaybolmayacak, tüm cihazlarınızda eşitlenecek ve çok yakında başlayacak olan küresel liderlik tablolarında yerinizi almanızı sağlayacaktır.
+                </p>
+                <p>
+                  Anlayışınız ve desteğiniz için teşekkür eder, yeni uygulamamızda keyifli tahminler dileriz!
+                </p>
+                <p className="font-bold text-emerald-400 text-right mt-6">— Statmatik Ekibi</p>
+              </>
+            ) : (
+              <>
+                <p className="font-semibold text-white">Dear Statmatik Users,</p>
+                <p>
+                  We have completed and prepared our Statmatik mobile application for release in order to provide you with a more seamless, fast, and global experience.
+                </p>
+                <p>
+                  As part of this major infrastructure transition, we have moved our scoring system, which was previously kept locally on your device, to our global (cloud) servers to work integrated with the whole world.
+                </p>
+                <p className="border-l-2 border-amber-500/50 pl-4 py-1.5 bg-amber-500/5 rounded-r-xl text-amber-200 font-semibold">
+                  Due to this technical necessity and database synchronization, old local points had to be reset. We apologize to all our users for this situation.
+                </p>
+                <p>
+                  Thanks to the new global system, your points will never be lost, will be synchronized across all your devices, and will allow you to take your place in the global leaderboards that will start very soon.
+                </p>
+                <p>
+                  Thank you for your understanding and support, and we wish you pleasant predictions in our new application!
+                </p>
+                <p className="font-bold text-emerald-400 text-right mt-6">— Statmatik Team</p>
+              </>
+            )}
+          </div>
+
+          <div className="flex justify-end border-t border-white/10 pt-5 mt-6">
+            <button 
+              onClick={dismissMigrationModal}
+              className="w-full sm:w-auto rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 px-8 py-3 text-sm sm:text-base font-bold text-[#060b14] shadow-lg shadow-emerald-500/25 transition hover:scale-[1.02] active:scale-95"
+            >
+              🚀 {modalButton}
+            </button>
+          </div>
+
+        </div>
+      </div>
+    );
+  };
+
+  if (!isSignedIn || !user) {
+    return renderMigrationModal();
+  }
 
   const activeConfig = getPageConfig(pathname);
   const totalDuration = activeConfig ? activeConfig.duration : 30;
 
   return (
     <>
+      {renderMigrationModal()}
       {/* Toast message popup */}
       {toast && (
         <div

@@ -1,3 +1,4 @@
+import { kv } from "@vercel/kv";
 import { getLeaderboard } from "@/lib/store/leaderboard-store";
 
 export interface UserActivity {
@@ -28,65 +29,73 @@ interface GamificationStore {
   periodEnd: string;               // ISO date string of current period end
 }
 
-// Persist in serverless global state
-const globalStore = globalThis as unknown as {
-  gamification?: GamificationStore;
-};
+const KV_KEY = "gamification_store";
 
-function getStore(): GamificationStore {
-  if (!globalStore.gamification) {
-    const defaultPeriodEnd = new Date();
-    defaultPeriodEnd.setHours(0, 0, 0, 0);
-    defaultPeriodEnd.setDate(defaultPeriodEnd.getDate() + 3);
-
-    globalStore.gamification = {
-      userActivities: [
-        {
-          userId: "demo-1",
-          displayName: "Kara",
-          taraftarPuani: 23,
-          gunlukGirisSayisi: 1,
-          sonGirisTarihi: new Date().toISOString().split("T")[0],
-          minmatEkSure: 10,
-          tahminGuncellemeHakki: 2,
-          yardimTiklandi: true,
-          hakkindaTiklandi: false,
-          mevcutPeriyotPuani: 23,
-          genelTahminHakkiKullanildi: false,
-          minmatOyunSayisiBugun: 6,
-        },
-        {
-          userId: "demo-2",
-          displayName: "Kartal",
-          taraftarPuani: 19,
-          gunlukGirisSayisi: 2,
-          sonGirisTarihi: new Date().toISOString().split("T")[0],
-          minmatEkSure: 5,
-          tahminGuncellemeHakki: 1,
-          yardimTiklandi: false,
-          hakkindaTiklandi: true,
-          mevcutPeriyotPuani: 19,
-          genelTahminHakkiKullanildi: false,
-          minmatOyunSayisiBugun: 3,
-        }
-      ],
-      gecmisSampiyonlar: [
-        {
-          userId: "champ-1",
-          displayName: "WorldCupGuru",
-          derece: 1,
-          periyotBitisTarihi: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-        }
-      ],
-      periodEnd: defaultPeriodEnd.toISOString(),
-    };
+async function getStore(): Promise<GamificationStore> {
+  try {
+    const data = await kv.get<GamificationStore>(KV_KEY);
+    if (data) return data;
+  } catch (error) {
+    console.error("KV Error loading gamification store", error);
   }
-  return globalStore.gamification!;
+
+  const defaultPeriodEnd = new Date();
+  defaultPeriodEnd.setMilliseconds(defaultPeriodEnd.getMilliseconds() + (2 * 24 + 11) * 60 * 60 * 1000);
+
+  return {
+    userActivities: [
+      {
+        userId: "demo-1",
+        displayName: "Kara",
+        taraftarPuani: 23,
+        gunlukGirisSayisi: 1,
+        sonGirisTarihi: new Date().toISOString().split("T")[0],
+        minmatEkSure: 10,
+        tahminGuncellemeHakki: 2,
+        yardimTiklandi: true,
+        hakkindaTiklandi: false,
+        mevcutPeriyotPuani: 23,
+        genelTahminHakkiKullanildi: false,
+        minmatOyunSayisiBugun: 6,
+      },
+      {
+        userId: "demo-2",
+        displayName: "Kartal",
+        taraftarPuani: 19,
+        gunlukGirisSayisi: 2,
+        sonGirisTarihi: new Date().toISOString().split("T")[0],
+        minmatEkSure: 5,
+        tahminGuncellemeHakki: 1,
+        yardimTiklandi: false,
+        hakkindaTiklandi: true,
+        mevcutPeriyotPuani: 19,
+        genelTahminHakkiKullanildi: false,
+        minmatOyunSayisiBugun: 3,
+      }
+    ],
+    gecmisSampiyonlar: [
+      {
+        userId: "champ-1",
+        displayName: "WorldCupGuru",
+        derece: 1,
+        periyotBitisTarihi: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+      }
+    ],
+    periodEnd: defaultPeriodEnd.toISOString(),
+  };
+}
+
+async function saveStore(store: GamificationStore): Promise<void> {
+  try {
+    await kv.set(KV_KEY, store);
+  } catch (error) {
+    console.error("KV Error saving gamification store", error);
+  }
 }
 
 // Automatically check and reset the 3-day periyot if current time has passed periodEnd
-export function checkAndResetPeriod(): void {
-  const store = getStore();
+export async function checkAndResetPeriod(): Promise<void> {
+  const store = await getStore();
   const now = new Date();
   const periodEndDate = new Date(store.periodEnd);
 
@@ -107,9 +116,17 @@ export function checkAndResetPeriod(): void {
       });
     });
 
-    // 3. Reset mevcutPeriyotPuani, tahminGuncellemeHakki and minmatEkSure for ALL users
+    // 3. Reset logic, keeping Kara at 23 and Kartal at 19
     store.userActivities.forEach((u) => {
-      u.mevcutPeriyotPuani = 0;
+      if (u.displayName === "Kara") {
+        u.mevcutPeriyotPuani = 23;
+        u.taraftarPuani = 23;
+      } else if (u.displayName === "Kartal") {
+        u.mevcutPeriyotPuani = 19;
+        u.taraftarPuani = 19;
+      } else {
+        u.mevcutPeriyotPuani = 0;
+      }
       u.tahminGuncellemeHakki = 0;
       u.minmatEkSure = 0;
     });
@@ -118,13 +135,15 @@ export function checkAndResetPeriod(): void {
     const newEnd = new Date();
     newEnd.setDate(newEnd.getDate() + 3);
     store.periodEnd = newEnd.toISOString();
+    
+    await saveStore(store);
   }
 }
 
 // Retrieve or initialize user profile
-export function getOrCreateProfile(userId: string, displayName?: string): UserActivity {
-  checkAndResetPeriod();
-  const store = getStore();
+export async function getOrCreateProfile(userId: string, displayName?: string): Promise<UserActivity> {
+  await checkAndResetPeriod();
+  const store = await getStore();
   let profile = store.userActivities.find((u) => u.userId === userId);
 
   if (!profile) {
@@ -143,18 +162,20 @@ export function getOrCreateProfile(userId: string, displayName?: string): UserAc
       minmatOyunSayisiBugun: 0,
     };
     store.userActivities.push(profile);
+    await saveStore(store);
   } else if (displayName && profile.displayName !== displayName) {
     profile.displayName = displayName; // Keep display name synchronized
+    await saveStore(store);
   }
 
   return profile;
 }
 
 // Get sorted active leaderboard for current 3-day period
-export function getGamificationLeaderboard(): UserActivity[] {
-  checkAndResetPeriod();
-  const store = getStore();
-  const predictions = getLeaderboard();
+export async function getGamificationLeaderboard(): Promise<UserActivity[]> {
+  await checkAndResetPeriod();
+  const store = await getStore();
+  const predictions = await getLeaderboard();
 
   return store.userActivities
     .map((u) => {
@@ -169,25 +190,25 @@ export function getGamificationLeaderboard(): UserActivity[] {
 }
 
 // Get the period end ISO string
-export function getPeriodEnd(): string {
-  const store = getStore();
+export async function getPeriodEnd(): Promise<string> {
+  const store = await getStore();
   return store.periodEnd;
 }
 
 // Get past champions
-export function getGecmisSampiyonlar(): GecmisSampiyon[] {
-  const store = getStore();
+export async function getGecmisSampiyonlar(): Promise<GecmisSampiyon[]> {
+  const store = await getStore();
   return store.gecmisSampiyonlar;
 }
 
 // Process gamification action
-export function handleGamificationAction(
+export async function handleGamificationAction(
   userId: string,
   action: string,
   amount: number = 0,
   displayName?: string
-): { success: boolean; profile: UserActivity; message: string } {
-  const profile = getOrCreateProfile(userId, displayName);
+): Promise<{ success: boolean; profile: UserActivity; message: string }> {
+  const profile = await getOrCreateProfile(userId, displayName);
   const todayStr = new Date().toISOString().split("T")[0];
   let message = "";
 
@@ -200,13 +221,18 @@ export function handleGamificationAction(
       profile.minmatEkSure += 2; // +2 seconds active Minmat time bonus
     }
     message = `Keşif ödülü kazanıldı: +${added} Taraftar Puanı!`;
+    
+    const store = await getStore();
+    const idx = store.userActivities.findIndex(u => u.userId === userId);
+    if(idx >= 0) store.userActivities[idx] = profile;
+    await saveStore(store);
+    
     return { success: true, profile, message };
   }
 
   switch (action) {
     case "login": {
       if (profile.sonGirisTarihi !== todayStr) {
-        // Daily Login Streak Check
         profile.sonGirisTarihi = todayStr;
         profile.gunlukGirisSayisi = 1;
         profile.yardimTiklandi = false;
@@ -304,12 +330,17 @@ export function handleGamificationAction(
       return { success: false, profile, message: "Bilinmeyen eylem tipi." };
   }
 
+  const store = await getStore();
+  const idx = store.userActivities.findIndex(u => u.userId === userId);
+  if(idx >= 0) store.userActivities[idx] = profile;
+  await saveStore(store);
+
   return { success: true, profile, message };
 }
 
 // Reset period manually (for testing / triggers)
-export function forceResetPeriod(): void {
-  const store = getStore();
+export async function forceResetPeriod(): Promise<void> {
+  const store = await getStore();
   const topUsers = [...store.userActivities]
     .filter((u) => u.mevcutPeriyotPuani > 0)
     .sort((a, b) => b.mevcutPeriyotPuani - a.mevcutPeriyotPuani)
@@ -325,7 +356,15 @@ export function forceResetPeriod(): void {
   });
 
   store.userActivities.forEach((u) => {
-    u.mevcutPeriyotPuani = 0;
+    if (u.displayName === "Kara") {
+      u.mevcutPeriyotPuani = 23;
+      u.taraftarPuani = 23;
+    } else if (u.displayName === "Kartal") {
+      u.mevcutPeriyotPuani = 19;
+      u.taraftarPuani = 19;
+    } else {
+      u.mevcutPeriyotPuani = 0;
+    }
     u.tahminGuncellemeHakki = 0;
     u.minmatEkSure = 0;
   });
@@ -333,11 +372,12 @@ export function forceResetPeriod(): void {
   const newEnd = new Date();
   newEnd.setDate(newEnd.getDate() + 3);
   store.periodEnd = newEnd.toISOString();
+  await saveStore(store);
 }
 
 // Award a prediction update key to a user by their display name (case-insensitive)
-export function awardPredictionRightByName(displayName: string, amount: number = 1): { success: boolean; message: string } {
-  const store = getStore();
+export async function awardPredictionRightByName(displayName: string, amount: number = 1): Promise<{ success: boolean; message: string }> {
+  const store = await getStore();
   const profile = store.userActivities.find(
     (u) => u.displayName.trim().toLowerCase() === displayName.trim().toLowerCase()
   );
@@ -345,20 +385,21 @@ export function awardPredictionRightByName(displayName: string, amount: number =
     return { success: false, message: "Kullanıcı bulunamadı." };
   }
   profile.tahminGuncellemeHakki += amount;
+  await saveStore(store);
   return { success: true, message: `${amount} adet tahmin değiştirme hakkı başarıyla eklendi.` };
 }
 
 // Find a user activity profile by display name (case-insensitive)
-export function getProfileByDisplayName(displayName: string): UserActivity | null {
-  const store = getStore();
+export async function getProfileByDisplayName(displayName: string): Promise<UserActivity | null> {
+  const store = await getStore();
   return store.userActivities.find(
     (u) => u.displayName.trim().toLowerCase() === displayName.trim().toLowerCase()
   ) || null;
 }
 
 // Increment the today's game count when MinMat is played
-export function registerMinMatGamePlayed(displayName: string): { success: boolean; profile?: UserActivity } {
-  const store = getStore();
+export async function registerMinMatGamePlayed(displayName: string): Promise<{ success: boolean; profile?: UserActivity }> {
+  const store = await getStore();
   const profile = store.userActivities.find(
     (u) => u.displayName.trim().toLowerCase() === displayName.trim().toLowerCase()
   );
@@ -373,5 +414,6 @@ export function registerMinMatGamePlayed(displayName: string): { success: boolea
   }
   
   profile.minmatOyunSayisiBugun = (profile.minmatOyunSayisiBugun || 0) + 1;
+  await saveStore(store);
   return { success: true, profile };
 }

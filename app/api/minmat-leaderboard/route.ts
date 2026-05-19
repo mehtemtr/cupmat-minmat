@@ -8,7 +8,7 @@ import { awardPredictionRightByName, registerMinMatGamePlayed } from "@/lib/stor
 
 export async function GET() {
   try {
-    const scores = getMinMatLeaderboard();
+    const scores = await getMinMatLeaderboard();
     return NextResponse.json({ leaderboard: scores });
   } catch (error) {
     console.error("GET MinMat Leaderboard error:", error);
@@ -32,16 +32,16 @@ export async function POST(request: Request) {
       date: body.date ?? new Date().toLocaleDateString("tr-TR"),
     };
 
-    addMinMatScore(entry);
+    await addMinMatScore(entry);
 
     // Register that they played a MinMat game today!
-    registerMinMatGamePlayed(entry.name);
+    await registerMinMatGamePlayed(entry.name);
 
     // If they score >= 30, award 1 prediction change key dynamically!
     let keyAwarded = false;
     let awardMessage = "";
     if (entry.score >= 30) {
-      const res = awardPredictionRightByName(entry.name, 1);
+      const res = await awardPredictionRightByName(entry.name, 1);
       keyAwarded = res.success;
       awardMessage = res.message;
     }
