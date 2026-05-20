@@ -1,0 +1,49 @@
+{
+  "userActivities": [
+    {
+      "userId": "demo-1",
+      "displayName": "Kara",
+      "taraftarPuani": 23,
+      "gunlukGirisSayisi": 1,
+      "sonGirisTarihi": "2026-05-18",
+      "minmatEkSure": 10,
+      "tahminGuncellemeHakki": 2,
+      "yardimTiklandi": true,
+      "hakkindaTiklandi": false,
+      "mevcutPeriyotPuani": 23,
+      "genelTahminHakkiKullanildi": false,
+      "minmatOyunSayisiBugun": 6,
+      "lastClerkLoginAt": null,
+      "activeSecondsInPeriod": 0,
+      "cupMatRewardSeconds": 0,
+      "cupMatRewardPoints": 0
+    },
+    {
+      "userId": "demo-2",
+      "displayName": "Kartal",
+      "taraftarPuani": 19,
+      "gunlukGirisSayisi": 2,
+      "sonGirisTarihi": "2026-05-18",
+      "minmatEkSure": 5,
+      "tahminGuncellemeHakki": 1,
+      "yardimTiklandi": false,
+      "hakkindaTiklandi": true,
+      "mevcutPeriyotPuani": 19,
+      "genelTahminHakkiKullanildi": false,
+      "minmatOyunSayisiBugun": 3,
+      "lastClerkLoginAt": null,
+      "activeSecondsInPeriod": 0,
+      "cupMatRewardSeconds": 0,
+      "cupMatRewardPoints": 0
+    }
+  ],
+  "gecmisSampiyonlar": [
+    {
+      "userId": "champ-1",
+      "displayName": "WorldCupGuru",
+      "derece": 1,
+      "periyotBitisTarihi": "2026-05-14T00:00:00.000Z"
+    }
+  ],
+  "periodEnd": "2026-05-22T00:00:00.000Z"
+}

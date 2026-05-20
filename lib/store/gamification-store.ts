@@ -1,4 +1,6 @@
 import { kv } from "@vercel/kv";
+import * as fs from "fs";
+import * as path from "path";
 import { getLeaderboard } from "@/lib/store/leaderboard-store";
 
 export interface UserActivity {
@@ -34,13 +36,26 @@ interface GamificationStore {
 }
 
 const KV_KEY = "gamification_store";
+const JSON_FILE_PATH = path.join(process.cwd(), "data", "gamification-store.json");
 
-async function getStore(): Promise<GamificationStore> {
+async function getStoreFromKV(): Promise<GamificationStore | null> {
   try {
     const data = await kv.get<GamificationStore>(KV_KEY);
     if (data) return data;
   } catch (error) {
-    console.error("KV Error loading gamification store", error);
+    console.warn("KV Error loading gamification store, falling back to JSON", error);
+  }
+  return null;
+}
+
+async function getStoreFromJSON(): Promise<GamificationStore> {
+  try {
+    if (fs.existsSync(JSON_FILE_PATH)) {
+      const data = fs.readFileSync(JSON_FILE_PATH, "utf-8");
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error("Error loading gamification store from JSON", error);
   }
 
   const defaultPeriodEnd = new Date();
@@ -97,11 +112,34 @@ async function getStore(): Promise<GamificationStore> {
   };
 }
 
-async function saveStore(store: GamificationStore): Promise<void> {
+async function getStore(): Promise<GamificationStore> {
+  const kvData = await getStoreFromKV();
+  if (kvData) return kvData;
+  return getStoreFromJSON();
+}
+
+async function saveStoreToKV(store: GamificationStore): Promise<boolean> {
   try {
     await kv.set(KV_KEY, store);
+    return true;
   } catch (error) {
-    console.error("KV Error saving gamification store", error);
+    console.warn("KV Error saving gamification store, falling back to JSON", error);
+    return false;
+  }
+}
+
+async function saveStoreToJSON(store: GamificationStore): Promise<void> {
+  try {
+    fs.writeFileSync(JSON_FILE_PATH, JSON.stringify(store, null, 2), "utf-8");
+  } catch (error) {
+    console.error("Error saving gamification store to JSON", error);
+  }
+}
+
+async function saveStore(store: GamificationStore): Promise<void> {
+  const kvSaved = await saveStoreToKV(store);
+  if (!kvSaved) {
+    await saveStoreToJSON(store);
   }
 }
 

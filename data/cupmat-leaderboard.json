@@ -1,0 +1,26 @@
+[
+  {
+    "userId": "demo-1",
+    "displayName": "Kara",
+    "matchPredictions": {},
+    "points": 0,
+    "groupsComplete": true,
+    "submittedAt": "2026-05-18T00:00:00.000Z"
+  },
+  {
+    "userId": "demo-2",
+    "displayName": "Kartal",
+    "matchPredictions": {},
+    "points": 0,
+    "groupsComplete": true,
+    "submittedAt": "2026-05-18T00:00:00.000Z"
+  },
+  {
+    "userId": "demo-3",
+    "displayName": "WC2026_TR",
+    "matchPredictions": {},
+    "points": 0,
+    "groupsComplete": false,
+    "submittedAt": "2026-05-18T00:00:00.000Z"
+  }
+]

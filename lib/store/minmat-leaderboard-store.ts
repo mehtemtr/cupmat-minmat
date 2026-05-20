@@ -1,4 +1,6 @@
 import { kv } from "@vercel/kv";
+import * as fs from "fs";
+import * as path from "path";
 
 export interface MinMatScore {
   name: string;
@@ -9,13 +11,26 @@ export interface MinMatScore {
 }
 
 const KV_KEY = "minmat_leaderboard";
+const JSON_FILE_PATH = path.join(process.cwd(), "data", "minmat-leaderboard.json");
 
-async function getStore(): Promise<MinMatScore[]> {
+async function getStoreFromKV(): Promise<MinMatScore[] | null> {
   try {
     const data = await kv.get<MinMatScore[]>(KV_KEY);
     if (data) return data;
   } catch (error) {
-    console.error("KV Error loading minmat leaderboard:", error);
+    console.warn("KV Error loading minmat leaderboard, falling back to JSON:", error);
+  }
+  return null;
+}
+
+async function getStoreFromJSON(): Promise<MinMatScore[]> {
+  try {
+    if (fs.existsSync(JSON_FILE_PATH)) {
+      const data = fs.readFileSync(JSON_FILE_PATH, "utf-8");
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error("Error loading minmat leaderboard from JSON:", error);
   }
 
   const defaultLeaderboard: MinMatScore[] = [
@@ -26,11 +41,34 @@ async function getStore(): Promise<MinMatScore[]> {
   return defaultLeaderboard;
 }
 
-async function saveStore(scores: MinMatScore[]) {
+async function getStore(): Promise<MinMatScore[]> {
+  const kvData = await getStoreFromKV();
+  if (kvData) return kvData;
+  return getStoreFromJSON();
+}
+
+async function saveStoreToKV(scores: MinMatScore[]): Promise<boolean> {
   try {
     await kv.set(KV_KEY, scores);
+    return true;
   } catch (error) {
-    console.error("KV Error saving minmat leaderboard:", error);
+    console.warn("KV Error saving minmat leaderboard, falling back to JSON:", error);
+    return false;
+  }
+}
+
+async function saveStoreToJSON(scores: MinMatScore[]) {
+  try {
+    fs.writeFileSync(JSON_FILE_PATH, JSON.stringify(scores, null, 2), "utf-8");
+  } catch (error) {
+    console.error("Error saving minmat leaderboard to JSON:", error);
+  }
+}
+
+async function saveStore(scores: MinMatScore[]) {
+  const kvSaved = await saveStoreToKV(scores);
+  if (!kvSaved) {
+    await saveStoreToJSON(scores);
   }
 }
 
