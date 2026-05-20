@@ -11,12 +11,10 @@ function AuthSignOutContent() {
   useEffect(() => {
     const performSignOut = async () => {
       try {
-        await signOut();
+        await signOut({ redirectUrl: "/" });
       } catch (err) {
         console.error("SignOut error:", err);
       }
-      const redirectUrl = searchParams.get("redirect") || "/minmat/index.html";
-      window.location.href = redirectUrl;
     };
     performSignOut();
   }, [signOut, searchParams]);
