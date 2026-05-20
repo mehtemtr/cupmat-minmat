@@ -1,4 +1,4 @@
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -13,12 +13,34 @@ export interface MinMatScore {
 const KV_KEY = "minmat_leaderboard";
 const JSON_FILE_PATH = path.join(process.cwd(), "data", "minmat-leaderboard.json");
 
-async function getStoreFromKV(): Promise<MinMatScore[] | null> {
+let redis: Redis | null = null;
+
+function getRedis(): Redis | null {
+  if (redis) return redis;
+  
   try {
-    const data = await kv.get<MinMatScore[]>(KV_KEY);
+    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+      redis = new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      });
+      return redis;
+    }
+  } catch (error) {
+    console.warn("Failed to initialize Upstash Redis, falling back to JSON:", error);
+  }
+  return null;
+}
+
+async function getStoreFromKV(): Promise<MinMatScore[] | null> {
+  const r = getRedis();
+  if (!r) return null;
+  
+  try {
+    const data = await r.get<MinMatScore[]>(KV_KEY);
     if (data) return data;
   } catch (error) {
-    console.warn("KV Error loading minmat leaderboard, falling back to JSON:", error);
+    console.warn("Redis Error loading minmat leaderboard, falling back to JSON:", error);
   }
   return null;
 }
@@ -48,11 +70,14 @@ async function getStore(): Promise<MinMatScore[]> {
 }
 
 async function saveStoreToKV(scores: MinMatScore[]): Promise<boolean> {
+  const r = getRedis();
+  if (!r) return false;
+  
   try {
-    await kv.set(KV_KEY, scores);
+    await r.set(KV_KEY, scores);
     return true;
   } catch (error) {
-    console.warn("KV Error saving minmat leaderboard, falling back to JSON:", error);
+    console.warn("Redis Error saving minmat leaderboard, falling back to JSON:", error);
     return false;
   }
 }

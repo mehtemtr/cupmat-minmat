@@ -1,4 +1,4 @@
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
 import * as fs from "fs";
 import * as path from "path";
 import { getLeaderboard } from "@/lib/store/leaderboard-store";
@@ -38,12 +38,34 @@ interface GamificationStore {
 const KV_KEY = "gamification_store";
 const JSON_FILE_PATH = path.join(process.cwd(), "data", "gamification-store.json");
 
-async function getStoreFromKV(): Promise<GamificationStore | null> {
+let redis: Redis | null = null;
+
+function getRedis(): Redis | null {
+  if (redis) return redis;
+  
   try {
-    const data = await kv.get<GamificationStore>(KV_KEY);
+    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+      redis = new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      });
+      return redis;
+    }
+  } catch (error) {
+    console.warn("Failed to initialize Upstash Redis, falling back to JSON:", error);
+  }
+  return null;
+}
+
+async function getStoreFromKV(): Promise<GamificationStore | null> {
+  const r = getRedis();
+  if (!r) return null;
+  
+  try {
+    const data = await r.get<GamificationStore>(KV_KEY);
     if (data) return data;
   } catch (error) {
-    console.warn("KV Error loading gamification store, falling back to JSON", error);
+    console.warn("Redis Error loading gamification store, falling back to JSON", error);
   }
   return null;
 }
@@ -119,11 +141,14 @@ async function getStore(): Promise<GamificationStore> {
 }
 
 async function saveStoreToKV(store: GamificationStore): Promise<boolean> {
+  const r = getRedis();
+  if (!r) return false;
+  
   try {
-    await kv.set(KV_KEY, store);
+    await r.set(KV_KEY, store);
     return true;
   } catch (error) {
-    console.warn("KV Error saving gamification store, falling back to JSON", error);
+    console.warn("Redis Error saving gamification store, falling back to JSON", error);
     return false;
   }
 }
