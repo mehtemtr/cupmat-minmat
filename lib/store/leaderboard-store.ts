@@ -1,4 +1,4 @@
-import { kv } from "@vercel/kv";
+import { Redis } from '@upstash/redis'
 import type { PredictionSubmission } from "@/lib/types/tournament";
 
 const KV_KEY = "cupmat_leaderboard";

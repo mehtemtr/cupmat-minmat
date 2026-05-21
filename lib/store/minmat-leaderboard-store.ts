@@ -1,5 +1,4 @@
-import { kv } from "@vercel/kv";
-
+import { Redis } from '@upstash/redis'
 export interface MinMatScore {
   name: string;
   score: number;
