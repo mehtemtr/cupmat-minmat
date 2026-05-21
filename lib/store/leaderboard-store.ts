@@ -1,6 +1,10 @@
+import { Redis } from "@upstash/redis";
 import type { PredictionSubmission } from "@/lib/types/tournament";
 
-const KV_KEY = "cupmat_leaderboard";
+// Upstash Redis istemcisi environment değişkenlerinden otomatik beslenir
+const redis = Redis.fromEnv();
+
+const REDIS_KEY = "cupmat_leaderboard";
 
 const defaultLeaderboard: PredictionSubmission[] = [
   {
@@ -31,30 +35,41 @@ const defaultLeaderboard: PredictionSubmission[] = [
 
 async function getStore(): Promise<PredictionSubmission[]> {
   try {
-    const data = await kv.get<PredictionSubmission[]>(KV_KEY);
-    return data || defaultLeaderboard;
+    // Upstash Redis üzerinden veriyi çekiyoruz
+    const data = await redis.get<PredictionSubmission[]>(REDIS_KEY);
+    
+    if (!data) {
+      return defaultLeaderboard;
+    }
+    
+    // Veri array tipinde değilse veya string olarak döndüyse güvenli parse işlemi
+    return Array.isArray(data) ? data : (typeof data === "string" ? JSON.parse(data) : defaultLeaderboard);
   } catch (err) {
-    console.error("KV Error loading cupmat leaderboard:", err);
+    console.error("Upstash Redis Error loading cupmat leaderboard:", err);
     return defaultLeaderboard;
   }
 }
 
 export async function getLeaderboard(): Promise<PredictionSubmission[]> {
   const store = await getStore();
+  // Oyuncuları kazandıkları puana göre büyükten küçüğe sıralar
   return store.sort((a, b) => b.points - a.points);
 }
 
 export async function upsertSubmission(entry: PredictionSubmission): Promise<void> {
   const store = await getStore();
   const idx = store.findIndex((s) => s.userId === entry.userId);
+  
   if (idx >= 0) {
     store[idx] = entry;
   } else {
     store.push(entry);
   }
+  
   try {
-    await kv.set(KV_KEY, store);
+    // Güncellenmiş havuzu Redis'e set ediyoruz
+    await redis.set(REDIS_KEY, store);
   } catch (err) {
-    console.error("KV Error saving cupmat leaderboard:", err);
+    console.error("Upstash Redis Error saving cupmat leaderboard:", err);
   }
 }

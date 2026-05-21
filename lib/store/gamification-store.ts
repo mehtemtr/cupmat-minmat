@@ -1,3 +1,4 @@
+import { Redis } from "@upstash/redis";
 import { getLeaderboard } from "@/lib/store/leaderboard-store";
 
 export interface UserActivity {
@@ -32,75 +33,92 @@ interface GamificationStore {
   periodEnd: string;               // ISO date string of current period end
 }
 
-const KV_KEY = "gamification_store";
+// Upstash Redis istemcisi environment değişkenlerinden otomatik beslenir
+const redis = Redis.fromEnv();
+
+const REDIS_KEY = "gamification_store";
+
+// Varsayılan periyot sonu tarihi (Şu andan itibaren 2 gün 11 saat sonrası)
+const defaultPeriodEnd = new Date();
+defaultPeriodEnd.setMilliseconds(defaultPeriodEnd.getMilliseconds() + (2 * 24 + 11) * 60 * 60 * 1000);
+
+const defaultStore: GamificationStore = {
+  userActivities: [
+    {
+      userId: "demo-1",
+      displayName: "Kara",
+      taraftarPuani: 23,
+      gunlukGirisSayisi: 1,
+      sonGirisTarihi: new Date().toISOString().split("T")[0],
+      minmatEkSure: 10,
+      tahminGuncellemeHakki: 2,
+      yardimTiklandi: true,
+      hakkindaTiklandi: false,
+      mevcutPeriyotPuani: 23,
+      genelTahminHakkiKullanildi: false,
+      minmatOyunSayisiBugun: 6,
+      lastClerkLoginAt: null,
+      activeSecondsInPeriod: 0,
+      cupMatRewardSeconds: 0,
+      cupMatRewardPoints: 0,
+    },
+    {
+      userId: "demo-2",
+      displayName: "Kartal",
+      taraftarPuani: 19,
+      gunlukGirisSayisi: 2,
+      sonGirisTarihi: new Date().toISOString().split("T")[0],
+      minmatEkSure: 5,
+      tahminGuncellemeHakki: 1,
+      yardimTiklandi: false,
+      hakkindaTiklandi: true,
+      mevcutPeriyotPuani: 19,
+      genelTahminHakkiKullanildi: false,
+      minmatOyunSayisiBugun: 3,
+      lastClerkLoginAt: null,
+      activeSecondsInPeriod: 0,
+      cupMatRewardSeconds: 0,
+      cupMatRewardPoints: 0,
+    }
+  ],
+  gecmisSampiyonlar: [
+    {
+      userId: "champ-1",
+      displayName: "WorldCupGuru",
+      derece: 1,
+      periyotBitisTarihi: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    }
+  ],
+  periodEnd: defaultPeriodEnd.toISOString(),
+};
 
 async function getStore(): Promise<GamificationStore> {
   try {
-    const data = await kv.get<GamificationStore>(KV_KEY);
-    if (data) return data;
+    // Upstash Redis üzerinden veriyi çekiyoruz
+    const data = await redis.get<GamificationStore>(REDIS_KEY);
+    
+    if (!data) {
+      return defaultStore;
+    }
+
+    // Gelen veri nesne tipinde değilse veya string olarak döndüyse güvenli parse katmanı
+    if (typeof data === "string") {
+      return JSON.parse(data);
+    }
+
+    return data;
   } catch (error) {
-    console.error("KV Error loading gamification store", error);
+    console.error("Upstash Redis Error loading gamification store", error);
+    return defaultStore;
   }
-
-  const defaultPeriodEnd = new Date();
-  defaultPeriodEnd.setMilliseconds(defaultPeriodEnd.getMilliseconds() + (2 * 24 + 11) * 60 * 60 * 1000);
-
-  return {
-    userActivities: [
-      {
-        userId: "demo-1",
-        displayName: "Kara",
-        taraftarPuani: 23,
-        gunlukGirisSayisi: 1,
-        sonGirisTarihi: new Date().toISOString().split("T")[0],
-        minmatEkSure: 10,
-        tahminGuncellemeHakki: 2,
-        yardimTiklandi: true,
-        hakkindaTiklandi: false,
-        mevcutPeriyotPuani: 23,
-        genelTahminHakkiKullanildi: false,
-        minmatOyunSayisiBugun: 6,
-        lastClerkLoginAt: null,
-        activeSecondsInPeriod: 0,
-        cupMatRewardSeconds: 0,
-        cupMatRewardPoints: 0,
-      },
-      {
-        userId: "demo-2",
-        displayName: "Kartal",
-        taraftarPuani: 19,
-        gunlukGirisSayisi: 2,
-        sonGirisTarihi: new Date().toISOString().split("T")[0],
-        minmatEkSure: 5,
-        tahminGuncellemeHakki: 1,
-        yardimTiklandi: false,
-        hakkindaTiklandi: true,
-        mevcutPeriyotPuani: 19,
-        genelTahminHakkiKullanildi: false,
-        minmatOyunSayisiBugun: 3,
-        lastClerkLoginAt: null,
-        activeSecondsInPeriod: 0,
-        cupMatRewardSeconds: 0,
-        cupMatRewardPoints: 0,
-      }
-    ],
-    gecmisSampiyonlar: [
-      {
-        userId: "champ-1",
-        displayName: "WorldCupGuru",
-        derece: 1,
-        periyotBitisTarihi: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-      }
-    ],
-    periodEnd: defaultPeriodEnd.toISOString(),
-  };
 }
 
 async function saveStore(store: GamificationStore): Promise<void> {
   try {
-    await kv.set(KV_KEY, store);
+    // Güncellenmiş nesneyi Redis'e set ediyoruz
+    await redis.set(REDIS_KEY, store);
   } catch (error) {
-    console.error("KV Error saving gamification store", error);
+    console.error("Upstash Redis Error saving gamification store", error);
   }
 }
 
@@ -292,7 +310,7 @@ export interface RewardEntry {
   displayName: string;
   score: number;
   rank: number;
-  reward: string; // human-readable reward description
+  reward: string; 
 }
 
 // Get reward leaderboards for the current period (email-eligible users only)
@@ -308,14 +326,14 @@ export async function getRewardLeaderboards(): Promise<{
   const periodStart = new Date(store.periodEnd);
   periodStart.setDate(periodStart.getDate() - 3);
   const compareStart = new Date(periodStart);
-  compareStart.setHours(0, 0, 0, 0); // Normalize to midnight to include start day
+  compareStart.setHours(0, 0, 0, 0); 
 
   // Eligibility: any Clerk user (email logged-in user)
   const eligible = store.userActivities.filter((u) => {
     return u.userId.startsWith("user_");
   });
 
-  // CupMat reward table: ranked by combined period score (same as main leaderboard)
+  // CupMat reward table: ranked by combined period score
   const cupMatSorted = [...eligible]
     .map((u) => {
       const predPoints = predictions.find((p) => p.userId === u.userId)?.points || 0;
@@ -429,13 +447,11 @@ export async function handleGamificationAction(
 
           profile.taraftarPuani += 10;
           profile.mevcutPeriyotPuani += 10;
-          profile.minmatEkSure += 2; // +2 seconds daily reward
-          // Record email login timestamp
+          profile.minmatEkSure += 2; 
           profile.lastClerkLoginAt = new Date().toISOString();
           message = "Günlük giriş ödülü kazanıldı: +10 Taraftar Puanı, +2sn MinMat Süresi!";
         } else {
           profile.gunlukGirisSayisi += 1;
-          // If already logged in via email earlier, keep timestamp unchanged
           message = "Günlük giriş sayacı güncellendi.";
         }
         break;
@@ -445,7 +461,7 @@ export async function handleGamificationAction(
       const added = amount || 10;
       profile.taraftarPuani += added;
       profile.mevcutPeriyotPuani += added;
-      profile.minmatEkSure += 2; // +2 seconds active reward
+      profile.minmatEkSure += 2; 
       message = `Aktif katılım ödülü kazanıldı: +${added} Taraftar Puanı, +2sn MinMat Süresi!`;
       break;
     }
