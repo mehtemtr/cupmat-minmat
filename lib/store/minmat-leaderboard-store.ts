@@ -1,4 +1,3 @@
-import { Redis } from '@upstash/redis'
 export interface MinMatScore {
   name: string;
   score: number;

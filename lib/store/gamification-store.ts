@@ -1,4 +1,3 @@
-import { Redis } from '@upstash/redis'
 import { getLeaderboard } from "@/lib/store/leaderboard-store";
 
 export interface UserActivity {
