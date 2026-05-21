@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
-import { getAllPlayers, getTeamById, getTeamName } from "@/data/teams";
+import { getAllPlayers } from "@/data/teams";
 import { getPlayerDetail } from "@/data/player-details";
 import { useTranslation } from "@/contexts/LocaleContext";
 import Image from "next/image";
@@ -32,7 +33,8 @@ const localDict = {
     positionGK: "Kaleci",
     positionDF: "Defans",
     positionMF: "Orta Saha",
-    positionFW: "Forvet"
+    positionFW: "Forvet",
+    country: "Ülke"
   },
   en: {
     back: "← All Footballers",
@@ -56,7 +58,8 @@ const localDict = {
     positionGK: "Goalkeeper",
     positionDF: "Defender",
     positionMF: "Midfielder",
-    positionFW: "Forward"
+    positionFW: "Forward",
+    country: "Country"
   },
   es: {
     back: "← Todos los Futbolistas",
@@ -80,7 +83,8 @@ const localDict = {
     positionGK: "Portero",
     positionDF: "Defensor",
     positionMF: "Centrocampista",
-    positionFW: "Delantero"
+    positionFW: "Delantero",
+    country: "País"
   },
   fr: {
     back: "← Tous les Joueurs",
@@ -104,7 +108,8 @@ const localDict = {
     positionGK: "Gardien",
     positionDF: "Défenseur",
     positionMF: "Milieu",
-    positionFW: "Attaquant"
+    positionFW: "Attaquant",
+    country: "Pays"
   },
   de: {
     back: "← Alle Spieler",
@@ -128,7 +133,8 @@ const localDict = {
     positionGK: "Torwart",
     positionDF: "Abwehr",
     positionMF: "Mittelfeld",
-    positionFW: "Sturm"
+    positionFW: "Sturm",
+    country: "Land"
   }
 };
 
@@ -143,6 +149,38 @@ export default function FootballerDetailPage() {
   const id = params?.id as string;
   const allPlayers = getAllPlayers();
   const player = allPlayers.find((p) => p.id === id);
+
+  // Discovery Timer & Leaderboard States
+  const [countdown, setCountdown] = useState(5);
+  const [isDiscovered, setIsDiscovered] = useState(false);
+
+  useEffect(() => {
+    if (!player) return;
+
+    // Check if player was already discovered in this session to prevent exploits
+    const alreadyDiscovered = sessionStorage.getItem(`discovered_${player.id}`);
+    if (alreadyDiscovered) {
+      setIsDiscovered(true);
+      setCountdown(0);
+      return;
+    }
+
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (countdown === 0 && !isDiscovered) {
+      setIsDiscovered(true);
+      sessionStorage.setItem(`discovered_${player.id}`, "true");
+      
+      // TRIGGER LEADERBOARD / POINTS CONNECTION HERE
+      // Global veya local storage puan tablosu mekanizmanızı günceller
+      const currentPoints = parseInt(localStorage.getItem("discovery_points") || "0", 10);
+      localStorage.setItem("discovery_points", (currentPoints + 10).toString());
+      
+      // Custom event dispatching so navigation bars or scoreboard components update live
+      window.dispatchEvent(new Event("scoreboardUpdated"));
+    }
+  }, [countdown, player, isDiscovered]);
 
   if (!player) {
     return (
@@ -187,13 +225,27 @@ export default function FootballerDetailPage() {
 
   return (
     <PageShell title={player.name} subtitle={getPositionLabel(player.position)}>
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <button
           onClick={() => router.push("/futbolcular")}
           className="flex items-center gap-2 px-4 py-2 text-zinc-400 hover:text-white rounded-lg bg-zinc-900/60 hover:bg-zinc-800/80 border border-zinc-800/80 transition-all text-sm"
         >
           {dict.back}
         </button>
+
+        {/* Discovery Timer UI */}
+        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-zinc-950/80 border border-zinc-800 backdrop-blur-sm text-xs">
+          <span className="text-zinc-500 font-bold uppercase tracking-wider">{dict.timerTitle}:</span>
+          {!isDiscovered ? (
+            <span className="text-amber-400 font-mono font-bold animate-pulse">
+              {dict.timerCounting} ({countdown}s)
+            </span>
+          ) : (
+            <span className="text-emerald-400 font-bold flex items-center gap-1 animate-fadeIn">
+              {dict.timerRewarded} <span className="text-zinc-500 text-[10px] bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 text-emerald-400">+10 XP</span>
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-3 relative">
@@ -234,13 +286,15 @@ export default function FootballerDetailPage() {
               </div>
 
               <div className="flex justify-between items-center pt-2 border-t border-zinc-900">
-                <span className="text-zinc-500">{dict.notFound.split(" ")[0]}</span>
+                <span className="text-zinc-500">{dict.country}</span>
                 <div className="flex items-center gap-1.5">
                   <div className="relative w-5 h-3.5 overflow-hidden rounded border border-zinc-800/40">
-                    <img
+                    <Image
                       src={player.teamFlagUrl}
-                      alt=""
-                      className="w-full h-full object-cover"
+                      alt={`${countryName} flag`}
+                      fill
+                      sizes="20px"
+                      className="object-cover"
                     />
                   </div>
                   <span className="text-zinc-200 font-bold truncate max-w-[120px]">
@@ -297,7 +351,7 @@ export default function FootballerDetailPage() {
               📖 {dict.bio}
             </h3>
             <p className="text-zinc-300 leading-relaxed text-base italic">
-              &ldquo;{details.bio[activeLang]}&rdquo;
+              &ldquo;{details.bio[activeLang] || details.bio["en"]}&rdquo;
             </p>
           </div>
 
