@@ -1,10 +1,7 @@
-import { Redis } from "@upstash/redis";
-import * as fs from "fs";
-import * as path from "path";
+import { kv } from "@vercel/kv";
 import type { PredictionSubmission } from "@/lib/types/tournament";
 
 const KV_KEY = "cupmat_leaderboard";
-const JSON_FILE_PATH = path.join(process.cwd(), "data", "cupmat-leaderboard.json");
 
 const defaultLeaderboard: PredictionSubmission[] = [
   {
@@ -33,84 +30,13 @@ const defaultLeaderboard: PredictionSubmission[] = [
   },
 ];
 
-let redis: Redis | null = null;
-
-function getRedis(): Redis | null {
-  if (redis) return redis;
-  
-  try {
-    const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-    const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
-    
-    if (url && token) {
-      redis = new Redis({
-        url,
-        token,
-      });
-      return redis;
-    }
-  } catch (error) {
-    console.warn("Failed to initialize Upstash Redis, falling back to JSON:", error);
-  }
-  return null;
-}
-
-async function getStoreFromKV(): Promise<PredictionSubmission[] | null> {
-  const r = getRedis();
-  if (!r) return null;
-  
-  try {
-    const data = await r.get<PredictionSubmission[]>(KV_KEY);
-    if (data) return data;
-  } catch (err) {
-    console.warn("Redis Error loading cupmat leaderboard, falling back to JSON:", err);
-  }
-  return null;
-}
-
-async function getStoreFromJSON(): Promise<PredictionSubmission[]> {
-  try {
-    if (fs.existsSync(JSON_FILE_PATH)) {
-      const data = fs.readFileSync(JSON_FILE_PATH, "utf-8");
-      return JSON.parse(data);
-    }
-  } catch (err) {
-    console.error("Error loading cupmat leaderboard from JSON:", err);
-  }
-  return defaultLeaderboard;
-}
-
 async function getStore(): Promise<PredictionSubmission[]> {
-  const kvData = await getStoreFromKV();
-  if (kvData) return kvData;
-  return getStoreFromJSON();
-}
-
-async function saveStoreToKV(scores: PredictionSubmission[]): Promise<boolean> {
-  const r = getRedis();
-  if (!r) return false;
-  
   try {
-    await r.set(KV_KEY, scores);
-    return true;
+    const data = await kv.get<PredictionSubmission[]>(KV_KEY);
+    return data || defaultLeaderboard;
   } catch (err) {
-    console.warn("Redis Error saving cupmat leaderboard, falling back to JSON:", err);
-    return false;
-  }
-}
-
-async function saveStoreToJSON(scores: PredictionSubmission[]) {
-  try {
-    fs.writeFileSync(JSON_FILE_PATH, JSON.stringify(scores, null, 2), "utf-8");
-  } catch (err) {
-    console.error("Error saving cupmat leaderboard to JSON:", err);
-  }
-}
-
-async function saveStore(scores: PredictionSubmission[]) {
-  const kvSaved = await saveStoreToKV(scores);
-  if (!kvSaved) {
-    await saveStoreToJSON(scores);
+    console.error("KV Error loading cupmat leaderboard:", err);
+    return defaultLeaderboard;
   }
 }
 
@@ -127,5 +53,9 @@ export async function upsertSubmission(entry: PredictionSubmission): Promise<voi
   } else {
     store.push(entry);
   }
-  await saveStore(store);
+  try {
+    await kv.set(KV_KEY, store);
+  } catch (err) {
+    console.error("KV Error saving cupmat leaderboard:", err);
+  }
 }
