@@ -37,12 +37,10 @@ function getRedis(): Redis | null {
 
 async function getStoreFromKV(): Promise<MinMatScore[] | null> {
   const r = getRedis();
-  console.log("getStoreFromKV: redis initialized?", !!r);
   if (!r) return null;
   
   try {
     const data = await r.get<MinMatScore[]>(KV_KEY);
-    console.log("getStoreFromKV: data loaded from Redis", !!data);
     if (data) return data;
   } catch (error) {
     console.warn("Redis Error loading minmat leaderboard, falling back to JSON:", error);
@@ -76,12 +74,10 @@ async function getStore(): Promise<MinMatScore[]> {
 
 async function saveStoreToKV(scores: MinMatScore[]): Promise<boolean> {
   const r = getRedis();
-  console.log("saveStoreToKV: redis initialized?", !!r, "scores count:", scores.length);
   if (!r) return false;
   
   try {
     await r.set(KV_KEY, scores);
-    console.log("saveStoreToKV: saved to Redis successfully!");
     return true;
   } catch (error) {
     console.warn("Redis Error saving minmat leaderboard, falling back to JSON:", error);
