@@ -172,7 +172,7 @@ export default function LeaderboardPage() {
                             </span>
                           </td>
                           <td className="py-3.5 px-4 text-right font-black font-mono text-white text-sm sm:text-base">
-                            {row.mevcutPeriyotPuani || (row as any).points || 0} <span className="text-[10px] text-zinc-500 font-normal">Puan</span>
+                            {row.taraftarPuani ?? 0} <span className="text-[10px] text-zinc-500 font-normal">Puan</span>
                           </td>
                         </tr>
                       );
