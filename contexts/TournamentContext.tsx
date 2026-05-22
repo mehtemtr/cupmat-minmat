@@ -326,8 +326,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     await fetch("/api/leaderboard", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
-        userId: `user-${displayName.toLowerCase().replace(/\s+/g, "-")}`,
         displayName,
         matchPredictions: predictions,
         points,

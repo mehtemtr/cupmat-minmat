@@ -186,7 +186,7 @@ export default function PredictionCenterPage() {
   const fetchData = async () => {
     if (!user) return;
     try {
-      const res = await fetch(`/api/predictions?userId=${user.id}`);
+      const res = await fetch("/api/predictions");
       const data = await res.json();
       if (data.success) {
         setProfile(data.profile);
@@ -263,7 +263,14 @@ export default function PredictionCenterPage() {
           setAiError((prev) => ({ ...prev, [matchId]: "AI analizi yüklenemedi." }));
         }
       } else {
-        setAiError((prev) => ({ ...prev, [matchId]: "Sunucu hatası." }));
+        const errData = (await res.json().catch(() => ({}))) as { error?: string };
+        setAiError((prev) => ({
+          ...prev,
+          [matchId]:
+            res.status === 403 && errData.error
+              ? errData.error
+              : "Sunucu hatası.",
+        }));
       }
     } catch (err) {
       console.error(err);
@@ -315,8 +322,6 @@ export default function PredictionCenterPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user.id,
-          displayName: user.username || user.fullName || "Oyuncu",
           predictions: payload,
         }),
       });
@@ -361,8 +366,6 @@ export default function PredictionCenterPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user.id,
-          displayName: user.username || user.fullName || "Oyuncu",
           predictions: payload,
           singleMatchId: matchId,
         }),
@@ -408,7 +411,7 @@ export default function PredictionCenterPage() {
           </div>
           <h2 className="text-xl font-black text-white">{dict.title}</h2>
           <p className="text-zinc-400 text-sm leading-relaxed">{dict.noUser}</p>
-          <SignInButton mode="modal" forceRedirectUrl="/tahminler">
+          <SignInButton mode="redirect" forceRedirectUrl="/tahminler">
             <button className="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-[#060b14] font-black text-sm transition-all duration-300 shadow-lg shadow-emerald-500/20 active:scale-95">
               Giriş Yap / Kaydol
             </button>

@@ -1,9 +1,35 @@
 import { NextResponse } from "next/server";
+import { requireApiAuth } from "@/lib/auth/api-auth";
+import { getOrCreateProfile } from "@/lib/store/gamification-store";
 import { getAiAnalysis } from "@/lib/store/ai-analysis-store";
 import type { Locale } from "@/lib/i18n/types";
 
+const MIN_MINMAT_GAMES_TODAY = 5;
+
 export async function POST(request: Request) {
   try {
+    const authResult = await requireApiAuth();
+    if (!authResult.ok) {
+      return authResult.response;
+    }
+
+    const profile = await getOrCreateProfile(
+      authResult.userId,
+      authResult.displayName,
+    );
+
+    if ((profile.minmatOyunSayisiBugun || 0) < MIN_MINMAT_GAMES_TODAY) {
+      return NextResponse.json(
+        {
+          error:
+            "Bu analizi görmek için bugün MinMat'ta en az 5 oyun tamamlamalısınız.",
+          requiredGames: MIN_MINMAT_GAMES_TODAY,
+          playedToday: profile.minmatOyunSayisiBugun || 0,
+        },
+        { status: 403 },
+      );
+    }
+
     const { matchId, homeTeamId, awayTeamId, locale } = (await request.json()) as {
       matchId?: string;
       homeTeamId?: string;

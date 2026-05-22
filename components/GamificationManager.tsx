@@ -197,8 +197,6 @@ export function GamificationManager() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user.id,
-          displayName: user.fullName || user.username || "Kullanıcı",
           action: cleanPathAction,
           amount: points,
         }),

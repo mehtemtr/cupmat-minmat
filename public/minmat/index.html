@@ -296,6 +296,31 @@
       cursor: pointer;
     }
 
+    .cupmatWorldSwitch {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 10001;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      background: linear-gradient(135deg, #34d399, #059669);
+      color: #041018;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 22px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .cupmatWorldSwitch:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 28px rgba(16, 185, 129, 0.5);
+    }
+
     .topRightNav {
       position: fixed;
       top: 16px;
@@ -701,6 +726,8 @@
 
 <body>
 
+  <button type="button" class="cupmatWorldSwitch" id="btnCupmatSwitch" onclick="goToCupmat()">🏆 Cupmat'a Geç</button>
+
   <div class="topRightNav">
     <button class="topRightBtn" onclick="openAbout()" title="Hakkında">ℹ️</button>
     <button class="topRightBtn" onclick="openHelp()" title="Yardım">❓</button>
@@ -873,7 +900,8 @@
         guest: "Misafir", menu: "Menü", subtitle: "MinMat — Zeka ve Matematik Oyunu", all: "Hepsi",
         authWarn: "⚠️ Global sıralamaya girmek ve ödül kazanmak için giriş yapmalısınız.", authVerified: "✓ Doğrulanmış Hesap",
         authLoginBtn: "🔑 Giriş Yap / Google ile Bağlan", authSaveWarn: "⚠️ Giriş yapmadığınız için skorunuz dünya genel sıralamasına kaydedilemedi.",
-        signout: "Çıkış Yap"
+        signout: "Çıkış Yap",
+        cupmatSwitch: "🏆 Cupmat'a Geç"
       },
       en: {
         placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
@@ -886,7 +914,8 @@
         guest: "Guest", menu: "Menu", subtitle: "MinMat — Brain & Math Game", all: "All",
         authWarn: "⚠️ You must sign in to enter the global leaderboard and win prizes.", authVerified: "✓ Verified Account",
         authLoginBtn: "🔑 Sign In / Connect with Google", authSaveWarn: "⚠️ Since you are not signed in, your score could not be saved to the global rankings.",
-        signout: "Sign Out"
+        signout: "Sign Out",
+        cupmatSwitch: "🏆 Go to Cupmat"
       },
       de: {
         placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
@@ -899,7 +928,8 @@
         guest: "Gast", menu: "Menü", subtitle: "MinMat — Gehirn- & Mathe-Spiel", all: "Alle",
         authWarn: "⚠️ Sie müssen sich anmelden, um an der globalen Bestenliste teilzunehmen.", authVerified: "✓ Verifiziertes Konto",
         authLoginBtn: "🔑 Einloggen / Google-Verbindung", authSaveWarn: "⚠️ Da Sie nicht angemeldet sind, wurde Ihr Punktestand nicht in die globale Liste eingetragen.",
-        signout: "Abmelden"
+        signout: "Abmelden",
+        cupmatSwitch: "🏆 Zu Cupmat"
       },
       fr: {
         placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
@@ -912,7 +942,8 @@
         guest: "Invité", menu: "Menu", subtitle: "MinMat — Jeu de Cerveau & de Mathématiques", all: "Tous",
         authWarn: "⚠️ Vous devez vous connecter pour figurer dans le classement mondial et gagner des prix.", authVerified: "✓ Compte Vérifié",
         authLoginBtn: "🔑 Se connecter / Google", authSaveWarn: "⚠️ Comme vous n'êtes pas connecté, votre score n'a pas pu être enregistré.",
-        signout: "Déconnexion"
+        signout: "Déconnexion",
+        cupmatSwitch: "🏆 Aller à Cupmat"
       },
       es: {
         placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
@@ -925,9 +956,14 @@
         guest: "Invitado", menu: "Menú", subtitle: "MinMat — Juego de Cerebro y Matemáticas", all: "Todos",
         authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de clasificación global y ganar premios.", authVerified: "✓ Cuenta Verificada",
         authLoginBtn: "🔑 Iniciar Sesión / Google", authSaveWarn: "⚠️ Como no has iniciado sesión, tu puntuación no se pudo guardar la tabla global.",
-        signout: "Sign Out"
+        signout: "Sign Out",
+        cupmatSwitch: "🏆 Ir a Cupmat"
       }
     };
+
+    function goToCupmat() {
+      window.location.href = "/cupmat";
+    }
 
     function t(key) {
       let lang = translations[currentLang] || translations["tr"];
@@ -948,6 +984,8 @@
       if (bs) bs.innerText = t("start");
       let bh = document.getElementById("btnHome");
       if (bh) bh.innerText = t("home");
+      let bcs = document.getElementById("btnCupmatSwitch");
+      if (bcs) bcs.innerText = t("cupmatSwitch");
       let blm = document.getElementById("btnLeaderboardMenu");
       if (blm) blm.innerText = t("puanTablosu");
       let blg = document.getElementById("btnLeaderboardGame");
@@ -1051,7 +1089,10 @@
 
     function redirectToLogin() {
       const currentPath = window.location.pathname + window.location.search;
-      window.location.href = `/auth-redirect?redirect=${encodeURIComponent(currentPath)}`;
+      const params = new URLSearchParams();
+      params.set("fresh", "1");
+      params.set("redirect_url", currentPath);
+      window.location.href = `/sign-in?${params.toString()}`;
     }
 
     function redirectToSignOut() {
@@ -1136,6 +1177,8 @@
     let playerName = "Adsız";
     let isPaused = false;
     let extraTimeSeconds = 0;
+    let periodSecondsPerLevel = 0;
+    let periodPointsPerLevel = 0;
     let activeTab = "scores";
 
     function getMaxLevel(mode) {
@@ -1202,6 +1245,8 @@
       document.getElementById("modeText").innerText = "🎯 " + shortModeName(gameMode);
 
       extraTimeSeconds = 0;
+      periodSecondsPerLevel = 0;
+      periodPointsPerLevel = 0;
       let badgeEl = document.getElementById("extraTimeBadge");
       if (badgeEl) badgeEl.style.display = "none";
 
@@ -1209,16 +1254,29 @@
         const res = await fetch("/api/gamification?displayName=" + encodeURIComponent(playerName));
         if (res.ok) {
           const data = await res.json();
-          if (data.success && data.profile && typeof data.profile.minmatEkSure === "number" && data.profile.minmatEkSure > 0) {
-            extraTimeSeconds = data.profile.minmatEkSure;
-            if (badgeEl) {
+          if (data.success && data.profile) {
+            const p = data.profile;
+            if (typeof p.minmatEkSure === "number" && p.minmatEkSure > 0) {
+              extraTimeSeconds = p.minmatEkSure;
+            }
+            if (p.periyotOdulAktif) {
+              periodSecondsPerLevel = Number(p.periyotOdulMinmatSaniyeSeviye) || 0;
+              periodPointsPerLevel = Number(p.periyotOdulMinmatPuanSeviye) || 0;
+            }
+            const totalBonus = extraTimeSeconds + periodSecondsPerLevel;
+            if (badgeEl && (extraTimeSeconds > 0 || periodSecondsPerLevel > 0)) {
               let suffix = "sn Cupmat Bonusu Aktif!";
               if (currentLang === "en") suffix = "s Cupmat Bonus Active!";
               else if (currentLang === "de") suffix = "s Cupmat-Bonus Aktiv!";
               else if (currentLang === "fr") suffix = "s Bonus Cupmat Actif!";
               else if (currentLang === "es") suffix = "s ¡Bono Cupmat Activo!";
-              
-              badgeEl.innerText = "+" + extraTimeSeconds + suffix;
+              let label = "+" + totalBonus + suffix;
+              if (periodSecondsPerLevel > 0 && extraTimeSeconds > 0) {
+                label = "+" + extraTimeSeconds + "sn + " + periodSecondsPerLevel + "sn/tur " + (currentLang === "tr" ? "periyot ödülü" : "period reward");
+              } else if (periodSecondsPerLevel > 0) {
+                label = "+" + periodSecondsPerLevel + "sn/tur " + (currentLang === "tr" ? "(periyot ödülü)" : "(period reward)");
+              }
+              badgeEl.innerText = label;
               badgeEl.style.display = "inline-flex";
             }
           }
@@ -1252,6 +1310,9 @@
 
       if (extraTimeSeconds > 0) {
         timeLeft += extraTimeSeconds;
+      }
+      if (periodSecondsPerLevel > 0) {
+        timeLeft += periodSecondsPerLevel;
       }
 
       updateUI();
@@ -1394,6 +1455,9 @@
         else if (gameMode === "mix") baseScore = 15;
 
         score += baseScore + level + Math.max(combo - 1, 0);
+        if (periodPointsPerLevel > 0) {
+          score += periodPointsPerLevel;
+        }
         matched += 2;
         reset();
 
@@ -1689,14 +1753,14 @@
         if (!data.success) throw new Error("API error");
 
         const cupRewards = data.cupMatRewards || [];
-        const minRewards = data.minMatRewards || []; // Son 72 saatte doğrulanmış e-postalı ilk 3 kullanıcı havuzu
+        const minPodium = data.minMatPodium72h || [];
 
         let html = "";
 
         // CupMat Ödül Sıralaması Bölümü
         html += `<div style="margin-bottom:24px;">`;
         html += `<h3 style="text-align:center; color:#fbbf24; font-size:16px; margin-bottom:4px;">🏆 CupMat Ödül Sıralaması</h3>`;
-        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Dönem sonu ilk 3'e özel sürpriz MinMat ödülleri</p>`;
+        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Bu periyot ilk 3 — ödüller bir sonraki 3 günlük periyotta aktif olur</p>`;
         
         if (cupRewards.length === 0) {
           html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Henüz veri yok</div>`;
@@ -1721,23 +1785,27 @@
         // MinMat Ödül Sıralaması Bölümü (72 Saatlik Filtrelenmiş Alan)
         html += `<div>`;
         html += `<h3 style="text-align:center; color:#a78bfa; font-size:16px; margin-bottom:4px;">🧮 MinMat Son 72 Saat Ödül Kürsüsü</h3>`;
-        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Giriş yapmış kullanıcılar arasından en yüksek ilk 3 skor listelenir</p>`;
+        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Son 72 saat — sadece aktif periyot ödülü olanlar (max 3 kürsü)</p>`;
         
-        if (minRewards.length === 0) {
+        if (minPodium.length === 0) {
           html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Son 72 saatte kayıtlı giriş yapan kullanıcı skoru yok</div>`;
         } else {
-          minRewards.slice(0, 3).forEach(function(e, index) {
+          minPodium.slice(0, 3).forEach(function(e, index) {
             const icons = ["🏆", "⚡", "🔥"];
             const bg = "rgba(167,139,250,0.12)";
+            const playerName = e.displayName || e.name || "Oyuncu";
+            const playerLevel = Number(e.level);
+            const levelText = Number.isFinite(playerLevel) && playerLevel > 0 ? playerLevel : 1;
+            const modeKey = e.mode || "mix";
             html += `
               <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; margin:6px 0; border-radius:10px; background:${bg}; border:1px solid rgba(167,139,250,0.25);">
                 <div style="display:flex; align-items:center; gap:8px;">
-                  <span style="font-size:14px; min-width:24px; text-align:center;">${icons[index]}</span>
-                  <span style="color:#e2e8f0; font-size:13px; font-weight:600;">${escapeHTML(e.name)}</span>
+                  <span style="font-size:14px; min-width:24px; text-align:center;">${icons[index] || e.rank}</span>
+                  <span style="color:#e2e8f0; font-size:13px; font-weight:600;">${escapeHTML(playerName)}</span>
                 </div>
                 <div style="text-align:right;">
                   <span style="color:#fff; font-family:monospace; font-size:12px; font-weight:700;">${e.score} Puan</span>
-                  <div style="color:#a78bfa; font-size:10px; margin-top:2px;">Lv.${e.level} • ${shortModeName(e.mode)}</div>
+                  <div style="color:#a78bfa; font-size:10px; margin-top:2px;">Lv.${levelText} • ${shortModeName(modeKey)}</div>
                 </div>
               </div>`;
           });

@@ -103,7 +103,11 @@ export default async function RootLayout({
   const locale = await getInitialLocale();
 
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      afterSignOutUrl="/auth-signout"
+    >
       <html lang={locale} className="dark">
         <body
           className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}

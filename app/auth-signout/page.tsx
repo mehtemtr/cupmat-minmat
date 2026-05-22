@@ -1,31 +1,56 @@
 "use client";
 
 import { useEffect, Suspense } from "react";
-import { useClerk } from "@clerk/nextjs";
+import { useClerk, useAuth } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
+import { clearClientSessionStorage } from "@/lib/auth/client-session-storage";
+import { buildSignInUrl } from "@/lib/auth/sign-in-url";
 
 function AuthSignOutContent() {
-  const { signOut } = useClerk();
+  const { signOut, session } = useClerk();
+  const { isLoaded, isSignedIn } = useAuth();
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    if (!isLoaded) return;
+
+    const returnTo = searchParams.get("redirect") || "/cupmat";
+    const signInUrl = buildSignInUrl(returnTo);
+
     const performSignOut = async () => {
+      clearClientSessionStorage();
+
       try {
-        await signOut();
+        await session?.reload();
+      } catch {
+        // Oturum zaten sonlanmış olabilir
+      }
+
+      try {
+        if (isSignedIn) {
+          await signOut({
+            redirectUrl: signInUrl,
+            sessionId: session?.id,
+          });
+          return;
+        }
       } catch (err) {
         console.error("SignOut error:", err);
       }
-      const redirectUrl = searchParams.get("redirect") || "/minmat/index.html";
-      window.location.href = redirectUrl;
+
+      window.location.replace(signInUrl);
     };
+
     performSignOut();
-  }, [signOut, searchParams]);
+  }, [isLoaded, isSignedIn, signOut, session, searchParams]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#060b14] text-white">
       <div className="flex flex-col items-center gap-4">
-        <div className="h-12 w-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
-        <p className="font-bold text-zinc-400">Çıkış yapılıyor... / Signing out...</p>
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-red-500 border-t-transparent" />
+        <p className="font-bold text-zinc-400">
+          Çıkış yapılıyor... / Signing out...
+        </p>
       </div>
     </div>
   );
@@ -33,11 +58,13 @@ function AuthSignOutContent() {
 
 export default function AuthSignOutPage() {
   return (
-    <Suspense fallback={
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#060b14] text-white">
-        <div className="h-12 w-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen flex-col items-center justify-center bg-[#060b14] text-white">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-red-500 border-t-transparent" />
+        </div>
+      }
+    >
       <AuthSignOutContent />
     </Suspense>
   );

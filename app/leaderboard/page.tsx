@@ -223,7 +223,7 @@ setLeaderboard(sortedData);
                 <p className="text-sm text-zinc-400 mb-3">
                   Sıralamada kendi yerinizi görmek ve periyot yarışı ödüllerini kazanabilmek için giriş yapın!
                 </p>
-                <SignInButton mode="modal">
+                <SignInButton mode="redirect" forceRedirectUrl="/leaderboard">
                   <button className="rounded-lg bg-emerald-500 px-5 py-2 text-xs sm:text-sm font-bold text-[#060b14] hover:bg-emerald-400 transition-colors">
                     Hemen Giriş Yap
                   </button>
@@ -242,7 +242,7 @@ setLeaderboard(sortedData);
                 CupMat Ödül Sıralaması
               </h2>
               <p className="mb-4 text-xs text-zinc-400">
-                Periyot sonunda ilk 3&apos;e girenlere MinMat ödülleri verilir. Sadece e-posta ile giriş yapanlar dahildir.
+                Bu periyot ilk 3&apos;e girenlere verilecek MinMat ödülleri, yalnızca sonraki 3 günlük periyotta aktif olur.
               </p>
               {cupMatRewards.length === 0 ? (
                 <div className="py-6 text-center text-sm text-zinc-500">
@@ -250,7 +250,7 @@ setLeaderboard(sortedData);
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {cupMatRewards.slice(0, 10).map((entry) => (
+                  {cupMatRewards.map((entry) => (
                     <div
                       key={entry.displayName}
                       className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ${
@@ -289,7 +289,7 @@ setLeaderboard(sortedData);
                 MinMat Ödül Sıralaması
               </h2>
               <p className="mb-4 text-xs text-zinc-400">
-                Periyot sonunda MinMat&apos;ta ilk 3&apos;e girenlere CupMat global puan ödülleri verilir.
+                Bu periyot MinMat ilk 3&apos;üne verilecek CupMat bonusu, yalnızca sonraki 3 günlük periyotta geçerlidir.
               </p>
               {minMatRewards.length === 0 ? (
                 <div className="py-6 text-center text-sm text-zinc-500">
@@ -297,7 +297,7 @@ setLeaderboard(sortedData);
                 </div>
               ) : (
                 <div className="space-y-2">
-                  {minMatRewards.slice(0, 10).map((entry) => (
+                  {minMatRewards.map((entry) => (
                     <div
                       key={entry.displayName}
                       className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ${
@@ -319,6 +319,12 @@ setLeaderboard(sortedData);
                       </div>
                       <div className="text-right">
                         <div className="font-mono text-xs font-bold text-white">{entry.score} <span className="text-zinc-500 font-normal">P</span></div>
+                        {(entry.level != null || entry.mode) && (
+                          <div className="text-[10px] text-purple-300/90 mt-0.5">
+                            Lv.{entry.level ?? 1}
+                            {entry.mode ? ` • ${entry.mode}` : ""}
+                          </div>
+                        )}
                         {entry.reward && (
                           <div className="text-[10px] text-purple-400 mt-0.5">{entry.reward}</div>
                         )}
@@ -365,7 +371,11 @@ setLeaderboard(sortedData);
                       </div>
 
                       <div className="space-y-2">
-                        {champs.sort((a,b) => a.derece - b.derece).map((champ) => (
+                        {champs
+                          .sort((a, b) => a.derece - b.derece)
+                          .filter((c) => c.derece >= 1 && c.derece <= 3)
+                          .slice(0, 3)
+                          .map((champ) => (
                           <div key={champ.userId} className="flex items-center justify-between text-sm">
                             <div className="flex items-center gap-2">
                               <span className="text-base">

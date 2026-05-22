@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Globe, Home, Menu, Trophy, X, Info, HelpCircle } from "lucide-react";
+import { Globe, Home, Menu, Trophy, X, Info, HelpCircle, Calculator } from "lucide-react";
 import { useState, useEffect } from "react";
-import { UserButton, SignInButton, useUser } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
+import { LogOut } from "lucide-react";
+import { buildSignOutUrl } from "@/lib/auth/sign-in-url";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { locales, type Locale } from "@/lib/i18n/types";
 
@@ -71,8 +73,6 @@ export function Header() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: user.id,
-            displayName: user.fullName || user.username || "Kullanıcı",
             action: "about_clicked",
           }),
         });
@@ -98,8 +98,6 @@ export function Header() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: user.id,
-            displayName: user.fullName || user.username || "Kullanıcı",
             action: "help_clicked",
           }),
         });
@@ -117,14 +115,17 @@ export function Header() {
     }
   };
 
-  // Hide header on portal page
-  if (pathname === "/") return null;
-
   const toggleLocale = () => {
     const currentIndex = locales.indexOf(locale);
     const nextIndex = (currentIndex + 1) % locales.length;
     setLocale(locales[nextIndex]);
   };
+
+  const minMatSwitchLabel =
+    locale === "tr" ? "MinMat'a Geç" : locale === "de" ? "Zu MinMat" : locale === "fr" ? "Aller à MinMat" : locale === "es" ? "Ir a MinMat" : "Go to MinMat";
+
+  // Kök seçim kapısı (/) — header yok; CupMat dünyasında navbar gösterilir
+  if (pathname === "/") return null;
 
   return (
     <>
@@ -137,7 +138,7 @@ export function Header() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4">
             <Link
-              href="/"
+              href="/cupmat"
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-400"
               title="Ana Sayfaya Dön"
             >
@@ -174,6 +175,16 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/minmat/index.html"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-blue-400/35 bg-gradient-to-r from-blue-500/15 to-blue-600/10 px-3 py-2 text-xs font-bold text-blue-300 shadow-md shadow-blue-500/10 transition hover:border-blue-400/55 hover:from-blue-500/25 hover:text-blue-100 sm:text-sm"
+              title={minMatSwitchLabel}
+            >
+              <Calculator className="h-4 w-4 shrink-0" />
+              <span className="hidden sm:inline">{minMatSwitchLabel}</span>
+              <span className="sm:hidden">MinMat</span>
+            </Link>
+
             {/* Hakkında (ℹ️) Butonu */}
             <button
               type="button"
@@ -214,16 +225,18 @@ export function Header() {
                   <span className="hidden sm:inline text-zinc-400">Puanım:</span>
                   <span className="text-emerald-400 font-bold">{taraftarPuani !== null ? taraftarPuani : "..."}</span>
                 </div>
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      avatarBox: "h-9 w-9 rounded-lg border border-white/10 hover:border-emerald-400/40 transition-colors"
-                    }
-                  }}
-                />
+                <div className="flex items-center gap-1.5">
+                  <Link
+                    href={buildSignOutUrl(pathname)}
+                    className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-bold text-rose-400 transition hover:border-rose-400/40 hover:bg-rose-500/10"
+                    title={t("nav.signout") || "Çıkış Yap"}
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
             ) : (
-              <SignInButton mode="modal" forceRedirectUrl="/tahminler">
+              <SignInButton mode="redirect" forceRedirectUrl="/tahminler">
                 <button className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-bold text-[#060b14] hover:bg-emerald-400 transition-colors">
                   {t("nav.signin") || "Giriş Yap"}
                 </button>
@@ -248,6 +261,16 @@ export function Header() {
         {mobileOpen && (
           <nav className="border-t border-white/10 bg-[#060b14]/95 px-4 py-4 md:hidden">
             <ul className="flex flex-col gap-1 list-none p-0 m-0">
+              <li className="list-none mb-2">
+                <Link
+                  href="/minmat/index.html"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-blue-400/35 bg-blue-500/15 px-3 py-3 text-sm font-bold text-blue-300 transition hover:bg-blue-500/25"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <Calculator className="h-4 w-4" />
+                  {minMatSwitchLabel}
+                </Link>
+              </li>
               {navKeys.map(({ href, key }) => (
                 <li key={key} className="list-none">
                   <Link

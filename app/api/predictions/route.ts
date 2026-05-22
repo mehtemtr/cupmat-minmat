@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
+import { requireApiAuth } from "@/lib/auth/api-auth";
 import { getOrCreateProfile } from "@/lib/store/gamification-store";
 import { getLeaderboard, upsertSubmission } from "@/lib/store/leaderboard-store";
 import { generateGroupFixtures } from "@/lib/fixtures";
 import type { PredictionSubmission, MatchPrediction } from "@/lib/types/tournament";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId");
-
-    if (!userId) {
-      return NextResponse.json({ error: "userId parametresi zorunludur" }, { status: 400 });
+    const authResult = await requireApiAuth();
+    if (!authResult.ok) {
+      return authResult.response;
     }
 
-    const profile = await getOrCreateProfile(userId);
+    const { userId } = authResult;
+    const profile = await getOrCreateProfile(userId, authResult.displayName);
     const leaderboard = await getLeaderboard();
     const submission = leaderboard.find((s) => s.userId === userId);
 
@@ -30,10 +30,17 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { userId, displayName, predictions, singleMatchId } = body;
+    const authResult = await requireApiAuth();
+    if (!authResult.ok) {
+      return authResult.response;
+    }
 
-    if (!userId || !predictions) {
+    const body = await request.json();
+    const { predictions, singleMatchId } = body;
+    const userId = authResult.userId;
+    const displayName = authResult.displayName;
+
+    if (!predictions) {
       return NextResponse.json({ error: "Geçersiz istek parametreleri" }, { status: 400 });
     }
 
@@ -41,10 +48,8 @@ export async function POST(request: Request) {
     const leaderboard = await getLeaderboard();
     const existingSubmission = leaderboard.find((s) => s.userId === userId);
 
-    // Get current fixtures to check match start lockouts
     const fixtures = generateGroupFixtures();
 
-    // 1. SINGLE MATCH UPDATE (Consuming change right)
     if (singleMatchId) {
       if (!profile.genelTahminHakkiKullanildi) {
         return NextResponse.json({
@@ -58,7 +63,6 @@ export async function POST(request: Request) {
         }, { status: 400 });
       }
 
-      // Check if match exists and if kickoff has passed
       const targetMatch = fixtures.find((m) => m.id === singleMatchId);
       if (!targetMatch) {
         return NextResponse.json({ error: "Maç bulunamadı." }, { status: 404 });
@@ -72,16 +76,13 @@ export async function POST(request: Request) {
         }, { status: 400 });
       }
 
-      // Consume one modification right
       profile.tahminGuncellemeHakki = Math.max(0, profile.tahminGuncellemeHakki - 1);
 
-      // Extract new score
       const newScore = predictions[singleMatchId];
       if (!newScore || typeof newScore.home !== "number" || typeof newScore.away !== "number") {
         return NextResponse.json({ error: "Geçersiz maç skor formatı." }, { status: 400 });
       }
 
-      // Build updated matchPredictions map
       const currentPredictions = existingSubmission?.matchPredictions || {};
       currentPredictions[singleMatchId] = {
         home: newScore.home,
@@ -108,17 +109,13 @@ export async function POST(request: Request) {
       });
     }
 
-    // 2. BATCH INITIAL SUBMIT (Free 1-time right)
     if (profile.genelTahminHakkiKullanildi) {
       return NextResponse.json({
         error: "Genel tahmin hakkınızı daha önce kullandınız! Tekli maç tahminlerini değiştirmek için MinMat'tan kazandığınız güncelleme haklarını kullanmalısınız."
       }, { status: 400 });
     }
 
-    // Validate and build initial matchPredictions
     const matchPredictions: Record<string, MatchPrediction> = {};
-    
-    // Filter out matches that have already started (just in case)
     const now = new Date();
     for (const matchId of Object.keys(predictions)) {
       const targetMatch = fixtures.find((m) => m.id === matchId);
