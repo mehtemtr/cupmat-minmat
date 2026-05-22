@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Globe, Home, Menu, Trophy, X, Info, HelpCircle, Calculator } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Globe, Home, Trophy, Info, HelpCircle, Calculator, ChevronDown } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { LogOut } from "lucide-react";
 import { buildSignOutUrl } from "@/lib/auth/sign-in-url";
@@ -11,7 +11,6 @@ import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { locales, type Locale } from "@/lib/i18n/types";
 
 const navKeys = [
-  { href: "/cupmat", key: "nav.home" },
   { href: "/teams", key: "nav.teams" },
   { href: "/futbolcular", key: "nav.footballers" },
   { href: "/groups", key: "nav.groups" },
@@ -25,10 +24,22 @@ export function Header() {
   const { locale, setLocale } = useLocale();
   const { user, isSignedIn } = useUser();
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [taraftarPuani, setTaraftarPuani] = useState<number | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Fetch initial gamification points
   useEffect(() => {
@@ -147,7 +158,6 @@ export function Header() {
             <Link
               href="/cupmat"
               className="flex items-center gap-2.5 text-white"
-              onClick={() => setMobileOpen(false)}
             >
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/25">
               <Trophy className="h-5 w-5 text-[#060b14]" strokeWidth={2.5} />
@@ -158,33 +168,55 @@ export function Header() {
           </Link>
           </div>
 
-          <nav className="hidden items-center gap-1 md:flex">
-            {navKeys.map(({ href, key }) => (
-              <Link
-                key={key}
-                href={href}
-                className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
-                  pathname === href
-                    ? "bg-emerald-400/10 text-emerald-300"
-                    : "text-zinc-400 hover:bg-white/5 hover:text-white"
-                }`}
-              >
-                {t(key)}
-              </Link>
-            ))}
-          </nav>
+          {/* CUPMAT MENÜ Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              type="button"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#060b14]/80 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-emerald-500/10 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-300"
+            >
+              CUPMAT MENÜ
+              <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {/* Dropdown Menu */}
+            {dropdownOpen && (
+              <div className="absolute left-1/2 -translate-x-1/2 mt-3 w-64 rounded-2xl border border-white/10 bg-[#060b14]/95 backdrop-blur-xl shadow-2xl shadow-emerald-500/10 z-50 overflow-hidden">
+                <div className="p-2">
+                  {/* MinMat Link */}
+                  <Link
+                    href="/minmat/index.html"
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-blue-300 hover:bg-blue-500/10 transition-colors"
+                  >
+                    <Calculator className="h-4 w-4" />
+                    <span>{minMatSwitchLabel}</span>
+                  </Link>
+                  
+                  {/* Divider */}
+                  <div className="my-1 h-px bg-white/10" />
+                  
+                  {/* Nav Links */}
+                  {navKeys.map(({ href, key }) => (
+                    <Link
+                      key={key}
+                      href={href}
+                      onClick={() => setDropdownOpen(false)}
+                      className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors ${
+                        pathname === href
+                          ? "bg-emerald-400/10 text-emerald-300"
+                          : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      {t(key)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           <div className="flex items-center gap-2">
-            <Link
-              href="/minmat"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-blue-400/35 bg-gradient-to-r from-blue-500/15 to-blue-600/10 px-3 py-2 text-xs font-bold text-blue-300 shadow-md shadow-blue-500/10 transition hover:border-blue-400/55 hover:from-blue-500/25 hover:text-blue-100 sm:text-sm"
-              title={minMatSwitchLabel}
-            >
-              <Calculator className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">{minMatSwitchLabel}</span>
-              <span className="sm:hidden">MinMat</span>
-            </Link>
-
             {/* Hakkında (ℹ️) Butonu */}
             <button
               type="button"
@@ -242,55 +274,8 @@ export function Header() {
                 </button>
               </SignInButton>
             )}
-
-            <button
-              type="button"
-              className="rounded-lg p-2 text-zinc-300 transition hover:bg-white/10 md:hidden"
-              onClick={() => setMobileOpen((o) => !o)}
-              aria-label="Menu"
-            >
-              {mobileOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
-            </button>
           </div>
         </div>
-
-        {mobileOpen && (
-          <div className="max-w-7xl mx-auto px-4 w-full">
-            <nav className="border-t border-white/10 bg-[#060b14]/95 px-4 py-4 md:hidden">
-              <ul className="flex flex-col gap-1 list-none p-0 m-0">
-                <li className="list-none mb-2">
-                  <Link
-                    href="/minmat"
-                    className="flex items-center justify-center gap-2 rounded-xl border border-blue-400/35 bg-blue-500/15 px-3 py-3 text-sm font-bold text-blue-300 transition hover:bg-blue-500/25"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <Calculator className="h-4 w-4" />
-                    {minMatSwitchLabel}
-                  </Link>
-                </li>
-                {navKeys.map(({ href, key }) => (
-                  <li key={key} className="list-none">
-                    <Link
-                      href={href}
-                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                        pathname === href
-                          ? "bg-emerald-400/10 text-emerald-300"
-                          : "text-zinc-300 hover:bg-white/5 hover:text-white"
-                      }`}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {t(key)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        )}
       </header>
 
       {/* HAKKINDA MODAL */}
