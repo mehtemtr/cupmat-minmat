@@ -135,7 +135,7 @@ export function Header() {
           aria-hidden
         />
 
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 w-full flex h-16 items-center justify-between sm:px-6 lg:px-8">
           <div className="flex items-center gap-4">
             <Link
               href="/cupmat"
@@ -176,7 +176,7 @@ export function Header() {
 
           <div className="flex items-center gap-2">
             <Link
-              href="/minmat/index.html"
+              href="/minmat"
               className="inline-flex items-center gap-1.5 rounded-lg border border-blue-400/35 bg-gradient-to-r from-blue-500/15 to-blue-600/10 px-3 py-2 text-xs font-bold text-blue-300 shadow-md shadow-blue-500/10 transition hover:border-blue-400/55 hover:from-blue-500/25 hover:text-blue-100 sm:text-sm"
               title={minMatSwitchLabel}
             >
@@ -259,35 +259,37 @@ export function Header() {
         </div>
 
         {mobileOpen && (
-          <nav className="border-t border-white/10 bg-[#060b14]/95 px-4 py-4 md:hidden">
-            <ul className="flex flex-col gap-1 list-none p-0 m-0">
-              <li className="list-none mb-2">
-                <Link
-                  href="/minmat/index.html"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-blue-400/35 bg-blue-500/15 px-3 py-3 text-sm font-bold text-blue-300 transition hover:bg-blue-500/25"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <Calculator className="h-4 w-4" />
-                  {minMatSwitchLabel}
-                </Link>
-              </li>
-              {navKeys.map(({ href, key }) => (
-                <li key={key} className="list-none">
+          <div className="max-w-7xl mx-auto px-4 w-full">
+            <nav className="border-t border-white/10 bg-[#060b14]/95 px-4 py-4 md:hidden">
+              <ul className="flex flex-col gap-1 list-none p-0 m-0">
+                <li className="list-none mb-2">
                   <Link
-                    href={href}
-                    className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                      pathname === href
-                        ? "bg-emerald-400/10 text-emerald-300"
-                        : "text-zinc-300 hover:bg-white/5 hover:text-white"
-                    }`}
+                    href="/minmat"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-blue-400/35 bg-blue-500/15 px-3 py-3 text-sm font-bold text-blue-300 transition hover:bg-blue-500/25"
                     onClick={() => setMobileOpen(false)}
                   >
-                    {t(key)}
+                    <Calculator className="h-4 w-4" />
+                    {minMatSwitchLabel}
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </nav>
+                {navKeys.map(({ href, key }) => (
+                  <li key={key} className="list-none">
+                    <Link
+                      href={href}
+                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                        pathname === href
+                          ? "bg-emerald-400/10 text-emerald-300"
+                          : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {t(key)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         )}
       </header>
 
