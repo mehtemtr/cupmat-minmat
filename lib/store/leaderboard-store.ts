@@ -52,8 +52,15 @@ async function getStore(): Promise<PredictionSubmission[]> {
 
 export async function getLeaderboard(): Promise<PredictionSubmission[]> {
   const store = await getStore();
-  // Oyuncuları kazandıkları puana göre büyükten küçüğe sıralar
-  return store.sort((a, b) => b.points - a.points);
+
+  // Eğer oyuncunun points değeri 0 ise veya yoksa, MinMat'taki asıl puanını (score) eşleştir
+  const mappedStore = store.map(item => ({
+    ...item,
+    points: item.points || (item as any).score || 0
+  }));
+
+  // Oyuncuları gerçek puanlarına göre büyükten küçüğe sıralar
+  return mappedStore.sort((a, b) => b.points - a.points);
 }
 
 export async function upsertSubmission(entry: PredictionSubmission): Promise<void> {
