@@ -1617,14 +1617,16 @@
 
       let scores = [];
       try {
-        // API artık sunucu tarafında filtreleme ve sıralama yapıyor
-        const response = await fetch(`/api/minmat-leaderboard?mode=${leaderboardFilter}`);
+        // Parametre ismi ?filter= olarak düzeltildi ve yalın array yapısına uyarlandı
+        let apiFilter = leaderboardFilter === "all" ? "all" : leaderboardFilter;
+        const response = await fetch(`/api/minmat-leaderboard?filter=${apiFilter}`);
         if (response.ok) {
           const data = await response.json();
-          scores = data.leaderboard || [];
+          // Eğer API doğrudan liste dönüyorsa onu al, aksi halde emniyet filtrelerini çalıştır
+          scores = Array.isArray(data) ? data : (data.leaderboard || []);
         }
       } catch (error) {
-        console.error("Global veri çekilemedi, yerel hafıza deneniyor:", error);
+                console.error("Global veri çekilemedi, yerel hafıza deneniyor:", error);
         scores = JSON.parse(localStorage.getItem("scores")) || [];
       }
 
