@@ -30,7 +30,8 @@ export default function LeaderboardPage() {
         const data = await res.json();
 
         if (data.success) {
-          setLeaderboard(data.leaderboard || []);
+          const sortedData = (data.leaderboard || []).sort((a: any, b: any) => (b.taraftarPuani || 0) - (a.taraftarPuani || 0));
+setLeaderboard(sortedData);
           setGecmisSampiyonlar(data.gecmisSampiyonlar || []);
           setPeriodEnd(data.periodEnd || "");
           setCupMatRewards(data.cupMatRewards || []);
