@@ -1659,6 +1659,7 @@
         const response = await fetch("/api/minmat-leaderboard", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include", // Oturum çerezlerini gönder
           body: JSON.stringify(scoreEntry)
         });
         if (!response.ok) {
@@ -1688,7 +1689,9 @@
       try {
         // Parametre ismi ?filter= olarak düzeltildi ve yalın array yapısına uyarlandı
         let apiFilter = leaderboardFilter === "all" ? "all" : leaderboardFilter;
-        const response = await fetch(`/api/minmat-leaderboard?filter=${apiFilter}`);
+        const response = await fetch(`/api/minmat-leaderboard?filter=${apiFilter}`, {
+          credentials: "include" // Oturum çerezlerini gönder
+        });
         if (response.ok) {
           const data = await response.json();
           // Eğer API doğrudan liste dönüyorsa onu al, aksi halde emniyet filtrelerini çalıştır
