@@ -1035,9 +1035,29 @@
 
     let userSession = { isAuthenticated: false };
 
+    async function getClerkToken() {
+      try {
+        if (window.Clerk && window.Clerk.session) {
+          return await window.Clerk.session.getToken();
+        }
+      } catch (e) {
+        console.error("Error getting Clerk token:", e);
+      }
+      return null;
+    }
+
     async function checkAuthSession() {
       try {
-        const response = await fetch("/api/auth/session");
+        const token = await getClerkToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        
+        const response = await fetch("/api/auth/session", {
+          credentials: "include",
+          headers
+        });
         if (response.ok) {
           const data = await response.json();
           if (data.isAuthenticated) {
@@ -1635,7 +1655,7 @@
        UPDATED UPSTASH REDIS / NEXT.JS API CONNECTION
        ========================================== */
 
-    async function saveScore() {
+   async function saveScore() {
       if (isGameOverSaved) return;
       isGameOverSaved = true;
       updateAuthUI();
@@ -1656,9 +1676,17 @@
       };
 
       try {
+        // Clerk aktif token'ı asenkron olarak alınıyor
+        const token = await getClerkToken();
+        
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+
         const response = await fetch("/api/minmat-leaderboard", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: headers,
           credentials: "include", // Oturum çerezlerini gönder
           body: JSON.stringify(scoreEntry)
         });
@@ -1673,7 +1701,7 @@
       }
 
       renderLeaderboard();
-    }
+    } 
 
     async function renderLeaderboard() {
       let filterKey = "leaderAll";
