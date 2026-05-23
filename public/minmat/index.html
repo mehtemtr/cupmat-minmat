@@ -1661,7 +1661,12 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(scoreEntry)
         });
-        if (!response.ok) console.error("Skor global veritabanına gönderilemedi.");
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Skor global veritabanına gönderilemedi. API Hatası:", response.status, errorText);
+        } else {
+          console.log("Skor başarıyla kaydedildi!");
+        }
       } catch (error) {
         console.error("POST Hatası:", error);
       }
