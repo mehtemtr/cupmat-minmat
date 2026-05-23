@@ -1036,6 +1036,7 @@
     let userSession = { isAuthenticated: false };
 
     async function getClerkToken() {
+     console.log("=== getClerkToken TETİKLENDİ ===");
       try {
         if (window.Clerk && window.Clerk.session) {
           return await window.Clerk.session.getToken();
@@ -1116,6 +1117,8 @@
     }
 
     function redirectToSignOut() {
+    // redirectToSignOut satırının hemen üstüne bu notu ekleyin:
+console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR ===");
       const currentPath = window.location.pathname + window.location.search;
       window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
     }
