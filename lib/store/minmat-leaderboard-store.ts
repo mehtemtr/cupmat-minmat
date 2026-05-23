@@ -1,4 +1,4 @@
-import { Redis } from "@upstash/redis";
+import { kv } from "@vercel/kv";
 
 export interface MinMatScore {
   name: string;
@@ -18,7 +18,6 @@ export interface MinMatPodiumEntry extends MinMatScore {
 
 export const MINMAT_PODIUM_LIMIT = 3;
 
-const redis = Redis.fromEnv();
 const REDIS_KEY = "minmat_leaderboard";
 
 function normalizeMinMatScore(raw: MinMatScore): MinMatScore {
@@ -44,7 +43,7 @@ function normalizeMinMatScore(raw: MinMatScore): MinMatScore {
 
 async function getRawStore(): Promise<MinMatScore[]> {
   try {
-    const data = await redis.get<MinMatScore[]>(REDIS_KEY);
+    const data = await kv.get<MinMatScore[]>(REDIS_KEY);
     if (!data) return [];
     const list = Array.isArray(data)
       ? data
@@ -53,7 +52,7 @@ async function getRawStore(): Promise<MinMatScore[]> {
         : [];
     return (list as MinMatScore[]).map((item) => normalizeMinMatScore(item));
   } catch (err) {
-    console.error("Redis error:", err);
+    console.error("KV error:", err);
     return [];
   }
 }
@@ -126,8 +125,8 @@ export async function addMinMatScore(entry: MinMatScore): Promise<void> {
   const trimmedStore = store.sort((a, b) => b.score - a.score).slice(0, 200);
 
   try {
-    await redis.set(REDIS_KEY, trimmedStore);
+    await kv.set(REDIS_KEY, trimmedStore);
   } catch (err) {
-    console.error("Redis save error:", err);
+    console.error("KV save error:", err);
   }
 }
