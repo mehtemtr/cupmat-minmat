@@ -108,8 +108,12 @@ export async function POST(request: Request) {
       );
     }
 
+    const safeName = authResult.displayName && authResult.displayName !== 'Kullanıcı' 
+      ? authResult.displayName 
+      : (authResult.email ? authResult.email.split('@')[0] : 'Oyuncu');
+
     const scoreEntry = {
-      name: authResult.displayName,
+      name: safeName,
       email: authResult.email || "",
       score: body.score,
       level: body.level,

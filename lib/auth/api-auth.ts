@@ -41,9 +41,9 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
     displayName = firstName;
   } else if (!displayName && user?.primaryEmailAddressId) {
     const email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
-    displayName = email.split('@')[0] || "Kullanıcı";
+    displayName = email.split('@')[0] || "Oyuncu";
   } else if (!displayName) {
-    displayName = "Kullanıcı";
+    displayName = "Oyuncu";
   }
   
   let email = "";
