@@ -6,6 +6,7 @@ export type ApiAuthSuccess = {
   userId: string;
   displayName: string;
   email: string;
+  username: string | null;
   firstName: string | null;
   lastName: string | null;
 };
@@ -51,7 +52,7 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
     email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
   }
 
-  return { ok: true, userId, displayName, email, firstName, lastName };
+  return { ok: true, userId, displayName, email, username: user?.username || null, firstName, lastName };
 }
 
 export function verifyAdminSecret(
