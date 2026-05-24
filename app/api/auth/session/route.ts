@@ -8,40 +8,38 @@ export async function GET() {
       return NextResponse.json({ isAuthenticated: false });
     }
 
-    // Sizin Muhteşem Güvenlik ve Dönüşüm Algoritmanız
     let email = user.username || "";
 
-    // Eğer sisteme girmeye çalışan kişi eski bir kullanıcıysa (Clerk ID'si yerine eski maili duruyorsa)
     if (user && user.primaryEmailAddressId) {
       const oldEmail = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
       
       if (oldEmail && oldEmail.includes('@')) {
-        const emailPrefix = oldEmail.split('@')[0]; // @ işaretinden önceki kısım
+        const emailPrefix = oldEmail.split('@')[0];
         
-        // 1. ADIM: İsim ve soyisimi boşluksuz, küçük harfli Nick yapar (Örn: yukselkartal)
         email = user.username || ""; 
 
-        // 2. ADIM: Sizin Özel Güvenlik Algoritmanız (Eksik karakter kadar '123' serisinden ekleyip TAM 8 haneye tamamlar)
         let generatedPassword = "";
         const prefix = String(emailPrefix);
 
         if (prefix.length >= 8) {
-          generatedPassword = prefix.substring(0, 8); // 8 hane ve üzeriyse ilk 8 karakteri şifre yapar
+          generatedPassword = prefix.substring(0, 8);
         } else {
-          const targetString = "12345678"; // Tamamlama serisi
-          const missingLength = 8 - prefix.length; // Kaç karakter eksik olduğunu hesaplar (Örn: 8 - 6 = 2)
-          generatedPassword = prefix + targetString.substring(0, missingLength); // Eksik kadarını (Örn: '12') sonuna ekler
+          const targetString = "12345678";
+          const missingLength = 8 - prefix.length;
+          generatedPassword = prefix + targetString.substring(0, missingLength);
         }
       }
     }
 
-    // 3. ADIM: Next.js Ana Oturum Dönüş Yapısı (Parantezleri milimetrik ayarlı)
+    // Oyun kodunun tam olarak beklediği 'userSession' anahtar kutusu
     return NextResponse.json({
       isAuthenticated: true,
-      userId: user.id,
-      email: email,
-      username: user.username || user.fullName || "Kullanıcı",
-      displayName: user.fullName || user.username || "Kullanıcı",
+      userSession: {
+        userId: user.id,
+        email: email,
+        username: user.username || user.fullName || "Kullanıcı",
+        displayName: user.fullName || user.username || "Kullanıcı"
+      }
     });
 
   } catch (error) {
