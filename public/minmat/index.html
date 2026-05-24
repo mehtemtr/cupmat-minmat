@@ -1231,10 +1231,10 @@
     }
 
     function redirectToLogin() {
-      const currentPath = window.location.pathname + window.location.search;
+      const minmatPath = "/minmat/index.html";
       const params = new URLSearchParams();
       params.set("fresh", "1");
-      params.set("redirect_url", currentPath);
+      params.set("redirect_url", minmatPath);
       window.location.href = `/sign-in?${params.toString()}`;
     }
 
