@@ -89,11 +89,6 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const authResult = await requireApiAuth();
-    if (!authResult.ok) {
-      return authResult.response;
-    }
-
     const body = await request.json();
 
     if (
@@ -108,13 +103,30 @@ export async function POST(request: Request) {
       );
     }
 
-    const safeName = authResult.username || (authResult.displayName && authResult.displayName !== 'Kullanıcı' && authResult.displayName !== 'Oyuncu'
-      ? authResult.displayName 
-      : 'KaraKartal1923');
+    let safeName = "KaraKartal1923";
+    let email = "";
+    let userId = null;
+
+    try {
+      const authResult = await requireApiAuth();
+      if (authResult.ok) {
+        safeName = authResult.username || (authResult.displayName && authResult.displayName !== 'Kullanıcı' && authResult.displayName !== 'Oyuncu'
+          ? authResult.displayName 
+          : 'KaraKartal1923');
+        email = authResult.email || "";
+        userId = authResult.userId;
+      }
+    } catch (authError) {
+      console.log("Auth hatası, misafir modda kaydediliyor:", authError);
+    }
+
+    if (body.name && body.name.trim()) {
+      safeName = body.name.trim();
+    }
 
     const scoreEntry = {
       name: safeName,
-      email: authResult.email || "",
+      email: email || "",
       score: body.score,
       level: body.level,
       mode: body.mode,
@@ -137,10 +149,12 @@ export async function POST(request: Request) {
       );
     }
 
-    await registerMinMatGamePlayedByUserId(
-      authResult.userId,
-      authResult.displayName,
-    );
+    if (userId) {
+      await registerMinMatGamePlayedByUserId(
+        userId,
+        safeName,
+      );
+    }
 
     return NextResponse.json({ success: true });
 
