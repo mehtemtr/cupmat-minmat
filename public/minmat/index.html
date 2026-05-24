@@ -771,6 +771,7 @@
         </div>
       </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
+      <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">🎮 Oyunu Başlat</button>
       <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
       <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
       <div style="margin-top: 16px;">
@@ -1140,12 +1141,19 @@
         });
         if (response.ok) {
           const data = await response.json();
-          if (data.isAuthenticated) {
-            userSession = data;
+          console.log("Session API response:", data);
+          if (data.isAuthenticated && data.userSession) {
+            userSession = {
+              isAuthenticated: true,
+              ...data.userSession
+            };
+          } else {
+            userSession = { isAuthenticated: false };
           }
         }
       } catch (e) {
         console.error("Error checking session:", e);
+        userSession = { isAuthenticated: false };
       }
       updateAuthUI();
     }
@@ -1156,12 +1164,14 @@
       let authSaveContainer = document.getElementById("authSaveContainer");
       let btnGuest = document.getElementById("btnGuest");
       let btnLoginMenu = document.getElementById("btnLoginMenu");
+      let btnStart = document.getElementById("btnStart");
       
       if (!input || !authContainer) return;
 
       if (userSession.isAuthenticated) {
         isGuestMode = false;
-        input.value = userSession.displayName;
+        const displayName = userSession.displayName || userSession.username || "Kullanıcı";
+        input.value = displayName;
         input.readOnly = true;
         input.disabled = true;
         input.style.opacity = "0.75";
@@ -1169,10 +1179,11 @@
         
         if (btnGuest) btnGuest.style.display = "none";
         if (btnLoginMenu) btnLoginMenu.style.display = "none";
+        if (btnStart) btnStart.style.display = "block";
         
         authContainer.innerHTML = `
           <div class="authStatusVerified">
-            <span>${t("authVerified")}: ${userSession.displayName}</span>
+            <span>${t("authVerified")}: ${displayName}</span>
             <button onclick="redirectToSignOut()" style="background:transparent; border:none; color:#ef4444; text-decoration:underline; font-size:11px; cursor:pointer; font-weight:bold; margin-left:8px; padding:0;">[${t("signout")}]</button>
           </div>
         `;
