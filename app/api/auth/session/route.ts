@@ -8,37 +8,35 @@ export async function GET() {
       return NextResponse.json({ isAuthenticated: false });
     }
 
-    let email = user.username || "";
-
-    if (user && user.primaryEmailAddressId) {
+    let username = user.username || "";
+    let displayName = "";
+    
+    if (!username && user.primaryEmailAddressId) {
       const oldEmail = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
-      
       if (oldEmail && oldEmail.includes('@')) {
         const emailPrefix = oldEmail.split('@')[0];
-        
-        email = user.username || ""; 
-
-        let generatedPassword = "";
-        const prefix = String(emailPrefix);
-
-        if (prefix.length >= 8) {
-          generatedPassword = prefix.substring(0, 8);
-        } else {
-          const targetString = "12345678";
-          const missingLength = 8 - prefix.length;
-          generatedPassword = prefix + targetString.substring(0, missingLength);
-        }
+        username = emailPrefix;
       }
     }
+    
+    if (!username && user.firstName && user.lastName) {
+      username = (user.firstName + user.lastName).toLowerCase().replace(/\s+/g, "");
+    }
+    
+    if (!username) {
+      username = "Kullanici";
+    }
+    
+    displayName = user.fullName || user.username || username || "Kullanıcı";
 
     // Oyun kodunun tam olarak beklediği 'userSession' anahtar kutusu
     return NextResponse.json({
       isAuthenticated: true,
       userSession: {
         userId: user.id,
-        email: email,
-        username: user.username || user.fullName || "Kullanıcı",
-        displayName: user.fullName || user.username || "Kullanıcı"
+        email: user.username || username,
+        username: username,
+        displayName: displayName
       }
     });
 
