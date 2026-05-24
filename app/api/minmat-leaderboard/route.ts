@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { requireApiAuth } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
-import { registerMinMatGamePlayedByUserId } from "@/lib/store/gamification-store";
 
 export async function GET(request: Request) {
   try {
@@ -12,7 +10,6 @@ export async function GET(request: Request) {
     if (type === "podium") {
       const seventyTwoHoursAgo = Date.now() - 72 * 60 * 60 * 1000;
 
-      // 1. Önce son 72 saatteki verileri çek
       const { data: recentData, error: recentError } = await supabaseAdmin
         .from("minmat_leaderboard")
         .select("*")
@@ -26,7 +23,6 @@ export async function GET(request: Request) {
 
       let podiumData = recentData || [];
 
-      // 2. Eğer son 72 saatte veri yoksa, tüm zamanların en yüksek skorlarını çek (fallback)
       if (podiumData.length === 0) {
         console.log("Son 72 saatte veri yok, tüm zamanların en yüksek skorları çekiliyor...");
         const { data: allTimeData, error: allTimeError } = await supabaseAdmin
@@ -91,42 +87,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    if (
-      typeof body.score !== "number" ||
-      typeof body.level !== "number" ||
-      typeof body.mode !== "string" ||
-      !body.mode.trim()
-    ) {
-      return NextResponse.json(
-        { success: false, error: "Geçersiz skor verisi" },
-        { status: 400 },
-      );
-    }
-
-    let safeName = "KaraKartal1923";
-    let email = "";
-    let userId = null;
-
-    try {
-      const authResult = await requireApiAuth();
-      if (authResult.ok) {
-        safeName = authResult.username || (authResult.displayName && authResult.displayName !== 'Kullanıcı' && authResult.displayName !== 'Oyuncu'
-          ? authResult.displayName 
-          : 'KaraKartal1923');
-        email = authResult.email || "";
-        userId = authResult.userId;
-      }
-    } catch (authError) {
-      console.log("Auth hatası, misafir modda kaydediliyor:", authError);
-    }
-
-    if (body.name && body.name.trim()) {
-      safeName = body.name.trim();
-    }
+    const safeName = body.name && body.name.trim() ? body.name.trim() : "KaraKartal1923";
 
     const scoreEntry = {
       name: safeName,
-      email: email || "",
+      email: body.email || "",
       score: body.score,
       level: body.level,
       mode: body.mode,
@@ -146,13 +111,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { success: false, error: "Kaydedilemedi" },
         { status: 500 },
-      );
-    }
-
-    if (userId) {
-      await registerMinMatGamePlayedByUserId(
-        userId,
-        safeName,
       );
     }
 
