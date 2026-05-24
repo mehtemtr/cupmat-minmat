@@ -1231,10 +1231,9 @@
     }
 
     function redirectToLogin() {
-      const minmatPath = "/minmat/index.html";
       const params = new URLSearchParams();
       params.set("fresh", "1");
-      params.set("redirect_url", minmatPath);
+      params.set("redirect_url", window.location.pathname);
       window.location.href = `/sign-in?${params.toString()}`;
     }
 
