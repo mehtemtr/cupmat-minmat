@@ -16,6 +16,9 @@
     gtag('config', 'G-GMHYYVM3BK');
   </script>
 
+  <!-- Clerk Authentication SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     @keyframes float {
@@ -746,10 +749,33 @@
       <div class="menuLogo">
         <img src="icon.png" alt="MinMat">
       </div>
-      <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 24px;">MinMat — Zeka ve Matematik Oyunu</p>
-      <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
+      <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 16px;">MinMat — Zeka ve Matematik Oyunu</p>
+      
+      <!-- Sistem Bilgi Kutusu -->
+      <div id="systemInfoBox" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 12px; padding: 12px; margin-bottom: 16px; font-size: 12px; line-height: 1.6; text-align: left;">
+        <div style="font-weight: 800; color: #22c55e; margin-bottom: 6px; font-size: 13px;">
+          🔄 Sistem Güncellendi!
+        </div>
+        <div style="color: #cbd5e1;">
+          • Yeni <strong>kullanıcı adı + şifre</strong> sistemi aktif<br>
+          • <strong>Misafirler</strong> ödül kazanamaz ve liderlik tablosunda görünmez<br>
+          • Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır
+        </div>
+        
+        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-weight: 700; color: #60a5fa; margin-bottom: 4px;">📢 Eski Kullanıcılar İçin:</div>
+          <div style="color: #94a3b8; font-size: 11px;">
+            <strong>Kullanıcı Adınız:</strong> İsim ve soyisminiz birleşik (boşluksuz, küçük harfler)<br>
+            <strong>Şifreniz:</strong> Eski e-posta adresinizin @ işaretinden önceki kısmı (8 karaktere tamamlanmış)
+          </div>
+        </div>
+      </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
-      <button class="menuStartBtn" onclick="startGame()" id="btnStart">Başla</button>
+      <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
+      <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
+      <div style="margin-top: 16px;">
+        <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
+      </div>
       <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
       <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
     </div>
@@ -1034,20 +1060,59 @@
     }
 
     let userSession = { isAuthenticated: false };
+    let isGuestMode = false;
+    let guestUsername = "";
 
-    
-const userSession = await getClerkToken();
-<!-- Eski Kullanıcılar İçin Giriş Sistemi Bilgilendirme Kutusu -->
-<div style="background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%); border: 2px solid #06b6d4; color: #e2e8f0; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-family: sans-serif; font-size: 14px; line-height: 1.6; max-width: 800px; text-align: left; box-shadow: 0 4px 20px rgba(6, 182, 212, 0.15);">
-  <strong style="font-size: 18px; display: block; margin-bottom: 8px; color: #22d3ee;">📢 Önemli Duyuru: Giriş Sistemi Yenilendi!</strong>
-  Sizleri e-posta kodlarıyla uğraştırmamak için tamamen <strong>Kullanıcı Adı (Nick) ve Şifre</strong> sistemine geçtik. Eski puanlarınız ve tüm kategorilerdeki verileriniz aynen korunmuştur.
-  <ul style="margin-top: 8px; margin-bottom: 0; padding-left: 20px; color: #cbd5e1;">
-    <li><strong>Kullanıcı Adınız (Nick):</strong> İsim ve soyisminiz birleşik ve tamamen küçük harflerle (Örn: <code style="color: #22d3ee; background: #0f172a; padding: 2px 6px; border-radius: 4px;">yukselkartal</code>).</li>
-    <li><strong>Şifreniz:</strong> Eski e-posta adresinizin @ işaretinden önceki kısmıdır. Eğer bu kısım 8 harften kısaysa, sonuna sırasıyla 1, 2, 3... eklenerek <strong style="color: #22d3ee;">tam 8 karaktere</strong> tamamlandmıştır.</li>
-  </ul>
-  <span style="display: block; margin-top: 10px; font-style: italic; font-size: 12px; color: #94a3b8;">* İlk girişinizden sonra dilerseniz profilinizden şifrenizi kendiniz değiştirebilirsiniz.</span>
-</div>
+    function getNextGuestCounter() {
+      const stored = localStorage.getItem("minmat_guest_counter");
+      let counter = stored ? parseInt(stored, 10) : 0;
+      return counter;
+    }
 
+    function incrementGuestCounter() {
+      const current = getNextGuestCounter();
+      const next = current + 1;
+      localStorage.setItem("minmat_guest_counter", next.toString());
+      return next;
+    }
+
+    function generateGuestUsername() {
+      let stored = getStoredGuestUsername();
+      if (stored) {
+        return stored;
+      }
+      
+      const counter = getNextGuestCounter();
+      const username = "KaraKartal" + (1923 + counter);
+      storeGuestUsername(username);
+      incrementGuestCounter();
+      return username;
+    }
+
+    function getStoredGuestUsername() {
+      return localStorage.getItem("minmat_guest_username");
+    }
+
+    function storeGuestUsername(username) {
+      localStorage.setItem("minmat_guest_username", username);
+    }
+
+    function continueAsGuest() {
+      let stored = getStoredGuestUsername();
+      if (!stored) {
+        stored = generateGuestUsername();
+        storeGuestUsername(stored);
+      }
+      guestUsername = stored;
+      isGuestMode = true;
+      
+      const input = document.getElementById("playerInput");
+      if (input) {
+        input.value = guestUsername;
+      }
+      
+      startGame();
+    }
 
     async function getClerkToken() {
      console.log("=== getClerkToken TETİKLENDİ ===");
@@ -1089,14 +1154,21 @@ const userSession = await getClerkToken();
       let input = document.getElementById("playerInput");
       let authContainer = document.getElementById("authContainer");
       let authSaveContainer = document.getElementById("authSaveContainer");
+      let btnGuest = document.getElementById("btnGuest");
+      let btnLoginMenu = document.getElementById("btnLoginMenu");
+      
       if (!input || !authContainer) return;
 
       if (userSession.isAuthenticated) {
+        isGuestMode = false;
         input.value = userSession.displayName;
         input.readOnly = true;
         input.disabled = true;
         input.style.opacity = "0.75";
         input.style.cursor = "not-allowed";
+        
+        if (btnGuest) btnGuest.style.display = "none";
+        if (btnLoginMenu) btnLoginMenu.style.display = "none";
         
         authContainer.innerHTML = `
           <div class="authStatusVerified">
@@ -1105,21 +1177,54 @@ const userSession = await getClerkToken();
           </div>
         `;
         if (authSaveContainer) authSaveContainer.innerHTML = "";
+      } else if (isGuestMode && guestUsername) {
+        input.value = guestUsername;
+        input.readOnly = true;
+        input.disabled = true;
+        input.style.opacity = "0.75";
+        input.style.cursor = "not-allowed";
+        
+        if (btnGuest) btnGuest.style.display = "block";
+        if (btnLoginMenu) btnLoginMenu.style.display = "block";
+        
+        authContainer.innerHTML = `
+          <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.35); padding: 10px 12px; border-radius: 12px; color: #a5b4fc; font-size: 12px; font-weight: 700;">
+            👤 Misafir Modu: ${guestUsername}
+            <button onclick="exitGuestMode()" style="background:transparent; border:none; color:#f87171; text-decoration:underline; font-size:11px; cursor:pointer; font-weight:bold; margin-left:8px; padding:0;">[Değiştir]</button>
+          </div>
+        `;
+        if (authSaveContainer) {
+          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">${t("authSaveWarn")}</div>`;
+        }
       } else {
+        isGuestMode = false;
         input.readOnly = false;
         input.disabled = false;
         input.style.opacity = "1";
         input.style.cursor = "text";
         
+        if (btnGuest) btnGuest.style.display = "block";
+        if (btnLoginMenu) btnLoginMenu.style.display = "block";
+        
         authContainer.innerHTML = `
           <div class="authStatusWarn">${t("authWarn")}</div>
-          <button class="authLoginBtn" onclick="redirectToLogin()">${t("authLoginBtn")}</button>
         `;
         if (authSaveContainer) {
           authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">${t("authSaveWarn")}</div>`;
         }
+        
+        const storedGuest = getStoredGuestUsername();
+        if (storedGuest) {
+          input.value = storedGuest;
+        }
       }
       checkInput();
+    }
+
+    function exitGuestMode() {
+      isGuestMode = false;
+      guestUsername = "";
+      updateAuthUI();
     }
 
     function redirectToLogin() {
@@ -1146,15 +1251,31 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
         input.addEventListener("input", checkInput);
         checkInput();
       }
-      checkAuthSession();
+      
+      if (window.Clerk) {
+        window.Clerk.load().then(() => {
+          checkAuthSession();
+          
+          if (window.Clerk.addListener) {
+            window.Clerk.addListener((e) => {
+              if (e.session) {
+                checkAuthSession();
+              }
+            });
+          }
+        });
+      } else {
+        checkAuthSession();
+      }
     });
 
     function checkInput() {
       let input = document.getElementById("playerInput");
       let btnLeaderboard = document.getElementById("btnLeaderboardMenu");
+      let btnStart = document.getElementById("btnStart");
       if (!input || !btnLeaderboard) return;
       let val = input.value.trim();
-      if (val.length >= 3 || userSession.isAuthenticated) {
+      if (val.length >= 3 || userSession.isAuthenticated || isGuestMode) {
         btnLeaderboard.disabled = false;
       } else {
         btnLeaderboard.disabled = true;
@@ -1551,6 +1672,13 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
 
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
       document.getElementById("gameOverScreen").classList.add("active");
+      
+      if (isGuestMode || !userSession.isAuthenticated) {
+        let authSaveContainer = document.getElementById("authSaveContainer");
+        if (authSaveContainer) {
+          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">⚠️ Misafir olarak oynadığınız için skorunuz global sıralamaya kaydedilemedi ve ödül kazanamazsınız! Kayıt olmak için giriş yapın.</div>`;
+        }
+      }
     }
 
     function showLeaderboardDirectly() {
@@ -1565,6 +1693,13 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
 
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
       document.getElementById("gameOverScreen").classList.add("active");
+    }
+
+    function checkGuestRestriction() {
+      if (isGuestMode || !userSession.isAuthenticated) {
+        return true;
+      }
+      return false;
     }
 
     function setMode(m) {
@@ -1643,9 +1778,15 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
     }
 
     function switchTab(tab) {
-      activeTab = tab;
       const tabS = document.getElementById("tabScores");
       const tabR = document.getElementById("tabRewards");
+      
+      if (tab === "rewards" && checkGuestRestriction()) {
+        alert("Ödül tablosunu görmek için giriş yapmalısınız! Misafirler ödül kazanamaz ve ödül listelerine giremez.");
+        return;
+      }
+      
+      activeTab = tab;
       
       if (tab === "scores") {
         document.getElementById("leaderboard").style.display = "";
