@@ -33,7 +33,7 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   const firstName = user?.firstName || null;
   const lastName = user?.lastName || null;
   
-  let displayName = user?.fullName || "";
+  let displayName = user?.username || user?.fullName || "";
   
   if (!displayName && firstName && lastName) {
     displayName = `${firstName} ${lastName}`;

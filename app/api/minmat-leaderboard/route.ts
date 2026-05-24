@@ -108,9 +108,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const safeName = authResult.displayName && authResult.displayName !== 'Kullanıcı' 
+    const safeName = authResult.username || (authResult.displayName && authResult.displayName !== 'Kullanıcı' 
       ? authResult.displayName 
-      : (authResult.email ? authResult.email.split('@')[0] : 'Oyuncu');
+      : (authResult.email ? authResult.email.split('@')[0] : 'Oyuncu'));
 
     const scoreEntry = {
       name: safeName,
