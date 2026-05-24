@@ -37,9 +37,9 @@ if (user && user.primaryEmailAddressId) {
       userId: user.id,
       email: email,
       username: user.username || user.fullName || "Kullanıcı",
-      displayName: user.fullName || user.username || "Kullanıcı",
-    });
-  } catch (error) {
+    displayName: user.fullName || user.username || "Kullanıcı",
+  });
+} catch (error) {
     console.error("GET Session error:", error);
     return NextResponse.json({ isAuthenticated: false });
   }
