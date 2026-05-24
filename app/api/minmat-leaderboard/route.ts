@@ -110,7 +110,7 @@ export async function POST(request: Request) {
 
     const safeName = authResult.username || (authResult.displayName && authResult.displayName !== 'Kullanıcı' && authResult.displayName !== 'Oyuncu'
       ? authResult.displayName 
-      : 'Oyuncu');
+      : 'KaraKartal1923');
 
     const scoreEntry = {
       name: safeName,

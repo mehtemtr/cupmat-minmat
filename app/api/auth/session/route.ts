@@ -13,7 +13,7 @@ export async function GET() {
       email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
     }
 
-    const displayName = user.username || user.fullName || "Oyuncu";
+    const displayName = user.username || user.fullName || "KaraKartal1923";
 
     return NextResponse.json({
       isAuthenticated: true,

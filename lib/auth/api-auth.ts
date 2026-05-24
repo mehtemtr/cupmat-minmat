@@ -41,7 +41,7 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   } else if (!displayName && firstName) {
     displayName = firstName;
   } else if (!displayName) {
-    displayName = "Oyuncu";
+    displayName = "KaraKartal1923";
   }
   
   let email = "";
