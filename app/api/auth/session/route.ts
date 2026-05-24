@@ -13,14 +13,14 @@ export async function GET() {
       email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
     }
 
-    const displayName = user.fullName || user.username || email?.split('@')[0] || "Kullanıcı";
+    const displayName = user.username || user.fullName || "Oyuncu";
 
     return NextResponse.json({
       isAuthenticated: true,
       userSession: {
         userId: user.id,
         email: email,
-        username: user.username || email?.split('@')[0],
+        username: user.username || null,
         displayName: displayName
       }
     });

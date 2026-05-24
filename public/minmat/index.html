@@ -1162,7 +1162,7 @@
 
       if (userSession.isAuthenticated) {
         isGuestMode = false;
-        const displayName = userSession.displayName || userSession.username || (userSession.email ? userSession.email.split('@')[0] : "Oyuncu");
+        const displayName = userSession.displayName || userSession.username || "Oyuncu";
         input.value = displayName;
         input.readOnly = true;
         input.disabled = true;
