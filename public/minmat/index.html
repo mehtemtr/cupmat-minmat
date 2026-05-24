@@ -757,17 +757,9 @@
           🔄 Sistem Güncellendi!
         </div>
         <div style="color: #cbd5e1;">
-          • Yeni <strong>kullanıcı adı + şifre</strong> sistemi aktif<br>
+          • Yeni <strong>e-posta + şifre</strong> sistemi aktif<br>
           • <strong>Misafirler</strong> ödül kazanamaz ve liderlik tablosunda görünmez<br>
           • Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır
-        </div>
-        
-        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
-          <div style="font-weight: 700; color: #60a5fa; margin-bottom: 4px;">📢 Eski Kullanıcılar İçin:</div>
-          <div style="color: #94a3b8; font-size: 11px;">
-            <strong>Kullanıcı Adınız:</strong> İsim ve soyisminiz birleşik (boşluksuz, küçük harfler)<br>
-            <strong>Şifreniz:</strong> Eski e-posta adresinizin @ işaretinden önceki kısmı (8 karaktere tamamlanmış)
-          </div>
         </div>
       </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
@@ -882,7 +874,7 @@
             Lütfiye TEMİZEL • Hüseyin TEMİZEL<br>
             Şükran TEMİZEL • Abdurrahman Hayri TEMİZEL
           </div>
-          <div class="memorial-footer">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
+          <div class="memorial-footer" style="margin-top:8px; font-size:12px; color:#fef08a;">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
         </div>
       </div>
       <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
@@ -980,7 +972,7 @@
         colCat: "Categoría", colRound: "Ronda", colScore: "Puntos", modeAdd: "Suma", modeSub: "Resta",
         modeMul: "Multiplicación", modeDiv: "División", modeMix: "Mixto", shortAdd: "Suma", shortSub: "Resta",
         shortMul: "Mult", shortDiv: "Div", shortMix: "Mix", round: "Ronda", nameErr: "El nombre debe tener al menos 3 caracteres",
-        guest: "Invitado", menu: "Menú", subtitle: "MinMat — Juego de Cerebro y Matemáticas", all: "Todos",
+        guest: "Invitado", menu: "Menü", subtitle: "MinMat — Juego de Cerebro y Matemáticas", all: "Todos",
         authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de clasificación global y ganar premios.", authVerified: "✓ Cuenta Verificada",
         authLoginBtn: "🔑 Iniciar Sesión / Google", authSaveWarn: "⚠️ Como no has iniciado sesión, tu puntuación no se pudo guardar la tabla global.",
         signout: "Sign Out",
@@ -1247,8 +1239,6 @@
     }
 
     function redirectToSignOut() {
-    // redirectToSignOut satırının hemen üstüne bu notu ekleyin:
-console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR ===");
       const currentPath = window.location.pathname + window.location.search;
       window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
     }
@@ -1837,15 +1827,14 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
 
       const scoreEntry = {
         name: userSession.displayName || playerName || t("guest"),
-        email: userSession.username || null, // Ödül tablosu 72 saatlik kontrolü için kritik mail verisi
+        email: userSession.email || null,
         score: parseInt(score, 10),
         level: parseInt(level, 10),
         mode: gameMode,
-        timestamp: Date.now() // Doğru saat tabanlı filtreleme için Unix Epoch milisaniye
+        timestamp: Date.now()
       };
 
       try {
-        // Clerk aktif token'ı asenkron olarak alınıyor
         const token = await getClerkToken();
         
         const headers = { "Content-Type": "application/json" };
@@ -1856,7 +1845,7 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
         const response = await fetch("/api/minmat-leaderboard", {
           method: "POST",
           headers: headers,
-          credentials: "include", // Oturum çerezlerini gönder
+          credentials: "include",
           body: JSON.stringify(scoreEntry)
         });
         if (!response.ok) {
@@ -1870,6 +1859,7 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
       }
 
       renderLeaderboard();
+      renderRewardBoard();
     } 
 
     async function renderLeaderboard() {
@@ -1884,14 +1874,12 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
 
       let scores = [];
       try {
-        // Parametre ismi ?filter= olarak düzeltildi ve yalın array yapısına uyarlandı
         let apiFilter = leaderboardFilter === "all" ? "all" : leaderboardFilter;
         const response = await fetch(`/api/minmat-leaderboard?filter=${apiFilter}`, {
-          credentials: "include" // Oturum çerezlerini gönder
+          credentials: "include"
         });
         if (response.ok) {
           const data = await response.json();
-          // Eğer API doğrudan liste dönüyorsa onu al, aksi halde emniyet filtrelerini çalıştır
           scores = Array.isArray(data) ? data : (data.leaderboard || []);
         }
       } catch (error) {
@@ -1925,7 +1913,6 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
           if (i === 1) cls = "secondPlace";
           if (i === 2) cls = "thirdPlace";
 
-          // Unix timestamp veya string date dönüşümü emniyeti
           let displayDate = s.date;
           if (s.timestamp) {
             displayDate = new Date(s.timestamp).toLocaleDateString("tr-TR", {hour: '2-digit', minute:'2-digit'});
@@ -1952,17 +1939,15 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
       board.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8;">⏳ Ödüller Hesaplanıyor...</div>`;
 
       try {
-        // endpoint üzerinden son 72 saat ve kayıtlı mail filtrelemesi tetiklenir
         const res = await fetch("/api/gamification");
         const data = await res.json();
         if (!data.success) throw new Error("API error");
 
-        const cupRewards = data.cupMatRewards || [];
+        const cupRewards = data.cupMatPodium72h || [];
         const minPodium = data.minMatPodium72h || [];
 
         let html = "";
 
-        // CupMat Ödül Sıralaması Bölümü
         html += `<div style="margin-bottom:24px;">`;
         html += `<h3 style="text-align:center; color:#fbbf24; font-size:16px; margin-bottom:4px;">🏆 CupMat Ödül Sıralaması</h3>`;
         html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Bu periyot ilk 3 — ödüller bir sonraki 3 günlük periyotta aktif olur</p>`;
@@ -1980,14 +1965,13 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
                   <span style="color:#e2e8f0; font-size:13px; font-weight:600;">${escapeHTML(e.displayName)}</span>
                 </div>
                 <div style="text-align:right;">
-                  <span style="color:#fff; font-family:monospace; font-size:12px; font-weight:700;">${e.score} P</span>
+                  <span style="color:#fff; font-family:monospace; font-size:12px; font-weight:700;">${e.points || e.score} P</span>
                 </div>
               </div>`;
           });
         }
         html += `</div>`;
 
-        // MinMat Ödül Sıralaması Bölümü (72 Saatlik Filtrelenmiş Alan)
         html += `<div>`;
         html += `<h3 style="text-align:center; color:#a78bfa; font-size:16px; margin-bottom:4px;">🧮 MinMat Son 72 Saat Ödül Kürsüsü</h3>`;
         html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Son 72 saat — sadece aktif periyot ödülü olanlar (max 3 kürsü)</p>`;

@@ -6,6 +6,8 @@ export type ApiAuthSuccess = {
   userId: string;
   displayName: string;
   email: string;
+  firstName: string | null;
+  lastName: string | null;
 };
 
 export type ApiAuthFailure = {
@@ -27,12 +29,29 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   }
 
   const user = await currentUser();
-  const displayName =
-    user?.fullName || user?.username || user?.firstName || "Kullanıcı";
   
-  const email = user?.username || "";
+  const firstName = user?.firstName || null;
+  const lastName = user?.lastName || null;
+  
+  let displayName = user?.fullName || "";
+  
+  if (!displayName && firstName && lastName) {
+    displayName = `${firstName} ${lastName}`;
+  } else if (!displayName && firstName) {
+    displayName = firstName;
+  } else if (!displayName && user?.primaryEmailAddressId) {
+    const email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
+    displayName = email.split('@')[0] || "Kullanıcı";
+  } else if (!displayName) {
+    displayName = "Kullanıcı";
+  }
+  
+  let email = "";
+  if (user?.primaryEmailAddressId) {
+    email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
+  }
 
-  return { ok: true, userId, displayName, email };
+  return { ok: true, userId, displayName, email, firstName, lastName };
 }
 
 export function verifyAdminSecret(

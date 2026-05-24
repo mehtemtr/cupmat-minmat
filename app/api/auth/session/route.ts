@@ -8,34 +8,19 @@ export async function GET() {
       return NextResponse.json({ isAuthenticated: false });
     }
 
-    let username = user.username || "";
-    let displayName = "";
-    
-    if (!username && user.primaryEmailAddressId) {
-      const oldEmail = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
-      if (oldEmail && oldEmail.includes('@')) {
-        const emailPrefix = oldEmail.split('@')[0];
-        username = emailPrefix;
-      }
+    let email = "";
+    if (user.primaryEmailAddressId) {
+      email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
     }
-    
-    if (!username && user.firstName && user.lastName) {
-      username = (user.firstName + user.lastName).toLowerCase().replace(/\s+/g, "");
-    }
-    
-    if (!username) {
-      username = "Kullanici";
-    }
-    
-    displayName = user.fullName || user.username || username || "Kullanıcı";
 
-    // Oyun kodunun tam olarak beklediği 'userSession' anahtar kutusu
+    const displayName = user.fullName || email?.split('@')[0] || "Kullanıcı";
+
     return NextResponse.json({
       isAuthenticated: true,
       userSession: {
         userId: user.id,
-        email: user.username || username,
-        username: username,
+        email: email,
+        username: email,
         displayName: displayName
       }
     });
