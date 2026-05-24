@@ -1035,6 +1035,10 @@
 
     let userSession = { isAuthenticated: false };
 
+    
+const userSession = await getClerkToken();
+
+
     async function getClerkToken() {
      console.log("=== getClerkToken TETİKLENDİ ===");
       try {
@@ -1671,7 +1675,7 @@ console.log("=== KONSOL NOTU: KULLANICI ÜYE ÇIKIŞI YAPTI, YÖNLENDİRİLİYOR
 
       const scoreEntry = {
         name: userSession.displayName || playerName || t("guest"),
-        email: userSession.email || null, // Ödül tablosu 72 saatlik kontrolü için kritik mail verisi
+        email: userSession.username || null, // Ödül tablosu 72 saatlik kontrolü için kritik mail verisi
         score: parseInt(score, 10),
         level: parseInt(level, 10),
         mode: gameMode,

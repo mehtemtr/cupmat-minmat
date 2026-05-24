@@ -45,7 +45,7 @@ export async function POST(request: Request) {
 
     const scoreEntry: MinMatScore = {
       name: authResult.displayName,
-      email: authResult.email || null,
+      email: authResult.username || null,
       score: body.score,
       level: body.level,
       mode: body.mode,

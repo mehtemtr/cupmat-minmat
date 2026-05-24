@@ -23,7 +23,7 @@ const REDIS_KEY = "minmat_leaderboard";
 function normalizeMinMatScore(raw: MinMatScore): MinMatScore {
   const name =
     (typeof raw.name === "string" && raw.name.trim()) ||
-    (raw.email ? String(raw.email).split("@")[0] : "") ||
+    (raw.email ? String(raw.email) : "") ||
     "Oyuncu";
 
   const score = Number(raw.score);
@@ -84,8 +84,9 @@ export async function getMinMatRewardPodium(): Promise<MinMatPodiumEntry[]> {
 
   const bestByEmail = new Map<string, MinMatScore>();
 
-  for (const item of recent) {
-    const emailKey = String(item.email).trim().toLowerCase();
+ for (const item of recent) {
+    // E-posta yoksa kullanıcı adını, o da yoksa ismi anahtar olarak kullanıyoruz
+    const emailKey = String(item.email || item.name || "").trim().toLowerCase();
     const current = bestByEmail.get(emailKey);
     if (!current || item.score > current.score) {
       bestByEmail.set(emailKey, item);

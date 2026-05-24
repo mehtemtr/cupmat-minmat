@@ -29,11 +29,8 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   const user = await currentUser();
   const displayName =
     user?.fullName || user?.username || user?.firstName || "Kullanıcı";
-  const email =
-    user?.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)
-      ?.emailAddress ||
-    user?.emailAddresses[0]?.emailAddress ||
-    "";
+  
+  const email = user?.username || "";
 
   return { ok: true, userId, displayName, email };
 }
