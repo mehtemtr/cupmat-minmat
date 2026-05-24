@@ -43,4 +43,3 @@ if (user && user.primaryEmailAddressId) {
     console.error("GET Session error:", error);
     return NextResponse.json({ isAuthenticated: false });
   }
-}
