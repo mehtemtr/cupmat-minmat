@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-// .env dosyasındaki en üst düzey yönetici anahtarını kullanan canavar istemci
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -19,40 +18,30 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Geçersiz kategori" }, { status: 400 });
     }
 
-    // Artık puanları çekerken az önce oluşturduğun gerçek 'profiles' tablosundan nickleri birleştiriyoruz (JOIN)
-    if (filter === "hepsi") {
-      const { data: allData, error } = await supabaseAdmin
-        .from("minmat_leaderboard")
-        .select("*, profiles(nickname)")
-        .order("high_score", { ascending: false })
-        .limit(10);
-
-      if (error) throw error;
-      
-      // Veriyi arayüzün beklediği formata temizce dönüştürüyoruz
-      const formattedData = allData?.map(item => ({
-        ...item,
-        nickname: item.profiles?.nickname || "Kullanıcı"
-      }));
-      
-      return NextResponse.json(formattedData || []);
+    let query = supabaseAdmin.from("minmat_leaderboard").select("*");
+    if (filter !== "hepsi") {
+      query = query.eq("category", filter);
     }
-
-    const { data, error } = await supabaseAdmin
-      .from("minmat_leaderboard")
-      .select("*, profiles(nickname)")
-      .eq("category", filter)
+    
+    const { data: scores, error: scoreError } = await query
       .order("high_score", { ascending: false })
       .limit(10);
 
-    if (error) throw error;
+    if (scoreError) throw scoreError;
 
-    const formattedData = data?.map(item => ({
+    // Profilleri ayrı çekip hafızada birleştirerek veritabanı ilişki hatasını kökten çözüyoruz
+    const { data: profiles, error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .select("user_id, nickname");
+
+    const profileMap = new Map(profiles?.map(p => [p.user_id, p.nickname]) || []);
+
+    const formattedData = scores?.map(item => ({
       ...item,
-      nickname: item.profiles?.nickname || "Kullanıcı"
-    }));
+      nickname: profileMap.get(item.user_id) || item.nickname || "Kullanıcı"
+    })) || [];
 
-    return NextResponse.json(formattedData || []);
+    return NextResponse.json(formattedData);
   } catch (error) {
     console.error("MinMat scores GET hatası:", error);
     return NextResponse.json([], { status: 500 });
@@ -62,7 +51,6 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
     const score = body.score;
     const clerkUserId = body.clerkUserId;
     const mode = body.mappedMode || body.mode; 
@@ -71,20 +59,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Eksik parametreler" }, { status: 400 });
     }
 
-    // Puan kontrolü
-    const { data: existingScore, error: fetchError } = await supabaseAdmin
+    const { data: existingScore } = await supabaseAdmin
       .from("minmat_leaderboard")
       .select("*")
       .eq("user_id", clerkUserId)
       .eq("category", mode)
       .maybeSingle();
 
-    const newHighScore =
-      !existingScore || score > existingScore.high_score ? score : existingScore.high_score;
-    const newRewardScore =
-      !existingScore || score > existingScore.reward_score ? score : existingScore.reward_score;
+    const newHighScore = !existingScore || score > existingScore.high_score ? score : existingScore.high_score;
+    const newRewardScore = !existingScore || score > existingScore.reward_score ? score : existingScore.reward_score;
 
-    // Puan tablosuna mühürleme (Nick artık profiles tablosundan dinamik gelecek)
+    const { data: profile } = await supabaseAdmin
+      .from("profiles")
+      .select("nickname")
+      .eq("user_id", clerkUserId)
+      .maybeSingle();
+
     const { error: upsertError } = await supabaseAdmin
       .from("minmat_leaderboard")
       .upsert({
@@ -92,17 +82,14 @@ export async function POST(request: Request) {
         category: mode,
         high_score: newHighScore,
         reward_score: newRewardScore,
+        nickname: profile?.nickname || "Karakartal1923",
         updated_at: new Date().toISOString(),
-      }, { onConflict: 'user_id,category' });
+      });
 
     if (upsertError) throw upsertError;
-
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error("MinMat scores POST hatası:", error);
-    return NextResponse.json(
-      { error: error.message || "Sunucu hatası" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Sunucu hatası" }, { status: 500 });
   }
 }
