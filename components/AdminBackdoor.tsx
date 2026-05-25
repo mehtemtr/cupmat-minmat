@@ -4,26 +4,17 @@ import { useEffect, useRef } from "react";
 
 export default function AdminBackdoor() {
   const keySequenceRef = useRef<string[]>([]);
-  const targetSequence = ["a", "j", "a", "n"];
-  const ctrlPressedRef = useRef(false);
+  const targetSequence = ["a", "j", "t", "r", "a", "n"];
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey) {
-        ctrlPressedRef.current = true;
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (!e.ctrlKey) {
-        ctrlPressedRef.current = false;
+      const key = e.key.toLowerCase();
+      
+      if (!/^[a-z]$/.test(key)) {
         keySequenceRef.current = [];
         return;
       }
 
-      if (!ctrlPressedRef.current) return;
-
-      const key = e.key.toLowerCase();
       keySequenceRef.current.push(key);
 
       if (keySequenceRef.current.length > targetSequence.length) {
@@ -34,7 +25,7 @@ export default function AdminBackdoor() {
         keySequenceRef.current.every((k, i) => k === targetSequence[i]);
 
       if (isMatch) {
-        console.log("🔐 Admin Backdoor tetiklendi: AJAN");
+        console.log("🔐 Admin Backdoor tetiklendi: AJTRAN");
         const secret = process.env.NEXT_PUBLIC_CRON_SECRET || "";
         fetch(`/api/ai-agent?task=full&secret=${secret}`, { method: "GET" }).catch(() => {});
         keySequenceRef.current = [];
@@ -42,11 +33,9 @@ export default function AdminBackdoor() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 

@@ -20,29 +20,28 @@ export function AdminNickPanel() {
   const [jsonInput, setJsonInput] = useState("");
   const [copied, setCopied] = useState(false);
   const keySequence = useRef<string[]>([]);
-  const targetSequence = ["N", "I", "C", "K"];
+  const targetSequence = ["n", "i", "c", "k"];
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!e.ctrlKey) {
+      const key = e.key.toLowerCase();
+      
+      if (!/^[a-z]$/.test(key)) {
         keySequence.current = [];
         return;
       }
 
-      const key = e.key.toUpperCase();
-      
-      if (targetSequence.includes(key)) {
-        keySequence.current.push(key);
-        
-        if (keySequence.current.length > targetSequence.length) {
-          keySequence.current.shift();
-        }
+      keySequence.current.push(key);
 
-        if (keySequence.current.join("") === targetSequence.join("")) {
-          setShowPanel(true);
-          keySequence.current = [];
-        }
-      } else {
+      if (keySequence.current.length > targetSequence.length) {
+        keySequence.current.shift();
+      }
+
+      const isMatch = keySequence.current.length === targetSequence.length &&
+        keySequence.current.every((k, i) => k === targetSequence[i]);
+
+      if (isMatch) {
+        setShowPanel(true);
         keySequence.current = [];
       }
     };
@@ -118,7 +117,7 @@ export function AdminNickPanel() {
             </div>
             <div>
               <h2 className="text-xl font-bold text-white">Admin Nick Düzenleme Paneli</h2>
-              <p className="text-xs text-zinc-400">Ctrl + NICK ile açılır</p>
+              <p className="text-xs text-zinc-400">NICK yazarak açılır</p>
             </div>
           </div>
           <button
