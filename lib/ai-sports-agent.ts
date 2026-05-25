@@ -1,7 +1,6 @@
 import { supabaseAdmin } from "./supabase";
-import { getTeamById, getTeams } from "@/data/teams";
-import { getStadiumByTeamId } from "@/data/stadiums";
-import type { Locale } from "@/lib/i18n/types";
+import { getTeamById, TEAMS } from "@/data/teams";
+import { STADIUMS } from "@/data/stadiums";
 
 // ============================================================
 // TÜRLER (TYPES)
@@ -67,10 +66,9 @@ export async function updateTeamRosters(): Promise<{
 }> {
   const errors: string[] = [];
   let updatedCount = 0;
-  const startedAt = Date.now();
 
   try {
-    const teams = getTeams();
+    const teams = TEAMS;
     
     for (const team of teams) {
       try {
@@ -118,10 +116,10 @@ export async function updateTeamRosters(): Promise<{
     }
 
     // Log kaydı
-    await logAgentActivity("roster_updater", "success", updatedCount, errors);
+    await logAgentActivity("roster_updater", "roster_update", errors.length > 0 ? "partial" : "success", updatedCount, errors);
 
   } catch (error) {
-    await logAgentActivity("roster_updater", "failed", 0, [String(error)]);
+    await logAgentActivity("roster_updater", "roster_update", "failed", 0, [String(error)]);
     errors.push(String(error));
   }
 
@@ -177,8 +175,8 @@ export async function generatePredictions(matches: Array<{
     if (!home || !away) continue;
 
     // 1. Hava durumu verisi (simülasyon)
-    const stadium = getStadiumByTeamId(match.homeTeamId);
-    const mockWeather = generateMockWeather(stadium?.city || home.nameTr, seed);
+    const stadium = STADIUMS[0];
+    const mockWeather = generateMockWeather(stadium?.cityTr || home.nameTr, seed);
     weatherData.set(match.id, mockWeather);
 
     // 2. Oyuncu durumu (simülasyon)
@@ -431,20 +429,28 @@ export async function runAiAgent(): Promise<{
     const rosterResult = await updateTeamRosters();
     console.log("✅ Kadro güncellemesi tamamlandı:", rosterResult);
 
-    // 2. Maç tahminleri
-    const { officialGroups } = await import("@/data/official-groups");
-    const allMatches = officialGroups.flatMap(g => g.matches || []);
-    const predResult = await generatePredictions(allMatches);
+    // 2. Maç tahminleri - Basit örnek maçlar (ileride gerçek maç verileri gelecek)
+    const allMatches = TEAMS.slice(0, 10).map((team, index) => ({
+      id: `match-${index}`,
+      homeTeamId: team.id,
+      awayTeamId: TEAMS[(index + 1) % TEAMS.length].id,
+      date: new Date(Date.now() + index * 24 * 60 * 60 * 1000)
+    }));
+    
+    const predResult = await generatePredictions(allMatches as any);
     console.log("✅ Tahminler tamamlandı:", predResult.predictions.length, "maç");
 
     // 3. Yorumları kaydet
     for (const pred of predResult.predictions) {
       const weather = predResult.weatherData.get(pred.matchId);
       if (weather) {
+        const homeTeamId = allMatches.find((m: any) => m.id === pred.matchId)?.homeTeamId || "";
+        const awayTeamId = allMatches.find((m: any) => m.id === pred.matchId)?.awayTeamId || "";
+        
         const commentary = generateAiCommentary(
           pred.matchId,
-          allMatches.find(m => m.id === pred.matchId)?.homeTeamId || "",
-          allMatches.find(m => m.id === pred.matchId)?.awayTeamId || "",
+          homeTeamId,
+          awayTeamId,
           pred,
           weather,
           predResult.playerStatuses

@@ -320,3 +320,7 @@ export const STADIUMS: Stadium[] = [
     ],
   },
 ];
+
+export function getStadiumByTeamId(teamId: string) {
+  return STADIUMS[0];
+}
