@@ -90,9 +90,31 @@ const redis = Redis.fromEnv();
 
 const REDIS_KEY = "gamification_store";
 
-// Varsayılan periyot sonu tarihi (Şu andan itibaren 2 gün 11 saat sonrası)
-const defaultPeriodEnd = new Date();
-defaultPeriodEnd.setMilliseconds(defaultPeriodEnd.getMilliseconds() + (2 * 24 + 11) * 60 * 60 * 1000);
+// Sabit başlangıç zamanı: 25 Mayıs 2026 Pazartesi 00:00:00 UTC
+const FIXED_PERIOD_START = new Date(Date.UTC(2026, 4, 25, 0, 0, 0, 0)); // Ay 0-indexli (Mayıs = 4)
+const PERIOD_DURATION_MS = 72 * 60 * 60 * 1000; // 72 saat = 3 gün
+
+/**
+ * Sabit zaman çizelgesine göre güncel periyot bitiş zamanını hesaplar
+ */
+function calculateCurrentPeriodEnd(): Date {
+  const now = Date.now();
+  
+  if (now < FIXED_PERIOD_START.getTime()) {
+    return new Date(FIXED_PERIOD_START.getTime() + PERIOD_DURATION_MS);
+  }
+
+  const elapsedSinceStart = now - FIXED_PERIOD_START.getTime();
+  const periodsCompleted = Math.floor(elapsedSinceStart / PERIOD_DURATION_MS);
+  const currentPeriodEnd = new Date(
+    FIXED_PERIOD_START.getTime() + (periodsCompleted + 1) * PERIOD_DURATION_MS
+  );
+
+  return currentPeriodEnd;
+}
+
+// Varsayılan periyot sonu tarihi - sabit hesaplamaya göre
+const defaultPeriodEnd = calculateCurrentPeriodEnd();
 
 const defaultStore: GamificationStore = {
   userActivities: [
@@ -152,7 +174,7 @@ const defaultStore: GamificationStore = {
   periodEnd: defaultPeriodEnd.toISOString(),
 };
 
-async function getStore(): Promise<GamificationStore> {
+export async function getStore(): Promise<GamificationStore> {
   try {
     // Upstash Redis üzerinden veriyi çekiyoruz
     const data = await redis.get<GamificationStore>(REDIS_KEY);
@@ -181,7 +203,7 @@ async function getStore(): Promise<GamificationStore> {
   }
 }
 
-async function saveStore(store: GamificationStore): Promise<void> {
+export async function saveStore(store: GamificationStore): Promise<void> {
   try {
     // Güncellenmiş nesneyi Redis'e set ediyoruz
     await redis.set(REDIS_KEY, store);
@@ -198,6 +220,20 @@ async function transitionToNextPeriod(store: GamificationStore): Promise<void> {
   const endingPeriodEnd = store.periodEnd;
   const compareStart = getPeriodStart(endingPeriodEnd);
   const predictions = await getLeaderboard();
+  
+  const { supabaseAdmin } = await import("@/lib/supabase");
+  try {
+    const { error } = await supabaseAdmin
+      .from("minmat_scores")
+      .update({ reward_score: 0 });
+    if (error) {
+      console.error("MinMat reward_score sıfırlama hatası:", error);
+    } else {
+      console.log("MinMat reward_score'leri başarıyla sıfırlandı!");
+    }
+  } catch (error) {
+    console.error("MinMat reward_score sıfırlama hatası:", error);
+  }
 
   // Şampiyon arşivi (dönem puanına göre)
   const periodChampions = [...store.userActivities]
@@ -287,10 +323,95 @@ async function transitionToNextPeriod(store: GamificationStore): Promise<void> {
 
 export async function checkAndResetPeriod(): Promise<void> {
   const store = await getStore();
-  if (new Date() >= new Date(store.periodEnd)) {
-    await transitionToNextPeriod(store);
+  const now = new Date();
+  const calculatedPeriodEnd = calculateCurrentPeriodEnd();
+  const storePeriodEnd = new Date(store.periodEnd);
+
+  if (now >= calculatedPeriodEnd || storePeriodEnd.getTime() !== calculatedPeriodEnd.getTime()) {
+    await transitionToNextPeriodWithFixedSchedule(store, calculatedPeriodEnd);
     await saveStore(store);
   }
+}
+
+async function transitionToNextPeriodWithFixedSchedule(store: GamificationStore, newPeriodEnd: Date) {
+  const endingPeriodEnd = new Date(newPeriodEnd.getTime() - PERIOD_DURATION_MS);
+  const compareStart = getPeriodStart(endingPeriodEnd.toISOString());
+  const predictions = await getLeaderboard();
+  
+  const { supabaseAdmin } = await import("@/lib/supabase");
+  try {
+    const { error } = await supabaseAdmin
+      .from("minmat_scores")
+      .update({ reward_score: 0 });
+    if (error) {
+      console.error("MinMat reward_score sıfırlama hatası:", error);
+    } else {
+      console.log("MinMat reward_score'leri başarıyla sıfırlandı!");
+    }
+  } catch (error) {
+    console.error("MinMat reward_score sıfırlama hatası:", error);
+  }
+
+  const periodChampions = [...store.userActivities]
+    .filter((u) => u.mevcutPeriyotPuani > 0)
+    .sort((a, b) => b.mevcutPeriyotPuani - a.mevcutPeriyotPuani)
+    .slice(0, 3);
+
+  periodChampions.forEach((user, index) => {
+    store.gecmisSampiyonlar.push({
+      userId: user.userId,
+      displayName: user.displayName || `Kullanıcı-${user.userId.substring(0, 5)}`,
+      derece: index + 1,
+      periyotBitisTarihi: endingPeriodEnd.toISOString(),
+    });
+  });
+
+  const cupTop3 = [...store.userActivities]
+    .filter(isEmailEligible)
+    .map((u) => ({
+      user: u,
+      combined: u.mevcutPeriyotPuani + (predictions.find((p) => p.userId === u.userId)?.points || 0) * 10,
+    }))
+    .sort((a, b) => b.combined - a.combined)
+    .slice(0, 3)
+    .map((row) => row.user);
+
+  const { getMinMatLeaderboard } = await import("@/lib/store/minmat-leaderboard-store");
+  const minMatScores = await getMinMatLeaderboard();
+  const periodScores = minMatScores.filter(
+    (s) => parseTrDate(s.date) >= compareStart,
+  );
+  const eligibleNames = new Set(
+    store.userActivities.filter(isEmailEligible).map((u) => u.displayName),
+  );
+  const minMatMaxByName: Record<string, number> = {};
+  for (const s of periodScores) {
+    if (eligibleNames.has(s.name)) {
+      minMatMaxByName[s.name] = Math.max(minMatMaxByName[s.name] || 0, s.score);
+    }
+  }
+  const minTop3 = Object.entries(minMatMaxByName)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 3)
+    .map(([name]) => store.userActivities.find((u) => u.displayName === name))
+    .filter((u): u is UserActivity => !!u);
+
+  store.userActivities.forEach((u) => {
+    clearPeriodRewardFields(u);
+    u.mevcutPeriyotPuani = 0;
+    u.tahminGuncellemeHakki = 0;
+    u.minmatEkSure = 0;
+    u.activeSecondsInPeriod = 0;
+  });
+
+  cupTop3.forEach((user, idx) => {
+    applyCupmatPeriodReward(user, idx, newPeriodEnd.toISOString());
+  });
+  minTop3.forEach((user, idx) => {
+    applyMinmatPeriodReward(user, idx, newPeriodEnd.toISOString());
+  });
+
+  store.periodEnd = newPeriodEnd.toISOString();
 }
 
 // Retrieve or initialize user profile

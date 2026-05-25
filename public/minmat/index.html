@@ -1819,53 +1819,35 @@
        UPDATED UPSTASH REDIS / NEXT.JS API CONNECTION
        ========================================== */
 
-   async function saveScore() {
-      if (isGameOverSaved) return;
-      isGameOverSaved = true;
-      updateAuthUI();
-
-      if (!userSession.isAuthenticated) {
-        console.log("Global veritabanına kaydedilemedi: Kullanıcı oturum açmamış.");
-        renderLeaderboard();
-        return;
-      }
-
-      const scoreEntry = {
-        name: userSession.displayName || playerName || t("guest"),
-        email: userSession.email || null,
-        score: parseInt(score, 10),
-        level: parseInt(level, 10),
-        mode: gameMode,
-        timestamp: Date.now()
-      };
-
-      try {
-        const token = await getClerkToken();
-        
-        const headers = { "Content-Type": "application/json" };
-        if (token) {
-          headers["Authorization"] = `Bearer ${token}`;
-        }
-
-        const response = await fetch("/api/minmat-leaderboard", {
-          method: "POST",
-          headers: headers,
-          credentials: "include",
-          body: JSON.stringify(scoreEntry)
-        });
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("Skor global veritabanına gönderilemedi. API Hatası:", response.status, errorText);
-        } else {
-          console.log("Skor başarıyla kaydedildi!");
-        }
-      } catch (error) {
-        console.error("POST Hatası:", error);
-      }
-
-      renderLeaderboard();
-      renderRewardBoard();
-    } 
+ async function saveScore() { 
+     const currentScore = score; 
+     const currentLevel = level; 
+     const currentMode = gameMode || 'mix'; 
+     
+     // Oyuncunun ekrandaki kutuya yazdığı ismi al, boşsa 'Oyuncu' yap 
+     const nameInput = document.getElementById('usernameInput') || document.getElementById('playerNameInput') || document.getElementById('playerInput'); 
+     const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Oyuncu'; 
+ 
+     console.log("=== PUAN GÖNDERİLİYOR ===", { name, score: currentScore, level: currentLevel, mode: currentMode }); 
+ 
+     try { 
+         const response = await fetch('/api/minmat-leaderboard', { 
+             method: 'POST', 
+             headers: { 'Content-Type': 'application/json' }, 
+             body: JSON.stringify({ name, score: currentScore, level: currentLevel, mode: currentMode }) 
+         }); 
+         
+         const result = await response.json(); 
+         if (response.ok) { 
+             console.log("🏆 Puan Başarıyla Supabase'e Yazıldı!"); 
+             renderLeaderboard(); // Tabloyu anında yenile 
+         } else { 
+             console.error("Veritabanı Hatası:", result.error); 
+         } 
+     } catch (err) { 
+         console.error("Ağ Hatası:", err); 
+     } 
+ } 
 
     async function renderLeaderboard() {
       let filterKey = "leaderAll";

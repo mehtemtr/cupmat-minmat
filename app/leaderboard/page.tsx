@@ -271,7 +271,7 @@ setLeaderboard(sortedData);
                         <span className="font-medium text-zinc-200 truncate max-w-[100px]">{entry.displayName}</span>
                       </div>
                       <div className="text-right">
-                          <div className="font-mono text-xs font-bold text-white">{entry.points || entry.score} <span className="text-zinc-500 font-normal">P</span></div>
+                          <div className="font-mono text-xs font-bold text-white">{entry.score} <span className="text-zinc-500 font-normal">P</span></div>
                           {entry.reward && (
                             <div className="text-[10px] text-amber-400 mt-0.5">{entry.reward}</div>
                           )}
