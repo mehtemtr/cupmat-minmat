@@ -1286,7 +1286,7 @@
       window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
       applyLang();
       let input = document.getElementById("playerInput");
       if (input) {
@@ -1296,22 +1296,67 @@
         checkInput();
       }
       
-      if (window.Clerk) {
-        window.Clerk.load({
-          publishableKey: "pk_live_Y2xlcmsuc3RhdG1hdGlrLmNvbSQ"
-        }).then(() => {
-          checkAuthSession();
+      try {
+        const clerkKeyRes = await fetch('/api/clerk-key');
+        if (clerkKeyRes.ok) {
+          const { publishableKey } = await clerkKeyRes.json();
           
-          if (window.Clerk.addListener) {
-            window.Clerk.addListener((e) => {
-              if (e.session) {
-                checkAuthSession();
+          if (window.Clerk && publishableKey) {
+            window.Clerk.load({
+              publishableKey
+            }).then(() => {
+              checkAuthSession();
+              
+              if (window.Clerk.addListener) {
+                window.Clerk.addListener((e) => {
+                  if (e.session) {
+                    checkAuthSession();
+                  }
+                });
               }
             });
+          } else {
+            checkAuthSession();
           }
-        });
-      } else {
-        checkAuthSession();
+        } else {
+          console.error("Clerk key çekilemedi, varsayılan anahtar kullanılıyor");
+          if (window.Clerk) {
+            window.Clerk.load({
+              publishableKey: "pk_live_Y2xlcmsuc3RhdG1hdGlrLmNvbSQ"
+            }).then(() => {
+              checkAuthSession();
+              
+              if (window.Clerk.addListener) {
+                window.Clerk.addListener((e) => {
+                  if (e.session) {
+                    checkAuthSession();
+                  }
+                });
+              }
+            });
+          } else {
+            checkAuthSession();
+          }
+        }
+      } catch (error) {
+        console.error("Clerk key çekme hatası, varsayılan anahtar kullanılıyor:", error);
+        if (window.Clerk) {
+          window.Clerk.load({
+            publishableKey: "pk_live_Y2xlcmsuc3RhdG1hdGlrLmNvbSQ"
+          }).then(() => {
+            checkAuthSession();
+            
+            if (window.Clerk.addListener) {
+              window.Clerk.addListener((e) => {
+                if (e.session) {
+                  checkAuthSession();
+                }
+              });
+            }
+          });
+        } else {
+          checkAuthSession();
+        }
       }
     });
 
