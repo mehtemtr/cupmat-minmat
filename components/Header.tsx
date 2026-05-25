@@ -4,11 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe, Home, Trophy, Info, HelpCircle, Calculator, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { SignInButton, useUser } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
-import { buildSignOutUrl } from "@/lib/auth/sign-in-url";
+import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { locales, type Locale } from "@/lib/i18n/types";
+import AuthPanel from "./AuthPanel";
 
 const navKeys = [
   { href: "/teams", key: "nav.teams" },
@@ -249,31 +248,18 @@ export function Header() {
               </span>
               <span className="sm:hidden uppercase">{locale}</span>
             </button>
-            
-            {isSignedIn ? (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs sm:text-sm font-semibold text-zinc-200 shadow-md transition hover:border-emerald-400/30">
-                  <span className="text-yellow-400 animate-pulse">⭐</span>
-                  <span className="hidden sm:inline text-zinc-400">Puanım:</span>
-                  <span className="text-emerald-400 font-bold">{taraftarPuani !== null ? taraftarPuani : "..."}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Link
-                    href={buildSignOutUrl(pathname)}
-                    className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-bold text-rose-400 transition hover:border-rose-400/40 hover:bg-rose-500/10"
-                    title={t("nav.signout") || "Çıkış Yap"}
-                  >
-                    <LogOut className="h-4 w-4" />
-                  </Link>
-                </div>
+
+            {/* Puan Göstergesi */}
+            {isSignedIn && (
+              <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs sm:text-sm font-semibold text-zinc-200 shadow-md transition hover:border-emerald-400/30">
+                <span className="text-yellow-400 animate-pulse">⭐</span>
+                <span className="hidden sm:inline text-zinc-400">Puanım:</span>
+                <span className="text-emerald-400 font-bold">{taraftarPuani !== null ? taraftarPuani : "..."}</span>
               </div>
-            ) : (
-              <SignInButton mode="redirect" forceRedirectUrl="/tahminler">
-                <button className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-bold text-[#060b14] hover:bg-emerald-400 transition-colors">
-                  {t("nav.signin") || "Giriş Yap"}
-                </button>
-              </SignInButton>
             )}
+            
+            {/* Evrensel Auth Panel */}
+            <AuthPanel />
           </div>
         </div>
       </header>

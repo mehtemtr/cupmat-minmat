@@ -536,33 +536,65 @@ export async function getRewardLeaderboards(): Promise<{
     }));
 
   // MinMat reward table: ranked by maximum score in this period
-  const { getMinMatLeaderboard } = await import("@/lib/store/minmat-leaderboard-store");
-  const minMatScores = await getMinMatLeaderboard();
-
-  // Filter scores within the current period
-  const periodScores = minMatScores.filter(s => {
-    const scoreDate = parseTrDate(s.date);
-    return scoreDate >= compareStart;
+  const { supabaseAdmin } = await import("@/lib/supabase");
+  
+  // Tüm eligible kullanıcıları ve profillerini (nickname'leri) alalım
+  const userIds = eligible.map(u => u.userId);
+  const { data: profiles } = await supabaseAdmin
+    .from("profiles")
+    .select("id, nickname")
+    .in("id", userIds);
+  
+  const userIdToNickname = new Map<string, string>();
+  profiles?.forEach(p => {
+    userIdToNickname.set(p.id, p.nickname);
+  });
+  eligible.forEach(u => {
+    if (!userIdToNickname.has(u.userId)) {
+      userIdToNickname.set(u.userId, u.displayName);
+    }
   });
 
-  // Build max score map for eligible users (isim + seviye + mod)
-  const eligibleNames = new Set(eligible.map((u) => u.displayName));
+  // Yeni minmat_scores tablosundan verileri çekelim
+  const { data: minMatScores } = await supabaseAdmin
+    .from("minmat_scores")
+    .select("*, profiles!inner(nickname)")
+    .in("user_id", userIds);
+
+  // Build max score map for eligible users
   const minMatMaxByUser: Record<
     string,
-    { score: number; level: number; mode: string }
+    { score: number; level: number; mode: string; displayName: string }
   > = {};
 
-  for (const s of periodScores) {
-    if (!eligibleNames.has(s.name)) continue;
-    const level = Number(s.level);
-    const score = Number(s.score);
-    const current = minMatMaxByUser[s.name];
-    if (!current || score > current.score) {
-      minMatMaxByUser[s.name] = {
-        score,
-        level: Number.isFinite(level) && level > 0 ? level : 1,
-        mode: s.mode || "mix",
-      };
+  // Kategori dönüşümü
+  function mapCategoryDisplay(newCat: string) {
+    const map: Record<string, string> = {
+      "topla": "toplama",
+      "cikar": "çıkarma",
+      "carp": "çarpma",
+      "bol": "bölme",
+      "karisik": "karışık"
+    };
+    return map[newCat] || newCat;
+  }
+
+  if (minMatScores) {
+    for (const s of minMatScores) {
+      const displayName = userIdToNickname.get(s.user_id) || "Kullanıcı";
+      const score = s.reward_score || s.high_score || 0;
+      const current = minMatMaxByUser[displayName];
+      
+      if (!current || score > current.score) {
+        minMatMaxByUser[displayName] = {
+          score,
+          level: s.category === "karisik" 
+            ? Math.floor(Math.sqrt(score / 10)) 
+            : Math.floor(score / 10),
+          mode: mapCategoryDisplay(s.category),
+          displayName
+        };
+      }
     }
   }
 
