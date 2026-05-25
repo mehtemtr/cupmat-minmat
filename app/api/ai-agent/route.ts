@@ -26,12 +26,20 @@ export async function GET(request: Request) {
 
     switch (task) {
       case "bulk_get":
+        console.log("🔍 bulk_get çalışıyor, supabaseAdmin:", !!supabaseAdmin);
+        console.log("🔍 SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 30));
+        console.log("🔍 SERVICE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "VAR" : "YOK");
+        
         const { data: profilesData, error: profilesError } = await supabaseAdmin
           .from("profiles")
           .select("id, email, nickname, created_at")
           .order("created_at", { ascending: false });
         
-        if (profilesError) throw profilesError;
+        if (profilesError) {
+          console.error("❌ Supabase Hatası:", profilesError);
+          throw profilesError;
+        }
+        console.log("✅ profilesData alındı:", profilesData?.length, "kayıt");
         return NextResponse.json(profilesData || []);
         
       case "roster":
