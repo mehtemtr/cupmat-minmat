@@ -10,9 +10,9 @@ export async function GET(request: Request) {
     const force = searchParams.get("force") === "true";
     const secret = searchParams.get("secret");
 
-    // Güvenlik kontrolü
-    const CRON_SECRET = process.env.CRON_SECRET;
-    if (CRON_SECRET && secret !== CRON_SECRET) {
+    // Güvenlik kontrolü (sadece full task ve secret ile korunur, diğerleri public)
+    const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
+    if (task === "full" && CRON_SECRET && secret !== CRON_SECRET) {
       return NextResponse.json(
         { error: "Yetkisiz erişim" },
         { status: 403 }
@@ -25,6 +25,7 @@ export async function GET(request: Request) {
 
     switch (task) {
       case "roster":
+      case "teams_only":
         result = await updateTeamRosters();
         break;
       case "predictions":

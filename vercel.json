@@ -1,12 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/period-reset",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/ai-agent?task=full",
-      "schedule": "0 */6 * * *"
-    }
-  ]
-}
+{}

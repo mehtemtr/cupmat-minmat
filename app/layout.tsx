@@ -10,6 +10,8 @@ import { defaultLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n/types";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GamificationManager } from "@/components/GamificationManager";
+import LazyCronAgent from "@/components/LazyCronAgent";
+import AdminBackdoor from "@/components/AdminBackdoor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -117,6 +119,8 @@ export default async function RootLayout({
             <DynamicMeta />
             <Header />
             <GamificationManager />
+            <LazyCronAgent />
+            <AdminBackdoor />
             <main>{children}</main>
             <Footer />
           </Providers>
