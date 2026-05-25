@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useUser, SignInButton, SignOutButton, UserProfile } from "@clerk/nextjs";
 import { Settings, LogOut, User as UserIcon, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -11,78 +11,91 @@ export default function AuthPanel() {
   const [showSettings, setShowSettings] = useState(false);
   const [showUserProfile, setShowUserProfile] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [checkingUnique, setCheckingUnique] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const debounceRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     if (isSignedIn && user) {
       localStorage.setItem("clerk_user_id", user.id);
-      fetchNickname();
+      fetchOrCreateNickname();
     }
   }, [isSignedIn, user]);
 
-  useEffect(() => {
-    if (tempNickname.trim() && tempNickname !== nickname) {
-      checkNicknameUnique();
-    } else {
-      setError(null);
-    }
-  }, [tempNickname]);
-
-  const fetchNickname = async () => {
+  const fetchOrCreateNickname = async () => {
     if (!user) return;
     try {
       const res = await fetch("/api/profile/nickname");
       if (res.ok) {
         const data = await res.json();
-        if (data) {
+        if (data && data.nickname) {
           setNickname(data.nickname);
           setTempNickname(data.nickname);
+        } else {
+          await createAutomaticNickname();
         }
+      } else if (res.status === 404) {
+        await createAutomaticNickname();
       }
     } catch (error) {
-      console.error("Nickname çekme hatası:", error);
+      console.error("Nickname hatası:", error);
     }
   };
 
-  const checkNicknameUnique = async () => {
-    if (!tempNickname.trim() || tempNickname === nickname) {
+  const createAutomaticNickname = async () => {
+    if (!user?.primaryEmailAddress?.emailAddress) return;
+    
+    const email = user.primaryEmailAddress.emailAddress;
+    const baseNick = email.split("@")[0].replace(/[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ]/g, "");
+    
+    let finalNick = baseNick;
+    let counter = 1923;
+    
+    for (let i = 0; i < 100; i++) {
+      const checkRes = await fetch(`/api/profile/nickname/check?nickname=${encodeURIComponent(finalNick)}`);
+      const checkData = await checkRes.json();
+      
+      if (checkData.unique) {
+        break;
+      }
+      
+      finalNick = `${baseNick}${counter}`;
+      counter += 34;
+    }
+
+    try {
+      const res = await fetch("/api/profile/nickname", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nickname: finalNick }),
+      });
+
+      if (res.ok) {
+        setNickname(finalNick);
+        setTempNickname(finalNick);
+      }
+    } catch (error) {
+      console.error("Otomatik nick oluşturma hatası:", error);
+    }
+  };
+
+  const handleBlur = async () => {
+    if (!user || !tempNickname.trim() || tempNickname === nickname) {
       setError(null);
       return;
     }
-
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
-
-    setCheckingUnique(true);
-    setError(null);
-
-    debounceRef.current = setTimeout(async () => {
-      try {
-        const res = await fetch(`/api/profile/nickname/check?nickname=${encodeURIComponent(tempNickname.trim())}`);
-        const data = await res.json();
-
-        if (!data.unique) {
-          setError("Bu takma ad zaten kullanımda, lütfen başka bir isim seçin!");
-        }
-      } catch (error) {
-        console.error("Benzersizlik kontrol hatası:", error);
-      } finally {
-        setCheckingUnique(false);
-      }
-    }, 500);
-  };
-
-  const handleSaveNickname = async () => {
-    if (!user || !tempNickname.trim()) return;
-    if (error) return;
 
     setLoading(true);
     setError(null);
 
     try {
+      const checkRes = await fetch(`/api/profile/nickname/check?nickname=${encodeURIComponent(tempNickname.trim())}`);
+      const checkData = await checkRes.json();
+
+      if (!checkData.unique) {
+        setError("Bu takma ad zaten kullanımda, lütfen başka bir isim seçin!");
+        setTempNickname(nickname);
+        return;
+      }
+
       const res = await fetch("/api/profile/nickname", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -94,10 +107,12 @@ export default function AuthPanel() {
       } else {
         const data = await res.json();
         setError(data.error || "Bir hata oluştu");
+        setTempNickname(nickname);
       }
     } catch (error) {
       console.error("Nickname güncelleme hatası:", error);
       setError("Sunucu hatası");
+      setTempNickname(nickname);
     } finally {
       setLoading(false);
     }
@@ -132,6 +147,12 @@ export default function AuthPanel() {
             type="text"
             value={tempNickname}
             onChange={(e) => setTempNickname(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleBlur();
+              }
+            }}
             className={`px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all ${
               error 
                 ? "bg-red-500/10 border border-red-500/50 text-red-300 focus:border-red-400" 
@@ -140,27 +161,10 @@ export default function AuthPanel() {
             placeholder="Takma adınız..."
           />
           
-          {tempNickname !== nickname && !error && !checkingUnique && (
-            <button
-              onClick={handleSaveNickname}
-              disabled={loading || !tempNickname.trim()}
-              className="flex items-center gap-1 px-3 py-2 rounded-full bg-emerald-500 text-emerald-950 font-bold text-xs hover:bg-emerald-400 disabled:opacity-50 transition-colors"
-            >
-              {loading ? (
-                <span className="animate-pulse">...</span>
-              ) : (
-                <>
-                  <CheckCircle2 className="h-3 w-3" />
-                  Güncelle
-                </>
-              )}
-            </button>
-          )}
-
-          {checkingUnique && (
+          {loading && (
             <div className="flex items-center gap-1 px-3 py-2 text-yellow-400 text-xs font-semibold">
               <span className="animate-pulse">⏳</span>
-              Kontrol ediliyor...
+              Kaydediliyor...
             </div>
           )}
         </div>

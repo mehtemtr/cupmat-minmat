@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-import { requireApiAuth } from "@/lib/auth/api-auth";
 
 const CATEGORIES = ["topla", "cikar", "carp", "bol", "karisik", "hepsi"] as const;
 type Category = typeof CATEGORIES[number];
@@ -42,24 +41,17 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const authResult = await requireApiAuth();
-    if (!authResult.ok) {
-      return authResult.response;
-    }
-
     const body = await request.json();
-    const { score, level, mode } = body;
+    const { score, level, mode, clerkUserId } = body;
 
-    if (!score || !mode) {
+    if (!score || !mode || !clerkUserId) {
       return NextResponse.json({ error: "Eksik parametreler" }, { status: 400 });
     }
-
-    const userId = authResult.userId;
 
     const { data: existingScore, error: fetchError } = await supabaseAdmin
       .from("minmat_scores")
       .select("*")
-      .eq("user_id", userId)
+      .eq("user_id", clerkUserId)
       .eq("category", mode)
       .single();
 
@@ -73,7 +65,7 @@ export async function POST(request: Request) {
     const { error: upsertError } = await supabaseAdmin
       .from("minmat_scores")
       .upsert({
-        user_id: userId,
+        user_id: clerkUserId,
         category: mode,
         high_score: newHighScore,
         reward_score: newRewardScore,
