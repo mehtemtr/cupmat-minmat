@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { runAiAgent, updateTeamRosters, generatePredictions } from "@/lib/ai-sports-agent";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const maxDuration = 300; // 5 dakika - uzun süren işlemler için
 
@@ -24,6 +25,15 @@ export async function GET(request: Request) {
     let result;
 
     switch (task) {
+      case "bulk_get":
+        const { data: profilesData, error: profilesError } = await supabaseAdmin
+          .from("profiles")
+          .select("id, email, nickname, created_at")
+          .order("created_at", { ascending: false });
+        
+        if (profilesError) throw profilesError;
+        return NextResponse.json(profilesData || []);
+        
       case "roster":
       case "teams_only":
         result = await updateTeamRosters();
@@ -60,11 +70,26 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { task = "full", secret } = body;
+    const { searchParams } = new URL(request.url);
+    const taskParam = searchParams.get("task");
+    
+    let body: any = {};
+    let task: string = "full";
+    let secret: string | null = null;
 
-    const CRON_SECRET = process.env.CRON_SECRET;
-    if (CRON_SECRET && secret !== CRON_SECRET) {
+    if (taskParam) {
+      task = taskParam;
+      secret = searchParams.get("secret");
+      body = await request.json();
+    } else {
+      body = await request.json();
+      task = body.task || "full";
+      secret = body.secret;
+    }
+
+    const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
+    
+    if (task !== "bulk_get" && CRON_SECRET && secret !== CRON_SECRET) {
       return NextResponse.json(
         { error: "Yetkisiz erişim" },
         { status: 403 }
@@ -72,6 +97,25 @@ export async function POST(request: Request) {
     }
 
     console.log(`🤖 AI Agent POST ile çalıştırılıyor: task=${task}`);
+
+    if (task === "bulk_update") {
+      if (!Array.isArray(body)) {
+        return NextResponse.json({ error: "Geçersiz format: dizi bekleniyor" }, { status: 400 });
+      }
+
+      const updates = body.map((profile: any) => ({
+        id: profile.id,
+        nickname: profile.nickname?.trim() || null,
+      }));
+
+      const { error } = await supabaseAdmin
+        .from("profiles")
+        .upsert(updates, { onConflict: "id" });
+
+      if (error) throw error;
+
+      return NextResponse.json({ success: true, updated: updates.length });
+    }
 
     let result;
     switch (task) {
