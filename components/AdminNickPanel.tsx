@@ -61,8 +61,7 @@ export function AdminNickPanel() {
     setLoading(true);
     setError(null);
     try {
-      const secret = process.env.NEXT_PUBLIC_CRON_SECRET || "";
-      const res = await fetch(`/api/ai-agent?task=bulk_get&secret=${secret}`);
+      const res = await fetch("/api/ai-agent?task=bulk_get");
       if (!res.ok) throw new Error("Veriler çekilemedi");
       const data = await res.json();
       setProfiles(data);
@@ -88,8 +87,7 @@ export function AdminNickPanel() {
     setSuccess(false);
 
     try {
-      const secret = process.env.NEXT_PUBLIC_CRON_SECRET || "";
-      const res = await fetch(`/api/ai-agent?task=bulk_update&secret=${secret}`, {
+      const res = await fetch("/api/ai-agent?task=bulk_update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editableProfiles),

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
     // Güvenlik kontrolü (sadece full task ve secret ile korunur, diğerleri public)
     const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
-    if (task === "full" && CRON_SECRET && secret !== CRON_SECRET) {
+    if ((task === "full" || task === "bulk_update") && CRON_SECRET && secret !== CRON_SECRET) {
       return NextResponse.json(
         { error: "Yetkisiz erişim" },
         { status: 403 }
@@ -89,7 +89,7 @@ export async function POST(request: Request) {
 
     const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
     
-    if (task !== "bulk_get" && CRON_SECRET && secret !== CRON_SECRET) {
+    if ((task === "full" || task === "predictions" || task === "roster" || task === "teams_only") && CRON_SECRET && secret !== CRON_SECRET) {
       return NextResponse.json(
         { error: "Yetkisiz erişim" },
         { status: 403 }
