@@ -12,6 +12,7 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GamificationManager } from "@/components/GamificationManager";
 import LazyCronAgent from "@/components/LazyCronAgent";
 import AdminBackdoor from "@/components/AdminBackdoor";
+import { AdminNickPanel } from "@/components/AdminNickPanel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -124,6 +125,7 @@ export default async function RootLayout({
             <GamificationManager />
             <LazyCronAgent />
             <AdminBackdoor />
+            <AdminNickPanel />
             <main>{children}</main>
             <Footer />
           </Providers>
