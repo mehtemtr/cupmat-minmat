@@ -19,27 +19,40 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Geçersiz kategori" }, { status: 400 });
     }
 
-    // Kırık profiles tablosu araması kaldırıldı, doğrudan gerçek tablodan çekiyoruz
+    // Artık puanları çekerken az önce oluşturduğun gerçek 'profiles' tablosundan nickleri birleştiriyoruz (JOIN)
     if (filter === "hepsi") {
       const { data: allData, error } = await supabaseAdmin
         .from("minmat_leaderboard")
-        .select("*")
+        .select("*, profiles(nickname)")
         .order("high_score", { ascending: false })
         .limit(10);
 
       if (error) throw error;
-      return NextResponse.json(allData || []);
+      
+      // Veriyi arayüzün beklediği formata temizce dönüştürüyoruz
+      const formattedData = allData?.map(item => ({
+        ...item,
+        nickname: item.profiles?.nickname || "Kullanıcı"
+      }));
+      
+      return NextResponse.json(formattedData || []);
     }
 
     const { data, error } = await supabaseAdmin
       .from("minmat_leaderboard")
-      .select("*")
+      .select("*, profiles(nickname)")
       .eq("category", filter)
       .order("high_score", { ascending: false })
       .limit(10);
 
     if (error) throw error;
-    return NextResponse.json(data || []);
+
+    const formattedData = data?.map(item => ({
+      ...item,
+      nickname: item.profiles?.nickname || "Kullanıcı"
+    }));
+
+    return NextResponse.json(formattedData || []);
   } catch (error) {
     console.error("MinMat scores GET hatası:", error);
     return NextResponse.json([], { status: 500 });
@@ -49,28 +62,29 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { score, level, mode, clerkUserId, nickname } = body;
+    
+    const score = body.score;
+    const clerkUserId = body.clerkUserId;
+    const mode = body.mappedMode || body.mode; 
 
-    if (!score || !mode || !clerkUserId) {
+    if (score === undefined || !mode || !clerkUserId) {
       return NextResponse.json({ error: "Eksik parametreler" }, { status: 400 });
     }
 
-    // Gerçek tablo olan minmat_leaderboard üzerinde arama yapıyoruz
+    // Puan kontrolü
     const { data: existingScore, error: fetchError } = await supabaseAdmin
       .from("minmat_leaderboard")
       .select("*")
       .eq("user_id", clerkUserId)
       .eq("category", mode)
-      .single();
-
-    if (fetchError && fetchError.code !== "PGRST116") throw fetchError;
+      .maybeSingle();
 
     const newHighScore =
       !existingScore || score > existingScore.high_score ? score : existingScore.high_score;
     const newRewardScore =
       !existingScore || score > existingScore.reward_score ? score : existingScore.reward_score;
 
-    // Puanla birlikte oyun anındaki güncel takma adı (nickname) doğrudan mühürlüyoruz
+    // Puan tablosuna mühürleme (Nick artık profiles tablosundan dinamik gelecek)
     const { error: upsertError } = await supabaseAdmin
       .from("minmat_leaderboard")
       .upsert({
@@ -78,17 +92,16 @@ export async function POST(request: Request) {
         category: mode,
         high_score: newHighScore,
         reward_score: newRewardScore,
-        nickname: nickname || "Kullanıcı",
         updated_at: new Date().toISOString(),
       }, { onConflict: 'user_id,category' });
 
     if (upsertError) throw upsertError;
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
     console.error("MinMat scores POST hatası:", error);
     return NextResponse.json(
-      { error: "Sunucu hatası" },
+      { error: error.message || "Sunucu hatası" },
       { status: 500 }
     );
   }
