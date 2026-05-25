@@ -41,71 +41,10 @@ export async function GET(request: Request) {
     const gecmisSampiyonlar = await getGecmisSampiyonlar();
     const periodEnd = await getPeriodEnd();
     const { cupMatRewards, minMatRewards } = await getRewardLeaderboards();
-    const { supabaseAdmin } = await import("@/lib/supabase");
-    
-    const seventyTwoHoursAgo = Date.now() - 72 * 60 * 60 * 1000;
 
-    // CupMat Podium (Supabase'ten)
-    const { data: cupData, error: cupError } = await supabaseAdmin
-      .from("cupmat_leaderboard")
-      .select("*")
-      .order("points", { ascending: false })
-      .limit(3);
-
-    const cupMatPodium72h = (!cupError && cupData) 
-      ? cupData.map((entry, index) => ({
-          ...entry,
-          rank: index + 1,
-          displayName: entry.display_name,
-        }))
-      : [];
-
-    // MinMat Podium (Supabase'ten)
-    // 1. Önce son 72 saatteki verileri çek
-    const { data: minData, error: minError } = await supabaseAdmin
-      .from("minmat_leaderboard")
-      .select("*")
-      .gte("timestamp", seventyTwoHoursAgo)
-      .not("email", "is", null);
-
-    let minPodiumData = minData || [];
-
-    // 2. Eğer son 72 saatte veri yoksa, tüm zamanların en yüksek skorlarını çek (fallback)
-    if (minPodiumData.length === 0 && !minError) {
-      console.log("Gamification: MinMat son 72 saatte veri yok, tüm zamanların en yüksek skorları çekiliyor...");
-      const { data: allTimeMinData, error: allTimeMinError } = await supabaseAdmin
-        .from("minmat_leaderboard")
-        .select("*")
-        .not("email", "is", null)
-        .order("score", { ascending: false })
-        .limit(100);
-
-      if (!allTimeMinError && allTimeMinData) {
-        minPodiumData = allTimeMinData;
-      }
-    }
-
-    let minMatPodium72h = [];
-
-    if (minPodiumData.length > 0) {
-      const bestByEmail = new Map<string, any>();
-      for (const item of minPodiumData) {
-        const emailKey = String(item.email).toLowerCase().trim();
-        const current = bestByEmail.get(emailKey);
-        if (!current || item.score > current.score) {
-          bestByEmail.set(emailKey, item);
-        }
-      }
-
-      minMatPodium72h = Array.from(bestByEmail.values())
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3)
-        .map((entry, index) => ({
-          ...entry,
-          rank: index + 1,
-          displayName: entry.name,
-        }));
-    }
+    // Yeni sistem: getRewardLeaderboards() fonksiyonundan gelen verileri kullan
+    const cupMatPodium72h = cupMatRewards;
+    const minMatPodium72h = minMatRewards;
 
     return NextResponse.json({
       success: true,

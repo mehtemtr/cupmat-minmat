@@ -1296,27 +1296,18 @@
         checkInput();
       }
       
-      // Clerk publishableKey açıkça tanımlanıyor
-      const DEFAULT_CLERK_KEY = "pk_live_Y2xlcmsuc3RhdG1hdGlrLmNvbSQ";
-      
       try {
-        let publishableKey = DEFAULT_CLERK_KEY;
+        // API'den Clerk anahtarını çek
+        const clerkKeyRes = await fetch('/api/clerk-key');
+        let publishableKey = null;
         
-        // API'den anahtarı çekmeye çalış
-        try {
-          const clerkKeyRes = await fetch('/api/clerk-key');
-          if (clerkKeyRes.ok) {
-            const data = await clerkKeyRes.json();
-            if (data.publishableKey) {
-              publishableKey = data.publishableKey;
-            }
-          }
-        } catch (apiError) {
-          console.log("Clerk API key çekilemedi, varsayılan kullanılıyor");
+        if (clerkKeyRes.ok) {
+          const data = await clerkKeyRes.json();
+          publishableKey = data.publishableKey;
         }
         
-        // Anahtarı ayarla ve yükle
-        if (window.Clerk) {
+        // Anahtarı yükle
+        if (window.Clerk && publishableKey) {
           window.Clerk.publishableKey = publishableKey;
           window.Clerk.load({
             publishableKey

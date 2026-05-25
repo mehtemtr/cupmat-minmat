@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUser, SignInButton, SignOutButton, UserProfile } from "@clerk/nextjs";
-import { Settings, LogOut, User as UserIcon } from "lucide-react";
+import { Settings, LogOut, User as UserIcon, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function AuthPanel() {
   const { user, isSignedIn, isLoaded } = useUser();
   const [nickname, setNickname] = useState<string>("");
+  const [tempNickname, setTempNickname] = useState("");
   const [showSettings, setShowSettings] = useState(false);
   const [showUserProfile, setShowUserProfile] = useState(false);
-  const [isEditingNickname, setIsEditingNickname] = useState(false);
-  const [newNickname, setNewNickname] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkingUnique, setCheckingUnique] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const debounceRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -19,6 +21,14 @@ export default function AuthPanel() {
       fetchNickname();
     }
   }, [isSignedIn, user]);
+
+  useEffect(() => {
+    if (tempNickname.trim() && tempNickname !== nickname) {
+      checkNicknameUnique();
+    } else {
+      setError(null);
+    }
+  }, [tempNickname]);
 
   const fetchNickname = async () => {
     if (!user) return;
@@ -28,7 +38,7 @@ export default function AuthPanel() {
         const data = await res.json();
         if (data) {
           setNickname(data.nickname);
-          setNewNickname(data.nickname);
+          setTempNickname(data.nickname);
         }
       }
     } catch (error) {
@@ -36,23 +46,58 @@ export default function AuthPanel() {
     }
   };
 
+  const checkNicknameUnique = async () => {
+    if (!tempNickname.trim() || tempNickname === nickname) {
+      setError(null);
+      return;
+    }
+
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    setCheckingUnique(true);
+    setError(null);
+
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/profile/nickname/check?nickname=${encodeURIComponent(tempNickname.trim())}`);
+        const data = await res.json();
+
+        if (!data.unique) {
+          setError("Bu takma ad zaten kullanımda, lütfen başka bir isim seçin!");
+        }
+      } catch (error) {
+        console.error("Benzersizlik kontrol hatası:", error);
+      } finally {
+        setCheckingUnique(false);
+      }
+    }, 500);
+  };
+
   const handleSaveNickname = async () => {
-    if (!user || !newNickname.trim()) return;
-    
+    if (!user || !tempNickname.trim()) return;
+    if (error) return;
+
     setLoading(true);
+    setError(null);
+
     try {
       const res = await fetch("/api/profile/nickname", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nickname: newNickname.trim() }),
+        body: JSON.stringify({ nickname: tempNickname.trim() }),
       });
 
       if (res.ok) {
-        setNickname(newNickname.trim());
-        setIsEditingNickname(false);
+        setNickname(tempNickname.trim());
+      } else {
+        const data = await res.json();
+        setError(data.error || "Bir hata oluştu");
       }
     } catch (error) {
       console.error("Nickname güncelleme hatası:", error);
+      setError("Sunucu hatası");
     } finally {
       setLoading(false);
     }
@@ -80,38 +125,53 @@ export default function AuthPanel() {
   }
 
   return (
-    <div className="flex items-center gap-2 relative z-50">
-      {!isEditingNickname ? (
-        <span className="px-4 py-2 rounded-full bg-white/10 border border-white/10 text-white font-semibold text-sm">
-          {nickname || user?.username || user?.fullName || "Kullanıcı"}
-        </span>
-      ) : (
+    <div className="flex items-center gap-3 relative z-50">
+      <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
           <input
             type="text"
-            value={newNickname}
-            onChange={(e) => setNewNickname(e.target.value)}
-            className="px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:border-emerald-500"
-            placeholder="Yeni nick..."
+            value={tempNickname}
+            onChange={(e) => setTempNickname(e.target.value)}
+            className={`px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all ${
+              error 
+                ? "bg-red-500/10 border border-red-500/50 text-red-300 focus:border-red-400" 
+                : "bg-white/10 border border-white/20 text-white focus:border-emerald-500"
+            }`}
+            placeholder="Takma adınız..."
           />
-          <button
-            onClick={handleSaveNickname}
-            disabled={loading}
-            className="px-3 py-1.5 rounded-lg bg-emerald-500 text-emerald-950 font-bold text-xs hover:bg-emerald-400 disabled:opacity-50"
-          >
-            {loading ? "..." : "Kaydet"}
-          </button>
-          <button
-            onClick={() => {
-              setIsEditingNickname(false);
-              setNewNickname(nickname);
-            }}
-            className="px-3 py-1.5 rounded-lg bg-white/10 text-white font-bold text-xs hover:bg-white/20"
-          >
-            İptal
-          </button>
+          
+          {tempNickname !== nickname && !error && !checkingUnique && (
+            <button
+              onClick={handleSaveNickname}
+              disabled={loading || !tempNickname.trim()}
+              className="flex items-center gap-1 px-3 py-2 rounded-full bg-emerald-500 text-emerald-950 font-bold text-xs hover:bg-emerald-400 disabled:opacity-50 transition-colors"
+            >
+              {loading ? (
+                <span className="animate-pulse">...</span>
+              ) : (
+                <>
+                  <CheckCircle2 className="h-3 w-3" />
+                  Güncelle
+                </>
+              )}
+            </button>
+          )}
+
+          {checkingUnique && (
+            <div className="flex items-center gap-1 px-3 py-2 text-yellow-400 text-xs font-semibold">
+              <span className="animate-pulse">⏳</span>
+              Kontrol ediliyor...
+            </div>
+          )}
         </div>
-      )}
+
+        {error && (
+          <div className="flex items-center gap-1.5 text-red-400 text-xs font-semibold">
+            <AlertCircle className="h-3 w-3" />
+            {error}
+          </div>
+        )}
+      </div>
 
       <button
         onClick={() => setShowSettings(!showSettings)}
@@ -125,19 +185,13 @@ export default function AuthPanel() {
         <div className="absolute top-full right-0 mt-2 w-64 rounded-xl bg-[#060b14] border border-white/10 shadow-2xl p-4">
           <div className="space-y-3">
             <button
-              onClick={() => setIsEditingNickname(!isEditingNickname)}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 text-white text-sm font-medium"
-            >
-              {isEditingNickname ? "✓ Nick Düzenleniyor" : "✏️ Nick Değiştir"}
-            </button>
-            
-            <button
               onClick={() => {
                 setShowUserProfile(true);
                 setShowSettings(false);
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 text-white text-sm font-medium"
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 text-white text-sm font-medium"
             >
+              <UserIcon className="h-4 w-4" />
               ⚙️ Hesap Ayarları
             </button>
 

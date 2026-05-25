@@ -41,7 +41,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: dict.meta.title,
     description: dict.meta.description,
     manifest: "/manifest.json",
-    themeColor: "#04080e",
     appleWebApp: {
       capable: true,
       statusBarStyle: "black-translucent",
@@ -96,6 +95,10 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
+
+export const viewport = {
+  themeColor: "#04080e",
+};
 
 export default async function RootLayout({
   children,
