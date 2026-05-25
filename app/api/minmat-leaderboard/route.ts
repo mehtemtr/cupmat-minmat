@@ -1,126 +1,105 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 
+// .env dosyasına elle eklediğimiz o en güçlü yönetici anahtarı
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+const CATEGORIES = ["topla", "cikar", "carp", "bol", "karisik", "hepsi"] as const;
+type Category = typeof CATEGORIES[number];
+
+// GET: Verileri yeni profiles tablosuyla hafızada birleştirerek tıkır tıkır listeler
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const filter = searchParams.get("filter") || "all";
-    const type = searchParams.get("type") || "leaderboard";
+    const filter = (searchParams.get("filter") || "hepsi") as Category;
 
-    if (type === "podium") {
-      const seventyTwoHoursAgo = Date.now() - 72 * 60 * 60 * 1000;
-
-      const { data: recentData, error: recentError } = await supabaseAdmin
-        .from("minmat_leaderboard")
-        .select("*")
-        .gte("timestamp", seventyTwoHoursAgo)
-        .not("email", "is", null);
-
-      if (recentError) {
-        console.error("Podium fetch error:", recentError);
-        return NextResponse.json({ success: false, podium: [] });
-      }
-
-      let podiumData = recentData || [];
-
-      if (podiumData.length === 0) {
-        console.log("Son 72 saatte veri yok, tüm zamanların en yüksek skorları çekiliyor...");
-        const { data: allTimeData, error: allTimeError } = await supabaseAdmin
-          .from("minmat_leaderboard")
-          .select("*")
-          .not("email", "is", null)
-          .order("score", { ascending: false })
-          .limit(100);
-
-        if (!allTimeError && allTimeData) {
-          podiumData = allTimeData;
-        }
-      }
-
-      const bestByEmail = new Map<string, any>();
-      for (const item of podiumData) {
-        const emailKey = String(item.email).toLowerCase().trim();
-        const current = bestByEmail.get(emailKey);
-        if (!current || item.score > current.score) {
-          bestByEmail.set(emailKey, item);
-        }
-      }
-
-      const podium = Array.from(bestByEmail.values())
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3)
-        .map((entry, index) => ({
-          ...entry,
-          rank: index + 1,
-          displayName: entry.name,
-        }));
-
-      return NextResponse.json({ success: true, podium });
+    if (!CATEGORIES.includes(filter)) {
+      return NextResponse.json({ error: "Geçersiz kategori" }, { status: 400 });
     }
 
-    let query = supabaseAdmin
-      .from("minmat_leaderboard")
-      .select("*")
-      .order("score", { ascending: false })
+    let query = supabaseAdmin.from("minmat_leaderboard").select("*");
+    if (filter !== "hepsi") {
+      query = query.eq("category", filter);
+    }
+    
+    const { data: scores, error: scoreError } = await query
+      .order("high_score", { ascending: false })
       .limit(10);
 
-    if (filter && filter !== "all") {
-      query = query.eq("mode", filter);
-    }
+    if (scoreError) throw scoreError;
 
-    const { data, error } = await query;
+    // Sizin elle kurduğunuz profiles tablosundan nickleri çekiyoruz
+    const { data: profiles, error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .select("user_id, nickname");
 
-    if (error) {
-      console.error("Leaderboard fetch error:", error);
-      return NextResponse.json([]);
-    }
+    const profileMap = new Map(profiles?.map(p => [p.user_id, p.nickname]) || []);
 
-    return NextResponse.json(data || []);
+    const formattedData = scores?.map(item => ({
+      ...item,
+      nickname: profileMap.get(item.user_id) || item.nickname || "Kullanıcı"
+    })) || [];
 
+    return NextResponse.json(formattedData);
   } catch (error) {
-    console.error("MinMat leaderboard GET error:", error);
-    return NextResponse.json([]);
+    console.error("MinMat scores GET hatası:", error);
+    return NextResponse.json([], { status: 500 });
   }
 }
 
+// POST: Oyun ne gönderirse göndersin, 400 hatası vermeden havada yakalayıp kaydeder
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    
+    const score = body.score;
+    const clerkUserId = body.clerkUserId;
+    const mode = body.mappedMode || body.mode; 
 
-    const safeName = body.name && body.name.trim() ? body.name.trim() : "KaraKartal1923";
-
-    const scoreEntry = {
-      name: safeName,
-      email: body.email || "",
-      score: body.score,
-      level: body.level,
-      mode: body.mode,
-      timestamp: body.timestamp || Date.now(),
-      date: body.date || new Date().toLocaleDateString("tr-TR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-
-    const { error } = await supabaseAdmin
-      .from("minmat_leaderboard")
-      .insert([scoreEntry]);
-
-    if (error) {
-      console.error("Supabase insert error:", error);
-      return NextResponse.json(
-        { success: false, error: "Kaydedilemedi" },
-        { status: 500 },
-      );
+    // Temel veriler eksikse çökmeyi önle
+    if (score === undefined || !mode || !clerkUserId) {
+      return NextResponse.json({ error: "Eksik parametreler" }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true });
+    // Kullanıcının nickini az önce kurduğunuz profiles tablosundan çek
+    const { data: profile } = await supabaseAdmin
+      .from("profiles")
+      .select("nickname")
+      .eq("user_id", clerkUserId)
+      .maybeSingle();
 
-  } catch (error) {
-    console.error("MinMat leaderboard POST error:", error);
-    return NextResponse.json(
-      { success: false, error: "Kaydedilemedi" },
-      { status: 500 },
-    );
+    const finalNickname = profile?.nickname || "Karakartal1923";
+
+    // Skor kontrolü
+    const { data: existingScore } = await supabaseAdmin
+      .from("minmat_leaderboard")
+      .select("*")
+      .eq("user_id", clerkUserId)
+      .eq("category", mode)
+      .maybeSingle();
+
+    const newHighScore = !existingScore || score > existingScore.high_score ? score : existingScore.high_score;
+    const newRewardScore = !existingScore || score > existingScore.reward_score ? score : existingScore.reward_score;
+
+    // Veritabanına sarsılmaz kayıt
+    const { error: upsertError } = await supabaseAdmin
+      .from("minmat_leaderboard")
+      .upsert({
+        user_id: clerkUserId,
+        category: mode,
+        high_score: newHighScore,
+        reward_score: newRewardScore,
+        nickname: finalNickname,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,category' });
+
+    if (upsertError) throw upsertError;
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error("MinMat scores POST hatası:", error);
+    return NextResponse.json({ error: "Sunucu hatası" }, { status: 500 });
   }
 }

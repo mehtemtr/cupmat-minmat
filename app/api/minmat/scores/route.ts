@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+// Supabase en üst düzey admin bağlantısı
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -29,7 +30,7 @@ export async function GET(request: Request) {
 
     if (scoreError) throw scoreError;
 
-    // Profilleri ayrı çekip hafızada birleştirerek veritabanı ilişki hatasını kökten çözüyoruz
+    // profiles tablosundan canlı nickleri çekip RAM'de birleştiriyoruz
     const { data: profiles, error: profileError } = await supabaseAdmin
       .from("profiles")
       .select("user_id, nickname");
@@ -51,14 +52,27 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    
+    // Konsoldaki verilere göre esnek parametre yakalama motoru
     const score = body.score;
     const clerkUserId = body.clerkUserId;
-    const mode = body.mappedMode || body.mode; 
+    const mode = body.mappedMode || body.mode; // 'topla' değerini buradan pürüzsüzce yakalar
 
+    // Eğer temel veriler eksikse 400 vermeden önce log basalım
     if (score === undefined || !mode || !clerkUserId) {
-      return NextResponse.json({ error: "Eksik parametreler" }, { status: 400 });
+      return NextResponse.json({ error: "Eksik temel parametreler" }, { status: 400 });
     }
 
+    // Kullanıcının nickini az önce elle kurduğun o profiles tablosundan canlı çekiyoruz!
+    const { data: profile } = await supabaseAdmin
+      .from("profiles")
+      .select("nickname")
+      .eq("user_id", clerkUserId)
+      .maybeSingle();
+
+    const finalNickname = profile?.nickname || "Karakartal1923";
+
+    // Mevcut skoru kontrol et
     const { data: existingScore } = await supabaseAdmin
       .from("minmat_leaderboard")
       .select("*")
@@ -69,12 +83,7 @@ export async function POST(request: Request) {
     const newHighScore = !existingScore || score > existingScore.high_score ? score : existingScore.high_score;
     const newRewardScore = !existingScore || score > existingScore.reward_score ? score : existingScore.reward_score;
 
-    const { data: profile } = await supabaseAdmin
-      .from("profiles")
-      .select("nickname")
-      .eq("user_id", clerkUserId)
-      .maybeSingle();
-
+    // minmat_leaderboard tablosuna güvenle mühürle
     const { error: upsertError } = await supabaseAdmin
       .from("minmat_leaderboard")
       .upsert({
@@ -82,7 +91,7 @@ export async function POST(request: Request) {
         category: mode,
         high_score: newHighScore,
         reward_score: newRewardScore,
-        nickname: profile?.nickname || "Karakartal1923",
+        nickname: finalNickname,
         updated_at: new Date().toISOString(),
       });
 
