@@ -10,6 +10,18 @@
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
   <script>
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MinMat – Sayı Avı</title>
+  <link rel="icon" href="/icon.png" type="image/png">
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
@@ -19,7 +31,6 @@
   <!-- Clerk Authentication SDK -->
   <script
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
-    data-publishable-key="pk_live_Y2xlcmsuc3RhdG1hdGlrLmNvbSQ"
     crossorigin="anonymous"
   ></script>
 
@@ -1147,13 +1158,19 @@
               isAuthenticated: true,
               ...data.userSession
             };
+            console.log("kullanıcı giriş yaptı: " + (userSession.displayName || userSession.username || userSession.email || "Adsız"));
           } else {
             userSession = { isAuthenticated: false };
+            console.log("kullanıcı çıkış yaptı");
           }
+        } else {
+          userSession = { isAuthenticated: false };
+          console.log("kullanıcı çıkış yaptı");
         }
       } catch (e) {
         console.error("Error checking session:", e);
         userSession = { isAuthenticated: false };
+        console.log("kullanıcı çıkış yaptı");
       }
       updateAuthUI();
     }
@@ -1286,6 +1303,7 @@
     }
 
     function redirectToSignOut() {
+      console.log("kullanıcı çıkış yaptı");
       const currentPath = window.location.pathname + window.location.search;
       window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
     }
@@ -1310,23 +1328,41 @@
           publishableKey = data.publishableKey;
         }
         
-        // Anahtarı yükle
-        if (window.Clerk && publishableKey) {
-          window.Clerk.publishableKey = publishableKey;
-          window.Clerk.load({
-            publishableKey
-          }).then(() => {
+        if (window.Clerk) {
+          // Eğer Clerk zaten yüklü ve aktifse load() çağırmayalım
+          if (window.Clerk.loaded) {
+            console.log("[Clerk] Zaten yüklü ve aktif.");
             checkAuthSession();
-            
             if (window.Clerk.addListener) {
               window.Clerk.addListener((e) => {
-                if (e.session) {
-                  checkAuthSession();
-                }
+                console.log("[Clerk Listener] Oturum durumu değişti:", e);
+                checkAuthSession();
               });
             }
-          });
+          } else if (publishableKey) {
+            console.log("[Clerk] Yükleniyor...", publishableKey);
+            window.Clerk.publishableKey = publishableKey;
+            window.Clerk.load({
+              publishableKey
+            }).then(() => {
+              console.log("[Clerk] Başarıyla yüklendi.");
+              checkAuthSession();
+              if (window.Clerk.addListener) {
+                window.Clerk.addListener((e) => {
+                  console.log("[Clerk Listener] Oturum durumu değişti:", e);
+                  checkAuthSession();
+                });
+              }
+            }).catch((err) => {
+              console.error("[Clerk Load Hatası]:", err);
+              checkAuthSession();
+            });
+          } else {
+            console.warn("[Clerk] Publishable key bulunamadı.");
+            checkAuthSession();
+          }
         } else {
+          console.warn("[Clerk] SDK bulunamadı.");
           checkAuthSession();
         }
       } catch (error) {
@@ -1896,19 +1932,8 @@
        return map[oldCat] || "karisik";
      }
      
-     console.log("[FRONTEND] Clerk authentication API tarafından yapılacak.");
-     
      const mappedMode = mapCategory(currentMode);
      
-     console.log("=== [FRONTEND] PUAN GÖNDERİLİYOR ===", { 
-       score: currentScore, 
-       level: currentLevel, 
-       originalMode: currentMode,
-       mappedMode: mappedMode,
-       userSession: userSession
-     }); 
-
-     // Sadece gerekli parametreleri gönderelim - artık clerkUserId göndermiyoruz!
      const payload = { 
        score: currentScore,
        highScore: currentScore,
@@ -1921,26 +1946,19 @@
        kategori: mappedMode
      };
      
-     console.log("[FRONTEND] Gönderilen tam payload:", payload);
-
      try { 
-         // Zaman damgası ekleyerek önbelleği devre dışı bırakalım
          const timestamp = Date.now();
-         
-         // Clerk token'ını al ve headers'a ekle!
          const token = await getClerkToken();
          const headers = { 'Content-Type': 'application/json' };
          if (token) {
              headers['Authorization'] = `Bearer ${token}`;
          }
          
-         // Eski ve güvenilir route'u kullanalım: /api/minmat/scores
          let response = await fetch(`/api/minmat/scores?t=${timestamp}`, { 
              method: 'POST', 
              headers: headers, 
              credentials: 'include',
              body: JSON.stringify(payload) 
-         }); 
          
          console.log("[FRONTEND] /api/minmat/scores Yanıt Durumu:", response.status);
          
