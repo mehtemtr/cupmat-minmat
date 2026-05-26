@@ -82,7 +82,15 @@ export async function GET(request: Request) {
     return NextResponse.json(formattedData);
   } catch (error: any) {
     console.error("[API GET] MinMat scores GET hatası:", error);
-    return NextResponse.json({ error: "Sunucu hatası", details: error?.message || String(error) }, { status: 500 });
+    return NextResponse.json({ 
+      error: "Sunucu hatası", 
+      details: error?.message || String(error),
+      diagnostics: {
+        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || "NOT_SET",
+        hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+        serviceKeyPrefix: process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.slice(0, 15) : "NONE"
+      }
+    }, { status: 500 });
   }
 }
 
@@ -147,6 +155,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, data: { high_score: score, nickname: finalNickname } });
   } catch (error: any) {
     console.error("[API POST] MinMat scores POST hatası:", error);
-    return NextResponse.json({ error: "Sunucu hatası", details: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      error: "Sunucu hatası", 
+      details: error?.message || String(error),
+      diagnostics: {
+        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || "NOT_SET",
+        hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+        serviceKeyPrefix: process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.slice(0, 15) : "NONE"
+      }
+    }, { status: 500 });
   }
 }
