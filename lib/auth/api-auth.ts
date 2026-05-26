@@ -29,9 +29,15 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
     };
   }
 
-  let user = await currentUser();
+  let user = null;
+  try {
+    user = await currentUser();
+  } catch (e) {
+    console.error("[requireApiAuth] currentUser() threw an error:", e);
+  }
+
   if (!user) {
-    console.log("[requireApiAuth] currentUser() is null, attempting fallback to clerkClient...");
+    console.log("[requireApiAuth] currentUser() is null or threw, attempting fallback to clerkClient...");
     try {
       const client = await clerkClient();
       user = await client.users.getUser(userId);
