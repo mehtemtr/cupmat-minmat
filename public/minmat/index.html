@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -1916,65 +1916,66 @@
        ========================================== */
 
  async function saveScore() { 
-     const currentScore = score; 
-     const currentLevel = level; 
-     const currentMode = gameMode || 'mix'; 
-     
-     // Kategori dönüşümü: eski ad -> yeni ad
-     function mapCategory(oldCat) {
-       const map = {
-         "add": "topla",
-         "sub": "cikar",
-         "mul": "carp",
-         "div": "bol",
-         "mix": "karisik"
-       };
-       return map[oldCat] || "karisik";
-     }
-     
-     const mappedMode = mapCategory(currentMode);
-     
-     const payload = { 
-       score: currentScore,
-       highScore: currentScore,
-       puan: currentScore,
-       level: currentLevel,
-       tur: currentLevel,
-       mode: mappedMode,
-       mappedMode: mappedMode,
-       category: mappedMode,
-       kategori: mappedMode
-     };
-     
-     try { 
-         const timestamp = Date.now();
-         const token = await getClerkToken();
-         const headers = { 'Content-Type': 'application/json' };
-         if (token) {
-             headers['Authorization'] = `Bearer ${token}`;
-         }
-         
-         let response = await fetch(`/api/minmat/scores?t=${timestamp}`, { 
-             method: 'POST', 
-             headers: headers, 
-             credentials: 'include',
-             body: JSON.stringify(payload) 
-         
-         console.log("[FRONTEND] /api/minmat/scores Yanıt Durumu:", response.status);
-         
-         const result = await response.json(); 
-         console.log("[FRONTEND] API Yanıtı:", result);
-         
-         if (response.ok) { 
-             console.log("🏆 Puan Başarıyla Kaydedildi!"); 
-             renderLeaderboard(); // Tabloyu anında yenile 
-         } else { 
-             console.error("[FRONTEND] Veritabanı Hatası:", result.error); 
-         } 
-     } catch (err) { 
-         console.error("[FRONTEND] Ağ Hatası:", err); 
-     } 
- } 
+      const currentScore = score; 
+      const currentLevel = level; 
+      const currentMode = gameMode || 'mix'; 
+      
+      // Kategori dÃ¶nÃ¼ÅŸÃ¼mÃ¼: eski ad -> yeni ad
+      function mapCategory(oldCat) {
+        const map = {
+          "add": "topla",
+          "sub": "cikar",
+          "mul": "carp",
+          "div": "bol",
+          "mix": "karisik"
+        };
+        return map[oldCat] || "karisik";
+      }
+      
+      const mappedMode = mapCategory(currentMode);
+      
+      const payload = { 
+        score: currentScore,
+        highScore: currentScore,
+        puan: currentScore,
+        level: currentLevel,
+        tur: currentLevel,
+        mode: mappedMode,
+        mappedMode: mappedMode,
+        category: mappedMode,
+        kategori: mappedMode
+      };
+      
+      try { 
+          const timestamp = Date.now();
+          const token = await getClerkToken();
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) {
+              headers['Authorization'] = `Bearer ${token}`;
+          }
+          
+          let response = await fetch(`/api/minmat/scores?t=${timestamp}`, { 
+              method: 'POST', 
+              headers: headers, 
+              credentials: 'include',
+              body: JSON.stringify(payload) 
+          }); 
+          
+          console.log("[FRONTEND] /api/minmat/scores YanÄ±t Durumu:", response.status);
+          
+          const result = await response.json(); 
+          console.log("[FRONTEND] API YanÄ±tÄ±:", result);
+          
+          if (response.ok) { 
+              console.log("ğŸ† Puan BaÅŸarÄ±yla Kaydedildi!"); 
+              renderLeaderboard(); // Tabloyu anÄ±nda yenile 
+          } else { 
+              console.error("[FRONTEND] VeritabanÄ± HatasÄ±:", result.error || result.details || JSON.stringify(result)); 
+          } 
+      } catch (err) { 
+          console.error("[FRONTEND] AÄŸ HatasÄ±:", err); 
+      } 
+  } 
 
     async function renderLeaderboard() {
       console.log("=== [FRONTEND] renderLeaderboard çağrıldı ===");
