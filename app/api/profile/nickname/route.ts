@@ -39,7 +39,16 @@ export async function GET(request: Request) {
 
     if (error) {
       console.error("Profil sorgulama hatası:", error);
-      return NextResponse.json({ error: "Profil sorgulama hatası" }, { status: 500 });
+      return NextResponse.json({ 
+        error: "Profil sorgulama hatası",
+        details: error.message,
+        code: error.code,
+        diagnostics: {
+          supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || "NOT_SET",
+          hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+          serviceKeyPrefix: process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.slice(0, 15) : "NONE"
+        }
+      }, { status: 500 });
     }
 
     // Profil yoksa otomatik oluşturalım
@@ -73,7 +82,16 @@ export async function GET(request: Request) {
 
       if (insertError) {
         console.error("Profil oluşturma hatası:", insertError);
-        return NextResponse.json({ error: "Profil oluşturulamadı" }, { status: 500 });
+        return NextResponse.json({ 
+          error: "Profil oluşturulamadı",
+          details: insertError.message,
+          code: insertError.code,
+          diagnostics: {
+            supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || "NOT_SET",
+            hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+            serviceKeyPrefix: process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.slice(0, 15) : "NONE"
+          }
+        }, { status: 500 });
       }
 
       // Gamification store üzerinde de profili ilklendirelim
@@ -107,7 +125,16 @@ export async function GET(request: Request) {
 
       if (updateError) {
         console.error("Profil nick güncelleme hatası:", updateError);
-        return NextResponse.json({ error: "Profil güncellenemedi" }, { status: 500 });
+        return NextResponse.json({ 
+          error: "Profil güncellenemedi",
+          details: updateError.message,
+          code: updateError.code,
+          diagnostics: {
+            supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || "NOT_SET",
+            hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+            serviceKeyPrefix: process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.slice(0, 15) : "NONE"
+          }
+        }, { status: 500 });
       }
 
       // Gamification store üzerinde de profili güncelleyelim

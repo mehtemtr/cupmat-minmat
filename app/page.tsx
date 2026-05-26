@@ -224,16 +224,6 @@ export default function EntryPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#04080e] selection:bg-emerald-500/30">
 
-      {/* Duyuru Banner */}
-      <div className="w-full bg-gradient-to-r from-amber-600 to-amber-500 py-3 px-4 z-50">
-        <div className="max-w-6xl mx-auto flex items-center justify-center gap-3 text-center">
-          <span className="text-2xl">📢</span>
-          <p className="text-sm sm:text-base font-semibold text-amber-950">
-            Bilgilendirme: Altyapı ve sunucu senkronizasyonlarından kaynaklanan teknik nedenlerden dolayı, kullanıcı kayıtları ve puan sıralamalarının listelenmesinde geçici aksaklıklar yaşanmaktadır. Mühendislerimiz sorunu tamamen çözmek için çalışıyorlar; bu süreçte sistemlerimizi keyifle kullanmaya devam edebilirsiniz. Anlayışınız için teşekkür ederiz!
-          </p>
-        </div>
-      </div>
-
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent" />

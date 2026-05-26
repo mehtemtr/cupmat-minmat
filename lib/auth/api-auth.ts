@@ -61,7 +61,22 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   
   let email = "";
   if (user?.primaryEmailAddressId) {
-    email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
+    email = user.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
+  }
+  
+  if (!email && user?.emailAddresses && user.emailAddresses.length > 0) {
+    email = user.emailAddresses[0]?.emailAddress || "";
+  }
+
+  // Fallback to sessionClaims email if available
+  if (!email && session.sessionClaims) {
+    const claims = session.sessionClaims as any;
+    email = claims.email || claims.primary_email_address || claims.primaryEmailAddress || "";
+  }
+
+  // Final fallback to avoid DB NOT NULL / UNIQUE constraints crashing the profile insertion
+  if (!email) {
+    email = `${userId}@no-email.statmatik.com`;
   }
 
   return { ok: true, userId, displayName, email, username: user?.username || null, firstName, lastName };

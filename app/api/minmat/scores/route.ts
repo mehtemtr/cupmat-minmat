@@ -18,15 +18,15 @@ export async function GET(request: Request) {
 
     let query = supabaseAdmin.from("minmat_leaderboard").select("*");
     if (filter !== "hepsi") {
-      const modeMap: Record<string, string> = {
-        "topla": "add",
-        "cikar": "sub",
-        "carp": "mul",
-        "bol": "div",
-        "karisik": "mix"
+      const modeMap: Record<string, string[]> = {
+        "topla": ["add", "topla"],
+        "cikar": ["sub", "cikar"],
+        "carp": ["mul", "carp"],
+        "bol": ["div", "bol"],
+        "karisik": ["mix", "karisik"]
       };
-      const dbMode = modeMap[filter] || filter;
-      query = query.eq("mode", dbMode);
+      const dbModes = modeMap[filter] || [filter];
+      query = query.in("mode", dbModes);
     }
     
     const { data: scores, error: scoreError } = await query

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { currentUser, auth, clerkClient } from "@clerk/nextjs/server";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export async function GET() {
   try {
@@ -10,13 +11,20 @@ export async function GET() {
       if (user.primaryEmailAddressId) {
         email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress || "";
       }
+      
+      const { data: dbProfile } = await supabaseAdmin
+        .from("profiles")
+        .select("nickname")
+        .eq("id", user.id)
+        .maybeSingle();
+
       return NextResponse.json({
         isAuthenticated: true,
         userSession: {
           userId: user.id,
           email: email,
           username: user.username || null,
-          displayName: user.username || user.fullName || "KaraKartal1923"
+          displayName: dbProfile?.nickname || user.username || user.fullName || "KaraKartal1923"
         }
       });
     }
@@ -31,7 +39,15 @@ export async function GET() {
         if (userFromSdk.primaryEmailAddressId) {
           email = userFromSdk.emailAddresses.find((e) => e.id === userFromSdk.primaryEmailAddressId)?.emailAddress || "";
         }
-        const displayName = userFromSdk.username || 
+
+        const { data: dbProfile } = await supabaseAdmin
+          .from("profiles")
+          .select("nickname")
+          .eq("id", userFromSdk.id)
+          .maybeSingle();
+
+        const displayName = dbProfile?.nickname || 
+                            userFromSdk.username || 
                             userFromSdk.fullName || 
                             (userFromSdk.firstName && userFromSdk.lastName ? `${userFromSdk.firstName} ${userFromSdk.lastName}` : "KaraKartal1923");
         return NextResponse.json({
