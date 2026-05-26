@@ -184,7 +184,7 @@ export function Header() {
                 <div className="p-2">
                   {/* MinMat Link */}
                   <Link
-                    href="/minmat/index.html"
+                    href="/minmat"
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-blue-300 hover:bg-blue-500/10 transition-colors"
                   >

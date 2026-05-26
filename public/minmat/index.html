@@ -122,7 +122,7 @@
       justify-content: center;
       font-weight: bold;
       font-size: 18px;
-      background-image: url("icon.png");
+      background-image: url("/minmat/icon.png");
       background-size: 60%;
       background-repeat: no-repeat;
       background-position: center;
@@ -755,7 +755,7 @@
         <button class="menuLangBtn" onclick="setLang('es')">🇪🇸</button>
       </div>
       <div class="menuLogo">
-        <img src="icon.png" alt="MinMat">
+        <img src="/minmat/icon.png" alt="MinMat">
       </div>
       <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 16px;">MinMat — Zeka ve Matematik Oyunu</p>
       
@@ -1173,9 +1173,13 @@
       if (userSession.isAuthenticated) {
         const displayName = userSession.displayName || userSession.username || "Kullanıcı";
         
-        // Clerk user ID'sini localStorage'a kaydet
+        // Clerk user ID'sini TÜM localStorage anahtarlarına kaydet!
         if (userSession.userId) {
           localStorage.setItem('clerk_user_id', userSession.userId);
+          localStorage.setItem('clerkUserId', userSession.userId);
+          localStorage.setItem('userId', userSession.userId);
+          localStorage.setItem('user_id', userSession.userId);
+          console.log("[FRONTEND updateAuthUI] Clerk user ID'si tüm localStorage anahtarlarına kaydedildi:", userSession.userId);
         }
         
         minmatAuthPanel.innerHTML = `
@@ -1892,49 +1896,62 @@
        return map[oldCat] || "karisik";
      }
      
-     // Clerk user ID'sini localStorage'dan al
-     const clerkUserId = localStorage.getItem('clerk_user_id');
+     console.log("[FRONTEND] Clerk authentication API tarafından yapılacak.");
      
      const mappedMode = mapCategory(currentMode);
      
-     console.log("=== PUAN GÖNDERİLİYOR ===", { 
+     console.log("=== [FRONTEND] PUAN GÖNDERİLİYOR ===", { 
        score: currentScore, 
        level: currentLevel, 
        originalMode: currentMode,
        mappedMode: mappedMode,
-       clerkUserId: clerkUserId
+       userSession: userSession
      }); 
 
-     if (!clerkUserId) {
-       console.log("Kullanıcı giriş yapmamış, puan kaydedilemiyor.");
-       renderLeaderboard();
-       return;
-     }
+     // Sadece gerekli parametreleri gönderelim - artık clerkUserId göndermiyoruz!
+     const payload = { 
+       score: currentScore,
+       highScore: currentScore,
+       puan: currentScore,
+       level: currentLevel,
+       tur: currentLevel,
+       mode: mappedMode,
+       mappedMode: mappedMode,
+       category: mappedMode,
+       kategori: mappedMode
+     };
+     
+     console.log("[FRONTEND] Gönderilen tam payload:", payload);
 
      try { 
-         const response = await fetch('/api/minmat/scores', { 
+         // Zaman damgası ekleyerek önbelleği devre dışı bırakalım
+         const timestamp = Date.now();
+         
+         // Eski ve güvenilir route'u kullanalım: /api/minmat/scores
+         let response = await fetch(`/api/minmat/scores?t=${timestamp}`, { 
              method: 'POST', 
              headers: { 'Content-Type': 'application/json' }, 
-             body: JSON.stringify({ 
-               score: currentScore, 
-               level: currentLevel, 
-               mode: mappedMode 
-             }) 
+             body: JSON.stringify(payload) 
          }); 
          
+         console.log("[FRONTEND] /api/minmat/scores Yanıt Durumu:", response.status);
+         
          const result = await response.json(); 
+         console.log("[FRONTEND] API Yanıtı:", result);
+         
          if (response.ok) { 
-             console.log("🏆 Puan Başarıyla Supabase'e Yazıldı!"); 
+             console.log("🏆 Puan Başarıyla Kaydedildi!"); 
              renderLeaderboard(); // Tabloyu anında yenile 
          } else { 
-             console.error("Veritabanı Hatası:", result.error); 
+             console.error("[FRONTEND] Veritabanı Hatası:", result.error); 
          } 
      } catch (err) { 
-         console.error("Ağ Hatası:", err); 
+         console.error("[FRONTEND] Ağ Hatası:", err); 
      } 
  } 
 
     async function renderLeaderboard() {
+      console.log("=== [FRONTEND] renderLeaderboard çağrıldı ===");
       let filterKey = "leaderAll";
       if (leaderboardFilter === "add") filterKey = "leaderAdd";
       else if (leaderboardFilter === "sub") filterKey = "leaderSub";
@@ -1942,6 +1959,7 @@
       else if (leaderboardFilter === "div") filterKey = "leaderDiv";
       else if (leaderboardFilter === "mix") filterKey = "leaderMix";
 
+      console.log("[FRONTEND] Leaderboard filtresi:", leaderboardFilter);
       document.getElementById("leaderboard").innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">⏳ Yükleniyor... / Loading...</div>`;
 
       // Kategori dönüşümü: eski ad -> yeni ad
@@ -1957,43 +1975,56 @@
         return map[oldCat] || "hepsi";
       }
 
-      // Kategori dönüşümü: yeni ad -> eski görünen ad
-      function mapCategoryDisplay(newCat) {
-        const map = {
-          "topla": "toplama",
-          "cikar": "çıkarma",
-          "carp": "çarpma",
-          "bol": "bölme",
-          "karisik": "karışık"
-        };
-        return map[newCat] || newCat;
-      }
-
       let scores = [];
       try {
         const apiFilter = mapCategory(leaderboardFilter);
-        const response = await fetch(`/api/minmat/scores?filter=${apiFilter}`, {
+        const timestamp = Date.now();
+        console.log("[FRONTEND] API filtresi:", apiFilter);
+        
+        // Eski ve güvenilir route'u kullanalım: /api/minmat/scores
+        let response = await fetch(`/api/minmat/scores?filter=${apiFilter}&t=${timestamp}`, {
           credentials: "include"
         });
+        
+        console.log("[FRONTEND] /api/minmat/scores yanıt durumu:", response.status);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log("[FRONTEND] API'den gelen ham veri:", data);
           scores = Array.isArray(data) ? data : [];
           
+          // Kategori dönüşümü: yeni ad -> eski ad (modeName için)
+          function mapCategoryReverse(newCat) {
+            const map = {
+              "topla": "add",
+              "cikar": "sub",
+              "carp": "mul",
+              "bol": "div",
+              "karisik": "mix"
+            };
+            return map[newCat] || "mix";
+          }
+
           // Veriyi index.html'in beklediği formata çevir
-          scores = scores.map(entry => ({
-            name: entry.profiles?.nickname || "Kullanıcı",
-            score: entry.high_score,
-            level: entry.category === "karisik" ? Math.floor(Math.sqrt(entry.high_score / 10)) : Math.floor(entry.high_score / 10),
-            mode: mapCategoryDisplay(entry.category),
-            date: new Date(entry.updated_at).toLocaleDateString("tr-TR", {
-              hour: "2-digit",
-              minute: "2-digit"
-            }),
-            timestamp: new Date(entry.updated_at).getTime()
-          }));
+          scores = scores.map(entry => {
+            const mappedEntry = {
+              name: entry.nickname || "Kullanıcı",
+              score: entry.high_score,
+              level: entry.category === "karisik" ? Math.floor(Math.sqrt(entry.high_score / 10)) : Math.floor(entry.high_score / 10),
+              mode: mapCategoryReverse(entry.category),
+              date: new Date(entry.updated_at).toLocaleDateString("tr-TR", {
+                hour: "2-digit",
+                minute: "2-digit"
+              }),
+              timestamp: new Date(entry.updated_at).getTime()
+            };
+            console.log("[FRONTEND] Map edilen entry:", mappedEntry);
+            return mappedEntry;
+          });
+          console.log("[FRONTEND] Hazırlanan skorlar:", scores);
         }
       } catch (error) {
-        console.error("Veri çekilemedi:", error);
+        console.error("[FRONTEND] Veri çekilemedi:", error);
         scores = JSON.parse(localStorage.getItem("scores")) || [];
       }
 

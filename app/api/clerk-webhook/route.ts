@@ -135,12 +135,13 @@ export async function POST(request: Request) {
 
       const categories = ["topla", "cikar", "carp", "bol", "karisik"];
       for (const category of categories) {
-        await supabaseAdmin.from("minmat_scores").insert([
+        await supabaseAdmin.from("minmat_leaderboard").insert([
           {
             user_id: userId,
             category: category,
             high_score: 0,
             reward_score: 0,
+            nickname: nickname,
           },
         ]);
       }

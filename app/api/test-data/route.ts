@@ -27,9 +27,10 @@ export async function GET() {
 
     for (const score of sampleScores) {
       await supabaseAdmin
-        .from("minmat_scores")
+        .from("minmat_leaderboard")
         .upsert({
           ...score,
+          nickname: sampleProfiles.find(p => p.id === score.user_id)?.nickname || "Kullanıcı",
           updated_at: new Date().toISOString()
         }, { onConflict: "user_id,category" });
     }

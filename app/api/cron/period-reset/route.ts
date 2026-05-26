@@ -174,7 +174,7 @@ async function forceResetPeriodWithFixedSchedule() {
 async function resetMinMatRewardScores() {
   try {
     const { error } = await supabaseAdmin
-      .from("minmat_scores")
+      .from("minmat_leaderboard")
       .update({ reward_score: 0 });
 
     if (error) {

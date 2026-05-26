@@ -1,7 +1,7 @@
 export default function MinMatPage() {
   return (
     <div className="min-h-screen bg-[#060b14]">
-      <div className="w-full h-[calc(100vh-64px)]">
+      <div className="w-full h-screen">
         <iframe 
           src="/minmat/index.html" 
           className="w-full h-full border-0 block"

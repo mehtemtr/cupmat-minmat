@@ -224,7 +224,7 @@ async function transitionToNextPeriod(store: GamificationStore): Promise<void> {
   const { supabaseAdmin } = await import("@/lib/supabase");
   try {
     const { error } = await supabaseAdmin
-      .from("minmat_scores")
+      .from("minmat_leaderboard")
       .update({ reward_score: 0 });
     if (error) {
       console.error("MinMat reward_score sıfırlama hatası:", error);
@@ -341,7 +341,7 @@ async function transitionToNextPeriodWithFixedSchedule(store: GamificationStore,
   const { supabaseAdmin } = await import("@/lib/supabase");
   try {
     const { error } = await supabaseAdmin
-      .from("minmat_scores")
+      .from("minmat_leaderboard")
       .update({ reward_score: 0 });
     if (error) {
       console.error("MinMat reward_score sıfırlama hatası:", error);
@@ -555,10 +555,10 @@ export async function getRewardLeaderboards(): Promise<{
     }
   });
 
-  // Yeni minmat_scores tablosundan verileri çekelim
+  // Yeni minmat_leaderboard tablosundan verileri çekelim
   const { data: minMatScores } = await supabaseAdmin
-    .from("minmat_scores")
-    .select("*, profiles!inner(nickname)")
+    .from("minmat_leaderboard")
+    .select("*")
     .in("user_id", userIds);
 
   // Build max score map for eligible users
