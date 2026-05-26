@@ -34,11 +34,16 @@ if (!supabaseUrl || supabaseUrl === "https://supabase.com" || !supabaseUrl.inclu
   }
 }
 
+// Fallback to avoid createClient throwing during module import
+const safeUrl = supabaseUrl || "https://placeholder-project-ref.supabase.co";
+const safeAnonKey = supabaseAnonKey || "placeholder-anon-key";
+const safeServiceKey = supabaseServiceKey || "placeholder-service-key";
+
 // İstemci tarafı için (tarayıcı)
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(safeUrl, safeAnonKey);
 
 // Sunucu tarafı için (API rotaları)
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+export const supabaseAdmin = createClient(safeUrl, safeServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,

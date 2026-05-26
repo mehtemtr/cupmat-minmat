@@ -175,50 +175,11 @@ function BirthdayCake() {
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
-  const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday">("none");
-  const [showTrabzonsporBanner, setShowTrabzonsporBanner] = useState(false);
-
-  // Trabzonspor Banner Check (24hr from first load + localStorage)
-  useEffect(() => {
-    const TRABZONSPOR_BANNER_KEY = "trabzonspor_banner_shown";
-    const TRABZONSPOR_BANNER_EXPIRY_KEY = "trabzonspor_banner_expiry";
-
-    const checkBanner = () => {
-      const now = Date.now();
-      const expiryStr = localStorage.getItem(TRABZONSPOR_BANNER_EXPIRY_KEY);
-      const dismissed = localStorage.getItem(TRABZONSPOR_BANNER_KEY) === "dismissed";
-
-      if (dismissed) {
-        setShowTrabzonsporBanner(false);
-        return;
-      }
-
-      if (expiryStr) {
-        const expiry = parseInt(expiryStr, 10);
-        if (now > expiry) {
-          setShowTrabzonsporBanner(false);
-          localStorage.setItem(TRABZONSPOR_BANNER_KEY, "dismissed");
-          return;
-        }
-      } else {
-        // Set expiry for 24 hours from now
-        localStorage.setItem(TRABZONSPOR_BANNER_EXPIRY_KEY, (now + 24 * 60 * 60 * 1000).toString());
-      }
-
-      setShowTrabzonsporBanner(true);
-    };
-
-    checkBanner();
-  }, []);
-
-  const handleDismissTrabzonspor = () => {
-    setShowTrabzonsporBanner(false);
-    localStorage.setItem("trabzonspor_banner_shown", "dismissed");
-  };
+  const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday" | "kurban">("none");
 
   useEffect(() => {
     const checkDate = () => {
-      // Check query parameter for easy testing: ?preview=birthday or ?preview=19mayis
+      // Check query parameter for easy testing: ?preview=birthday, ?preview=19mayis, ?preview=kurban
       const urlParams = new URLSearchParams(window.location.search);
       const preview = urlParams.get("preview");
       if (preview === "birthday") {
@@ -227,6 +188,10 @@ export default function EntryPage() {
       }
       if (preview === "19mayis") {
         setActiveBanner("19mayis");
+        return;
+      }
+      if (preview === "kurban") {
+        setActiveBanner("kurban");
         return;
       }
 
@@ -239,6 +204,8 @@ export default function EntryPage() {
         setActiveBanner("19mayis");
       } else if (year === 2026 && month === 4 && date === 20) {
         setActiveBanner("birthday");
+      } else if (year === 2026 && month === 4 && date >= 27 && date <= 30) {
+        setActiveBanner("kurban");
       } else {
         setActiveBanner("none");
       }
@@ -283,41 +250,6 @@ export default function EntryPage() {
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-20">
-        {/* Trabzonspor Türkiye Kupası Şampiyonluğu Tebrik Banner */}
-        {showTrabzonsporBanner && (
-          <div className="w-full mb-10 relative group overflow-hidden rounded-3xl border border-bordeaux-500/25 bg-gradient-to-r from-[#6C0A2F] via-[#7A0C35] to-[#0F52BA] p-5 sm:p-6 shadow-[0_0_40px_rgba(124,10,47,0.45)] transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_55px_rgba(15,82,186,0.35)] z-20">
-            {/* Close Button */}
-            <button
-              onClick={handleDismissTrabzonspor}
-              className="absolute right-3 top-3 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white/80 backdrop-blur-sm hover:bg-white/25 hover:text-white transition-all duration-200 shadow-md"
-              title="Kapat"
-            >
-              <span className="text-lg font-bold leading-none">✕</span>
-            </button>
-            
-            <div className="relative flex flex-col items-center gap-4 sm:gap-5 z-10">
-              <div className="flex items-center gap-3 sm:gap-4 flex-wrap justify-center">
-                <span className="text-4xl sm:text-5xl select-none animate-bounce">🏆</span>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight text-center">
-                  2025-2026 Ziraat Türkiye Kupası Şampiyonu
-                  <br />
-                  <span className="bg-gradient-to-r from-[#FFD700] to-[#FFA500] bg-clip-text text-transparent">
-                    Trabzonspor'u Kutlarız!
-                  </span>
-                </h2>
-                <div className="flex gap-2 text-4xl sm:text-5xl select-none">
-                  <span>🔴</span>
-                  <span>🔵</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-white/80 font-semibold tracking-wider uppercase">
-                <span className="px-3 py-1 rounded-full bg-white/15 border border-white/20">
-                  statmatik.com
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
 
         <header className="mb-16 w-full">
           <div className="mb-8 flex justify-center">
@@ -342,6 +274,118 @@ export default function EntryPage() {
         </header>
 
         {/* Dynamic Celebrations Section */}
+        {activeBanner === "kurban" && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-r from-emerald-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
+            
+            {/* Custom Animations for Eid */}
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes float-eid {
+                0% { transform: translateY(80px) scale(0.6) rotate(0deg); opacity: 0; }
+                15% { opacity: 0.5; }
+                85% { opacity: 0.5; }
+                100% { transform: translateY(-280px) scale(1.1) rotate(15deg); opacity: 0; }
+              }
+              .eid-star-1 { animation: float-eid 9s infinite ease-in-out; left: 15%; animation-delay: 0s; }
+              .eid-star-2 { animation: float-eid 12s infinite ease-in-out; left: 35%; animation-delay: 3.5s; }
+              .eid-star-3 { animation: float-eid 8s infinite ease-in-out; left: 55%; animation-delay: 1.2s; }
+              .eid-star-4 { animation: float-eid 10s infinite ease-in-out; left: 78%; animation-delay: 5s; }
+            `}} />
+
+            {/* Eid Particle elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+              <span className="absolute text-2xl eid-star-1 select-none">✨</span>
+              <span className="absolute text-xl eid-star-2 select-none">🌙</span>
+              <span className="absolute text-2xl eid-star-3 select-none">🕌</span>
+              <span className="absolute text-xl eid-star-4 select-none">✨</span>
+            </div>
+
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600 to-amber-500 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+            
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8 z-10">
+              
+              {/* Celebration Graphic */}
+              <div className="w-full md:w-[42%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[5/4] max-w-[380px] rounded-2xl overflow-hidden border border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.25)] bg-[#070b13] flex flex-col items-center justify-center p-4 transition-all duration-300">
+                  {/* Beautiful Glowing Mosque & Crescent Moon Graphic */}
+                  <svg viewBox="0 0 200 200" className="w-[85%] h-[85%]">
+                    {/* Crescent Moon */}
+                    <path d="M 120 40 A 50 50 0 1 0 160 110 A 42 42 0 1 1 120 40 Z" fill="#fbbf24" filter="drop-shadow(0 0 8px rgba(251,191,36,0.5))" />
+                    
+                    {/* Stars */}
+                    <circle cx="60" cy="50" r="1.5" fill="#fff" opacity="0.8" />
+                    <circle cx="85" cy="35" r="2" fill="#fff" filter="drop-shadow(0 0 2px #fff)" />
+                    <circle cx="150" cy="30" r="1.5" fill="#fff" opacity="0.5" />
+                    <circle cx="45" cy="80" r="2.5" fill="#fbbf24" filter="drop-shadow(0 0 3px #fbbf24)" />
+                    
+                    {/* Mosque Dome Base */}
+                    <rect x="50" y="140" width="100" height="30" rx="3" fill="#047857" />
+                    {/* Mosque Main Dome */}
+                    <path d="M 65 140 C 65 95 135 95 135 140 Z" fill="#059669" />
+                    {/* Dome Pinnacle */}
+                    <line x1="100" y1="95" x2="100" y2="85" stroke="#fbbf24" strokeWidth="2" />
+                    <path d="M 98 85 L 102 85 L 100 81 Z" fill="#fbbf24" />
+                    
+                    {/* Minaret Left */}
+                    <rect x="35" y="110" width="12" height="60" rx="1" fill="#065f46" />
+                    <path d="M 32 110 L 50 110 L 41 98 Z" fill="#fbbf24" />
+                    
+                    {/* Minaret Right */}
+                    <rect x="153" y="110" width="12" height="60" rx="1" fill="#065f46" />
+                    <path d="M 150 110 L 168 110 L 159 98 Z" fill="#fbbf24" />
+                    
+                    {/* Arch Door */}
+                    <path d="M 90 170 C 90 152 110 152 110 170 Z" fill="#064e3b" />
+                  </svg>
+                  
+                  <div className="absolute bottom-4 left-0 right-0 text-center">
+                    <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-[3px] bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/20">
+                      KURBAN BAYRAMI
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[58%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-black text-emerald-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🕌 BAYRAMINIZ KUTLU OLSUN"}
+                </span>
+                
+                <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    "Kurban Bayramınız Mübarek Olsun! 💫"
+                  ) : (
+                    "Eid al-Adha Mubarak! 💫"
+                  )}
+                </h2>
+
+                <p className="text-base sm:text-lg text-zinc-200 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Kurban Bayramı'nın ülkemize, milletimize ve tüm insanlığa barış, huzur, sağlık ve mutluluk getirmesini dileriz. Sevdiklerinizle birlikte nice mutlu ve huzurlu bayramlara!"
+                  ) : (
+                    "We wish Eid al-Adha brings peace, serenity, health, and happiness to you, your family, and all humanity. Have a blessed and joyful holiday with your loved ones!"
+                  )}
+                </p>
+
+                {/* Islamic/Tradition quote or message */}
+                <div className="relative border-l-2 border-amber-500/60 pl-4 py-1.5 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-300 leading-snug">
+                    {locale === "tr" ? (
+                      "\"Bayramlar, kırgınlıkların unutulduğu, sevgi ve saygının katlanarak çoğaldığı en özel günlerdir. Paylaştıkça çoğalan kurban ibadetinin kabul olmasını dileriz.\""
+                    ) : (
+                      "\"Holidays are the most special days when resentments are forgotten, and love and respect multiply. We wish that the sacrifices shared bring blessing and unity.\""
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— Statmatik Ekibi"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
         {activeBanner === "19mayis" && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-r from-red-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-red-500/30">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 to-amber-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
