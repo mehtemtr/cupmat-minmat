@@ -73,6 +73,7 @@ export async function GET(request: Request) {
         nickname: finalNick,
         category: mapCategoryReverse(item.mode),
         high_score: item.score,
+        level: item.level,
         updated_at: new Date(item.timestamp || Date.now()).toISOString()
       };
     }) || [];

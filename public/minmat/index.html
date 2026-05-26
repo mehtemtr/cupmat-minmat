@@ -2080,7 +2080,7 @@
             const mappedEntry = {
               name: entry.nickname || "Kullanıcı",
               score: entry.high_score,
-              level: entry.category === "karisik" ? Math.floor(Math.sqrt(entry.high_score / 10)) : Math.floor(entry.high_score / 10),
+              level: entry.level != null ? entry.level : (entry.category === "karisik" ? Math.floor(Math.sqrt(entry.high_score / 10)) : Math.floor(entry.high_score / 10)),
               mode: mapCategoryReverse(entry.category),
               date: new Date(entry.updated_at).toLocaleDateString("tr-TR", {
                 hour: "2-digit",
