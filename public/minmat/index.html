@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -1314,7 +1314,9 @@
     }
 
     function openClerkSignIn() {
-      if (window.Clerk && window.Clerk.openSignIn) {
+      if (window.self !== window.top) {
+        redirectToLogin();
+      } else if (window.Clerk && window.Clerk.openSignIn) {
         window.Clerk.openSignIn();
       } else {
         redirectToLogin();
@@ -1325,13 +1327,21 @@
       const params = new URLSearchParams();
       params.set("fresh", "1");
       params.set("redirect_url", window.location.pathname);
-      window.location.href = `/sign-in?${params.toString()}`;
+      if (window.self !== window.top) {
+        window.top.location.href = `/sign-in?${params.toString()}`;
+      } else {
+        window.location.href = `/sign-in?${params.toString()}`;
+      }
     }
 
     function redirectToSignOut() {
       console.log("kullanıcı çıkış yaptı");
       const currentPath = window.location.pathname + window.location.search;
-      window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
+      if (window.self !== window.top) {
+        window.top.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
+      } else {
+        window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
+      }
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -1342,6 +1352,13 @@
         input.value = lastName;
         input.addEventListener("input", checkInput);
         checkInput();
+      }
+      
+      // Eğer iframe içindeysek Clerk yüklemesini tamamen pas geçelim (Mükerrer ve sonsuz döngü engelleme)
+      if (window.self !== window.top) {
+        console.log("[IFRAME] Iframe içindeyiz, Clerk SDK yüklenmesi pas geçiliyor. Oturum parent pencereden yönetilecek.");
+        checkAuthSession();
+        return;
       }
       
       try {
@@ -1388,7 +1405,7 @@
             checkAuthSession();
           }
         } else {
-          console.warn("[Clerk] SDK bulunamadı.");
+          console.warn("[Clerk] SDK SDK bulunamadı.");
           checkAuthSession();
         }
       } catch (error) {
@@ -2075,6 +2092,14 @@
             return mappedEntry;
           });
           console.log("[FRONTEND] Hazırlanan skorlar:", scores);
+        } else {
+          try {
+            const errRes = await response.json();
+            console.error("[FRONTEND] API Hata Detayı:", errRes);
+          } catch (e) {
+            console.error("[FRONTEND] API Hata Kodu (status):", response.status);
+          }
+          scores = JSON.parse(localStorage.getItem("scores")) || [];
         }
       } catch (error) {
         console.error("[FRONTEND] Veri çekilemedi:", error);

@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export type ApiAuthSuccess = {
@@ -29,7 +29,16 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
     };
   }
 
-  const user = await currentUser();
+  let user = await currentUser();
+  if (!user) {
+    console.log("[requireApiAuth] currentUser() is null, attempting fallback to clerkClient...");
+    try {
+      const client = await clerkClient();
+      user = await client.users.getUser(userId);
+    } catch (e) {
+      console.error("[requireApiAuth] fallback clerkClient error:", e);
+    }
+  }
   
   const firstName = user?.firstName || null;
   const lastName = user?.lastName || null;
