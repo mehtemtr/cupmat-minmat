@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -1127,13 +1127,39 @@
     }
 
     async function getClerkToken() {
-     console.log("=== getClerkToken TETİKLENDİ ===");
+      console.log("=== getClerkToken TETİKLENDİ ===");
+      // 1. Eğer iframe içindeysek parent pencereden güncel token isteyelim (Oturum paylaşımı için en güvenilir yol)
+      if (window.self !== window.top) {
+        try {
+          console.log("[IFRAME] Parent pencereden token talep ediliyor...");
+          const tokenFromParent = await new Promise((resolve) => {
+            const channel = new MessageChannel();
+            channel.port1.onmessage = (event) => {
+              resolve(event.data.token);
+            };
+            window.parent.postMessage({ type: "GET_CLERK_TOKEN" }, "*", [channel.port2]);
+            // 2 saniye içinde yanıt gelmezse timeout olsun
+            setTimeout(() => {
+              console.warn("[IFRAME] Parent token talebi zaman aşımına uğradı.");
+              resolve(null);
+            }, 2000);
+          });
+          if (tokenFromParent) {
+            console.log("[IFRAME] Parent pencereden token başarıyla alındı.");
+            return tokenFromParent;
+          }
+        } catch (e) {
+          console.error("[IFRAME] Parent pencereden token istenirken hata:", e);
+        }
+      }
+
+      // 2. Yoksa (yerel test veya parent yanıt vermedi) kendi içindeki Clerk SDK'yı dene
       try {
         if (window.Clerk && window.Clerk.session) {
           return await window.Clerk.session.getToken();
         }
       } catch (e) {
-        console.error("Error getting Clerk token:", e);
+        console.error("Error getting Clerk token locally:", e);
       }
       return null;
     }

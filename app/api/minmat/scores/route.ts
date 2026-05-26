@@ -85,9 +85,9 @@ export async function GET(request: Request) {
 
     console.log("[API GET] Formatlanmış veri:", formattedData);
     return NextResponse.json(formattedData);
-  } catch (error) {
+  } catch (error: any) {
     console.error("[API GET] MinMat scores GET hatası:", error);
-    return NextResponse.json([], { status: 500 });
+    return NextResponse.json({ error: "Sunucu hatası", details: error?.message || String(error) }, { status: 500 });
   }
 }
 
