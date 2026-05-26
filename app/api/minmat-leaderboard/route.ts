@@ -25,11 +25,19 @@ export async function GET(request: Request) {
 
     let query = supabaseAdmin.from("minmat_leaderboard").select("*");
     if (filter !== "hepsi") {
-      query = query.eq("category", filter);
+      const modeMap: Record<string, string> = {
+        "topla": "add",
+        "cikar": "sub",
+        "carp": "mul",
+        "bol": "div",
+        "karisik": "mix"
+      };
+      const dbMode = modeMap[filter] || filter;
+      query = query.eq("mode", dbMode);
     }
     
     const { data: scores, error: scoreError } = await query
-      .order("high_score", { ascending: false })
+      .order("score", { ascending: false })
       .limit(10);
 
     console.log("[API GET] Çekilen skorlar:", scores);
@@ -38,22 +46,43 @@ export async function GET(request: Request) {
       throw scoreError;
     }
 
-    // Sizin elle kurduğunuz profiles tablosundan nickleri çekiyoruz
+    // Sizin elle kurduğunuz profiles tablosundan nickleri çekip RAM'de e-posta ile eşleştiriyoruz
     const { data: profiles, error: profileError } = await supabaseAdmin
       .from("profiles")
-      .select("user_id, nickname");
+      .select("email, nickname");
 
     console.log("[API GET] Çekilen profiller:", profiles);
     if (profileError) {
       console.error("[API GET] Profil çekme hatası:", profileError);
     }
 
-    const profileMap = new Map(profiles?.map(p => [p.user_id, p.nickname]) || []);
+    const emailToNicknameMap = new Map(
+      profiles?.map(p => [p.email?.toLowerCase().trim(), p.nickname]) || []
+    );
 
-    const formattedData = scores?.map(item => ({
-      ...item,
-      nickname: profileMap.get(item.user_id) || item.nickname || "Kullanıcı"
-    })) || [];
+    // Kategori ismini eski frontend formatına çeviren yardımcı fonksiyon
+    function mapCategoryReverse(newCat: string) {
+      const map: Record<string, string> = {
+        "add": "topla",
+        "sub": "cikar",
+        "mul": "carp",
+        "div": "bol",
+        "mix": "karisik"
+      };
+      return map[newCat] || newCat;
+    }
+
+    const formattedData = scores?.map(item => {
+      const emailKey = item.email?.toLowerCase().trim();
+      const finalNick = (emailKey && emailToNicknameMap.get(emailKey)) || item.name || "Kullanıcı";
+      return {
+        id: item.id,
+        nickname: finalNick,
+        category: mapCategoryReverse(item.mode),
+        high_score: item.score,
+        updated_at: new Date(item.timestamp || Date.now()).toISOString()
+      };
+    }) || [];
 
     console.log("[API GET] Formatlanmış veri:", formattedData);
     return NextResponse.json(formattedData);
@@ -76,80 +105,52 @@ export async function POST(request: Request) {
     }
     
     const clerkUserId = authResult.userId;
-    console.log("[API POST] Clerk tarafından doğrulanan kullanıcı:", clerkUserId);
+    const userEmail = authResult.email;
+    console.log("[API POST] Clerk tarafından doğrulanan kullanıcı:", clerkUserId, "Email:", userEmail);
     
     const body = await request.json();
     console.log("[API POST] Gelen body:", body);
-    console.log("[API POST] Tüm body anahtarları:", Object.keys(body));
     
     // Konsoldaki verilere göre esnek parametre yakalama motoru
-    const score = body.score ?? body.highScore ?? body.puan;
-    const mode = body.mappedMode ?? body.mode ?? body.category ?? body.kategori;
+    const score = Number(body.score ?? body.highScore ?? body.puan ?? 0);
+    const level = Number(body.level ?? body.tur ?? 1);
+    const mode = body.mappedMode ?? body.mode ?? body.category ?? body.kategori ?? "mix";
 
-    console.log("[API POST] Ayrıştırılan parametreler:", { score, clerkUserId, mode });
-    console.log("[API POST] Parametre tipleri:", { 
-      score: typeof score, 
-      clerkUserId: typeof clerkUserId, 
-      mode: typeof mode 
-    });
+    console.log("[API POST] Ayrıştırılan parametreler:", { score, level, userEmail, mode });
 
-    // Temel veriler eksikse çökmeyi önle
-    const missingParams = [];
-    if (score === undefined) missingParams.push('score');
-    if (!mode) missingParams.push('mode');
-    
-    if (missingParams.length > 0) {
-      console.error("[API POST] Eksik temel parametreler!", missingParams);
-      return NextResponse.json({ 
-        error: "Eksik temel parametreler", 
-        missing: missingParams,
-        received: body
-      }, { status: 400 });
-    }
-
-    // Kullanıcının nickini az önce kurduğunuz profiles tablosundan çek
+    // Kullanıcının nickini profiles tablosundan çekiyoruz (id Clerk userId'dir)
     const { data: profile } = await supabaseAdmin
       .from("profiles")
       .select("nickname")
-      .eq("user_id", clerkUserId)
+      .eq("id", clerkUserId)
       .maybeSingle();
 
     console.log("[API POST] Çekilen profil:", profile);
-    const finalNickname = profile?.nickname || "Karakartal1923";
+    const finalNickname = profile?.nickname || authResult.displayName || "Kullanıcı";
     console.log("[API POST] Final nickname:", finalNickname);
 
-    // Skor kontrolü
-    const { data: existingScore } = await supabaseAdmin
+    // minmat_leaderboard tablosuna yeni skoru insert ediyoruz
+    const { error: insertError } = await supabaseAdmin
       .from("minmat_leaderboard")
-      .select("*")
-      .eq("user_id", clerkUserId)
-      .eq("category", mode)
-      .maybeSingle();
+      .insert({
+        name: finalNickname,
+        email: userEmail,
+        score: score,
+        level: level,
+        mode: mode,
+        date: new Date().toLocaleDateString("tr-TR", {
+          hour: "2-digit",
+          minute: "2-digit"
+        }),
+        timestamp: Date.now()
+      });
 
-    console.log("[API POST] Mevcut skor:", existingScore);
-
-    const newHighScore = !existingScore || score > existingScore.high_score ? score : existingScore.high_score;
-    const newRewardScore = !existingScore || score > existingScore.reward_score ? score : existingScore.reward_score;
-    console.log("[API POST] Yeni skorlar:", { newHighScore, newRewardScore });
-
-    // Veritabanına sarsılmaz kayıt
-    const { error: upsertError } = await supabaseAdmin
-      .from("minmat_leaderboard")
-      .upsert({
-        user_id: clerkUserId,
-        category: mode,
-        high_score: newHighScore,
-        reward_score: newRewardScore,
-        nickname: finalNickname,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'user_id,category' });
-
-    if (upsertError) {
-      console.error("[API POST] Upsert hatası:", upsertError);
-      throw upsertError;
+    if (insertError) {
+      console.error("[API POST] Insert hatası:", insertError);
+      throw insertError;
     }
     console.log("[API POST] Başarılı!");
-    return NextResponse.json({ success: true, data: { high_score: newHighScore, nickname: finalNickname } });
+    return NextResponse.json({ success: true, data: { high_score: score, nickname: finalNickname } });
   } catch (error: any) {
     console.error("[API POST] MinMat scores POST hatası:", error);
     return NextResponse.json({ error: "Sunucu hatası", details: error.message }, { status: 500 });
