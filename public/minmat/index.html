@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -1134,15 +1134,15 @@
           console.log("[IFRAME] Parent pencereden token talep ediliyor...");
           const tokenFromParent = await new Promise((resolve) => {
             const channel = new MessageChannel();
-            channel.port1.onmessage = (event) => {
-              resolve(event.data.token);
-            };
-            window.parent.postMessage({ type: "GET_CLERK_TOKEN" }, "*", [channel.port2]);
-            // 2 saniye içinde yanıt gelmezse timeout olsun
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
               console.warn("[IFRAME] Parent token talebi zaman aşımına uğradı.");
               resolve(null);
             }, 2000);
+            channel.port1.onmessage = (event) => {
+              clearTimeout(timeoutId);
+              resolve(event.data.token);
+            };
+            window.parent.postMessage({ type: "GET_CLERK_TOKEN" }, "*", [channel.port2]);
           });
           if (tokenFromParent) {
             console.log("[IFRAME] Parent pencereden token başarıyla alındı.");

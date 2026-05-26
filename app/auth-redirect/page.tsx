@@ -12,7 +12,7 @@ function AuthRedirectContent() {
   useEffect(() => {
     if (!isLoaded) return;
 
-    const redirectUrl = searchParams.get("redirect") || "/minmat/index.html";
+    const redirectUrl = searchParams.get("redirect") || "/minmat";
 
     if (isSignedIn) {
       window.location.replace(redirectUrl);

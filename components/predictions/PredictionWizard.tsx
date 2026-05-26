@@ -171,7 +171,7 @@ export function PredictionWizard() {
               </div>
             </div>
             <Link
-              href="/minmat/index.html"
+              href="/minmat"
               className="shrink-0 rounded-xl bg-blue-500 px-6 py-2.5 text-sm font-bold text-white transition hover:bg-blue-400"
             >
               Şimdi Dene

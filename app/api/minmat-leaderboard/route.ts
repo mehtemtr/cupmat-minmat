@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseAdmin } from "@/lib/supabase";
 import { requireApiAuth } from "@/lib/auth/api-auth";
-
-// .env dosyasına elle eklediğimiz o en güçlü yönetici anahtarı
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 const CATEGORIES = ["topla", "cikar", "carp", "bol", "karisik", "hepsi"] as const;
 type Category = typeof CATEGORIES[number];
