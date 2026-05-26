@@ -29,51 +29,10 @@ export default function AuthPanel() {
         if (data && data.nickname) {
           setNickname(data.nickname);
           setTempNickname(data.nickname);
-        } else {
-          await createAutomaticNickname();
         }
-      } else if (res.status === 404) {
-        await createAutomaticNickname();
       }
     } catch (error) {
       console.error("Nickname hatası:", error);
-    }
-  };
-
-  const createAutomaticNickname = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress) return;
-    
-    const email = user.primaryEmailAddress.emailAddress;
-    const baseNick = email.split("@")[0].replace(/[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ]/g, "");
-    
-    let finalNick = baseNick;
-    let counter = 1923;
-    
-    for (let i = 0; i < 100; i++) {
-      const checkRes = await fetch(`/api/profile/nickname/check?nickname=${encodeURIComponent(finalNick)}`);
-      const checkData = await checkRes.json();
-      
-      if (checkData.unique) {
-        break;
-      }
-      
-      finalNick = `${baseNick}${counter}`;
-      counter += 34;
-    }
-
-    try {
-      const res = await fetch("/api/profile/nickname", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nickname: finalNick }),
-      });
-
-      if (res.ok) {
-        setNickname(finalNick);
-        setTempNickname(finalNick);
-      }
-    } catch (error) {
-      console.error("Otomatik nick oluşturma hatası:", error);
     }
   };
 
@@ -87,7 +46,7 @@ export default function AuthPanel() {
     setError(null);
 
     try {
-      const checkRes = await fetch(`/api/profile/nickname/check?nickname=${encodeURIComponent(tempNickname.trim())}`);
+      const checkRes = await fetch(`/api/profile/nickname?nickname=${encodeURIComponent(tempNickname.trim())}`);
       const checkData = await checkRes.json();
 
       if (!checkData.unique) {

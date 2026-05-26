@@ -1927,10 +1927,18 @@
          // Zaman damgası ekleyerek önbelleği devre dışı bırakalım
          const timestamp = Date.now();
          
+         // Clerk token'ını al ve headers'a ekle!
+         const token = await getClerkToken();
+         const headers = { 'Content-Type': 'application/json' };
+         if (token) {
+             headers['Authorization'] = `Bearer ${token}`;
+         }
+         
          // Eski ve güvenilir route'u kullanalım: /api/minmat/scores
          let response = await fetch(`/api/minmat/scores?t=${timestamp}`, { 
              method: 'POST', 
-             headers: { 'Content-Type': 'application/json' }, 
+             headers: headers, 
+             credentials: 'include',
              body: JSON.stringify(payload) 
          }); 
          

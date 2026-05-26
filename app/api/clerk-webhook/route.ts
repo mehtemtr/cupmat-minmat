@@ -5,35 +5,11 @@ import { supabaseAdmin } from "@/lib/supabase";
 
 const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET || "";
 
-async function generateUniqueNickname(
-  email: string,
-  locale: string = "tr"
-): Promise<string> {
-  const emailPrefix = email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "");
-  
-  if (emailPrefix.length >= 3) {
-    const { data: existing } = await supabaseAdmin
-      .from("profiles")
-      .select("nickname")
-      .eq("nickname", emailPrefix);
-    if (!existing || existing.length === 0) {
-      return emailPrefix;
-    }
-  }
-
-  const fallbackNames: Record<string, string> = {
-    tr: "Karakartal",
-    en: "BlackEagle",
-    de: "SchwarzerAdler",
-    fr: "AigleNoir",
-    es: "AguilaNegra",
-  };
-
-  const baseName = fallbackNames[locale] || fallbackNames.tr;
+async function generateSequentialNickname(): Promise<string> {
   let counter = 1923;
 
   while (true) {
-    const candidateNickname = `${baseName}${counter}`;
+    const candidateNickname = `Kartal${counter}`;
     const { data: existing } = await supabaseAdmin
       .from("profiles")
       .select("nickname")
@@ -109,7 +85,7 @@ export async function POST(request: Request) {
         });
       }
 
-      const nickname = await generateUniqueNickname(email, userLocale);
+      const nickname = await generateSequentialNickname();
 
       const { data: newProfile, error: insertError } = await supabaseAdmin
         .from("profiles")

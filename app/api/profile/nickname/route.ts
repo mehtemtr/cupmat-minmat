@@ -21,24 +21,103 @@ export async function GET(request: Request) {
       return NextResponse.json({ unique: count === 0 });
     }
 
-    // Normal nickname çekme
+    // Normal nickname çekme (Oturum doğrulaması ile)
     const authResult = await requireApiAuth();
     if (!authResult.ok) {
       return authResult.response;
     }
 
     const userId = authResult.userId;
-    const { data, error } = await supabaseAdmin
+    const email = authResult.email;
+
+    // Profiles tablosunda kayıt var mı kontrol et
+    let { data: profile, error } = await supabaseAdmin
       .from("profiles")
-      .select("nickname")
+      .select("*")
       .eq("id", userId)
-      .single();
+      .maybeSingle();
 
     if (error) {
-      return NextResponse.json({ error: "Profil bulunamadı" }, { status: 404 });
+      console.error("Profil sorgulama hatası:", error);
+      return NextResponse.json({ error: "Profil sorgulama hatası" }, { status: 500 });
     }
 
-    return NextResponse.json(data);
+    // Profil yoksa otomatik oluşturalım
+    if (!profile) {
+      let counter = 1923;
+      let finalNick = "";
+      while (true) {
+        finalNick = `Kartal${counter}`;
+        const { count, error: countError } = await supabaseAdmin
+          .from("profiles")
+          .select("nickname", { count: "exact", head: true })
+          .eq("nickname", finalNick);
+        
+        if (!countError && count === 0) {
+          break;
+        }
+        counter++;
+      }
+
+      const { data: newProfile, error: insertError } = await supabaseAdmin
+        .from("profiles")
+        .insert({
+          id: userId,
+          email: email,
+          nickname: finalNick,
+          cupmat_general_score: 0,
+          cupmat_reward_score: 0,
+        })
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error("Profil oluşturma hatası:", insertError);
+        return NextResponse.json({ error: "Profil oluşturulamadı" }, { status: 500 });
+      }
+
+      // Gamification store üzerinde de profili ilklendirelim
+      const { getOrCreateProfile } = await import("@/lib/store/gamification-store");
+      await getOrCreateProfile(userId, finalNick);
+
+      return NextResponse.json({ nickname: finalNick });
+    }
+
+    // Profil var ama nicki yoksa otomatik KartalXXXX atayalım
+    if (!profile.nickname || !profile.nickname.trim()) {
+      let counter = 1923;
+      let finalNick = "";
+      while (true) {
+        finalNick = `Kartal${counter}`;
+        const { count, error: countError } = await supabaseAdmin
+          .from("profiles")
+          .select("nickname", { count: "exact", head: true })
+          .eq("nickname", finalNick);
+        
+        if (!countError && count === 0) {
+          break;
+        }
+        counter++;
+      }
+
+      const { error: updateError } = await supabaseAdmin
+        .from("profiles")
+        .update({ nickname: finalNick })
+        .eq("id", userId);
+
+      if (updateError) {
+        console.error("Profil nick güncelleme hatası:", updateError);
+        return NextResponse.json({ error: "Profil güncellenemedi" }, { status: 500 });
+      }
+
+      // Gamification store üzerinde de profili güncelleyelim
+      const { getOrCreateProfile } = await import("@/lib/store/gamification-store");
+      await getOrCreateProfile(userId, finalNick);
+
+      return NextResponse.json({ nickname: finalNick });
+    }
+
+    return NextResponse.json({ nickname: profile.nickname });
   } catch (error) {
     console.error("Nickname GET hatası:", error);
     return NextResponse.json({ error: "Sunucu hatası" }, { status: 500 });
