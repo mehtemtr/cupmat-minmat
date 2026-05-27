@@ -1339,7 +1339,7 @@
         input.style.opacity = "0.75";
         input.style.cursor = "not-allowed";
         
-        if (btnGuest) btnGuest.style.display = "block";
+        if (btnGuest) btnGuest.style.display = "none";
         if (btnLoginMenu) btnLoginMenu.style.display = "block";
         
         authContainer.innerHTML = `
@@ -1487,12 +1487,21 @@
       let input = document.getElementById("playerInput");
       let btnLeaderboard = document.getElementById("btnLeaderboardMenu");
       let btnStart = document.getElementById("btnStart");
-      if (!input || !btnLeaderboard) return;
+      if (!input || !btnLeaderboard || !btnStart) return;
       let val = input.value.trim();
       if (val.length >= 3 || userSession.isAuthenticated || isGuestMode) {
         btnLeaderboard.disabled = false;
       } else {
         btnLeaderboard.disabled = true;
+      }
+
+      // Dynamically toggle start button visibility
+      if (userSession.isAuthenticated || isGuestMode) {
+        btnStart.style.display = "block";
+      } else if (val.length >= 3) {
+        btnStart.style.display = "block";
+      } else {
+        btnStart.style.display = "none";
       }
     }
 
