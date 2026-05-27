@@ -73,6 +73,7 @@ export async function GET(request: Request) {
         .insert({
           user_id: userId,
           nickname: finalNick,
+          email: email,
         })
         .select()
         .single();

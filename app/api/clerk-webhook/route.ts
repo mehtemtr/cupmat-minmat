@@ -86,6 +86,7 @@ export async function POST(request: Request) {
           {
             user_id: userId,
             nickname: nickname,
+            email: email,
           },
         ])
         .select()

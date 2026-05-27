@@ -112,7 +112,8 @@
     #gameOverScreen {
       background: #04080e;
       overflow-y: auto;
-      padding: 20px 10px;
+      padding: 40px 10px;
+      justify-content: flex-start; /* Fix flexbox top scroll clipping on desktop */
     }
 
     #effects {
@@ -915,11 +916,11 @@
 
     <div id="scoreFilters">
       <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">Hepsi</button>
-      <button onclick="setLeaderboardFilter('add')">➕</button>
-      <button onclick="setLeaderboardFilter('sub')">➖</button>
-      <button onclick="setLeaderboardFilter('mul')">✖️</button>
-      <button onclick="setLeaderboardFilter('div')">/</button>
-      <button onclick="setLeaderboardFilter('mix')">🎲</button>
+      <button onclick="setLeaderboardFilter('add')" id="btnFilterAdd">➕</button>
+      <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">➖</button>
+      <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">✖️</button>
+      <button onclick="setLeaderboardFilter('div')" id="btnFilterDiv">/</button>
+      <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix">🎲</button>
     </div>
 
     <div id="leaderboardTabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:12px;">
@@ -2106,6 +2107,28 @@
       else if (leaderboardFilter === "mul") filterKey = "leaderMul";
       else if (leaderboardFilter === "div") filterKey = "leaderDiv";
       else if (leaderboardFilter === "mix") filterKey = "leaderMix";
+
+      // Highlight active filter button
+      const filterButtons = {
+        all: "btnFilterAll",
+        add: "btnFilterAdd",
+        sub: "btnFilterSub",
+        mul: "btnFilterMul",
+        div: "btnFilterDiv",
+        mix: "btnFilterMix"
+      };
+      Object.entries(filterButtons).forEach(([key, id]) => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          if (key === leaderboardFilter) {
+            btn.classList.add("modeActive");
+            btn.style.borderColor = "#22c55e";
+          } else {
+            btn.classList.remove("modeActive");
+            btn.style.borderColor = "";
+          }
+        }
+      });
 
       console.log("[FRONTEND] Leaderboard filtresi:", leaderboardFilter);
       document.getElementById("leaderboard").innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">⏳ Yükleniyor... / Loading...</div>`;

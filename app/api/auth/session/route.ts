@@ -15,7 +15,7 @@ export async function GET() {
       const { data: dbProfile } = await supabaseAdmin
         .from("profiles")
         .select("nickname")
-        .eq("id", user.id)
+        .eq("user_id", user.id)
         .maybeSingle();
 
       return NextResponse.json({
@@ -43,7 +43,7 @@ export async function GET() {
         const { data: dbProfile } = await supabaseAdmin
           .from("profiles")
           .select("nickname")
-          .eq("id", userFromSdk.id)
+          .eq("user_id", userFromSdk.id)
           .maybeSingle();
 
         const displayName = dbProfile?.nickname || 

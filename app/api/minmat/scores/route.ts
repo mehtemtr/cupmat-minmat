@@ -137,30 +137,17 @@ export async function POST(request: Request) {
 
     console.log("[API POST] Ayrıştırılan parametreler:", { score, level, userEmail, mode });
 
-    // Kullanıcının nickini profiles tablosundan çekiyoruz (id veya user_id Clerk userId'dir)
+    // Kullanıcının nickini profiles tablosundan çekiyoruz (user_id Clerk userId'dir)
     let profile = null;
     try {
       const { data } = await supabaseAdmin
         .from("profiles")
         .select("nickname")
-        .eq("id", clerkUserId)
+        .eq("user_id", clerkUserId)
         .maybeSingle();
       if (data) profile = data;
     } catch (e) {
-      console.warn("Profiles query by id failed, trying user_id", e);
-    }
-
-    if (!profile) {
-      try {
-        const { data } = await supabaseAdmin
-          .from("profiles")
-          .select("nickname")
-          .eq("user_id", clerkUserId)
-          .maybeSingle();
-        if (data) profile = data;
-      } catch (e) {
-        console.error("Profiles query by user_id failed too", e);
-      }
+      console.error("Profiles query by user_id failed", e);
     }
 
     console.log("[API POST] Çekilen profil:", profile);

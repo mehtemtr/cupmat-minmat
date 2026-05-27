@@ -483,14 +483,32 @@ export async function getGamificationLeaderboard(): Promise<UserActivity[]> {
   const store = await getStore();
   const predictions = await getLeaderboard();
 
+  const userNickMap = new Map<string, string>();
+  try {
+    const { data: profiles } = await supabaseAdmin
+      .from("profiles")
+      .select("user_id, nickname");
+    if (profiles) {
+      profiles.forEach(p => {
+        if (p.user_id && p.nickname) {
+          userNickMap.set(p.user_id, p.nickname);
+        }
+      });
+    }
+  } catch (e) {
+    console.error("Error fetching profiles for leaderboard names mapping:", e);
+  }
+
   return store.userActivities
     .map((u) => {
       const predPoints = predictions.find((p) => p.userId === u.userId)?.points || 0;
       const periodBonus = getActiveCupmatGlobalBonus(u, store.periodEnd);
       const combinedPoints =
         u.mevcutPeriyotPuani + predPoints * 10 + periodBonus;
+      const finalNick = userNickMap.get(u.userId) || u.displayName;
       return {
         ...u,
+        displayName: finalNick,
         mevcutPeriyotPuani: combinedPoints,
       };
     })
@@ -506,8 +524,32 @@ export async function getPeriodEnd(): Promise<string> {
 // Get past champions
 export async function getGecmisSampiyonlar(): Promise<GecmisSampiyon[]> {
   const store = await getStore();
+
+  const userNickMap = new Map<string, string>();
+  try {
+    const { data: profiles } = await supabaseAdmin
+      .from("profiles")
+      .select("user_id, nickname");
+    if (profiles) {
+      profiles.forEach(p => {
+        if (p.user_id && p.nickname) {
+          userNickMap.set(p.user_id, p.nickname);
+        }
+      });
+    }
+  } catch (e) {
+    console.error("Error fetching profiles for past champions mapping:", e);
+  }
+
   return store.gecmisSampiyonlar
     .filter((c) => c.derece >= 1 && c.derece <= ARCHIVE_PODIUM_LIMIT)
+    .map((c) => {
+      const finalNick = userNickMap.get(c.userId) || c.displayName;
+      return {
+        ...c,
+        displayName: finalNick,
+      };
+    })
     .sort(
       (a, b) =>
         new Date(b.periyotBitisTarihi).getTime() -
@@ -542,11 +584,28 @@ export async function getRewardLeaderboards(): Promise<{
 
   const eligible = store.userActivities.filter(isEmailEligible);
 
+  const userNickMap = new Map<string, string>();
+  try {
+    const { data: profiles } = await supabaseAdmin
+      .from("profiles")
+      .select("user_id, nickname");
+    if (profiles) {
+      profiles.forEach(p => {
+        if (p.user_id && p.nickname) {
+          userNickMap.set(p.user_id, p.nickname);
+        }
+      });
+    }
+  } catch (e) {
+    console.error("Error fetching profiles for reward leaderboards mapping:", e);
+  }
+
   // CupMat reward table: ranked by combined period score
   const cupMatSorted = [...eligible]
     .map((u) => {
       const predPoints = predictions.find((p) => p.userId === u.userId)?.points || 0;
-      return { ...u, combinedScore: u.mevcutPeriyotPuani + predPoints * 10 };
+      const finalNick = userNickMap.get(u.userId) || u.displayName;
+      return { ...u, displayName: finalNick, combinedScore: u.mevcutPeriyotPuani + predPoints * 10 };
     })
     .sort((a, b) => b.combinedScore - a.combinedScore);
 
@@ -615,13 +674,14 @@ export async function getRewardLeaderboards(): Promise<{
         const score = s.score || 0;
         const userKey = matchingUser.userId; // Use unique userId as grouping key
         const current = minMatMaxByUser[userKey];
+        const finalNick = userNickMap.get(matchingUser.userId) || matchingUser.displayName;
         
         if (!current || score > current.score) {
           minMatMaxByUser[userKey] = {
             score,
             level: s.level || 1,
             mode: mapCategoryDisplay(s.mode),
-            displayName: matchingUser.displayName
+            displayName: finalNick
           };
         }
       }
