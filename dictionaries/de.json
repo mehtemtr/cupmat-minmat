@@ -132,5 +132,11 @@
     "es": "Español",
     "fr": "Français",
     "de": "Deutsch"
+  },
+  "pwa": {
+    "title": "MahTEM zum Home-Bildschirm",
+    "instructionShare": "Tippe auf das Teilen-Symbol im Safari-Menü unten.",
+    "instructionAdd": "Scrolle nach unten und wähle 'Zum Home-Bildschirm'.",
+    "close": "Schließen"
   }
 }

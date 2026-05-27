@@ -132,5 +132,11 @@
     "es": "Español",
     "fr": "Français",
     "de": "Deutsch"
+  },
+  "pwa": {
+    "title": "Add MahTEM to Home Screen",
+    "instructionShare": "Tap the Share icon in the Safari bottom menu.",
+    "instructionAdd": "Scroll down and select 'Add to Home Screen'.",
+    "close": "Close"
   }
 }

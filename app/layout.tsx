@@ -13,6 +13,7 @@ import { GamificationManager } from "@/components/GamificationManager";
 import LazyCronAgent from "@/components/LazyCronAgent";
 import AdminBackdoor from "@/components/AdminBackdoor";
 import { AdminNickPanel } from "@/components/AdminNickPanel";
+import IOSInstallPrompt from "@/components/IOSInstallPrompt";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -46,6 +47,9 @@ export async function generateMetadata(): Promise<Metadata> {
       capable: true,
       statusBarStyle: "black-translucent",
       title: "MahTEM",
+    },
+    icons: {
+      apple: "/icon-192.png",
     },
     keywords: [
       "2026 World Championship",
@@ -126,6 +130,7 @@ export default async function RootLayout({
             <LazyCronAgent />
             <AdminBackdoor />
             <AdminNickPanel />
+            <IOSInstallPrompt />
             <main>{children}</main>
             <Footer />
           </Providers>
