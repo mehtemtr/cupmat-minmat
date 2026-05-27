@@ -913,19 +913,18 @@
     <h1 id="gameOverTitle">Oyun Bitti</h1>
     <p id="finalScoreRow"><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
     <div id="authSaveContainer" style="width: 100%; max-width: 320px; margin: 0 auto;"></div>
+    <div id="leaderboardTabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:12px;">
+      <button onclick="switchTab('scores')" id="tabScores" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(16,185,129,0.2); color:#6ee7b7; font-weight:700; font-size:13px; cursor:pointer;">🏆 Puan Tablosu</button>
+      <button onclick="switchTab('rewards')" id="tabRewards" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:13px; cursor:pointer;">🎁 Ödül Tablosu</button>
+    </div>
 
-    <div id="scoreFilters">
+    <div id="scoreFilters" style="margin-bottom: 12px;">
       <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">Hepsi</button>
       <button onclick="setLeaderboardFilter('add')" id="btnFilterAdd">➕</button>
       <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">➖</button>
       <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">✖️</button>
       <button onclick="setLeaderboardFilter('div')" id="btnFilterDiv">/</button>
       <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix">🎲</button>
-    </div>
-
-    <div id="leaderboardTabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:12px;">
-      <button onclick="switchTab('scores')" id="tabScores" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(16,185,129,0.2); color:#6ee7b7; font-weight:700; font-size:13px; cursor:pointer;">🏆 Puan Tablosu</button>
-      <button onclick="switchTab('rewards')" id="tabRewards" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:13px; cursor:pointer;">🎁 Ödül Tablosu</button>
     </div>
 
     <div id="leaderboard"></div>
