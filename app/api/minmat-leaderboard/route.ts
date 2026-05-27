@@ -40,19 +40,37 @@ export async function GET(request: Request) {
       throw scoreError;
     }
 
-    // Sizin elle kurduğunuz profiles tablosundan nickleri çekip RAM'de e-posta ile eşleştiriyoruz
-    const { data: profiles, error: profileError } = await supabaseAdmin
-      .from("profiles")
-      .select("email, nickname");
-
-    console.log("[API GET] Çekilen profiller:", profiles);
-    if (profileError) {
-      console.error("[API GET] Profil çekme hatası:", profileError);
+    const emailToNicknameMap = new Map<string, string>();
+    
+    // Redis gamification store'dan e-posta -> nick eşleştirmelerini RAM'e yükle
+    try {
+      const { getStore } = await import("@/lib/store/gamification-store");
+      const store = await getStore();
+      store.userActivities.forEach((u) => {
+        if (u.email) {
+          emailToNicknameMap.set(u.email.toLowerCase().trim(), u.displayName);
+        }
+      });
+    } catch (e) {
+      console.error("[API GET] Redis'ten profil eşleştirme yüklenemedi:", e);
     }
 
-    const emailToNicknameMap = new Map(
-      profiles?.map(p => [p.email?.toLowerCase().trim(), p.nickname]) || []
-    );
+    // Supabase profiles tablosundan canlı nickleri çekip RAM'de e-posta ile eşleştirmeyi dene (kolon varsa)
+    try {
+      const { data: profiles, error: profileError } = await supabaseAdmin
+        .from("profiles")
+        .select("email, nickname");
+
+      if (profiles && !profileError) {
+        profiles.forEach(p => {
+          if (p.email) {
+            emailToNicknameMap.set(p.email.toLowerCase().trim(), p.nickname);
+          }
+        });
+      }
+    } catch (e) {
+      console.warn("[API GET] Supabase profiles email seçilemedi (normal - yerel şemada sütun yok):", e);
+    }
 
     // Kategori ismini eski frontend formatına çeviren yardımcı fonksiyon
     function mapCategoryReverse(newCat: string) {
@@ -121,12 +139,31 @@ export async function POST(request: Request) {
 
     console.log("[API POST] Ayrıştırılan parametreler:", { score, level, userEmail, mode });
 
-    // Kullanıcının nickini profiles tablosundan çekiyoruz (id Clerk userId'dir)
-    const { data: profile } = await supabaseAdmin
-      .from("profiles")
-      .select("nickname")
-      .eq("id", clerkUserId)
-      .maybeSingle();
+    // Kullanıcının nickini profiles tablosundan çekiyoruz (id veya user_id Clerk userId'dir)
+    let profile = null;
+    try {
+      const { data } = await supabaseAdmin
+        .from("profiles")
+        .select("nickname")
+        .eq("id", clerkUserId)
+        .maybeSingle();
+      if (data) profile = data;
+    } catch (e) {
+      console.warn("Profiles query by id failed, trying user_id", e);
+    }
+
+    if (!profile) {
+      try {
+        const { data } = await supabaseAdmin
+          .from("profiles")
+          .select("nickname")
+          .eq("user_id", clerkUserId)
+          .maybeSingle();
+        if (data) profile = data;
+      } catch (e) {
+        console.error("Profiles query by user_id failed too", e);
+      }
+    }
 
     console.log("[API POST] Çekilen profil:", profile);
     const finalNickname = profile?.nickname || authResult.displayName || "Kullanıcı";

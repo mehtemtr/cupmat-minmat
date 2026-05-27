@@ -13,7 +13,11 @@ export async function GET(request: Request) {
 
     // Güvenlik kontrolü (sadece full task ve secret ile korunur, diğerleri public)
     const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
-    if ((task === "full" || task === "bulk_update") && CRON_SECRET && secret !== CRON_SECRET) {
+    const isAuthorized = !CRON_SECRET || 
+      secret === process.env.CRON_SECRET || 
+      secret === process.env.NEXT_PUBLIC_CRON_SECRET;
+
+    if ((task === "full" || task === "bulk_update") && !isAuthorized) {
       return NextResponse.json(
         { error: "Yetkisiz erişim" },
         { status: 403 }
@@ -47,9 +51,9 @@ export async function GET(request: Request) {
         result = await updateTeamRosters();
         break;
       case "predictions":
-        const { officialGroups } = await import("@/data/official-groups");
-        const allMatches = officialGroups.flatMap(g => g.matches || []);
-        result = await generatePredictions(allMatches);
+        const { generateGroupFixtures } = await import("@/lib/fixtures");
+        const allMatches = generateGroupFixtures();
+        result = await generatePredictions(allMatches as any);
         break;
       case "full":
       default:
@@ -96,8 +100,11 @@ export async function POST(request: Request) {
     }
 
     const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
+    const isAuthorized = !CRON_SECRET || 
+      secret === process.env.CRON_SECRET || 
+      secret === process.env.NEXT_PUBLIC_CRON_SECRET;
     
-    if ((task === "full" || task === "predictions" || task === "roster" || task === "teams_only") && CRON_SECRET && secret !== CRON_SECRET) {
+    if ((task === "full" || task === "predictions" || task === "roster" || task === "teams_only") && !isAuthorized) {
       return NextResponse.json(
         { error: "Yetkisiz erişim" },
         { status: 403 }

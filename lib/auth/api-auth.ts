@@ -17,7 +17,7 @@ export type ApiAuthFailure = {
 };
 
 export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure> {
-  const { userId } = await auth();
+  const { userId, sessionClaims } = await auth();
 
   if (!userId) {
     return {
@@ -69,8 +69,8 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   }
 
   // Fallback to sessionClaims email if available
-  if (!email && session.sessionClaims) {
-    const claims = session.sessionClaims as any;
+  if (!email && sessionClaims) {
+    const claims = sessionClaims as any;
     email = claims.email || claims.primary_email_address || claims.primaryEmailAddress || "";
   }
 

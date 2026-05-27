@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { supabaseAdmin } from "@/lib/supabase";
 import { getLeaderboard } from "@/lib/store/leaderboard-store";
 import {
   applyCupmatPeriodReward,
@@ -18,6 +19,7 @@ export type ProfileWithPeriodRewards = ProfileWithPeriodRewardsBase<UserActivity
 export interface UserActivity {
   userId: string;
   displayName: string;
+  email?: string;                 // User email from Clerk
   taraftarPuani: number;          // Cupmat activity points
   gunlukGirisSayisi: number;       // Logins within the current day
   sonGirisTarihi: string;          // Last login date (YYYY-MM-DD)
@@ -47,6 +49,7 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
   return {
     userId: raw.userId,
     displayName: raw.displayName || `Oyuncu-${raw.userId.substring(0, 5)}`,
+    email: raw.email || "",
     taraftarPuani: raw.taraftarPuani ?? 0,
     gunlukGirisSayisi: raw.gunlukGirisSayisi ?? 0,
     sonGirisTarihi: raw.sonGirisTarihi ?? "",
@@ -252,48 +255,46 @@ async function transitionToNextPeriod(store: GamificationStore): Promise<void> {
     .slice(0, 3)
     .map((row) => row.user);
 
-  // MinMat ödül sıralaması (dönem içi en yüksek skor - e-posta bazlı hesaplama)
+  // MinMat ödül sıralaması (dönem içi en yüksek skor - in-memory e-posta/isim eşleştirmesi)
   const eligibleUsers = store.userActivities.filter(isEmailEligible);
-  const eligibleUserIds = eligibleUsers.map((u) => u.userId);
-  const { data: userProfiles } = await supabaseAdmin
-    .from("profiles")
-    .select("id, email, nickname")
-    .in("id", eligibleUserIds);
-
-  const emailToUserMap = new Map<string, UserActivity>();
-  const eligibleEmailsList: string[] = [];
-
-  userProfiles?.forEach((p) => {
-    if (p.email) {
-      const emailKey = p.email.toLowerCase().trim();
-      eligibleEmailsList.push(emailKey);
-      const userObj = eligibleUsers.find((u) => u.userId === p.id);
-      if (userObj) {
-        emailToUserMap.set(emailKey, userObj);
-      }
-    }
-  });
-
-  const { data: periodScoresList } = await supabaseAdmin
+  
+  const { data: periodScoresList, error: scoresError } = await supabaseAdmin
     .from("minmat_leaderboard")
     .select("*")
-    .gte("timestamp", compareStart.getTime())
-    .in("email", eligibleEmailsList);
+    .gte("timestamp", compareStart.getTime());
 
-  const minMatMaxByEmailMap: Record<string, number> = {};
+  if (scoresError) {
+    console.error("Error fetching minmat scores in transitionToNextPeriod:", scoresError);
+  }
+
+  const minMatMaxByUserIdMap: Record<string, number> = {};
+  const userIdToUserMap = new Map<string, UserActivity>();
+
+  eligibleUsers.forEach(u => {
+    userIdToUserMap.set(u.userId, u);
+  });
+
   if (periodScoresList) {
     for (const s of periodScoresList) {
-      if (s.email) {
-        const emailKey = s.email.toLowerCase().trim();
-        minMatMaxByEmailMap[emailKey] = Math.max(minMatMaxByEmailMap[emailKey] || 0, s.score || 0);
+      const emailKey = s.email?.toLowerCase().trim() || "";
+      const nameKey = s.name?.toLowerCase().trim() || "";
+
+      const matchingUser = eligibleUsers.find((u) => 
+        (emailKey && u.email?.toLowerCase().trim() === emailKey) || 
+        (nameKey && u.displayName.toLowerCase().trim() === nameKey)
+      );
+
+      if (matchingUser) {
+        const userId = matchingUser.userId;
+        minMatMaxByUserIdMap[userId] = Math.max(minMatMaxByUserIdMap[userId] || 0, s.score || 0);
       }
     }
   }
 
-  const minTop3 = Object.entries(minMatMaxByEmailMap)
+  const minTop3 = Object.entries(minMatMaxByUserIdMap)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 3)
-    .map(([email]) => emailToUserMap.get(email))
+    .map(([userId]) => userIdToUserMap.get(userId))
     .filter((u): u is UserActivity => !!u);
 
   const newPeriodEnd = scheduleNextPeriodEnd();
@@ -371,48 +372,46 @@ async function transitionToNextPeriodWithFixedSchedule(store: GamificationStore,
     .slice(0, 3)
     .map((row) => row.user);
 
-  // MinMat ödül sıralaması (dönem içi en yüksek skor - e-posta bazlı hesaplama)
+  // MinMat ödül sıralaması (dönem içi en yüksek skor - in-memory e-posta/isim eşleştirmesi)
   const eligibleUsers = store.userActivities.filter(isEmailEligible);
-  const eligibleUserIds = eligibleUsers.map((u: any) => u.userId);
-  const { data: userProfiles } = await supabaseAdmin
-    .from("profiles")
-    .select("id, email, nickname")
-    .in("id", eligibleUserIds);
-
-  const emailToUserMap = new Map<string, any>();
-  const eligibleEmailsList: string[] = [];
-
-  userProfiles?.forEach((p: any) => {
-    if (p.email) {
-      const emailKey = p.email.toLowerCase().trim();
-      eligibleEmailsList.push(emailKey);
-      const userObj = eligibleUsers.find((u: any) => u.userId === p.id);
-      if (userObj) {
-        emailToUserMap.set(emailKey, userObj);
-      }
-    }
-  });
-
-  const { data: periodScoresList } = await supabaseAdmin
+  
+  const { data: periodScoresList, error: scoresError } = await supabaseAdmin
     .from("minmat_leaderboard")
     .select("*")
-    .gte("timestamp", compareStart.getTime())
-    .in("email", eligibleEmailsList);
+    .gte("timestamp", compareStart.getTime());
 
-  const minMatMaxByEmailMap: Record<string, number> = {};
+  if (scoresError) {
+    console.error("Error fetching minmat scores in transitionToNextPeriodWithFixedSchedule:", scoresError);
+  }
+
+  const minMatMaxByUserIdMap: Record<string, number> = {};
+  const userIdToUserMap = new Map<string, any>();
+
+  eligibleUsers.forEach(u => {
+    userIdToUserMap.set(u.userId, u);
+  });
+
   if (periodScoresList) {
     for (const s of periodScoresList) {
-      if (s.email) {
-        const emailKey = s.email.toLowerCase().trim();
-        minMatMaxByEmailMap[emailKey] = Math.max(minMatMaxByEmailMap[emailKey] || 0, s.score || 0);
+      const emailKey = s.email?.toLowerCase().trim() || "";
+      const nameKey = s.name?.toLowerCase().trim() || "";
+
+      const matchingUser = eligibleUsers.find((u) => 
+        (emailKey && u.email?.toLowerCase().trim() === emailKey) || 
+        (nameKey && u.displayName.toLowerCase().trim() === nameKey)
+      );
+
+      if (matchingUser) {
+        const userId = matchingUser.userId;
+        minMatMaxByUserIdMap[userId] = Math.max(minMatMaxByUserIdMap[userId] || 0, s.score || 0);
       }
     }
   }
 
-  const minTop3 = Object.entries(minMatMaxByEmailMap)
+  const minTop3 = Object.entries(minMatMaxByUserIdMap)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 3)
-    .map(([email]) => emailToUserMap.get(email))
+    .map(([userId]) => userIdToUserMap.get(userId))
     .filter((u): u is any => !!u);
 
   store.userActivities.forEach((u) => {
@@ -437,6 +436,7 @@ async function transitionToNextPeriodWithFixedSchedule(store: GamificationStore,
 export async function getOrCreateProfile(
   userId: string,
   displayName?: string,
+  email?: string,
 ): Promise<ProfileWithPeriodRewards> {
   await checkAndResetPeriod();
   const store = await getStore();
@@ -447,12 +447,23 @@ export async function getOrCreateProfile(
     profile = normalizeUserActivity({
       userId,
       displayName: displayName || `Oyuncu-${userId.substring(0, 5)}`,
+      email: email,
     });
     store.userActivities.push(profile);
     needsSave = true;
-  } else if (displayName && profile.displayName !== displayName) {
-    profile.displayName = displayName;
-    needsSave = true;
+  } else {
+    let updated = false;
+    if (displayName && profile.displayName !== displayName) {
+      profile.displayName = displayName;
+      updated = true;
+    }
+    if (email && profile.email !== email) {
+      profile.email = email;
+      updated = true;
+    }
+    if (updated) {
+      needsSave = true;
+    }
   }
 
   if (expirePeriodRewardsIfNeeded(profile, store.periodEnd)) {
@@ -555,39 +566,18 @@ export async function getRewardLeaderboards(): Promise<{
     }));
 
   // MinMat reward table: ranked by maximum score in this period
-  const { supabaseAdmin } = await import("@/lib/supabase");
   
-  // Tüm eligible kullanıcıları ve profillerini (email'leri) alalım
-  const userIds = eligible.map(u => u.userId);
-  const { data: profiles } = await supabaseAdmin
-    .from("profiles")
-    .select("id, email, nickname")
-    .in("id", userIds);
-  
-  const emailToUser = new Map<string, UserActivity>();
-  const emailToNickname = new Map<string, string>();
-  const eligibleEmails: string[] = [];
-
-  profiles?.forEach(p => {
-    if (p.email) {
-      const emailKey = p.email.toLowerCase().trim();
-      eligibleEmails.push(emailKey);
-      emailToNickname.set(emailKey, p.nickname || p.email);
-      const userObj = eligible.find(u => u.userId === p.id);
-      if (userObj) {
-        emailToUser.set(emailKey, userObj);
-      }
-    }
-  });
-
   // Dönem başlangıcından bu yana olan minmat_leaderboard skorlarını çekelim
-  const { data: minMatScores } = await supabaseAdmin
+  const { data: minMatScores, error: scoresError } = await supabaseAdmin
     .from("minmat_leaderboard")
     .select("*")
-    .gte("timestamp", compareStart.getTime())
-    .in("email", eligibleEmails);
+    .gte("timestamp", compareStart.getTime());
 
-  // Build max score map for eligible users
+  if (scoresError) {
+    console.error("Error fetching minmat scores for reward calculation:", scoresError);
+  }
+
+  // Build max score map for eligible users (matched by email or displayName)
   const minMatMaxByUser: Record<
     string,
     { score: number; level: number; mode: string; displayName: string }
@@ -612,19 +602,28 @@ export async function getRewardLeaderboards(): Promise<{
 
   if (minMatScores) {
     for (const s of minMatScores) {
-      if (!s.email) continue;
-      const emailKey = s.email.toLowerCase().trim();
-      const displayName = emailToNickname.get(emailKey) || "Kullanıcı";
-      const score = s.score || 0;
-      const current = minMatMaxByUser[emailKey];
-      
-      if (!current || score > current.score) {
-        minMatMaxByUser[emailKey] = {
-          score,
-          level: s.level || 1,
-          mode: mapCategoryDisplay(s.mode),
-          displayName
-        };
+      const emailKey = s.email?.toLowerCase().trim() || "";
+      const nameKey = s.name?.toLowerCase().trim() || "";
+
+      // Find if this score belongs to one of our eligible users
+      const matchingUser = eligible.find((u) => 
+        (emailKey && u.email?.toLowerCase().trim() === emailKey) || 
+        (nameKey && u.displayName.toLowerCase().trim() === nameKey)
+      );
+
+      if (matchingUser) {
+        const score = s.score || 0;
+        const userKey = matchingUser.userId; // Use unique userId as grouping key
+        const current = minMatMaxByUser[userKey];
+        
+        if (!current || score > current.score) {
+          minMatMaxByUser[userKey] = {
+            score,
+            level: s.level || 1,
+            mode: mapCategoryDisplay(s.mode),
+            displayName: matchingUser.displayName
+          };
+        }
       }
     }
   }
@@ -658,9 +657,10 @@ export async function handleGamificationAction(
   userId: string,
   action: string,
   amount: number = 0,
-  displayName?: string
+  displayName?: string,
+  email?: string
 ): Promise<{ success: boolean; profile: UserActivity; message: string }> {
-  const profile = await getOrCreateProfile(userId, displayName);
+  const profile = await getOrCreateProfile(userId, displayName, email);
   const todayStr = new Date().toISOString().split("T")[0];
   let message = "";
 
@@ -859,8 +859,9 @@ export async function registerMinMatGamePlayed(displayName: string): Promise<{ s
 export async function registerMinMatGamePlayedByUserId(
   userId: string,
   displayName?: string,
+  email?: string,
 ): Promise<{ success: boolean; profile?: UserActivity }> {
-  const profile = await getOrCreateProfile(userId, displayName);
+  const profile = await getOrCreateProfile(userId, displayName, email);
   const store = await getStore();
   incrementMinMatDailyCount(profile);
   const idx = store.userActivities.findIndex((u) => u.userId === userId);

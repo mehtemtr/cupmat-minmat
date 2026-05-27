@@ -34,7 +34,7 @@ export async function GET(request: Request) {
     let { data: profile, error } = await supabaseAdmin
       .from("profiles")
       .select("*")
-      .eq("id", userId)
+      .eq("user_id", userId)
       .maybeSingle();
 
     if (error) {
@@ -71,11 +71,8 @@ export async function GET(request: Request) {
       const { data: newProfile, error: insertError } = await supabaseAdmin
         .from("profiles")
         .insert({
-          id: userId,
-          email: email,
+          user_id: userId,
           nickname: finalNick,
-          cupmat_general_score: 0,
-          cupmat_reward_score: 0,
         })
         .select()
         .single();
@@ -121,7 +118,7 @@ export async function GET(request: Request) {
       const { error: updateError } = await supabaseAdmin
         .from("profiles")
         .update({ nickname: finalNick })
-        .eq("id", userId);
+        .eq("user_id", userId);
 
       if (updateError) {
         console.error("Profil nick güncelleme hatası:", updateError);
@@ -177,7 +174,7 @@ export async function PUT(request: Request) {
     const { error } = await supabaseAdmin
       .from("profiles")
       .update({ nickname: nickname.trim() })
-      .eq("id", userId);
+      .eq("user_id", userId);
 
     if (error) {
       if (error.code === "23505") {

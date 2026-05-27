@@ -32,7 +32,7 @@ export async function GET(request: Request) {
       if (authResult.userId !== requestedUserId) {
         return NextResponse.json({ error: "Yetkisiz erişim" }, { status: 403 });
       }
-      profile = await getOrCreateProfile(authResult.userId, authResult.displayName);
+      profile = await getOrCreateProfile(authResult.userId, authResult.displayName, authResult.email);
     } else if (displayName) {
       profile = await getProfileByDisplayName(displayName);
     }
@@ -117,6 +117,7 @@ export async function POST(request: Request) {
       action,
       amount,
       displayName || authResult.displayName,
+      authResult.email,
     );
 
     if (!result.success) {

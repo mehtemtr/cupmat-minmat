@@ -67,17 +67,10 @@ export async function POST(request: Request) {
       const { data: existingProfile } = await supabaseAdmin
         .from("profiles")
         .select("*")
-        .eq("id", userId)
-        .single();
+        .eq("user_id", userId)
+        .maybeSingle();
 
       if (existingProfile) {
-        await supabaseAdmin
-          .from("profiles")
-          .update({
-            email: email,
-          })
-          .eq("id", userId);
-
         return NextResponse.json({
           success: true,
           message: "Mevcut kullanıcı güncellendi, veriler korundu",
@@ -91,11 +84,8 @@ export async function POST(request: Request) {
         .from("profiles")
         .insert([
           {
-            id: userId,
-            email: email,
+            user_id: userId,
             nickname: nickname,
-            cupmat_general_score: 0,
-            cupmat_reward_score: 0,
           },
         ])
         .select()
@@ -107,19 +97,6 @@ export async function POST(request: Request) {
           { error: "Profil oluşturulamadı" },
           { status: 500 }
         );
-      }
-
-      const categories = ["topla", "cikar", "carp", "bol", "karisik"];
-      for (const category of categories) {
-        await supabaseAdmin.from("minmat_leaderboard").insert([
-          {
-            user_id: userId,
-            category: category,
-            high_score: 0,
-            reward_score: 0,
-            nickname: nickname,
-          },
-        ]);
       }
 
       return NextResponse.json({

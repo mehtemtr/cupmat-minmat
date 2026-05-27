@@ -16,8 +16,9 @@ function generateBaseUsername(user: any): string {
 
 async function checkUsernameAvailability(username: string): Promise<boolean> {
   try {
-    await clerkClient.users.getUserList({ username });
-    return false;
+    const client = await clerkClient();
+    const list = await client.users.getUserList({ username: [username] });
+    return list.data.length === 0;
   } catch (error) {
     return true;
   }
@@ -48,7 +49,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const users = await clerkClient.users.getUserList({ limit: 500 });
+    const client = await clerkClient();
+    const response = await client.users.getUserList({ limit: 500 });
+    const users = response.data;
     const results: any[] = [];
 
     for (const user of users) {
@@ -66,7 +69,7 @@ export async function POST(request: Request) {
       const uniqueUsername = await generateUniqueUsername(baseUsername);
 
       try {
-        await clerkClient.users.updateUser(user.id, {
+        await client.users.updateUser(user.id, {
           username: uniqueUsername
         });
 
@@ -121,9 +124,11 @@ export async function GET(request: Request) {
       );
     }
 
-    const users = await clerkClient.users.getUserList({ limit: 500 });
+    const client = await clerkClient();
+    const response = await client.users.getUserList({ limit: 500 });
+    const users = response.data;
     
-    const userStats = users.map(user => ({
+    const userStats = users.map((user: any) => ({
       id: user.id,
       email: user.emailAddresses?.[0]?.emailAddress,
       username: user.username,
@@ -132,7 +137,7 @@ export async function GET(request: Request) {
       needsMigration: !user.username
     }));
 
-    const needsMigrationCount = userStats.filter(u => u.needsMigration).length;
+    const needsMigrationCount = userStats.filter((u: any) => u.needsMigration).length;
 
     return NextResponse.json({
       success: true,

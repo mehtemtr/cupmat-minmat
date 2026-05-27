@@ -4,8 +4,7 @@ export default function SignInPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#060b14]">
       <SignIn 
-        afterSignInUrl="/cupmat"
-        afterSignUpUrl="/cupmat"
+        fallbackRedirectUrl="/cupmat"
         appearance={{
           elements: {
             card: "bg-[#060b14] border border-white/10 rounded-2xl shadow-2xl",

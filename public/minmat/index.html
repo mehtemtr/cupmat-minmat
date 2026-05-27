@@ -739,6 +739,77 @@
       line-height: 1.5;
       text-align: center;
     }
+
+    .screen {
+      box-sizing: border-box;
+      padding: 0 16px;
+    }
+
+    #leaderboard {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto 16px auto;
+    }
+
+    .scoreRow {
+      width: 100%;
+      box-sizing: border-box;
+      grid-template-columns: 35px 2fr 1.8fr 1.5fr 1fr 1.5fr;
+      padding: 8px 12px;
+      margin: 6px 0;
+      gap: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .scoreRow {
+        grid-template-columns: 30px 1.5fr 1.2fr 1.1fr 1fr 1fr;
+        font-size: 11px;
+        padding: 8px 6px;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .card {
+        width: 58px;
+        height: 58px;
+        font-size: 15px;
+        border-radius: 8px;
+      }
+      #grid {
+        gap: 8px;
+      }
+      .scoreRow {
+        grid-template-columns: 24px 1.4fr 1.1fr 1fr 0.8fr 0.9fr;
+        font-size: 10px;
+        padding: 6px 4px;
+        gap: 3px;
+      }
+      .retryBtn {
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+      .menuCard {
+        padding: 30px 20px 20px;
+      }
+      .cupmatWorldSwitch {
+        padding: 8px 12px;
+        font-size: 11px;
+        top: 12px;
+        left: 12px;
+      }
+      .topRightNav {
+        top: 12px;
+        right: 12px;
+        gap: 6px;
+      }
+      .topRightBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+      }
+    }
   </style>
 </head>
 
@@ -746,13 +817,11 @@
 
   <button type="button" class="cupmatWorldSwitch" id="btnCupmatSwitch" onclick="goToCupmat()">🏆 Cupmat'a Geç</button>
 
-  <div class="topRightNav">
+  <!-- Top Right Navigation Panel (Unified flexbox aligned to prevent mobile overlap) -->
+  <div class="topRightNav" style="gap: 8px; z-index: 10000; align-items: center; display: flex; flex-direction: row-reverse;">
+    <div id="minmatAuthPanel" style="display: flex; gap: 8px;"></div>
     <button class="topRightBtn" onclick="openAbout()" title="Hakkında">ℹ️</button>
     <button class="topRightBtn" onclick="openHelp()" title="Yardım">❓</button>
-  </div>
-
-  <!-- Auth Panel -->
-  <div id="minmatAuthPanel" class="topRightNav" style="gap: 8px; z-index: 10002;">
   </div>
 
   <!-- MENU -->

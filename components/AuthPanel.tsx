@@ -87,11 +87,18 @@ export default function AuthPanel() {
 
   if (!isSignedIn) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 relative z-50">
+        <input
+          type="text"
+          value="Kartal1903"
+          readOnly
+          className="px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all bg-white/10 border border-white/20 text-white/50 cursor-not-allowed w-44"
+          title="Giriş yapmadınız"
+        />
         <SignInButton mode="modal">
           <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 text-emerald-950 font-bold text-sm hover:bg-emerald-400 transition-colors">
             <UserIcon className="h-4 w-4" />
-            Giriş Yap / Kayıt Ol
+            Giriş Yap
           </button>
         </SignInButton>
       </div>
@@ -112,7 +119,7 @@ export default function AuthPanel() {
                 handleBlur();
               }
             }}
-            className={`px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all ${
+            className={`px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all w-44 ${
               error 
                 ? "bg-red-500/10 border border-red-500/50 text-red-300 focus:border-red-400" 
                 : "bg-white/10 border border-white/20 text-white focus:border-emerald-500"
