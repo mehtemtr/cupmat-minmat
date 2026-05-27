@@ -20,17 +20,18 @@ export default function LazyCronAgent() {
         const lastTeamsRun = lastTeamsRunStr ? new Date(lastTeamsRunStr) : new Date(0);
         const hoursSinceTeamsRun = (now.getTime() - lastTeamsRun.getTime()) / (1000 * 60 * 60);
 
+        const secret = process.env.NEXT_PUBLIC_CRON_SECRET || "";
         // 20:00 KURALI (Türkiye saati) - Tam ajanı çalıştır
         if (hour >= 20 && lastFullRunStr !== todayStr) {
           console.log("🤖 20:00 KURALI: Tam AI Agent çalıştırılıyor...");
-          fetch("/api/ai-agent?task=full", { method: "GET" }).catch(() => {});
+          fetch(`/api/ai-agent?task=full&secret=${secret}`, { method: "GET" }).catch(() => {});
           localStorage.setItem("ai_agent_last_full_run", todayStr);
           hasRunTodayRef.current = true;
         }
         // 4 SAATLİK KADRO KURALI (00:00 - 20:00 arası)
         else if (hour < 20 && hoursSinceTeamsRun >= 4) {
           console.log("🤖 4 SAATLİK KURAL: Kadro güncellemesi çalıştırılıyor...");
-          fetch("/api/ai-agent?task=teams_only", { method: "GET" }).catch(() => {});
+          fetch(`/api/ai-agent?task=teams_only&secret=${secret}`, { method: "GET" }).catch(() => {});
           localStorage.setItem("ai_agent_last_teams_run", now.toISOString());
         }
         // 20:00 - 00:00 ARASI KİLİT: 4 saatlik kontrolü askıya al

@@ -9,7 +9,10 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const task = searchParams.get("task") || "full";
     const force = searchParams.get("force") === "true";
-    const secret = searchParams.get("secret");
+
+    const authHeader = request.headers.get("authorization");
+    const bearerSecret = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : null;
+    const secret = searchParams.get("secret") || bearerSecret;
 
     // Güvenlik kontrolü (sadece full task ve secret ile korunur, diğerleri public)
     const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
@@ -85,18 +88,21 @@ export async function POST(request: Request) {
     const { searchParams } = new URL(request.url);
     const taskParam = searchParams.get("task");
     
+    const authHeader = request.headers.get("authorization");
+    const bearerSecret = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : null;
+    
     let body: any = {};
     let task: string = "full";
     let secret: string | null = null;
 
     if (taskParam) {
       task = taskParam;
-      secret = searchParams.get("secret");
+      secret = searchParams.get("secret") || bearerSecret;
       body = await request.json();
     } else {
       body = await request.json();
       task = body.task || "full";
-      secret = body.secret;
+      secret = body.secret || bearerSecret;
     }
 
     const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;

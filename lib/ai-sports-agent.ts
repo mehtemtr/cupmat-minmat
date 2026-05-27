@@ -83,10 +83,24 @@ export async function updateTeamRosters(): Promise<{
           continue;
         }
 
-        // Eğer kadro eksikse (24'ten azsa), örnek oyuncular ekle (gerçek API entegrasyonu için yer tutucu)
-        if (!count || count < 24) {
+        const isRealRoster = team.players && team.players.length >= 24;
+
+        // Eğer kadro eksikse veya gerçek bir kadroya sahipsek ve güncellenmesi gerekiyorsa (db ile eşitlemek için zorla)
+        if (!count || count < 24 || isRealRoster) {
           console.log(`Takım ${team.nameTr} kadrosu güncelleniyor (mevcut: ${count || 0})`);
           
+          if (isRealRoster) {
+            // Eski kadroyu silerek temiz bir kurulum yapalım (çakışma ve eski yer tutucuların kalmasını önler)
+            const { error: deleteError } = await supabaseAdmin
+              .from("team_rosters")
+              .delete()
+              .eq("team_id", team.id);
+            
+            if (deleteError) {
+              errors.push(`Takım ${team.id} eski kadrosu silinemedi: ${deleteError.message}`);
+            }
+          }
+
           // Örnek oyuncu listesi (gerçek FIFA entegrasyonu buraya gelecek)
           const samplePlayers = generateSampleRoster(team);
           
@@ -99,6 +113,7 @@ export async function updateTeamRosters(): Promise<{
                 player_position: player.position,
                 player_number: player.number,
                 is_captain: player.isCaptain,
+                club: player.club,
               }, {
                 onConflict: "team_id, player_name"
               });
@@ -130,8 +145,29 @@ export async function updateTeamRosters(): Promise<{
   };
 }
 
-// Örnek kadro üretici (gerçek API entegrasyonu için yer tutucu)
+// Örnek kadro üretici (gerçek API entegrasyonu veya tanımlı kadro eşleştirici)
 function generateSampleRoster(team: any) {
+  if (team.players && team.players.length >= 24) {
+    return team.players.map((p: any, idx: number) => {
+      let pos = p.position;
+      const upper = p.position.toUpperCase();
+      if (upper === "GK") pos = "Kaleci";
+      else if (upper === "DF") pos = "Defans";
+      else if (upper === "MF") pos = "Orta Saha";
+      else if (upper === "FW") pos = "Forvet";
+
+      const isCaptain = p.name === "Christian Pulisic" || p.name === "Virgil van Dijk" || idx === 0;
+
+      return {
+        name: p.name,
+        position: pos,
+        number: idx + 1,
+        isCaptain: isCaptain,
+        club: p.club || ""
+      };
+    });
+  }
+
   const positions = ["Kaleci", "Stoper", "Sol Bek", "Sağ Bek", "Ön Libero", 
                      "Merkez Midfielder", "Sol Açık", "Sağ Açık", "Ofansif Midfielder", "Forvet"];
   
@@ -141,7 +177,8 @@ function generateSampleRoster(team: any) {
       name: `${team.nameTr} Oyuncu ${i}`,
       position: positions[i % positions.length],
       number: i,
-      isCaptain: i === 1
+      isCaptain: i === 1,
+      club: "Kulüp Yok"
     });
   }
   return players;
