@@ -362,9 +362,14 @@ export function Header() {
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Giriş Yap:</strong> Tahmin yapabilmek, puanlarınızı kaydetmek ve global liderlik tablosunda yerinizi alabilmek için sağ üst köşedeki <strong>Giriş Yap</strong> butonunu kullanarak Clerk güvencesiyle hesabınızı oluşturun veya giriş yapın.
+                    <strong>Üye Girişi & Takma Ad (Nick) Değiştirme:</strong> Tahmin yapabilmek, puanlarınızı kaydetmek ve sıralamada yer alabilmek için sağ üst köşedeki <strong>Giriş Yap</strong> butonunu kullanarak hesabınızı oluşturun.
                   </span>
                 </li>
+                <div className="ml-6 border-l-2 border-emerald-500/40 pl-4 py-1.5 space-y-1.5 text-zinc-400 text-xs">
+                  <div>🔐 <strong>Giriş Yöntemi:</strong> E-posta adresiniz veya sosyal hesaplarınızla hızlıca üye olabilirsiniz.</div>
+                  <div>✏️ <strong>Takma Adı (Nick) Düzenleme:</strong> Giriş yaptıktan sonra, sağ üstteki kutucukta otomatik atanan adınızı göreceksiniz. Bu kutucuğa tıklayarak istediğiniz takma adı yazıp <strong>Enter</strong> tuşuna basarak veya kutucuk dışına tıklayarak veritabanına otomatik olarak kaydedebilirsiniz.</div>
+                </div>
+
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
