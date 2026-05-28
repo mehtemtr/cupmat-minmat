@@ -175,11 +175,11 @@ function BirthdayCake() {
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday" | "kurban">("none");
+  const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday" | "kurban" | "istanbul">("none");
 
   useEffect(() => {
     const checkDate = () => {
-      // Check query parameter for easy testing: ?preview=birthday, ?preview=19mayis, ?preview=kurban
+      // Check query parameter for easy testing: ?preview=birthday, ?preview=19mayis, ?preview=kurban, ?preview=istanbul
       const urlParams = new URLSearchParams(window.location.search);
       const preview = urlParams.get("preview");
       if (preview === "birthday") {
@@ -194,6 +194,10 @@ export default function EntryPage() {
         setActiveBanner("kurban");
         return;
       }
+      if (preview === "istanbul") {
+        setActiveBanner("istanbul");
+        return;
+      }
 
       const now = new Date();
       const year = now.getFullYear();
@@ -204,6 +208,8 @@ export default function EntryPage() {
         setActiveBanner("19mayis");
       } else if (year === 2026 && month === 4 && date === 20) {
         setActiveBanner("birthday");
+      } else if (year === 2026 && month === 4 && date === 29) {
+        setActiveBanner("istanbul");
       } else if (year === 2026 && month === 4 && date >= 27 && date <= 30) {
         setActiveBanner("kurban");
       } else {
@@ -357,6 +363,64 @@ export default function EntryPage() {
                   </p>
                   <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
                     {"— Statmatik Ekibi"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
+        {activeBanner === "istanbul" && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-r from-red-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-red-500/30">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-750 to-amber-650 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8 animate-fade-in">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[42%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[5/4] max-w-[380px] rounded-2xl overflow-hidden border border-red-500/30 shadow-[0_0_30px_rgba(239,68,68,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/istanbul_conquest.png"
+                    alt="İstanbul'un Fethi'nin 573. Yıl Dönümü"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[58%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3.5 py-1 text-xs font-black text-red-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr" ? "🇹🇷 İSTANBUL'UN FETHİ" : "🏰 CONQUEST OF ISTANBUL"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`İstanbul'un Fethi'nin`}<br />{`573. Yıl Dönümü Kutlu Olsun! 🏰`}</>
+                  ) : (
+                    <>{`Happy 573rd Anniversary of`}<br />{`the Conquest of Istanbul! 🏰`}</>
+                  )}
+                </h2>
+
+                <p className="text-sm text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "29 Mayıs 1453'te, askeri dehası ve sarsılmaz inancıyla bir çağı kapatıp yeni bir çağ açan Fatih Sultan Mehmet Han ve kahraman ordusunu rahmet, minnet ve saygıyla anıyoruz. Tarihin akışını değiştiren bu şanlı zafer, milletimizin gücünün ve azminin en büyük nişanesidir."
+                  ) : (
+                    "On May 29, 1453, Sultan Mehmed the Conqueror and his heroic army reshaped history, bringing an end to an era and ushering in a new one. We commemorate with respect, gratitude, and mercy the legacy of this glorious victory that stands as a symbol of determination and vision."
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-amber-500/60 pl-4 py-1.5 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-amber-300 leading-snug">
+                    {locale === "tr" ? (
+                      `"Ya ben İstanbul'u alırım, ya İstanbul beni!"`
+                    ) : (
+                      `"Either I will conquer Istanbul, or Istanbul will conquer me!"`
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {locale === "tr" ? "— FATİH SULTAN MEHMET" : "— SULTAN MEHMED THE CONQUEROR"}
                   </span>
                 </div>
               </div>
