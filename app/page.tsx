@@ -175,27 +175,16 @@ function BirthdayCake() {
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday" | "kurban" | "istanbul">("none");
+  const [activeBanners, setActiveBanners] = useState<string[]>([]);
 
   useEffect(() => {
     const checkDate = () => {
       // Check query parameter for easy testing: ?preview=birthday, ?preview=19mayis, ?preview=kurban, ?preview=istanbul
       const urlParams = new URLSearchParams(window.location.search);
       const preview = urlParams.get("preview");
-      if (preview === "birthday") {
-        setActiveBanner("birthday");
-        return;
-      }
-      if (preview === "19mayis") {
-        setActiveBanner("19mayis");
-        return;
-      }
-      if (preview === "kurban") {
-        setActiveBanner("kurban");
-        return;
-      }
-      if (preview === "istanbul") {
-        setActiveBanner("istanbul");
+      if (preview) {
+        // Can be comma-separated list of previews, e.g. ?preview=istanbul,kurban
+        setActiveBanners(preview.split(","));
         return;
       }
 
@@ -204,17 +193,24 @@ export default function EntryPage() {
       const month = now.getMonth(); // 4 = May (0-indexed)
       const date = now.getDate();
 
-      if (year === 2026 && month === 4 && date === 19) {
-        setActiveBanner("19mayis");
-      } else if (year === 2026 && month === 4 && date === 20) {
-        setActiveBanner("birthday");
-      } else if (year === 2026 && month === 4 && date === 29) {
-        setActiveBanner("istanbul");
-      } else if (year === 2026 && month === 4 && date >= 27 && date <= 30) {
-        setActiveBanner("kurban");
-      } else {
-        setActiveBanner("none");
+      const banners: string[] = [];
+
+      if (year === 2026 && month === 4) {
+        if (date === 19) {
+          banners.push("19mayis");
+        }
+        if (date === 20) {
+          banners.push("birthday");
+        }
+        if (date === 29) {
+          banners.push("istanbul");
+        }
+        if (date >= 27 && date <= 30) {
+          banners.push("kurban");
+        }
       }
+
+      setActiveBanners(banners);
     };
     checkDate();
     const interval = setInterval(checkDate, 20000);
@@ -259,7 +255,7 @@ export default function EntryPage() {
         </header>
 
         {/* Dynamic Celebrations Section */}
-        {activeBanner === "kurban" && (
+        {activeBanners.includes("kurban") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-r from-emerald-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
             
             {/* Custom Animations for Eid */}
@@ -371,7 +367,7 @@ export default function EntryPage() {
           </div>
         )}
 
-        {activeBanner === "istanbul" && (
+        {activeBanners.includes("istanbul") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-r from-red-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-red-500/30">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-750 to-amber-650 opacity-10 blur transition duration-500 group-hover:opacity-15" />
             <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8 animate-fade-in">
@@ -429,7 +425,7 @@ export default function EntryPage() {
           </div>
         )}
 
-        {activeBanner === "19mayis" && (
+        {activeBanners.includes("19mayis") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/20 bg-gradient-to-r from-red-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-red-500/30">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 to-amber-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
             <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
@@ -483,7 +479,7 @@ export default function EntryPage() {
           </div>
         )}
 
-        {activeBanner === "birthday" && (
+        {activeBanners.includes("birthday") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-pink-500/20 bg-gradient-to-r from-purple-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-pink-500/30">
             
             {/* Custom Animations for Birthday Balloons */}
