@@ -2,25 +2,9 @@ import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 import type { WebhookEvent } from "@clerk/nextjs/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { generateSequentialNickname } from "@/lib/auth/nickname-helper";
 
 const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET || "";
-
-async function generateSequentialNickname(): Promise<string> {
-  let counter = 1923;
-
-  while (true) {
-    const candidateNickname = `Kartal${counter}`;
-    const { data: existing } = await supabaseAdmin
-      .from("profiles")
-      .select("nickname")
-      .eq("nickname", candidateNickname);
-    
-    if (!existing || existing.length === 0) {
-      return candidateNickname;
-    }
-    counter++;
-  }
-}
 
 export async function POST(request: Request) {
   try {
@@ -78,7 +62,7 @@ export async function POST(request: Request) {
         });
       }
 
-      const nickname = await generateSequentialNickname();
+      const nickname = await generateSequentialNickname(email, userLocale);
 
       const { data: newProfile, error: insertError } = await supabaseAdmin
         .from("profiles")

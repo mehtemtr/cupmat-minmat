@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireApiAuth } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
+import { validateNickname, generateSequentialNickname } from "@/lib/auth/nickname-helper";
 
 export async function GET(request: Request) {
   try {
@@ -51,22 +52,11 @@ export async function GET(request: Request) {
       }, { status: 500 });
     }
 
+    const requestedLocale = searchParams.get("locale") || undefined;
+
     // Profil yoksa otomatik oluşturalım
     if (!profile) {
-      let counter = 1923;
-      let finalNick = "";
-      while (true) {
-        finalNick = `Kartal${counter}`;
-        const { count, error: countError } = await supabaseAdmin
-          .from("profiles")
-          .select("nickname", { count: "exact", head: true })
-          .eq("nickname", finalNick);
-        
-        if (!countError && count === 0) {
-          break;
-        }
-        counter++;
-      }
+      const finalNick = await generateSequentialNickname(email, requestedLocale);
 
       const { data: newProfile, error: insertError } = await supabaseAdmin
         .from("profiles")
@@ -101,20 +91,7 @@ export async function GET(request: Request) {
 
     // Profil var ama nicki yoksa otomatik KartalXXXX atayalım
     if (!profile.nickname || !profile.nickname.trim()) {
-      let counter = 1923;
-      let finalNick = "";
-      while (true) {
-        finalNick = `Kartal${counter}`;
-        const { count, error: countError } = await supabaseAdmin
-          .from("profiles")
-          .select("nickname", { count: "exact", head: true })
-          .eq("nickname", finalNick);
-        
-        if (!countError && count === 0) {
-          break;
-        }
-        counter++;
-      }
+      const finalNick = await generateSequentialNickname(email, requestedLocale);
 
       const { error: updateError } = await supabaseAdmin
         .from("profiles")
@@ -165,16 +142,21 @@ export async function PUT(request: Request) {
     }
 
     const body = await request.json();
-    const { nickname } = body;
+    const { nickname, locale } = body;
 
-    if (!nickname || !nickname.trim()) {
-      return NextResponse.json({ error: "Geçersiz nickname" }, { status: 400 });
+    let finalNickname = nickname ? nickname.trim() : "";
+    const validation = validateNickname(finalNickname);
+
+    if (!validation.isValid) {
+      // Boş veya geçersiz giriş yapılmışsa, otomatik sıradan boş olanı veriyoruz
+      const { email } = authResult;
+      finalNickname = await generateSequentialNickname(email, locale);
     }
 
     const userId = authResult.userId;
     const { error } = await supabaseAdmin
       .from("profiles")
-      .update({ nickname: nickname.trim() })
+      .update({ nickname: finalNickname })
       .eq("user_id", userId);
 
     if (error) {
@@ -184,7 +166,7 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "Güncelleme hatası" }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, nickname: nickname.trim() });
+    return NextResponse.json({ success: true, nickname: finalNickname });
   } catch (error: any) {
     console.error("Nickname PUT hatası:", error);
     return NextResponse.json({ 
