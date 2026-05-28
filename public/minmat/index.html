@@ -649,29 +649,91 @@
       font-weight: 600;
     }
 
-    .menuLangRow {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin-bottom: 20px;
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
     }
 
-    .menuLangBtn {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      font-size: 20px;
-      display: flex;
+    .dropdownBtn {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 0;
+      gap: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 140px;
+      justify-content: space-between;
     }
 
-    .menuLangBtn.activeLang {
-      border-color: rgba(34, 197, 94, 0.5);
-      background: rgba(34, 197, 94, 0.12);
+    .dropdownBtn:hover {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .dropdownContent {
+      display: none;
+      position: absolute;
+      background-color: #0f172a;
+      min-width: 155px;
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      z-index: 11000;
+      overflow: hidden;
+      margin-top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .open-up .dropdownContent {
+      bottom: 100%;
+      top: auto;
+      margin-bottom: 4px;
+      margin-top: 0;
+    }
+
+    .dropdownContent a {
+      color: #94a3b8;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .dropdownContent a:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .dropdownContent a.activeLangOption {
+      background-color: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      font-weight: 700;
+    }
+
+    .dropdown.show .dropdownContent {
+      display: block;
+    }
+
+    .dropdownArrow {
+      font-size: 10px;
+      color: #64748b;
+      margin-left: 4px;
+      transition: transform 0.2s;
+    }
+
+    .dropdown.show .dropdownArrow {
+      transform: rotate(180deg);
     }
     
     .extraTimeActive {
@@ -828,12 +890,17 @@
   <!-- MENU -->
   <div id="menuScreen" class="screen active">
     <div class="menuCard">
-      <div class="menuLangRow" id="menuLangRow">
-        <button class="menuLangBtn" onclick="setLang('tr')">🇹🇷</button>
-        <button class="menuLangBtn" onclick="setLang('en')">🇬🇧</button>
-        <button class="menuLangBtn" onclick="setLang('de')">🇩🇪</button>
-        <button class="menuLangBtn" onclick="setLang('fr')">🇫🇷</button>
-        <button class="menuLangBtn" onclick="setLang('es')">🇪🇸</button>
+      <div class="dropdown" id="menuLangDropdownContainer" style="margin-bottom: 20px;">
+        <button class="dropdownBtn" onclick="toggleDropdown('menuLangDropdown')" id="menuLangDropdownBtn">
+          <span class="langFlagActive">🇹🇷</span> <span class="langLabelActive">Türkçe</span> <span class="dropdownArrow">▼</span>
+        </button>
+        <div class="dropdownContent" id="menuLangDropdown">
+          <a href="#" onclick="selectLang('tr', 'menuLangDropdown', event)">🇹🇷 Türkçe</a>
+          <a href="#" onclick="selectLang('en', 'menuLangDropdown', event)">🇬🇧 English</a>
+          <a href="#" onclick="selectLang('de', 'menuLangDropdown', event)">🇩🇪 Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'menuLangDropdown', event)">🇫🇷 Français</a>
+          <a href="#" onclick="selectLang('es', 'menuLangDropdown', event)">🇪🇸 Español</a>
+        </div>
       </div>
       <div class="menuLogo">
         <img src="/minmat/icon.png" alt="MinMat">
@@ -870,7 +937,6 @@
       <p id="gameSubtitle" style="font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px;">MinMat — Zeka ve Matematik Oyunu</p>
     </div>
     <div id="playerBar">
-      <span id="playerText">👤 Oyuncu</span>
       <span id="modeText">🎯 Topla</span>
     </div>
     <div id="topBar">
@@ -899,10 +965,19 @@
     <div class="screenNav">
       <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText">Menü</span></button>
       <button class="navBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardGame">🏆 Puan Tablosu</button>
-      <button class="navBtn langToggle" onclick="cycleLang()">
-        <span class="langIcon">🌐</span>
-        <span id="gameLangLabel">TR</span>
-      </button>
+      <div class="dropdown open-up" id="gameLangDropdownContainer">
+        <button class="navBtn dropdownBtn" onclick="toggleDropdown('gameLangDropdown')">
+          <span class="langIcon">🌐</span>
+          <span id="gameLangLabel">TR</span> <span class="dropdownArrow">▼</span>
+        </button>
+        <div class="dropdownContent" id="gameLangDropdown">
+          <a href="#" onclick="selectLang('tr', 'gameLangDropdown', event)">🇹🇷 Türkçe</a>
+          <a href="#" onclick="selectLang('en', 'gameLangDropdown', event)">🇬🇧 English</a>
+          <a href="#" onclick="selectLang('de', 'gameLangDropdown', event)">🇩🇪 Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'gameLangDropdown', event)">🇫🇷 Français</a>
+          <a href="#" onclick="selectLang('es', 'gameLangDropdown', event)">🇪🇸 Español</a>
+        </div>
+      </div>
     </div>
 
     <div id="grid"></div>
@@ -935,10 +1010,19 @@
 
     <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
       <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText2">Menü</span></button>
-      <button class="navBtn langToggle" onclick="cycleLang()">
-        <span class="langIcon">🌐</span>
-        <span id="goLangLabel">TR</span>
-      </button>
+      <div class="dropdown open-up" id="goLangDropdownContainer">
+        <button class="navBtn dropdownBtn" onclick="toggleDropdown('goLangDropdown')">
+          <span class="langIcon">🌐</span>
+          <span id="goLangLabel">TR</span> <span class="dropdownArrow">▼</span>
+        </button>
+        <div class="dropdownContent" id="goLangDropdown">
+          <a href="#" onclick="selectLang('tr', 'goLangDropdown', event)">🇹🇷 Türkçe</a>
+          <a href="#" onclick="selectLang('en', 'goLangDropdown', event)">🇬🇧 English</a>
+          <a href="#" onclick="selectLang('de', 'goLangDropdown', event)">🇩🇪 Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'goLangDropdown', event)">🇫🇷 Français</a>
+          <a href="#" onclick="selectLang('es', 'goLangDropdown', event)">🇪🇸 Español</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1126,12 +1210,38 @@
       let mt = document.getElementById("modeText");
       if (mt) mt.innerText = "🎯 " + shortModeName(gameMode);
 
-      document.querySelectorAll(".menuLangBtn").forEach((btn, i) => {
-        let langs = ["tr", "en", "de", "fr", "es"];
-        if (langs[i] === currentLang) {
-          btn.classList.add("activeLang");
-        } else {
-          btn.classList.remove("activeLang");
+      // Update dropdown button contents and active option classes
+      const langNames = {
+        tr: "Türkçe",
+        en: "English",
+        de: "Deutsch",
+        fr: "Français",
+        es: "Español"
+      };
+      const langFlags = {
+        tr: "🇹🇷",
+        en: "🇬🇧",
+        de: "🇩🇪",
+        fr: "🇫🇷",
+        es: "🇪🇸"
+      };
+
+      const menuBtn = document.getElementById("menuLangDropdownBtn");
+      if (menuBtn) {
+        menuBtn.innerHTML = `<span class="langFlagActive">${langFlags[currentLang] || "🇹🇷"}</span> <span class="langLabelActive">${langNames[currentLang] || "Türkçe"}</span> <span class="dropdownArrow">▼</span>`;
+      }
+
+      const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
+      dropdowns.forEach(dId => {
+        const el = document.getElementById(dId);
+        if (el) {
+          el.querySelectorAll("a").forEach(a => {
+            if (a.getAttribute("onclick") && a.getAttribute("onclick").includes(`'${currentLang}'`)) {
+              a.classList.add("activeLangOption");
+            } else {
+              a.classList.remove("activeLangOption");
+            }
+          });
         }
       });
 
@@ -1260,6 +1370,17 @@
               ...data.userSession
             };
             console.log("kullanıcı giriş yaptı: " + (userSession.displayName || userSession.username || userSession.email || "Adsız"));
+            
+            // Sync levels: Database values override local storage for authenticated users
+            if (userSession.minmatMaxLevels) {
+              let modes = ["add", "sub", "mul", "div", "mix"];
+              modes.forEach(m => {
+                let dbVal = userSession.minmatMaxLevels[m] || 1;
+                // Force local storage to be exactly the database progress
+                localStorage.setItem("minmat_maxLevel_" + m, dbVal);
+              });
+              updateModeButtons();
+            }
           } else {
             userSession = { isAuthenticated: false };
             console.log("kullanıcı çıkış yaptı");
@@ -1274,6 +1395,39 @@
         console.log("kullanıcı çıkış yaptı");
       }
       updateAuthUI();
+    }
+
+    async function submitProgressToDb() {
+      if (!userSession.isAuthenticated) return;
+      try {
+        const token = await getClerkToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        
+        const levels = {
+          add: getMaxLevel("add"),
+          sub: getMaxLevel("sub"),
+          mul: getMaxLevel("mul"),
+          div: getMaxLevel("div"),
+          mix: getMaxLevel("mix")
+        };
+        
+        const response = await fetch("/api/profile/minmat-progress", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ levels })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.minmatMaxLevels) {
+            userSession.minmatMaxLevels = data.minmatMaxLevels;
+          }
+        }
+      } catch (e) {
+        console.error("Error saving progress to DB:", e);
+      }
     }
 
     function updateAuthUI() {
@@ -1543,6 +1697,40 @@
       show("menuScreen");
     }
 
+    function toggleDropdown(id) {
+      // Close other dropdowns
+      const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
+      dropdowns.forEach(dId => {
+        if (dId !== id) {
+          const el = document.getElementById(dId);
+          if (el) el.parentElement.classList.remove("show");
+        }
+      });
+
+      const el = document.getElementById(id);
+      if (el) {
+        el.parentElement.classList.toggle("show");
+      }
+    }
+
+    // Close dropdowns on outside click
+    window.addEventListener("click", function(event) {
+      if (!event.target.closest(".dropdownBtn")) {
+        const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
+        dropdowns.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.parentElement.classList.remove("show");
+        });
+      }
+    });
+
+    function selectLang(lang, dropdownId, event) {
+      if (event) event.preventDefault();
+      setLang(lang);
+      const el = document.getElementById(dropdownId);
+      if (el) el.parentElement.classList.remove("show");
+    }
+
     function cycleLang() {
       let langs = ["tr", "en", "de", "fr", "es"];
       let idx = langs.indexOf(currentLang);
@@ -1603,6 +1791,9 @@
       if (lvl > current) {
         localStorage.setItem("minmat_maxLevel_" + mode, lvl);
         updateModeButtons();
+        if (userSession.isAuthenticated) {
+          submitProgressToDb();
+        }
       }
     }
 
@@ -1662,7 +1853,10 @@
       lives = 3;
       updateLivesUI();
       level = 1;
-      document.getElementById("playerText").innerText = "👤 " + playerName;
+      const playerTextEl = document.getElementById("playerText");
+      if (playerTextEl) {
+        playerTextEl.innerText = "👤 " + playerName;
+      }
       document.getElementById("modeText").innerText = "🎯 " + shortModeName(gameMode);
 
       extraTimeSeconds = 0;

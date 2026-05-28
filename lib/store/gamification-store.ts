@@ -34,15 +34,16 @@ export interface UserActivity {
   activeSecondsInPeriod: number;    // Seconds tracked in the current period
   /** Önceki periyot CupMat ilk3 → bu periyot MinMat: tur başına ek saniye */
   periyotOdulMinmatSaniyeSeviye: number;
-  /** Önceki periyot CupMat ilk3 → bu periyot MinMat: eşleşme başına ek puan */
+  /** Önceki periyot CupMat ilk3 → bu periyot MinMat: Eşleşme başına ek puan */
   periyotOdulMinmatPuanSeviye: number;
-  /** Önceki periyot MinMat ilk3 → bu periyot CupMat: ek global puan */
+  /** Önceki periyot MinMat ilk3 → bu periyot CupMat: Ek global puan */
   periyotOdulCupmatGlobalPuan: number;
   /** Aktif ödülün geçerli olduğu periyot bitişi (store.periodEnd ile eşleşir) */
   periyotOdulGecerliBitis: string;
   /** @deprecated Eski alan — yeni periyot ödülleri yukarıdaki alanlarda */
   cupMatRewardSeconds: number;
   cupMatRewardPoints: number;
+  minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number };
 }
 
 function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }): UserActivity {
@@ -68,6 +69,7 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     periyotOdulGecerliBitis: raw.periyotOdulGecerliBitis ?? "",
     cupMatRewardSeconds: 0,
     cupMatRewardPoints: 0,
+    minmatMaxLevels: raw.minmatMaxLevels ?? { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
   };
 }
 
@@ -142,6 +144,7 @@ const defaultStore: GamificationStore = {
       periyotOdulGecerliBitis: "",
       cupMatRewardSeconds: 0,
       cupMatRewardPoints: 0,
+      minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
     },
     {
       userId: "demo-2",
@@ -164,6 +167,7 @@ const defaultStore: GamificationStore = {
       periyotOdulGecerliBitis: "",
       cupMatRewardSeconds: 0,
       cupMatRewardPoints: 0,
+      minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
     }
   ],
   gecmisSampiyonlar: [

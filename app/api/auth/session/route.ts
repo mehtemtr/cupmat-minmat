@@ -18,13 +18,19 @@ export async function GET() {
         .eq("user_id", user.id)
         .maybeSingle();
 
+      const displayName = dbProfile?.nickname || user.username || user.fullName || "KaraKartal1923";
+      const { getOrCreateProfile } = await import("@/lib/store/gamification-store");
+      const profile = await getOrCreateProfile(user.id, displayName, email);
+      const minmatMaxLevels = profile.minmatMaxLevels || { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+
       return NextResponse.json({
         isAuthenticated: true,
         userSession: {
           userId: user.id,
           email: email,
           username: user.username || null,
-          displayName: dbProfile?.nickname || user.username || user.fullName || "KaraKartal1923"
+          displayName: displayName,
+          minmatMaxLevels: minmatMaxLevels
         }
       });
     }
@@ -50,13 +56,19 @@ export async function GET() {
                             userFromSdk.username || 
                             userFromSdk.fullName || 
                             (userFromSdk.firstName && userFromSdk.lastName ? `${userFromSdk.firstName} ${userFromSdk.lastName}` : "KaraKartal1923");
+        
+        const { getOrCreateProfile } = await import("@/lib/store/gamification-store");
+        const profile = await getOrCreateProfile(userFromSdk.id, displayName, email);
+        const minmatMaxLevels = profile.minmatMaxLevels || { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+
         return NextResponse.json({
           isAuthenticated: true,
           userSession: {
             userId: userFromSdk.id,
             email: email,
             username: userFromSdk.username || null,
-            displayName: displayName
+            displayName: displayName,
+            minmatMaxLevels: minmatMaxLevels
           }
         });
       }
