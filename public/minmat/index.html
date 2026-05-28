@@ -855,8 +855,9 @@
       <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">🎮 Oyunu Başlat</button>
       <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
       <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
-      <div style="margin-top: 16px;">
-        <input id="playerInput" type="text" maxlength="20" placeholder="İsmini yaz...">
+      <div id="playerInputContainer" style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+        <input id="playerInput" type="text" maxlength="16" placeholder="İsmini yaz...">
+        <div id="playerInputStatus" style="font-size: 11px; font-weight: 700; margin-top: -10px; margin-bottom: 12px; text-align: center; min-height: 16px; display: none;"></div>
       </div>
       <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
       <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
@@ -1008,7 +1009,8 @@
         authWarn: "⚠️ Global sıralamaya girmek ve ödül kazanmak için giriş yapmalısınız.", authVerified: "✓ Doğrulanmış Hesap",
         authLoginBtn: "🔑 Giriş Yap / Google ile Bağlan", authSaveWarn: "⚠️ Giriş yapmadığınız için skorunuz dünya genel sıralamasına kaydedilemedi.",
         signout: "Çıkış Yap",
-        cupmatSwitch: "🏆 Cupmat'a Geç"
+        cupmatSwitch: "🏆 Cupmat'a Geç",
+        saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!"
       },
       en: {
         placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
@@ -1022,7 +1024,8 @@
         authWarn: "⚠️ You must sign in to enter the global leaderboard and win prizes.", authVerified: "✓ Verified Account",
         authLoginBtn: "🔑 Sign In / Connect with Google", authSaveWarn: "⚠️ Since you are not signed in, your score could not be saved to the global rankings.",
         signout: "Sign Out",
-        cupmatSwitch: "🏆 Go to Cupmat"
+        cupmatSwitch: "🏆 Go to Cupmat",
+        saving: "⏳ Saving...", saved: "✓ Saved successfully!"
       },
       de: {
         placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
@@ -1036,7 +1039,8 @@
         authWarn: "⚠️ Sie müssen sich anmelden, um an der globalen Bestenliste teilzunehmen.", authVerified: "✓ Verifiziertes Konto",
         authLoginBtn: "🔑 Einloggen / Google-Verbindung", authSaveWarn: "⚠️ Da Sie nicht angemeldet sind, wurde Ihr Punktestand nicht in die globale Liste eingetragen.",
         signout: "Abmelden",
-        cupmatSwitch: "🏆 Zu Cupmat"
+        cupmatSwitch: "🏆 Zu Cupmat",
+        saving: "⏳ Speichern...", saved: "✓ Erfolgreich gespeichert!"
       },
       fr: {
         placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
@@ -1050,21 +1054,23 @@
         authWarn: "⚠️ Vous devez vous connecter pour figurer dans le classement mondial et gagner des prix.", authVerified: "✓ Compte Vérifié",
         authLoginBtn: "🔑 Se connecter / Google", authSaveWarn: "⚠️ Comme vous n'êtes pas connecté, votre score n'a pas pu être enregistré.",
         signout: "Déconnexion",
-        cupmatSwitch: "🏆 Aller à Cupmat"
+        cupmatSwitch: "🏆 Aller à Cupmat",
+        saving: "⏳ Enregistrement...", saved: "✓ Enregistré avec succès!"
       },
       es: {
         placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
         gameOver: "Juego Terminado", score: "Puntuación", again: "🔄 Jugar de Nuevo", leaderAll: "🏆 Mejores Puntuaciones",
-        leaderAdd: "🏆 Puntos Suma", leaderSub: "🏆 Puntos Resta", leaderMul: "🏆 Puntos Multiplicación",
+        leaderAdd: "🏆 Puntos Suma", leaderSub: "🏆 Puntos Resta", leaderMul: "🏆 Puntos Multiplikación",
         leaderDiv: "🏆 Puntos División", leaderMix: "🏆 Puntos Mixto", colName: "Nombre", colDate: "Fecha/Hora",
         colCat: "Categoría", colRound: "Ronda", colScore: "Puntos", modeAdd: "Suma", modeSub: "Resta",
-        modeMul: "Multiplicación", modeDiv: "División", modeMix: "Mixto", shortAdd: "Suma", shortSub: "Resta",
+        modeMul: "Multiplikación", modeDiv: "División", modeMix: "Mixto", shortAdd: "Suma", shortSub: "Resta",
         shortMul: "Mult", shortDiv: "Div", shortMix: "Mix", round: "Ronda", nameErr: "El nombre debe tener al menos 3 caracteres",
         guest: "Invitado", menu: "Menü", subtitle: "MinMat — Juego de Cerebro y Matemáticas", all: "Todos",
-        authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de clasificación global y ganar premios.", authVerified: "✓ Cuenta Verificada",
+        authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de classificação global y ganar premios.", authVerified: "✓ Cuenta Verificada",
         authLoginBtn: "🔑 Iniciar Sesión / Google", authSaveWarn: "⚠️ Como no has iniciado sesión, tu puntuación no se pudo guardar la tabla global.",
         signout: "Sign Out",
-        cupmatSwitch: "🏆 Ir a Cupmat"
+        cupmatSwitch: "🏆 Ir a Cupmat",
+        saving: "⏳ Guardando...", saved: "✓ Guardado con éxito!"
       }
     };
 
@@ -1315,11 +1321,16 @@
       if (userSession.isAuthenticated) {
         isGuestMode = false;
         const displayName = userSession.displayName || userSession.username || "KaraKartal1923";
-        input.value = displayName;
-        input.readOnly = true;
-        input.disabled = true;
-        input.style.opacity = "0.75";
-        input.style.cursor = "not-allowed";
+        if (document.activeElement !== input) {
+          input.value = displayName;
+        }
+        input.readOnly = false;
+        input.disabled = false;
+        input.style.opacity = "1";
+        input.style.cursor = "text";
+        
+        const pic = document.getElementById("playerInputContainer");
+        if (pic) pic.style.display = "none";
         
         if (btnGuest) btnGuest.style.display = "none";
         if (btnLoginMenu) btnLoginMenu.style.display = "none";
@@ -1339,6 +1350,9 @@
         input.style.opacity = "0.75";
         input.style.cursor = "not-allowed";
         
+        const pic = document.getElementById("playerInputContainer");
+        if (pic) pic.style.display = "none";
+        
         if (btnGuest) btnGuest.style.display = "none";
         if (btnLoginMenu) btnLoginMenu.style.display = "block";
         
@@ -1357,6 +1371,9 @@
         input.disabled = false;
         input.style.opacity = "1";
         input.style.cursor = "text";
+        
+        const pic = document.getElementById("playerInputContainer");
+        if (pic) pic.style.display = "flex";
         
         if (btnGuest) btnGuest.style.display = "block";
         if (btnLoginMenu) btnLoginMenu.style.display = "block";
@@ -1415,6 +1432,21 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
       applyLang();
+      
+      // Listen to nickname updates from parent
+      window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "NICKNAME_UPDATED") {
+          console.log("[IFRAME] Received NICKNAME_UPDATED from parent:", event.data.nickname);
+          userSession.displayName = event.data.nickname;
+          localStorage.setItem("minmat_last_name", event.data.nickname);
+          let input = document.getElementById("playerInput");
+          if (input) {
+            input.value = event.data.nickname;
+          }
+          updateAuthUI();
+        }
+      });
+
       let input = document.getElementById("playerInput");
       if (input) {
         let lastName = localStorage.getItem("minmat_last_name") || "";
@@ -1609,7 +1641,15 @@
     }
 
     async function startGame() {
-      playerName = document.getElementById("playerInput").value.trim();
+      let inputVal = document.getElementById("playerInput") ? document.getElementById("playerInput").value.trim() : "";
+      
+      if (userSession.isAuthenticated) {
+        playerName = userSession.displayName || userSession.username || "Kullanıcı";
+      } else if (isGuestMode && guestUsername) {
+        playerName = guestUsername;
+      } else {
+        playerName = inputVal;
+      }
 
       if (playerName.length < 3 && !userSession.isAuthenticated) {
         alert(t("nameErr"));

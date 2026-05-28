@@ -64,7 +64,14 @@ export default function AuthPanel() {
       });
 
       if (res.ok) {
-        setNickname(tempNickname.trim());
+        const updatedNick = tempNickname.trim();
+        setNickname(updatedNick);
+        
+        // Notify the game iframe if it is currently mounted
+        const iframe = document.querySelector("iframe");
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage({ type: "NICKNAME_UPDATED", nickname: updatedNick }, "*");
+        }
       } else {
         const data = await res.json();
         setError(data.error || "Bir hata oluştu");
