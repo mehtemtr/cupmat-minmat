@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Globe, Home, Trophy, Info, HelpCircle, Calculator, ChevronDown } from "lucide-react";
+import { Home, Trophy, Info, HelpCircle, Calculator, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
-import { locales, type Locale } from "@/lib/i18n/types";
 import AuthPanel from "./AuthPanel";
+import { LanguageDropdown } from "./LanguageDropdown";
 
 const navKeys = [
   { href: "/teams", key: "nav.teams" },
@@ -20,7 +20,7 @@ const navKeys = [
 
 export function Header() {
   const { t } = useTranslation();
-  const { locale, setLocale } = useLocale();
+  const { locale } = useLocale();
   const { user, isSignedIn } = useUser();
   const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -125,11 +125,6 @@ export function Header() {
     }
   };
 
-  const toggleLocale = () => {
-    const currentIndex = locales.indexOf(locale);
-    const nextIndex = (currentIndex + 1) % locales.length;
-    setLocale(locales[nextIndex]);
-  };
 
   const minMatSwitchLabel =
     locale === "tr" ? "MinMat'a Geç" : locale === "de" ? "Zu MinMat" : locale === "fr" ? "Aller à MinMat" : locale === "es" ? "Ir a MinMat" : "Go to MinMat";
@@ -236,18 +231,7 @@ export function Header() {
               <HelpCircle className="h-4 w-4" />
             </button>
 
-            <button
-              type="button"
-              onClick={toggleLocale}
-              className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
-              aria-label={t("language.toggle")}
-            >
-              <Globe className="h-4 w-4 text-emerald-400" />
-              <span className="hidden sm:inline">
-                {t(`language.${locale}`)}
-              </span>
-              <span className="sm:hidden uppercase">{locale}</span>
-            </button>
+            <LanguageDropdown showFullLabelOnDesktop />
 
             {/* Puan Göstergesi */}
             {isSignedIn && (

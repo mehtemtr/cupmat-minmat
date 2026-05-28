@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation, useLocale } from "@/contexts/LocaleContext";
-import { locales, type Locale } from "@/lib/i18n/types";
-import { Trophy, Sparkles, ChevronRight, Calculator, Activity, Globe } from "lucide-react";
+import { Trophy, Sparkles, ChevronRight, Calculator, Activity } from "lucide-react";
+import { LanguageDropdown } from "@/components/LanguageDropdown";
 
 function BirthdayCake() {
   const [isBlownOut, setIsBlownOut] = useState(false);
@@ -174,7 +174,7 @@ function BirthdayCake() {
 
 export default function EntryPage() {
   const { t } = useTranslation();
-  const { locale, setLocale } = useLocale();
+  const { locale } = useLocale();
   const [activeBanner, setActiveBanner] = useState<"none" | "19mayis" | "birthday" | "kurban">("none");
 
   useEffect(() => {
@@ -215,11 +215,6 @@ export default function EntryPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const toggleLocale = () => {
-    const currentIndex = locales.indexOf(locale);
-    const nextIndex = (currentIndex + 1) % locales.length;
-    setLocale(locales[nextIndex]);
-  };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#04080e] selection:bg-emerald-500/30">
@@ -230,13 +225,7 @@ export default function EntryPage() {
       
       {/* Floating Language Toggle */}
       <div className="fixed right-6 top-6 z-50">
-        <button
-          onClick={toggleLocale}
-          className="flex items-center gap-2 rounded-full border border-white/10 bg-[#060b14]/80 px-4 py-2 text-sm font-bold text-zinc-200 backdrop-blur-md transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
-        >
-          <Globe className="h-4 w-4 text-emerald-400" />
-          <span className="uppercase">{locale}</span>
-        </button>
+        <LanguageDropdown buttonClassName="flex items-center gap-2 rounded-full border border-white/10 bg-[#060b14]/80 px-4 py-2 text-sm font-bold text-zinc-200 backdrop-blur-md transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white" />
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-20">
