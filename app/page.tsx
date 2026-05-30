@@ -208,6 +208,9 @@ export default function EntryPage() {
         if (date >= 27 && date <= 30) {
           banners.push("kurban");
         }
+        if (date === 30 || date === 31) {
+          banners.push("psg");
+        }
       }
 
       setActiveBanners(banners);
@@ -254,7 +257,93 @@ export default function EntryPage() {
           </div>
         </header>
 
+        {/* Giriş ve Aktarım Duyurusu */}
+        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-amber-500/20 bg-gradient-to-r from-amber-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-amber-500/30">
+          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-600/10 to-yellow-600/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+          <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 ring-1 ring-amber-400/20">
+              <span className="text-2xl">📢</span>
+            </div>
+            <div className="text-center md:text-left">
+              <h3 className="text-lg font-black text-white mb-2">
+                {locale === "tr" ? "Kullanıcı Geçişi ve Giriş Duyurusu" : "User Migration & Login Announcement"}
+              </h3>
+              <p className="text-sm text-zinc-300 leading-relaxed">
+                {locale === "tr" ? (
+                  "Sisteme kayıtlı olup giriş yaparken sorun yaşayan veya şifresi kabul edilmeyen üyelerimizin dikkatine: Hesaplarınız yeni sisteme güvenli bir şekilde aktarılmıştır. Giriş yapabilmek için sisteme kayıtlı olan e-posta adresinizi ve şifre olarak e-posta adresinizin @ işaretinden önceki ilk 8 karakterini yazabilirsiniz (Örn: veli.yilmaz@gmail.com için geçici şifreniz veli.yil olacaktır). Giriş yaptıktan sonra şifrenizi profil ayarlarınızdan değiştirebilirsiniz."
+                ) : (
+                  "Attention to our members who have problems logging in or whose password is not accepted: Your accounts have been securely migrated to the new system. To log in, you can write your registered email address and, as a password, the first 8 characters of your email address before the @ sign (e.g. for veli.yilmaz@gmail.com your temporary password will be veli.yil). You can update your password from your profile settings after logging in."
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Dynamic Celebrations Section */}
+        {activeBanners.includes("psg") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/20 bg-gradient-to-r from-blue-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-blue-500/30">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-650 to-red-650 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[42%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[5/4] max-w-[380px] rounded-2xl overflow-hidden border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/psg_champions_league.png"
+                    alt="PSG UEFA Champions League Back-to-Back Champions"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/40 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[58%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3.5 py-1 text-xs font-black text-blue-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "fr" ? "🏆 LIGUE DES CHAMPIONS" : locale === "tr" ? "🏆 ŞAMPİYONLAR LİGİ" : "🏆 CHAMPIONS LEAGUE"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl font-black text-white leading-tight mb-3">
+                  {locale === "fr" ? (
+                    <>{`Paris Saint-Germain (PSG)`}<br />{`sacré champion d'Europe pour la deuxième fois consécutive ! 🏆`}</>
+                  ) : locale === "tr" ? (
+                    <>{`Paris Saint-Germain (PSG)`}<br />{`Üst Üste İkinci Kez Avrupa Şampiyonu! 🏆`}</>
+                  ) : (
+                    <>{`Paris Saint-Germain (PSG)`}<br />{`crowned champions of Europe for the second consecutive year! 🏆`}</>
+                  )}
+                </h2>
+
+                <p className="text-sm text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "fr" ? (
+                    "L'Europe reste rouge et bleu ! Grâce à un jeu collectif spectaculaire et une force mentale hors du commun, le Paris Saint-Germain réalise un doublé historique en conservant son titre de vainqueur de l'UEFA Champions League. Nous célébrons avec fierté ce triomphe légendaire qui confirme la domination parisienne sur le football européen !"
+                  ) : locale === "tr" ? (
+                    "Avrupa kırmızı ve maviye boyanmaya devam ediyor! Olağanüstü takım oyunu ve sarsılmaz inancıyla Paris Saint-Germain, UEFA Şampiyonlar Ligi şampiyonluk unvanını koruyarak tarihi bir üst üste zafer (doublé) elde etti. Paris'in Avrupa futbolundaki hakimiyetini taçlandıran bu efsanevi zaferi gururla kutluyoruz!"
+                  ) : (
+                    "Europe remains red and blue! Driven by spectacular teamwork and extraordinary mental strength, Paris Saint-Germain secures a historic back-to-back triumph by retaining the UEFA Champions League title. We proudly celebrate this legendary victory that cements Paris's dominance over European football!"
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-red-500/60 pl-4 py-1.5 bg-red-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-red-300 leading-snug">
+                    {locale === "fr" ? (
+                      `"Un combat héroïque, une victoire méritée. Paris conserve sa couronne et trône au sommet de l'Europe !"`
+                    ) : locale === "tr" ? (
+                      `"Kahramanca bir mücadele, hak edilmiş bir zafer. Paris tacını koruyor ve Avrupa'nın zirvesindeki yerini sağlamlaştırıyor!"`
+                    ) : (
+                      `"A heroic battle, a well-deserved victory. Paris keeps its crown and reigns at the absolute summit of Europe!"`
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-red-400 uppercase mt-2">
+                    {locale === "fr" ? "— PARIS CHAMPION" : locale === "tr" ? "— ŞAMPİYON PARİS" : "— PARIS CHAMPIONS"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
         {activeBanners.includes("kurban") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-r from-emerald-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
             
