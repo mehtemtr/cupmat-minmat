@@ -15,7 +15,8 @@
     "footballers": "Futbolistas",
     "signin": "Iniciar sesión",
     "signout": "Cerrar sesión",
-    "logoTitle": "CupMat — Pantalla Especial del Campeonato Mundial 2026"
+    "logoTitle": "CupMat — Pantalla Especial del Campeonato Mundial 2026",
+    "stats": "Estadísticas"
   },
   "hero": {
     "badge": "StatMatik — Campeonato Mundial 2026",
@@ -138,5 +139,38 @@
     "instructionShare": "Toca el icono Compartir en el menú inferior de Safari.",
     "instructionAdd": "Desplázate hacia abajo y selecciona 'Añadir a la pantalla de inicio'.",
     "close": "Cerrar"
+  },
+  "statsPage": {
+    "title": "Estadísticas del Torneo",
+    "subtitle": "Analiza las edades, alturas, pesos de los jugadores, representación de clubes y récords históricos de la Copa Mundial.",
+    "tabSquad": "Análisis de Plantillas",
+    "tabLive": "Estadísticas en Vivo",
+    "tabHistory": "Récords Históricos",
+    "youngestTitle": "Top 20 Jugadores Más Jóvenes",
+    "oldestTitle": "Top 20 Jugadores Más Veteranos",
+    "topClubsTitle": "Clubes con Más Representantes",
+    "topCitiesTitle": "Ciudades de Nacimiento de Jugadores",
+    "confederationsTitle": "Jugadores por Confederación",
+    "countryAveragesTitle": "Promedios por País",
+    "historyWins": "Más Títulos de la Copa Mundial",
+    "historyFinals": "Más Finales Disputadas",
+    "historyScorers": "Máximos Goleadores Históricos",
+    "liveScorers": "Tabla de Goleadores",
+    "liveAssists": "Tabla de Asistencias",
+    "liveCards": "Reporte de Tarjetas",
+    "liveOwnGoals": "Goles en Propia Puerta",
+    "liveNote": "Estas estadísticas se actualizarán en vivo automáticamente una vez que comiencen los partidos del torneo.",
+    "colPlayer": "Jugador",
+    "colPlayersCount": "Jugadores",
+    "colTeam": "Equipo",
+    "colAge": "Edad",
+    "colClub": "Club",
+    "colHeight": "Altura (cm)",
+    "colWeight": "Peso (kg)",
+    "colLeague": "Liga",
+    "avgAge": "Prom. Edad",
+    "avgHeight": "Prom. Altura",
+    "avgWeight": "Prom. Peso",
+    "emptyData": "Cargando datos o no hay estadísticas disponibles."
   }
 }

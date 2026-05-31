@@ -15,7 +15,8 @@
     "footballers": "Footballers",
     "signin": "Sign In",
     "signout": "Sign Out",
-    "logoTitle": "CupMat — 2026 World Championship Special Screen"
+    "logoTitle": "CupMat — 2026 World Championship Special Screen",
+    "stats": "Stats"
   },
   "hero": {
     "badge": "StatMatik — 2026 World Championship",
@@ -138,5 +139,38 @@
     "instructionShare": "Tap the Share icon in the Safari bottom menu.",
     "instructionAdd": "Scroll down and select 'Add to Home Screen'.",
     "close": "Close"
+  },
+  "statsPage": {
+    "title": "Tournament Statistics",
+    "subtitle": "Analyze player ages, heights, weights, club representations, and historical World Cup records.",
+    "tabSquad": "Squad Analysis",
+    "tabLive": "Live Stats",
+    "tabHistory": "Historical Records",
+    "youngestTitle": "Top 20 Youngest Players",
+    "oldestTitle": "Top 20 Oldest Players",
+    "topClubsTitle": "Top Clubs Represented",
+    "topCitiesTitle": "Top Birth Places of Players",
+    "confederationsTitle": "Players by Confederation",
+    "countryAveragesTitle": "Country Squad Averages",
+    "historyWins": "Most World Cup Titles",
+    "historyFinals": "Most Finals Played",
+    "historyScorers": "World Cup All-Time Top Scorers",
+    "liveScorers": "Tournament Top Scorers",
+    "liveAssists": "Tournament Top Assists",
+    "liveCards": "Card Reports",
+    "liveOwnGoals": "Own Goals",
+    "liveNote": "These stats will update live automatically once the tournament matches kickoff.",
+    "colPlayer": "Player",
+    "colPlayersCount": "Players",
+    "colTeam": "Team",
+    "colAge": "Age",
+    "colClub": "Club",
+    "colHeight": "Height (cm)",
+    "colWeight": "Weight (kg)",
+    "colLeague": "League",
+    "avgAge": "Avg. Age",
+    "avgHeight": "Avg. Height",
+    "avgWeight": "Avg. Weight",
+    "emptyData": "Loading data or no statistics available."
   }
 }

@@ -45,7 +45,8 @@ export interface UserActivity {
   cupMatRewardPoints: number;
   minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number };
   lastPageStayClaimAt: string;     // ISO string of the last page stay claim
-  pageStayClaimsTodayCount: number; // Number of page stay claims today
+  pageStayClaimsTodayCount: number; // Number of page stay sessions today
+  pageStayHistory: Record<string, { lastClaimedAt: string; claimsTodayCount: number }>;
 }
 
 function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }): UserActivity {
@@ -74,6 +75,7 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     minmatMaxLevels: raw.minmatMaxLevels ?? { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
     lastPageStayClaimAt: raw.lastPageStayClaimAt ?? "",
     pageStayClaimsTodayCount: raw.pageStayClaimsTodayCount ?? 0,
+    pageStayHistory: raw.pageStayHistory ?? {},
   };
 }
 
@@ -151,6 +153,7 @@ const defaultStore: GamificationStore = {
       minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
       lastPageStayClaimAt: "",
       pageStayClaimsTodayCount: 0,
+      pageStayHistory: {},
     },
     {
       userId: "demo-2",
@@ -176,6 +179,7 @@ const defaultStore: GamificationStore = {
       minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
       lastPageStayClaimAt: "",
       pageStayClaimsTodayCount: 0,
+      pageStayHistory: {},
     }
   ],
   gecmisSampiyonlar: [
@@ -502,6 +506,7 @@ export async function getOrCreateProfile(
       profile.hakkindaTiklandi = false;
       profile.minmatOyunSayisiBugun = 0;
       profile.pageStayClaimsTodayCount = 0;
+      profile.pageStayHistory = {};
 
       // Award daily login points on first login of the day
       profile.taraftarPuani += 10;
@@ -784,25 +789,35 @@ export async function handleGamificationAction(
       profile.yardimTiklandi = false;
       profile.hakkindaTiklandi = false;
       profile.minmatOyunSayisiBugun = 0;
+      profile.pageStayHistory = {};
     }
 
-    // Rule 1: Max 5 claims per day
-    if ((profile.pageStayClaimsTodayCount || 0) >= 5) {
+    const now = Date.now();
+    const cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
+
+    // Ensure history is initialized
+    if (!profile.pageStayHistory) {
+      profile.pageStayHistory = {};
+    }
+
+    // Get history for this specific page action
+    const pageRecord = profile.pageStayHistory[action] || { lastClaimedAt: "", claimsTodayCount: 0 };
+
+    // Check limit (max 5 claims per page per day)
+    if ((pageRecord.claimsTodayCount || 0) >= 5) {
       return {
         success: false,
         profile,
-        message: "Bugün için maksimum sayfa gezinti puanı sınırına (5) ulaştınız."
+        message: "Bu sayfa için günlük maksimum keşif sınırına (5) ulaştınız."
       };
     }
 
-    // Rule 2: Cooldown of 2 hours
-    if (profile.lastPageStayClaimAt) {
-      const lastClaimTime = new Date(profile.lastPageStayClaimAt).getTime();
-      const now = Date.now();
-      const diffMs = now - lastClaimTime;
-      const cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
-      if (diffMs < cooldownMs) {
-        const remainingMs = cooldownMs - diffMs;
+    // Check 2-hour cooldown for this specific page
+    if (pageRecord.lastClaimedAt) {
+      const lastClaimTime = new Date(pageRecord.lastClaimedAt).getTime();
+      const elapsedMs = now - lastClaimTime;
+      if (elapsedMs < cooldownMs) {
+        const remainingMs = cooldownMs - elapsedMs;
         const remainingMinutes = Math.ceil(remainingMs / (60 * 1000));
         const remainingHours = Math.floor(remainingMinutes / 60);
         const remainingMinsText = remainingMinutes % 60;
@@ -816,24 +831,28 @@ export async function handleGamificationAction(
         return {
           success: false,
           profile,
-          message: `Bir sonraki sayfa gezinti puanı için ${cooldownStr} beklemeniz gerekmektedir.`
+          message: `Bu sayfadan tekrar puan alabilmek için ${cooldownStr} beklemeniz gerekmektedir.`
         };
       }
     }
 
+    // Allowed to claim points for this page!
     const added = amount || 1;
     profile.taraftarPuani += added;
     profile.mevcutPeriyotPuani += added;
     if (added >= 10) {
       profile.minmatEkSure += 2; // +2 seconds active Minmat time bonus
     }
-    
-    // Update counters
-    profile.pageStayClaimsTodayCount = (profile.pageStayClaimsTodayCount || 0) + 1;
+
+    // Update history for this page
+    profile.pageStayHistory[action] = {
+      lastClaimedAt: new Date().toISOString(),
+      claimsTodayCount: (pageRecord.claimsTodayCount || 0) + 1
+    };
+
     profile.lastPageStayClaimAt = new Date().toISOString();
-    
     message = `Keşif ödülü kazanıldı: +${added} Taraftar Puanı!`;
-    
+
     const store = await getStore();
     const idx = store.userActivities.findIndex(u => u.userId === userId);
     if(idx >= 0) store.userActivities[idx] = profile;

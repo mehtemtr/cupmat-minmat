@@ -59,7 +59,7 @@ function hashString(str: string): number {
 // 1. KADRO GÜNCELLEYİCİ (ROSTER UPDATER)
 // ============================================================
 
-export async function updateTeamRosters(): Promise<{
+export async function updateTeamRosters(force = false): Promise<{
   success: boolean;
   updated: number;
   errors: string[];
@@ -69,6 +69,22 @@ export async function updateTeamRosters(): Promise<{
 
   try {
     const teams = TEAMS;
+    
+    // En fazla 12 oyuncu limitini korumak için kulüp sayaçlarını tutuyoruz.
+    const clubCounts: Record<string, number> = {};
+    if (!force) {
+      // Eğer sıfırdan doldurmuyorsak, mevcut veritabanındaki oyuncuların kulüp sayılarını yükleyelim
+      const { data: existingPlayers } = await supabaseAdmin
+        .from("team_rosters")
+        .select("club");
+      if (existingPlayers) {
+        existingPlayers.forEach(p => {
+          if (p.club) {
+            clubCounts[p.club] = (clubCounts[p.club] || 0) + 1;
+          }
+        });
+      }
+    }
     
     for (const team of teams) {
       try {
@@ -86,10 +102,10 @@ export async function updateTeamRosters(): Promise<{
         const isRealRoster = team.players && team.players.length >= 24;
 
         // Eğer kadro eksikse veya gerçek bir kadroya sahipsek ve güncellenmesi gerekiyorsa (db ile eşitlemek için zorla)
-        if (!count || count < 24 || isRealRoster) {
+        if (force || !count || count < 24 || isRealRoster) {
           console.log(`Takım ${team.nameTr} kadrosu güncelleniyor (mevcut: ${count || 0})`);
           
-          if (isRealRoster) {
+          if (force || isRealRoster) {
             // Eski kadroyu silerek temiz bir kurulum yapalım (çakışma ve eski yer tutucuların kalmasını önler)
             const { error: deleteError } = await supabaseAdmin
               .from("team_rosters")
@@ -102,7 +118,7 @@ export async function updateTeamRosters(): Promise<{
           }
 
           // Örnek oyuncu listesi (gerçek FIFA entegrasyonu buraya gelecek)
-          const samplePlayers = generateSampleRoster(team);
+          const samplePlayers = generateSampleRoster(team, clubCounts);
           
           for (const player of samplePlayers) {
             const { error } = await supabaseAdmin
@@ -114,6 +130,15 @@ export async function updateTeamRosters(): Promise<{
                 player_number: player.number,
                 is_captain: player.isCaptain,
                 club: player.club,
+                date_of_birth: player.dateOfBirth,
+                height: player.height,
+                weight: player.weight,
+                league: player.league,
+                birth_place: player.birthPlace,
+                goals: player.goals ?? 0,
+                assists: player.assists ?? 0,
+                yellow_cards: player.yellowCards ?? 0,
+                red_cards: player.redCards ?? 0,
               }, {
                 onConflict: "team_id, player_name"
               });
@@ -145,8 +170,231 @@ export async function updateTeamRosters(): Promise<{
   };
 }
 
+// Doğum yeri belirleme yardımcısı (ülkelere göre gerçekçi şehirler)
+function getBirthPlaceByTeam(teamId: string, playerName: string): string {
+  const cityMap: Record<string, string[]> = {
+    tur: ["İstanbul", "Ankara", "İzmir", "Bursa", "Trabzon", "Adana", "Antalya", "Konya", "Samsun", "Gaziantep", "Kocaeli", "Diyarbakır", "Kayseri", "Rize", "Eskişehir", "Trabzon", "Sivas", "Malatya", "Mersin", "Hatay"],
+    mex: ["Mexico City", "Guadalajara", "Monterrey", "Puebla", "Tijuana", "León", "Juárez", "Zapopan", "Mérida", "San Luis Potosí", "Querétaro", "Aguascalientes", "Hermosillo"],
+    usa: ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Seattle", "Boston", "Miami", "Atlanta", "Chicago", "San Francisco"],
+    can: ["Toronto", "Montreal", "Vancouver", "Calgary", "Edmonton", "Ottawa", "Winnipeg", "Quebec City", "Halifax", "Hamilton", "London", "Victoria"],
+    bra: ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Porto Alegre", "Salvador", "Brasília", "Fortaleza", "Recife", "Curitiba", "Manaus", "Santos", "Campinas"],
+    arg: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza", "La Plata", "Tucumán", "Salta", "Santa Fe", "Mar del Plata", "Bahía Blanca", "Neuquén"],
+    eng: ["London", "Manchester", "Birmingham", "Liverpool", "Leeds", "Sheffield", "Newcastle", "Bristol", "Leicester", "Nottingham", "Southampton", "Leeds"],
+    ger: ["Berlin", "Munich", "Hamburg", "Cologne", "Frankfurt", "Stuttgart", "Düsseldorf", "Dortmund", "Essen", "Leipzig", "Bremen", "Hannover", "Nuremberg"],
+    fra: ["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg", "Montpellier", "Bordeaux", "Lille", "Rennes", "Reims"],
+    esp: ["Madrid", "Barcelona", "Valencia", "Seville", "Zaragoza", "Málaga", "Murcia", "Palma", "Bilbao", "Las Palmas", "Vigo", "Alicante"],
+    jpn: ["Tokyo", "Yokohama", "Osaka", "Nagoya", "Sapporo", "Kobe", "Fukuoka", "Kyoto", "Kawasaki", "Saitama", "Hiroshima", "Sendai"],
+    kor: ["Seoul", "Busan", "Incheon", "Daegu", "Daejeon", "Gwangju", "Suwon", "Ulsan", "Seongnam", "Jeonju", "Cheonan"],
+    ned: ["Amsterdam", "Rotterdam", "The Hague", "Utrecht", "Eindhoven", "Groningen", "Almere", "Breda", "Nijmegen", "Enschede", "Haarlem"],
+    por: ["Lisbon", "Porto", "Braga", "Coimbra", "Funchal", "Faro", "Setúbal", "Aveiro", "Évora", "Guimarães"],
+    uru: ["Montevideo", "Salto", "Paysandú", "Las Piedras", "Rivera", "Maldonado", "Tacuarembó", "Melo", "Artigas"],
+    sen: ["Dakar", "Thiès", "Kaolack", "Ziguinchor", "Saint-Louis", "M'bour", "Rufisque", "Diourbel"],
+    mar: ["Casablanca", "Rabat", "Fes", "Marrakech", "Tangier", "Agadir", "Meknes", "Oujda", "Tetouan", "Safi"],
+    cro: ["Zagreb", "Split", "Rijeka", "Osijek", "Zadar", "Slavonski Brod", "Pula", "Karlovac", "Varaždin"]
+  };
+
+  const cities = cityMap[teamId];
+  const hash = hashString(playerName);
+  
+  if (cities && cities.length > 0) {
+    return cities[hash % cities.length];
+  }
+
+  // Genel bölgesel şehir isimleri
+  const fallbackCities = ["Capital City", "Port City", "Highlands", "Metropolis", "Valley City", "Coastal Town", "River Town"];
+  return fallbackCities[hash % fallbackCities.length];
+}
+
+function getRealisticClubByTeam(teamId: string, seedNum: number, clubCounts: Record<string, number> = {}): string {
+  const clubMap: Record<string, string[]> = {
+    tur: ["Galatasaray", "Fenerbahçe", "Beşiktaş", "Trabzonspor", "Başakşehir", "Samsunspor", "Kasımpaşa", "Antalyaspor", "Konyaspor", "Göztepe", "Rizespor"],
+    mex: ["Club América", "Guadalajara", "Monterrey", "Tigres UANL", "Cruz Azul", "Pumas UNAM", "Toluca", "Pachuca", "Santos Laguna", "León", "Tijuana"],
+    usa: ["Inter Miami", "LA Galaxy", "LAFC", "Seattle Sounders", "Columbus Crew", "New York City FC", "Atlanta United", "Orlando City", "FC Cincinnati", "Philadelphia Union"],
+    can: ["Toronto FC", "CF Montréal", "Vancouver Whitecaps", "Forge FC", "Pacific FC", "Halifax Wanderers"],
+    bra: ["Flamengo", "Palmeiras", "São Paulo", "Corinthians", "Fluminense", "Grêmio", "Santos", "Atlético Mineiro", "Botafogo", "Internacional", "Cruzeiro"],
+    arg: ["River Plate", "Boca Juniors", "Racing Club", "Independiente", "San Lorenzo", "Estudiantes", "Vélez Sarsfield", "Talleres", "Lanús", "Newell's Old Boys"],
+    eng: ["Arsenal", "Chelsea", "Liverpool", "Manchester City", "Manchester United", "Tottenham Hotspur", "Aston Villa", "Newcastle United", "West Ham", "Brighton", "Everton"],
+    ger: ["Bayern Munich", "Borussia Dortmund", "Bayer Leverkusen", "RB Leipzig", "VfB Stuttgart", "Eintracht Frankfurt", "Wolfsburg", "Borussia Mönchengladbach", "Freiburg"],
+    fra: ["Paris Saint-Germain", "Marseille", "Lyon", "Monaco", "Lille", "Rennes", "Nice", "Lens", "Reims", "Strasbourg"],
+    esp: ["Madrid", "Barcelona", "Atlético Madrid", "Real Sociedad", "Real Betis", "Villarreal", "Sevilla", "Athletic Bilbao", "Getafe", "Girona", "Valencia"],
+    jpn: ["Vissel Kobe", "Yokohama F. Marinos", "Kawasaki Frontale", "Urawa Reds", "Sanfrecce Hiroshima", "Nagoya Grampus", "Kashima Antlers", "Cerezo Osaka"],
+    kor: ["Ulsan HD", "Jeonbuk Hyundai Motors", "FC Seoul", "Pohang Steelers", "Gwangju FC", "Daegu FC", "Incheon United", "Daejeon Hana Citizen"],
+    ned: ["Ajax", "PSV Eindhoven", "Feyenoord", "AZ Alkmaar", "FC Utrecht", "FC Twente", "Heerenveen", "Vitesse"],
+    por: ["Benfica", "Sporting CP", "FC Porto", "Braga", "Vitória de Guimarães", "Boavista", "Famalicão", "Estoril"],
+    uru: ["Peñarol", "Nacional", "Defensor Sporting", "Danubio", "Liverpool FC (Montevideo)", "Montevideo Wanderers", "Cerro Largo"],
+    sen: ["ASC Diaraf", "Teungueth FC", "Generation Foot", "Casa Sports", "Jaraaf", "Pikine"],
+    mar: ["Wydad AC", "Raja CA", "AS FAR", "RS Berkane", "FUS Rabat", "Ittihad Tanger", "MAS Fes"],
+    cro: ["Dinamo Zagreb", "Hajduk Split", "Rijeka", "Osijek", "Lokomotiva Zagreb", "Gorica", "Slaven Belupo"],
+    ita: ["Inter Milan", "AC Milan", "Juventus", "Roma", "Napoli", "Lazio", "Atalanta", "Fiorentina", "Torino", "Bologna", "Monza"]
+  };
+
+  const hasClub = seedNum % 6 !== 0; // %16'sı Serbest
+  if (!hasClub) return "Serbest";
+
+  const domesticClubs = clubMap[teamId];
+  const topEuropeanClubs = ["Real Madrid", "Barcelona", "Bayern Munich", "Borussia Dortmund", "Manchester City", "Liverpool", "Arsenal", "Chelsea", "Manchester United", "Paris Saint-Germain", "Inter Milan", "AC Milan", "Juventus", "Benfica", "Ajax", "Atlético Madrid", "Napoli", "Sporting CP", "Feyenoord", "Aston Villa", "Bayer Leverkusen"];
+
+  const CLUB_LIMIT = 12;
+
+  // Helper to check if a club is full
+  const isFull = (clubName: string) => {
+    if (clubName === "Serbest") return false;
+    return (clubCounts[clubName] || 0) >= CLUB_LIMIT;
+  };
+
+  // Tanımlı yerel ligi olan ülkeler için (Türkiye, İngiltere, Brezilya vb.)
+  if (domesticClubs && domesticClubs.length > 0) {
+    const playsDomestic = seedNum % 4 !== 0; // %75'i kendi yerel liginde oynuyor
+    if (playsDomestic) {
+      for (let attempt = 0; attempt < domesticClubs.length; attempt++) {
+        const candidate = domesticClubs[(seedNum + attempt) % domesticClubs.length];
+        if (!isFull(candidate)) {
+          return candidate;
+        }
+      }
+    }
+    
+    // %25'i veya yerel kulüpler dolmuşsa Avrupa devlerinde oynuyor (Lejyoner)
+    for (let attempt = 0; attempt < topEuropeanClubs.length; attempt++) {
+      const candidate = topEuropeanClubs[(seedNum + attempt) % topEuropeanClubs.length];
+      if (!isFull(candidate)) {
+        return candidate;
+      }
+    }
+
+    return "Serbest";
+  }
+
+  // Yerel ligi tanımlı olmayan ülkeler için (Ekvador, Kolombiya vb.)
+  const playsInEurope = seedNum % 10 < 3; // %30'u Avrupa devlerinde oynuyor
+  if (playsInEurope) {
+    for (let attempt = 0; attempt < topEuropeanClubs.length; attempt++) {
+      const candidate = topEuropeanClubs[(seedNum + attempt) % topEuropeanClubs.length];
+      if (!isFull(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  // %70'i veya Avrupa kulüpleri dolmuşsa kendi ülkesindeki bölgesel/uydurma kulüplerde oynuyor
+  const prefixes = ["FC", "Sporting", "United", "Athletic", "Club", "Deportivo", "Real", "City"];
+  const prefix = prefixes[seedNum % prefixes.length];
+  const nameMap: Record<string, string> = {
+    ecu: "Quito", col: "Bogota", aus: "Sydney", egy: "Cairo", ksa: "Riyadh",
+    civ: "Abidjan", rsa: "Johannesburg", bih: "Sarajevo", qat: "Doha", swe: "Stockholm",
+    sco: "Glasgow", tun: "Tunis", bel: "Brussels", hti: "Port-au-Prince", par: "Asuncion",
+    irn: "Tehran", cur: "Willemstad", cze: "Prague", nzl: "Auckland", pan: "Panama", gha: "Accra"
+  };
+  const cityName = nameMap[teamId] || (teamId.toUpperCase() + " City");
+  
+  const fictionalClub = seedNum % 2 === 0 ? `${cityName} ${prefix}` : `${prefix} ${cityName}`;
+  return fictionalClub;
+}
+
 // Örnek kadro üretici (gerçek API entegrasyonu veya tanımlı kadro eşleştirici)
-function generateSampleRoster(team: any) {
+function generateSampleRoster(team: any, clubCounts: Record<string, number> = {}) {
+  const leagues = ["Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1", "Süper Lig", "MLS", "Eredivisie"];
+  
+  const getHeightByPosition = (pos: string, seedNum: number) => {
+    const pUpper = pos.toUpperCase();
+    if (pUpper.includes("KALECI") || pUpper.includes("GK") || pUpper.includes("STOPER")) {
+      return 185 + (seedNum % 14); // 185 - 198 cm
+    }
+    if (pUpper.includes("FORVET") || pUpper.includes("FW")) {
+      return 178 + (seedNum % 15); // 178 - 192 cm
+    }
+    if (pUpper.includes("MIDFIELDER") || pUpper.includes("MF") || pUpper.includes("LIBERO") || pUpper.includes("SAHA")) {
+      return 175 + (seedNum % 14); // 175 - 188 cm
+    }
+    return 170 + (seedNum % 13); // 170 - 182 cm
+  };
+
+  const getWeightByHeight = (h: number, seedNum: number) => {
+    return h - 105 + (seedNum % 11 - 5); // height - 105 +/- 5 kg
+  };
+
+  const getLeagueByClub = (club: string, seedNum: number) => {
+    if (!club || club === "Kulüp Yok" || club === "Serbest") return "Serbest";
+    const cUpper = club.toUpperCase();
+    if (cUpper.includes("MANCHESTER") || cUpper.includes("WEST HAM") || cUpper.includes("LIVERPOOL") || cUpper.includes("ARSENAL") || cUpper.includes("CHELSEA") || cUpper.includes("HULL CITY") || cUpper.includes("STOKE") || cUpper.includes("SWANSEA") || cUpper.includes("CRYSTAL PALACE") || cUpper.includes("BOURNEMOUTH") || cUpper.includes("BRENTFORD") || cUpper.includes("LEICESTER") || cUpper.includes("LEEDS") || cUpper.includes("ASTON VILLA") || cUpper.includes("TOTTENHAM") || cUpper.includes("CELTIC") || cUpper.includes("BIRMINGHAM")) {
+      return "Premier League";
+    }
+    if (cUpper.includes("REAL MADRID") || cUpper.includes("BARCELONA") || cUpper.includes("SEVILLA") || cUpper.includes("MALLORCA") || cUpper.includes("ATHLETIC BILBAO") || cUpper.includes("VALENCIA") || cUpper.includes("VILLARREAL") || cUpper.includes("ATLETICO")) {
+      return "La Liga";
+    }
+    if (cUpper.includes("INTER MILAN") || cUpper.includes("AC MILAN") || cUpper.includes("JUVENTUS") || cUpper.includes("ROMA") || cUpper.includes("ATALANTA") || cUpper.includes("FIORENTINA") || cUpper.includes("SASSUOLO") || cUpper.includes("SAMPDORIA") || cUpper.includes("SALERNITANA")) {
+      return "Serie A";
+    }
+    if (cUpper.includes("BAYERN") || cUpper.includes("BEYER") || cUpper.includes("LEVERKUSEN") || cUpper.includes("DORTMUND") || cUpper.includes("STUTTGART") || cUpper.includes("MAINZ") || cUpper.includes("AUGSBURG") || cUpper.includes("SCHALKE") || cUpper.includes("SALZBURG") || cUpper.includes("EINTRACHT") || cUpper.includes("KARLSRUHER") || cUpper.includes("MONCHENGLADBACH")) {
+      return "Bundesliga";
+    }
+    if (cUpper.includes("PSG") || cUpper.includes("PARIS") || cUpper.includes("LILLE") || cUpper.includes("MONACO") || cUpper.includes("RENNES") || cUpper.includes("LENS") || cUpper.includes("ANGERS") || cUpper.includes("MONTPELLIER")) {
+      return "Ligue 1";
+    }
+    if (cUpper.includes("BESIKTAS") || cUpper.includes("FENERBAHCE") || cUpper.includes("GALATASARAY") || cUpper.includes("GAZIANTEP") || cUpper.includes("RIZESPOR")) {
+      return "Süper Lig";
+    }
+    if (cUpper.includes("LAFC") || cUpper.includes("MIAMI") || cUpper.includes("COLUMBUS") || cUpper.includes("CHICAGO") || cUpper.includes("ORLANDO") || cUpper.includes("CHARLOTTE") || cUpper.includes("CINCINNATI") || cUpper.includes("VANCOUVER") || cUpper.includes("PHILADELPHIA") || cUpper.includes("NEW YORK")) {
+      return "MLS";
+    }
+    if (cUpper.includes("PSV") || cUpper.includes("FEYENOORD") || cUpper.includes("AJAX") || cUpper.includes("AZ") || cUpper.includes("WILLEM") || cUpper.includes("NEC")) {
+      return "Eredivisie";
+    }
+    return leagues[seedNum % leagues.length];
+  };
+
+  // Try to load real player squads scraped from Wikipedia
+  let realSquads: Record<string, any[]> = {};
+  try {
+    const fs = require("fs");
+    const path = require("path");
+    const filePath = path.join(process.cwd(), "scratch", "real-squads.json");
+    if (fs.existsSync(filePath)) {
+      realSquads = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    }
+  } catch (e) {
+    console.log("Could not load real-squads.json:", e);
+  }
+
+  const wikiPlayers = realSquads[team.id];
+  if (wikiPlayers && wikiPlayers.length >= 10) {
+    return wikiPlayers.slice(0, 26).map((p: any, idx: number) => {
+      let pos = p.position;
+      const pUpper = p.position.toUpperCase();
+      if (pUpper.includes("GK")) pos = "Kaleci";
+      else if (pUpper.includes("DF")) pos = "Defans";
+      else if (pUpper.includes("MF")) pos = "Orta Saha";
+      else if (pUpper.includes("FW")) pos = "Forvet";
+
+      const isCaptain = idx === 0;
+      const age = p.age || 26;
+      const dateOfBirth = p.dateOfBirth || `${2026 - age}-06-01`;
+
+      const h = getHeightByPosition(pos, idx);
+      const w = getWeightByHeight(h, idx);
+      
+      const club = p.club || "Serbest";
+      if (club && club !== "Serbest") {
+        clubCounts[club] = (clubCounts[club] || 0) + 1;
+      }
+      const league = getLeagueByClub(club, idx);
+      const birthPlace = getBirthPlaceByTeam(team.id, p.name);
+
+      return {
+        name: p.name,
+        position: pos,
+        number: idx + 1,
+        isCaptain: isCaptain,
+        club: club,
+        dateOfBirth,
+        height: h,
+        weight: w,
+        league,
+        birthPlace
+      };
+    });
+  }
+
   if (team.players && team.players.length >= 24) {
     return team.players.map((p: any, idx: number) => {
       let pos = p.position;
@@ -158,12 +406,31 @@ function generateSampleRoster(team: any) {
 
       const isCaptain = p.name === "Christian Pulisic" || p.name === "Virgil van Dijk" || idx === 0;
 
+      const age = p.age || 26;
+      const birthYear = 2026 - age;
+      const dateOfBirth = `${birthYear}-01-01`;
+
+      const h = getHeightByPosition(pos, idx);
+      const w = getWeightByHeight(h, idx);
+      
+      const club = p.club || "";
+      if (club) {
+        clubCounts[club] = (clubCounts[club] || 0) + 1;
+      }
+      const league = getLeagueByClub(club, idx);
+      const birthPlace = getBirthPlaceByTeam(team.id, p.name);
+
       return {
         name: p.name,
         position: pos,
         number: idx + 1,
         isCaptain: isCaptain,
-        club: p.club || ""
+        club: club,
+        dateOfBirth,
+        height: h,
+        weight: w,
+        league,
+        birthPlace
       };
     });
   }
@@ -173,12 +440,32 @@ function generateSampleRoster(team: any) {
   
   const players = [];
   for (let i = 1; i <= 26; i++) {
+    const name = `${team.nameTr} Oyuncu ${i}`;
+    const seed = hashString(name);
+    const age = (seed % 18) + 18; // age 18 to 35
+    const birthYear = 2026 - age;
+    const dateOfBirth = `${birthYear}-06-01`;
+
+    const pos = positions[i % positions.length];
+    const h = getHeightByPosition(pos, seed);
+    const w = getWeightByHeight(h, seed);
+    
+    const club = getRealisticClubByTeam(team.id, seed, clubCounts);
+    clubCounts[club] = (clubCounts[club] || 0) + 1;
+    const league = getLeagueByClub(club, seed);
+    const birthPlace = getBirthPlaceByTeam(team.id, name);
+
     players.push({
-      name: `${team.nameTr} Oyuncu ${i}`,
-      position: positions[i % positions.length],
+      name: name,
+      position: pos,
       number: i,
       isCaptain: i === 1,
-      club: "Kulüp Yok"
+      club: club,
+      dateOfBirth,
+      height: h,
+      weight: w,
+      league,
+      birthPlace
     });
   }
   return players;

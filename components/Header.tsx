@@ -16,6 +16,7 @@ const navKeys = [
   { href: "/venues", key: "nav.venues" },
   { href: "/tahminler", key: "nav.predictions" },
   { href: "/leaderboard", key: "nav.leaderboard" },
+  { href: "/stats", key: "nav.stats" },
 ] as const;
 
 export function Header() {
@@ -65,8 +66,7 @@ export function Header() {
             localStorage.setItem(
               "wc2026-gamification-state",
               JSON.stringify({
-                lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
-                pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+                pageStayHistory: data.profile.pageStayHistory || {},
                 lastSyncDate: new Date().toISOString().split("T")[0],
               })
             );
@@ -135,8 +135,7 @@ export function Header() {
           localStorage.setItem(
             "wc2026-gamification-state",
             JSON.stringify({
-              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
-              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              pageStayHistory: data.profile.pageStayHistory || {},
               lastSyncDate: new Date().toISOString().split("T")[0],
             })
           );
@@ -195,8 +194,7 @@ export function Header() {
           localStorage.setItem(
             "wc2026-gamification-state",
             JSON.stringify({
-              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
-              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              pageStayHistory: data.profile.pageStayHistory || {},
               lastSyncDate: new Date().toISOString().split("T")[0],
             })
           );
@@ -566,7 +564,7 @@ export function Header() {
                 <div className="ml-6 border-l-2 border-indigo-500/40 pl-4 py-1 space-y-1 text-zinc-400">
                   <div>📅 <strong>Günlük Giriş Ödülü:</strong> Günde 1 kez giriş yapınca <strong>+10 Taraftar Puanı</strong> ve <strong>+2 saniye MinMat süresi</strong>.</div>
                   <div>ℹ️ <strong>Keşif Ödülleri (Hakkında/Yardım):</strong> Günde 1 kez Hakkında ve Yardım pencerelerini incelediğinizde <strong>+5 Puan</strong>.</div>
-                  <div>⏳ <strong>Gezinme Sayacı (Ana Sayfalar):</strong> Takımlar, Futbolcular, Gruplar, Stadyumlar ve Tahminler sayfalarında 30 saniye kaldığınızda sayfa altındaki sayaç tamamlanır ve <strong>+10 Taraftar Puanı</strong> ile <strong>+2 saniye MinMat ek süresi</strong> kazanırsınız.</div>
+                  <div>⏳ <strong>Gezinme Sayacı (Ana Sayfalar):</strong> Takımlar, Futbolcular, Gruplar, Stadyumlar, Tahminler ve İstatistikler sayfalarında 30 saniye kaldığınızda sayfa altındaki sayaç tamamlanır ve <strong>+10 Taraftar Puanı</strong> ile <strong>+2 saniye MinMat ek süresi</strong> kazanırsınız.</div>
                   <div>📄 <strong>Detay Keşfi (Alt Sayfalar):</strong> Futbolcu, ülke, hakem ve stadyum detay sayfalarında 10 saniye kaldığınızda sayaç tamamlanır ve <strong>+1 Taraftar Puanı</strong> kazanırsınız.</div>
                 </div>
 

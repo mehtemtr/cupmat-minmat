@@ -15,7 +15,8 @@
     "footballers": "Joueurs",
     "signin": "Se connecter",
     "signout": "Se déconnecter",
-    "logoTitle": "CupMat — Écran Spécial Championnat du Monde 2026"
+    "logoTitle": "CupMat — Écran Spécial Championnat du Monde 2026",
+    "stats": "Statistiques"
   },
   "hero": {
     "badge": "StatMatik — Championnat du Monde 2026",
@@ -138,5 +139,38 @@
     "instructionShare": "Appuyez sur l'icône Partager dans le menu inférieur de Safari.",
     "instructionAdd": "Faites défiler vers le bas et sélectionnez 'Sur l'écran d'accueil'.",
     "close": "Fermer"
+  },
+  "statsPage": {
+    "title": "Statistiques du Tournoi",
+    "subtitle": "Analysez l'âge, la taille et le poids des joueurs, les clubs représentés et les records historiques de la Coupe du Monde.",
+    "tabSquad": "Analyse des Effectifs",
+    "tabLive": "Stats en Direct",
+    "tabHistory": "Records Historiques",
+    "youngestTitle": "Top 20 des plus jeunes joueurs",
+    "oldestTitle": "Top 20 des plus vieux joueurs",
+    "topClubsTitle": "Clubs les plus représentés",
+    "topCitiesTitle": "Lieux de Naissance des Joueurs",
+    "confederationsTitle": "Joueurs par Confédération",
+    "countryAveragesTitle": "Moyennes des Effectifs Nationaux",
+    "historyWins": "Plus grand nombre de titres",
+    "historyFinals": "Plus grand nombre de finales jouées",
+    "historyScorers": "Meilleurs buteurs de l'histoire de la CM",
+    "liveScorers": "Meilleurs buteurs du tournoi",
+    "liveAssists": "Meilleurs passeurs du tournoi",
+    "liveCards": "Rapport sur les cartons",
+    "liveOwnGoals": "Buts contre son camp",
+    "liveNote": "Ces statistiques seront mises à jour en direct automatiquement dès le coup d'envoi du tournoi.",
+    "colPlayer": "Joueur",
+    "colPlayersCount": "Joueurs",
+    "colTeam": "Équipe",
+    "colAge": "Âge",
+    "colClub": "Club",
+    "colHeight": "Taille (cm)",
+    "colWeight": "Poids (kg)",
+    "colLeague": "Ligue",
+    "avgAge": "Âge moy.",
+    "avgHeight": "Taille moy.",
+    "avgWeight": "Poids moy.",
+    "emptyData": "Chargement des données ou aucune statistique disponible."
   }
 }

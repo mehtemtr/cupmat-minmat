@@ -15,7 +15,8 @@
     "footballers": "Spieler",
     "signin": "Anmelden",
     "signout": "Abmelden",
-    "logoTitle": "CupMat — 2026 Weltmeisterschaft Spezial-Bildschirm"
+    "logoTitle": "CupMat — 2026 Weltmeisterschaft Spezial-Bildschirm",
+    "stats": "Statistiken"
   },
   "hero": {
     "badge": "StatMatik — 2026 Weltmeisterschaft",
@@ -138,5 +139,38 @@
     "instructionShare": "Tippe auf das Teilen-Symbol im Safari-Menü unten.",
     "instructionAdd": "Scrolle nach unten und wähle 'Zum Home-Bildschirm'.",
     "close": "Schließen"
+  },
+  "statsPage": {
+    "title": "Turnierstatistiken",
+    "subtitle": "Analysieren Sie Alter, Größe, Gewicht der Spieler, Vereinsvertretungen und historische WM-Rekorde.",
+    "tabSquad": "Kaderanalyse",
+    "tabLive": "Live-Statistiken",
+    "tabHistory": "Historische Rekorde",
+    "youngestTitle": "Top 20 der jüngsten Spieler",
+    "oldestTitle": "Top 20 der ältesten Spieler",
+    "topClubsTitle": "Am stärksten vertretene Vereine",
+    "topCitiesTitle": "Häufigste Geburtsorte der Spieler",
+    "confederationsTitle": "Spieler nach Konföderation",
+    "countryAveragesTitle": "Durchschnittswerte der Nationalkader",
+    "historyWins": "Die meisten WM-Titel",
+    "historyFinals": "Die meisten gespielten Finalspiele",
+    "historyScorers": "Ewige Torschützenliste der WM",
+    "liveScorers": "Torschützenkönig des Turniers",
+    "liveAssists": "Top-Vorlagengeber des Turniers",
+    "liveCards": "Kartenberichte",
+    "liveOwnGoals": "Eigentore",
+    "liveNote": "Diese Statistiken werden automatisch live aktualisiert, sobald die Turnierspiele angepfiffen werden.",
+    "colPlayer": "Spieler",
+    "colPlayersCount": "Spieler",
+    "colTeam": "Team",
+    "colAge": "Alter",
+    "colClub": "Verein",
+    "colHeight": "Größe (cm)",
+    "colWeight": "Gewicht (kg)",
+    "colLeague": "Liga",
+    "avgAge": "Ø Alter",
+    "avgHeight": "Ø Größe",
+    "avgWeight": "Ø Gewicht",
+    "emptyData": "Daten werden geladen oder keine Statistiken verfügbar."
   }
 }

@@ -121,7 +121,8 @@ async function main() {
       cupMatRewardPoints: 0,
       minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
       lastPageStayClaimAt: "",
-      pageStayClaimsTodayCount: 0
+      pageStayClaimsTodayCount: 0,
+      pageStayHistory: {}
     };
   }
 
@@ -165,7 +166,8 @@ async function main() {
         mix: Math.max((u2.minmatMaxLevels?.mix || 1), (u1.minmatMaxLevels?.mix || 1)),
       },
       lastPageStayClaimAt: getLatestDate(u2.lastPageStayClaimAt, u1.lastPageStayClaimAt),
-      pageStayClaimsTodayCount: Math.max(u2.pageStayClaimsTodayCount || 0, u1.pageStayClaimsTodayCount || 0)
+      pageStayClaimsTodayCount: Math.max(u2.pageStayClaimsTodayCount || 0, u1.pageStayClaimsTodayCount || 0),
+      pageStayHistory: { ...(u2.pageStayHistory || {}), ...(u1.pageStayHistory || {}) }
     };
 
     console.log("Merged target stats:", mergedUser);

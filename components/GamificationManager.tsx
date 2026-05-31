@@ -67,7 +67,7 @@ export function GamificationManager() {
   // 1. Determine page category and rules
   const getPageConfig = (path: string) => {
     // General pages (30 seconds, +10 points)
-    const generalHubs = ["/teams", "/futbolcular", "/groups", "/venues", "/tahminler"];
+    const generalHubs = ["/teams", "/futbolcular", "/groups", "/venues", "/tahminler", "/stats"];
     if (generalHubs.includes(path)) {
       return { duration: 30, points: 10, category: "hub" };
     }
@@ -96,7 +96,7 @@ export function GamificationManager() {
   };
 
   // Helper to check if page-stay is restricted (cooldown or limit)
-  const getPageStayRestriction = () => {
+  const getPageStayRestriction = (path: string, duration: number) => {
     try {
       const saved = localStorage.getItem("wc2026-gamification-state");
       if (!saved) return { restricted: false };
@@ -104,19 +104,26 @@ export function GamificationManager() {
       const data = JSON.parse(saved);
       const today = getTodayKey();
       
-      // If sync date is today and claim count >= 5
-      if (data.lastSyncDate === today && (data.pageStayClaimsTodayCount || 0) >= 5) {
-        return { restricted: true, reason: "limit" };
-      }
-      
-      // If last claim is within 2 hours
-      if (data.lastPageStayClaimAt) {
-        const lastClaimTime = new Date(data.lastPageStayClaimAt).getTime();
-        const now = Date.now();
-        const diffMs = now - lastClaimTime;
-        const cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
-        if (diffMs < cooldownMs) {
-          return { restricted: true, reason: "cooldown", remainingMs: cooldownMs - diffMs };
+      if (data.lastSyncDate === today && data.pageStayHistory) {
+        const cleanPathAction = `stay_${duration}s_${path.replace(/[^a-zA-Z0-9]/g, "_")}`;
+        const pageRecord = data.pageStayHistory[cleanPathAction];
+        
+        if (pageRecord) {
+          // Check limit (max 5 claims per page per day)
+          if ((pageRecord.claimsTodayCount || 0) >= 5) {
+            return { restricted: true, reason: "limit" };
+          }
+          
+          // Check 2-hour cooldown for this specific page
+          if (pageRecord.lastClaimedAt) {
+            const lastClaimTime = new Date(pageRecord.lastClaimedAt).getTime();
+            const now = Date.now();
+            const elapsedMs = now - lastClaimTime;
+            const cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
+            if (elapsedMs < cooldownMs) {
+              return { restricted: true, reason: "cooldown", remainingMs: cooldownMs - elapsedMs };
+            }
+          }
         }
       }
     } catch (e) {
@@ -147,10 +154,10 @@ export function GamificationManager() {
     const config = getPageConfig(pathname);
     if (!config) return;
 
-    // Check if page stay is restricted globally (limit reached or in cooldown)
-    const restriction = getPageStayRestriction();
+    // Check if page stay is restricted globally (limit reached, claimed, or in cooldown)
+    const restriction = getPageStayRestriction(pathname, config.duration);
     if (restriction.restricted) {
-      // Don't show the timer or start countdown if user is in cooldown or has reached daily limit
+      // Don't show the timer or start countdown if user is in cooldown, has reached daily limit, or already claimed
       return;
     }
 
@@ -201,8 +208,7 @@ export function GamificationManager() {
           localStorage.setItem(
             "wc2026-gamification-state",
             JSON.stringify({
-              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
-              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              pageStayHistory: data.profile.pageStayHistory || {},
               lastSyncDate: new Date().toISOString().split("T")[0],
             })
           );
@@ -236,8 +242,7 @@ export function GamificationManager() {
           localStorage.setItem(
             "wc2026-gamification-state",
             JSON.stringify({
-              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
-              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              pageStayHistory: data.profile.pageStayHistory || {},
               lastSyncDate: new Date().toISOString().split("T")[0],
             })
           );

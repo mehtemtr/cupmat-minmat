@@ -15,7 +15,8 @@
     "footballers": "Futbolcular",
     "signin": "Giriş Yap",
     "signout": "Çıkış Yap",
-    "logoTitle": "CupMat — 2026 Dünya Şampiyonası Özel Ekranı"
+    "logoTitle": "CupMat — 2026 Dünya Şampiyonası Özel Ekranı",
+    "stats": "İstatistikler"
   },
   "hero": {
     "badge": "StatMatik — 2026 Dünya Şampiyonası",
@@ -138,5 +139,38 @@
     "instructionShare": "Safari alt menüsündeki Paylaş simgesine dokunun.",
     "instructionAdd": "Aşağı kaydırıp 'Ana Ekrana Ekle' seçeneğini seçin.",
     "close": "Kapat"
+  },
+  "statsPage": {
+    "title": "Turnuva İstatistikleri",
+    "subtitle": "Kadro yaş, boy, kilo ortalamaları, kulüp temsilcileri ve tarihteki Dünya Kupası rekorlarını analiz edin.",
+    "tabSquad": "Kadro Analizleri",
+    "tabLive": "Canlı İstatistik",
+    "tabHistory": "Tarihsel Rekorlar",
+    "youngestTitle": "En Genç 20 Futbolcu",
+    "oldestTitle": "En Yaşlı 20 Futbolcu",
+    "topClubsTitle": "En Çok Oyuncu Gönderen Kulüpler",
+    "topCitiesTitle": "En Çok Oyuncu Doğan Şehirler",
+    "confederationsTitle": "Konfederasyon Dağılımı",
+    "countryAveragesTitle": "Ülke Kadro Ortalamaları",
+    "historyWins": "Dünya Kupası Şampiyonluk Sayıları",
+    "historyFinals": "En Çok Final Oynayan Ülkeler",
+    "historyScorers": "Dünya Kupası Tarihinin En Golcüleri",
+    "liveScorers": "Turnuva Gol Krallığı",
+    "liveAssists": "Turnuva Asist Krallığı",
+    "liveCards": "Kart Raporları",
+    "liveOwnGoals": "Kendi Kalesine Goller",
+    "liveNote": "Bu istatistikler, turnuva maçları başladığında canlı olarak otomatik güncellenecektir.",
+    "colPlayer": "Futbolcu",
+    "colPlayersCount": "Futbolcu",
+    "colTeam": "Takım",
+    "colAge": "Yaş",
+    "colClub": "Kulüp",
+    "colHeight": "Boy (cm)",
+    "colWeight": "Kilo (kg)",
+    "colLeague": "Lig",
+    "avgAge": "Ort. Yaş",
+    "avgHeight": "Ort. Boy",
+    "avgWeight": "Ort. Kilo",
+    "emptyData": "Veriler yükleniyor veya istatistik bulunamadı."
   }
 }

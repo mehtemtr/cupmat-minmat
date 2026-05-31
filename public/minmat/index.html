@@ -949,13 +949,14 @@
       
       <!-- Sistem Bilgi Kutusu -->
       <div id="systemInfoBox" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 12px; padding: 12px; margin-bottom: 16px; font-size: 12px; line-height: 1.6; text-align: left;">
-        <div style="font-weight: 800; color: #22c55e; margin-bottom: 6px; font-size: 13px;">
+        <div id="sysInfoTitle" style="font-weight: 800; color: #22c55e; margin-bottom: 6px; font-size: 13px;">
           🔄 Sistem Güncellendi!
         </div>
-        <div style="color: #cbd5e1;">
+        <div id="sysInfoContent" style="color: #cbd5e1;">
           • Yeni <strong>e-posta + şifre</strong> sistemi aktif<br>
           • <strong>Misafirler</strong> ödül kazanamaz ve liderlik tablosunda görünmez<br>
-          • Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır
+          • Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır<br>
+          • CupMat'taki yeni turnuva güncellemelerini inceleyebilirsiniz!
         </div>
       </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
@@ -1143,8 +1144,10 @@
         authWarn: "⚠️ Global sıralamaya girmek ve ödül kazanmak için giriş yapmalısınız.", authVerified: "✓ Doğrulanmış Hesap",
         authLoginBtn: "🔑 Giriş Yap / Google ile Bağlan", authSaveWarn: "⚠️ Giriş yapmadığınız için skorunuz dünya genel sıralamasına kaydedilemedi.",
         signout: "Çıkış Yap",
-        cupmatSwitch: "🏆 Cupmat'a Geç",
-        saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!"
+        cupmatSwitch: "🏆 Cupmat'a Geç (Yeni Güncellemeleri İncele)",
+        saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!",
+        sysInfoTitle: "🔄 Sistem Güncellendi!",
+        sysInfoContent: "• Yeni <strong>e-posta + şifre</strong> sistemi aktif<br>• <strong>Misafirler</strong> ödül kazanamaz ve liderlik tablosunda görünmez<br>• Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır<br>• CupMat'taki yeni turnuva güncellemelerini inceleyebilirsiniz!"
       },
       en: {
         placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
@@ -1158,8 +1161,10 @@
         authWarn: "⚠️ You must sign in to enter the global leaderboard and win prizes.", authVerified: "✓ Verified Account",
         authLoginBtn: "🔑 Sign In / Connect with Google", authSaveWarn: "⚠️ Since you are not signed in, your score could not be saved to the global rankings.",
         signout: "Sign Out",
-        cupmatSwitch: "🏆 Go to Cupmat",
-        saving: "⏳ Saving...", saved: "✓ Saved successfully!"
+        cupmatSwitch: "🏆 Go to Cupmat (Check New Updates)",
+        saving: "⏳ Saving...", saved: "✓ Saved successfully!",
+        sysInfoTitle: "🔄 System Updated!",
+        sysInfoContent: "• New <strong>email + password</strong> system is active<br>• <strong>Guests</strong> cannot earn rewards or appear on the leaderboard<br>• Session is shared between <strong>MinMat &amp; CupMat</strong><br>• You can review the new tournament updates on CupMat!"
       },
       de: {
         placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
@@ -1173,8 +1178,10 @@
         authWarn: "⚠️ Sie müssen sich anmelden, um an der globalen Bestenliste teilzunehmen.", authVerified: "✓ Verifiziertes Konto",
         authLoginBtn: "🔑 Einloggen / Google-Verbindung", authSaveWarn: "⚠️ Da Sie nicht angemeldet sind, wurde Ihr Punktestand nicht in die globale Liste eingetragen.",
         signout: "Abmelden",
-        cupmatSwitch: "🏆 Zu Cupmat",
-        saving: "⏳ Speichern...", saved: "✓ Erfolgreich gespeichert!"
+        cupmatSwitch: "🏆 Zu Cupmat (Neue Updates ansehen)",
+        saving: "⏳ Speichern...", saved: "✓ Erfolgreich gespeichert!",
+        sysInfoTitle: "🔄 System Aktualisiert!",
+        sysInfoContent: "• Neues <strong>E-Mail + Passwort</strong>-System ist aktiv<br>• <strong>Gäste</strong> können keine Belohnungen erhalten oder auf der Bestenliste erscheinen<br>• Die Sitzung wird zwischen <strong>MinMat &amp; CupMat</strong> geteilt<br>• Sie können die neuen Turnier-Updates auf CupMat ansehen!"
       },
       fr: {
         placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
@@ -1183,13 +1190,15 @@
         leaderDiv: "🏆 Scores Division", leaderMix: "🏆 Scores Mixte", colName: "Nom", colDate: "Date/Heure",
         colCat: "Catégorie", colRound: "Tour", colScore: "Score", modeAdd: "Addition", modeSub: "Soustraction",
         modeMul: "Multiplication", modeDiv: "Division", modeMix: "Mixte", shortAdd: "Add", shortSub: "Sub",
-        shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Tour", nameErr: "Le nom doit comporter au moins 3 caractères",
+        shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Tour", nameErr: "Le nom doit comporter au menos 3 caractères",
         guest: "Invité", menu: "Menu", subtitle: "MinMat — Jeu de Cerveau & de Mathématiques", all: "Tous",
         authWarn: "⚠️ Vous devez vous connecter pour figurer dans le classement mondial et gagner des prix.", authVerified: "✓ Compte Vérifié",
         authLoginBtn: "🔑 Se connecter / Google", authSaveWarn: "⚠️ Comme vous n'êtes pas connecté, votre score n'a pas pu être enregistré.",
         signout: "Déconnexion",
-        cupmatSwitch: "🏆 Aller à Cupmat",
-        saving: "⏳ Enregistrement...", saved: "✓ Enregistré avec succès!"
+        cupmatSwitch: "🏆 Aller à Cupmat (Voir les nouveautés)",
+        saving: "⏳ Enregistrement...", saved: "✓ Enregistré avec succès!",
+        sysInfoTitle: "🔄 Système Mis à Jour !",
+        sysInfoContent: "• Le nouveau système <strong>e-mail + mot de passe</strong> est actif<br>• Les <strong>invités</strong> ne peuvent pas gagner de récompenses ni figurer au classement<br>• La session est partagée entre <strong>MinMat &amp; CupMat</strong><br>• Vous pouvez consulter les nouvelles mises à jour du tournoi sur CupMat !"
       },
       es: {
         placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
@@ -1203,8 +1212,10 @@
         authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de classificação global y ganar premios.", authVerified: "✓ Cuenta Verificada",
         authLoginBtn: "🔑 Iniciar Sesión / Google", authSaveWarn: "⚠️ Como no has iniciado sesión, tu puntuación no se pudo guardar la tabla global.",
         signout: "Sign Out",
-        cupmatSwitch: "🏆 Ir a Cupmat",
-        saving: "⏳ Guardando...", saved: "✓ Guardado con éxito!"
+        cupmatSwitch: "🏆 Ir a Cupmat (Ver nuevas actualizaciones)",
+        saving: "⏳ Guardando...", saved: "✓ Guardado con éxito!",
+        sysInfoTitle: "🔄 ¡Sistema Actualizado!",
+        sysInfoContent: "• El nuevo sistema de <strong>correo electrónico + contraseña</strong> está activo<br>• Los <strong>invitados</strong> no pueden ganar recompenses ni aparecer en la tabla de clasificación<br>• La sesión se comparte entre <strong>MinMat y CupMat</strong><br>• ¡Puedes revisar las nuevas actualizaciones del torneo en CupMat!"
       }
     };
 
@@ -1241,6 +1252,11 @@
       if (go) go.innerText = t("gameOver");
       let ra = document.getElementById("btnRetry");
       if (ra) ra.innerText = t("again");
+
+      let sit = document.getElementById("sysInfoTitle");
+      if (sit) sit.innerText = t("sysInfoTitle");
+      let sic = document.getElementById("sysInfoContent");
+      if (sic) sic.innerHTML = t("sysInfoContent");
 
       let ms = document.getElementById("menuSub");
       if (ms) ms.innerText = t("subtitle");
