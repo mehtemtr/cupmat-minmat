@@ -29,9 +29,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Açılış · Final · Grup ve Eleme",
     imageGradient: "from-blue-600/30 to-indigo-900/20",
     images: [
-      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508344928928-7137b29de216?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/metlife-1.jpg",
+      "/stadiums/metlife-2.jpg",
+      "/stadiums/metlife-3.jpg"
     ],
   },
   {
@@ -48,9 +48,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 16",
     imageGradient: "from-purple-600/30 to-violet-900/20",
     images: [
-      "https://images.unsplash.com/photo-1595171730410-671239fc414c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1614251147571-b0db37c35f29?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1563844528129-067e06a61f8d?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/sofi-1.jpg",
+      "/stadiums/sofi-2.jpg",
+      "/stadiums/sofi-3.jpg"
     ],
   },
   {
@@ -67,9 +67,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Çeyrek final",
     imageGradient: "from-sky-600/30 to-blue-900/20",
     images: [
-      "https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1541532713592-79a0317b6b27?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/att-1.jpg",
+      "/stadiums/att-2.jpg",
+      "/stadiums/att-3.jpg"
     ],
   },
   {
@@ -86,9 +86,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Yarı final",
     imageGradient: "from-emerald-600/30 to-teal-900/20",
     images: [
-      "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1431324155629-1a6bbe968074?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502672260266-1c1c24240938?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/mercedes-1.jpg",
+      "/stadiums/mercedes-2.jpg",
+      "/stadiums/mercedes-3.jpg"
     ],
   },
   {
@@ -105,9 +105,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 32",
     imageGradient: "from-orange-600/30 to-red-900/20",
     images: [
-      "https://images.unsplash.com/photo-1504156806644-d021c3b17403?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/nrg-1.jpg",
+      "/stadiums/nrg-2.jpg",
+      "/stadiums/nrg-3.jpg"
     ],
   },
   {
@@ -124,9 +124,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-green-600/30 to-emerald-900/20",
     images: [
-      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1551280857-2b9bbe52ccbd?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/lincoln-1.jpg",
+      "/stadiums/lincoln-2.jpg",
+      "/stadiums/lincoln-3.jpg"
     ],
   },
   {
@@ -143,9 +143,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 16",
     imageGradient: "from-rose-600/30 to-pink-900/20",
     images: [
-      "https://images.unsplash.com/photo-1580130281326-9551c9a51791?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/levis-1.jpg",
+      "/stadiums/levis-2.jpg",
+      "/stadiums/levis-3.jpg"
     ],
   },
   {
@@ -162,9 +162,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-cyan-600/30 to-slate-900/20",
     images: [
-      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508344928928-7137b29de216?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/lumen-1.jpg",
+      "/stadiums/lumen-2.jpg",
+      "/stadiums/lumen-3.jpg"
     ],
   },
   {
@@ -181,9 +181,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-blue-500/30 to-navy-900/20",
     images: [
-      "https://images.unsplash.com/photo-1568194157720-8ece7b1fc0d1?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518091043644-c1d445e4d20c?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/gillette-1.jpg",
+      "/stadiums/gillette-2.jpg",
+      "/stadiums/gillette-3.jpg"
     ],
   },
   {
@@ -200,9 +200,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Üçüncülük · Eleme turu",
     imageGradient: "from-teal-600/30 to-cyan-900/20",
     images: [
-      "https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1541532713592-79a0317b6b27?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/hardrock-1.jpg",
+      "/stadiums/hardrock-2.jpg",
+      "/stadiums/hardrock-3.jpg"
     ],
   },
   {
@@ -219,9 +219,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-red-600/30 to-amber-900/20",
     images: [
-      "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1431324155629-1a6bbe968074?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502672260266-1c1c24240938?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/arrowhead-1.jpg",
+      "/stadiums/arrowhead-2.jpg",
+      "/stadiums/arrowhead-3.jpg"
     ],
   },
   {
@@ -238,9 +238,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Tarihi mekan · Grup ve eleme",
     imageGradient: "from-lime-600/30 to-green-900/20",
     images: [
-      "https://images.unsplash.com/photo-1624823183493-6a978f877ca6?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518605368461-1ee1262d08a0?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/azteca-1.jpg",
+      "/stadiums/azteca-2.jpg",
+      "/stadiums/azteca-3.jpg"
     ],
   },
   {
@@ -257,9 +257,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-amber-600/30 to-yellow-900/20",
     images: [
-      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1551280857-2b9bbe52ccbd?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/bbva-1.jpg",
+      "/stadiums/bbva-2.jpg",
+      "/stadiums/bbva-3.jpg"
     ],
   },
   {
@@ -276,9 +276,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması",
     imageGradient: "from-fuchsia-600/30 to-purple-900/20",
     images: [
-      "https://images.unsplash.com/photo-1606925797300-0b35e9d17400?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/akron-1.jpg",
+      "/stadiums/akron-2.jpg",
+      "/stadiums/akron-3.jpg"
     ],
   },
   {
@@ -295,9 +295,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Son 32",
     imageGradient: "from-red-500/30 to-rose-900/20",
     images: [
-      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1508344928928-7137b29de216?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/bmo-1.jpg",
+      "/stadiums/bmo-2.jpg",
+      "/stadiums/bmo-3.jpg"
     ],
   },
   {
@@ -314,9 +314,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Grup aşaması · Eleme",
     imageGradient: "from-indigo-600/30 to-blue-900/20",
     images: [
-      "https://images.unsplash.com/photo-1519760791241-114a260f001e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1519315901367-f34f858fa334?auto=format&fit=crop&w=800&q=80"
+      "/stadiums/bcplace-1.jpg",
+      "/stadiums/bcplace-2.jpg",
+      "/stadiums/bcplace-3.jpg"
     ],
   },
 ];

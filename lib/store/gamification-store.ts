@@ -44,6 +44,7 @@ export interface UserActivity {
   cupMatRewardSeconds: number;
   cupMatRewardPoints: number;
   minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number };
+  minmatGamesPlayedCount?: { add: number; sub: number; mul: number; div: number; mix: number };
   lastPageStayClaimAt: string;     // ISO string of the last page stay claim
   pageStayClaimsTodayCount: number; // Number of page stay sessions today
   pageStayHistory: Record<string, { lastClaimedAt: string; claimsTodayCount: number }>;
@@ -73,6 +74,7 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     cupMatRewardSeconds: 0,
     cupMatRewardPoints: 0,
     minmatMaxLevels: raw.minmatMaxLevels ?? { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
+    minmatGamesPlayedCount: raw.minmatGamesPlayedCount ?? { add: 0, sub: 0, mul: 0, div: 0, mix: 0 },
     lastPageStayClaimAt: raw.lastPageStayClaimAt ?? "",
     pageStayClaimsTodayCount: raw.pageStayClaimsTodayCount ?? 0,
     pageStayHistory: raw.pageStayHistory ?? {},
@@ -1044,6 +1046,49 @@ export async function registerMinMatGamePlayedByUserId(
   const profile = await getOrCreateProfile(userId, displayName, email);
   const store = await getStore();
   incrementMinMatDailyCount(profile);
+  const idx = store.userActivities.findIndex((u) => u.userId === userId);
+  if (idx >= 0) {
+    store.userActivities[idx] = profile;
+  }
+  await saveStore(store);
+  return { success: true, profile };
+}
+
+// Increment today's and all-time MinMat game count by category/mode for the signed-in Clerk user
+export async function incrementMinMatGamesPlayedCount(
+  userId: string,
+  mode: string,
+  displayName?: string,
+  email?: string,
+): Promise<{ success: boolean; profile: UserActivity }> {
+  const profile = await getOrCreateProfile(userId, displayName, email);
+  if (!profile.minmatGamesPlayedCount) {
+    profile.minmatGamesPlayedCount = { add: 0, sub: 0, mul: 0, div: 0, mix: 0 };
+  }
+  
+  function normalizeMinmatMode(rawMode: string): "add" | "sub" | "mul" | "div" | "mix" {
+    const map: Record<string, "add" | "sub" | "mul" | "div" | "mix"> = {
+      "topla": "add",
+      "cikar": "sub",
+      "carp": "mul",
+      "bol": "div",
+      "karisik": "mix",
+      "add": "add",
+      "sub": "sub",
+      "mul": "mul",
+      "div": "div",
+      "mix": "mix"
+    };
+    return map[rawMode] || "mix";
+  }
+
+  const normMode = normalizeMinmatMode(mode);
+  profile.minmatGamesPlayedCount[normMode] = (profile.minmatGamesPlayedCount[normMode] || 0) + 1;
+  
+  // also increment daily count
+  incrementMinMatDailyCount(profile);
+
+  const store = await getStore();
   const idx = store.userActivities.findIndex((u) => u.userId === userId);
   if (idx >= 0) {
     store.userActivities[idx] = profile;

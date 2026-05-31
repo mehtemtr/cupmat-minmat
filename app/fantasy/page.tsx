@@ -1,0 +1,1156 @@
+"use client";
+
+import { PageShell } from "@/components/PageShell";
+import { useUser } from "@clerk/nextjs";
+import { useLocale, useTranslation } from "@/contexts/LocaleContext";
+import { useState, useEffect, useMemo } from "react";
+import { getAllPlayers } from "@/data/teams";
+import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
+import { Shield, Users, Award, Calendar, Settings, Play, CheckCircle, AlertTriangle, ArrowRight, Star, RefreshCw } from "lucide-react";
+
+// Position mapper helper
+function getGeneralPosition(pos: string): "GK" | "DEF" | "MID" | "FWD" {
+  const p = pos?.toLowerCase() || "";
+  if (p.includes("gk") || p.includes("kaleci") || p.includes("portero") || p.includes("gardien") || p.includes("torwart")) return "GK";
+  if (p.includes("df") || p.includes("defans") || p.includes("bek") || p.includes("stoper") || p.includes("defensor") || p.includes("défenseur") || p.includes("abwehr")) return "DEF";
+  if (p.includes("mf") || p.includes("orta saha") || p.includes("libero") || p.includes("midfielder") || p.includes("centrocampista") || p.includes("milieu") || p.includes("mittelfeld") || p.includes("açık")) return "MID";
+  if (p.includes("fw") || p.includes("forvet") || p.includes("delantero") || p.includes("attaquant") || p.includes("sturm")) return "FWD";
+  return "FWD";
+}
+
+// Map country codes to World Cup Groups (A-L)
+const teamToGroup: Record<string, string> = {};
+for (const [group, teams] of Object.entries(OFFICIAL_GROUP_DRAW)) {
+  for (const team of teams) {
+    teamToGroup[team.toLowerCase()] = group;
+  }
+}
+
+export default function FantasyPage() {
+  const { user: clerkUser, isSignedIn: clerkIsSignedIn } = useUser();
+  const { locale } = useLocale();
+  const { t } = useTranslation();
+
+  const [activeTab, setActiveTab] = useState<"builder" | "standings" | "fixtures" | "commonXI">("builder");
+  const [stage, setStage] = useState("matchday_1");
+  const [teamIndex, setTeamIndex] = useState(1);
+  const [teamName, setTeamName] = useState("");
+  const [formation, setFormation] = useState("4-4-2");
+  
+  // Selected IDs
+  const [starters, setStarters] = useState<(string | null)[]>(Array(11).fill(null));
+  const [bench, setBench] = useState<(string | null)[]>([]);
+  const [selectedManager, setSelectedManager] = useState<string | null>(null);
+
+  // States from API
+  const [unlocked, setUnlocked] = useState<boolean | null>(null);
+  const [unlockProgress, setUnlockProgress] = useState<any>(null);
+  const [maxTeams, setMaxTeams] = useState(1);
+  const [allowedBenchSlots, setAllowedBenchSlots] = useState(0);
+  const [originalRoster, setOriginalRoster] = useState<any>(null);
+  const [hasRoster, setHasRoster] = useState<boolean | null>(null);
+  const [isStageActive, setIsStageActive] = useState<boolean>(false);
+  const [minmatGamesToday, setMinmatGamesToday] = useState<number>(0);
+
+  // Compute transfers count in real time
+  const newTransfersCount = useMemo(() => {
+    if (!originalRoster) return 0;
+    const prevPlayers = new Set([
+      ...(originalRoster.starters || []).map((p: any) => p?.id || p),
+      ...(originalRoster.bench || []).map((p: any) => p?.id || p),
+    ]);
+    const currentPlayers = [...starters, ...bench].filter(Boolean);
+    let diff = 0;
+    currentPlayers.forEach((id) => {
+      if (id && !prevPlayers.has(id)) {
+        diff++;
+      }
+    });
+    return diff;
+  }, [originalRoster, starters, bench]);
+  
+  // Standings / Duels state
+  const [standings, setStandings] = useState<any[]>([]);
+  const [duels, setDuels] = useState<any[]>([]);
+  const [userDuel, setUserDuel] = useState<any>(null);
+  const [commonMindXI, setCommonMindXI] = useState<any[]>([]);
+
+  // UI state
+  const [teaserBypass, setTeaserBypass] = useState(false);
+  const [adminSecretInput, setAdminSecretInput] = useState("");
+  const [adminBypass, setAdminBypass] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saveStatus, setSaveStatus] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+
+  // Derive mock session for local development testing
+  const isSignedIn = clerkIsSignedIn || teaserBypass;
+  
+  // Player Selection Drawer Modal State
+  const [selectorModal, setSelectorModal] = useState<{
+    isOpen: boolean;
+    slotIndex: number | null; // index in starters (0-10) or bench
+    isBench: boolean;
+    positionFilter: "GK" | "DEF" | "MID" | "FWD" | null;
+  }>({
+    isOpen: false,
+    slotIndex: null,
+    isBench: false,
+    positionFilter: null,
+  });
+
+  const [playerSearchQuery, setPlayerSearchQuery] = useState("");
+  const [playerSearchTeamFilter, setPlayerSearchTeamFilter] = useState("");
+
+  const allPlayersList = useMemo(() => getAllPlayers(), []);
+
+  // Filtered players inside the selector modal
+  const searchablePlayers = useMemo(() => {
+    return allPlayersList.filter((p) => {
+      const pGenPos = getGeneralPosition(p.position);
+      const matchesPosition = !selectorModal.positionFilter || pGenPos === selectorModal.positionFilter;
+      
+      const matchesSearch =
+        p.name.toLowerCase().includes(playerSearchQuery.toLowerCase()) ||
+        p.club.toLowerCase().includes(playerSearchQuery.toLowerCase());
+        
+      const matchesTeam =
+        !playerSearchTeamFilter || p.teamId.toLowerCase() === playerSearchTeamFilter.toLowerCase();
+
+      // Ensure we don't select a player already in starters or bench
+      const isAlreadySelected = starters.includes(p.id) || bench.includes(p.id);
+
+      return matchesPosition && matchesSearch && matchesTeam && !isAlreadySelected;
+    });
+  }, [allPlayersList, selectorModal.positionFilter, playerSearchQuery, playerSearchTeamFilter, starters, bench]);
+
+  // Load configuration and status
+  useEffect(() => {
+    // Check local bypass
+    if (typeof window !== "undefined") {
+      const bypass = localStorage.getItem("wc2026_fantasy_bypass") === "true";
+      setTeaserBypass(bypass);
+      
+      const sec = localStorage.getItem("wc2026_fantasy_admin_bypass") === "true";
+      setAdminBypass(sec);
+    }
+  }, []);
+
+  const loadStatusAndData = async () => {
+    if (!isSignedIn) return;
+    setLoading(true);
+    try {
+      // 1. Fetch unlock status
+      const resUnlock = await fetch(`/api/fantasy/unlock-status?stage=${stage}&teamIndex=${teamIndex}`);
+      const dataUnlock = await resUnlock.json();
+      if (dataUnlock.success) {
+        setUnlocked(dataUnlock.unlocked);
+        setUnlockProgress(dataUnlock.progress);
+        setMaxTeams(dataUnlock.maxTeams);
+        setAllowedBenchSlots(dataUnlock.benchSlots);
+        setBench(Array(dataUnlock.benchSlots).fill(null));
+        setHasRoster(dataUnlock.hasRoster);
+        setIsStageActive(dataUnlock.isStageActive);
+        setMinmatGamesToday(dataUnlock.minmatOyunSayisiBugun);
+      }
+
+      // 2. Fetch rosters
+      const resRosters = await fetch(`/api/fantasy/roster?stage=${stage}`);
+      const dataRosters = await resRosters.json();
+      if (dataRosters.success && dataRosters.rosters) {
+        const activeRoster = dataRosters.rosters.find((r: any) => r.team_index === teamIndex);
+        if (activeRoster) {
+          setOriginalRoster(activeRoster);
+          setTeamName(activeRoster.team_name || "");
+          setFormation(activeRoster.formation || "4-4-2");
+          setSelectedManager(activeRoster.manager_id || null);
+          
+          // Rebuild starters array
+          const newStarters = Array(11).fill(null);
+          (activeRoster.starters || []).forEach((p: any, idx: number) => {
+            if (p && p.id) newStarters[idx] = p.id;
+          });
+          setStarters(newStarters);
+
+          // Rebuild bench array
+          const newBench = Array(dataUnlock.benchSlots).fill(null);
+          (activeRoster.bench || []).forEach((p: any, idx: number) => {
+            if (p && p.id && idx < newBench.length) newBench[idx] = p.id;
+          });
+          setBench(newBench);
+        } else {
+          setOriginalRoster(null);
+          // Clear
+          setTeamName("");
+          setStarters(Array(11).fill(null));
+          setBench(Array(dataUnlock.benchSlots).fill(null));
+          setSelectedManager(null);
+        }
+      } else {
+        setOriginalRoster(null);
+      }
+
+      // 3. Fetch duels / standings
+      const resDuels = await fetch(`/api/fantasy/duels?stage=${stage}`);
+      const dataDuels = await resDuels.json();
+      if (dataDuels.success) {
+        setStandings(dataDuels.standings || []);
+        setDuels(dataDuels.duels || []);
+        setUserDuel(dataDuels.userDuel || null);
+        setCommonMindXI(dataDuels.commonMindXI || []);
+      }
+    } catch (e) {
+      console.error("Error loading fantasy data:", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      loadStatusAndData();
+    }
+  }, [isSignedIn, stage, teamIndex]);
+
+  // Handle teaser lock bypass check
+  const handleBypassSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (adminSecretInput === "admin" || adminSecretInput === "minmat_odul_2026") {
+      localStorage.setItem("wc2026_fantasy_bypass", "true");
+      setTeaserBypass(true);
+      if (adminSecretInput === "minmat_odul_2026") {
+        localStorage.setItem("wc2026_fantasy_admin_bypass", "true");
+        setAdminBypass(true);
+      }
+      setAdminSecretInput("");
+    } else {
+      alert("Geçersiz şifre!");
+    }
+  };
+
+  const handleAdminTrigger = async (actionType: string) => {
+    try {
+      const res = await fetch("/api/fantasy/trigger-matchday", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-secret": "minmat_odul_2026",
+        },
+        body: JSON.stringify({
+          stage,
+          action: actionType,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Eylem başarıyla tamamlandı:\n" + data.reports.join("\n"));
+        loadStatusAndData();
+      } else {
+        alert("Hata: " + data.error);
+      }
+    } catch (e: any) {
+      alert("Hata oluştu: " + e.message);
+    }
+  };
+
+  // Convert player ids back to detailed objects
+  const detailedStarters = useMemo(() => {
+    return starters.map((id) => {
+      if (!id) return null;
+      return allPlayersList.find((p) => p.id === id) || null;
+    });
+  }, [starters, allPlayersList]);
+
+  const detailedBench = useMemo(() => {
+    return bench.map((id) => {
+      if (!id) return null;
+      return allPlayersList.find((p) => p.id === id) || null;
+    });
+  }, [bench, allPlayersList]);
+
+  // Formations configuration: GK, DEF, MID, FWD structure
+  const currentFormationConfig = useMemo(() => {
+    const parts = formation.split("-").map(Number);
+    return {
+      DEF: parts[0] || 4,
+      MID: parts[1] || 4,
+      FWD: parts[2] || 2,
+    };
+  }, [formation]);
+
+  // Map slots in starting XI array (0 to 10) to actual positions
+  // Slot 0: GK
+  // Slots 1 to reqDEF: DEF
+  // Slots 1+reqDEF to reqDEF+reqMID: MID
+  // Remaining: FWD
+  const starterPositions = useMemo(() => {
+    const { DEF, MID } = currentFormationConfig;
+    const positions: ("GK" | "DEF" | "MID" | "FWD")[] = ["GK"];
+    for (let i = 0; i < DEF; i++) positions.push("DEF");
+    for (let i = 0; i < MID; i++) positions.push("MID");
+    for (let i = 0; i < 11 - 1 - DEF - MID; i++) positions.push("FWD");
+    return positions;
+  }, [currentFormationConfig]);
+
+  // Dynamic limits calculation
+  const limitsStatus = useMemo(() => {
+    const allSelected = [...starters, ...bench].filter(Boolean) as string[];
+    const counts: Record<string, number> = {};
+    const groupCounts: Record<string, number> = {};
+    
+    let countryLimit = 3;
+    const stg = stage.toLowerCase();
+    if (stg.includes("quarter")) countryLimit = 5;
+    else if (stg.includes("semi") || stg.includes("final")) countryLimit = 7;
+    else if (stg.includes("round")) countryLimit = 4;
+
+    let countryLimitPassed = true;
+    let groupLimitPassed = true;
+
+    const countryViolations: string[] = [];
+    const groupViolations: string[] = [];
+
+    allSelected.forEach((id) => {
+      const p = allPlayersList.find((x) => x.id === id);
+      if (p) {
+        const country = p.teamId.toLowerCase();
+        counts[country] = (counts[country] || 0) + 1;
+        if (counts[country] > countryLimit) {
+          countryLimitPassed = false;
+          if (!countryViolations.includes(p.teamNameTr)) {
+            countryViolations.push(p.teamNameTr);
+          }
+        }
+
+        const grp = teamToGroup[country];
+        if (grp) {
+          groupCounts[grp] = (groupCounts[grp] || 0) + 1;
+          if (groupCounts[grp] > 5) {
+            groupLimitPassed = false;
+            if (!groupViolations.includes(grp)) {
+              groupViolations.push(grp);
+            }
+          }
+        }
+      }
+    });
+
+    return {
+      countryLimit,
+      countryLimitPassed,
+      groupLimitPassed,
+      countryViolations,
+      groupViolations,
+    };
+  }, [starters, bench, stage, allPlayersList]);
+
+  // Open player drawer modal
+  const openSelector = (slotIndex: number, isBench: boolean, position: "GK" | "DEF" | "MID" | "FWD") => {
+    setSelectorModal({
+      isOpen: true,
+      slotIndex,
+      isBench,
+      positionFilter: position,
+    });
+    setPlayerSearchQuery("");
+    setPlayerSearchTeamFilter("");
+  };
+
+  const selectPlayer = (playerId: string) => {
+    const { slotIndex, isBench } = selectorModal;
+    if (slotIndex === null) return;
+
+    if (isBench) {
+      const newBench = [...bench];
+      newBench[slotIndex] = playerId;
+      setBench(newBench);
+    } else {
+      const newStarters = [...starters];
+      newStarters[slotIndex] = playerId;
+      setStarters(newStarters);
+    }
+
+    setSelectorModal({ isOpen: false, slotIndex: null, isBench: false, positionFilter: null });
+  };
+
+  const removePlayer = (slotIndex: number, isBench: boolean) => {
+    if (isBench) {
+      const newBench = [...bench];
+      newBench[slotIndex] = null;
+      setBench(newBench);
+    } else {
+      const newStarters = [...starters];
+      newStarters[slotIndex] = null;
+      setStarters(newStarters);
+    }
+  };
+
+  // Save Roster to database
+  const saveRoster = async () => {
+    setSaveStatus(null);
+    const filledStarters = starters.filter(Boolean);
+    if (filledStarters.length < 11) {
+      setSaveStatus({ type: "error", msg: "Kadronuzu kaydetmek için 11 ilk 11 oyuncusunu da seçmelisiniz." });
+      return;
+    }
+
+    if (!teamName.trim()) {
+      setSaveStatus({ type: "error", msg: "Kadro adı girilmelidir." });
+      return;
+    }
+
+    if (!limitsStatus.countryLimitPassed) {
+      setSaveStatus({
+        type: "error",
+        msg: `Ülke limiti aşıldı! Seçilen aşamada bir ülkeden en fazla ${limitsStatus.countryLimit} oyuncu seçebilirsiniz. Aşım yapılan ülkeler: ${limitsStatus.countryViolations.join(", ")}`,
+      });
+      return;
+    }
+
+    if (!limitsStatus.groupLimitPassed) {
+      setSaveStatus({
+        type: "error",
+        msg: `Grup limiti aşıldı! Aynı gruptan en fazla 5 oyuncu seçebilirsiniz. Aşım yapılan gruplar: ${limitsStatus.groupViolations.join(", ")}`,
+      });
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/fantasy/roster", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          teamName,
+          stage,
+          formation,
+          starters: starters.filter(Boolean),
+          bench: bench.filter(Boolean),
+          managerId: selectedManager,
+          teamIndex,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSaveStatus({ type: "success", msg: data.message });
+        loadStatusAndData();
+      } else {
+        setSaveStatus({ type: "error", msg: data.error || "Kadro kaydedilirken hata oluştu." });
+      }
+    } catch (e: any) {
+      setSaveStatus({ type: "error", msg: "Ağ hatası: " + e.message });
+    }
+  };
+
+  // Render Teaser Page initially (for all users, whether logged in or not)
+  if (!teaserBypass) {
+    return (
+      <PageShell title="CupMat Taktik" subtitle="Yakında Başlıyor!">
+        <div className="relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-slate-950 p-8 md:p-16 text-center shadow-2xl flex flex-col items-center">
+          {/* Soccer pitch visual glow background */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.15),transparent_60%)] pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-emerald-500/10 to-transparent pointer-events-none" />
+          
+          <Award className="w-20 h-20 text-emerald-400 mb-8 animate-bounce" />
+          
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">
+            Yakında: Sizleri de Dünya Kupası'na götürüyoruz!
+          </h2>
+          <p className="text-emerald-300 font-semibold text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
+            MinMat antrenmanlarına şimdiden başlayın... Roster oluşturabilmek ve liglerde yarışabilmek için normalde her kategoriden en az 3. Seviyeyi tamamlayıp 5 başarılı oyun oynamış olmalısınız. Eğer aşama başladıktan sonra ilk defa kadro kuracaksanız (geç katılım), herhangi bir MinMat kategorisinde en az 7. Seviyeyi tamamlamış olmalısınız!
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <a
+              href="/minmat"
+              className="px-8 py-4 bg-emerald-500 text-slate-950 font-black rounded-2xl shadow-lg shadow-emerald-500/20 hover:scale-105 hover:bg-emerald-400 transition-all text-lg"
+            >
+              MinMat Antrenmanına Başla 🧠
+            </a>
+            <a
+              href="/futbolcular"
+              className="px-8 py-4 bg-slate-900 border border-slate-800 text-white font-black rounded-2xl hover:bg-slate-800 hover:text-white transition-all text-lg"
+            >
+              Yıldızları İncele ⭐
+            </a>
+          </div>
+
+          {/* Hidden secret check for testing */}
+          <form onSubmit={handleBypassSubmit} className="mt-8 border-t border-slate-900 pt-8 w-full max-w-sm">
+            <p className="text-xs text-slate-500 mb-2">Bypass Teaser (Test Amaçlı)</p>
+            <div className="flex gap-2">
+              <input
+                type="password"
+                placeholder="Admin Secret"
+                value={adminSecretInput}
+                onChange={(e) => setAdminSecretInput(e.target.value)}
+                className="flex-grow bg-slate-900 text-slate-300 rounded-xl px-4 py-2 text-sm border border-slate-800 focus:outline-none focus:border-emerald-500"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-slate-800 text-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-700"
+              >
+                Giriş
+              </button>
+            </div>
+          </form>
+        </div>
+      </PageShell>
+    );
+  }
+
+  // Once bypassed, enforce sign-in (or mock it for dev)
+  if (!isSignedIn) {
+    return (
+      <PageShell title="CupMat Taktik Ligi" subtitle="Kendi Dünya Kupası kadronuzu kurun ve H2H Düello Liginde yarışın!">
+        <div className="flex flex-col items-center justify-center text-center py-20 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl">
+          <Shield className="w-16 h-16 text-emerald-400 mb-6 animate-pulse" />
+          <h2 className="text-2xl font-black text-white mb-2">Giriş Yapmalısınız</h2>
+          <p className="text-slate-400 max-w-md mb-8">
+            Kadro kurup düello ligine katılabilmek ve ödüller kazanabilmek için sisteme giriş yapmalısınız.
+          </p>
+        </div>
+      </PageShell>
+    );
+  }
+
+  return (
+    <PageShell
+      title="CupMat Taktik Ligi"
+      subtitle="Kendi elit takımınızı kurun, matematik başarınızla yedeklerinizi ve takım haklarınızı açın, ikili düellolarda kapışın!"
+    >
+      {/* Admin Settings bar */}
+      {adminBypass && (
+        <div className="mb-6 p-4 bg-slate-950/80 border border-amber-500/20 rounded-2xl flex flex-wrap gap-4 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Settings className="w-5 h-5 text-amber-400" />
+            <span className="text-sm font-bold text-amber-400">Yönetici Paneli (Bypass Aktif)</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => handleAdminTrigger("pair")}
+              className="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 rounded-xl text-xs font-semibold"
+            >
+              H2H Eşleştirme Yap
+            </button>
+            <button
+              onClick={() => handleAdminTrigger("calculate")}
+              className="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 rounded-xl text-xs font-semibold"
+            >
+              Skorları Hesapla
+            </button>
+            <button
+              onClick={() => handleAdminTrigger("standings")}
+              className="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 rounded-xl text-xs font-semibold"
+            >
+              Puan Durumunu Güncelle
+            </button>
+            <button
+              onClick={() => handleAdminTrigger("all")}
+              className="px-3 py-1.5 bg-amber-500 text-slate-950 hover:bg-amber-400 rounded-xl text-xs font-bold"
+            >
+              Hepsini Tetikle
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Check Qualifications */}
+      {unlocked === false && unlockProgress && (
+        <div className="mb-8 p-6 bg-rose-500/10 border border-rose-500/20 rounded-3xl flex flex-col md:flex-row items-center gap-6">
+          <AlertTriangle className="w-12 h-12 text-rose-400 flex-shrink-0" />
+          <div>
+            <h3 className="text-lg font-black text-white mb-2">Kadro Kurma Kilitli!</h3>
+            <p className="text-sm text-slate-400 mb-4 max-w-xl">
+              {isStageActive
+                ? "Aşama devam ettiği için geç katılım şartı uygulanmaktadır: Kadro açabilmek için herhangi bir MinMat kategorisinde en az Seviye 7'ye ulaşmış olmalısınız."
+                : "Dünya Kupası kadronuzu açabilmek için tüm MinMat kategorilerinde en az Seviye 3 bitirmeli ve 5 başarılı oyun oynamalısınız."}
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {unlockProgress.categoryStatus.map((c: any) => {
+                const reqLvl = isStageActive ? 7 : 3;
+                const isLvlPassed = c.level >= reqLvl;
+                return (
+                  <div key={c.category} className="bg-slate-950/40 p-3 rounded-xl border border-slate-900">
+                    <p className="text-xs font-bold text-slate-300 capitalize mb-1">
+                      {c.category === "add" ? "Toplama" : c.category === "sub" ? "Çıkarma" : c.category === "mul" ? "Çarpma" : c.category === "div" ? "Bölme" : "Karışık"}
+                    </p>
+                    <div className="flex flex-col gap-0.5">
+                      <span className={`text-[10px] ${isLvlPassed ? "text-emerald-400" : "text-rose-400"}`}>
+                        Seviye: {c.level}/{reqLvl} {isLvlPassed ? "✓" : ""}
+                      </span>
+                      {!isStageActive && (
+                        <span className={`text-[10px] ${c.gamesPlayed >= 5 ? "text-emerald-400" : "text-rose-400"}`}>
+                          Oyun: {c.gamesPlayed}/5 {c.gamesPlayed >= 5 ? "✓" : ""}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <a
+              href="/minmat"
+              className="inline-flex items-center gap-2 mt-4 text-emerald-400 font-bold hover:text-emerald-300 text-sm"
+            >
+              MinMat oynamaya git <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Main Dashboard Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left column: Setup controls & Pitch */}
+        <div className="lg:col-span-8 space-y-6">
+          {/* Active settings controls */}
+          <div className="p-6 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl flex flex-wrap gap-4 items-center justify-between">
+            <div className="flex flex-wrap gap-4 items-center">
+              {/* Stage selector */}
+              <div>
+                <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">Dönem/Maç Günü</label>
+                <select
+                  value={stage}
+                  onChange={(e) => setStage(e.target.value)}
+                  className="bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500"
+                >
+                  <option value="matchday_1">1. Maç Günü (Grup)</option>
+                  <option value="matchday_2">2. Maç Günü (Grup)</option>
+                  <option value="matchday_3">3. Maç Günü (Grup)</option>
+                  <option value="round_of_32">Son 32</option>
+                  <option value="round_of_16">Son 16</option>
+                  <option value="quarter_finals">Çeyrek Final</option>
+                  <option value="semi_finals">Yarı Final</option>
+                  <option value="finals">Final</option>
+                </select>
+              </div>
+
+              {/* Team Index selector (maxTeams count) */}
+              {maxTeams > 1 && (
+                <div>
+                  <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">Aktif Takımım</label>
+                  <div className="flex gap-1.5">
+                    {Array.from({ length: maxTeams }).map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setTeamIndex(i + 1)}
+                        className={`px-3 py-2 rounded-xl text-xs font-black transition-all ${
+                          teamIndex === i + 1
+                            ? "bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20"
+                            : "bg-slate-950 text-slate-400 border border-slate-800 hover:bg-slate-900"
+                        }`}
+                      >
+                        {i + 1}. Takım
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Formation selector */}
+            <div>
+              <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">Diziliş Formasyonu</label>
+              <select
+                value={formation}
+                onChange={(e) => setFormation(e.target.value)}
+                className="bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500"
+              >
+                <option value="4-4-2">4-4-2</option>
+                <option value="4-3-3">4-3-3</option>
+                <option value="3-5-2">3-5-2</option>
+                <option value="3-4-3">3-4-3</option>
+                <option value="5-3-2">5-3-2</option>
+                <option value="5-4-1">5-4-1</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Soccer pitch visual builder */}
+          <div className="bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl p-6 relative overflow-hidden">
+            {/* Team details name input */}
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="Kadro Adı Giriniz (örn: Matematik Fırtınası)"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+                className="bg-slate-950 text-white font-extrabold text-lg px-4 py-3 rounded-2xl border border-slate-800 focus:outline-none focus:border-emerald-500 w-full"
+              />
+            </div>
+
+            {/* Visual Football Pitch */}
+            <div className="bg-gradient-to-b from-emerald-950 to-emerald-900 relative rounded-3xl border border-emerald-800/80 shadow-2xl p-4 overflow-hidden aspect-[4/5] md:aspect-[3/4]">
+              {/* Pitch layout markers */}
+              <div className="absolute inset-0 border-2 border-emerald-600/20 m-4 rounded-2xl pointer-events-none" />
+              <div className="absolute inset-x-0 top-1/2 h-0.5 bg-emerald-600/20 pointer-events-none" />
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-28 border-2 border-emerald-600/20 rounded-full pointer-events-none" />
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-16 border-2 border-emerald-600/20 border-t-0 pointer-events-none" />
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-16 border-2 border-emerald-600/20 border-b-0 pointer-events-none" />
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-56 h-36 border-2 border-emerald-600/20 border-t-0 pointer-events-none" />
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-56 h-36 border-2 border-emerald-600/20 border-b-0 pointer-events-none" />
+              
+              {/* Tactical grid positioning for players based on formation selection */}
+              <div className="h-full flex flex-col justify-between py-4 relative z-10">
+                {/* Forwards row */}
+                <div className="flex justify-around items-center h-1/5">
+                  {starterPositions.map((pos, i) => {
+                    if (pos !== "FWD") return null;
+                    const p = detailedStarters[i];
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => openSelector(i, false, "FWD")}
+                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
+                          p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
+                        }`}>
+                          {p ? p.name.charAt(0) : "+"}
+                        </div>
+                        <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
+                          {p ? p.name : "Forvet"}
+                        </span>
+                        {p && (
+                          <div
+                            onClick={(e) => { e.stopPropagation(); removePlayer(i, false); }}
+                            className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
+                          >
+                            ×
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Midfielders row */}
+                <div className="flex justify-around items-center h-1/5">
+                  {starterPositions.map((pos, i) => {
+                    if (pos !== "MID") return null;
+                    const p = detailedStarters[i];
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => openSelector(i, false, "MID")}
+                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
+                          p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
+                        }`}>
+                          {p ? p.name.charAt(0) : "+"}
+                        </div>
+                        <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
+                          {p ? p.name : "Orta Saha"}
+                        </span>
+                        {p && (
+                          <div
+                            onClick={(e) => { e.stopPropagation(); removePlayer(i, false); }}
+                            className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
+                          >
+                            ×
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Defenders row */}
+                <div className="flex justify-around items-center h-1/5">
+                  {starterPositions.map((pos, i) => {
+                    if (pos !== "DEF") return null;
+                    const p = detailedStarters[i];
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => openSelector(i, false, "DEF")}
+                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
+                          p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
+                        }`}>
+                          {p ? p.name.charAt(0) : "+"}
+                        </div>
+                        <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
+                          {p ? p.name : "Defans"}
+                        </span>
+                        {p && (
+                          <div
+                            onClick={(e) => { e.stopPropagation(); removePlayer(i, false); }}
+                            className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
+                          >
+                            ×
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Goalkeeper slot */}
+                <div className="flex justify-center items-center h-1/5">
+                  {(() => {
+                    const p = detailedStarters[0];
+                    return (
+                      <button
+                        onClick={() => openSelector(0, false, "GK")}
+                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                      >
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
+                          p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
+                        }`}>
+                          {p ? p.name.charAt(0) : "+"}
+                        </div>
+                        <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
+                          {p ? p.name : "Kaleci"}
+                        </span>
+                        {p && (
+                          <div
+                            onClick={(e) => { e.stopPropagation(); removePlayer(0, false); }}
+                            className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
+                          >
+                            ×
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })()}
+                </div>
+              </div>
+            </div>
+
+            {/* Bench (Yedekler) Slots */}
+            {allowedBenchSlots > 0 && (
+              <div className="mt-6 pt-6 border-t border-slate-800">
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">Yedek Kulübesi ({allowedBenchSlots} Slot Açık)</h4>
+                <div className="flex gap-4">
+                  {Array.from({ length: allowedBenchSlots }).map((_, idx) => {
+                    const p = detailedBench[idx];
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => openSelector(idx, true, p ? getGeneralPosition(p.position) : "MID")}
+                        className="flex flex-col items-center justify-center relative group"
+                      >
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black border-2 shadow-md ${
+                          p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-slate-950/60 border-dashed border-slate-700 text-slate-500"
+                        }`}>
+                          {p ? p.name.charAt(0) : "+"}
+                        </div>
+                        <span className="text-[9px] text-slate-300 font-extrabold bg-slate-950/40 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
+                          {p ? p.name : "Yedek"}
+                        </span>
+                        {p && (
+                          <div
+                            onClick={(e) => { e.stopPropagation(); removePlayer(idx, true); }}
+                            className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
+                          >
+                            ×
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Save Status & Button */}
+            <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-slate-800 pt-6">
+              {saveStatus && (
+                <div className={`p-3 rounded-xl text-xs font-bold ${
+                  saveStatus.type === "success" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                }`}>
+                  {saveStatus.msg}
+                </div>
+              )}
+              <div className="w-full md:w-auto flex gap-3 ml-auto">
+                <button
+                  onClick={saveRoster}
+                  className="w-full md:w-auto px-6 py-3.5 bg-emerald-500 text-slate-950 hover:bg-emerald-400 font-black rounded-2xl shadow-lg transition-all"
+                >
+                  Kadroyu Kaydet 💾
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right column: Dynamic validation dashboard, standings and H2H matches */}
+        <div className="lg:col-span-4 space-y-6">
+          {/* Qualifications & Dynamic Limits panel */}
+          <div className="p-6 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl space-y-4">
+            <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2 mb-4">
+              <Users className="w-4 h-4 text-emerald-400" /> Kadro Sınırları & Kriterleri
+            </h3>
+            
+            <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
+              <span className="text-xs text-slate-400">İlk Giriş Durumu</span>
+              <span className={`inline-flex items-center gap-1 text-xs font-black ${unlocked ? "text-emerald-400" : "text-rose-400"}`}>
+                {unlocked ? "Açık ✓" : "Kilitli ⚠"}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
+              <span className="text-xs text-slate-400">Açık Takım Hakkı</span>
+              <span className="text-xs font-black text-white">{maxTeams} Takım</span>
+            </div>
+
+            <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
+              <span className="text-xs text-slate-400">Maksimum Ülke Limiti</span>
+              <span className={`inline-flex items-center gap-1 text-xs font-black ${limitsStatus.countryLimitPassed ? "text-emerald-400" : "text-rose-400"}`}>
+                Aşama Başına {limitsStatus.countryLimit} Oyuncu {limitsStatus.countryLimitPassed ? "✓" : "⚠"}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
+              <span className="text-xs text-slate-400">Maksimum Grup Limiti</span>
+              <span className={`inline-flex items-center gap-1 text-xs font-black ${limitsStatus.groupLimitPassed ? "text-emerald-400" : "text-rose-400"}`}>
+                Aynı Gruptan Max 5 Oyuncu {limitsStatus.groupLimitPassed ? "✓" : "⚠"}
+              </span>
+            </div>
+
+            {isStageActive && originalRoster && (
+              <div className="flex flex-col gap-2 pt-3 border-t border-slate-800/60">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-amber-400 font-bold">Aktif Aşama Transferi</span>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-md font-semibold">Aktif</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-400">Değişen Oyuncu (Transfer)</span>
+                  <span className="text-xs font-black text-white">{newTransfersCount} Oyuncu</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-400">Bugünkü MinMat Oyununuz</span>
+                  <span className={`text-xs font-black ${minmatGamesToday >= newTransfersCount * 3 ? "text-emerald-400" : "text-rose-400"}`}>
+                    {minmatGamesToday} Oyun
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-400">Gereken MinMat Oyunu</span>
+                  <span className="text-xs font-black text-white">{newTransfersCount * 3} Oyun</span>
+                </div>
+                {newTransfersCount > 0 && minmatGamesToday < newTransfersCount * 3 && (
+                  <div className="mt-1 p-2 bg-rose-500/10 border border-rose-500/20 rounded-xl text-[10px] text-rose-400 font-bold leading-normal">
+                    ⚠ Değişiklikleri kaydedebilmek için bugün en az {newTransfersCount * 3 - minmatGamesToday} MinMat oyunu daha oynamalısınız.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* H2H Duel League Standings & Live Score Ticker widget */}
+          <div className="p-6 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl space-y-4">
+            <div className="flex border-b border-slate-800">
+              <button
+                onClick={() => setActiveTab("builder")}
+                className={`flex-1 pb-3 text-xs font-black border-b-2 transition-all ${
+                  activeTab === "builder" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
+                }`}
+              >
+                Kadro
+              </button>
+              <button
+                onClick={() => setActiveTab("standings")}
+                className={`flex-1 pb-3 text-xs font-black border-b-2 transition-all ${
+                  activeTab === "standings" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
+                }`}
+              >
+                Puan Durumu
+              </button>
+              <button
+                onClick={() => setActiveTab("fixtures")}
+                className={`flex-1 pb-3 text-xs font-black border-b-2 transition-all ${
+                  activeTab === "fixtures" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
+                }`}
+              >
+                Fikstür & Canlı
+              </button>
+            </div>
+
+            {/* TAB CONTENT: STANDINGS */}
+            {activeTab === "standings" && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="text-slate-500 uppercase tracking-wider border-b border-slate-800">
+                      <th className="pb-2 font-black">#</th>
+                      <th className="pb-2 font-black">Kullanıcı</th>
+                      <th className="pb-2 font-black text-center">OM</th>
+                      <th className="pb-2 font-black text-center">P</th>
+                      <th className="pb-2 font-black text-right">KP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {standings.map((row, idx) => (
+                      <tr key={row.user_id} className="border-b border-slate-800/40 last:border-0">
+                        <td className="py-2.5 font-bold text-slate-400">{idx + 1}</td>
+                        <td className="py-2.5 font-extrabold text-white truncate max-w-[100px]">{row.nickname}</td>
+                        <td className="py-2.5 font-semibold text-center text-slate-300">{row.played}</td>
+                        <td className="py-2.5 font-black text-center text-emerald-400">{row.points}</td>
+                        <td className="py-2.5 font-bold text-right text-slate-300">{row.total_roster_points}</td>
+                      </tr>
+                    ))}
+                    {standings.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="text-center py-4 text-slate-500 font-semibold">Düello puan durumu henüz oluşmadı.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {/* TAB CONTENT: FIXTURES & LIVE MATCH */}
+            {activeTab === "fixtures" && (
+              <div className="space-y-4">
+                {/* Active user H2H detailed box */}
+                {userDuel ? (
+                  <div className="bg-slate-950/80 p-4 rounded-2xl border border-emerald-500/20">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] text-emerald-400 font-black tracking-wider uppercase">İKİLİ CANLI DÜELLO</span>
+                      <span className="inline-flex items-center gap-1 text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-lg font-black tracking-widest animate-pulse">CANLI</span>
+                    </div>
+                    <div className="flex justify-between items-center text-center">
+                      <div className="flex-1">
+                        <p className="font-extrabold text-xs text-white truncate">{userDuel.team1.name}</p>
+                        <p className="text-[10px] text-slate-500">Oyuncu</p>
+                      </div>
+                      <div className="px-4 py-1.5 bg-slate-900 rounded-xl">
+                        <span className="font-black text-white text-lg">{userDuel.team1.score}</span>
+                        <span className="mx-2 text-slate-600 font-bold">-</span>
+                        <span className="font-black text-white text-lg">{userDuel.team2.score}</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-extrabold text-xs text-white truncate">{userDuel.team2.name}</p>
+                        <p className="text-[10px] text-slate-500">Rakip</p>
+                      </div>
+                    </div>
+
+                    {/* Live events ticker list */}
+                    {userDuel.ticker && userDuel.ticker.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-slate-900 space-y-1.5 max-h-32 overflow-y-auto">
+                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">CANLI MAÇ LOGLARI</p>
+                        {userDuel.ticker.map((ticker: any, tIdx: number) => (
+                          <div key={tIdx} className={`text-[10px] flex justify-between ${ticker.team === 1 ? "text-emerald-400" : "text-sky-400"}`}>
+                            <span>{ticker.player}</span>
+                            <span className="font-bold">{ticker.event}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-500 font-semibold italic text-center py-2">Bu aşamada düello maçınız bulunmuyor.</p>
+                )}
+
+                {/* List of other matches */}
+                <div className="space-y-2">
+                  <p className="text-[10px] text-slate-500 font-black tracking-wider uppercase">TÜM EŞLEŞMELER</p>
+                  <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                    {duels.map((d) => (
+                      <div key={d.id} className="bg-slate-950/30 p-2.5 rounded-xl border border-slate-900 flex justify-between items-center text-xs">
+                        <span className="font-bold text-slate-300 truncate max-w-[80px]">{d.name1}</span>
+                        <span className="bg-slate-950 px-2 py-0.5 rounded font-black text-emerald-400">{d.score1} - {d.score2}</span>
+                        <span className="font-bold text-slate-300 truncate max-w-[80px] text-right">{d.name2}</span>
+                      </div>
+                    ))}
+                    {duels.length === 0 && (
+                      <p className="text-xs text-slate-500 font-semibold italic text-center py-2">Fikstür bulunamadı.</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: BUILDER SUMMARY / EXPLANATION */}
+            {activeTab === "builder" && (
+              <div className="text-xs text-slate-400 leading-relaxed space-y-2">
+                <p>
+                  ⚽ <b>Formasyon Kuralları:</b> Seçtiğiniz dizilişe uygun sayıda oyuncuyu sahaya yerleştirin.
+                </p>
+                <p>
+                  🏆 <b>Puan Çeşitlendirmesi:</b> Puan eşitliğini önlemek amacıyla oyuncu golleri ve asistleri pozisyona göre farklı puanlanır.
+                </p>
+                <p>
+                  🛠️ <b>Transfer Kuralı:</b> Aşama öncesi tüm kadro güncellemeleri ücretsizdir. Ancak aşama devam ederken kadroda değişiklik yapabilmek için herhangi bir MinMat kategorisinde en az Seviye 7'ye ulaşmış olmanız gerekir!
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Selector Modal Drawer */}
+      {selectorModal.isOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
+            <div className="p-6 border-b border-slate-800 flex justify-between items-center">
+              <h3 className="text-lg font-black text-white flex items-center gap-2">
+                <Star className="w-5 h-5 text-emerald-400" /> Futbolcu Seçimi ({selectorModal.positionFilter})
+              </h3>
+              <button
+                onClick={() => setSelectorModal({ isOpen: false, slotIndex: null, isBench: false, positionFilter: null })}
+                className="w-8 h-8 rounded-full bg-slate-950 border border-slate-800 text-slate-400 hover:text-white flex items-center justify-center font-bold text-sm"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Search inputs */}
+            <div className="p-4 border-b border-slate-800 space-y-3 bg-slate-950/30">
+              <input
+                type="text"
+                placeholder="Futbolcu veya kulüp ara..."
+                value={playerSearchQuery}
+                onChange={(e) => setPlayerSearchQuery(e.target.value)}
+                className="w-full bg-slate-950 text-slate-200 text-sm px-4 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500"
+              />
+              <select
+                value={playerSearchTeamFilter}
+                onChange={(e) => setPlayerSearchTeamFilter(e.target.value)}
+                className="w-full bg-slate-950 text-slate-300 text-xs px-4 py-2 rounded-xl border border-slate-800 focus:outline-none"
+              >
+                <option value="">Tüm Takımlar</option>
+                {Object.values(OFFICIAL_GROUP_DRAW).flat().map((teamCode) => (
+                  <option key={teamCode} value={teamCode}>{teamCode.toUpperCase()}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Players list */}
+            <div className="flex-grow overflow-y-auto p-4 space-y-2">
+              {searchablePlayers.map((player) => (
+                <div
+                  key={player.id}
+                  onClick={() => selectPlayer(player.id)}
+                  className="bg-slate-950/60 hover:bg-slate-950 border border-slate-800/40 hover:border-emerald-500/30 rounded-xl p-3.5 flex justify-between items-center transition-all cursor-pointer group"
+                >
+                  <div>
+                    <p className="font-extrabold text-sm text-white group-hover:text-emerald-400 transition-colors">{player.name}</p>
+                    <p className="text-[10px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                      <span>{player.club}</span>
+                      <span className="text-slate-600">•</span>
+                      <span className="font-bold text-slate-300">{player.teamNameTr} ({player.teamId.toUpperCase()})</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg text-emerald-400 font-extrabold capitalize">
+                      {player.position}
+                    </span>
+                    <button className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-black hover:bg-emerald-500 hover:text-slate-950">
+                      Seç
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {searchablePlayers.length === 0 && (
+                <p className="text-center text-slate-500 py-10 font-semibold text-xs">Aradığınız kriterlere uygun seçilebilir oyuncu bulunamadı.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </PageShell>
+  );
+}

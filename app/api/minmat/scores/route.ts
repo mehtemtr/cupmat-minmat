@@ -186,6 +186,15 @@ export async function POST(request: Request) {
       }
     }
 
+    // Track and increment all-time games played count for this mode
+    try {
+      const { incrementMinMatGamesPlayedCount } = await import("@/lib/store/gamification-store");
+      await incrementMinMatGamesPlayedCount(clerkUserId, mode, finalNickname, userEmail);
+      console.log(`[API POST] Registered game played for user ${clerkUserId} in mode ${mode}`);
+    } catch (err) {
+      console.error("[API POST] Failed to register game played count:", err);
+    }
+
     console.log("[API POST] Başarılı!");
     return NextResponse.json({ success: true, data: { high_score: score, nickname: finalNickname } });
   } catch (error: any) {

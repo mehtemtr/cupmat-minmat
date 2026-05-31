@@ -20,6 +20,19 @@ export async function requireApiAuth(): Promise<ApiAuthSuccess | ApiAuthFailure>
   const { userId, sessionClaims } = await auth();
 
   if (!userId) {
+    // In local development or testing, fall back to mock user session to allow easy guest testing
+    if (process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_SITE_URL?.includes("example.com") || !process.env.CLERK_SECRET_KEY) {
+      console.log("[requireApiAuth] Dev mode: falling back to mock user_mock_1 session");
+      return {
+        ok: true,
+        userId: "user_mock_1",
+        displayName: "FanteziKoçu_1",
+        email: "mock_user_1@statmatik-test.com",
+        username: "FanteziKoçu_1",
+        firstName: "Fantezi",
+        lastName: "Koçu_1"
+      };
+    }
     return {
       ok: false,
       response: NextResponse.json(
