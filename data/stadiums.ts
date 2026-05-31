@@ -29,9 +29,9 @@ export const STADIUMS: Stadium[] = [
     scheduleNoteTr: "Açılış · Final · Grup ve Eleme",
     imageGradient: "from-blue-600/30 to-indigo-900/20",
     images: [
-      "/stadiums/metlife-1.jpg",
-      "/stadiums/metlife-2.jpg",
-      "/stadiums/metlife-3.jpg"
+      "/stadiums/metlife1.jpg",
+      "/stadiums/metlife2.jpg",
+      "/stadiums/metlife3.jpg"
     ],
   },
   {
