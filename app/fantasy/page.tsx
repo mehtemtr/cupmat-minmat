@@ -444,57 +444,7 @@ export default function FantasyPage() {
   // Render Teaser Page initially (for all users, whether logged in or not)
   if (!teaserBypass) {
     return (
-      <PageShell title="CupMat Taktik" subtitle="Yakında Başlıyor!">
-        <div className="relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-slate-950 p-8 md:p-16 text-center shadow-2xl flex flex-col items-center">
-          {/* Soccer pitch visual glow background */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.15),transparent_60%)] pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-emerald-500/10 to-transparent pointer-events-none" />
-          
-          <Award className="w-20 h-20 text-emerald-400 mb-8 animate-bounce" />
-          
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">
-            CupMat Taktik Ligi Yakında Başlıyor!
-          </h2>
-          <p className="text-emerald-300 font-semibold text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
-            Kadro oluşturabilmek ve liglerde yarışabilmek için normalde her kategoriden en az 3. Seviyeyi tamamlayıp 5 başarılı oyun oynamış olmalısınız. Eğer aşama başladıktan sonra ilk defa kadro kuracaksanız (geç katılım), herhangi bir MinMat kategorisinde en az 7. Seviyeyi tamamlamış olmalısınız!
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <a
-              href="/minmat"
-              className="px-8 py-4 bg-emerald-500 text-slate-950 font-black rounded-2xl shadow-lg shadow-emerald-500/20 hover:scale-105 hover:bg-emerald-400 transition-all text-lg"
-            >
-              MinMat Antrenmanına Başla 🧠
-            </a>
-            <a
-              href="/futbolcular"
-              className="px-8 py-4 bg-slate-900 border border-slate-800 text-white font-black rounded-2xl hover:bg-slate-800 hover:text-white transition-all text-lg"
-            >
-              Yıldızları İncele ⭐
-            </a>
-          </div>
-
-          {/* Hidden secret check for testing */}
-          <form onSubmit={handleBypassSubmit} className="mt-8 border-t border-slate-900 pt-8 w-full max-w-sm">
-            <p className="text-xs text-slate-500 mb-2">Bypass Teaser (Test Amaçlı)</p>
-            <div className="flex gap-2">
-              <input
-                type="password"
-                placeholder="Admin Secret"
-                value={adminSecretInput}
-                onChange={(e) => setAdminSecretInput(e.target.value)}
-                className="flex-grow bg-slate-900 text-slate-300 rounded-xl px-4 py-2 text-sm border border-slate-800 focus:outline-none focus:border-emerald-500"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-slate-800 text-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-700"
-              >
-                Giriş
-              </button>
-            </div>
-          </form>
-        </div>
-      </PageShell>
+      <div className="min-h-screen bg-[#060b14]" />
     );
   }
 
