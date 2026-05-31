@@ -92,6 +92,46 @@
       width: 45px;
       height: 45px;
       font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mix-dice {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 2px;
+      width: 24px;
+      height: 24px;
+      border: 1.5px solid currentColor;
+      border-radius: 6px;
+      padding: 2px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.03);
+      line-height: 1;
+    }
+
+    .mix-dice span {
+      font-size: 8px;
+      font-weight: 900;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mix-dice.small {
+      width: 18px;
+      height: 18px;
+      border-width: 1.2px;
+      border-radius: 4px;
+      padding: 1px;
+      gap: 1px;
+    }
+
+    .mix-dice.small span {
+      font-size: 7px;
     }
 
     #topBar {
@@ -959,7 +999,12 @@
       <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
       <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
       <button id="modeBtn_div" onclick="setMode('div')">/</button>
-      <button id="modeBtn_mix" onclick="setMode('mix')" style="font-size: 11px;">➕➖✖️➗</button>
+      <button id="modeBtn_mix" onclick="setMode('mix')" style="padding: 0;">
+        <div class="mix-dice">
+          <span>+</span><span>-</span>
+          <span>×</span><span>÷</span>
+        </div>
+      </button>
     </div>
 
     <div class="screenNav">
@@ -1000,7 +1045,12 @@
       <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">➖</button>
       <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">✖️</button>
       <button onclick="setLeaderboardFilter('div')" id="btnFilterDiv">/</button>
-      <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix" style="font-size: 10px; padding: 6px 8px;">➕➖✖️➗</button>
+      <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix" style="padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center;">
+        <div class="mix-dice small">
+          <span>+</span><span>-</span>
+          <span>×</span><span>÷</span>
+        </div>
+      </button>
     </div>
 
     <div id="leaderboard"></div>
