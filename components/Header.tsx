@@ -15,7 +15,7 @@ const navKeys = [
   { href: "/groups", key: "nav.groups" },
   { href: "/venues", key: "nav.venues" },
   { href: "/tahminler", key: "nav.predictions" },
-  { href: "/fantasy", key: "nav.fantasy" },
+  // { href: "/fantasy", key: "nav.fantasy" },
   { href: "/leaderboard", key: "nav.leaderboard" },
   { href: "/stats", key: "nav.stats" },
 ] as const;

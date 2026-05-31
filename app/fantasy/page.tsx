@@ -453,10 +453,10 @@ export default function FantasyPage() {
           <Award className="w-20 h-20 text-emerald-400 mb-8 animate-bounce" />
           
           <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">
-            Yakında: Sizleri de Dünya Kupası'na götürüyoruz!
+            CupMat Taktik Ligi Yakında Başlıyor!
           </h2>
           <p className="text-emerald-300 font-semibold text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
-            MinMat antrenmanlarına şimdiden başlayın... Roster oluşturabilmek ve liglerde yarışabilmek için normalde her kategoriden en az 3. Seviyeyi tamamlayıp 5 başarılı oyun oynamış olmalısınız. Eğer aşama başladıktan sonra ilk defa kadro kuracaksanız (geç katılım), herhangi bir MinMat kategorisinde en az 7. Seviyeyi tamamlamış olmalısınız!
+            Kadro oluşturabilmek ve liglerde yarışabilmek için normalde her kategoriden en az 3. Seviyeyi tamamlayıp 5 başarılı oyun oynamış olmalısınız. Eğer aşama başladıktan sonra ilk defa kadro kuracaksanız (geç katılım), herhangi bir MinMat kategorisinde en az 7. Seviyeyi tamamlamış olmalısınız!
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
