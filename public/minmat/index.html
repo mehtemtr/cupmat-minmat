@@ -1662,6 +1662,17 @@
       // Eğer iframe içindeysek Clerk yüklemesini tamamen pas geçelim (Mükerrer ve sonsuz döngü engelleme)
       if (window.self !== window.top) {
         console.log("[IFRAME] Iframe içindeyiz, Clerk SDK yüklenmesi pas geçiliyor. Oturum parent pencereden yönetilecek.");
+        
+        // Mükerrer butonları gizle (Hakkında, Yardım, Çıkış, Cupmat'a Geç)
+        const topRightNav = document.querySelector('.topRightNav');
+        if (topRightNav) {
+          topRightNav.style.display = 'none';
+        }
+        const switchBtn = document.getElementById('btnCupmatSwitch');
+        if (switchBtn) {
+          switchBtn.style.display = 'none';
+        }
+        
         checkAuthSession();
         return;
       }
