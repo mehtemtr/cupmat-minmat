@@ -95,33 +95,34 @@ export function GamificationManager() {
     return `${year}-${month}-${day}`;
   };
 
-  // Helper to check if pathname was claimed today
-  const isClaimedToday = (path: string) => {
+  // Helper to check if page-stay is restricted (cooldown or limit)
+  const getPageStayRestriction = () => {
     try {
-      const saved = localStorage.getItem("wc2026-claimed-pages");
-      if (!saved) return false;
-      const data = JSON.parse(saved) as Record<string, string[]>;
+      const saved = localStorage.getItem("wc2026-gamification-state");
+      if (!saved) return { restricted: false };
+      
+      const data = JSON.parse(saved);
       const today = getTodayKey();
-      return data[today]?.includes(path) || false;
-    } catch {
-      return false;
-    }
-  };
-
-  // Helper to save claimed pathname
-  const recordClaimToday = (path: string) => {
-    try {
-      const saved = localStorage.getItem("wc2026-claimed-pages") || "{}";
-      const data = JSON.parse(saved) as Record<string, string[]>;
-      const today = getTodayKey();
-      if (!data[today]) data[today] = [];
-      if (!data[today].includes(path)) {
-        data[today].push(path);
+      
+      // If sync date is today and claim count >= 5
+      if (data.lastSyncDate === today && (data.pageStayClaimsTodayCount || 0) >= 5) {
+        return { restricted: true, reason: "limit" };
       }
-      localStorage.setItem("wc2026-claimed-pages", JSON.stringify(data));
+      
+      // If last claim is within 2 hours
+      if (data.lastPageStayClaimAt) {
+        const lastClaimTime = new Date(data.lastPageStayClaimAt).getTime();
+        const now = Date.now();
+        const diffMs = now - lastClaimTime;
+        const cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
+        if (diffMs < cooldownMs) {
+          return { restricted: true, reason: "cooldown", remainingMs: cooldownMs - diffMs };
+        }
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Error reading restriction from localStorage", e);
     }
+    return { restricted: false };
   };
 
   // Handle page transitions & timer setups
@@ -146,9 +147,10 @@ export function GamificationManager() {
     const config = getPageConfig(pathname);
     if (!config) return;
 
-    // Check if this page has already been claimed today
-    if (isClaimedToday(pathname)) {
-      // "Sayaç çıkmasın ya da geri sayıma başlamasın"
+    // Check if page stay is restricted globally (limit reached or in cooldown)
+    const restriction = getPageStayRestriction();
+    if (restriction.restricted) {
+      // Don't show the timer or start countdown if user is in cooldown or has reached daily limit
       return;
     }
 
@@ -194,8 +196,18 @@ export function GamificationManager() {
 
       const data = await res.json();
       if (data.success) {
-        // Record claim in today's log
-        recordClaimToday(path);
+        // Update gamification state in localStorage
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            "wc2026-gamification-state",
+            JSON.stringify({
+              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
+              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              lastSyncDate: new Date().toISOString().split("T")[0],
+            })
+          );
+        }
+
         setIsRewarded(true);
 
         // Notify global headers to update taraftarPuani immediately
@@ -218,9 +230,35 @@ export function GamificationManager() {
             setShowWidget(false);
           }
         }, 4000);
+      } else {
+        // If server rejected the claim (e.g. cooldown or limit), update localStorage with returned profile if available
+        if (data.profile && typeof window !== "undefined") {
+          localStorage.setItem(
+            "wc2026-gamification-state",
+            JSON.stringify({
+              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
+              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              lastSyncDate: new Date().toISOString().split("T")[0],
+            })
+          );
+        }
+
+        // Show error message returned by server
+        setToast({
+          id: `toast-${Date.now()}`,
+          text: data.error || "Puan kazanılamadı.",
+          icon: "⚠️",
+        });
+
+        setTimeout(() => {
+          if (currentPathRef.current === path) {
+            setShowWidget(false);
+          }
+        }, 4000);
       }
     } catch (error) {
       console.error("Error claiming page stay points:", error);
+      hasClaimedRef.current = false;
     }
   };
 

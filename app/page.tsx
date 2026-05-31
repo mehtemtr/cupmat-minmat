@@ -279,6 +279,32 @@ export default function EntryPage() {
           </div>
         </div>
 
+        {/* MinMat Puan Güncellemesi Duyurusu */}
+        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-violet-500/20 bg-gradient-to-r from-violet-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-violet-500/30">
+          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-650/10 to-indigo-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+          <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-500/10 text-violet-400 ring-1 ring-violet-400/20">
+              <span className="text-2xl">🧮</span>
+            </div>
+            <div className="text-center md:text-left">
+              <h3 className="text-lg font-black text-white mb-2">
+                {locale === "tr" ? "MinMat Puanlama Sistemi Güncellendi!" : "MinMat Scoring System Updated!"}
+              </h3>
+              <p className="text-sm text-zinc-300 leading-relaxed">
+                {locale === "tr" ? (
+                  <>
+                    MinMat zeka oyununda artık seviye tamamlama ve kalan süre bonusları aktif! Yeni puanlama güncellemesiyle <strong>çok daha fazla puan kazanacaksınız</strong>, hemen girip yeni puanları ve rekorlarınızı deneyebilirsiniz!
+                  </>
+                ) : (
+                  <>
+                    Level completion and remaining time bonuses are now active in the MinMat math game! With the new scoring update, <strong>you will earn much more points</strong>. Try it out now to set new records!
+                  </>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Dynamic Celebrations Section */}
         {activeBanners.includes("psg") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/20 bg-gradient-to-r from-blue-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-blue-500/30">

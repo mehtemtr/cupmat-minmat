@@ -174,6 +174,18 @@ export async function POST(request: Request) {
       console.error("[API POST] Insert hatası:", insertError);
       throw insertError;
     }
+
+    // Auto-award prediction update key (tahminGuncellemeHakki) if score is >= 300
+    if (score >= 300) {
+      try {
+        const { handleGamificationAction } = await import("@/lib/store/gamification-store");
+        await handleGamificationAction(clerkUserId, "earn_prediction_right", 1);
+        console.log(`[API POST] Auto-awarded prediction key to user ${clerkUserId} for score ${score}`);
+      } catch (err) {
+        console.error("[API POST] Failed to auto-award prediction key:", err);
+      }
+    }
+
     console.log("[API POST] Başarılı!");
     return NextResponse.json({ success: true, data: { high_score: score, nickname: finalNickname } });
   } catch (error: any) {

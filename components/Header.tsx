@@ -27,6 +27,14 @@ export function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [taraftarPuani, setTaraftarPuani] = useState<number | null>(null);
+  const [hakkindaTiklandi, setHakkindaTiklandi] = useState<boolean>(false);
+  const [yardimTiklandi, setYardimTiklandi] = useState<boolean>(false);
+  
+  const [aboutSecondsLeft, setAboutSecondsLeft] = useState(10);
+  const [aboutClaimedThisSession, setAboutClaimedThisSession] = useState(false);
+  const [helpSecondsLeft, setHelpSecondsLeft] = useState(10);
+  const [helpClaimedThisSession, setHelpClaimedThisSession] = useState(false);
+  
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -50,8 +58,18 @@ export function Header() {
         const data = await res.json();
         if (data.success && data.profile) {
           setTaraftarPuani(data.profile.taraftarPuani);
+          setHakkindaTiklandi(data.profile.hakkindaTiklandi || false);
+          setYardimTiklandi(data.profile.yardimTiklandi || false);
           if (typeof window !== "undefined") {
             localStorage.setItem("minmat_last_name", data.profile.displayName);
+            localStorage.setItem(
+              "wc2026-gamification-state",
+              JSON.stringify({
+                lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
+                pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+                lastSyncDate: new Date().toISOString().split("T")[0],
+              })
+            );
           }
         }
       } catch (err) {
@@ -75,54 +93,132 @@ export function Header() {
     return () => window.removeEventListener("taraftar-puan-guncellendi", handlePointsUpdate);
   }, []);
 
-  const handleAboutOpen = async () => {
-    setAboutOpen(true);
-    if (isSignedIn && user) {
-      try {
-        const res = await fetch("/api/gamification", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "about_clicked",
-          }),
-        });
-        const data = await res.json();
-        if (data.success) {
-          window.dispatchEvent(
-            new CustomEvent("taraftar-puan-guncellendi", {
-              detail: { points: data.profile.taraftarPuani, toast: data.message },
+  // About modal timer logic
+  useEffect(() => {
+    if (!aboutOpen || !isSignedIn || !user || hakkindaTiklandi || aboutClaimedThisSession) {
+      setAboutSecondsLeft(10);
+      return;
+    }
+
+    setAboutSecondsLeft(10);
+    const interval = setInterval(() => {
+      setAboutSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          claimAboutPoints();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [aboutOpen, isSignedIn, user, hakkindaTiklandi, aboutClaimedThisSession]);
+
+  const claimAboutPoints = async () => {
+    if (!isSignedIn || !user || hakkindaTiklandi || aboutClaimedThisSession) return;
+    try {
+      const res = await fetch("/api/gamification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "about_clicked",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setHakkindaTiklandi(true);
+        setAboutClaimedThisSession(true);
+        setTaraftarPuani(data.profile.taraftarPuani);
+        
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            "wc2026-gamification-state",
+            JSON.stringify({
+              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
+              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              lastSyncDate: new Date().toISOString().split("T")[0],
             })
           );
         }
-      } catch (err) {
-        console.error("About gamification error:", err);
+
+        window.dispatchEvent(
+          new CustomEvent("taraftar-puan-guncellendi", {
+            detail: { points: data.profile.taraftarPuani, toast: data.message },
+          })
+        );
       }
+    } catch (err) {
+      console.error("About gamification error:", err);
     }
   };
 
-  const handleHelpOpen = async () => {
-    setHelpOpen(true);
-    if (isSignedIn && user) {
-      try {
-        const res = await fetch("/api/gamification", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "help_clicked",
-          }),
-        });
-        const data = await res.json();
-        if (data.success) {
-          window.dispatchEvent(
-            new CustomEvent("taraftar-puan-guncellendi", {
-              detail: { points: data.profile.taraftarPuani, toast: data.message },
+  // Help modal timer logic
+  useEffect(() => {
+    if (!helpOpen || !isSignedIn || !user || yardimTiklandi || helpClaimedThisSession) {
+      setHelpSecondsLeft(10);
+      return;
+    }
+
+    setHelpSecondsLeft(10);
+    const interval = setInterval(() => {
+      setHelpSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          claimHelpPoints();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [helpOpen, isSignedIn, user, yardimTiklandi, helpClaimedThisSession]);
+
+  const claimHelpPoints = async () => {
+    if (!isSignedIn || !user || yardimTiklandi || helpClaimedThisSession) return;
+    try {
+      const res = await fetch("/api/gamification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "help_clicked",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setYardimTiklandi(true);
+        setHelpClaimedThisSession(true);
+        setTaraftarPuani(data.profile.taraftarPuani);
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            "wc2026-gamification-state",
+            JSON.stringify({
+              lastPageStayClaimAt: data.profile.lastPageStayClaimAt || "",
+              pageStayClaimsTodayCount: data.profile.pageStayClaimsTodayCount || 0,
+              lastSyncDate: new Date().toISOString().split("T")[0],
             })
           );
         }
-      } catch (err) {
-        console.error("Help gamification error:", err);
+
+        window.dispatchEvent(
+          new CustomEvent("taraftar-puan-guncellendi", {
+            detail: { points: data.profile.taraftarPuani, toast: data.message },
+          })
+        );
       }
+    } catch (err) {
+      console.error("Help gamification error:", err);
     }
+  };
+
+  const handleAboutOpen = () => {
+    setAboutOpen(true);
+  };
+
+  const handleHelpOpen = () => {
+    setHelpOpen(true);
   };
 
 
@@ -144,7 +240,7 @@ export function Header() {
           <div className="flex items-center gap-4">
             <Link
               href="/cupmat"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-400"
+              className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-400"
               title="Ana Sayfaya Dön"
             >
               <Home className="h-5 w-5" />
@@ -205,6 +301,35 @@ export function Header() {
                       {t(key)}
                     </Link>
                   ))}
+
+                  {/* Divider */}
+                  <div className="my-1 h-px bg-white/10 sm:hidden" />
+
+                  {/* Hakkında Link (Mobile Only) */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      handleAboutOpen();
+                    }}
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors sm:hidden"
+                  >
+                    <Info className="h-4 w-4 text-emerald-400" />
+                    <span>{locale === "tr" ? "Hakkında" : "About"}</span>
+                  </button>
+
+                  {/* Yardım Link (Mobile Only) */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      handleHelpOpen();
+                    }}
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors sm:hidden"
+                  >
+                    <HelpCircle className="h-4 w-4 text-emerald-400" />
+                    <span>{locale === "tr" ? "Yardım" : "Help"}</span>
+                  </button>
                 </div>
               </div>
             )}
@@ -215,7 +340,7 @@ export function Header() {
             <button
               type="button"
               onClick={handleAboutOpen}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
+              className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
               title="Hakkında"
             >
               <Info className="h-4 w-4" />
@@ -225,7 +350,7 @@ export function Header() {
             <button
               type="button"
               onClick={handleHelpOpen}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
+              className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white"
               title="Yardım"
             >
               <HelpCircle className="h-4 w-4" />
@@ -268,6 +393,36 @@ export function Header() {
                 MahTEM
               </h2>
             </div>
+            
+            {/* Visual Stay Timer Reward Indicator */}
+            {isSignedIn && (
+              <div className="mb-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 flex items-center justify-between animate-fadeIn">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">🎁</span>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">
+                      {locale === "tr" ? "İnceleme Ödülü" : "Review Reward"}
+                    </h4>
+                    <p className="text-xs text-zinc-400">
+                      {locale === "tr" 
+                        ? "Hakkında sayfasını 10 saniye inceleyerek +5 Taraftar Puanı kazanın." 
+                        : "Spend 10 seconds reviewing the About page to earn +5 Fans Points."}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  {hakkindaTiklandi || aboutClaimedThisSession ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">
+                      ✓ {locale === "tr" ? "Puan Alındı" : "Points Claimed"}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400 border border-amber-500/30 animate-pulse">
+                      ⏱️ {aboutSecondsLeft}s
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
             
             <div className="text-[14px] leading-relaxed text-zinc-300 space-y-5">
               <p>
@@ -341,6 +496,36 @@ export function Header() {
               </h2>
             </div>
             
+            {/* Visual Stay Timer Reward Indicator */}
+            {isSignedIn && (
+              <div className="mb-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 flex items-center justify-between animate-fadeIn">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">🎁</span>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">
+                      {locale === "tr" ? "İnceleme Ödülü" : "Review Reward"}
+                    </h4>
+                    <p className="text-xs text-zinc-400">
+                      {locale === "tr" 
+                        ? "Yardım sayfasını 10 saniye inceleyerek +5 Taraftar Puanı kazanın." 
+                        : "Spend 10 seconds reviewing the Help page to earn +5 Fans Points."}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  {yardimTiklandi || helpClaimedThisSession ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">
+                      ✓ {locale === "tr" ? "Puan Alındı" : "Points Claimed"}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400 border border-amber-500/30 animate-pulse">
+                      ⏱️ {helpSecondsLeft}s
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+            
             <div className="text-[14px] leading-relaxed text-zinc-300 space-y-4">
               <ul className="list-none p-0 m-0 space-y-3.5">
                 <li className="flex items-start gap-2.5">
@@ -392,7 +577,7 @@ export function Header() {
                   </span>
                 </li>
                 <div className="ml-6 border-l-2 border-yellow-500/40 pl-4 py-1 space-y-1 text-zinc-400">
-                  <div>🔑 <strong>Anahtar Kazanma:</strong> MinMat oyununu oynayıp 30 puan veya üzeri skor elde ettiğiniz her oyun için <strong>+1 Tahmin Güncelleme Anahtarı</strong> kazanırsınız.</div>
+                  <div>🔑 <strong>Anahtar Kazanma:</strong> MinMat oyununu oynayıp 300 puan veya üzeri skor elde ettiğiniz her oyun için <strong>+1 Tahmin Güncelleme Anahtarı</strong> kazanırsınız.</div>
                   <div>⏱️ <strong>Ek Süre Kullanımı:</strong> MinMat oyununda zorlandığınızda, CupMat ile kazandığınız ek süreleri (⏱️) harcayarak oyuna ek süreyle başlayabilir ve daha kolay rekor kırabilirsiniz!</div>
                 </div>
 

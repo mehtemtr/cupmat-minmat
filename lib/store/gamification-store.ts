@@ -44,6 +44,8 @@ export interface UserActivity {
   cupMatRewardSeconds: number;
   cupMatRewardPoints: number;
   minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number };
+  lastPageStayClaimAt: string;     // ISO string of the last page stay claim
+  pageStayClaimsTodayCount: number; // Number of page stay claims today
 }
 
 function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }): UserActivity {
@@ -70,6 +72,8 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     cupMatRewardSeconds: 0,
     cupMatRewardPoints: 0,
     minmatMaxLevels: raw.minmatMaxLevels ?? { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
+    lastPageStayClaimAt: raw.lastPageStayClaimAt ?? "",
+    pageStayClaimsTodayCount: raw.pageStayClaimsTodayCount ?? 0,
   };
 }
 
@@ -145,6 +149,8 @@ const defaultStore: GamificationStore = {
       cupMatRewardSeconds: 0,
       cupMatRewardPoints: 0,
       minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
+      lastPageStayClaimAt: "",
+      pageStayClaimsTodayCount: 0,
     },
     {
       userId: "demo-2",
@@ -168,6 +174,8 @@ const defaultStore: GamificationStore = {
       cupMatRewardSeconds: 0,
       cupMatRewardPoints: 0,
       minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
+      lastPageStayClaimAt: "",
+      pageStayClaimsTodayCount: 0,
     }
   ],
   gecmisSampiyonlar: [
@@ -328,6 +336,11 @@ async function transitionToNextPeriod(store: GamificationStore): Promise<void> {
   });
   minTop3.forEach((user, idx) => {
     applyMinmatPeriodReward(user, idx, newPeriodEnd);
+    
+    // Award prediction update rights to MinMat winners
+    const predictionRightsBonus = [5, 3, 1];
+    const rightsToAdd = predictionRightsBonus[idx] || 0;
+    user.tahminGuncellemeHakki = (user.tahminGuncellemeHakki || 0) + rightsToAdd;
   });
 
   store.periodEnd = newPeriodEnd;
@@ -431,6 +444,11 @@ async function transitionToNextPeriodWithFixedSchedule(store: GamificationStore,
   });
   minTop3.forEach((user, idx) => {
     applyMinmatPeriodReward(user, idx, newPeriodEnd.toISOString());
+    
+    // Award prediction update rights to MinMat winners
+    const predictionRightsBonus = [5, 3, 1];
+    const rightsToAdd = predictionRightsBonus[idx] || 0;
+    user.tahminGuncellemeHakki = (user.tahminGuncellemeHakki || 0) + rightsToAdd;
   });
 
   store.periodEnd = newPeriodEnd.toISOString();
@@ -447,12 +465,22 @@ export async function getOrCreateProfile(
   let profile = store.userActivities.find((u) => u.userId === userId);
   let needsSave = false;
 
+  const todayStr = new Date().toISOString().split("T")[0];
+
   if (!profile) {
     profile = normalizeUserActivity({
       userId,
       displayName: displayName || `Oyuncu-${userId.substring(0, 5)}`,
       email: email,
+      sonGirisTarihi: todayStr,
+      gunlukGirisSayisi: 1,
     });
+    // Award daily login points on profile creation
+    profile.taraftarPuani += 10;
+    profile.mevcutPeriyotPuani += 10;
+    profile.minmatEkSure += 2;
+    profile.lastClerkLoginAt = new Date().toISOString();
+    
     store.userActivities.push(profile);
     needsSave = true;
   } else {
@@ -465,6 +493,25 @@ export async function getOrCreateProfile(
       profile.email = email;
       updated = true;
     }
+    
+    // Check if calendar day has changed
+    if (profile.sonGirisTarihi !== todayStr) {
+      profile.sonGirisTarihi = todayStr;
+      profile.gunlukGirisSayisi = 1;
+      profile.yardimTiklandi = false;
+      profile.hakkindaTiklandi = false;
+      profile.minmatOyunSayisiBugun = 0;
+      profile.pageStayClaimsTodayCount = 0;
+
+      // Award daily login points on first login of the day
+      profile.taraftarPuani += 10;
+      profile.mevcutPeriyotPuani += 10;
+      profile.minmatEkSure += 2;
+      profile.lastClerkLoginAt = new Date().toISOString();
+      
+      updated = true;
+    }
+
     if (updated) {
       needsSave = true;
     }
@@ -697,9 +744,9 @@ export async function getRewardLeaderboards(): Promise<{
     .map(([, stats]) => [stats.displayName, stats] as const);
 
   const minMatRewardLabels = [
-    "CupMat'ta +50 global puan",
-    "CupMat'ta +30 global puan",
-    "CupMat'ta +15 global puan",
+    "CupMat'ta +50 global puan ve 5 tahmin değiştirme hakkı",
+    "CupMat'ta +30 global puan ve 3 tahmin değiştirme hakkı",
+    "CupMat'ta +15 global puan ve 1 tahmin değiştirme hakkı",
   ];
 
   const minMatRewards: RewardEntry[] = minMatSorted
@@ -730,12 +777,61 @@ export async function handleGamificationAction(
 
   // Dynamic Stay Page Scout Action Handler
   if (action.startsWith("stay_")) {
+    // Safety check if day changed (already done in getOrCreateProfile, but double check)
+    if (profile.sonGirisTarihi !== todayStr) {
+      profile.sonGirisTarihi = todayStr;
+      profile.pageStayClaimsTodayCount = 0;
+      profile.yardimTiklandi = false;
+      profile.hakkindaTiklandi = false;
+      profile.minmatOyunSayisiBugun = 0;
+    }
+
+    // Rule 1: Max 5 claims per day
+    if ((profile.pageStayClaimsTodayCount || 0) >= 5) {
+      return {
+        success: false,
+        profile,
+        message: "Bugün için maksimum sayfa gezinti puanı sınırına (5) ulaştınız."
+      };
+    }
+
+    // Rule 2: Cooldown of 2 hours
+    if (profile.lastPageStayClaimAt) {
+      const lastClaimTime = new Date(profile.lastPageStayClaimAt).getTime();
+      const now = Date.now();
+      const diffMs = now - lastClaimTime;
+      const cooldownMs = 2 * 60 * 60 * 1000; // 2 hours
+      if (diffMs < cooldownMs) {
+        const remainingMs = cooldownMs - diffMs;
+        const remainingMinutes = Math.ceil(remainingMs / (60 * 1000));
+        const remainingHours = Math.floor(remainingMinutes / 60);
+        const remainingMinsText = remainingMinutes % 60;
+        
+        let cooldownStr = "";
+        if (remainingHours > 0) {
+          cooldownStr = `${remainingHours} saat ${remainingMinsText} dakika`;
+        } else {
+          cooldownStr = `${remainingMinutes} dakika`;
+        }
+        return {
+          success: false,
+          profile,
+          message: `Bir sonraki sayfa gezinti puanı için ${cooldownStr} beklemeniz gerekmektedir.`
+        };
+      }
+    }
+
     const added = amount || 1;
     profile.taraftarPuani += added;
     profile.mevcutPeriyotPuani += added;
     if (added >= 10) {
       profile.minmatEkSure += 2; // +2 seconds active Minmat time bonus
     }
+    
+    // Update counters
+    profile.pageStayClaimsTodayCount = (profile.pageStayClaimsTodayCount || 0) + 1;
+    profile.lastPageStayClaimAt = new Date().toISOString();
+    
     message = `Keşif ödülü kazanıldı: +${added} Taraftar Puanı!`;
     
     const store = await getStore();
@@ -754,6 +850,7 @@ export async function handleGamificationAction(
           profile.yardimTiklandi = false;
           profile.hakkindaTiklandi = false;
           profile.minmatOyunSayisiBugun = 0;
+          profile.pageStayClaimsTodayCount = 0;
 
           profile.taraftarPuani += 10;
           profile.mevcutPeriyotPuani += 10;

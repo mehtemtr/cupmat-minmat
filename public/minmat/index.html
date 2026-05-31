@@ -959,7 +959,7 @@
       <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
       <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
       <button id="modeBtn_div" onclick="setMode('div')">/</button>
-      <button id="modeBtn_mix" onclick="setMode('mix')">🎲</button>
+      <button id="modeBtn_mix" onclick="setMode('mix')" style="font-size: 11px;">➕➖✖️➗</button>
     </div>
 
     <div class="screenNav">
@@ -1000,7 +1000,7 @@
       <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">➖</button>
       <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">✖️</button>
       <button onclick="setLeaderboardFilter('div')" id="btnFilterDiv">/</button>
-      <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix">🎲</button>
+      <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix" style="font-size: 10px; padding: 6px 8px;">➕➖✖️➗</button>
     </div>
 
     <div id="leaderboard"></div>
@@ -2056,9 +2056,24 @@
         combo++;
         wrongCount = 0;
         document.getElementById("wrongBar").innerText = "⚠️ 0/3";
-        if ((combo === 4 || combo === 7 || combo === 9) && lives < 5) {
-          lives++;
-          animateLives();
+        
+        // Combo can/life recovery or can-overflow points bonus
+        if (combo === 4 || combo === 7 || combo === 9) {
+          if (lives < 5) {
+            lives++;
+            animateLives();
+          } else {
+            // Can max ise ekstra +123 Puan can bonusu ver
+            const lifeBonus = 123;
+            score += lifeBonus;
+            
+            let label = "❤️ CAN BONUSU: +123 PUAN!";
+            if (currentLang === "en") label = "❤️ LIFE BONUS: +123 POINTS!";
+            else if (currentLang === "de") label = "❤️ LEBENS-BONUS: +123 PUNKTE!";
+            else if (currentLang === "fr") label = "❤️ BONUS DE VIE: +123 POINTS!";
+            else if (currentLang === "es") label = "❤️ BONO DE VIDA: +123 PUNTOS!";
+            showEffect(label);
+          }
         }
 
         if (combo >= 3) showEffect("🔥 KOMBO x" + combo);
@@ -2069,21 +2084,41 @@
         else if (gameMode === "div") baseScore = 13;
         else if (gameMode === "mix") baseScore = 15;
 
-        score += baseScore + level + Math.max(combo - 1, 0);
+        // Formula: MatchPoints = (baseScore + (level - 1) + Math.max(combo - 1, 0)) * 5
+        let matchPoints = (baseScore + (level - 1) + Math.max(combo - 1, 0)) * 5;
         if (periodPointsPerLevel > 0) {
-          score += periodPointsPerLevel;
+          matchPoints += periodPointsPerLevel * 5;
         }
+
+        score += matchPoints;
         matched += 2;
         reset();
 
         if (matched === totalPairs) {
           clearInterval(timer);
+          
+          // Calculate bonuses
+          const completionBonus = 100 + (level - 1) * 50;
+          const timeBonus = timeLeft * 10;
+          score += completionBonus + timeBonus;
+          
+          // Show effect
+          let label = `🎉 +${completionBonus} Tur | +${timeBonus} Süre`;
+          if (currentLang === "en") label = `🎉 +${completionBonus} Round | +${timeBonus} Time`;
+          else if (currentLang === "de") label = `🎉 +${completionBonus} Runde | +${timeBonus} Zeit`;
+          else if (currentLang === "fr") label = `🎉 +${completionBonus} Tour | +${timeBonus} Temps`;
+          else if (currentLang === "es") label = `🎉 +${completionBonus} Ronda | +${timeBonus} Tiempo`;
+          
+          setTimeout(() => {
+            showEffect(label);
+          }, 100);
+
           setTimeout(() => {
             level++;
             updateMaxLevel(gameMode, level);
             showLevelEffect();
             startLevel();
-          }, 500);
+          }, 800);
         }
       } else {
         combo = 0;
@@ -2183,6 +2218,8 @@
     function showEffect(text) {
       let e = document.createElement("div");
       e.className = "effect";
+      e.style.whiteSpace = "pre-wrap";
+      e.style.textAlign = "center";
       e.innerText = text;
       document.body.appendChild(e);
       setTimeout(() => e.remove(), 800);
