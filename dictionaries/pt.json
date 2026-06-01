@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "title": "StatMatik — Campeonato Mundial de 2026",
+    "description": "O guia definitivo para o Campeonato Mundial de 2026 — 48 seleções, 12 grupos, três países-sede. Contagem regressiva para o pontapé inicial em 11 de junho de 2026.",
+    "ogTitle": "Campeonato Mundial de 2026 — O Maior Show da Terra",
+    "ogDescription": "48 seleções. 12 grupos. 3 países-sede. A contagem regressiva para 11 de junho de 2026 começou."
+  },
+  "nav": {
+    "home": "Início",
+    "teams": "Seleções",
+    "groups": "Grupos",
+    "venues": "Estádios",
+    "predictions": "Palpites",
+    "leaderboard": "Classificação",
+    "footballers": "Jogadores",
+    "signin": "Entrar",
+    "signout": "Sair",
+    "logoTitle": "CupMat — Tela Especial do Campeonato Mundial de 2026",
+    "stats": "Estatísticas",
+    "fantasy": "Táticas CupMat"
+  },
+  "hero": {
+    "badge": "StatMatik — Campeonato Mundial de 2026",
+    "mainBadge": "StatMatik — Campeonato Mundial de 2026 & Arena Matemática",
+    "title": "O Mundo",
+    "titleHighlight": "Se Une",
+    "subtitle": "EUA · Canadá · México — três nações, um torneio, a história está sendo escrita.",
+    "ctaPrimary": "Explorar Torneio",
+    "ctaSecondary": "Fazer Palpite",
+    "minMatPromo": "Refresque sua mente enquanto espera a partida! 🧠 Experimente o nosso Jogo de Matemática & Memória MinMat.",
+    "cupMatPromo": "Seu conhecimento de futebol é melhor que o da IA? 🏆 Faça seus palpites para o Campeonato Mundial de 2026 com o CupMat agora!",
+    "comingSoon": "Em Breve ⌛",
+    "players": "Informações dos Jogadores",
+    "countries": "Detalhes dos Países",
+    "referees": "Estatísticas dos Árbitros",
+    "slogan": "Futebol é matemática, matemática é tudo. Resolva a matemática do futebol com statmatik.com!",
+    "cupMatDesc": "Apoiado por IA, tudo sobre o Campeonato Mundial de 2026!",
+    "minMatDesc": "Jogo mental que facilitará o cálculo mental para você e seus filhos!",
+    "playStart": "Ver a Copa",
+    "mindRefresh": "Refrescar a Mente"
+  },
+  "countdown": {
+    "label": "Tempo até o pontapé inicial",
+    "days": "Dias",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "seconds": "Segundos",
+    "targetDate": "11 de junho de 2026"
+  },
+  "overview": {
+    "sectionTitle": "Visão Geral do Torneio",
+    "sectionSubtitle": "A maior Copa do Mundo de todos os tempos — formato expandido, três sedes, momentos inesquecíveis esperam por você.",
+    "teams": {
+      "value": "48",
+      "label": "Seleções",
+      "description": "A maior lista de participantes na história do Campeonato Mundial"
+    },
+    "groups": {
+      "value": "12",
+      "label": "Grupos",
+      "description": "Fase de grupos com quatro equipes em cada"
+    },
+    "hosts": {
+      "value": "3",
+      "label": "Países-Sede",
+      "description": "EUA, Canadá e México juntos"
+    }
+  },
+  "hosts": {
+    "usa": "Estados Unidos",
+    "canada": "Canadá",
+    "mexico": "México"
+  },
+  "teams": {
+    "title": "Seleções Participantes",
+    "subtitle": "48 nações distribuídas nos grupos A–L, ranking mundial e detalhes dos elencos.",
+    "group": "Grupo",
+    "manager": "Técnico",
+    "squad": "Elenco",
+    "years": "anos"
+  },
+  "groups": {
+    "title": "Grupos & Classificação",
+    "subtitle": "As tabelas são atualizadas instantaneamente por pontos, saldo de gols e gols marcados assim que os resultados são inseridos.",
+    "group": "Grupo",
+    "team": "Seleção",
+    "enterResults": "Inserir Resultados",
+    "resultsHint": "Atualize os placares — as classificações nos 12 grupos são recalculadas instantaneamente."
+  },
+  "venues": {
+    "title": "Estádios-Sede",
+    "subtitle": "16 estádios oficiais na América do Norte — capacidade, localização e calendário de jogos.",
+    "capacity": "assentos",
+    "matches": "jogos"
+  },
+  "predictions": {
+    "title": "Palpites & Classificação Geral",
+    "subtitle": "Envie os placares dos grupos passo a passo, desbloqueie o chaveamento da Fase do Mata-Mata e compita no ranking global.",
+    "aiToggle": "Palpite da IA (GPT-5.4)",
+    "yourPoints": "Seus Pontos",
+    "groupStep": "Grupo",
+    "prev": "Voltar",
+    "next": "Avançar",
+    "displayName": "Nome de exibição",
+    "applyScores": "Aplicar palpites à classificação",
+    "submitLeaderboard": "Enviar para a classificação",
+    "knockoutTitle": "Chaveamento do Mata-Mata",
+    "knockoutLocked": "Complete todos os palpites dos grupos e aplique os placares — a fase mata-mata será desbloqueada.",
+    "leaderboard": "Ranking Geral",
+    "loading": "Carregando...",
+    "tbd": "A definir",
+    "simulateLive": "Simular Notícias ao Vivo",
+    "liveUpdate": "Atualização de Notícias ao Vivo",
+    "winProb": "Probabilidade de Vitória",
+    "confidence": "Confiança da IA",
+    "reset": "Limpar Palpites",
+    "champion": "CAMPEÃO",
+    "completed": "CAMPEONATO MUNDIAL DE 2026 CONCLUÍDO!",
+    "et": "PRORROGAÇÃO",
+    "penalties": "PÊNALTIS",
+    "aiRoundPredict": "Prever com IA",
+    "played": "(JOGADO)",
+    "userLabel": "USUÁRIO",
+    "aiLabel": "PALPITE DA IA"
+  },
+  "footer": {
+    "tagline": "Campeonato Mundial de 2026 — Pelo amor ao jogo.",
+    "rights": "Todos os direitos reservados."
+  },
+  "language": {
+    "toggle": "Idioma",
+    "en": "English",
+    "tr": "Türkçe",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "pt": "Português",
+    "ar": "العربية",
+    "ko": "한국어",
+    "it": "Italiano"
+  },
+  "pwa": {
+    "title": "Adicionar MahTEM à Tela Inicial",
+    "instructionShare": "Toque no ícone de Compartilhar no menu inferior do Safari.",
+    "instructionAdd": "Role para baixo e selecione 'Adicionar à Tela Inicial'.",
+    "close": "Fechar"
+  },
+  "statsPage": {
+    "title": "Estatísticas do Torneio",
+    "subtitle": "Analise a média de idade, altura, peso dos jogadores, representação dos clubes e recordes históricos da Copa do Mundo.",
+    "tabSquad": "Análise dos Elencos",
+    "tabLive": "Estatísticas ao Vivo",
+    "tabHistory": "Recordes Históricos",
+    "youngestTitle": "Top 20 Jogadores Mais Jovens",
+    "oldestTitle": "Top 20 Jogadores Mais Velhos",
+    "topClubsTitle": "Clubes Mais Representados",
+    "topCitiesTitle": "Cidades de Nascimento dos Jogadores",
+    "confederationsTitle": "Jogadores por Confederação",
+    "countryAveragesTitle": "Médias dos Elencos por País",
+    "historyWins": "Mais Títulos de Copa do Mundo",
+    "historyFinals": "Mais Finais Disputadas",
+    "historyScorers": "Maiores Artilheiros da História da Copa",
+    "liveScorers": "Artilheiros do Torneio",
+    "liveAssists": "Líderes de Assistências",
+    "liveCards": "Relatório de Cartões",
+    "liveOwnGoals": "Gols Contra",
+    "liveNote": "Estas estatísticas serão atualizadas automaticamente assim que os jogos do torneio começarem.",
+    "colPlayer": "Jogador",
+    "colPlayersCount": "Jogadores",
+    "colTeam": "Seleção",
+    "colAge": "Idade",
+    "colClub": "Clube",
+    "colHeight": "Altura (cm)",
+    "colWeight": "Peso (kg)",
+    "colLeague": "Liga",
+    "avgAge": "Média de Idade",
+    "avgHeight": "Média de Altura",
+    "avgWeight": "Média de Peso",
+    "emptyData": "Carregando dados ou nenhuma estatística disponível."
+  }
+}

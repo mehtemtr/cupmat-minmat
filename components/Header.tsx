@@ -222,7 +222,15 @@ export function Header() {
 
 
   const minMatSwitchLabel =
-    locale === "tr" ? "MinMat'a Geç" : locale === "de" ? "Zu MinMat" : locale === "fr" ? "Aller à MinMat" : locale === "es" ? "Ir a MinMat" : "Go to MinMat";
+    locale === "tr" ? "MinMat'a Geç" :
+    locale === "de" ? "Zu MinMat" :
+    locale === "fr" ? "Aller à MinMat" :
+    locale === "es" ? "Ir a MinMat" :
+    locale === "pt" ? "Ir para o MinMat" :
+    locale === "ar" ? "الذهاب إلى MinMat" :
+    locale === "ko" ? "MinMat으로 이동" :
+    locale === "it" ? "Vai a MinMat" :
+    "Go to MinMat";
 
   // Kök seçim kapısı (/) — header yok; CupMat dünyasında navbar gösterilir
   if (pathname === "/") return null;

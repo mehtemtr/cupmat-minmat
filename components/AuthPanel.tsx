@@ -101,6 +101,10 @@ export default function AuthPanel() {
         case "de": return "Adler1923";
         case "es": return "Aguila1923";
         case "fr": return "Aigle1923";
+        case "pt": return "Aguia1923";
+        case "ar": return "Nasr1923";
+        case "ko": return "Doksuri1923";
+        case "it": return "Aquila1923";
         case "tr":
         default:
           return "Kartal1923";
@@ -113,6 +117,10 @@ export default function AuthPanel() {
         case "de": return "Anmelden";
         case "es": return "Iniciar Sesión";
         case "fr": return "Se Connecter";
+        case "pt": return "Entrar";
+        case "ar": return "تسجيل الدخول";
+        case "ko": return "로그인";
+        case "it": return "Accedi";
         case "tr":
         default:
           return "Giriş Yap";
@@ -125,6 +133,10 @@ export default function AuthPanel() {
         case "de": return "Sie sind nicht angemeldet";
         case "es": return "No has iniciado sesión";
         case "fr": return "Vous n'êtes pas connecté";
+        case "pt": return "Você não está conectado";
+        case "ar": return "لم تقم بتسجيل الدخول";
+        case "ko": return "로그인하지 않았습니다";
+        case "it": return "Non hai effettuato l'accesso";
         case "tr":
         default:
           return "Giriş yapmadınız";

@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import { DynamicMeta } from "@/components/DynamicMeta";
 import { ClerkProvider } from "@clerk/nextjs";
-import { defaultLocale, LOCALE_COOKIE, type Locale } from "@/lib/i18n/types";
+import { defaultLocale, LOCALE_COOKIE, type Locale, locales } from "@/lib/i18n/types";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GamificationManager } from "@/components/GamificationManager";
@@ -31,7 +31,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://worldcup2026.exampl
 async function getInitialLocale(): Promise<Locale> {
   const cookieStore = await cookies();
   const value = cookieStore.get(LOCALE_COOKIE)?.value;
-  return value === "en" || value === "tr" ? value : defaultLocale;
+  return value && (locales as string[]).includes(value) ? (value as Locale) : defaultLocale;
 }
 
 export async function generateMetadata(): Promise<Metadata> {

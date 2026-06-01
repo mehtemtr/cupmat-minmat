@@ -16,8 +16,12 @@ import tr from "@/dictionaries/tr.json";
 import es from "@/dictionaries/es.json";
 import fr from "@/dictionaries/fr.json";
 import de from "@/dictionaries/de.json";
+import pt from "@/dictionaries/pt.json";
+import ar from "@/dictionaries/ar.json";
+import ko from "@/dictionaries/ko.json";
+import it from "@/dictionaries/it.json";
 
-const dictionaries: Record<Locale, Dictionary> = { en, tr, es, fr, de };
+const dictionaries: Record<Locale, Dictionary> = { en, tr, es, fr, de, pt, ar, ko, it };
 
 type LocaleContextValue = {
   locale: Locale;
@@ -36,13 +40,14 @@ function readPersistedLocale(): Locale | null {
     new RegExp(`(?:^|; )${LOCALE_COOKIE}=([^;]*)`),
   );
   const cookieValue = match?.[1];
-  if (cookieValue && ["en", "tr", "es", "fr", "de"].includes(cookieValue)) {
+  const validLocales = ["en", "tr", "es", "fr", "de", "pt", "ar", "ko", "it"];
+  if (cookieValue && validLocales.includes(cookieValue)) {
     return cookieValue as Locale;
   }
 
   // Try localStorage
   const localValue = localStorage.getItem(LOCALE_COOKIE);
-  if (localValue && ["en", "tr", "es", "fr", "de"].includes(localValue)) {
+  if (localValue && validLocales.includes(localValue)) {
     return localValue as Locale;
   }
 

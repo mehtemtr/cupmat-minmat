@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "title": "StatMatik — 2026 세계 선수권 대회",
+    "description": "2026 세계 선수권 대회의 궁극적인 가이드 — 48개 팀, 12개 조, 3개 공동 개최국. 2026년 6월 11일 개막전 카운트다운.",
+    "ogTitle": "2026 세계 선수권 대회 — 세계 최대의 쇼",
+    "ogDescription": "48개 팀. 12개 조. 3개 개최국. 2026년 6월 11일을 향한 카운트다운이 시작되었습니다."
+  },
+  "nav": {
+    "home": "홈",
+    "teams": "참가국",
+    "groups": "조편성",
+    "venues": "경기장",
+    "predictions": "경기 예측",
+    "leaderboard": "순위표",
+    "footballers": "선수 명단",
+    "signin": "로그인",
+    "signout": "로그아웃",
+    "logoTitle": "CupMat — 2026 세계 선수권 대회 특별 화면",
+    "stats": "통계",
+    "fantasy": "CupMat 전술"
+  },
+  "hero": {
+    "badge": "StatMatik — 2026 세계 선수권 대회",
+    "mainBadge": "StatMatik — 2026 세계 선수권 대회 & 수학 놀이터",
+    "title": "하나로",
+    "titleHighlight": "뭉치는 세계",
+    "subtitle": "미국 · 캐나다 · 멕시코 — 세 나라, 하나의 대회, 역사가 만들어지는 순간.",
+    "ctaPrimary": "대회 둘러보기",
+    "ctaSecondary": "예측하기",
+    "minMatPromo": "경기를 기다리는 동안 두뇌를 회전시키세요! 🧠 MinMat 수학 및 메모리 게임을 해보세요.",
+    "cupMatPromo": "여러분의 축구 지식이 AI보다 뛰어난가요? 🏆 지금 CupMat으로 2026 세계 선수권 대회 예측을 해보세요!",
+    "comingSoon": "커밍순 ⌛",
+    "players": "선수 정보",
+    "countries": "국가 상세 정보",
+    "referees": "심판 통계",
+    "slogan": "축구는 수학이고, 수학은 모든 것입니다. statmatik.com과 함께 축구의 수학을 풀어보세요!",
+    "cupMatDesc": "AI 기반, 2026 세계 선수권 대회에 관한 모든 것!",
+    "minMatDesc": "부모님과 자녀가 암산으로 빠르게 계산하도록 돕는 두뇌 게임!",
+    "playStart": "월드컵 보기",
+    "mindRefresh": "두뇌 회전하기"
+  },
+  "countdown": {
+    "label": "개막까지 남은 시간",
+    "days": "일",
+    "hours": "시간",
+    "minutes": "분",
+    "seconds": "초",
+    "targetDate": "2026년 6월 11일"
+  },
+  "overview": {
+    "sectionTitle": "대회 개요",
+    "sectionSubtitle": "역대 최대 규모의 월드컵 — 확대된 포맷, 3개 개최국, 잊지 못할 순간이 여러분을 기다립니다.",
+    "teams": {
+      "value": "48",
+      "label": "개국",
+      "description": "세계 선수권 대회 역사상 최대 규모의 참가국"
+    },
+    "groups": {
+      "value": "12",
+      "label": "개 조",
+      "description": "각 조당 4개 팀 조별 리그"
+    },
+    "hosts": {
+      "value": "3",
+      "label": "개 개최국",
+      "description": "미국, 캐나다, 멕시코 공동 개최"
+    }
+  },
+  "hosts": {
+    "usa": "미국",
+    "canada": "캐나다",
+    "mexico": "멕시코"
+  },
+  "teams": {
+    "title": "참가국 목록",
+    "subtitle": "A–L조의 48개국, 세계 랭킹 및 스쿼드 정보.",
+    "group": "조",
+    "manager": "감독",
+    "squad": "스쿼드",
+    "years": "세"
+  },
+  "groups": {
+    "title": "조별 순위 및 대진표",
+    "subtitle": "결과가 입력되면 승점, 골득실, 다득점 순으로 표가 즉시 업데이트됩니다.",
+    "group": "조",
+    "team": "팀",
+    "enterResults": "경기 결과 입력",
+    "resultsHint": "점수를 입력하세요 — 12개 조의 순위가 즉시 재계산됩니다."
+  },
+  "venues": {
+    "title": "개최 도시 경기장",
+    "subtitle": "북미 전역의 16개 공식 경기장 — 수용 인원, 위치 및 경기 일정.",
+    "capacity": "석",
+    "matches": "경기"
+  },
+  "predictions": {
+    "title": "예측 & 순위표",
+    "subtitle": "조별 리그 점수를 차례대로 입력하고, 32강 토너먼트 대진표를 열어 글로벌 랭킹에서 경쟁하세요.",
+    "aiToggle": "AI 예측 (GPT-5.4)",
+    "yourPoints": "내 점수",
+    "groupStep": "조",
+    "prev": "이전",
+    "next": "다음",
+    "displayName": "닉네임",
+    "applyScores": "예측 점수를 순위표에 적용",
+    "submitLeaderboard": "순위표에 등록",
+    "knockoutTitle": "32강 토너먼트 대진표",
+    "knockoutLocked": "모든 조별 리그 예측을 완료하고 점수를 적용하면 토너먼트 대진표가 열립니다.",
+    "leaderboard": "순위표",
+    "loading": "로딩 중...",
+    "tbd": "미정",
+    "simulateLive": "라이브 뉴스 시뮬레이션",
+    "liveUpdate": "라이브 뉴스 업데이트",
+    "winProb": "승리 확률",
+    "confidence": "AI 신뢰도",
+    "reset": "예측 초기화",
+    "champion": "우승",
+    "completed": "2026 세계 선수권 대회 완료!",
+    "et": "연장전",
+    "penalties": "승부차기",
+    "aiRoundPredict": "AI로 예측하기",
+    "played": "(종료)",
+    "userLabel": "사용자",
+    "aiLabel": "AI 예측"
+  },
+  "footer": {
+    "tagline": "2026 세계 선수권 대회 — 축구를 사랑하는 마음으로.",
+    "rights": "All rights reserved."
+  },
+  "language": {
+    "toggle": "언어",
+    "en": "English",
+    "tr": "Türkçe",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "pt": "Português",
+    "ar": "العربية",
+    "ko": "한국어",
+    "it": "Italiano"
+  },
+  "pwa": {
+    "title": "MahTEM을 홈 화면에 추가",
+    "instructionShare": "Safari 하단 메뉴의 공유 아이콘을 누릅니다.",
+    "instructionAdd": "아래로 스크롤하여 '홈 화면에 추가'를 선택합니다.",
+    "close": "닫기"
+  },
+  "statsPage": {
+    "title": "대회 통계 정보",
+    "subtitle": "선수들의 연령, 신장, 체중, 소속 클럽 분포 및 역대 월드컵 역사적 기록을 분석합니다.",
+    "tabSquad": "스쿼드 분석",
+    "tabLive": "실시간 통계",
+    "tabHistory": "역사적 기록",
+    "youngestTitle": "가장 어린 선수 Top 20",
+    "oldestTitle": "가장 나이 많은 선수 Top 20",
+    "topClubsTitle": "가장 많은 선수를 배출한 클럽",
+    "topCitiesTitle": "선수들의 주요 출생지",
+    "confederationsTitle": "대륙별 축구 연맹 선수 수",
+    "countryAveragesTitle": "국가별 스쿼드 평균치",
+    "historyWins": "월드컵 최다 우승국",
+    "historyFinals": "월드컵 최다 결승 진출국",
+    "historyScorers": "월드컵 역대 개인 최다 득점자",
+    "liveScorers": "대회 득점 순위",
+    "liveAssists": "대회 도움 순위",
+    "liveCards": "카드 현황",
+    "liveOwnGoals": "자책골",
+    "liveNote": "본 통계는 대회 경기가 시작되면 실시간으로 자동 업데이트됩니다.",
+    "colPlayer": "선수",
+    "colPlayersCount": "선수 수",
+    "colTeam": "팀",
+    "colAge": "나이",
+    "colClub": "소속 클럽",
+    "colHeight": "키 (cm)",
+    "colWeight": "몸무게 (kg)",
+    "colLeague": "리그",
+    "avgAge": "평균 연령",
+    "avgHeight": "평균 신장",
+    "avgWeight": "평균 체중",
+    "emptyData": "데이터를 불러오는 중이거나 통계가 제공되지 않습니다."
+  }
+}

@@ -71,30 +71,51 @@ async function main() {
   }
 
   console.log("\n=== CHECKING TEAM ROSTERS (PLAYERS) ===");
-  const { data: players, error: pError } = await supabaseAdmin
-    .from("team_rosters")
-    .select("team_id, player_name, player_position, player_number, is_captain, club");
-
-  if (pError) {
-    console.error("Error loading players:", pError);
-  } else {
-    console.log(`Total players loaded in team_rosters: ${players?.length || 0}`);
-    
-    // Group by team
-    const teamCounts: Record<string, number> = {};
-    players?.forEach(p => {
-      teamCounts[p.team_id] = (teamCounts[p.team_id] || 0) + 1;
-    });
-
-    console.log("\nPlayer distribution by team_id:");
-    Object.entries(teamCounts).forEach(([teamId, count]) => {
-      console.log(`- ${teamId}: ${count} players`);
-    });
-
-    if (players && players.length > 0) {
-      console.log("\nSample Players (First 10):");
-      console.table(players.slice(0, 10));
+  const players: any[] = [];
+  let from = 0;
+  let to = 999;
+  let hasMore = true;
+  
+  while (hasMore) {
+    const { data, error: pError } = await supabaseAdmin
+      .from("team_rosters")
+      .select("team_id, player_name, player_position, player_number, is_captain, club")
+      .range(from, to);
+      
+    if (pError) {
+      console.error("Error loading players:", pError);
+      return;
     }
+    
+    if (data && data.length > 0) {
+      players.push(...data);
+      if (data.length < 1000) {
+        hasMore = false;
+      } else {
+        from += 1000;
+        to += 1000;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
+
+  console.log(`Total players loaded in team_rosters: ${players.length}`);
+  
+  // Group by team
+  const teamCounts: Record<string, number> = {};
+  players.forEach(p => {
+    teamCounts[p.team_id] = (teamCounts[p.team_id] || 0) + 1;
+  });
+
+  console.log("\nPlayer distribution by team_id:");
+  Object.entries(teamCounts).forEach(([teamId, count]) => {
+    console.log(`- ${teamId}: ${count} players`);
+  });
+
+  if (players && players.length > 0) {
+    console.log("\nSample Players (First 10):");
+    console.table(players.slice(0, 10));
   }
 }
 

@@ -305,6 +305,32 @@ export default function EntryPage() {
           </div>
         </div>
 
+        {/* Yeni Dil Destekleri Duyurusu */}
+        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-sky-500/20 bg-gradient-to-r from-sky-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-sky-500/30">
+          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-sky-650/10 to-blue-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+          <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-400/20">
+              <span className="text-2xl">🌐</span>
+            </div>
+            <div className="text-center md:text-left">
+              <h3 className="text-lg font-black text-white mb-2">
+                {locale === "tr" ? "Yeni Dil Destekleri Eklendi! 🇧🇷🇵🇹 🇦🇪🇸🇦 🇰🇷 🇮🇹" : "New Language Support Added! 🇧🇷🇵🇹 🇦🇪🇸🇦 🇰🇷 🇮🇹"}
+              </h3>
+              <p className="text-sm text-zinc-300 leading-relaxed">
+                {locale === "tr" ? (
+                  <>
+                    Sistem genelinde dil seçeneklerimizi 5'ten 9'a çıkardık! Artık CupMat, yapay zeka analizleri ve MinMat zeka oyununun tamamını <strong>Portekizce, Arapça, Korece ve İtalyanca</strong> olarak deneyimleyebilirsiniz. Bu güncellemeyle birlikte artık neredeyse dünyanın yarısı bizi anlayacak! Dil seçiminizi sağ üst köşedeki dünya simgesine tıklayarak anında değiştirebilirsiniz.
+                  </>
+                ) : (
+                  <>
+                    We have expanded our language options from 5 to 9 across the system! You can now experience CupMat, AI match analysis, and the MinMat math game in <strong>Portuguese, Arabic, Korean, and Italian</strong>. With this update, almost half of the world will understand us now! Change your preferences instantly using the language dropdown in the top-right corner.
+                  </>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Dynamic Celebrations Section */}
         {activeBanners.includes("psg") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/20 bg-gradient-to-r from-blue-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-blue-500/30">

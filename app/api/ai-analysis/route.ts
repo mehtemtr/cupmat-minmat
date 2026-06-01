@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     }
 
     const validLocale: Locale =
-      locale === "tr" || locale === "en" || locale === "de" || locale === "fr" || locale === "es"
+      locale && ["tr", "en", "de", "fr", "es", "pt", "ar", "ko", "it"].includes(locale)
         ? locale
         : "tr";
 
