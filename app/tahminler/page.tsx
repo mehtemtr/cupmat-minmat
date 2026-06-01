@@ -177,9 +177,11 @@ export default function PredictionCenterPage() {
   const [aiLoading, setAiLoading] = useState<Record<string, boolean>>({});
   const [aiError, setAiError] = useState<Record<string, string>>({});
 
-  // Generate 12 upcoming group matches chronologically
+  // Generate the first round matches of all groups (A-L) - 24 matches total
   const upcomingMatches = useMemo(() => {
-    return generateGroupFixtures().slice(0, 12);
+    return generateGroupFixtures().filter(
+      (m) => m.id.endsWith("-1") || m.id.endsWith("-6")
+    );
   }, []);
 
   // Fetch prediction and profile details
