@@ -6,13 +6,33 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const { data: players, error } = await supabaseAdmin
-      .from("team_rosters")
-      .select("id, player_name, team_id, player_position, player_number, club, date_of_birth, height, weight, league, birth_place");
+    const players: any[] = [];
+    let from = 0;
+    let to = 999;
+    let hasMore = true;
 
-    if (error) {
-      console.error("Error fetching player stats:", error);
-      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    while (hasMore) {
+      const { data, error } = await supabaseAdmin
+        .from("team_rosters")
+        .select("id, player_name, team_id, player_position, player_number, club, date_of_birth, height, weight, league, birth_place")
+        .range(from, to);
+
+      if (error) {
+        console.error("Error fetching player stats:", error);
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+      }
+
+      if (data && data.length > 0) {
+        players.push(...data);
+        if (data.length < 1000) {
+          hasMore = false;
+        } else {
+          from += 1000;
+          to += 1000;
+        }
+      } else {
+        hasMore = false;
+      }
     }
 
     if (!players || players.length === 0) {
