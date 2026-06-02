@@ -4,7 +4,7 @@ export type Locale = "en" | "tr" | "es" | "fr" | "de" | "pt" | "ar" | "ko" | "it
 
 export type Dictionary = typeof en;
 
-export const locales: Locale[] = ["tr", "en", "es", "fr", "de", "pt", "ar", "ko", "it"];
+export const locales: Locale[] = ["tr", "de", "en", "es", "fr", "it", "pt", "ar", "ko"];
 
 export const defaultLocale: Locale = "tr";
 
