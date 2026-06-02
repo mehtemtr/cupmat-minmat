@@ -143,7 +143,7 @@
     {
       "name": "Edson Álvarez",
       "position": "MF",
-      "club": "Fenerbahçe",
+      "club": "West Ham United",
       "age": 29,
       "dateOfBirth": "1997-10-24"
     },
@@ -537,7 +537,7 @@
     {
       "name": "Oh Hyeon-gyu",
       "position": "FW",
-      "club": "Beşiktaş",
+      "club": "Genk",
       "age": 25,
       "dateOfBirth": "2001-04-12"
     }
@@ -1359,7 +1359,7 @@
     {
       "name": "Nihad Mujakić",
       "position": "DF",
-      "club": "Gaziantep",
+      "club": "Partizan",
       "age": 28,
       "dateOfBirth": "1998-04-15"
     },
@@ -1699,7 +1699,7 @@
     {
       "name": "Weverton",
       "position": "GK",
-      "club": "Grêmio",
+      "club": "Palmeiras",
       "age": 39,
       "dateOfBirth": "1987-12-13"
     },
@@ -1713,7 +1713,7 @@
     {
       "name": "Wesley",
       "position": "DF",
-      "club": "Roma",
+      "club": "Al-Nassr",
       "age": 23,
       "dateOfBirth": "2003-09-06"
     },
@@ -1741,7 +1741,7 @@
     {
       "name": "Danilo Luiz",
       "position": "DF",
-      "club": "Flamengo",
+      "club": "Juventus",
       "age": 35,
       "dateOfBirth": "1991-07-15"
     },
@@ -1818,7 +1818,7 @@
     {
       "name": "Matheus Cunha",
       "position": "FW",
-      "club": "Manchester United",
+      "club": "Wolverhampton Wanderers",
       "age": 27,
       "dateOfBirth": "1999-05-27"
     },
@@ -1839,14 +1839,14 @@
     {
       "name": "Endrick",
       "position": "FW",
-      "club": "Lyon",
+      "club": "Real Madrid",
       "age": 20,
       "dateOfBirth": "2006-07-21"
     },
     {
       "name": "Luiz Henrique",
       "position": "FW",
-      "club": "Zenit Saint Petersburg",
+      "club": "Botafogo",
       "age": 25,
       "dateOfBirth": "2001-01-02"
     },
@@ -2384,7 +2384,7 @@
     {
       "name": "Frantzdy Pierrot",
       "position": "FW",
-      "club": "Çaykur Rizespor",
+      "club": "AEK Athens",
       "age": 31,
       "dateOfBirth": "1995-03-29"
     },
@@ -3244,13 +3244,6 @@
       "dateOfBirth": "1998-04-14"
     },
     {
-      "name": "Ersin Destanoğlu",
-      "position": "GK",
-      "club": "Beşiktaş",
-      "age": 25,
-      "dateOfBirth": "2001-01-01"
-    },
-    {
       "name": "Muhammed Şengezer",
       "position": "GK",
       "club": "İstanbul Başakşehir",
@@ -3309,35 +3302,35 @@
     {
       "name": "Eren Elmalı",
       "position": "DF",
-      "club": "Galatasaray",
+      "club": "Trabzonspor",
       "age": 26,
       "dateOfBirth": "2000-07-07"
     },
     {
       "name": "Samet Akaydin",
       "position": "DF",
-      "club": "Çaykur Rizespor",
+      "club": "Fenerbahçe",
       "age": 32,
       "dateOfBirth": "1994-05-13"
     },
     {
       "name": "Yusuf Akçiçek",
       "position": "DF",
-      "club": "Al-Hilal",
+      "club": "Fenerbahçe",
       "age": 20,
       "dateOfBirth": "2006-01-25"
     },
     {
       "name": "Mustafa Eskihellaç",
       "position": "DF",
-      "club": "Trabzonspor",
+      "club": "Gaziantep FK",
       "age": 29,
       "dateOfBirth": "1997-05-05"
     },
     {
       "name": "Ahmetcan Kaplan",
       "position": "DF",
-      "club": "NEC",
+      "club": "Ajax",
       "age": 23,
       "dateOfBirth": "2003-01-16"
     },
@@ -3358,7 +3351,7 @@
     {
       "name": "Orkun Kökçü",
       "position": "MF",
-      "club": "Beşiktaş",
+      "club": "Benfica",
       "age": 26,
       "dateOfBirth": "2000-12-29"
     },
@@ -3386,7 +3379,7 @@
     {
       "name": "Demir Ege Tıknaz",
       "position": "MF",
-      "club": "Beşiktaş",
+      "club": "Braga",
       "age": 22,
       "dateOfBirth": "2004-08-17"
     },
@@ -3400,7 +3393,7 @@
     {
       "name": "İrfan Can Kahveci",
       "position": "FW",
-      "club": "Kasımpaşa",
+      "club": "Fenerbahçe",
       "age": 31,
       "dateOfBirth": "1995-07-15"
     },
@@ -3514,7 +3507,7 @@
     {
       "name": "Pascal Groß",
       "position": "DF",
-      "club": "Brighton &amp; Hove Albion",
+      "club": "Borussia Dortmund",
       "age": 35,
       "dateOfBirth": "1991-06-15"
     },
@@ -3591,7 +3584,7 @@
     {
       "name": "Florian Wirtz",
       "position": "MF",
-      "club": "Liverpool",
+      "club": "Bayer Leverkusen",
       "age": 23,
       "dateOfBirth": "2003-05-03"
     },
@@ -3633,7 +3626,7 @@
     {
       "name": "Nick Woltemade",
       "position": "FW",
-      "club": "Newcastle United",
+      "club": "VfB Stuttgart",
       "age": 24,
       "dateOfBirth": "2002-02-14"
     },
@@ -3896,7 +3889,7 @@
     {
       "name": "Yahia Fofana",
       "position": "GK",
-      "club": "Çaykur Rizespor",
+      "club": "Angers",
       "age": 26,
       "dateOfBirth": "2000-08-21"
     },
@@ -3931,7 +3924,7 @@
     {
       "name": "Wilfried Singo",
       "position": "DF",
-      "club": "Galatasaray",
+      "club": "Monaco",
       "age": 26,
       "dateOfBirth": "2000-12-25"
     },
@@ -3945,7 +3938,7 @@
     {
       "name": "Emmanuel Agbadou",
       "position": "DF",
-      "club": "Beşiktaş",
+      "club": "Reims",
       "age": 29,
       "dateOfBirth": "1997-06-07"
     },
@@ -3966,7 +3959,7 @@
     {
       "name": "Christopher Opéri",
       "position": "DF",
-      "club": "İstanbul Başakşehir",
+      "club": "Le Havre",
       "age": 29,
       "dateOfBirth": "1997-04-29"
     },
@@ -4001,7 +3994,7 @@
     {
       "name": "Christ Inao Oulaï",
       "position": "MF",
-      "club": "Trabzonspor",
+      "club": "Serbest",
       "age": 20,
       "dateOfBirth": "2006-04-06"
     },
@@ -4136,7 +4129,7 @@
     {
       "name": "Joshua Brenet",
       "position": "DF",
-      "club": "Kayserispor",
+      "club": "Serbest",
       "age": 32,
       "dateOfBirth": "1994-03-20"
     },
@@ -4418,7 +4411,7 @@
     {
       "name": "Noa Lang",
       "position": "FW",
-      "club": "Galatasaray",
+      "club": "PSV Eindhoven",
       "age": 27,
       "dateOfBirth": "1999-06-17"
     },
@@ -4709,7 +4702,7 @@
     {
       "name": "Adem Arous",
       "position": "DF",
-      "club": "Kasımpaşa",
+      "club": "ES Tunis",
       "age": 22,
       "dateOfBirth": "2004-07-17"
     },
@@ -5424,14 +5417,14 @@
     {
       "name": "Joan Garcia",
       "position": "GK",
-      "club": "Barcelona",
+      "club": "Espanyol",
       "age": 25,
       "dateOfBirth": "2001-05-04"
     },
     {
       "name": "Aymeric Laporte",
       "position": "DF",
-      "club": "Athletic Bilbao",
+      "club": "Al-Nassr",
       "age": 32,
       "dateOfBirth": "1994-05-27"
     },
@@ -5480,7 +5473,7 @@
     {
       "name": "Marc Pubill",
       "position": "DF",
-      "club": "Atlético Madrid",
+      "club": "Almería",
       "age": 23,
       "dateOfBirth": "2003-06-20"
     },
@@ -5529,14 +5522,14 @@
     {
       "name": "Martín Zubimendi",
       "position": "MF",
-      "club": "Arsenal",
+      "club": "Real Sociedad",
       "age": 27,
       "dateOfBirth": "1999-02-02"
     },
     {
       "name": "Álex Baena",
       "position": "MF",
-      "club": "Atlético Madrid",
+      "club": "Villarreal",
       "age": 25,
       "dateOfBirth": "2001-07-20"
     },
@@ -5571,7 +5564,7 @@
     {
       "name": "Yéremy Pino",
       "position": "FW",
-      "club": "Crystal Palace",
+      "club": "Villarreal",
       "age": 24,
       "dateOfBirth": "2002-10-20"
     },
@@ -6067,7 +6060,7 @@
     {
       "name": "Wagner Pina",
       "position": "DF",
-      "club": "Trabzonspor",
+      "club": "Estoril",
       "age": 24,
       "dateOfBirth": "2002-11-03"
     },
@@ -6179,7 +6172,7 @@
     {
       "name": "Nuno da Costa",
       "position": "FW",
-      "club": "İstanbul Başakşehir",
+      "club": "Kasımpaşa",
       "age": 35,
       "dateOfBirth": "1991-02-10"
     }
@@ -6188,7 +6181,7 @@
     {
       "name": "Brice Samba",
       "position": "GK",
-      "club": "Rennes",
+      "club": "Lens",
       "age": 32,
       "dateOfBirth": "1994-04-25"
     },
@@ -6202,7 +6195,7 @@
     {
       "name": "Robin Risser",
       "position": "GK",
-      "club": "Lens",
+      "club": "Strasbourg",
       "age": 22,
       "dateOfBirth": "2004-12-02"
     },
@@ -6251,7 +6244,7 @@
     {
       "name": "Théo Hernandez",
       "position": "DF",
-      "club": "Al-Hilal",
+      "club": "AC Milan",
       "age": 29,
       "dateOfBirth": "1997-10-06"
     },
@@ -6286,7 +6279,7 @@
     {
       "name": "N'Golo Kanté",
       "position": "MF",
-      "club": "Fenerbahçe",
+      "club": "Al-Ittihad",
       "age": 35,
       "dateOfBirth": "1991-03-29"
     },
@@ -6356,7 +6349,7 @@
     {
       "name": "Rayan Cherki",
       "position": "FW",
-      "club": "Manchester City",
+      "club": "Lyon",
       "age": 23,
       "dateOfBirth": "2003-08-17"
     },
@@ -6964,7 +6957,7 @@
     {
       "name": "Cherif Ndiaye",
       "position": "FW",
-      "club": "Samsunspor",
+      "club": "Red Star Belgrade",
       "age": 30,
       "dateOfBirth": "1996-01-23"
     },
@@ -7071,7 +7064,7 @@
     {
       "name": "Rodrigo De Paul",
       "position": "MF",
-      "club": "Inter Miami",
+      "club": "Atlético Madrid",
       "age": 32,
       "dateOfBirth": "1994-05-24"
     },
@@ -7127,14 +7120,14 @@
     {
       "name": "Nicolás González",
       "position": "FW",
-      "club": "Atlético Madrid",
+      "club": "Juventus",
       "age": 28,
       "dateOfBirth": "1998-04-06"
     },
     {
       "name": "Thiago Almada",
       "position": "FW",
-      "club": "Atlético Madrid",
+      "club": "Botafogo",
       "age": 25,
       "dateOfBirth": "2001-04-26"
     },
@@ -7148,7 +7141,7 @@
     {
       "name": "Nico Paz",
       "position": "FW",
-      "club": "Real Madrid",
+      "club": "Como",
       "age": 22,
       "dateOfBirth": "2004-09-08"
     },
@@ -7758,14 +7751,14 @@
     {
       "name": "Rui Silva",
       "position": "GK",
-      "club": "Sporting CP",
+      "club": "Real Betis",
       "age": 32,
       "dateOfBirth": "1994-02-07"
     },
     {
       "name": "Ricardo Velho",
       "position": "GK",
-      "club": "Gençlerbirliği",
+      "club": "Farense",
       "age": 28,
       "dateOfBirth": "1998-08-20"
     },
@@ -7786,7 +7779,7 @@
     {
       "name": "Nélson Semedo",
       "position": "DF",
-      "club": "Fenerbahçe",
+      "club": "Wolverhampton Wanderers",
       "age": 33,
       "dateOfBirth": "1993-11-16"
     },
@@ -8266,7 +8259,7 @@
     {
       "name": "Eldor Shomurodov",
       "position": "FW",
-      "club": "İstanbul Başakşehir",
+      "club": "Roma",
       "age": 31,
       "dateOfBirth": "1995-06-29"
     },
@@ -8301,7 +8294,7 @@
     {
       "name": "Abbosbek Fayzullaev",
       "position": "FW",
-      "club": "İstanbul Başakşehir",
+      "club": "CSKA Moscow",
       "age": 23,
       "dateOfBirth": "2003-10-03"
     },
@@ -8408,7 +8401,7 @@
     {
       "name": "Meschak Elia",
       "position": "MF",
-      "club": "Alanyaspor",
+      "club": "Young Boys",
       "age": 29,
       "dateOfBirth": "1997-08-06"
     },
@@ -8592,14 +8585,14 @@
     {
       "name": "Jarell Quansah",
       "position": "DF",
-      "club": "Bayer Leverkusen",
+      "club": "Liverpool",
       "age": 23,
       "dateOfBirth": "2003-01-29"
     },
     {
       "name": "Jordan Henderson",
       "position": "MF",
-      "club": "Brentford",
+      "club": "Ajax",
       "age": 36,
       "dateOfBirth": "1990-06-17"
     },
@@ -8655,7 +8648,7 @@
     {
       "name": "Marcus Rashford",
       "position": "FW",
-      "club": "Barcelona",
+      "club": "Manchester United",
       "age": 29,
       "dateOfBirth": "1997-10-31"
     },
@@ -8683,7 +8676,7 @@
     {
       "name": "Noni Madueke",
       "position": "FW",
-      "club": "Arsenal",
+      "club": "Chelsea",
       "age": 24,
       "dateOfBirth": "2002-03-10"
     },
@@ -8918,7 +8911,7 @@
     {
       "name": "Amir Murillo",
       "position": "DF",
-      "club": "Beşiktaş",
+      "club": "Marseille",
       "age": 30,
       "dateOfBirth": "1996-02-11"
     },

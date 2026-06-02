@@ -172,6 +172,45 @@ function BirthdayCake() {
   );
 }
 
+const promoDict = {
+  tr: {
+    title: "Yıldızların Sahne Almasına Az Kaldı! 🌟",
+    text: "Kylian Mbappé, Erling Haaland gollerine; Lamine Yamal, Vinicius Junior, Pedri asist ve gollerine az kaldı. statmatik.com'u takip ederek yenilikleri kaçırmazsınız!"
+  },
+  en: {
+    title: "The Stars Are Ready to Take the Stage! 🌟",
+    text: "Not long to go for goals from Kylian Mbappé, Erling Haaland; assists and goals from Lamine Yamal, Vinicius Junior, Pedri. Follow statmatik.com and don't miss out on the latest updates!"
+  },
+  es: {
+    title: "¡Las Estrellas Están Listas para el Escenario! 🌟",
+    text: "¡Falta poco para los goles de Kylian Mbappé, Erling Haaland; las asistencias y goles de Lamine Yamal, Vinicius Junior, Pedri. Sigue statmatik.com y no te pierdas las novedades!"
+  },
+  fr: {
+    title: "Les Stars s'Apprêtent à Entrer en Scène ! 🌟",
+    text: "Plus que quelques instants avant les buts de Kylian Mbappé, Erling Haaland ; les passes décisives et buts de Lamine Yamal, Vinicius Junior, Pedri. Suivez statmatik.com pour ne rien rater des nouveautés !"
+  },
+  de: {
+    title: "Die Stars Sind Bereit für die Bühne! 🌟",
+    text: "Es dauert nicht mehr lange bis zu den Toren von Kylian Mbappé, Erling Haaland; den Assists und Toren von Lamine Yamal, Vinicius Junior, Pedri. Folge statmatik.com, um keine Neuigkeiten zu verpassen!"
+  },
+  pt: {
+    title: "As Estrelas Estão Prontas para o Palco! 🌟",
+    text: "Falta pouco para os gols de Kylian Mbappé, Erling Haaland; as assistências e gols de Lamine Yamal, Vinicius Junior, Pedri. Siga statmatik.com e não perca as novidades!"
+  },
+  it: {
+    title: "Le Stelle Sono Ponte a Salire sul Palco! 🌟",
+    text: "Manca poco ai gol di Kylian Mbappé, Erling Haaland; agli assist e ai gol di Lamine Yamal, Vinicius Junior, Pedri. Segui statmatik.com per non perderti tutte le novità!"
+  },
+  ko: {
+    title: "스타들의 무대가 곧 시작됩니다! 🌟",
+    text: "킬리안 음바페, 엘링 홀란드의 득점, 라민 야말, 비니시우스 주니어, 페드리의 어시스트와 득점이 머지않았습니다. statmatik.com을 팔로우하고 새로운 소식을 놓치지 마세요!"
+  },
+  ar: {
+    title: "النجوم مستعدون لاعتلاء المسرح! 🌟",
+    text: "لم يتبق الكثير على أهداف كيليان مبابي وإيرلينغ هالاند؛ وتمريرات وأهداف لامين يامال وفينيسيوس جونيور وبيدري. تابع statmatik.com ولا تفوت المستجدات!"
+  }
+};
+
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -179,7 +218,7 @@ export default function EntryPage() {
 
   useEffect(() => {
     const checkDate = () => {
-      // Check query parameter for easy testing: ?preview=birthday, ?preview=19mayis, ?preview=kurban, ?preview=istanbul
+      // Check query parameter for easy testing: ?preview=birthday, ?preview=19mayis, ?preview=kurban, ?preview=istanbul, ?preview=statmatik_promo
       const urlParams = new URLSearchParams(window.location.search);
       const preview = urlParams.get("preview");
       if (preview) {
@@ -211,6 +250,12 @@ export default function EntryPage() {
         if (date === 30 || date === 31) {
           banners.push("psg");
         }
+      }
+
+      // Show statmatik_promo from June 2, 2026 19:03 local time onwards
+      const targetTime = new Date(2026, 5, 2, 19, 3, 0); // Month is 5 (June)
+      if (now >= targetTime) {
+        banners.push("statmatik_promo");
       }
 
       setActiveBanners(banners);
@@ -684,6 +729,33 @@ export default function EntryPage() {
             </div>
           </div>
         )}
+
+        {activeBanners.includes("statmatik_promo") && (() => {
+          const activePromo = promoDict[locale in promoDict ? (locale as keyof typeof promoDict) : "en"];
+          return (
+            <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-r from-emerald-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
+              <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600 to-teal-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+              <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-400/20">
+                  <span className="text-2xl animate-bounce">⚽</span>
+                </div>
+                <div className="text-center md:text-left">
+                  <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-black text-emerald-400 uppercase mb-2 select-none">
+                    {locale === "tr" ? "🔥 GERİ SAYIM BAŞLADI" : "🔥 COUNTDOWN STARTED"}
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-black text-white mb-2">
+                    {activePromo.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-semibold">
+                    {activePromo.text.split("statmatik.com")[0]}
+                    <span className="text-emerald-400 font-extrabold underline decoration-emerald-400/30 underline-offset-4">statmatik.com</span>
+                    {activePromo.text.split("statmatik.com")[1]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="grid w-full gap-8 md:grid-cols-2">
           {/* CupMat Card */}

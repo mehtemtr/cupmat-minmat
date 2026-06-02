@@ -47,40 +47,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Jorge Sánchez",
-        "position": "DF",
-        "club": "PAOK",
-        "age": 29
-      },
-      {
-        "name": "Carlos Acevedo",
-        "position": "GK",
-        "club": "Santos Laguna",
-        "age": 30
-      },
-      {
-        "name": "Álex Padilla",
-        "position": "GK",
-        "club": "Athletic Bilbao",
-        "age": 23
-      },
-      {
         "name": "Guillermo Ochoa",
         "position": "GK",
         "club": "AEL Limassol",
         "age": 41
       },
       {
-        "name": "Raúl Rangel",
+        "name": "Carlos Acevedo",
         "position": "GK",
-        "club": "Guadalajara",
-        "age": 26
-      },
-      {
-        "name": "José Antonio Rodríguez",
-        "position": "GK",
-        "club": "Tijuana",
-        "age": 34
+        "club": "Santos Laguna",
+        "age": 30
       },
       {
         "name": "Carlos Moreno",
@@ -95,6 +71,78 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
+        "name": "Jorge Sánchez",
+        "position": "DF",
+        "club": "PAOK",
+        "age": 29
+      },
+      {
+        "name": "Israel Reyes",
+        "position": "DF",
+        "club": "América",
+        "age": 26
+      },
+      {
+        "name": "Julián Araujo",
+        "position": "DF",
+        "club": "Celtic",
+        "age": 25
+      },
+      {
+        "name": "Víctor Guzmán",
+        "position": "DF",
+        "club": "Monterrey",
+        "age": 24
+      },
+      {
+        "name": "Alejandro Gómez",
+        "position": "DF",
+        "club": "Tijuana",
+        "age": 24
+      },
+      {
+        "name": "Bryan González",
+        "position": "DF",
+        "club": "Guadalajara",
+        "age": 23
+      },
+      {
+        "name": "Edson Álvarez",
+        "position": "MF",
+        "club": "West Ham United",
+        "age": 29
+      },
+      {
+        "name": "Carlos Rodríguez",
+        "position": "MF",
+        "club": "Cruz Azul",
+        "age": 29
+      },
+      {
+        "name": "Luis Romo",
+        "position": "MF",
+        "club": "Guadalajara",
+        "age": 31
+      },
+      {
+        "name": "Raúl Rangel",
+        "position": "GK",
+        "club": "Guadalajara",
+        "age": 26
+      },
+      {
+        "name": "José Antonio Rodríguez",
+        "position": "GK",
+        "club": "Tijuana",
+        "age": 34
+      },
+      {
+        "name": "Álex Padilla",
+        "position": "GK",
+        "club": "Athletic Bilbao",
+        "age": 23
+      },
+      {
         "name": "César Montes",
         "position": "DF",
         "club": "Lokomotiv Moscow",
@@ -107,22 +155,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Israel Reyes",
-        "position": "DF",
-        "club": "América",
-        "age": 26
-      },
-      {
         "name": "Jesús Alberto Angulo",
         "position": "DF",
         "club": "UANL",
         "age": 28
-      },
-      {
-        "name": "Julián Araujo",
-        "position": "DF",
-        "club": "Celtic",
-        "age": 25
       },
       {
         "name": "Mateo Chávez",
@@ -131,22 +167,10 @@ const seeds: TeamSeed[] = [
         "age": 22
       },
       {
-        "name": "Víctor Guzmán",
-        "position": "DF",
-        "club": "Monterrey",
-        "age": 24
-      },
-      {
         "name": "Richard Ledezma",
         "position": "DF",
         "club": "Guadalajara",
         "age": 26
-      },
-      {
-        "name": "Alejandro Gómez",
-        "position": "DF",
-        "club": "Tijuana",
-        "age": 24
       },
       {
         "name": "Everardo López",
@@ -155,22 +179,10 @@ const seeds: TeamSeed[] = [
         "age": 21
       },
       {
-        "name": "Bryan González",
-        "position": "DF",
-        "club": "Guadalajara",
-        "age": 23
-      },
-      {
         "name": "Ramón Juárez",
         "position": "DF",
         "club": "América",
         "age": 25
-      },
-      {
-        "name": "Edson Álvarez",
-        "position": "MF",
-        "club": "Fenerbahçe",
-        "age": 29
       },
       {
         "name": "Orbelín Pineda",
@@ -179,22 +191,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Carlos Rodríguez",
-        "position": "MF",
-        "club": "Cruz Azul",
-        "age": 29
-      },
-      {
         "name": "Roberto Alvarado",
         "position": "MF",
         "club": "Guadalajara",
         "age": 28
-      },
-      {
-        "name": "Luis Romo",
-        "position": "MF",
-        "club": "Guadalajara",
-        "age": 31
       },
       {
         "name": "Luis Chávez",
@@ -220,28 +220,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Bae Jun-ho",
-        "position": "MF",
-        "club": "Stoke City",
-        "age": 23
-      },
-      {
-        "name": "Seol Young-woo",
-        "position": "DF",
-        "club": "Red Star Belgrade",
-        "age": 28
-      },
-      {
         "name": "Kim Seung-gyu",
         "position": "GK",
         "club": "FC Tokyo",
         "age": 36
-      },
-      {
-        "name": "Jo Hyeon-woo",
-        "position": "GK",
-        "club": "Ulsan HD",
-        "age": 35
       },
       {
         "name": "Song Bum-keun",
@@ -262,22 +244,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Lee Tae-seok",
-        "position": "DF",
-        "club": "Austria Wien",
-        "age": 24
-      },
-      {
         "name": "Park Jin-seob",
         "position": "DF",
         "club": "Zhejiang FC",
         "age": 31
-      },
-      {
-        "name": "Kim Tae-hyeon",
-        "position": "DF",
-        "club": "Kashima Antlers",
-        "age": 26
       },
       {
         "name": "Lee Han-beom",
@@ -298,10 +268,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Paik Seung-ho",
+        "name": "Lee Kang-in",
         "position": "MF",
-        "club": "Birmingham City",
-        "age": 29
+        "club": "Paris Saint-Germain",
+        "age": 25
       },
       {
         "name": "Kim Jin-gyu",
@@ -310,10 +280,52 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
+        "name": "Bae Jun-ho",
+        "position": "MF",
+        "club": "Stoke City",
+        "age": 23
+      },
+      {
+        "name": "Yang Hyun-jun",
+        "position": "MF",
+        "club": "Celtic",
+        "age": 24
+      },
+      {
+        "name": "Cho Gue-sung",
+        "position": "FW",
+        "club": "Midtjylland",
+        "age": 28
+      },
+      {
+        "name": "Jo Hyeon-woo",
+        "position": "GK",
+        "club": "Ulsan HD",
+        "age": 35
+      },
+      {
         "name": "Kim Min-jae",
         "position": "DF",
         "club": "Bayern Munich",
         "age": 30
+      },
+      {
+        "name": "Seol Young-woo",
+        "position": "DF",
+        "club": "Red Star Belgrade",
+        "age": 28
+      },
+      {
+        "name": "Lee Tae-seok",
+        "position": "DF",
+        "club": "Austria Wien",
+        "age": 24
+      },
+      {
+        "name": "Kim Tae-hyeon",
+        "position": "DF",
+        "club": "Kashima Antlers",
+        "age": 26
       },
       {
         "name": "Jens Castrop",
@@ -334,10 +346,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Lee Kang-in",
+        "name": "Paik Seung-ho",
         "position": "MF",
-        "club": "Paris Saint-Germain",
-        "age": 25
+        "club": "Birmingham City",
+        "age": 29
       },
       {
         "name": "Lee Dong-gyeong",
@@ -352,27 +364,15 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Yang Hyun-jun",
-        "position": "MF",
-        "club": "Celtic",
-        "age": 24
-      },
-      {
         "name": "Son Heung-min",
         "position": "FW",
         "club": "Los Angeles FC",
         "age": 34
       },
       {
-        "name": "Cho Gue-sung",
-        "position": "FW",
-        "club": "Midtjylland",
-        "age": 28
-      },
-      {
         "name": "Oh Hyeon-gyu",
         "position": "FW",
-        "club": "Beşiktaş",
+        "club": "Genk",
         "age": 25
       }
     ]
@@ -393,10 +393,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Jindřich Staněk",
+        "name": "Matěj Kovář",
         "position": "GK",
-        "club": "Slavia Prague",
-        "age": 30
+        "club": "PSV",
+        "age": 26
       },
       {
         "name": "Lukáš Horníček",
@@ -411,40 +411,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Ladislav Krejčí",
-        "position": "DF",
-        "club": "Wolverhampton Wanderers",
-        "age": 27
-      },
-      {
         "name": "David Zima",
         "position": "DF",
         "club": "Slavia Prague",
         "age": 26
-      },
-      {
-        "name": "Jaroslav Zelený",
-        "position": "DF",
-        "club": "Sparta Prague",
-        "age": 34
-      },
-      {
-        "name": "Matěj Kovář",
-        "position": "GK",
-        "club": "PSV",
-        "age": 26
-      },
-      {
-        "name": "Vladimír Coufal",
-        "position": "DF",
-        "club": "TSG Hoffenheim",
-        "age": 34
-      },
-      {
-        "name": "Tomáš Souček",
-        "position": "MF",
-        "club": "West Ham United",
-        "age": 31
       },
       {
         "name": "David Jurásek",
@@ -453,16 +423,40 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "David Douděra",
-        "position": "DF",
-        "club": "Slavia Prague",
-        "age": 28
-      },
-      {
         "name": "Robin Hranáč",
         "position": "DF",
         "club": "TSG Hoffenheim",
         "age": 26
+      },
+      {
+        "name": "Jindřich Staněk",
+        "position": "GK",
+        "club": "Slavia Prague",
+        "age": 30
+      },
+      {
+        "name": "Vladimír Coufal",
+        "position": "DF",
+        "club": "TSG Hoffenheim",
+        "age": 34
+      },
+      {
+        "name": "Ladislav Krejčí",
+        "position": "DF",
+        "club": "Wolverhampton Wanderers",
+        "age": 27
+      },
+      {
+        "name": "Jaroslav Zelený",
+        "position": "DF",
+        "club": "Sparta Prague",
+        "age": 34
+      },
+      {
+        "name": "David Douděra",
+        "position": "DF",
+        "club": "Slavia Prague",
+        "age": 28
       },
       {
         "name": "Štěpán Chaloupek",
@@ -477,28 +471,22 @@ const seeds: TeamSeed[] = [
         "age": 36
       },
       {
+        "name": "Tomáš Souček",
+        "position": "MF",
+        "club": "West Ham United",
+        "age": 31
+      },
+      {
         "name": "Lukáš Provod",
         "position": "MF",
         "club": "Slavia Prague",
         "age": 30
       },
       {
-        "name": "Michal Sadílek",
-        "position": "MF",
-        "club": "Slavia Prague",
-        "age": 27
-      },
-      {
         "name": "Pavel Šulc",
         "position": "MF",
         "club": "Lyon",
         "age": 26
-      },
-      {
-        "name": "Lukáš Červ",
-        "position": "MF",
-        "club": "Viktoria Plzeň",
-        "age": 25
       },
       {
         "name": "Tomáš Ladra",
@@ -513,12 +501,6 @@ const seeds: TeamSeed[] = [
         "age": 18
       },
       {
-        "name": "Alexandr Sojka",
-        "position": "MF",
-        "club": "Viktoria Plzeň",
-        "age": 23
-      },
-      {
         "name": "Denis Višinský",
         "position": "MF",
         "club": "Viktoria Plzeň",
@@ -531,10 +513,16 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Jan Kuchta",
-        "position": "FW",
-        "club": "Sparta Prague",
-        "age": 29
+        "name": "Michal Sadílek",
+        "position": "MF",
+        "club": "Slavia Prague",
+        "age": 27
+      },
+      {
+        "name": "Lukáš Červ",
+        "position": "MF",
+        "club": "Viktoria Plzeň",
+        "age": 25
       },
       {
         "name": "Pavel Bucha",
@@ -543,10 +531,22 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
+        "name": "Alexandr Sojka",
+        "position": "MF",
+        "club": "Viktoria Plzeň",
+        "age": 23
+      },
+      {
         "name": "Patrik Schick",
         "position": "FW",
         "club": "Bayer Leverkusen",
         "age": 30
+      },
+      {
+        "name": "Jan Kuchta",
+        "position": "FW",
+        "club": "Sparta Prague",
+        "age": 29
       }
     ]
   },
@@ -578,10 +578,10 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Sipho Chaine",
-        "position": "GK",
-        "club": "Orlando Pirates",
-        "age": 30
+        "name": "Khulumani Ndamane",
+        "position": "DF",
+        "club": "Mamelodi Sundowns",
+        "age": 22
       },
       {
         "name": "Mbekezeli Mbokazi",
@@ -590,87 +590,15 @@ const seeds: TeamSeed[] = [
         "age": 21
       },
       {
-        "name": "Olwethu Makhanya",
-        "position": "DF",
-        "club": "Philadelphia Union",
-        "age": 22
-      },
-      {
-        "name": "Kamogelo Sebelebele",
-        "position": "DF",
-        "club": "Orlando Pirates",
-        "age": 24
-      },
-      {
-        "name": "Nkosinathi Sibisi",
-        "position": "DF",
-        "club": "Orlando Pirates",
-        "age": 31
-      },
-      {
-        "name": "Thalente Mbatha",
-        "position": "MF",
-        "club": "Orlando Pirates",
-        "age": 26
-      },
-      {
-        "name": "Oswin Appollis",
-        "position": "FW",
-        "club": "Orlando Pirates",
-        "age": 25
-      },
-      {
-        "name": "Tshepang Moremi",
-        "position": "FW",
-        "club": "Orlando Pirates",
-        "age": 26
-      },
-      {
-        "name": "Relebohile Mofokeng",
-        "position": "FW",
-        "club": "Orlando Pirates",
-        "age": 22
-      },
-      {
-        "name": "Evidence Makgopa",
-        "position": "FW",
-        "club": "Orlando Pirates",
-        "age": 26
-      },
-      {
-        "name": "Thabang Matuludi",
-        "position": "DF",
-        "club": "Polokwane City",
-        "age": 27
-      },
-      {
-        "name": "Khulumani Ndamane",
-        "position": "DF",
-        "club": "Mamelodi Sundowns",
-        "age": 22
-      },
-      {
-        "name": "Aubrey Modiba",
-        "position": "DF",
-        "club": "Mamelodi Sundowns",
-        "age": 31
-      },
-      {
-        "name": "Samukele Kabini",
-        "position": "DF",
-        "club": "Molde",
-        "age": 22
-      },
-      {
         "name": "Khuliso Mudau",
         "position": "DF",
         "club": "Mamelodi Sundowns",
         "age": 31
       },
       {
-        "name": "Ime Okon",
+        "name": "Olwethu Makhanya",
         "position": "DF",
-        "club": "Hannover 96",
+        "club": "Philadelphia Union",
         "age": 22
       },
       {
@@ -692,9 +620,9 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Jayden Adams",
-        "position": "MF",
-        "club": "Mamelodi Sundowns",
+        "name": "Oswin Appollis",
+        "position": "FW",
+        "club": "Orlando Pirates",
         "age": 25
       },
       {
@@ -708,6 +636,78 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Mamelodi Sundowns",
         "age": 37
+      },
+      {
+        "name": "Evidence Makgopa",
+        "position": "FW",
+        "club": "Orlando Pirates",
+        "age": 26
+      },
+      {
+        "name": "Sipho Chaine",
+        "position": "GK",
+        "club": "Orlando Pirates",
+        "age": 30
+      },
+      {
+        "name": "Thabang Matuludi",
+        "position": "DF",
+        "club": "Polokwane City",
+        "age": 27
+      },
+      {
+        "name": "Aubrey Modiba",
+        "position": "DF",
+        "club": "Mamelodi Sundowns",
+        "age": 31
+      },
+      {
+        "name": "Samukele Kabini",
+        "position": "DF",
+        "club": "Molde",
+        "age": 22
+      },
+      {
+        "name": "Ime Okon",
+        "position": "DF",
+        "club": "Hannover 96",
+        "age": 22
+      },
+      {
+        "name": "Kamogelo Sebelebele",
+        "position": "DF",
+        "club": "Orlando Pirates",
+        "age": 24
+      },
+      {
+        "name": "Nkosinathi Sibisi",
+        "position": "DF",
+        "club": "Orlando Pirates",
+        "age": 31
+      },
+      {
+        "name": "Thalente Mbatha",
+        "position": "MF",
+        "club": "Orlando Pirates",
+        "age": 26
+      },
+      {
+        "name": "Jayden Adams",
+        "position": "MF",
+        "club": "Mamelodi Sundowns",
+        "age": 25
+      },
+      {
+        "name": "Tshepang Moremi",
+        "position": "FW",
+        "club": "Orlando Pirates",
+        "age": 26
+      },
+      {
+        "name": "Relebohile Mofokeng",
+        "position": "FW",
+        "club": "Orlando Pirates",
+        "age": 22
       },
       {
         "name": "Thapelo Maseko",
@@ -739,12 +739,6 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Maxime Crépeau",
-        "position": "GK",
-        "club": "Orlando City",
-        "age": 32
-      },
-      {
         "name": "Dayne St. Clair",
         "position": "GK",
         "club": "Inter Miami",
@@ -757,28 +751,16 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
-        "name": "Alistair Johnston",
-        "position": "DF",
-        "club": "Celtic",
-        "age": 28
-      },
-      {
         "name": "Luc de Fougerolles",
         "position": "DF",
         "club": "Dender",
         "age": 21
       },
       {
-        "name": "Alfie Jones",
+        "name": "Joel Waterman",
         "position": "DF",
-        "club": "Middlesbrough",
-        "age": 29
-      },
-      {
-        "name": "Derek Cornelius",
-        "position": "DF",
-        "club": "Marseille",
-        "age": 29
+        "club": "Chicago Fire",
+        "age": 30
       },
       {
         "name": "Moïse Bombito",
@@ -793,28 +775,16 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
-        "name": "Niko Sigur",
-        "position": "DF",
-        "club": "Hajduk Split",
-        "age": 23
-      },
-      {
         "name": "Mathieu Choinière",
         "position": "MF",
         "club": "Los Angeles FC",
         "age": 27
       },
       {
-        "name": "Stephen Eustáquio",
+        "name": "Ismaël Koné",
         "position": "MF",
-        "club": "Los Angeles FC",
-        "age": 30
-      },
-      {
-        "name": "Liam Millar",
-        "position": "MF",
-        "club": "Hull City",
-        "age": 27
+        "club": "Sassuolo",
+        "age": 24
       },
       {
         "name": "Jacob Shaffelburg",
@@ -829,10 +799,34 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Joel Waterman",
+        "name": "Nathan Saliba",
+        "position": "MF",
+        "club": "Anderlecht",
+        "age": 22
+      },
+      {
+        "name": "Maxime Crépeau",
+        "position": "GK",
+        "club": "Orlando City",
+        "age": 32
+      },
+      {
+        "name": "Alistair Johnston",
         "position": "DF",
-        "club": "Chicago Fire",
-        "age": 30
+        "club": "Celtic",
+        "age": 28
+      },
+      {
+        "name": "Alfie Jones",
+        "position": "DF",
+        "club": "Middlesbrough",
+        "age": 29
+      },
+      {
+        "name": "Derek Cornelius",
+        "position": "DF",
+        "club": "Marseille",
+        "age": 29
       },
       {
         "name": "Alphonso Davies",
@@ -841,10 +835,22 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Ismaël Koné",
+        "name": "Niko Sigur",
+        "position": "DF",
+        "club": "Hajduk Split",
+        "age": 23
+      },
+      {
+        "name": "Stephen Eustáquio",
         "position": "MF",
-        "club": "Sassuolo",
-        "age": 24
+        "club": "Los Angeles FC",
+        "age": 30
+      },
+      {
+        "name": "Liam Millar",
+        "position": "MF",
+        "club": "Hull City",
+        "age": 27
       },
       {
         "name": "Tajon Buchanan",
@@ -853,28 +859,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Jonathan David",
-        "position": "FW",
-        "club": "Juventus",
-        "age": 26
-      },
-      {
-        "name": "Tani Oluwaseyi",
-        "position": "FW",
-        "club": "Villarreal",
-        "age": 26
-      },
-      {
         "name": "Jonathan Osorio",
         "position": "MF",
         "club": "Toronto FC",
         "age": 34
-      },
-      {
-        "name": "Nathan Saliba",
-        "position": "MF",
-        "club": "Anderlecht",
-        "age": 22
       },
       {
         "name": "Marcelo Flores",
@@ -883,16 +871,28 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
-        "name": "Cyle Larin",
+        "name": "Jonathan David",
         "position": "FW",
-        "club": "Southampton",
-        "age": 31
+        "club": "Juventus",
+        "age": 26
       },
       {
         "name": "Promise David",
         "position": "FW",
         "club": "Union Saint-Gilloise",
         "age": 25
+      },
+      {
+        "name": "Cyle Larin",
+        "position": "FW",
+        "club": "Southampton",
+        "age": 31
+      },
+      {
+        "name": "Tani Oluwaseyi",
+        "position": "FW",
+        "club": "Villarreal",
+        "age": 26
       }
     ]
   },
@@ -912,6 +912,42 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
+        "name": "Miro Muheim",
+        "position": "DF",
+        "club": "Hamburger SV",
+        "age": 28
+      },
+      {
+        "name": "Nico Elvedi",
+        "position": "DF",
+        "club": "Borussia Mönchengladbach",
+        "age": 30
+      },
+      {
+        "name": "Ricardo Rodriguez",
+        "position": "DF",
+        "club": "Betis",
+        "age": 34
+      },
+      {
+        "name": "Aurèle Amenda",
+        "position": "DF",
+        "club": "Eintracht Frankfurt",
+        "age": 23
+      },
+      {
+        "name": "Denis Zakaria",
+        "position": "MF",
+        "club": "Monaco",
+        "age": 30
+      },
+      {
+        "name": "Johan Manzambi",
+        "position": "MF",
+        "club": "SC Freiburg",
+        "age": 21
+      },
+      {
         "name": "Ardon Jashari",
         "position": "MF",
         "club": "Milan",
@@ -924,10 +960,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Michel Aebischer",
+        "name": "Fabian Rieder",
         "position": "MF",
-        "club": "Pisa",
-        "age": 29
+        "club": "FC Augsburg",
+        "age": 24
       },
       {
         "name": "Dan Ndoye",
@@ -942,46 +978,10 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Zeki Amdouni",
-        "position": "FW",
-        "club": "Burnley",
-        "age": 26
-      },
-      {
-        "name": "Djibril Sow",
-        "position": "MF",
-        "club": "Sevilla",
-        "age": 29
-      },
-      {
-        "name": "Fabian Rieder",
-        "position": "MF",
-        "club": "FC Augsburg",
-        "age": 24
-      },
-      {
-        "name": "Breel Embolo",
-        "position": "FW",
-        "club": "Rennes",
-        "age": 29
-      },
-      {
-        "name": "Rubén Vargas",
-        "position": "FW",
-        "club": "Sevilla",
-        "age": 28
-      },
-      {
         "name": "Cedric Itten",
         "position": "FW",
         "club": "Fortuna Düsseldorf",
         "age": 30
-      },
-      {
-        "name": "Gregor Kobel",
-        "position": "GK",
-        "club": "Borussia Dortmund",
-        "age": 29
       },
       {
         "name": "Silvan Widmer",
@@ -1002,52 +1002,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Aurèle Amenda",
-        "position": "DF",
-        "club": "Eintracht Frankfurt",
-        "age": 23
-      },
-      {
         "name": "Luca Jaquez",
         "position": "DF",
         "club": "VfB Stuttgart",
         "age": 23
-      },
-      {
-        "name": "Denis Zakaria",
-        "position": "MF",
-        "club": "Monaco",
-        "age": 30
-      },
-      {
-        "name": "Yvon Mvogo",
-        "position": "GK",
-        "club": "Lorient",
-        "age": 32
-      },
-      {
-        "name": "Marvin Keller",
-        "position": "GK",
-        "club": "Young Boys",
-        "age": 24
-      },
-      {
-        "name": "Miro Muheim",
-        "position": "DF",
-        "club": "Hamburger SV",
-        "age": 28
-      },
-      {
-        "name": "Nico Elvedi",
-        "position": "DF",
-        "club": "Borussia Mönchengladbach",
-        "age": 30
-      },
-      {
-        "name": "Ricardo Rodriguez",
-        "position": "DF",
-        "club": "Betis",
-        "age": 34
       },
       {
         "name": "Remo Freuler",
@@ -1056,16 +1014,58 @@ const seeds: TeamSeed[] = [
         "age": 34
       },
       {
-        "name": "Johan Manzambi",
-        "position": "MF",
-        "club": "SC Freiburg",
-        "age": 21
-      },
-      {
         "name": "Granit Xhaka",
         "position": "MF",
         "club": "Sunderland",
         "age": 34
+      },
+      {
+        "name": "Djibril Sow",
+        "position": "MF",
+        "club": "Sevilla",
+        "age": 29
+      },
+      {
+        "name": "Michel Aebischer",
+        "position": "MF",
+        "club": "Pisa",
+        "age": 29
+      },
+      {
+        "name": "Breel Embolo",
+        "position": "FW",
+        "club": "Rennes",
+        "age": 29
+      },
+      {
+        "name": "Rubén Vargas",
+        "position": "FW",
+        "club": "Sevilla",
+        "age": 28
+      },
+      {
+        "name": "Zeki Amdouni",
+        "position": "FW",
+        "club": "Burnley",
+        "age": 26
+      },
+      {
+        "name": "Yvon Mvogo",
+        "position": "GK",
+        "club": "Lorient",
+        "age": 32
+      },
+      {
+        "name": "Gregor Kobel",
+        "position": "GK",
+        "club": "Borussia Dortmund",
+        "age": 29
+      },
+      {
+        "name": "Marvin Keller",
+        "position": "GK",
+        "club": "Young Boys",
+        "age": 24
       }
     ]
   },
@@ -1085,46 +1085,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Ivan Bašić",
-        "position": "MF",
-        "club": "Astana",
-        "age": 24
-      },
-      {
-        "name": "Esmir Bajraktarević",
-        "position": "MF",
-        "club": "PSV",
-        "age": 21
-      },
-      {
-        "name": "Kerim Alajbegović",
-        "position": "MF",
-        "club": "Red Bull Salzburg",
-        "age": 19
-      },
-      {
-        "name": "Edin Džeko",
-        "position": "FW",
-        "club": "Schalke 04",
-        "age": 40
-      },
-      {
-        "name": "Ermedin Demirović",
-        "position": "FW",
-        "club": "VfB Stuttgart",
+        "name": "Martin Zlomislić",
+        "position": "GK",
+        "club": "Rijeka",
         "age": 28
-      },
-      {
-        "name": "Amar Memić",
-        "position": "MF",
-        "club": "Viktoria Plzeň",
-        "age": 25
-      },
-      {
-        "name": "Ivan Šunjić",
-        "position": "MF",
-        "club": "Pafos",
-        "age": 30
       },
       {
         "name": "Sead Kolašinac",
@@ -1133,10 +1097,70 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Dennis Hadžikadunić",
+        "name": "Amar Dedić",
         "position": "DF",
-        "club": "Sampdoria",
+        "club": "Benfica",
+        "age": 24
+      },
+      {
+        "name": "Tarik Muharemović",
+        "position": "DF",
+        "club": "Sassuolo",
+        "age": 23
+      },
+      {
+        "name": "Arjan Malić",
+        "position": "DF",
+        "club": "Sturm Graz",
+        "age": 21
+      },
+      {
+        "name": "Nidal Čelik",
+        "position": "DF",
+        "club": "Lens",
+        "age": 20
+      },
+      {
+        "name": "Benjamin Tahirović",
+        "position": "MF",
+        "club": "Brøndby",
+        "age": 23
+      },
+      {
+        "name": "Dženis Burnić",
+        "position": "MF",
+        "club": "Karlsruher SC",
         "age": 28
+      },
+      {
+        "name": "Esmir Bajraktarević",
+        "position": "MF",
+        "club": "PSV",
+        "age": 21
+      },
+      {
+        "name": "Ivan Šunjić",
+        "position": "MF",
+        "club": "Pafos",
+        "age": 30
+      },
+      {
+        "name": "Ermin Mahmić",
+        "position": "MF",
+        "club": "Slovan Liberec",
+        "age": 21
+      },
+      {
+        "name": "Ermedin Demirović",
+        "position": "FW",
+        "club": "VfB Stuttgart",
+        "age": 28
+      },
+      {
+        "name": "Haris Tabaković",
+        "position": "FW",
+        "club": "Borussia Mönchengladbach",
+        "age": 32
       },
       {
         "name": "Nikola Vasilj",
@@ -1145,34 +1169,28 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
-        "name": "Martin Zlomislić",
-        "position": "GK",
-        "club": "Rijeka",
-        "age": 28
-      },
-      {
         "name": "Mladen Jurkas",
         "position": "GK",
         "club": "Borac Banja Luka",
         "age": 19
       },
       {
-        "name": "Amar Dedić",
+        "name": "Dennis Hadžikadunić",
         "position": "DF",
-        "club": "Benfica",
-        "age": 24
+        "club": "Sampdoria",
+        "age": 28
+      },
+      {
+        "name": "Nikola Katić",
+        "position": "DF",
+        "club": "Schalke 04",
+        "age": 30
       },
       {
         "name": "Nihad Mujakić",
         "position": "DF",
-        "club": "Gaziantep",
+        "club": "Partizan",
         "age": 28
-      },
-      {
-        "name": "Arjan Malić",
-        "position": "DF",
-        "club": "Sturm Graz",
-        "age": 21
       },
       {
         "name": "Stjepan Radeljić",
@@ -1187,52 +1205,34 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Benjamin Tahirović",
-        "position": "MF",
-        "club": "Brøndby",
-        "age": 23
-      },
-      {
-        "name": "Nikola Katić",
-        "position": "DF",
-        "club": "Schalke 04",
-        "age": 30
-      },
-      {
-        "name": "Tarik Muharemović",
-        "position": "DF",
-        "club": "Sassuolo",
-        "age": 23
-      },
-      {
-        "name": "Nidal Čelik",
-        "position": "DF",
-        "club": "Lens",
-        "age": 20
-      },
-      {
         "name": "Armin Gigović",
         "position": "MF",
         "club": "Young Boys",
         "age": 24
       },
       {
-        "name": "Dženis Burnić",
+        "name": "Ivan Bašić",
         "position": "MF",
-        "club": "Karlsruher SC",
-        "age": 28
+        "club": "Astana",
+        "age": 24
       },
       {
-        "name": "Ermin Mahmić",
+        "name": "Amar Memić",
         "position": "MF",
-        "club": "Slovan Liberec",
-        "age": 21
+        "club": "Viktoria Plzeň",
+        "age": 25
       },
       {
-        "name": "Haris Tabaković",
+        "name": "Kerim Alajbegović",
+        "position": "MF",
+        "club": "Red Bull Salzburg",
+        "age": 19
+      },
+      {
+        "name": "Edin Džeko",
         "position": "FW",
-        "club": "Borussia Mönchengladbach",
-        "age": 32
+        "club": "Schalke 04",
+        "age": 40
       },
       {
         "name": "Samed Baždar",
@@ -1258,10 +1258,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Meshaal Barsham",
+        "name": "Salah Zakaria",
         "position": "GK",
-        "club": "Al-Sadd",
-        "age": 28
+        "club": "Al-Duhail",
+        "age": 27
       },
       {
         "name": "Shehab Ellethy",
@@ -1270,15 +1270,87 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Pedro Miguel",
+        "name": "Lucas Mendes",
+        "position": "DF",
+        "club": "Al-Wakrah",
+        "age": 36
+      },
+      {
+        "name": "Ayoub Al-Oui",
+        "position": "DF",
+        "club": "Al-Gharafa",
+        "age": 21
+      },
+      {
+        "name": "Boualem Khoukhi",
         "position": "DF",
         "club": "Al-Sadd",
         "age": 36
       },
       {
-        "name": "Lucas Mendes",
+        "name": "Al-Hashmi Al-Hussain",
         "position": "DF",
+        "club": "Al-Arabi",
+        "age": 23
+      },
+      {
+        "name": "Jassem Gaber",
+        "position": "MF",
+        "club": "Al-Rayyan",
+        "age": 24
+      },
+      {
+        "name": "Karim Boudiaf",
+        "position": "MF",
+        "club": "Al-Duhail",
+        "age": 36
+      },
+      {
+        "name": "Assim Madibo",
+        "position": "MF",
         "club": "Al-Wakrah",
+        "age": 30
+      },
+      {
+        "name": "Mohamed Al-Mannai",
+        "position": "MF",
+        "club": "Al-Shamal",
+        "age": 23
+      },
+      {
+        "name": "Edmilson Junior",
+        "position": "FW",
+        "club": "Al-Duhail",
+        "age": 32
+      },
+      {
+        "name": "Hassan Al-Haydos",
+        "position": "FW",
+        "club": "Al-Sadd",
+        "age": 36
+      },
+      {
+        "name": "Yusuf Abdurisag",
+        "position": "FW",
+        "club": "Al-Wakrah",
+        "age": 27
+      },
+      {
+        "name": "Mahmud Abunada",
+        "position": "GK",
+        "club": "Al-Rayyan",
+        "age": 26
+      },
+      {
+        "name": "Meshaal Barsham",
+        "position": "GK",
+        "club": "Al-Sadd",
+        "age": 28
+      },
+      {
+        "name": "Pedro Miguel",
+        "position": "DF",
+        "club": "Al-Sadd",
         "age": 36
       },
       {
@@ -1288,22 +1360,10 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Ayoub Al-Oui",
-        "position": "DF",
-        "club": "Al-Gharafa",
-        "age": 21
-      },
-      {
         "name": "Homam Ahmed",
         "position": "DF",
         "club": "Cultural Leonesa",
         "age": 27
-      },
-      {
-        "name": "Boualem Khoukhi",
-        "position": "DF",
-        "club": "Al-Sadd",
-        "age": 36
       },
       {
         "name": "Sultan Al-Brake",
@@ -1312,33 +1372,15 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Al-Hashmi Al-Hussain",
-        "position": "DF",
-        "club": "Al-Arabi",
-        "age": 23
-      },
-      {
         "name": "Rayyan Al-Ali",
         "position": "DF",
         "club": "Al-Gharafa",
         "age": 20
       },
       {
-        "name": "Jassem Gaber",
-        "position": "MF",
-        "club": "Al-Rayyan",
-        "age": 24
-      },
-      {
         "name": "Abdulaziz Hatem",
         "position": "MF",
         "club": "Al-Rayyan",
-        "age": 36
-      },
-      {
-        "name": "Karim Boudiaf",
-        "position": "MF",
-        "club": "Al-Duhail",
         "age": 36
       },
       {
@@ -1348,22 +1390,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Assim Madibo",
-        "position": "MF",
-        "club": "Al-Wakrah",
-        "age": 30
-      },
-      {
         "name": "Tahsin Jamshid",
         "position": "MF",
         "club": "Al-Duhail",
         "age": 20
-      },
-      {
-        "name": "Mohamed Al-Mannai",
-        "position": "MF",
-        "club": "Al-Shamal",
-        "age": 23
       },
       {
         "name": "Ahmed Alaaeldin",
@@ -1372,46 +1402,16 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Edmilson Junior",
-        "position": "FW",
-        "club": "Al-Duhail",
-        "age": 32
-      },
-      {
         "name": "Mohammed Muntari",
         "position": "FW",
         "club": "Al-Gharafa",
         "age": 33
       },
       {
-        "name": "Hassan Al-Haydos",
-        "position": "FW",
-        "club": "Al-Sadd",
-        "age": 36
-      },
-      {
         "name": "Akram Afif",
         "position": "FW",
         "club": "Al-Sadd",
         "age": 30
-      },
-      {
-        "name": "Yusuf Abdurisag",
-        "position": "FW",
-        "club": "Al-Wakrah",
-        "age": 27
-      },
-      {
-        "name": "Salah Zakaria",
-        "position": "GK",
-        "club": "Al-Duhail",
-        "age": 27
-      },
-      {
-        "name": "Mahmud Abunada",
-        "position": "GK",
-        "club": "Al-Rayyan",
-        "age": 26
       }
     ]
   },
@@ -1431,22 +1431,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Alisson",
+        "name": "Weverton",
         "position": "GK",
-        "club": "Liverpool",
-        "age": 34
+        "club": "Palmeiras",
+        "age": 39
       },
       {
         "name": "Wesley",
         "position": "DF",
-        "club": "Roma",
+        "club": "Al-Nassr",
         "age": 23
-      },
-      {
-        "name": "Gabriel Magalhães",
-        "position": "DF",
-        "club": "Arsenal",
-        "age": 29
       },
       {
         "name": "Marquinhos",
@@ -1455,39 +1449,9 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Weverton",
-        "position": "GK",
-        "club": "Grêmio",
-        "age": 39
-      },
-      {
-        "name": "Ederson",
-        "position": "GK",
-        "club": "Fenerbahçe",
-        "age": 33
-      },
-      {
-        "name": "Bremer",
-        "position": "DF",
-        "club": "Juventus",
-        "age": 29
-      },
-      {
-        "name": "Casemiro",
-        "position": "MF",
-        "club": "Manchester United",
-        "age": 34
-      },
-      {
-        "name": "Alex Sandro",
-        "position": "DF",
-        "club": "Flamengo",
-        "age": 35
-      },
-      {
         "name": "Danilo Luiz",
         "position": "DF",
-        "club": "Flamengo",
+        "club": "Juventus",
         "age": 35
       },
       {
@@ -1497,40 +1461,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Douglas Santos",
-        "position": "DF",
-        "club": "Zenit Saint Petersburg",
-        "age": 32
-      },
-      {
         "name": "Roger Ibañez",
         "position": "DF",
         "club": "Al-Ahli",
         "age": 28
-      },
-      {
-        "name": "Vinícius Júnior",
-        "position": "FW",
-        "club": "Real Madrid",
-        "age": 26
-      },
-      {
-        "name": "Matheus Cunha",
-        "position": "FW",
-        "club": "Manchester United",
-        "age": 27
-      },
-      {
-        "name": "Raphinha",
-        "position": "FW",
-        "club": "Barcelona",
-        "age": 30
-      },
-      {
-        "name": "Gabriel Martinelli",
-        "position": "FW",
-        "club": "Arsenal",
-        "age": 25
       },
       {
         "name": "Bruno Guimarães",
@@ -1539,22 +1473,16 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Fabinho",
-        "position": "MF",
-        "club": "Al-Ittihad",
-        "age": 33
-      },
-      {
         "name": "Danilo Santos",
         "position": "MF",
         "club": "Botafogo",
         "age": 25
       },
       {
-        "name": "Lucas Paquetá",
-        "position": "MF",
-        "club": "Flamengo",
-        "age": 29
+        "name": "Vinícius Júnior",
+        "position": "FW",
+        "club": "Real Madrid",
+        "age": 26
       },
       {
         "name": "Neymar",
@@ -1565,19 +1493,85 @@ const seeds: TeamSeed[] = [
       {
         "name": "Endrick",
         "position": "FW",
-        "club": "Lyon",
+        "club": "Real Madrid",
         "age": 20
+      },
+      {
+        "name": "Alisson",
+        "position": "GK",
+        "club": "Liverpool",
+        "age": 34
+      },
+      {
+        "name": "Ederson",
+        "position": "GK",
+        "club": "Fenerbahçe",
+        "age": 33
+      },
+      {
+        "name": "Gabriel Magalhães",
+        "position": "DF",
+        "club": "Arsenal",
+        "age": 29
+      },
+      {
+        "name": "Alex Sandro",
+        "position": "DF",
+        "club": "Flamengo",
+        "age": 35
+      },
+      {
+        "name": "Bremer",
+        "position": "DF",
+        "club": "Juventus",
+        "age": 29
+      },
+      {
+        "name": "Douglas Santos",
+        "position": "DF",
+        "club": "Zenit Saint Petersburg",
+        "age": 32
+      },
+      {
+        "name": "Casemiro",
+        "position": "MF",
+        "club": "Manchester United",
+        "age": 34
+      },
+      {
+        "name": "Fabinho",
+        "position": "MF",
+        "club": "Al-Ittihad",
+        "age": 33
+      },
+      {
+        "name": "Lucas Paquetá",
+        "position": "MF",
+        "club": "Flamengo",
+        "age": 29
+      },
+      {
+        "name": "Matheus Cunha",
+        "position": "FW",
+        "club": "Wolverhampton Wanderers",
+        "age": 27
+      },
+      {
+        "name": "Raphinha",
+        "position": "FW",
+        "club": "Barcelona",
+        "age": 30
       },
       {
         "name": "Luiz Henrique",
         "position": "FW",
-        "club": "Zenit Saint Petersburg",
+        "club": "Botafogo",
         "age": 25
       },
       {
-        "name": "Igor Thiago",
+        "name": "Gabriel Martinelli",
         "position": "FW",
-        "club": "Brentford",
+        "club": "Arsenal",
         "age": 25
       },
       {
@@ -1585,6 +1579,12 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Bournemouth",
         "age": 20
+      },
+      {
+        "name": "Igor Thiago",
+        "position": "FW",
+        "club": "Brentford",
+        "age": 25
       }
     ]
   },
@@ -1604,22 +1604,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Angus Gunn",
-        "position": "GK",
-        "club": "Nottingham Forest",
-        "age": 30
-      },
-      {
         "name": "Liam Kelly",
         "position": "GK",
         "club": "Rangers",
         "age": 30
-      },
-      {
-        "name": "Craig Gordon",
-        "position": "GK",
-        "club": "Heart of Midlothian",
-        "age": 44
       },
       {
         "name": "Aaron Hickey",
@@ -1628,52 +1616,10 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Andy Robertson",
-        "position": "DF",
-        "club": "Liverpool",
-        "age": 32
-      },
-      {
-        "name": "John Souttar",
-        "position": "DF",
-        "club": "Rangers",
-        "age": 30
-      },
-      {
-        "name": "Tyler Fletcher",
-        "position": "MF",
-        "club": "Manchester United",
-        "age": 19
-      },
-      {
-        "name": "Ryan Christie",
-        "position": "MF",
-        "club": "Bournemouth",
-        "age": 31
-      },
-      {
-        "name": "Ben Gannon-Doak",
-        "position": "MF",
-        "club": "Bournemouth",
-        "age": 21
-      },
-      {
-        "name": "John McGinn",
-        "position": "MF",
-        "club": "Aston Villa",
-        "age": 32
-      },
-      {
         "name": "Grant Hanley",
         "position": "DF",
         "club": "Hibernian",
         "age": 35
-      },
-      {
-        "name": "Luke Graham",
-        "position": "DF",
-        "club": "Dundee",
-        "age": 22
       },
       {
         "name": "Jack Hendry",
@@ -1688,22 +1634,10 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
-        "name": "Nathan Patterson",
-        "position": "DF",
-        "club": "Everton",
-        "age": 25
-      },
-      {
         "name": "Anthony Ralston",
         "position": "DF",
         "club": "Celtic",
         "age": 28
-      },
-      {
-        "name": "Scott McKenna",
-        "position": "DF",
-        "club": "Dinamo Zagreb",
-        "age": 30
       },
       {
         "name": "Kieran Tierney",
@@ -1712,10 +1646,94 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
+        "name": "Ryan Christie",
+        "position": "MF",
+        "club": "Bournemouth",
+        "age": 31
+      },
+      {
         "name": "Kenny McLean",
         "position": "MF",
         "club": "Norwich City",
         "age": 34
+      },
+      {
+        "name": "John McGinn",
+        "position": "MF",
+        "club": "Aston Villa",
+        "age": 32
+      },
+      {
+        "name": "Lewis Ferguson",
+        "position": "MF",
+        "club": "Bologna",
+        "age": 27
+      },
+      {
+        "name": "James Wilson",
+        "position": "FW",
+        "club": "Tottenham Hotspur",
+        "age": 19
+      },
+      {
+        "name": "Lawrence Shankland",
+        "position": "FW",
+        "club": "Heart of Midlothian",
+        "age": 31
+      },
+      {
+        "name": "Angus Gunn",
+        "position": "GK",
+        "club": "Nottingham Forest",
+        "age": 30
+      },
+      {
+        "name": "Craig Gordon",
+        "position": "GK",
+        "club": "Heart of Midlothian",
+        "age": 44
+      },
+      {
+        "name": "Andy Robertson",
+        "position": "DF",
+        "club": "Liverpool",
+        "age": 32
+      },
+      {
+        "name": "Luke Graham",
+        "position": "DF",
+        "club": "Dundee",
+        "age": 22
+      },
+      {
+        "name": "John Souttar",
+        "position": "DF",
+        "club": "Rangers",
+        "age": 30
+      },
+      {
+        "name": "Nathan Patterson",
+        "position": "DF",
+        "club": "Everton",
+        "age": 25
+      },
+      {
+        "name": "Scott McKenna",
+        "position": "DF",
+        "club": "Dinamo Zagreb",
+        "age": 30
+      },
+      {
+        "name": "Tyler Fletcher",
+        "position": "MF",
+        "club": "Manchester United",
+        "age": 19
+      },
+      {
+        "name": "Ben Gannon-Doak",
+        "position": "MF",
+        "club": "Bournemouth",
+        "age": 21
       },
       {
         "name": "Findlay Curtis",
@@ -1730,34 +1748,16 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Lewis Ferguson",
-        "position": "MF",
-        "club": "Bologna",
-        "age": 27
-      },
-      {
         "name": "Lyndon Dykes",
         "position": "FW",
         "club": "Charlton Athletic",
         "age": 31
       },
       {
-        "name": "James Wilson",
-        "position": "FW",
-        "club": "Tottenham Hotspur",
-        "age": 19
-      },
-      {
         "name": "George Hirst",
         "position": "FW",
         "club": "Ipswich Town",
         "age": 27
-      },
-      {
-        "name": "Lawrence Shankland",
-        "position": "FW",
-        "club": "Heart of Midlothian",
-        "age": 31
       }
     ]
   },
@@ -1777,16 +1777,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
+        "name": "Munir Mohamedi",
+        "position": "GK",
+        "club": "RS Berkane",
+        "age": 37
+      },
+      {
         "name": "Achraf Hakimi",
         "position": "DF",
         "club": "Paris Saint-Germain",
         "age": 28
-      },
-      {
-        "name": "Nayef Aguerd",
-        "position": "DF",
-        "club": "Marseille",
-        "age": 30
       },
       {
         "name": "Noussair Mazraoui",
@@ -1801,76 +1801,10 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Chadi Riad",
-        "position": "DF",
-        "club": "Crystal Palace",
-        "age": 23
-      },
-      {
-        "name": "Bilal El Khannouss",
-        "position": "MF",
-        "club": "VfB Stuttgart",
-        "age": 22
-      },
-      {
-        "name": "Ismael Saibari",
-        "position": "MF",
-        "club": "PSV",
-        "age": 25
-      },
-      {
-        "name": "Neil El Aynaoui",
-        "position": "MF",
-        "club": "Roma",
-        "age": 25
-      },
-      {
-        "name": "Ayyoub Bouaddi",
-        "position": "MF",
-        "club": "Lille",
-        "age": 19
-      },
-      {
-        "name": "Brahim Díaz",
-        "position": "FW",
-        "club": "Real Madrid",
-        "age": 27
-      },
-      {
-        "name": "Yassine Bounou",
-        "position": "GK",
-        "club": "Al-Hilal",
-        "age": 35
-      },
-      {
-        "name": "Munir Mohamedi",
-        "position": "GK",
-        "club": "RS Berkane",
-        "age": 37
-      },
-      {
-        "name": "Ahmed Reda Tagnaouti",
-        "position": "GK",
-        "club": "AS FAR",
-        "age": 30
-      },
-      {
-        "name": "Youssef Belammari",
-        "position": "DF",
-        "club": "Al Ahly",
-        "age": 28
-      },
-      {
         "name": "Issa Diop",
         "position": "DF",
         "club": "Fulham",
         "age": 29
-      },
-      {
-        "name": "Zakaria El Ouahdi",
-        "position": "DF",
-        "club": "Genk",
-        "age": 25
       },
       {
         "name": "Redouane Halhal",
@@ -1879,16 +1813,16 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
-        "name": "Sofyan Amrabat",
-        "position": "MF",
-        "club": "Betis",
-        "age": 30
-      },
-      {
         "name": "Azzedine Ounahi",
         "position": "MF",
         "club": "Girona",
         "age": 26
+      },
+      {
+        "name": "Ismael Saibari",
+        "position": "MF",
+        "club": "PSV",
+        "age": 25
       },
       {
         "name": "Samir El Mourabet",
@@ -1903,12 +1837,6 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Abde Ezzalzouli",
-        "position": "FW",
-        "club": "Betis",
-        "age": 25
-      },
-      {
         "name": "Soufiane Rahimi",
         "position": "FW",
         "club": "Al Ain",
@@ -1921,16 +1849,88 @@ const seeds: TeamSeed[] = [
         "age": 21
       },
       {
-        "name": "Gessime Yassine",
-        "position": "FW",
-        "club": "Strasbourg",
-        "age": 21
-      },
-      {
         "name": "Ayoube Amaimouni",
         "position": "FW",
         "club": "Eintracht Frankfurt",
         "age": 22
+      },
+      {
+        "name": "Yassine Bounou",
+        "position": "GK",
+        "club": "Al-Hilal",
+        "age": 35
+      },
+      {
+        "name": "Ahmed Reda Tagnaouti",
+        "position": "GK",
+        "club": "AS FAR",
+        "age": 30
+      },
+      {
+        "name": "Nayef Aguerd",
+        "position": "DF",
+        "club": "Marseille",
+        "age": 30
+      },
+      {
+        "name": "Youssef Belammari",
+        "position": "DF",
+        "club": "Al Ahly",
+        "age": 28
+      },
+      {
+        "name": "Chadi Riad",
+        "position": "DF",
+        "club": "Crystal Palace",
+        "age": 23
+      },
+      {
+        "name": "Zakaria El Ouahdi",
+        "position": "DF",
+        "club": "Genk",
+        "age": 25
+      },
+      {
+        "name": "Sofyan Amrabat",
+        "position": "MF",
+        "club": "Betis",
+        "age": 30
+      },
+      {
+        "name": "Bilal El Khannouss",
+        "position": "MF",
+        "club": "VfB Stuttgart",
+        "age": 22
+      },
+      {
+        "name": "Neil El Aynaoui",
+        "position": "MF",
+        "club": "Roma",
+        "age": 25
+      },
+      {
+        "name": "Ayyoub Bouaddi",
+        "position": "MF",
+        "club": "Lille",
+        "age": 19
+      },
+      {
+        "name": "Abde Ezzalzouli",
+        "position": "FW",
+        "club": "Betis",
+        "age": 25
+      },
+      {
+        "name": "Brahim Díaz",
+        "position": "FW",
+        "club": "Real Madrid",
+        "age": 27
+      },
+      {
+        "name": "Gessime Yassine",
+        "position": "FW",
+        "club": "Strasbourg",
+        "age": 21
       }
     ]
   },
@@ -1950,40 +1950,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Carlens Arcus",
-        "position": "DF",
-        "club": "Angers",
-        "age": 30
-      },
-      {
-        "name": "Danley Jean Jacques",
-        "position": "MF",
-        "club": "Philadelphia Union",
-        "age": 26
-      },
-      {
-        "name": "Frantzdy Pierrot",
-        "position": "FW",
-        "club": "Çaykur Rizespor",
-        "age": 31
-      },
-      {
-        "name": "Johny Placide",
-        "position": "GK",
-        "club": "Bastia",
-        "age": 38
-      },
-      {
         "name": "Alexandre Pierre",
         "position": "GK",
         "club": "Sochaux",
         "age": 25
-      },
-      {
-        "name": "Josué Duverger",
-        "position": "GK",
-        "club": "Cosmos Koblenz",
-        "age": 26
       },
       {
         "name": "Ricardo Adé",
@@ -1998,22 +1968,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Jean-Kévin Duverne",
-        "position": "DF",
-        "club": "Gent",
-        "age": 29
-      },
-      {
         "name": "Duke Lacroix",
         "position": "DF",
         "club": "Colorado Springs Switchbacks",
         "age": 33
-      },
-      {
-        "name": "Wilguens Paugain",
-        "position": "DF",
-        "club": "Zulte Waregem",
-        "age": 25
       },
       {
         "name": "Hannes Delcroix",
@@ -2034,22 +1992,10 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Jean‐Ricner Bellegarde",
-        "position": "MF",
-        "club": "Wolverhampton Wanderers",
-        "age": 28
-      },
-      {
         "name": "Woodensky Pierre",
         "position": "MF",
         "club": "Violette",
         "age": 22
-      },
-      {
-        "name": "Dominique Simon",
-        "position": "MF",
-        "club": "Tatran Prešov",
-        "age": 26
       },
       {
         "name": "Duckens Nazon",
@@ -2064,21 +2010,9 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Louicius Deedson",
-        "position": "FW",
-        "club": "Dallas",
-        "age": 25
-      },
-      {
         "name": "Ruben Providence",
         "position": "FW",
         "club": "Almere City",
-        "age": 25
-      },
-      {
-        "name": "Josué Casimir",
-        "position": "FW",
-        "club": "Auxerre",
         "age": 25
       },
       {
@@ -2088,22 +2022,88 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Wilson Isidor",
-        "position": "FW",
-        "club": "Sunderland",
-        "age": 26
-      },
-      {
         "name": "Lenny Joseph",
         "position": "FW",
         "club": "Ferencváros",
         "age": 26
       },
       {
+        "name": "Johny Placide",
+        "position": "GK",
+        "club": "Bastia",
+        "age": 38
+      },
+      {
+        "name": "Josué Duverger",
+        "position": "GK",
+        "club": "Cosmos Koblenz",
+        "age": 26
+      },
+      {
+        "name": "Carlens Arcus",
+        "position": "DF",
+        "club": "Angers",
+        "age": 30
+      },
+      {
+        "name": "Jean-Kévin Duverne",
+        "position": "DF",
+        "club": "Gent",
+        "age": 29
+      },
+      {
+        "name": "Wilguens Paugain",
+        "position": "DF",
+        "club": "Zulte Waregem",
+        "age": 25
+      },
+      {
         "name": "Keeto Thermoncy",
         "position": "DF",
         "club": "Young Boys",
         "age": 20
+      },
+      {
+        "name": "Danley Jean Jacques",
+        "position": "MF",
+        "club": "Philadelphia Union",
+        "age": 26
+      },
+      {
+        "name": "Jean‐Ricner Bellegarde",
+        "position": "MF",
+        "club": "Wolverhampton Wanderers",
+        "age": 28
+      },
+      {
+        "name": "Dominique Simon",
+        "position": "MF",
+        "club": "Tatran Prešov",
+        "age": 26
+      },
+      {
+        "name": "Frantzdy Pierrot",
+        "position": "FW",
+        "club": "AEK Athens",
+        "age": 31
+      },
+      {
+        "name": "Louicius Deedson",
+        "position": "FW",
+        "club": "Dallas",
+        "age": 25
+      },
+      {
+        "name": "Josué Casimir",
+        "position": "FW",
+        "club": "Auxerre",
+        "age": 25
+      },
+      {
+        "name": "Wilson Isidor",
+        "position": "FW",
+        "club": "Sunderland",
+        "age": 26
       }
     ]
   },
@@ -2129,34 +2129,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Chris Brady",
-        "position": "GK",
-        "club": "Chicago Fire",
-        "age": 22
-      },
-      {
         "name": "Sergiño Dest",
         "position": "DF",
         "club": "PSV",
         "age": 26
-      },
-      {
-        "name": "Chris Richards",
-        "position": "DF",
-        "club": "Crystal Palace",
-        "age": 26
-      },
-      {
-        "name": "Miles Robinson",
-        "position": "DF",
-        "club": "FC Cincinnati",
-        "age": 29
-      },
-      {
-        "name": "Matt Turner",
-        "position": "GK",
-        "club": "New England Revolution",
-        "age": 32
       },
       {
         "name": "Antonee Robinson",
@@ -2165,16 +2141,10 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Auston Trusty",
+        "name": "Miles Robinson",
         "position": "DF",
-        "club": "Celtic",
-        "age": 28
-      },
-      {
-        "name": "Tim Ream",
-        "position": "DF",
-        "club": "Charlotte FC",
-        "age": 39
+        "club": "FC Cincinnati",
+        "age": 29
       },
       {
         "name": "Alex Freeman",
@@ -2183,10 +2153,10 @@ const seeds: TeamSeed[] = [
         "age": 22
       },
       {
-        "name": "Maximilian Arfsten",
+        "name": "Mark McKenzie",
         "position": "DF",
-        "club": "Columbus Crew",
-        "age": 25
+        "club": "Toulouse",
+        "age": 27
       },
       {
         "name": "Tyler Adams",
@@ -2201,34 +2171,46 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Sebastian Berhalter",
+        "name": "Cristian Roldan",
         "position": "MF",
-        "club": "Vancouver Whitecaps",
-        "age": 25
+        "club": "Seattle Sounders",
+        "age": 31
       },
       {
-        "name": "Malik Tillman",
-        "position": "MF",
-        "club": "Bayer Leverkusen",
-        "age": 24
+        "name": "Matt Turner",
+        "position": "GK",
+        "club": "New England Revolution",
+        "age": 32
       },
       {
-        "name": "Ricardo Pepi",
-        "position": "FW",
-        "club": "PSV",
-        "age": 23
+        "name": "Chris Brady",
+        "position": "GK",
+        "club": "Chicago Fire",
+        "age": 22
       },
       {
-        "name": "Folarin Balogun",
-        "position": "FW",
-        "club": "Monaco",
-        "age": 25
-      },
-      {
-        "name": "Mark McKenzie",
+        "name": "Chris Richards",
         "position": "DF",
-        "club": "Toulouse",
-        "age": 27
+        "club": "Crystal Palace",
+        "age": 26
+      },
+      {
+        "name": "Auston Trusty",
+        "position": "DF",
+        "club": "Celtic",
+        "age": 28
+      },
+      {
+        "name": "Tim Ream",
+        "position": "DF",
+        "club": "Charlotte FC",
+        "age": 39
+      },
+      {
+        "name": "Maximilian Arfsten",
+        "position": "DF",
+        "club": "Columbus Crew",
+        "age": 25
       },
       {
         "name": "Joe Scally",
@@ -2243,10 +2225,16 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Cristian Roldan",
+        "name": "Sebastian Berhalter",
         "position": "MF",
-        "club": "Seattle Sounders",
-        "age": 31
+        "club": "Vancouver Whitecaps",
+        "age": 25
+      },
+      {
+        "name": "Malik Tillman",
+        "position": "MF",
+        "club": "Bayer Leverkusen",
+        "age": 24
       },
       {
         "name": "Christian Pulisic",
@@ -2255,21 +2243,9 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Brenden Aaronson",
-        "position": "FW",
-        "club": "Leeds United",
-        "age": 26
-      },
-      {
         "name": "Haji Wright",
         "position": "FW",
         "club": "Coventry City",
-        "age": 28
-      },
-      {
-        "name": "Alejandro Zendejas",
-        "position": "FW",
-        "club": "América",
         "age": 28
       },
       {
@@ -2277,6 +2253,30 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Marseille",
         "age": 26
+      },
+      {
+        "name": "Ricardo Pepi",
+        "position": "FW",
+        "club": "PSV",
+        "age": 23
+      },
+      {
+        "name": "Brenden Aaronson",
+        "position": "FW",
+        "club": "Leeds United",
+        "age": 26
+      },
+      {
+        "name": "Folarin Balogun",
+        "position": "FW",
+        "club": "Monaco",
+        "age": 25
+      },
+      {
+        "name": "Alejandro Zendejas",
+        "position": "FW",
+        "club": "América",
+        "age": 28
       }
     ]
   },
@@ -2296,46 +2296,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Alexandro Maidana",
-        "position": "DF",
-        "club": "Talleres",
-        "age": 21
-      },
-      {
-        "name": "Fabián Balbuena",
-        "position": "DF",
-        "club": "Grêmio",
-        "age": 35
-      },
-      {
-        "name": "Omar Alderete",
-        "position": "DF",
-        "club": "Sunderland",
-        "age": 30
-      },
-      {
-        "name": "Juan Cáceres",
-        "position": "DF",
-        "club": "Dynamo Moscow",
-        "age": 26
-      },
-      {
-        "name": "Blas Riveros",
-        "position": "DF",
-        "club": "Cerro Porteño",
-        "age": 28
-      },
-      {
         "name": "Gatito Fernández",
         "position": "GK",
         "club": "Cerro Porteño",
         "age": 38
-      },
-      {
-        "name": "Carlos Coronel",
-        "position": "GK",
-        "club": "São Paulo",
-        "age": 30
       },
       {
         "name": "Orlando Gill",
@@ -2344,16 +2308,82 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Santiago Rojas",
-        "position": "GK",
-        "club": "Nacional",
-        "age": 30
-      },
-      {
         "name": "Juan Espínola",
         "position": "GK",
         "club": "Barracas Central",
         "age": 32
+      },
+      {
+        "name": "Gustavo Gómez",
+        "position": "DF",
+        "club": "Palmeiras",
+        "age": 33
+      },
+      {
+        "name": "Fabián Balbuena",
+        "position": "DF",
+        "club": "Grêmio",
+        "age": 35
+      },
+      {
+        "name": "Juan Cáceres",
+        "position": "DF",
+        "club": "Dynamo Moscow",
+        "age": 26
+      },
+      {
+        "name": "Gustavo Velázquez",
+        "position": "DF",
+        "club": "Cerro Porteño",
+        "age": 35
+      },
+      {
+        "name": "Agustín Sández",
+        "position": "DF",
+        "club": "Rosario Central",
+        "age": 25
+      },
+      {
+        "name": "Saúl Salcedo",
+        "position": "DF",
+        "club": "Newell's Old Boys",
+        "age": 29
+      },
+      {
+        "name": "Diego León",
+        "position": "DF",
+        "club": "Manchester United",
+        "age": 19
+      },
+      {
+        "name": "Alcides Benítez",
+        "position": "DF",
+        "club": "Belgrano",
+        "age": 24
+      },
+      {
+        "name": "Alan Núñez",
+        "position": "DF",
+        "club": "Nacional",
+        "age": 22
+      },
+      {
+        "name": "Mathías Villasanti",
+        "position": "MF",
+        "club": "Grêmio",
+        "age": 29
+      },
+      {
+        "name": "Carlos Coronel",
+        "position": "GK",
+        "club": "São Paulo",
+        "age": 30
+      },
+      {
+        "name": "Santiago Rojas",
+        "position": "GK",
+        "club": "Nacional",
+        "age": 30
       },
       {
         "name": "Gastón Olveira",
@@ -2368,10 +2398,16 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Gustavo Velázquez",
+        "name": "Omar Alderete",
+        "position": "DF",
+        "club": "Sunderland",
+        "age": 30
+      },
+      {
+        "name": "Blas Riveros",
         "position": "DF",
         "club": "Cerro Porteño",
-        "age": 35
+        "age": 28
       },
       {
         "name": "Alan Benítez",
@@ -2380,28 +2416,10 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Diego León",
-        "position": "DF",
-        "club": "Manchester United",
-        "age": 19
-      },
-      {
-        "name": "Agustín Sández",
-        "position": "DF",
-        "club": "Rosario Central",
-        "age": 25
-      },
-      {
         "name": "Mateo Gamarra",
         "position": "DF",
         "club": "Cruzeiro",
         "age": 33
-      },
-      {
-        "name": "Saúl Salcedo",
-        "position": "DF",
-        "club": "Newell's Old Boys",
-        "age": 29
       },
       {
         "name": "José Canale",
@@ -2410,10 +2428,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Alcides Benítez",
+        "name": "Alexandro Maidana",
         "position": "DF",
-        "club": "Belgrano",
-        "age": 24
+        "club": "Talleres",
+        "age": 21
       },
       {
         "name": "Ronaldo Dejesús",
@@ -2422,34 +2440,16 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Alan Núñez",
-        "position": "DF",
-        "club": "Nacional",
-        "age": 22
-      },
-      {
         "name": "Miguel Almirón",
         "position": "MF",
         "club": "Atlanta United",
         "age": 32
       },
       {
-        "name": "Mathías Villasanti",
-        "position": "MF",
-        "club": "Grêmio",
-        "age": 29
-      },
-      {
         "name": "Kaku",
         "position": "MF",
         "club": "Al Ain",
         "age": 31
-      },
-      {
-        "name": "Gustavo Gómez",
-        "position": "DF",
-        "club": "Palmeiras",
-        "age": 33
       }
     ]
   },
@@ -2469,46 +2469,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Cameron Burgess",
-        "position": "DF",
-        "club": "Swansea City",
-        "age": 31
-      },
-      {
-        "name": "Aiden O'Neill",
-        "position": "MF",
-        "club": "New York City",
-        "age": 28
-      },
-      {
-        "name": "Kye Rowles",
-        "position": "DF",
-        "club": "D.C. United",
-        "age": 28
-      },
-      {
-        "name": "Jordan Bos",
-        "position": "DF",
-        "club": "Feyenoord",
-        "age": 24
-      },
-      {
-        "name": "Harry Souttar",
-        "position": "DF",
-        "club": "Leicester City",
-        "age": 28
-      },
-      {
         "name": "Mathew Ryan",
         "position": "GK",
         "club": "Levante",
         "age": 34
-      },
-      {
-        "name": "Paul Izzo",
-        "position": "GK",
-        "club": "Randers",
-        "age": 31
       },
       {
         "name": "Patrick Beach",
@@ -2517,22 +2481,16 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
-        "name": "Joe Gauci",
-        "position": "GK",
-        "club": "Port Vale",
-        "age": 26
-      },
-      {
         "name": "Miloš Degenek",
         "position": "DF",
         "club": "APOEL",
         "age": 32
       },
       {
-        "name": "Alessandro Circati",
+        "name": "Kye Rowles",
         "position": "DF",
-        "club": "Parma",
-        "age": 23
+        "club": "D.C. United",
+        "age": 28
       },
       {
         "name": "Aziz Behich",
@@ -2541,10 +2499,10 @@ const seeds: TeamSeed[] = [
         "age": 36
       },
       {
-        "name": "Jacob Italiano",
+        "name": "Cameron Burgess",
         "position": "DF",
-        "club": "Grazer AK",
-        "age": 25
+        "club": "Swansea City",
+        "age": 31
       },
       {
         "name": "Jason Geria",
@@ -2553,22 +2511,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Lucas Herrington",
-        "position": "DF",
-        "club": "Colorado Rapids",
-        "age": 19
-      },
-      {
         "name": "Kai Trewin",
         "position": "DF",
         "club": "New York City",
         "age": 25
-      },
-      {
-        "name": "Connor Metcalfe",
-        "position": "MF",
-        "club": "FC St. Pauli",
-        "age": 27
       },
       {
         "name": "Ajdin Hrustić",
@@ -2583,21 +2529,9 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Paul Okon-Engstler",
-        "position": "MF",
-        "club": "Sydney FC",
-        "age": 21
-      },
-      {
         "name": "Jackson Irvine",
         "position": "MF",
         "club": "FC St. Pauli",
-        "age": 33
-      },
-      {
-        "name": "Martin Boyle",
-        "position": "FW",
-        "club": "Hibernian",
         "age": 33
       },
       {
@@ -2607,16 +2541,82 @@ const seeds: TeamSeed[] = [
         "age": 35
       },
       {
-        "name": "Mohamed Touré",
-        "position": "FW",
-        "club": "Norwich City",
-        "age": 22
-      },
-      {
         "name": "Nestory Irankunda",
         "position": "FW",
         "club": "Watford",
         "age": 20
+      },
+      {
+        "name": "Paul Izzo",
+        "position": "GK",
+        "club": "Randers",
+        "age": 31
+      },
+      {
+        "name": "Joe Gauci",
+        "position": "GK",
+        "club": "Port Vale",
+        "age": 26
+      },
+      {
+        "name": "Alessandro Circati",
+        "position": "DF",
+        "club": "Parma",
+        "age": 23
+      },
+      {
+        "name": "Jordan Bos",
+        "position": "DF",
+        "club": "Feyenoord",
+        "age": 24
+      },
+      {
+        "name": "Harry Souttar",
+        "position": "DF",
+        "club": "Leicester City",
+        "age": 28
+      },
+      {
+        "name": "Jacob Italiano",
+        "position": "DF",
+        "club": "Grazer AK",
+        "age": 25
+      },
+      {
+        "name": "Lucas Herrington",
+        "position": "DF",
+        "club": "Colorado Rapids",
+        "age": 19
+      },
+      {
+        "name": "Connor Metcalfe",
+        "position": "MF",
+        "club": "FC St. Pauli",
+        "age": 27
+      },
+      {
+        "name": "Aiden O'Neill",
+        "position": "MF",
+        "club": "New York City",
+        "age": 28
+      },
+      {
+        "name": "Paul Okon-Engstler",
+        "position": "MF",
+        "club": "Sydney FC",
+        "age": 21
+      },
+      {
+        "name": "Martin Boyle",
+        "position": "FW",
+        "club": "Hibernian",
+        "age": 33
+      },
+      {
+        "name": "Mohamed Touré",
+        "position": "FW",
+        "club": "Norwich City",
+        "age": 22
       },
       {
         "name": "Nishan Velupillay",
@@ -2654,72 +2654,6 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Zeki Çelik",
-        "position": "DF",
-        "club": "Roma",
-        "age": 29
-      },
-      {
-        "name": "Abdülkerim Bardakcı",
-        "position": "DF",
-        "club": "Galatasaray",
-        "age": 32
-      },
-      {
-        "name": "Eren Elmalı",
-        "position": "DF",
-        "club": "Galatasaray",
-        "age": 26
-      },
-      {
-        "name": "Samet Akaydin",
-        "position": "DF",
-        "club": "Çaykur Rizespor",
-        "age": 32
-      },
-      {
-        "name": "Hakan Çalhanoğlu",
-        "position": "MF",
-        "club": "Inter Milan",
-        "age": 32
-      },
-      {
-        "name": "Kaan Ayhan",
-        "position": "MF",
-        "club": "Galatasaray",
-        "age": 32
-      },
-      {
-        "name": "Salih Özcan",
-        "position": "MF",
-        "club": "Borussia Dortmund",
-        "age": 28
-      },
-      {
-        "name": "Atakan Karazor",
-        "position": "MF",
-        "club": "VfB Stuttgart",
-        "age": 30
-      },
-      {
-        "name": "Mert Günok",
-        "position": "GK",
-        "club": "Fenerbahçe",
-        "age": 37
-      },
-      {
-        "name": "Ersin Destanoğlu",
-        "position": "GK",
-        "club": "Beşiktaş",
-        "age": 25
-      },
-      {
-        "name": "Muhammed Şengezer",
-        "position": "GK",
-        "club": "İstanbul Başakşehir",
-        "age": 29
-      },
-      {
         "name": "Merih Demiral",
         "position": "DF",
         "club": "Al-Ahli",
@@ -2732,15 +2666,81 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Mert Müldür",
-        "position": "DF",
-        "club": "Fenerbahçe",
-        "age": 27
-      },
-      {
         "name": "Ferdi Kadıoğlu",
         "position": "DF",
         "club": "Brighton &amp; Hove Albion",
+        "age": 27
+      },
+      {
+        "name": "Abdülkerim Bardakcı",
+        "position": "DF",
+        "club": "Galatasaray",
+        "age": 32
+      },
+      {
+        "name": "Samet Akaydin",
+        "position": "DF",
+        "club": "Fenerbahçe",
+        "age": 32
+      },
+      {
+        "name": "Mustafa Eskihellaç",
+        "position": "DF",
+        "club": "Gaziantep FK",
+        "age": 29
+      },
+      {
+        "name": "Hakan Çalhanoğlu",
+        "position": "MF",
+        "club": "Inter Milan",
+        "age": 32
+      },
+      {
+        "name": "Orkun Kökçü",
+        "position": "MF",
+        "club": "Benfica",
+        "age": 26
+      },
+      {
+        "name": "Salih Özcan",
+        "position": "MF",
+        "club": "Borussia Dortmund",
+        "age": 28
+      },
+      {
+        "name": "Demir Ege Tıknaz",
+        "position": "MF",
+        "club": "Braga",
+        "age": 22
+      },
+      {
+        "name": "İrfan Can Kahveci",
+        "position": "FW",
+        "club": "Fenerbahçe",
+        "age": 31
+      },
+      {
+        "name": "Mert Günok",
+        "position": "GK",
+        "club": "Fenerbahçe",
+        "age": 37
+      },
+      {
+        "name": "Muhammed Şengezer",
+        "position": "GK",
+        "club": "İstanbul Başakşehir",
+        "age": 29
+      },
+      {
+        "name": "Zeki Çelik",
+        "position": "DF",
+        "club": "Roma",
+        "age": 29
+      },
+      {
+        "name": "Mert Müldür",
+        "position": "DF",
+        "club": "Fenerbahçe",
         "age": 27
       },
       {
@@ -2750,28 +2750,28 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Yusuf Akçiçek",
-        "position": "DF",
-        "club": "Al-Hilal",
-        "age": 20
-      },
-      {
-        "name": "Mustafa Eskihellaç",
+        "name": "Eren Elmalı",
         "position": "DF",
         "club": "Trabzonspor",
-        "age": 29
+        "age": 26
+      },
+      {
+        "name": "Yusuf Akçiçek",
+        "position": "DF",
+        "club": "Fenerbahçe",
+        "age": 20
       },
       {
         "name": "Ahmetcan Kaplan",
         "position": "DF",
-        "club": "NEC",
+        "club": "Ajax",
         "age": 23
       },
       {
-        "name": "Orkun Kökçü",
+        "name": "Kaan Ayhan",
         "position": "MF",
-        "club": "Beşiktaş",
-        "age": 26
+        "club": "Galatasaray",
+        "age": 32
       },
       {
         "name": "İsmail Yüksek",
@@ -2780,10 +2780,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Demir Ege Tıknaz",
+        "name": "Atakan Karazor",
         "position": "MF",
-        "club": "Beşiktaş",
-        "age": 22
+        "club": "VfB Stuttgart",
+        "age": 30
       },
       {
         "name": "Kerem Aktürkoğlu",
@@ -2792,10 +2792,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "İrfan Can Kahveci",
+        "name": "Barış Alper Yılmaz",
         "position": "FW",
-        "club": "Kasımpaşa",
-        "age": 31
+        "club": "Galatasaray",
+        "age": 26
       }
     ]
   },
@@ -2815,12 +2815,6 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "David Raum",
-        "position": "DF",
-        "club": "RB Leipzig",
-        "age": 28
-      },
-      {
         "name": "Manuel Neuer",
         "position": "GK",
         "club": "Bayern Munich",
@@ -2833,40 +2827,16 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Antonio Rüdiger",
-        "position": "DF",
-        "club": "Real Madrid",
-        "age": 33
-      },
-      {
         "name": "Waldemar Anton",
         "position": "DF",
         "club": "Borussia Dortmund",
         "age": 30
       },
       {
-        "name": "Jonathan Tah",
-        "position": "DF",
-        "club": "Bayern Munich",
-        "age": 30
-      },
-      {
-        "name": "Oliver Baumann",
-        "position": "GK",
-        "club": "TSG Hoffenheim",
-        "age": 36
-      },
-      {
         "name": "Pascal Groß",
         "position": "DF",
-        "club": "Brighton &amp; Hove Albion",
-        "age": 35
-      },
-      {
-        "name": "Nico Schlotterbeck",
-        "position": "DF",
         "club": "Borussia Dortmund",
-        "age": 27
+        "age": 35
       },
       {
         "name": "Nathaniel Brown",
@@ -2875,19 +2845,55 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
+        "name": "Malick Thiaw",
+        "position": "DF",
+        "club": "Newcastle United",
+        "age": 25
+      },
+      {
+        "name": "Oliver Baumann",
+        "position": "GK",
+        "club": "TSG Hoffenheim",
+        "age": 36
+      },
+      {
+        "name": "Antonio Rüdiger",
+        "position": "DF",
+        "club": "Real Madrid",
+        "age": 33
+      },
+      {
+        "name": "Jonathan Tah",
+        "position": "DF",
+        "club": "Bayern Munich",
+        "age": 30
+      },
+      {
+        "name": "Nico Schlotterbeck",
+        "position": "DF",
+        "club": "Borussia Dortmund",
+        "age": 27
+      },
+      {
+        "name": "David Raum",
+        "position": "DF",
+        "club": "RB Leipzig",
+        "age": 28
+      },
+      {
         "name": "Aleksandar Pavlović",
         "position": "MF",
         "club": "Bayern Munich",
         "age": 22
       },
       {
-        "name": "Joshua Kimmich",
+        "name": "Leon Goretzka",
         "position": "MF",
         "club": "Bayern Munich",
         "age": 31
       },
       {
-        "name": "Leon Goretzka",
+        "name": "Joshua Kimmich",
         "position": "MF",
         "club": "Bayern Munich",
         "age": 31
@@ -2899,22 +2905,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Jamal Musiala",
-        "position": "MF",
-        "club": "Bayern Munich",
-        "age": 23
-      },
-      {
         "name": "Angelo Stiller",
         "position": "MF",
         "club": "VfB Stuttgart",
         "age": 25
-      },
-      {
-        "name": "Florian Wirtz",
-        "position": "MF",
-        "club": "Liverpool",
-        "age": 23
       },
       {
         "name": "Leroy Sané",
@@ -2923,22 +2917,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Nadiem Amiri",
-        "position": "MF",
-        "club": "Mainz 05",
-        "age": 30
-      },
-      {
         "name": "Felix Nmecha",
         "position": "MF",
         "club": "Borussia Dortmund",
         "age": 26
-      },
-      {
-        "name": "Lennart Karl",
-        "position": "MF",
-        "club": "Bayern Munich",
-        "age": 18
       },
       {
         "name": "Kai Havertz",
@@ -2953,22 +2935,40 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Deniz Undav",
-        "position": "FW",
-        "club": "VfB Stuttgart",
+        "name": "Jamal Musiala",
+        "position": "MF",
+        "club": "Bayern Munich",
+        "age": 23
+      },
+      {
+        "name": "Florian Wirtz",
+        "position": "MF",
+        "club": "Bayer Leverkusen",
+        "age": 23
+      },
+      {
+        "name": "Nadiem Amiri",
+        "position": "MF",
+        "club": "Mainz 05",
         "age": 30
       },
       {
-        "name": "Malick Thiaw",
-        "position": "DF",
-        "club": "Newcastle United",
-        "age": 25
+        "name": "Lennart Karl",
+        "position": "MF",
+        "club": "Bayern Munich",
+        "age": 18
       },
       {
         "name": "Nick Woltemade",
         "position": "FW",
-        "club": "Newcastle United",
+        "club": "VfB Stuttgart",
         "age": 24
+      },
+      {
+        "name": "Deniz Undav",
+        "position": "FW",
+        "club": "VfB Stuttgart",
+        "age": 30
       }
     ]
   },
@@ -2994,28 +2994,10 @@ const seeds: TeamSeed[] = [
         "age": 20
       },
       {
-        "name": "Darwin Guagua",
-        "position": "MF",
-        "club": "Independiente del Valle",
-        "age": 19
-      },
-      {
-        "name": "Moisés Ramírez",
-        "position": "GK",
-        "club": "Kifisia",
-        "age": 26
-      },
-      {
         "name": "Gonzalo Valle",
         "position": "GK",
         "club": "LDU Quito",
         "age": 30
-      },
-      {
-        "name": "Hernán Galíndez",
-        "position": "GK",
-        "club": "Huracán",
-        "age": 39
       },
       {
         "name": "Félix Torres",
@@ -3024,27 +3006,87 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Fricio Caicedo",
-        "position": "DF",
-        "club": "LDU Quito",
-        "age": 18
-      },
-      {
         "name": "Joel Ordóñez",
         "position": "DF",
         "club": "Club Brugge",
         "age": 22
       },
       {
-        "name": "Pervis Estupiñán",
-        "position": "DF",
-        "club": "Milan",
-        "age": 28
-      },
-      {
         "name": "Ángelo Preciado",
         "position": "DF",
         "club": "Atlético Mineiro",
+        "age": 28
+      },
+      {
+        "name": "Jackson Porozo",
+        "position": "DF",
+        "club": "Tijuana",
+        "age": 26
+      },
+      {
+        "name": "Jordy Alcívar",
+        "position": "MF",
+        "club": "Independiente del Valle",
+        "age": 27
+      },
+      {
+        "name": "John Yeboah",
+        "position": "MF",
+        "club": "Venezia",
+        "age": 26
+      },
+      {
+        "name": "Luis Fragozo",
+        "position": "MF",
+        "club": "Emelec",
+        "age": 16
+      },
+      {
+        "name": "Darwin Guagua",
+        "position": "MF",
+        "club": "Independiente del Valle",
+        "age": 19
+      },
+      {
+        "name": "Ederson Castillo",
+        "position": "MF",
+        "club": "LDU Quito",
+        "age": 18
+      },
+      {
+        "name": "Moisés Caicedo",
+        "position": "MF",
+        "club": "Chelsea",
+        "age": 25
+      },
+      {
+        "name": "Gonzalo Plata",
+        "position": "MF",
+        "club": "Flamengo",
+        "age": 26
+      },
+      {
+        "name": "Moisés Ramírez",
+        "position": "GK",
+        "club": "Kifisia",
+        "age": 26
+      },
+      {
+        "name": "Hernán Galíndez",
+        "position": "GK",
+        "club": "Huracán",
+        "age": 39
+      },
+      {
+        "name": "Fricio Caicedo",
+        "position": "DF",
+        "club": "LDU Quito",
+        "age": 18
+      },
+      {
+        "name": "Pervis Estupiñán",
+        "position": "DF",
+        "club": "Milan",
         "age": 28
       },
       {
@@ -3054,22 +3096,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Jackson Porozo",
-        "position": "DF",
-        "club": "Tijuana",
-        "age": 26
-      },
-      {
         "name": "Deinner Ordóñez",
         "position": "DF",
         "club": "Independiente del Valle",
         "age": 17
-      },
-      {
-        "name": "Jordy Alcívar",
-        "position": "MF",
-        "club": "Independiente del Valle",
-        "age": 27
       },
       {
         "name": "Denil Castillo",
@@ -3078,22 +3108,10 @@ const seeds: TeamSeed[] = [
         "age": 22
       },
       {
-        "name": "John Yeboah",
-        "position": "MF",
-        "club": "Venezia",
-        "age": 26
-      },
-      {
         "name": "Kendry Páez",
         "position": "MF",
         "club": "River Plate",
         "age": 19
-      },
-      {
-        "name": "Luis Fragozo",
-        "position": "MF",
-        "club": "Emelec",
-        "age": 16
       },
       {
         "name": "Malcom Dacosta",
@@ -3108,24 +3126,6 @@ const seeds: TeamSeed[] = [
         "age": 21
       },
       {
-        "name": "Moisés Caicedo",
-        "position": "MF",
-        "club": "Chelsea",
-        "age": 25
-      },
-      {
-        "name": "Alan Minda",
-        "position": "MF",
-        "club": "Atlético Mineiro",
-        "age": 23
-      },
-      {
-        "name": "Ederson Castillo",
-        "position": "MF",
-        "club": "LDU Quito",
-        "age": 18
-      },
-      {
         "name": "Yaimar Medina",
         "position": "MF",
         "club": "Genk",
@@ -3138,10 +3138,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Gonzalo Plata",
+        "name": "Alan Minda",
         "position": "MF",
-        "club": "Flamengo",
-        "age": 26
+        "club": "Atlético Mineiro",
+        "age": 23
       }
     ]
   },
@@ -3161,40 +3161,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Seko Fofana",
-        "position": "MF",
-        "club": "Porto",
-        "age": 31
-      },
-      {
         "name": "Yahia Fofana",
         "position": "GK",
-        "club": "Çaykur Rizespor",
+        "club": "Angers",
         "age": 26
-      },
-      {
-        "name": "Odilon Kossounou",
-        "position": "DF",
-        "club": "Atalanta",
-        "age": 25
-      },
-      {
-        "name": "Wilfried Singo",
-        "position": "DF",
-        "club": "Galatasaray",
-        "age": 26
-      },
-      {
-        "name": "Evan Ndicka",
-        "position": "DF",
-        "club": "Roma",
-        "age": 27
-      },
-      {
-        "name": "Alban Lafont",
-        "position": "GK",
-        "club": "Panathinaikos",
-        "age": 27
       },
       {
         "name": "Mohamed Koné",
@@ -3203,16 +3173,16 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Ghislain Konan",
+        "name": "Odilon Kossounou",
         "position": "DF",
-        "club": "Gil Vicente",
-        "age": 31
+        "club": "Atalanta",
+        "age": 25
       },
       {
-        "name": "Emmanuel Agbadou",
+        "name": "Evan Ndicka",
         "position": "DF",
-        "club": "Beşiktaş",
-        "age": 29
+        "club": "Roma",
+        "age": 27
       },
       {
         "name": "Guéla Doué",
@@ -3221,22 +3191,10 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Ousmane Diomande",
-        "position": "DF",
-        "club": "Sporting CP",
-        "age": 23
-      },
-      {
         "name": "Christopher Opéri",
         "position": "DF",
-        "club": "İstanbul Başakşehir",
+        "club": "Le Havre",
         "age": 29
-      },
-      {
-        "name": "Franck Kessié",
-        "position": "MF",
-        "club": "Al-Ahli",
-        "age": 30
       },
       {
         "name": "Jean Michaël Seri",
@@ -3245,46 +3203,10 @@ const seeds: TeamSeed[] = [
         "age": 35
       },
       {
-        "name": "Ibrahim Sangaré",
+        "name": "Seko Fofana",
         "position": "MF",
-        "club": "Nottingham Forest",
-        "age": 29
-      },
-      {
-        "name": "Nicolas Pépé",
-        "position": "FW",
-        "club": "Villarreal",
+        "club": "Porto",
         "age": 31
-      },
-      {
-        "name": "Simon Adingra",
-        "position": "FW",
-        "club": "Monaco",
-        "age": 24
-      },
-      {
-        "name": "Evann Guessand",
-        "position": "FW",
-        "club": "Crystal Palace",
-        "age": 25
-      },
-      {
-        "name": "Amad Diallo",
-        "position": "FW",
-        "club": "Manchester United",
-        "age": 24
-      },
-      {
-        "name": "Ange-Yoan Bonny",
-        "position": "FW",
-        "club": "Inter Milan",
-        "age": 23
-      },
-      {
-        "name": "Christ Inao Oulaï",
-        "position": "MF",
-        "club": "Trabzonspor",
-        "age": 20
       },
       {
         "name": "Parfait Guiagon",
@@ -3299,10 +3221,88 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
+        "name": "Evann Guessand",
+        "position": "FW",
+        "club": "Crystal Palace",
+        "age": 25
+      },
+      {
         "name": "Yan Diomande",
         "position": "FW",
         "club": "RB Leipzig",
         "age": 20
+      },
+      {
+        "name": "Elye Wahi",
+        "position": "FW",
+        "club": "Nice",
+        "age": 23
+      },
+      {
+        "name": "Alban Lafont",
+        "position": "GK",
+        "club": "Panathinaikos",
+        "age": 27
+      },
+      {
+        "name": "Ghislain Konan",
+        "position": "DF",
+        "club": "Gil Vicente",
+        "age": 31
+      },
+      {
+        "name": "Wilfried Singo",
+        "position": "DF",
+        "club": "Monaco",
+        "age": 26
+      },
+      {
+        "name": "Emmanuel Agbadou",
+        "position": "DF",
+        "club": "Reims",
+        "age": 29
+      },
+      {
+        "name": "Ousmane Diomande",
+        "position": "DF",
+        "club": "Sporting CP",
+        "age": 23
+      },
+      {
+        "name": "Franck Kessié",
+        "position": "MF",
+        "club": "Al-Ahli",
+        "age": 30
+      },
+      {
+        "name": "Ibrahim Sangaré",
+        "position": "MF",
+        "club": "Nottingham Forest",
+        "age": 29
+      },
+      {
+        "name": "Christ Inao Oulaï",
+        "position": "MF",
+        "club": "Serbest",
+        "age": 20
+      },
+      {
+        "name": "Nicolas Pépé",
+        "position": "FW",
+        "club": "Villarreal",
+        "age": 31
+      },
+      {
+        "name": "Simon Adingra",
+        "position": "FW",
+        "club": "Monaco",
+        "age": 24
+      },
+      {
+        "name": "Amad Diallo",
+        "position": "FW",
+        "club": "Manchester United",
+        "age": 24
       },
       {
         "name": "Bazoumana Touré",
@@ -3311,9 +3311,9 @@ const seeds: TeamSeed[] = [
         "age": 20
       },
       {
-        "name": "Elye Wahi",
+        "name": "Ange-Yoan Bonny",
         "position": "FW",
-        "club": "Nice",
+        "club": "Inter Milan",
         "age": 23
       }
     ]
@@ -3334,10 +3334,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Ar'jany Martha",
-        "position": "MF",
-        "club": "Rotherham United",
-        "age": 23
+        "name": "Eloy Room",
+        "position": "GK",
+        "club": "Miami FC",
+        "age": 37
       },
       {
         "name": "Tyrick Bodak",
@@ -3346,22 +3346,70 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Eloy Room",
-        "position": "GK",
-        "club": "Miami FC",
-        "age": 37
+        "name": "Juriën Gaari",
+        "position": "DF",
+        "club": "Abha",
+        "age": 33
       },
       {
-        "name": "Armando Obispo",
+        "name": "Sherel Floranus",
         "position": "DF",
-        "club": "PSV",
-        "age": 27
+        "club": "PEC Zwolle",
+        "age": 28
+      },
+      {
+        "name": "Joshua Brenet",
+        "position": "DF",
+        "club": "Serbest",
+        "age": 32
+      },
+      {
+        "name": "Deveron Fonville",
+        "position": "DF",
+        "club": "NEC",
+        "age": 23
+      },
+      {
+        "name": "Juninho Bacuna",
+        "position": "MF",
+        "club": "Volendam",
+        "age": 29
+      },
+      {
+        "name": "Leandro Bacuna",
+        "position": "MF",
+        "club": "Iğdır",
+        "age": 35
+      },
+      {
+        "name": "Ar'jany Martha",
+        "position": "MF",
+        "club": "Rotherham United",
+        "age": 23
       },
       {
         "name": "Jürgen Locadia",
         "position": "FW",
         "club": "Miami FC",
         "age": 33
+      },
+      {
+        "name": "Sontje Hansen",
+        "position": "FW",
+        "club": "Middlesbrough",
+        "age": 24
+      },
+      {
+        "name": "Jearl Margaritha",
+        "position": "FW",
+        "club": "Beveren",
+        "age": 26
+      },
+      {
+        "name": "Gervane Kastaneer",
+        "position": "FW",
+        "club": "Terengganu",
+        "age": 30
       },
       {
         "name": "Trevor Doornbusch",
@@ -3376,28 +3424,16 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Juriën Gaari",
-        "position": "DF",
-        "club": "Abha",
-        "age": 33
-      },
-      {
         "name": "Roshon van Eijma",
         "position": "DF",
         "club": "RKC Waalwijk",
         "age": 28
       },
       {
-        "name": "Sherel Floranus",
+        "name": "Armando Obispo",
         "position": "DF",
-        "club": "PEC Zwolle",
-        "age": 28
-      },
-      {
-        "name": "Joshua Brenet",
-        "position": "DF",
-        "club": "Kayserispor",
-        "age": 32
+        "club": "PSV",
+        "age": 27
       },
       {
         "name": "Riechedly Bazoer",
@@ -3406,34 +3442,16 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Deveron Fonville",
-        "position": "DF",
-        "club": "NEC",
-        "age": 23
-      },
-      {
         "name": "Godfried Roemeratoe",
         "position": "MF",
         "club": "RKC Waalwijk",
         "age": 27
       },
       {
-        "name": "Juninho Bacuna",
-        "position": "MF",
-        "club": "Volendam",
-        "age": 29
-      },
-      {
         "name": "Livano Comenencia",
         "position": "MF",
         "club": "Zürich",
         "age": 22
-      },
-      {
-        "name": "Leandro Bacuna",
-        "position": "MF",
-        "club": "Iğdır",
-        "age": 35
       },
       {
         "name": "Tyrese Noslin",
@@ -3454,34 +3472,16 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Sontje Hansen",
-        "position": "FW",
-        "club": "Middlesbrough",
-        "age": 24
-      },
-      {
         "name": "Kenji Gorré",
         "position": "FW",
         "club": "Maccabi Haifa",
         "age": 32
       },
       {
-        "name": "Jearl Margaritha",
-        "position": "FW",
-        "club": "Beveren",
-        "age": 26
-      },
-      {
         "name": "Brandley Kuwas",
         "position": "FW",
         "club": "Volendam",
         "age": 34
-      },
-      {
-        "name": "Gervane Kastaneer",
-        "position": "FW",
-        "club": "Terengganu",
-        "age": 30
       },
       {
         "name": "Tahith Chong",
@@ -3507,12 +3507,6 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Denzel Dumfries",
-        "position": "DF",
-        "club": "Internazionale",
-        "age": 30
-      },
-      {
         "name": "Bart Verbruggen",
         "position": "GK",
         "club": "Brighton &amp; Hove Albion",
@@ -3531,12 +3525,6 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Virgil van Dijk",
-        "position": "DF",
-        "club": "Liverpool",
-        "age": 35
-      },
-      {
         "name": "Robin Roefs",
         "position": "GK",
         "club": "Sunderland",
@@ -3549,16 +3537,76 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Nathan Aké",
+        "name": "Virgil van Dijk",
         "position": "DF",
-        "club": "Manchester City",
-        "age": 31
+        "club": "Liverpool",
+        "age": 35
       },
       {
         "name": "Micky van de Ven",
         "position": "DF",
         "club": "Tottenham Hotspur",
         "age": 25
+      },
+      {
+        "name": "Nathan Aké",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 31
+      },
+      {
+        "name": "Denzel Dumfries",
+        "position": "DF",
+        "club": "Internazionale",
+        "age": 30
+      },
+      {
+        "name": "Mats Wieffer",
+        "position": "MF",
+        "club": "Brighton &amp; Hove Albion",
+        "age": 27
+      },
+      {
+        "name": "Ryan Gravenberch",
+        "position": "MF",
+        "club": "Liverpool",
+        "age": 24
+      },
+      {
+        "name": "Tijjani Reijnders",
+        "position": "MF",
+        "club": "Manchester City",
+        "age": 28
+      },
+      {
+        "name": "Teun Koopmeiners",
+        "position": "MF",
+        "club": "Juventus",
+        "age": 28
+      },
+      {
+        "name": "Quinten Timber",
+        "position": "MF",
+        "club": "Marseille",
+        "age": 25
+      },
+      {
+        "name": "Memphis Depay",
+        "position": "FW",
+        "club": "Corinthians",
+        "age": 32
+      },
+      {
+        "name": "Noa Lang",
+        "position": "FW",
+        "club": "PSV Eindhoven",
+        "age": 27
+      },
+      {
+        "name": "Brian Brobbey",
+        "position": "FW",
+        "club": "Sunderland",
+        "age": 24
       },
       {
         "name": "Jorrel Hato",
@@ -3573,34 +3621,16 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Ryan Gravenberch",
-        "position": "MF",
-        "club": "Liverpool",
-        "age": 24
-      },
-      {
         "name": "Guus Til",
         "position": "MF",
         "club": "PSV Eindhoven",
         "age": 29
       },
       {
-        "name": "Tijjani Reijnders",
-        "position": "MF",
-        "club": "Manchester City",
-        "age": 28
-      },
-      {
         "name": "Marten de Roon",
         "position": "MF",
         "club": "Atalanta",
         "age": 35
-      },
-      {
-        "name": "Teun Koopmeiners",
-        "position": "MF",
-        "club": "Juventus",
-        "age": 28
       },
       {
         "name": "Frenkie de Jong",
@@ -3621,12 +3651,6 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Noa Lang",
-        "position": "FW",
-        "club": "Galatasaray",
-        "age": 27
-      },
-      {
         "name": "Donyell Malen",
         "position": "FW",
         "club": "Roma",
@@ -3637,30 +3661,6 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "West Ham United",
         "age": 25
-      },
-      {
-        "name": "Mats Wieffer",
-        "position": "MF",
-        "club": "Brighton &amp; Hove Albion",
-        "age": 27
-      },
-      {
-        "name": "Quinten Timber",
-        "position": "MF",
-        "club": "Marseille",
-        "age": 25
-      },
-      {
-        "name": "Memphis Depay",
-        "position": "FW",
-        "club": "Corinthians",
-        "age": 32
-      },
-      {
-        "name": "Brian Brobbey",
-        "position": "FW",
-        "club": "Sunderland",
-        "age": 24
       }
     ]
   },
@@ -3680,76 +3680,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Takefusa Kubo",
-        "position": "MF",
-        "club": "Real Sociedad",
-        "age": 25
-      },
-      {
-        "name": "Keito Nakamura",
-        "position": "MF",
-        "club": "Reims",
-        "age": 26
-      },
-      {
-        "name": "Junya Itō",
-        "position": "MF",
-        "club": "Genk",
-        "age": 33
-      },
-      {
-        "name": "Keisuke Gotō",
-        "position": "FW",
-        "club": "Sint-Truiden",
-        "age": 21
-      },
-      {
-        "name": "Daizen Maeda",
-        "position": "FW",
-        "club": "Celtic",
-        "age": 29
-      },
-      {
-        "name": "Yuito Suzuki",
-        "position": "FW",
-        "club": "SC Freiburg",
-        "age": 25
-      },
-      {
-        "name": "Kōki Ogawa",
-        "position": "FW",
-        "club": "NEC",
-        "age": 29
-      },
-      {
-        "name": "Ritsu Dōan",
-        "position": "MF",
-        "club": "Eintracht Frankfurt",
-        "age": 28
-      },
-      {
-        "name": "Keisuke Ōsako",
+        "name": "Zion Suzuki",
         "position": "GK",
-        "club": "Sanfrecce Hiroshima",
-        "age": 27
-      },
-      {
-        "name": "Kaishu Sano",
-        "position": "MF",
-        "club": "Mainz 05",
-        "age": 26
-      },
-      {
-        "name": "Daichi Kamada",
-        "position": "MF",
-        "club": "Crystal Palace",
-        "age": 30
-      },
-      {
-        "name": "Ayase Ueda",
-        "position": "FW",
-        "club": "Feyenoord",
-        "age": 28
+        "club": "Parma",
+        "age": 24
       },
       {
         "name": "Tomoki Hayakawa",
@@ -3758,10 +3692,76 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Zion Suzuki",
+        "name": "Shōgo Taniguchi",
+        "position": "DF",
+        "club": "Sint-Truiden",
+        "age": 35
+      },
+      {
+        "name": "Yūto Nagatomo",
+        "position": "DF",
+        "club": "FC Tokyo",
+        "age": 40
+      },
+      {
+        "name": "Tsuyoshi Watanabe",
+        "position": "DF",
+        "club": "Feyenoord",
+        "age": 29
+      },
+      {
+        "name": "Hiroki Itō",
+        "position": "DF",
+        "club": "Bayern Munich",
+        "age": 27
+      },
+      {
+        "name": "Junnosuke Suzuki",
+        "position": "DF",
+        "club": "Copenhagen",
+        "age": 23
+      },
+      {
+        "name": "Ao Tanaka",
+        "position": "MF",
+        "club": "Leeds United",
+        "age": 28
+      },
+      {
+        "name": "Ritsu Dōan",
+        "position": "MF",
+        "club": "Eintracht Frankfurt",
+        "age": 28
+      },
+      {
+        "name": "Junya Itō",
+        "position": "MF",
+        "club": "Genk",
+        "age": 33
+      },
+      {
+        "name": "Daichi Kamada",
+        "position": "MF",
+        "club": "Crystal Palace",
+        "age": 30
+      },
+      {
+        "name": "Daizen Maeda",
+        "position": "FW",
+        "club": "Celtic",
+        "age": 29
+      },
+      {
+        "name": "Ayase Ueda",
+        "position": "FW",
+        "club": "Feyenoord",
+        "age": 28
+      },
+      {
+        "name": "Keisuke Ōsako",
         "position": "GK",
-        "club": "Parma",
-        "age": 24
+        "club": "Sanfrecce Hiroshima",
+        "age": 27
       },
       {
         "name": "Yukinari Sugawara",
@@ -3782,36 +3782,6 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Tsuyoshi Watanabe",
-        "position": "DF",
-        "club": "Feyenoord",
-        "age": 29
-      },
-      {
-        "name": "Hiroki Itō",
-        "position": "DF",
-        "club": "Bayern Munich",
-        "age": 27
-      },
-      {
-        "name": "Wataru Endo",
-        "position": "MF",
-        "club": "Liverpool",
-        "age": 33
-      },
-      {
-        "name": "Shōgo Taniguchi",
-        "position": "DF",
-        "club": "Sint-Truiden",
-        "age": 35
-      },
-      {
-        "name": "Yūto Nagatomo",
-        "position": "DF",
-        "club": "FC Tokyo",
-        "age": 40
-      },
-      {
         "name": "Ayumu Seko",
         "position": "DF",
         "club": "Le Havre",
@@ -3824,16 +3794,46 @@ const seeds: TeamSeed[] = [
         "age": 38
       },
       {
-        "name": "Junnosuke Suzuki",
-        "position": "DF",
-        "club": "Copenhagen",
-        "age": 23
+        "name": "Wataru Endo",
+        "position": "MF",
+        "club": "Liverpool",
+        "age": 33
       },
       {
-        "name": "Ao Tanaka",
+        "name": "Takefusa Kubo",
         "position": "MF",
-        "club": "Leeds United",
-        "age": 28
+        "club": "Real Sociedad",
+        "age": 25
+      },
+      {
+        "name": "Keito Nakamura",
+        "position": "MF",
+        "club": "Reims",
+        "age": 26
+      },
+      {
+        "name": "Kaishu Sano",
+        "position": "MF",
+        "club": "Mainz 05",
+        "age": 26
+      },
+      {
+        "name": "Keisuke Gotō",
+        "position": "FW",
+        "club": "Sint-Truiden",
+        "age": 21
+      },
+      {
+        "name": "Yuito Suzuki",
+        "position": "FW",
+        "club": "SC Freiburg",
+        "age": 25
+      },
+      {
+        "name": "Kōki Ogawa",
+        "position": "FW",
+        "club": "NEC",
+        "age": 29
       }
     ]
   },
@@ -3852,12 +3852,6 @@ const seeds: TeamSeed[] = [
       "tenure": "2024–"
     },
     "players": [
-      {
-        "name": "İsveç Oyuncu 12",
-        "position": "DF",
-        "club": "City Stockholm",
-        "age": 19
-      },
       {
         "name": "İsveç Oyuncu 1",
         "position": "DF",
@@ -3883,6 +3877,12 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
+        "name": "İsveç Oyuncu 9",
+        "position": "FW",
+        "club": "Sporting Stockholm",
+        "age": 35
+      },
+      {
         "name": "İsveç Oyuncu 11",
         "position": "DF",
         "club": "Bayer Leverkusen",
@@ -3893,12 +3893,6 @@ const seeds: TeamSeed[] = [
         "position": "DF",
         "club": "Serbest",
         "age": 18
-      },
-      {
-        "name": "İsveç Oyuncu 19",
-        "position": "FW",
-        "club": "Serbest",
-        "age": 30
       },
       {
         "name": "İsveç Oyuncu 15",
@@ -3913,34 +3907,16 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "İsveç Oyuncu 21",
-        "position": "DF",
-        "club": "Sporting Stockholm",
-        "age": 25
-      },
-      {
-        "name": "İsveç Oyuncu 2",
-        "position": "DF",
-        "club": "Aston Villa",
-        "age": 28
-      },
-      {
-        "name": "İsveç Oyuncu 4",
-        "position": "MF",
+        "name": "İsveç Oyuncu 19",
+        "position": "FW",
         "club": "Serbest",
         "age": 30
       },
       {
-        "name": "İsveç Oyuncu 10",
-        "position": "GK",
-        "club": "Real Madrid",
-        "age": 21
-      },
-      {
-        "name": "İsveç Oyuncu 20",
-        "position": "GK",
-        "club": "AC Milan",
-        "age": 26
+        "name": "İsveç Oyuncu 21",
+        "position": "DF",
+        "club": "Sporting Stockholm",
+        "age": 25
       },
       {
         "name": "İsveç Oyuncu 23",
@@ -3955,6 +3931,18 @@ const seeds: TeamSeed[] = [
         "age": 21
       },
       {
+        "name": "İsveç Oyuncu 2",
+        "position": "DF",
+        "club": "Aston Villa",
+        "age": 28
+      },
+      {
+        "name": "İsveç Oyuncu 4",
+        "position": "MF",
+        "club": "Serbest",
+        "age": 30
+      },
+      {
         "name": "İsveç Oyuncu 6",
         "position": "FW",
         "club": "Stockholm Real",
@@ -3965,6 +3953,18 @@ const seeds: TeamSeed[] = [
         "position": "DF",
         "club": "Stockholm FC",
         "age": 34
+      },
+      {
+        "name": "İsveç Oyuncu 10",
+        "position": "GK",
+        "club": "Real Madrid",
+        "age": 21
+      },
+      {
+        "name": "İsveç Oyuncu 12",
+        "position": "DF",
+        "club": "City Stockholm",
+        "age": 19
       },
       {
         "name": "İsveç Oyuncu 14",
@@ -3985,6 +3985,12 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
+        "name": "İsveç Oyuncu 20",
+        "position": "GK",
+        "club": "AC Milan",
+        "age": 26
+      },
+      {
         "name": "İsveç Oyuncu 22",
         "position": "DF",
         "club": "Serbest",
@@ -4001,12 +4007,6 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Stockholm Club",
         "age": 20
-      },
-      {
-        "name": "İsveç Oyuncu 9",
-        "position": "FW",
-        "club": "Sporting Stockholm",
-        "age": 35
       }
     ]
   },
@@ -4026,34 +4026,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Anis Ben Slimane",
-        "position": "MF",
-        "club": "Norwich City",
-        "age": 25
-      },
-      {
-        "name": "Ellyes Skhiri",
-        "position": "MF",
-        "club": "Eintracht Frankfurt",
-        "age": 31
-      },
-      {
-        "name": "Ismaël Gharbi",
-        "position": "MF",
-        "club": "FC Augsburg",
-        "age": 22
-      },
-      {
         "name": "Aymen Dahmen",
         "position": "GK",
         "club": "CS Sfaxien",
         "age": 29
-      },
-      {
-        "name": "Sabri Ben Hessen",
-        "position": "GK",
-        "club": "Étoile du Sahel",
-        "age": 30
       },
       {
         "name": "Mouhib Chamakh",
@@ -4062,22 +4038,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Montassar Talbi",
-        "position": "DF",
-        "club": "Lorient",
-        "age": 28
-      },
-      {
         "name": "Dylan Bronn",
         "position": "DF",
         "club": "Servette",
         "age": 31
-      },
-      {
-        "name": "Ali Abdi",
-        "position": "DF",
-        "club": "Nice",
-        "age": 33
       },
       {
         "name": "Yan Valery",
@@ -4086,28 +4050,88 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Mohamed Amine Ben Hamida",
-        "position": "DF",
-        "club": "Espérance de Tunis",
-        "age": 31
-      },
-      {
         "name": "Moutaz Neffati",
         "position": "DF",
         "club": "IFK Norrköping",
         "age": 22
       },
       {
+        "name": "Adem Arous",
+        "position": "DF",
+        "club": "ES Tunis",
+        "age": 22
+      },
+      {
+        "name": "Ellyes Skhiri",
+        "position": "MF",
+        "club": "Eintracht Frankfurt",
+        "age": 31
+      },
+      {
+        "name": "Anis Ben Slimane",
+        "position": "MF",
+        "club": "Norwich City",
+        "age": 25
+      },
+      {
+        "name": "Ismaël Gharbi",
+        "position": "MF",
+        "club": "FC Augsburg",
+        "age": 22
+      },
+      {
+        "name": "Rani Khedira",
+        "position": "MF",
+        "club": "Union Berlin",
+        "age": 32
+      },
+      {
+        "name": "Firas Chaouat",
+        "position": "FW",
+        "club": "Club Africain",
+        "age": 30
+      },
+      {
+        "name": "Elias Saad",
+        "position": "FW",
+        "club": "Hannover 96",
+        "age": 27
+      },
+      {
+        "name": "Khalil Ayari",
+        "position": "FW",
+        "club": "Paris Saint-Germain",
+        "age": 21
+      },
+      {
+        "name": "Sabri Ben Hessen",
+        "position": "GK",
+        "club": "Étoile du Sahel",
+        "age": 30
+      },
+      {
+        "name": "Montassar Talbi",
+        "position": "DF",
+        "club": "Lorient",
+        "age": 28
+      },
+      {
+        "name": "Ali Abdi",
+        "position": "DF",
+        "club": "Nice",
+        "age": 33
+      },
+      {
+        "name": "Mohamed Amine Ben Hamida",
+        "position": "DF",
+        "club": "Espérance de Tunis",
+        "age": 31
+      },
+      {
         "name": "Omar Rekik",
         "position": "DF",
         "club": "Maribor",
         "age": 25
-      },
-      {
-        "name": "Adem Arous",
-        "position": "DF",
-        "club": "Kasımpaşa",
-        "age": 22
       },
       {
         "name": "Raed Chikhaoui",
@@ -4134,22 +4158,10 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Rani Khedira",
-        "position": "MF",
-        "club": "Union Berlin",
-        "age": 32
-      },
-      {
         "name": "Elias Achouri",
         "position": "FW",
         "club": "Copenhagen",
         "age": 27
-      },
-      {
-        "name": "Firas Chaouat",
-        "position": "FW",
-        "club": "Club Africain",
-        "age": 30
       },
       {
         "name": "Hazem Mastouri",
@@ -4158,22 +4170,10 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Elias Saad",
-        "position": "FW",
-        "club": "Hannover 96",
-        "age": 27
-      },
-      {
         "name": "Sebastian Tounekti",
         "position": "FW",
         "club": "Celtic",
         "age": 24
-      },
-      {
-        "name": "Khalil Ayari",
-        "position": "FW",
-        "club": "Paris Saint-Germain",
-        "age": 21
       },
       {
         "name": "Rayan Elloumi",
@@ -4199,18 +4199,6 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Alexis Saelemaekers",
-        "position": "FW",
-        "club": "Milan",
-        "age": 27
-      },
-      {
-        "name": "Thibaut Courtois",
-        "position": "GK",
-        "club": "Real Madrid",
-        "age": 34
-      },
-      {
         "name": "Senne Lammens",
         "position": "GK",
         "club": "Manchester United",
@@ -4229,52 +4217,16 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Nathan Ngoy",
+        "name": "Maxim De Cuyper",
         "position": "DF",
-        "club": "Lille",
-        "age": 23
+        "club": "Brighton &amp; Hove Albion",
+        "age": 26
       },
       {
-        "name": "Youri Tielemans",
-        "position": "MF",
-        "club": "Aston Villa",
-        "age": 29
-      },
-      {
-        "name": "Amadou Onana",
-        "position": "MF",
-        "club": "Aston Villa",
-        "age": 25
-      },
-      {
-        "name": "Nicolas Raskin",
-        "position": "MF",
-        "club": "Rangers",
-        "age": 25
-      },
-      {
-        "name": "Leandro Trossard",
-        "position": "FW",
-        "club": "Arsenal",
-        "age": 32
-      },
-      {
-        "name": "Charles De Ketelaere",
-        "position": "FW",
-        "club": "Atalanta",
-        "age": 25
-      },
-      {
-        "name": "Jérémy Doku",
-        "position": "FW",
-        "club": "Manchester City",
-        "age": 24
-      },
-      {
-        "name": "Matias Fernandez-Pardo",
-        "position": "FW",
-        "club": "Lille",
-        "age": 21
+        "name": "Thibaut Courtois",
+        "position": "GK",
+        "club": "Real Madrid",
+        "age": 34
       },
       {
         "name": "Mike Penders",
@@ -4295,22 +4247,10 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
-        "name": "Maxim De Cuyper",
-        "position": "DF",
-        "club": "Brighton &amp; Hove Albion",
-        "age": 26
-      },
-      {
         "name": "Brandon Mechele",
         "position": "DF",
         "club": "Club Brugge",
         "age": 33
-      },
-      {
-        "name": "Koni De Winter",
-        "position": "DF",
-        "club": "Milan",
-        "age": 24
       },
       {
         "name": "Joaquin Seys",
@@ -4325,6 +4265,54 @@ const seeds: TeamSeed[] = [
         "age": 37
       },
       {
+        "name": "Youri Tielemans",
+        "position": "MF",
+        "club": "Aston Villa",
+        "age": 29
+      },
+      {
+        "name": "Amadou Onana",
+        "position": "MF",
+        "club": "Aston Villa",
+        "age": 25
+      },
+      {
+        "name": "Diego Moreira",
+        "position": "MF",
+        "club": "Strasbourg",
+        "age": 22
+      },
+      {
+        "name": "Leandro Trossard",
+        "position": "FW",
+        "club": "Arsenal",
+        "age": 32
+      },
+      {
+        "name": "Jérémy Doku",
+        "position": "FW",
+        "club": "Manchester City",
+        "age": 24
+      },
+      {
+        "name": "Alexis Saelemaekers",
+        "position": "FW",
+        "club": "Milan",
+        "age": 27
+      },
+      {
+        "name": "Koni De Winter",
+        "position": "DF",
+        "club": "Milan",
+        "age": 24
+      },
+      {
+        "name": "Nathan Ngoy",
+        "position": "DF",
+        "club": "Lille",
+        "age": 23
+      },
+      {
         "name": "Kevin De Bruyne",
         "position": "MF",
         "club": "Napoli",
@@ -4337,10 +4325,10 @@ const seeds: TeamSeed[] = [
         "age": 34
       },
       {
-        "name": "Diego Moreira",
+        "name": "Nicolas Raskin",
         "position": "MF",
-        "club": "Strasbourg",
-        "age": 22
+        "club": "Rangers",
+        "age": 25
       },
       {
         "name": "Romelu Lukaku",
@@ -4349,10 +4337,22 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
+        "name": "Charles De Ketelaere",
+        "position": "FW",
+        "club": "Atalanta",
+        "age": 25
+      },
+      {
         "name": "Dodi Lukébakio",
         "position": "FW",
         "club": "Benfica",
         "age": 29
+      },
+      {
+        "name": "Matias Fernandez-Pardo",
+        "position": "FW",
+        "club": "Lille",
+        "age": 21
       }
     ]
   },
@@ -4372,28 +4372,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Hossein Kanaanizadegan",
-        "position": "DF",
-        "club": "Persepolis",
-        "age": 32
-      },
-      {
-        "name": "Mohammad Ghorbani",
-        "position": "MF",
-        "club": "Al-Wahda",
-        "age": 25
-      },
-      {
         "name": "Alireza Beiranvand",
         "position": "GK",
         "club": "Tractor",
         "age": 34
-      },
-      {
-        "name": "Payam Niazmand",
-        "position": "GK",
-        "club": "Persepolis",
-        "age": 31
       },
       {
         "name": "Hossein Hosseini",
@@ -4402,28 +4384,52 @@ const seeds: TeamSeed[] = [
         "age": 34
       },
       {
-        "name": "Mohammad Khalife",
-        "position": "GK",
-        "club": "Aluminium Arak",
-        "age": 22
-      },
-      {
         "name": "Saleh Hardani",
         "position": "DF",
         "club": "Esteghlal",
         "age": 28
       },
       {
-        "name": "Ehsan Hajsafi",
-        "position": "DF",
-        "club": "Sepahan",
-        "age": 36
-      },
-      {
         "name": "Shojae Khalilzadeh",
         "position": "DF",
         "club": "Tractor",
         "age": 37
+      },
+      {
+        "name": "Hossein Kanaanizadegan",
+        "position": "DF",
+        "club": "Persepolis",
+        "age": 32
+      },
+      {
+        "name": "Ali Nemati",
+        "position": "DF",
+        "club": "Foolad",
+        "age": 30
+      },
+      {
+        "name": "Danial Eiri",
+        "position": "DF",
+        "club": "Malavan",
+        "age": 23
+      },
+      {
+        "name": "Payam Niazmand",
+        "position": "GK",
+        "club": "Persepolis",
+        "age": 31
+      },
+      {
+        "name": "Mohammad Khalife",
+        "position": "GK",
+        "club": "Aluminium Arak",
+        "age": 22
+      },
+      {
+        "name": "Ehsan Hajsafi",
+        "position": "DF",
+        "club": "Sepahan",
+        "age": 36
       },
       {
         "name": "Milad Mohammadi",
@@ -4438,34 +4444,16 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Ali Nemati",
-        "position": "DF",
-        "club": "Foolad",
-        "age": 30
-      },
-      {
         "name": "Ramin Rezaeian",
         "position": "DF",
         "club": "Foolad",
         "age": 36
       },
       {
-        "name": "Danial Eiri",
-        "position": "DF",
-        "club": "Malavan",
-        "age": 23
-      },
-      {
         "name": "Saeid Ezatolahi",
         "position": "MF",
         "club": "Shabab Al-Ahli",
         "age": 30
-      },
-      {
-        "name": "Alireza Jahanbakhsh",
-        "position": "MF",
-        "club": "Dender",
-        "age": 33
       },
       {
         "name": "Mohammad Mohebi",
@@ -4480,22 +4468,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Rouzbeh Cheshmi",
-        "position": "MF",
-        "club": "Esteghlal",
-        "age": 33
-      },
-      {
         "name": "Mahdi Torabi",
         "position": "MF",
         "club": "Tractor",
         "age": 32
-      },
-      {
-        "name": "Omid Noorafkan",
-        "position": "MF",
-        "club": "Sepahan",
-        "age": 29
       },
       {
         "name": "Hadi Habibinejad",
@@ -4504,28 +4480,52 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
-        "name": "Amirmohammad Razzaghinia",
-        "position": "MF",
-        "club": "Esteghlal",
-        "age": 20
-      },
-      {
         "name": "Mehdi Taremi",
         "position": "FW",
         "club": "Olympiacos",
         "age": 34
       },
       {
-        "name": "Mehdi Ghayedi",
-        "position": "FW",
-        "club": "Al-Nasr",
-        "age": 28
-      },
-      {
         "name": "Amirhossein Hosseinzadeh",
         "position": "FW",
         "club": "Tractor",
         "age": 26
+      },
+      {
+        "name": "Alireza Jahanbakhsh",
+        "position": "MF",
+        "club": "Dender",
+        "age": 33
+      },
+      {
+        "name": "Mohammad Ghorbani",
+        "position": "MF",
+        "club": "Al-Wahda",
+        "age": 25
+      },
+      {
+        "name": "Rouzbeh Cheshmi",
+        "position": "MF",
+        "club": "Esteghlal",
+        "age": 33
+      },
+      {
+        "name": "Omid Noorafkan",
+        "position": "MF",
+        "club": "Sepahan",
+        "age": 29
+      },
+      {
+        "name": "Amirmohammad Razzaghinia",
+        "position": "MF",
+        "club": "Esteghlal",
+        "age": 20
+      },
+      {
+        "name": "Mehdi Ghayedi",
+        "position": "FW",
+        "club": "Al-Nasr",
+        "age": 28
       }
     ]
   },
@@ -4545,52 +4545,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Mohamed El Shenawy",
-        "position": "GK",
-        "club": "Al Ahly",
-        "age": 38
-      },
-      {
-        "name": "Hamdy Fathy",
-        "position": "MF",
-        "club": "Al-Wakrah",
-        "age": 32
-      },
-      {
-        "name": "Ibrahim Adel",
-        "position": "FW",
-        "club": "Nordsjælland",
-        "age": 25
-      },
-      {
-        "name": "Mohamed Salah",
-        "position": "FW",
-        "club": "Liverpool",
-        "age": 34
-      },
-      {
-        "name": "Omar Marmoush",
-        "position": "FW",
-        "club": "Manchester City",
-        "age": 27
-      },
-      {
-        "name": "Hamza Abdelkarim",
-        "position": "FW",
-        "club": "Barcelona B",
-        "age": 18
-      },
-      {
         "name": "Mostafa Shobeir",
         "position": "GK",
         "club": "Al Ahly",
         "age": 26
-      },
-      {
-        "name": "Mohamed Alaa",
-        "position": "GK",
-        "club": "El Gouna",
-        "age": 27
       },
       {
         "name": "El Mahdy Soliman",
@@ -4599,22 +4557,10 @@ const seeds: TeamSeed[] = [
         "age": 39
       },
       {
-        "name": "Ramy Rabia",
-        "position": "DF",
-        "club": "Al Ain",
-        "age": 33
-      },
-      {
         "name": "Mohamed Hany",
         "position": "DF",
         "club": "Al Ahly",
         "age": 30
-      },
-      {
-        "name": "Ahmed Abou El Fotouh",
-        "position": "DF",
-        "club": "Zamalek",
-        "age": 28
       },
       {
         "name": "Mohamed Abdelmonem",
@@ -4623,22 +4569,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Yasser Ibrahim",
-        "position": "DF",
-        "club": "Al Ahly",
-        "age": 33
-      },
-      {
         "name": "Hossam Abdelmaguid",
         "position": "DF",
         "club": "Zamalek",
         "age": 25
-      },
-      {
-        "name": "Karim Hafez",
-        "position": "DF",
-        "club": "Pyramids",
-        "age": 30
       },
       {
         "name": "Tarek Alaa",
@@ -4653,28 +4587,94 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Emam Ashour",
-        "position": "MF",
-        "club": "Al Ahly",
-        "age": 28
-      },
-      {
         "name": "Mohanad Lasheen",
         "position": "MF",
         "club": "Pyramids",
         "age": 30
       },
       {
-        "name": "Mahmoud Saber",
-        "position": "MF",
-        "club": "ZED",
-        "age": 25
-      },
-      {
         "name": "Nabil Emad",
         "position": "MF",
         "club": "Al-Najma",
         "age": 30
+      },
+      {
+        "name": "Mohamed Salah",
+        "position": "FW",
+        "club": "Liverpool",
+        "age": 34
+      },
+      {
+        "name": "Zizo",
+        "position": "FW",
+        "club": "Al Ahly",
+        "age": 30
+      },
+      {
+        "name": "Ibrahim Adel",
+        "position": "FW",
+        "club": "Nordsjælland",
+        "age": 25
+      },
+      {
+        "name": "Hamza Abdelkarim",
+        "position": "FW",
+        "club": "Barcelona B",
+        "age": 18
+      },
+      {
+        "name": "Mohamed El Shenawy",
+        "position": "GK",
+        "club": "Al Ahly",
+        "age": 38
+      },
+      {
+        "name": "Mohamed Alaa",
+        "position": "GK",
+        "club": "El Gouna",
+        "age": 27
+      },
+      {
+        "name": "Ramy Rabia",
+        "position": "DF",
+        "club": "Al Ain",
+        "age": 33
+      },
+      {
+        "name": "Ahmed Abou El Fotouh",
+        "position": "DF",
+        "club": "Zamalek",
+        "age": 28
+      },
+      {
+        "name": "Yasser Ibrahim",
+        "position": "DF",
+        "club": "Al Ahly",
+        "age": 33
+      },
+      {
+        "name": "Karim Hafez",
+        "position": "DF",
+        "club": "Pyramids",
+        "age": 30
+      },
+      {
+        "name": "Hamdy Fathy",
+        "position": "MF",
+        "club": "Al-Wakrah",
+        "age": 32
+      },
+      {
+        "name": "Emam Ashour",
+        "position": "MF",
+        "club": "Al Ahly",
+        "age": 28
+      },
+      {
+        "name": "Mahmoud Saber",
+        "position": "MF",
+        "club": "ZED",
+        "age": 25
       },
       {
         "name": "Mostafa Ziko",
@@ -4689,10 +4689,10 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Zizo",
+        "name": "Omar Marmoush",
         "position": "FW",
-        "club": "Al Ahly",
-        "age": 30
+        "club": "Manchester City",
+        "age": 27
       },
       {
         "name": "Haissem Hassan",
@@ -4718,46 +4718,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Yeni Zelanda Oyuncu 12",
-        "position": "DF",
-        "club": "Auckland Real",
-        "age": 22
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 15",
-        "position": "DF",
-        "club": "Sporting Auckland",
-        "age": 25
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 6",
-        "position": "FW",
-        "club": "Borussia Dortmund",
-        "age": 21
-      },
-      {
         "name": "Yeni Zelanda Oyuncu 10",
         "position": "GK",
         "club": "Manchester United",
         "age": 20
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 2",
-        "position": "DF",
-        "club": "Athletic Auckland",
-        "age": 25
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 4",
-        "position": "MF",
-        "club": "Sporting Auckland",
-        "age": 23
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 8",
-        "position": "DF",
-        "club": "Deportivo Auckland",
-        "age": 19
       },
       {
         "name": "Yeni Zelanda Oyuncu 14",
@@ -4766,52 +4730,10 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Yeni Zelanda Oyuncu 20",
-        "position": "GK",
-        "club": "Athletic Auckland",
-        "age": 33
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 3",
-        "position": "DF",
-        "club": "Serbest",
-        "age": 24
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 5",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 22
-      },
-      {
         "name": "Yeni Zelanda Oyuncu 7",
         "position": "FW",
         "club": "Bayern Munich",
         "age": 20
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 9",
-        "position": "FW",
-        "club": "Serbest",
-        "age": 18
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 23",
-        "position": "DF",
-        "club": "Serbest",
-        "age": 18
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 16",
-        "position": "FW",
-        "club": "Auckland United",
-        "age": 26
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 18",
-        "position": "DF",
-        "club": "Napoli",
-        "age": 28
       },
       {
         "name": "Yeni Zelanda Oyuncu 22",
@@ -4820,10 +4742,106 @@ const seeds: TeamSeed[] = [
         "age": 35
       },
       {
+        "name": "Yeni Zelanda Oyuncu 11",
+        "position": "DF",
+        "club": "Deportivo Auckland",
+        "age": 21
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 25",
+        "position": "DF",
+        "club": "Auckland FC",
+        "age": 20
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 15",
+        "position": "DF",
+        "club": "Sporting Auckland",
+        "age": 25
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 8",
+        "position": "DF",
+        "club": "Deportivo Auckland",
+        "age": 19
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 5",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 22
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 16",
+        "position": "FW",
+        "club": "Auckland United",
+        "age": 26
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 6",
+        "position": "FW",
+        "club": "Borussia Dortmund",
+        "age": 21
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 4",
+        "position": "MF",
+        "club": "Sporting Auckland",
+        "age": 23
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 3",
+        "position": "DF",
+        "club": "Serbest",
+        "age": 24
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 9",
+        "position": "FW",
+        "club": "Serbest",
+        "age": 18
+      },
+      {
         "name": "Yeni Zelanda Oyuncu 24",
         "position": "MF",
         "club": "City Auckland",
         "age": 19
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 13",
+        "position": "DF",
+        "club": "City Auckland",
+        "age": 23
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 12",
+        "position": "DF",
+        "club": "Auckland Real",
+        "age": 22
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 2",
+        "position": "DF",
+        "club": "Athletic Auckland",
+        "age": 25
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 20",
+        "position": "GK",
+        "club": "Athletic Auckland",
+        "age": 33
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 23",
+        "position": "DF",
+        "club": "Serbest",
+        "age": 18
+      },
+      {
+        "name": "Yeni Zelanda Oyuncu 18",
+        "position": "DF",
+        "club": "Napoli",
+        "age": 28
       },
       {
         "name": "Yeni Zelanda Oyuncu 26",
@@ -4836,18 +4854,6 @@ const seeds: TeamSeed[] = [
         "position": "DF",
         "club": "Auckland Club",
         "age": 26
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 11",
-        "position": "DF",
-        "club": "Deportivo Auckland",
-        "age": 21
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 13",
-        "position": "DF",
-        "club": "City Auckland",
-        "age": 23
       },
       {
         "name": "Yeni Zelanda Oyuncu 17",
@@ -4866,12 +4872,6 @@ const seeds: TeamSeed[] = [
         "position": "DF",
         "club": "Auckland Club",
         "age": 34
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 25",
-        "position": "DF",
-        "club": "Auckland FC",
-        "age": 20
       }
     ]
   },
@@ -4905,13 +4905,13 @@ const seeds: TeamSeed[] = [
       {
         "name": "Joan Garcia",
         "position": "GK",
-        "club": "Barcelona",
+        "club": "Espanyol",
         "age": 25
       },
       {
         "name": "Aymeric Laporte",
         "position": "DF",
-        "club": "Athletic Bilbao",
+        "club": "Al-Nassr",
         "age": 32
       },
       {
@@ -4919,6 +4919,12 @@ const seeds: TeamSeed[] = [
         "position": "DF",
         "club": "Chelsea",
         "age": 28
+      },
+      {
+        "name": "Marcos Llorente",
+        "position": "DF",
+        "club": "Atlético Madrid",
+        "age": 31
       },
       {
         "name": "Eric García",
@@ -4945,10 +4951,10 @@ const seeds: TeamSeed[] = [
         "age": 19
       },
       {
-        "name": "Rodri",
-        "position": "MF",
-        "club": "Manchester City",
-        "age": 30
+        "name": "Marc Pubill",
+        "position": "DF",
+        "club": "Almería",
+        "age": 23
       },
       {
         "name": "Dani Olmo",
@@ -4957,15 +4963,51 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Mikel Merino",
-        "position": "MF",
-        "club": "Arsenal",
-        "age": 30
-      },
-      {
         "name": "Fabián Ruiz",
         "position": "MF",
         "club": "Paris Saint-Germain",
+        "age": 30
+      },
+      {
+        "name": "Gavi",
+        "position": "MF",
+        "club": "Barcelona",
+        "age": 22
+      },
+      {
+        "name": "Álex Baena",
+        "position": "MF",
+        "club": "Villarreal",
+        "age": 25
+      },
+      {
+        "name": "Mikel Oyarzabal",
+        "position": "FW",
+        "club": "Real Sociedad",
+        "age": 29
+      },
+      {
+        "name": "Lamine Yamal",
+        "position": "FW",
+        "club": "Barcelona",
+        "age": 19
+      },
+      {
+        "name": "Borja Iglesias",
+        "position": "FW",
+        "club": "Celta Vigo",
+        "age": 33
+      },
+      {
+        "name": "Rodri",
+        "position": "MF",
+        "club": "Manchester City",
+        "age": 30
+      },
+      {
+        "name": "Mikel Merino",
+        "position": "MF",
+        "club": "Arsenal",
         "age": 30
       },
       {
@@ -4975,15 +5017,9 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Gavi",
-        "position": "MF",
-        "club": "Barcelona",
-        "age": 22
-      },
-      {
         "name": "Martín Zubimendi",
         "position": "MF",
-        "club": "Arsenal",
+        "club": "Real Sociedad",
         "age": 27
       },
       {
@@ -4999,15 +5035,9 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Lamine Yamal",
-        "position": "FW",
-        "club": "Barcelona",
-        "age": 19
-      },
-      {
         "name": "Yéremy Pino",
         "position": "FW",
-        "club": "Crystal Palace",
+        "club": "Villarreal",
         "age": 24
       },
       {
@@ -5015,36 +5045,6 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Osasuna",
         "age": 23
-      },
-      {
-        "name": "Marcos Llorente",
-        "position": "DF",
-        "club": "Atlético Madrid",
-        "age": 31
-      },
-      {
-        "name": "Marc Pubill",
-        "position": "DF",
-        "club": "Atlético Madrid",
-        "age": 23
-      },
-      {
-        "name": "Álex Baena",
-        "position": "MF",
-        "club": "Atlético Madrid",
-        "age": 25
-      },
-      {
-        "name": "Mikel Oyarzabal",
-        "position": "FW",
-        "club": "Real Sociedad",
-        "age": 29
-      },
-      {
-        "name": "Borja Iglesias",
-        "position": "FW",
-        "club": "Celta Vigo",
-        "age": 33
       }
     ]
   },
@@ -5064,52 +5064,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Santiago Mele",
-        "position": "GK",
-        "club": "Monterrey",
-        "age": 29
-      },
-      {
-        "name": "Juan Manuel Sanabria",
-        "position": "MF",
-        "club": "Real Salt Lake",
-        "age": 26
-      },
-      {
         "name": "Sergio Rochet",
         "position": "GK",
         "club": "Internacional",
         "age": 33
       },
       {
-        "name": "Ronald Araújo",
-        "position": "DF",
-        "club": "Barcelona",
-        "age": 27
-      },
-      {
-        "name": "Manuel Ugarte",
-        "position": "MF",
-        "club": "Manchester United",
-        "age": 25
-      },
-      {
-        "name": "Federico Valverde",
-        "position": "MF",
-        "club": "Real Madrid",
-        "age": 28
-      },
-      {
         "name": "Fernando Muslera",
         "position": "GK",
         "club": "Estudiantes",
         "age": 40
-      },
-      {
-        "name": "José María Giménez",
-        "position": "DF",
-        "club": "Atlético Madrid",
-        "age": 31
       },
       {
         "name": "Sebastián Cáceres",
@@ -5124,22 +5088,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Mathías Olivera",
-        "position": "DF",
-        "club": "Napoli",
-        "age": 29
-      },
-      {
         "name": "Matías Viña",
         "position": "DF",
         "club": "River Plate",
         "age": 29
-      },
-      {
-        "name": "Santiago Bueno",
-        "position": "DF",
-        "club": "Wolverhampton Wanderers",
-        "age": 28
       },
       {
         "name": "José Luis Rodríguez",
@@ -5148,22 +5100,16 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Joaquín Piquerez",
-        "position": "DF",
-        "club": "Palmeiras",
-        "age": 28
+        "name": "Manuel Ugarte",
+        "position": "MF",
+        "club": "Manchester United",
+        "age": 25
       },
       {
         "name": "Nicolás de la Cruz",
         "position": "MF",
         "club": "Flamengo",
         "age": 29
-      },
-      {
-        "name": "Emiliano Martínez",
-        "position": "MF",
-        "club": "Palmeiras",
-        "age": 27
       },
       {
         "name": "Giorgian de Arrascaeta",
@@ -5178,22 +5124,10 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Nicolás Fonseca",
-        "position": "MF",
-        "club": "Oviedo",
-        "age": 28
-      },
-      {
         "name": "Darwin Núñez",
         "position": "FW",
         "club": "Al-Hilal",
         "age": 27
-      },
-      {
-        "name": "Facundo Pellistri",
-        "position": "FW",
-        "club": "Panathinaikos",
-        "age": 25
       },
       {
         "name": "Agustín Canobbio",
@@ -5202,16 +5136,82 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Brian Rodríguez",
-        "position": "FW",
-        "club": "América",
-        "age": 26
-      },
-      {
         "name": "Federico Viñas",
         "position": "FW",
         "club": "Oviedo",
         "age": 28
+      },
+      {
+        "name": "Santiago Mele",
+        "position": "GK",
+        "club": "Monterrey",
+        "age": 29
+      },
+      {
+        "name": "José María Giménez",
+        "position": "DF",
+        "club": "Atlético Madrid",
+        "age": 31
+      },
+      {
+        "name": "Ronald Araújo",
+        "position": "DF",
+        "club": "Barcelona",
+        "age": 27
+      },
+      {
+        "name": "Mathías Olivera",
+        "position": "DF",
+        "club": "Napoli",
+        "age": 29
+      },
+      {
+        "name": "Santiago Bueno",
+        "position": "DF",
+        "club": "Wolverhampton Wanderers",
+        "age": 28
+      },
+      {
+        "name": "Joaquín Piquerez",
+        "position": "DF",
+        "club": "Palmeiras",
+        "age": 28
+      },
+      {
+        "name": "Juan Manuel Sanabria",
+        "position": "MF",
+        "club": "Real Salt Lake",
+        "age": 26
+      },
+      {
+        "name": "Emiliano Martínez",
+        "position": "MF",
+        "club": "Palmeiras",
+        "age": 27
+      },
+      {
+        "name": "Federico Valverde",
+        "position": "MF",
+        "club": "Real Madrid",
+        "age": 28
+      },
+      {
+        "name": "Nicolás Fonseca",
+        "position": "MF",
+        "club": "Oviedo",
+        "age": 28
+      },
+      {
+        "name": "Facundo Pellistri",
+        "position": "FW",
+        "club": "Panathinaikos",
+        "age": 25
+      },
+      {
+        "name": "Brian Rodríguez",
+        "position": "FW",
+        "club": "América",
+        "age": 26
       },
       {
         "name": "Facundo Torres",
@@ -5237,52 +5237,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Ali Lajami",
-        "position": "DF",
-        "club": "Al-Hilal",
-        "age": 30
-      },
-      {
-        "name": "Abdullah Al-Khaibari",
-        "position": "MF",
-        "club": "Al-Nassr",
-        "age": 30
-      },
-      {
-        "name": "Ziyad Al-Johani",
-        "position": "MF",
-        "club": "Al-Ahli",
-        "age": 25
-      },
-      {
-        "name": "Saud Abdulhamid",
-        "position": "DF",
-        "club": "Lens",
-        "age": 27
-      },
-      {
         "name": "Nawaf Al-Aqidi",
         "position": "GK",
         "club": "Al-Nassr",
         "age": 26
       },
       {
-        "name": "Mohammed Al-Owais",
-        "position": "GK",
-        "club": "Al-Ula",
-        "age": 35
-      },
-      {
         "name": "Ahmed Al-Kassar",
         "position": "GK",
         "club": "Al-Qadsiah",
         "age": 35
-      },
-      {
-        "name": "Abdulquddus Atiah",
-        "position": "GK",
-        "club": "Al-Taawoun",
-        "age": 29
       },
       {
         "name": "Ali Majrashi",
@@ -5297,6 +5261,78 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
+        "name": "Saud Abdulhamid",
+        "position": "DF",
+        "club": "Lens",
+        "age": 27
+      },
+      {
+        "name": "Hassan Kadesh",
+        "position": "DF",
+        "club": "Al-Ittihad",
+        "age": 34
+      },
+      {
+        "name": "Mohammed Abu Al-Shamat",
+        "position": "DF",
+        "club": "Al-Qadsiah",
+        "age": 24
+      },
+      {
+        "name": "Zakaria Hawsawi",
+        "position": "DF",
+        "club": "Al-Ahli",
+        "age": 25
+      },
+      {
+        "name": "Musab Al-Juwayr",
+        "position": "MF",
+        "club": "Al-Qadsiah",
+        "age": 23
+      },
+      {
+        "name": "Abdullah Al-Khaibari",
+        "position": "MF",
+        "club": "Al-Nassr",
+        "age": 30
+      },
+      {
+        "name": "Mohamed Kanno",
+        "position": "MF",
+        "club": "Al-Hilal",
+        "age": 32
+      },
+      {
+        "name": "Saleh Abu Al-Shamat",
+        "position": "MF",
+        "club": "Al-Ahli",
+        "age": 24
+      },
+      {
+        "name": "Ziyad Al-Johani",
+        "position": "MF",
+        "club": "Al-Ahli",
+        "age": 25
+      },
+      {
+        "name": "Mohammed Al-Owais",
+        "position": "GK",
+        "club": "Al-Ula",
+        "age": 35
+      },
+      {
+        "name": "Abdulquddus Atiah",
+        "position": "GK",
+        "club": "Al-Taawoun",
+        "age": 29
+      },
+      {
+        "name": "Ali Lajami",
+        "position": "DF",
+        "club": "Al-Hilal",
+        "age": 30
+      },
+      {
         "name": "Hassan Al-Tambakti",
         "position": "DF",
         "club": "Al-Hilal",
@@ -5309,22 +5345,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Hassan Kadesh",
-        "position": "DF",
-        "club": "Al-Ittihad",
-        "age": 34
-      },
-      {
         "name": "Moteb Al-Harbi",
         "position": "DF",
         "club": "Al-Hilal",
         "age": 26
-      },
-      {
-        "name": "Mohammed Abu Al-Shamat",
-        "position": "DF",
-        "club": "Al-Qadsiah",
-        "age": 24
       },
       {
         "name": "Jehad Thakri",
@@ -5333,22 +5357,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Zakaria Hawsawi",
-        "position": "DF",
-        "club": "Al-Ahli",
-        "age": 25
-      },
-      {
         "name": "Nasser Al-Dawsari",
         "position": "MF",
         "club": "Al-Hilal",
         "age": 28
-      },
-      {
-        "name": "Musab Al-Juwayr",
-        "position": "MF",
-        "club": "Al-Qadsiah",
-        "age": 23
       },
       {
         "name": "Salem Al-Dawsari",
@@ -5363,22 +5375,10 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Mohamed Kanno",
-        "position": "MF",
-        "club": "Al-Hilal",
-        "age": 32
-      },
-      {
         "name": "Alaa Al-Hejji",
         "position": "MF",
         "club": "Neom",
         "age": 31
-      },
-      {
-        "name": "Saleh Abu Al-Shamat",
-        "position": "MF",
-        "club": "Al-Ahli",
-        "age": 24
       },
       {
         "name": "Ayman Yahya",
@@ -5410,22 +5410,28 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
+        "name": "Vozinha",
+        "position": "GK",
+        "club": "Chaves",
+        "age": 40
+      },
+      {
+        "name": "CJ dos Santos",
+        "position": "GK",
+        "club": "San Diego",
+        "age": 26
+      },
+      {
         "name": "Pico",
         "position": "DF",
         "club": "Shamrock Rovers",
         "age": 34
       },
       {
-        "name": "Laros Duarte",
-        "position": "MF",
-        "club": "Puskás Akadémia",
-        "age": 29
-      },
-      {
-        "name": "Logan Costa",
+        "name": "Diney",
         "position": "DF",
-        "club": "Villarreal",
-        "age": 25
+        "club": "Al Bataeh",
+        "age": 31
       },
       {
         "name": "Steven Moreira",
@@ -5434,22 +5440,28 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Vozinha",
-        "position": "GK",
-        "club": "Chaves",
-        "age": 40
+        "name": "Sidny Lopes Cabral",
+        "position": "DF",
+        "club": "Benfica",
+        "age": 23
+      },
+      {
+        "name": "Jamiro Monteiro",
+        "position": "MF",
+        "club": "PEC Zwolle",
+        "age": 33
+      },
+      {
+        "name": "Deroy Duarte",
+        "position": "MF",
+        "club": "Ludogorets Razgrad",
+        "age": 27
       },
       {
         "name": "Márcio Rosa",
         "position": "GK",
         "club": "Montana",
         "age": 29
-      },
-      {
-        "name": "CJ dos Santos",
-        "position": "GK",
-        "club": "San Diego",
-        "age": 26
       },
       {
         "name": "Stopira",
@@ -5464,22 +5476,16 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Diney",
+        "name": "Logan Costa",
         "position": "DF",
-        "club": "Al Bataeh",
-        "age": 31
+        "club": "Villarreal",
+        "age": 25
       },
       {
         "name": "Wagner Pina",
         "position": "DF",
-        "club": "Trabzonspor",
+        "club": "Estoril",
         "age": 24
-      },
-      {
-        "name": "Sidny Lopes Cabral",
-        "position": "DF",
-        "club": "Benfica",
-        "age": 23
       },
       {
         "name": "Kelvin Pires",
@@ -5488,28 +5494,22 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Jamiro Monteiro",
-        "position": "MF",
-        "club": "PEC Zwolle",
-        "age": 33
-      },
-      {
         "name": "Kevin Pina",
         "position": "MF",
         "club": "Krasnodar",
         "age": 29
       },
       {
-        "name": "Deroy Duarte",
-        "position": "MF",
-        "club": "Ludogorets Razgrad",
-        "age": 27
-      },
-      {
         "name": "Telmo Arcanjo",
         "position": "MF",
         "club": "Vitória de Guimarães",
         "age": 25
+      },
+      {
+        "name": "Laros Duarte",
+        "position": "MF",
+        "club": "Puskás Akadémia",
+        "age": 29
       },
       {
         "name": "Yannick Semedo",
@@ -5562,7 +5562,7 @@ const seeds: TeamSeed[] = [
       {
         "name": "Nuno da Costa",
         "position": "FW",
-        "club": "İstanbul Başakşehir",
+        "club": "Kasımpaşa",
         "age": 35
       }
     ]
@@ -5583,28 +5583,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Adrien Rabiot",
-        "position": "MF",
-        "club": "Milan",
-        "age": 31
-      },
-      {
         "name": "Brice Samba",
         "position": "GK",
-        "club": "Rennes",
+        "club": "Lens",
         "age": 32
       },
       {
         "name": "Robin Risser",
         "position": "GK",
-        "club": "Lens",
+        "club": "Strasbourg",
         "age": 22
-      },
-      {
-        "name": "Malo Gusto",
-        "position": "DF",
-        "club": "Chelsea",
-        "age": 23
       },
       {
         "name": "Lucas Digne",
@@ -5613,22 +5601,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Dayot Upamecano",
-        "position": "DF",
-        "club": "Bayern Munich",
-        "age": 28
-      },
-      {
         "name": "Jules Koundé",
         "position": "DF",
         "club": "Barcelona",
         "age": 28
-      },
-      {
-        "name": "Ibrahima Konaté",
-        "position": "DF",
-        "club": "Liverpool",
-        "age": 27
       },
       {
         "name": "William Saliba",
@@ -5643,22 +5619,16 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Maxence Lacroix",
-        "position": "DF",
-        "club": "Crystal Palace",
-        "age": 26
-      },
-      {
         "name": "Manu Koné",
         "position": "MF",
         "club": "Roma",
         "age": 25
       },
       {
-        "name": "Aurélien Tchouaméni",
+        "name": "N'Golo Kanté",
         "position": "MF",
-        "club": "Real Madrid",
-        "age": 26
+        "club": "Al-Ittihad",
+        "age": 35
       },
       {
         "name": "Warren Zaïre-Emery",
@@ -5667,15 +5637,81 @@ const seeds: TeamSeed[] = [
         "age": 20
       },
       {
-        "name": "Ousmane Dembélé",
-        "position": "FW",
-        "club": "Paris Saint-Germain",
-        "age": 29
-      },
-      {
         "name": "Marcus Thuram",
         "position": "FW",
         "club": "Inter Milan",
+        "age": 29
+      },
+      {
+        "name": "Michael Olise",
+        "position": "FW",
+        "club": "Bayern Munich",
+        "age": 25
+      },
+      {
+        "name": "Désiré Doué",
+        "position": "FW",
+        "club": "Paris Saint-Germain",
+        "age": 21
+      },
+      {
+        "name": "Rayan Cherki",
+        "position": "FW",
+        "club": "Lyon",
+        "age": 23
+      },
+      {
+        "name": "Mike Maignan",
+        "position": "GK",
+        "club": "Milan",
+        "age": 31
+      },
+      {
+        "name": "Malo Gusto",
+        "position": "DF",
+        "club": "Chelsea",
+        "age": 23
+      },
+      {
+        "name": "Dayot Upamecano",
+        "position": "DF",
+        "club": "Bayern Munich",
+        "age": 28
+      },
+      {
+        "name": "Ibrahima Konaté",
+        "position": "DF",
+        "club": "Liverpool",
+        "age": 27
+      },
+      {
+        "name": "Théo Hernandez",
+        "position": "DF",
+        "club": "AC Milan",
+        "age": 29
+      },
+      {
+        "name": "Maxence Lacroix",
+        "position": "DF",
+        "club": "Crystal Palace",
+        "age": 26
+      },
+      {
+        "name": "Aurélien Tchouaméni",
+        "position": "MF",
+        "club": "Real Madrid",
+        "age": 26
+      },
+      {
+        "name": "Adrien Rabiot",
+        "position": "MF",
+        "club": "Milan",
+        "age": 31
+      },
+      {
+        "name": "Ousmane Dembélé",
+        "position": "FW",
+        "club": "Paris Saint-Germain",
         "age": 29
       },
       {
@@ -5685,52 +5721,16 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Michael Olise",
-        "position": "FW",
-        "club": "Bayern Munich",
-        "age": 25
-      },
-      {
         "name": "Bradley Barcola",
         "position": "FW",
         "club": "Paris Saint-Germain",
         "age": 24
       },
       {
-        "name": "Mike Maignan",
-        "position": "GK",
-        "club": "Milan",
-        "age": 31
-      },
-      {
-        "name": "Théo Hernandez",
-        "position": "DF",
-        "club": "Al-Hilal",
-        "age": 29
-      },
-      {
-        "name": "N'Golo Kanté",
-        "position": "MF",
-        "club": "Fenerbahçe",
-        "age": 35
-      },
-      {
-        "name": "Désiré Doué",
-        "position": "FW",
-        "club": "Paris Saint-Germain",
-        "age": 21
-      },
-      {
         "name": "Jean-Philippe Mateta",
         "position": "FW",
         "club": "Crystal Palace",
         "age": 29
-      },
-      {
-        "name": "Rayan Cherki",
-        "position": "FW",
-        "club": "Manchester City",
-        "age": 23
       },
       {
         "name": "Maghnes Akliouche",
@@ -5756,70 +5756,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Sander Tangvik",
-        "position": "GK",
-        "club": "Hamburg",
-        "age": 24
-      },
-      {
-        "name": "Patrick Berg",
-        "position": "MF",
-        "club": "Bodø/Glimt",
-        "age": 29
-      },
-      {
         "name": "Ørjan Nyland",
         "position": "GK",
         "club": "Sevilla",
         "age": 36
-      },
-      {
-        "name": "Kristoffer Vassbakk Ajer",
-        "position": "DF",
-        "club": "Brentford",
-        "age": 28
-      },
-      {
-        "name": "Julian Ryerson",
-        "position": "DF",
-        "club": "Borussia Dortmund",
-        "age": 29
-      },
-      {
-        "name": "Martin Ødegaard",
-        "position": "MF",
-        "club": "Arsenal",
-        "age": 28
-      },
-      {
-        "name": "Kristian Thorstvedt",
-        "position": "MF",
-        "club": "Sassuolo",
-        "age": 27
-      },
-      {
-        "name": "Thelo Aasgaard",
-        "position": "MF",
-        "club": "Rangers",
-        "age": 24
-      },
-      {
-        "name": "Antonio Nusa",
-        "position": "MF",
-        "club": "RB Leipzig",
-        "age": 21
-      },
-      {
-        "name": "Erling Braut Haaland",
-        "position": "FW",
-        "club": "Manchester City",
-        "age": 26
-      },
-      {
-        "name": "Jørgen Strand Larsen",
-        "position": "FW",
-        "club": "Crystal Palace",
-        "age": 26
       },
       {
         "name": "Egil Selvik",
@@ -5834,34 +5774,16 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "David Møller Wolfe",
-        "position": "DF",
-        "club": "Wolverhampton Wanderers",
-        "age": 24
-      },
-      {
         "name": "Fredrik André Bjørkan",
         "position": "DF",
         "club": "Bodø/Glimt",
         "age": 28
       },
       {
-        "name": "Marcus Holmgren Pedersen",
-        "position": "DF",
-        "club": "Torino",
-        "age": 26
-      },
-      {
         "name": "Torbjørn Heggem",
         "position": "DF",
         "club": "Bologna",
         "age": 27
-      },
-      {
-        "name": "Sondre Langås",
-        "position": "DF",
-        "club": "Derby County",
-        "age": 25
       },
       {
         "name": "Henrik Falchener",
@@ -5888,16 +5810,16 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
+        "name": "Thelo Aasgaard",
+        "position": "MF",
+        "club": "Rangers",
+        "age": 24
+      },
+      {
         "name": "Andreas Schjelderup",
         "position": "MF",
         "club": "Benfica",
         "age": 22
-      },
-      {
-        "name": "Oscar Bobb",
-        "position": "MF",
-        "club": "Fulham",
-        "age": 23
       },
       {
         "name": "Jens Petter Hauge",
@@ -5906,10 +5828,88 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
+        "name": "Erling Braut Haaland",
+        "position": "FW",
+        "club": "Manchester City",
+        "age": 26
+      },
+      {
+        "name": "Sander Tangvik",
+        "position": "GK",
+        "club": "Hamburg",
+        "age": 24
+      },
+      {
+        "name": "Kristoffer Vassbakk Ajer",
+        "position": "DF",
+        "club": "Brentford",
+        "age": 28
+      },
+      {
+        "name": "David Møller Wolfe",
+        "position": "DF",
+        "club": "Wolverhampton Wanderers",
+        "age": 24
+      },
+      {
+        "name": "Marcus Holmgren Pedersen",
+        "position": "DF",
+        "club": "Torino",
+        "age": 26
+      },
+      {
+        "name": "Sondre Langås",
+        "position": "DF",
+        "club": "Derby County",
+        "age": 25
+      },
+      {
+        "name": "Julian Ryerson",
+        "position": "DF",
+        "club": "Borussia Dortmund",
+        "age": 29
+      },
+      {
+        "name": "Patrick Berg",
+        "position": "MF",
+        "club": "Bodø/Glimt",
+        "age": 29
+      },
+      {
+        "name": "Martin Ødegaard",
+        "position": "MF",
+        "club": "Arsenal",
+        "age": 28
+      },
+      {
+        "name": "Kristian Thorstvedt",
+        "position": "MF",
+        "club": "Sassuolo",
+        "age": 27
+      },
+      {
+        "name": "Antonio Nusa",
+        "position": "MF",
+        "club": "RB Leipzig",
+        "age": 21
+      },
+      {
+        "name": "Oscar Bobb",
+        "position": "MF",
+        "club": "Fulham",
+        "age": 23
+      },
+      {
         "name": "Alexander Sørloth",
         "position": "FW",
         "club": "Atlético Madrid",
         "age": 31
+      },
+      {
+        "name": "Jørgen Strand Larsen",
+        "position": "FW",
+        "club": "Crystal Palace",
+        "age": 26
       }
     ]
   },
@@ -5929,46 +5929,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Maitham Jabbar",
-        "position": "DF",
-        "club": "Al-Zawraa",
-        "age": 26
-      },
-      {
-        "name": "Hussein Ali",
-        "position": "DF",
-        "club": "Pogoń Szczecin",
-        "age": 24
-      },
-      {
-        "name": "Jussef Nasrawe",
-        "position": "MF",
-        "club": "SV Ried",
-        "age": 19
-      },
-      {
         "name": "Fahad Talib",
         "position": "GK",
         "club": "Al-Talaba",
         "age": 32
       },
       {
-        "name": "Jalal Hassan",
-        "position": "GK",
-        "club": "Al-Zawraa",
-        "age": 35
-      },
-      {
         "name": "Kumel Al-Rekabe",
         "position": "GK",
         "club": "Erbil",
         "age": 22
-      },
-      {
-        "name": "Ahmed Basil",
-        "position": "GK",
-        "club": "Al-Shorta",
-        "age": 30
       },
       {
         "name": "Rebin Sulaka",
@@ -5983,22 +5953,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Akam Hashim",
-        "position": "DF",
-        "club": "Al-Zawraa",
-        "age": 28
-      },
-      {
         "name": "Manaf Younis",
         "position": "DF",
         "club": "Al-Shorta",
         "age": 30
-      },
-      {
-        "name": "Mustafa Saadoon",
-        "position": "DF",
-        "club": "Al-Shorta",
-        "age": 25
       },
       {
         "name": "Ahmed Yahya",
@@ -6007,22 +5965,10 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
-        "name": "Dario Naamo",
-        "position": "DF",
-        "club": "Dundee United",
-        "age": 21
-      },
-      {
         "name": "Ahmed Maknzi",
         "position": "DF",
         "club": "Al-Karma",
         "age": 25
-      },
-      {
-        "name": "Frans Putros",
-        "position": "DF",
-        "club": "Persib",
-        "age": 33
       },
       {
         "name": "Merchas Doski",
@@ -6037,12 +5983,6 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
-        "name": "Hasan Abdulkareem",
-        "position": "MF",
-        "club": "Al-Zawraa",
-        "age": 27
-      },
-      {
         "name": "Zidane Iqbal",
         "position": "MF",
         "club": "Utrecht",
@@ -6055,28 +5995,88 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Aimar Sher",
-        "position": "MF",
-        "club": "Sarpsborg",
-        "age": 24
-      },
-      {
         "name": "Marko Farji",
         "position": "MF",
         "club": "Venezia",
         "age": 22
       },
       {
-        "name": "Zaid Ismail",
-        "position": "MF",
-        "club": "Al-Talaba",
-        "age": 24
-      },
-      {
         "name": "Peter Gwargis",
         "position": "MF",
         "club": "Duhok",
         "age": 26
+      },
+      {
+        "name": "Jalal Hassan",
+        "position": "GK",
+        "club": "Al-Zawraa",
+        "age": 35
+      },
+      {
+        "name": "Ahmed Basil",
+        "position": "GK",
+        "club": "Al-Shorta",
+        "age": 30
+      },
+      {
+        "name": "Maitham Jabbar",
+        "position": "DF",
+        "club": "Al-Zawraa",
+        "age": 26
+      },
+      {
+        "name": "Akam Hashim",
+        "position": "DF",
+        "club": "Al-Zawraa",
+        "age": 28
+      },
+      {
+        "name": "Mustafa Saadoon",
+        "position": "DF",
+        "club": "Al-Shorta",
+        "age": 25
+      },
+      {
+        "name": "Dario Naamo",
+        "position": "DF",
+        "club": "Dundee United",
+        "age": 21
+      },
+      {
+        "name": "Frans Putros",
+        "position": "DF",
+        "club": "Persib",
+        "age": 33
+      },
+      {
+        "name": "Hussein Ali",
+        "position": "DF",
+        "club": "Pogoń Szczecin",
+        "age": 24
+      },
+      {
+        "name": "Hasan Abdulkareem",
+        "position": "MF",
+        "club": "Al-Zawraa",
+        "age": 27
+      },
+      {
+        "name": "Jussef Nasrawe",
+        "position": "MF",
+        "club": "SV Ried",
+        "age": 19
+      },
+      {
+        "name": "Aimar Sher",
+        "position": "MF",
+        "club": "Sarpsborg",
+        "age": 24
+      },
+      {
+        "name": "Zaid Ismail",
+        "position": "MF",
+        "club": "Al-Talaba",
+        "age": 24
       },
       {
         "name": "Ibrahim Bayesh",
@@ -6102,10 +6102,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Bamba Dieng",
-        "position": "FW",
-        "club": "Lorient",
-        "age": 26
+        "name": "Édouard Mendy",
+        "position": "GK",
+        "club": "Al-Ahli",
+        "age": 34
+      },
+      {
+        "name": "Yehvann Diouf",
+        "position": "GK",
+        "club": "Nice",
+        "age": 27
       },
       {
         "name": "Krépin Diatta",
@@ -6144,39 +6150,21 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Pape Matar Sarr",
-        "position": "MF",
-        "club": "Tottenham Hotspur",
-        "age": 24
-      },
-      {
         "name": "Lamine Camara",
         "position": "MF",
         "club": "Monaco",
         "age": 22
       },
       {
-        "name": "Bara Sapoko Ndiaye",
+        "name": "Habib Diarra",
         "position": "MF",
-        "club": "Bayern Munich",
-        "age": 19
+        "club": "Sunderland",
+        "age": 22
       },
       {
-        "name": "Ismaïla Sarr",
+        "name": "Sadio Mané",
         "position": "FW",
-        "club": "Crystal Palace",
-        "age": 28
-      },
-      {
-        "name": "Nicolas Jackson",
-        "position": "FW",
-        "club": "Bayern Munich",
-        "age": 25
-      },
-      {
-        "name": "Édouard Mendy",
-        "position": "GK",
-        "club": "Al-Ahli",
+        "club": "Al-Nassr",
         "age": 34
       },
       {
@@ -6184,12 +6172,6 @@ const seeds: TeamSeed[] = [
         "position": "GK",
         "club": "Le Havre",
         "age": 33
-      },
-      {
-        "name": "Yehvann Diouf",
-        "position": "GK",
-        "club": "Nice",
-        "age": 27
       },
       {
         "name": "Kalidou Koulibaly",
@@ -6228,22 +6210,40 @@ const seeds: TeamSeed[] = [
         "age": 37
       },
       {
+        "name": "Pape Matar Sarr",
+        "position": "MF",
+        "club": "Tottenham Hotspur",
+        "age": 24
+      },
+      {
         "name": "Pathé Ciss",
         "position": "MF",
         "club": "Rayo Vallecano",
         "age": 32
       },
       {
-        "name": "Habib Diarra",
+        "name": "Bara Sapoko Ndiaye",
         "position": "MF",
-        "club": "Sunderland",
-        "age": 22
+        "club": "Bayern Munich",
+        "age": 19
       },
       {
-        "name": "Sadio Mané",
+        "name": "Ismaïla Sarr",
         "position": "FW",
-        "club": "Al-Nassr",
-        "age": 34
+        "club": "Crystal Palace",
+        "age": 28
+      },
+      {
+        "name": "Nicolas Jackson",
+        "position": "FW",
+        "club": "Bayern Munich",
+        "age": 25
+      },
+      {
+        "name": "Cherif Ndiaye",
+        "position": "FW",
+        "club": "Red Star Belgrade",
+        "age": 30
       },
       {
         "name": "Iliman Ndiaye",
@@ -6252,10 +6252,10 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Cherif Ndiaye",
+        "name": "Bamba Dieng",
         "position": "FW",
-        "club": "Samsunspor",
-        "age": 30
+        "club": "Lorient",
+        "age": 26
       }
     ]
   },
@@ -6275,9 +6275,75 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
+        "name": "Gerónimo Rulli",
+        "position": "GK",
+        "club": "Marseille",
+        "age": 34
+      },
+      {
+        "name": "Leonardo Balerdi",
+        "position": "DF",
+        "club": "Marseille",
+        "age": 27
+      },
+      {
+        "name": "Gonzalo Montiel",
+        "position": "DF",
+        "club": "River Plate",
+        "age": 29
+      },
+      {
+        "name": "Cristian Romero",
+        "position": "DF",
+        "club": "Tottenham Hotspur",
+        "age": 28
+      },
+      {
+        "name": "Facundo Medina",
+        "position": "DF",
+        "club": "Marseille",
+        "age": 27
+      },
+      {
+        "name": "Leandro Paredes",
+        "position": "MF",
+        "club": "Boca Juniors",
+        "age": 32
+      },
+      {
+        "name": "Valentín Barco",
+        "position": "MF",
+        "club": "Strasbourg",
+        "age": 22
+      },
+      {
+        "name": "Exequiel Palacios",
+        "position": "MF",
+        "club": "Bayer Leverkusen",
+        "age": 28
+      },
+      {
+        "name": "Enzo Fernández",
+        "position": "MF",
+        "club": "Chelsea",
+        "age": 25
+      },
+      {
+        "name": "Lionel Messi",
+        "position": "FW",
+        "club": "Inter Miami",
+        "age": 39
+      },
+      {
+        "name": "Thiago Almada",
+        "position": "FW",
+        "club": "Botafogo",
+        "age": 25
+      },
+      {
         "name": "Nico Paz",
         "position": "FW",
-        "club": "Real Madrid",
+        "club": "Como",
         "age": 22
       },
       {
@@ -6287,10 +6353,10 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Julián Alvarez",
-        "position": "FW",
+        "name": "Juan Musso",
+        "position": "GK",
         "club": "Atlético Madrid",
-        "age": 26
+        "age": 32
       },
       {
         "name": "Emiliano Martínez",
@@ -6311,46 +6377,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Cristian Romero",
-        "position": "DF",
-        "club": "Tottenham Hotspur",
-        "age": 28
-      },
-      {
-        "name": "Juan Musso",
-        "position": "GK",
-        "club": "Atlético Madrid",
-        "age": 32
-      },
-      {
-        "name": "Gerónimo Rulli",
-        "position": "GK",
-        "club": "Marseille",
-        "age": 34
-      },
-      {
-        "name": "Leonardo Balerdi",
-        "position": "DF",
-        "club": "Marseille",
-        "age": 27
-      },
-      {
-        "name": "Gonzalo Montiel",
-        "position": "DF",
-        "club": "River Plate",
-        "age": 29
-      },
-      {
         "name": "Nicolás Otamendi",
         "position": "DF",
         "club": "River Plate",
         "age": 38
-      },
-      {
-        "name": "Facundo Medina",
-        "position": "DF",
-        "club": "Marseille",
-        "age": 27
       },
       {
         "name": "Nahuel Molina",
@@ -6359,22 +6389,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Leandro Paredes",
-        "position": "MF",
-        "club": "Boca Juniors",
-        "age": 32
-      },
-      {
         "name": "Rodrigo De Paul",
         "position": "MF",
-        "club": "Inter Miami",
+        "club": "Atlético Madrid",
         "age": 32
-      },
-      {
-        "name": "Valentín Barco",
-        "position": "MF",
-        "club": "Strasbourg",
-        "age": 22
       },
       {
         "name": "Giovani Lo Celso",
@@ -6383,40 +6401,22 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Exequiel Palacios",
-        "position": "MF",
-        "club": "Bayer Leverkusen",
-        "age": 28
-      },
-      {
         "name": "Alexis Mac Allister",
         "position": "MF",
         "club": "Liverpool",
         "age": 28
       },
       {
-        "name": "Enzo Fernández",
-        "position": "MF",
-        "club": "Chelsea",
-        "age": 25
-      },
-      {
-        "name": "Lionel Messi",
+        "name": "Julián Alvarez",
         "position": "FW",
-        "club": "Inter Miami",
-        "age": 39
+        "club": "Atlético Madrid",
+        "age": 26
       },
       {
         "name": "Nicolás González",
         "position": "FW",
-        "club": "Atlético Madrid",
+        "club": "Juventus",
         "age": 28
-      },
-      {
-        "name": "Thiago Almada",
-        "position": "FW",
-        "club": "Atlético Madrid",
-        "age": 25
       },
       {
         "name": "Giuliano Simeone",
@@ -6454,60 +6454,6 @@ const seeds: TeamSeed[] = [
         "age": 20
       },
       {
-        "name": "Aïssa Mandi",
-        "position": "DF",
-        "club": "Lille",
-        "age": 35
-      },
-      {
-        "name": "Rayan Aït-Nouri",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 25
-      },
-      {
-        "name": "Ramy Bensebaini",
-        "position": "DF",
-        "club": "Borussia Dortmund",
-        "age": 31
-      },
-      {
-        "name": "Farès Chaïbi",
-        "position": "MF",
-        "club": "Eintracht Frankfurt",
-        "age": 24
-      },
-      {
-        "name": "Adil Aouchiche",
-        "position": "MF",
-        "club": "Schalke 04",
-        "age": 24
-      },
-      {
-        "name": "Ibrahim Maza",
-        "position": "MF",
-        "club": "Bayer Leverkusen",
-        "age": 21
-      },
-      {
-        "name": "Amine Gouiri",
-        "position": "FW",
-        "club": "Marseille",
-        "age": 26
-      },
-      {
-        "name": "Anthony Mandrea",
-        "position": "GK",
-        "club": "Caen",
-        "age": 30
-      },
-      {
-        "name": "Luca Zidane",
-        "position": "GK",
-        "club": "Granada",
-        "age": 28
-      },
-      {
         "name": "Melvin Mastil",
         "position": "GK",
         "club": "Stade Nyonnais",
@@ -6520,28 +6466,22 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Achref Abada",
+        "name": "Zineddine Belaïd",
         "position": "DF",
-        "club": "USM Alger",
+        "club": "JS Kabylie",
         "age": 27
       },
       {
-        "name": "Sohaib Naïr",
+        "name": "Rayan Aït-Nouri",
         "position": "DF",
-        "club": "Guingamp",
-        "age": 24
+        "club": "Manchester City",
+        "age": 25
       },
       {
         "name": "Rafik Belghali",
         "position": "DF",
         "club": "Hellas Verona",
         "age": 24
-      },
-      {
-        "name": "Ramiz Zerrouki",
-        "position": "MF",
-        "club": "Twente",
-        "age": 28
       },
       {
         "name": "Houssem Aouar",
@@ -6556,10 +6496,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Yacine Titraoui",
+        "name": "Ibrahim Maza",
         "position": "MF",
-        "club": "Charleroi",
-        "age": 23
+        "club": "Bayer Leverkusen",
+        "age": 21
       },
       {
         "name": "Riyad Mahrez",
@@ -6574,6 +6514,84 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
+        "name": "Mohamed Amoura",
+        "position": "FW",
+        "club": "VfL Wolfsburg",
+        "age": 26
+      },
+      {
+        "name": "Adil Boulbina",
+        "position": "FW",
+        "club": "Al-Duhail",
+        "age": 23
+      },
+      {
+        "name": "Anthony Mandrea",
+        "position": "GK",
+        "club": "Caen",
+        "age": 30
+      },
+      {
+        "name": "Luca Zidane",
+        "position": "GK",
+        "club": "Granada",
+        "age": 28
+      },
+      {
+        "name": "Aïssa Mandi",
+        "position": "DF",
+        "club": "Lille",
+        "age": 35
+      },
+      {
+        "name": "Achref Abada",
+        "position": "DF",
+        "club": "USM Alger",
+        "age": 27
+      },
+      {
+        "name": "Sohaib Naïr",
+        "position": "DF",
+        "club": "Guingamp",
+        "age": 24
+      },
+      {
+        "name": "Ramy Bensebaini",
+        "position": "DF",
+        "club": "Borussia Dortmund",
+        "age": 31
+      },
+      {
+        "name": "Ramiz Zerrouki",
+        "position": "MF",
+        "club": "Twente",
+        "age": 28
+      },
+      {
+        "name": "Farès Chaïbi",
+        "position": "MF",
+        "club": "Eintracht Frankfurt",
+        "age": 24
+      },
+      {
+        "name": "Adil Aouchiche",
+        "position": "MF",
+        "club": "Schalke 04",
+        "age": 24
+      },
+      {
+        "name": "Yacine Titraoui",
+        "position": "MF",
+        "club": "Charleroi",
+        "age": 23
+      },
+      {
+        "name": "Amine Gouiri",
+        "position": "FW",
+        "club": "Marseille",
+        "age": 26
+      },
+      {
         "name": "Farès Ghedjemis",
         "position": "FW",
         "club": "Frosinone",
@@ -6584,24 +6602,6 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Rosenborg",
         "age": 20
-      },
-      {
-        "name": "Adil Boulbina",
-        "position": "FW",
-        "club": "Al-Duhail",
-        "age": 23
-      },
-      {
-        "name": "Zineddine Belaïd",
-        "position": "DF",
-        "club": "JS Kabylie",
-        "age": 27
-      },
-      {
-        "name": "Mohamed Amoura",
-        "position": "FW",
-        "club": "VfL Wolfsburg",
-        "age": 26
       }
     ]
   },
@@ -6621,22 +6621,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Alexander Schlager",
-        "position": "GK",
-        "club": "Red Bull Salzburg",
-        "age": 30
-      },
-      {
         "name": "Florian Wiegele",
         "position": "GK",
         "club": "Viktoria Plzeň",
         "age": 25
-      },
-      {
-        "name": "Patrick Pentz",
-        "position": "GK",
-        "club": "Brøndby",
-        "age": 29
       },
       {
         "name": "David Affengruber",
@@ -6645,58 +6633,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Kevin Danso",
-        "position": "DF",
-        "club": "Tottenham Hotspur",
-        "age": 28
-      },
-      {
         "name": "Stefan Posch",
         "position": "DF",
         "club": "Mainz 05",
         "age": 29
-      },
-      {
-        "name": "David Alaba",
-        "position": "DF",
-        "club": "Real Madrid",
-        "age": 34
-      },
-      {
-        "name": "Phillipp Mwene",
-        "position": "DF",
-        "club": "Mainz 05",
-        "age": 32
-      },
-      {
-        "name": "Marcel Sabitzer",
-        "position": "MF",
-        "club": "Borussia Dortmund",
-        "age": 32
-      },
-      {
-        "name": "Carney Chukwuemeka",
-        "position": "MF",
-        "club": "Borussia Dortmund",
-        "age": 23
-      },
-      {
-        "name": "Konrad Laimer",
-        "position": "MF",
-        "club": "Bayern Munich",
-        "age": 29
-      },
-      {
-        "name": "Paul Wanner",
-        "position": "MF",
-        "club": "PSV",
-        "age": 21
-      },
-      {
-        "name": "Michael Gregoritsch",
-        "position": "FW",
-        "club": "FC Augsburg",
-        "age": 32
       },
       {
         "name": "Philipp Lienhart",
@@ -6711,22 +6651,10 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Marco Friedl",
-        "position": "DF",
-        "club": "Werder Bremen",
-        "age": 28
-      },
-      {
         "name": "Michael Svoboda",
         "position": "DF",
         "club": "Venezia",
         "age": 28
-      },
-      {
-        "name": "Xaver Schlager",
-        "position": "MF",
-        "club": "RB Leipzig",
-        "age": 29
       },
       {
         "name": "Nicolas Seiwald",
@@ -6747,16 +6675,16 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Christoph Baumgartner",
+        "name": "Konrad Laimer",
         "position": "MF",
-        "club": "RB Leipzig",
-        "age": 27
+        "club": "Bayern Munich",
+        "age": 29
       },
       {
-        "name": "Alessandro Schöpf",
+        "name": "Paul Wanner",
         "position": "MF",
-        "club": "Wolfsberger AC",
-        "age": 32
+        "club": "PSV",
+        "age": 21
       },
       {
         "name": "Marko Arnautović",
@@ -6771,10 +6699,82 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
+        "name": "Alexander Schlager",
+        "position": "GK",
+        "club": "Red Bull Salzburg",
+        "age": 30
+      },
+      {
+        "name": "Patrick Pentz",
+        "position": "GK",
+        "club": "Brøndby",
+        "age": 29
+      },
+      {
+        "name": "Kevin Danso",
+        "position": "DF",
+        "club": "Tottenham Hotspur",
+        "age": 28
+      },
+      {
+        "name": "David Alaba",
+        "position": "DF",
+        "club": "Real Madrid",
+        "age": 34
+      },
+      {
+        "name": "Phillipp Mwene",
+        "position": "DF",
+        "club": "Mainz 05",
+        "age": 32
+      },
+      {
+        "name": "Marco Friedl",
+        "position": "DF",
+        "club": "Werder Bremen",
+        "age": 28
+      },
+      {
+        "name": "Xaver Schlager",
+        "position": "MF",
+        "club": "RB Leipzig",
+        "age": 29
+      },
+      {
+        "name": "Marcel Sabitzer",
+        "position": "MF",
+        "club": "Borussia Dortmund",
+        "age": 32
+      },
+      {
+        "name": "Carney Chukwuemeka",
+        "position": "MF",
+        "club": "Borussia Dortmund",
+        "age": 23
+      },
+      {
+        "name": "Christoph Baumgartner",
+        "position": "MF",
+        "club": "RB Leipzig",
+        "age": 27
+      },
+      {
         "name": "Patrick Wimmer",
         "position": "MF",
         "club": "VfL Wolfsburg",
         "age": 25
+      },
+      {
+        "name": "Alessandro Schöpf",
+        "position": "MF",
+        "club": "Wolfsberger AC",
+        "age": 32
+      },
+      {
+        "name": "Michael Gregoritsch",
+        "position": "FW",
+        "club": "FC Augsburg",
+        "age": 32
       }
     ]
   },
@@ -6794,28 +6794,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Musa Al-Taamari",
-        "position": "FW",
-        "club": "Rennes",
-        "age": 29
-      },
-      {
-        "name": "Yazeed Abulaila",
-        "position": "GK",
-        "club": "Al-Hussein",
-        "age": 33
-      },
-      {
         "name": "Abdallah Al-Fakhouri",
         "position": "GK",
         "club": "Al-Wehdat",
         "age": 26
-      },
-      {
-        "name": "Nour Bani Attiah",
-        "position": "GK",
-        "club": "Al-Faisaly",
-        "age": 33
       },
       {
         "name": "Ihsan Haddad",
@@ -6824,28 +6806,52 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Yazan Al-Arab",
-        "position": "DF",
-        "club": "FC Seoul",
-        "age": 30
-      },
-      {
         "name": "Abdallah Nasib",
         "position": "DF",
         "club": "Al-Zawraa",
         "age": 32
       },
       {
-        "name": "Saed Al-Rosan",
-        "position": "DF",
-        "club": "Al-Hussein",
-        "age": 29
-      },
-      {
         "name": "Husam Abu Dahab",
         "position": "DF",
         "club": "Al-Faisaly",
         "age": 26
+      },
+      {
+        "name": "Salim Obaid",
+        "position": "DF",
+        "club": "Al-Hussein",
+        "age": 34
+      },
+      {
+        "name": "Rajaei Ayed",
+        "position": "MF",
+        "club": "Al-Hussein",
+        "age": 33
+      },
+      {
+        "name": "Yazeed Abulaila",
+        "position": "GK",
+        "club": "Al-Hussein",
+        "age": 33
+      },
+      {
+        "name": "Nour Bani Attiah",
+        "position": "GK",
+        "club": "Al-Faisaly",
+        "age": 33
+      },
+      {
+        "name": "Yazan Al-Arab",
+        "position": "DF",
+        "club": "FC Seoul",
+        "age": 30
+      },
+      {
+        "name": "Saed Al-Rosan",
+        "position": "DF",
+        "club": "Al-Hussein",
+        "age": 29
       },
       {
         "name": "Mohammad Abualnadi",
@@ -6860,22 +6866,10 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "Rajaei Ayed",
-        "position": "MF",
-        "club": "Al-Hussein",
-        "age": 33
-      },
-      {
         "name": "Noor Al-Rawabdeh",
         "position": "MF",
         "club": "Selangor",
         "age": 29
-      },
-      {
-        "name": "Ibrahim Sa'deh",
-        "position": "MF",
-        "club": "Al-Karma",
-        "age": 26
       },
       {
         "name": "Mohammad Abu Hashish",
@@ -6884,16 +6878,16 @@ const seeds: TeamSeed[] = [
         "age": 31
       },
       {
+        "name": "Ibrahim Sa'deh",
+        "position": "MF",
+        "club": "Al-Karma",
+        "age": 26
+      },
+      {
         "name": "Nizar Al-Rashdan",
         "position": "MF",
         "club": "Qatar",
         "age": 27
-      },
-      {
-        "name": "Mohannad Abu Taha",
-        "position": "MF",
-        "club": "Al-Quwa Al-Jawiya",
-        "age": 23
       },
       {
         "name": "Amer Jamous",
@@ -6902,19 +6896,7 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Mohammad Al-Dawoud",
-        "position": "MF",
-        "club": "Al-Wehdat",
-        "age": 34
-      },
-      {
         "name": "Yousef Qashi",
-        "position": "MF",
-        "club": "Al-Hussein",
-        "age": 21
-      },
-      {
-        "name": "Mohammad Taha",
         "position": "MF",
         "club": "Al-Hussein",
         "age": 21
@@ -6938,10 +6920,28 @@ const seeds: TeamSeed[] = [
         "age": 20
       },
       {
-        "name": "Salim Obaid",
-        "position": "DF",
-        "club": "Al-Hussein",
+        "name": "Mohannad Abu Taha",
+        "position": "MF",
+        "club": "Al-Quwa Al-Jawiya",
+        "age": 23
+      },
+      {
+        "name": "Mohammad Al-Dawoud",
+        "position": "MF",
+        "club": "Al-Wehdat",
         "age": 34
+      },
+      {
+        "name": "Mohammad Taha",
+        "position": "MF",
+        "club": "Al-Hussein",
+        "age": 21
+      },
+      {
+        "name": "Musa Al-Taamari",
+        "position": "FW",
+        "club": "Rennes",
+        "age": 29
       },
       {
         "name": "Mohammad Abu Zrayq",
@@ -6967,10 +6967,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Rúben Dias",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 29
+        "name": "José Sá",
+        "position": "GK",
+        "club": "Wolverhampton Wanderers",
+        "age": 33
+      },
+      {
+        "name": "Ricardo Velho",
+        "position": "GK",
+        "club": "Farense",
+        "age": 28
       },
       {
         "name": "João Cancelo",
@@ -6985,16 +6991,10 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
-        "name": "Diogo Dalot",
+        "name": "Gonçalo Inácio",
         "position": "DF",
-        "club": "Manchester United",
-        "age": 27
-      },
-      {
-        "name": "Matheus Nunes",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 28
+        "club": "Sporting CP",
+        "age": 25
       },
       {
         "name": "Renato Veiga",
@@ -7009,6 +7009,84 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
+        "name": "Rúben Neves",
+        "position": "MF",
+        "club": "Al-Hilal",
+        "age": 29
+      },
+      {
+        "name": "João Neves",
+        "position": "MF",
+        "club": "Paris Saint-Germain",
+        "age": 22
+      },
+      {
+        "name": "Cristiano Ronaldo",
+        "position": "FW",
+        "club": "Al-Nassr",
+        "age": 41
+      },
+      {
+        "name": "Rafael Leão",
+        "position": "FW",
+        "club": "Milan",
+        "age": 27
+      },
+      {
+        "name": "Gonçalo Ramos",
+        "position": "FW",
+        "club": "Paris Saint-Germain",
+        "age": 25
+      },
+      {
+        "name": "Francisco Trincão",
+        "position": "FW",
+        "club": "Sporting CP",
+        "age": 27
+      },
+      {
+        "name": "Diogo Costa",
+        "position": "GK",
+        "club": "Porto",
+        "age": 27
+      },
+      {
+        "name": "Rui Silva",
+        "position": "GK",
+        "club": "Real Betis",
+        "age": 32
+      },
+      {
+        "name": "Rúben Dias",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 29
+      },
+      {
+        "name": "Nélson Semedo",
+        "position": "DF",
+        "club": "Wolverhampton Wanderers",
+        "age": 33
+      },
+      {
+        "name": "Diogo Dalot",
+        "position": "DF",
+        "club": "Manchester United",
+        "age": 27
+      },
+      {
+        "name": "Matheus Nunes",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 28
+      },
+      {
+        "name": "Tomás Araújo",
+        "position": "DF",
+        "club": "Benfica",
+        "age": 24
+      },
+      {
         "name": "Bruno Fernandes",
         "position": "MF",
         "club": "Manchester United",
@@ -7021,93 +7099,15 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "João Neves",
-        "position": "MF",
-        "club": "Paris Saint-Germain",
-        "age": 22
-      },
-      {
         "name": "Samú Costa",
         "position": "MF",
         "club": "Mallorca",
         "age": 26
       },
       {
-        "name": "Gonçalo Ramos",
-        "position": "FW",
-        "club": "Paris Saint-Germain",
-        "age": 25
-      },
-      {
-        "name": "Pedro Neto",
-        "position": "FW",
-        "club": "Chelsea",
-        "age": 26
-      },
-      {
-        "name": "Diogo Costa",
-        "position": "GK",
-        "club": "Porto",
-        "age": 27
-      },
-      {
-        "name": "José Sá",
-        "position": "GK",
-        "club": "Wolverhampton Wanderers",
-        "age": 33
-      },
-      {
-        "name": "Rui Silva",
-        "position": "GK",
-        "club": "Sporting CP",
-        "age": 32
-      },
-      {
-        "name": "Ricardo Velho",
-        "position": "GK",
-        "club": "Gençlerbirliği",
-        "age": 28
-      },
-      {
-        "name": "Nélson Semedo",
-        "position": "DF",
-        "club": "Fenerbahçe",
-        "age": 33
-      },
-      {
-        "name": "Gonçalo Inácio",
-        "position": "DF",
-        "club": "Sporting CP",
-        "age": 25
-      },
-      {
-        "name": "Tomás Araújo",
-        "position": "DF",
-        "club": "Benfica",
-        "age": 24
-      },
-      {
-        "name": "Rúben Neves",
-        "position": "MF",
-        "club": "Al-Hilal",
-        "age": 29
-      },
-      {
-        "name": "Cristiano Ronaldo",
-        "position": "FW",
-        "club": "Al-Nassr",
-        "age": 41
-      },
-      {
         "name": "João Félix",
         "position": "FW",
         "club": "Al-Nassr",
-        "age": 27
-      },
-      {
-        "name": "Rafael Leão",
-        "position": "FW",
-        "club": "Milan",
         "age": 27
       },
       {
@@ -7117,10 +7117,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Francisco Trincão",
+        "name": "Pedro Neto",
         "position": "FW",
-        "club": "Sporting CP",
-        "age": 27
+        "club": "Chelsea",
+        "age": 26
       }
     ]
   },
@@ -7140,52 +7140,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Davinson Sánchez",
-        "position": "DF",
-        "club": "Galatasaray",
-        "age": 30
-      },
-      {
-        "name": "Daniel Muñoz",
-        "position": "DF",
-        "club": "Crystal Palace",
-        "age": 30
-      },
-      {
-        "name": "Johan Mojica",
-        "position": "DF",
-        "club": "Mallorca",
-        "age": 34
-      },
-      {
-        "name": "Jefferson Lerma",
-        "position": "MF",
-        "club": "Crystal Palace",
-        "age": 32
-      },
-      {
-        "name": "David Ospina",
-        "position": "GK",
-        "club": "Atlético Nacional",
-        "age": 38
-      },
-      {
         "name": "Camilo Vargas",
         "position": "GK",
         "club": "Atlas",
         "age": 37
       },
       {
-        "name": "Álvaro Montero",
-        "position": "GK",
-        "club": "Vélez Sarsfield",
-        "age": 31
-      },
-      {
-        "name": "Santiago Arias",
+        "name": "Davinson Sánchez",
         "position": "DF",
-        "club": "Independiente",
-        "age": 34
+        "club": "Galatasaray",
+        "age": 30
       },
       {
         "name": "Yerry Mina",
@@ -7194,22 +7158,16 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Jhon Lucumí",
+        "name": "Johan Mojica",
         "position": "DF",
-        "club": "Bologna",
-        "age": 28
+        "club": "Mallorca",
+        "age": 34
       },
       {
         "name": "Deiver Machado",
         "position": "DF",
         "club": "Nantes",
         "age": 33
-      },
-      {
-        "name": "Willer Ditta",
-        "position": "DF",
-        "club": "Cruz Azul",
-        "age": 29
       },
       {
         "name": "James Rodríguez",
@@ -7224,21 +7182,9 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Jhon Arias",
-        "position": "MF",
-        "club": "Palmeiras",
-        "age": 29
-      },
-      {
         "name": "Richard Ríos",
         "position": "MF",
         "club": "Benfica",
-        "age": 26
-      },
-      {
-        "name": "Kevin Castaño",
-        "position": "MF",
-        "club": "River Plate",
         "age": 26
       },
       {
@@ -7248,22 +7194,88 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
+        "name": "Juan Portilla",
+        "position": "MF",
+        "club": "Athletico Paranaense",
+        "age": 28
+      },
+      {
         "name": "Luis Díaz",
         "position": "FW",
         "club": "Bayern Munich",
         "age": 29
       },
       {
+        "name": "Luis Suárez",
+        "position": "FW",
+        "club": "Sporting CP",
+        "age": 29
+      },
+      {
+        "name": "Andrés Gómez",
+        "position": "FW",
+        "club": "Vasco da Gama",
+        "age": 24
+      },
+      {
+        "name": "David Ospina",
+        "position": "GK",
+        "club": "Atlético Nacional",
+        "age": 38
+      },
+      {
+        "name": "Álvaro Montero",
+        "position": "GK",
+        "club": "Vélez Sarsfield",
+        "age": 31
+      },
+      {
+        "name": "Santiago Arias",
+        "position": "DF",
+        "club": "Independiente",
+        "age": 34
+      },
+      {
+        "name": "Daniel Muñoz",
+        "position": "DF",
+        "club": "Crystal Palace",
+        "age": 30
+      },
+      {
+        "name": "Jhon Lucumí",
+        "position": "DF",
+        "club": "Bologna",
+        "age": 28
+      },
+      {
+        "name": "Willer Ditta",
+        "position": "DF",
+        "club": "Cruz Azul",
+        "age": 29
+      },
+      {
+        "name": "Jefferson Lerma",
+        "position": "MF",
+        "club": "Crystal Palace",
+        "age": 32
+      },
+      {
+        "name": "Jhon Arias",
+        "position": "MF",
+        "club": "Palmeiras",
+        "age": 29
+      },
+      {
+        "name": "Kevin Castaño",
+        "position": "MF",
+        "club": "River Plate",
+        "age": 26
+      },
+      {
         "name": "Jaminton Campaz",
         "position": "MF",
         "club": "Rosario Central",
         "age": 26
-      },
-      {
-        "name": "Juan Portilla",
-        "position": "MF",
-        "club": "Athletico Paranaense",
-        "age": 28
       },
       {
         "name": "Gustavo Puerta",
@@ -7278,22 +7290,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Luis Suárez",
-        "position": "FW",
-        "club": "Sporting CP",
-        "age": 29
-      },
-      {
         "name": "Cucho Hernández",
         "position": "FW",
         "club": "Betis",
         "age": 27
-      },
-      {
-        "name": "Andrés Gómez",
-        "position": "FW",
-        "club": "Vasco da Gama",
-        "age": 24
       }
     ]
   },
@@ -7313,22 +7313,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Utkir Yusupov",
-        "position": "GK",
-        "club": "Navbahor",
-        "age": 35
-      },
-      {
         "name": "Abduvohid Nematov",
         "position": "GK",
         "club": "Nasaf",
         "age": 25
-      },
-      {
-        "name": "Botirali Ergashev",
-        "position": "GK",
-        "club": "Neftchi",
-        "age": 31
       },
       {
         "name": "Rustam Ashurmatov",
@@ -7337,28 +7325,10 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Abdukodir Khusanov",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 22
-      },
-      {
-        "name": "Farrukh Sayfiev",
-        "position": "DF",
-        "club": "Neftchi",
-        "age": 35
-      },
-      {
         "name": "Khojiakbar Alijonov",
         "position": "DF",
         "club": "Pakhtakor",
         "age": 29
-      },
-      {
-        "name": "Sherzod Nasrullaev",
-        "position": "DF",
-        "club": "Nasaf",
-        "age": 28
       },
       {
         "name": "Umar Eshmurodov",
@@ -7367,10 +7337,10 @@ const seeds: TeamSeed[] = [
         "age": 34
       },
       {
-        "name": "Bekhruz Karimov",
+        "name": "Abdulla Abdullaev",
         "position": "DF",
-        "club": "Surkhon",
-        "age": 19
+        "club": "Dibba Al Fujairah",
+        "age": 29
       },
       {
         "name": "Jakhongir Urozov",
@@ -7379,21 +7349,9 @@ const seeds: TeamSeed[] = [
         "age": 22
       },
       {
-        "name": "Avazbek Ulmasaliev",
-        "position": "DF",
-        "club": "AGMK",
-        "age": 26
-      },
-      {
         "name": "Otabek Shukurov",
         "position": "MF",
         "club": "Baniyas",
-        "age": 30
-      },
-      {
-        "name": "Odiljon Hamrobekov",
-        "position": "MF",
-        "club": "Tractor",
         "age": 30
       },
       {
@@ -7401,18 +7359,6 @@ const seeds: TeamSeed[] = [
         "position": "MF",
         "club": "Neftchi",
         "age": 33
-      },
-      {
-        "name": "Eldor Shomurodov",
-        "position": "FW",
-        "club": "İstanbul Başakşehir",
-        "age": 31
-      },
-      {
-        "name": "Akmal Mozgovoy",
-        "position": "MF",
-        "club": "Pakhtakor",
-        "age": 27
       },
       {
         "name": "Azizjon Ganiev",
@@ -7427,6 +7373,84 @@ const seeds: TeamSeed[] = [
         "age": 23
       },
       {
+        "name": "Eldor Shomurodov",
+        "position": "FW",
+        "club": "Roma",
+        "age": 31
+      },
+      {
+        "name": "Jaloliddin Masharipov",
+        "position": "FW",
+        "club": "Esteghlal",
+        "age": 33
+      },
+      {
+        "name": "Dostonbek Khamdamov",
+        "position": "FW",
+        "club": "Pakhtakor",
+        "age": 30
+      },
+      {
+        "name": "Utkir Yusupov",
+        "position": "GK",
+        "club": "Navbahor",
+        "age": 35
+      },
+      {
+        "name": "Botirali Ergashev",
+        "position": "GK",
+        "club": "Neftchi",
+        "age": 31
+      },
+      {
+        "name": "Farrukh Sayfiev",
+        "position": "DF",
+        "club": "Neftchi",
+        "age": 35
+      },
+      {
+        "name": "Sherzod Nasrullaev",
+        "position": "DF",
+        "club": "Nasaf",
+        "age": 28
+      },
+      {
+        "name": "Abdukodir Khusanov",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 22
+      },
+      {
+        "name": "Bekhruz Karimov",
+        "position": "DF",
+        "club": "Surkhon",
+        "age": 19
+      },
+      {
+        "name": "Avazbek Ulmasaliev",
+        "position": "DF",
+        "club": "AGMK",
+        "age": 26
+      },
+      {
+        "name": "Odiljon Hamrobekov",
+        "position": "MF",
+        "club": "Tractor",
+        "age": 30
+      },
+      {
+        "name": "Akmal Mozgovoy",
+        "position": "MF",
+        "club": "Pakhtakor",
+        "age": 27
+      },
+      {
+        "name": "Jasurbek Jaloliddinov",
+        "position": "MF",
+        "club": "Sogdiana",
+        "age": 24
+      },
+      {
         "name": "Sherzod Esanov",
         "position": "MF",
         "club": "Bukhara",
@@ -7439,34 +7463,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Jaloliddin Masharipov",
-        "position": "FW",
-        "club": "Esteghlal",
-        "age": 33
-      },
-      {
         "name": "Oston Urunov",
         "position": "FW",
         "club": "Persepolis",
         "age": 26
-      },
-      {
-        "name": "Dostonbek Khamdamov",
-        "position": "FW",
-        "club": "Pakhtakor",
-        "age": 30
-      },
-      {
-        "name": "Abdulla Abdullaev",
-        "position": "DF",
-        "club": "Dibba Al Fujairah",
-        "age": 29
-      },
-      {
-        "name": "Jasurbek Jaloliddinov",
-        "position": "MF",
-        "club": "Sogdiana",
-        "age": 24
       }
     ]
   },
@@ -7486,16 +7486,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Simon Banza",
-        "position": "FW",
-        "club": "Al Jazira",
-        "age": 30
-      },
-      {
-        "name": "Axel Tuanzebe",
-        "position": "DF",
-        "club": "Burnley",
-        "age": 29
+        "name": "Timothy Fayulu",
+        "position": "GK",
+        "club": "Noah",
+        "age": 27
       },
       {
         "name": "Chancel Mbemba",
@@ -7504,64 +7498,10 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Arthur Masuaku",
-        "position": "DF",
-        "club": "Lens",
-        "age": 33
-      },
-      {
-        "name": "Lionel Mpasi",
-        "position": "GK",
-        "club": "Le Havre",
-        "age": 32
-      },
-      {
-        "name": "Timothy Fayulu",
-        "position": "GK",
-        "club": "Noah",
-        "age": 27
-      },
-      {
-        "name": "Matthieu Epolo",
-        "position": "GK",
-        "club": "Standard Liège",
-        "age": 21
-      },
-      {
         "name": "Gédéon Kalulu",
         "position": "DF",
         "club": "Aris Limassol",
         "age": 29
-      },
-      {
-        "name": "Joris Kayembe",
-        "position": "DF",
-        "club": "Genk",
-        "age": 32
-      },
-      {
-        "name": "Aaron Wan-Bissaka",
-        "position": "DF",
-        "club": "West Ham United",
-        "age": 29
-      },
-      {
-        "name": "Nathanaël Mbuku",
-        "position": "MF",
-        "club": "Montpellier",
-        "age": 24
-      },
-      {
-        "name": "Ngal'ayel Mukau",
-        "position": "MF",
-        "club": "Lille",
-        "age": 22
-      },
-      {
-        "name": "Yoane Wissa",
-        "position": "FW",
-        "club": "Newcastle United",
-        "age": 30
       },
       {
         "name": "Dylan Batubinsika",
@@ -7570,22 +7510,46 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Steve Kapuadi",
+        "name": "Lionel Mpasi",
+        "position": "GK",
+        "club": "Le Havre",
+        "age": 32
+      },
+      {
+        "name": "Matthieu Epolo",
+        "position": "GK",
+        "club": "Standard Liège",
+        "age": 21
+      },
+      {
+        "name": "Arthur Masuaku",
         "position": "DF",
-        "club": "Widzew Łódź",
-        "age": 28
+        "club": "Lens",
+        "age": 33
+      },
+      {
+        "name": "Joris Kayembe",
+        "position": "DF",
+        "club": "Genk",
+        "age": 32
+      },
+      {
+        "name": "Axel Tuanzebe",
+        "position": "DF",
+        "club": "Burnley",
+        "age": 29
+      },
+      {
+        "name": "Aaron Wan-Bissaka",
+        "position": "DF",
+        "club": "West Ham United",
+        "age": 29
       },
       {
         "name": "Meschak Elia",
         "position": "MF",
-        "club": "Alanyaspor",
+        "club": "Young Boys",
         "age": 29
-      },
-      {
-        "name": "Samuel Moutoussamy",
-        "position": "MF",
-        "club": "Atromitos",
-        "age": 30
       },
       {
         "name": "Edo Kayembe",
@@ -7594,22 +7558,10 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Théo Bongonda",
-        "position": "MF",
-        "club": "Spartak Moscow",
-        "age": 31
-      },
-      {
         "name": "Charles Pickel",
         "position": "MF",
         "club": "Espanyol",
         "age": 29
-      },
-      {
-        "name": "Gaël Kakuta",
-        "position": "MF",
-        "club": "AEL",
-        "age": 35
       },
       {
         "name": "Noah Sadiki",
@@ -7630,16 +7582,64 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
+        "name": "Fiston Mayele",
+        "position": "FW",
+        "club": "Pyramids",
+        "age": 32
+      },
+      {
+        "name": "Simon Banza",
+        "position": "FW",
+        "club": "Al Jazira",
+        "age": 30
+      },
+      {
+        "name": "Steve Kapuadi",
+        "position": "DF",
+        "club": "Widzew Łódź",
+        "age": 28
+      },
+      {
+        "name": "Samuel Moutoussamy",
+        "position": "MF",
+        "club": "Atromitos",
+        "age": 30
+      },
+      {
+        "name": "Théo Bongonda",
+        "position": "MF",
+        "club": "Spartak Moscow",
+        "age": 31
+      },
+      {
+        "name": "Gaël Kakuta",
+        "position": "MF",
+        "club": "AEL",
+        "age": 35
+      },
+      {
+        "name": "Nathanaël Mbuku",
+        "position": "MF",
+        "club": "Montpellier",
+        "age": 24
+      },
+      {
+        "name": "Ngal'ayel Mukau",
+        "position": "MF",
+        "club": "Lille",
+        "age": 22
+      },
+      {
         "name": "Cédric Bakambu",
         "position": "FW",
         "club": "Betis",
         "age": 35
       },
       {
-        "name": "Fiston Mayele",
+        "name": "Yoane Wissa",
         "position": "FW",
-        "club": "Pyramids",
-        "age": 32
+        "club": "Newcastle United",
+        "age": 30
       }
     ]
   },
@@ -7659,22 +7659,10 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Jordan Pickford",
-        "position": "GK",
-        "club": "Everton",
-        "age": 32
-      },
-      {
         "name": "Dean Henderson",
         "position": "GK",
         "club": "Crystal Palace",
         "age": 29
-      },
-      {
-        "name": "James Trafford",
-        "position": "GK",
-        "club": "Manchester City",
-        "age": 24
       },
       {
         "name": "John Stones",
@@ -7683,28 +7671,16 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Marc Guéhi",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 26
-      },
-      {
         "name": "Reece James",
         "position": "DF",
         "club": "Chelsea",
         "age": 27
       },
       {
-        "name": "Ezri Konsa",
-        "position": "DF",
-        "club": "Aston Villa",
-        "age": 29
-      },
-      {
-        "name": "Tino Livramento",
+        "name": "Dan Burn",
         "position": "DF",
         "club": "Newcastle United",
-        "age": 24
+        "age": 34
       },
       {
         "name": "Djed Spence",
@@ -7713,22 +7689,10 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Nico O'Reilly",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 21
-      },
-      {
         "name": "Jarell Quansah",
         "position": "DF",
-        "club": "Bayer Leverkusen",
+        "club": "Liverpool",
         "age": 23
-      },
-      {
-        "name": "Jordan Henderson",
-        "position": "MF",
-        "club": "Brentford",
-        "age": 36
       },
       {
         "name": "Declan Rice",
@@ -7737,22 +7701,10 @@ const seeds: TeamSeed[] = [
         "age": 27
       },
       {
-        "name": "Jude Bellingham",
-        "position": "MF",
-        "club": "Real Madrid",
-        "age": 23
-      },
-      {
         "name": "Eberechi Eze",
         "position": "MF",
         "club": "Arsenal",
         "age": 28
-      },
-      {
-        "name": "Morgan Rogers",
-        "position": "MF",
-        "club": "Aston Villa",
-        "age": 24
       },
       {
         "name": "Kobbie Mainoo",
@@ -7767,34 +7719,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Marcus Rashford",
-        "position": "FW",
-        "club": "Barcelona",
-        "age": 29
-      },
-      {
         "name": "Bukayo Saka",
         "position": "FW",
         "club": "Arsenal",
         "age": 25
-      },
-      {
-        "name": "Dan Burn",
-        "position": "DF",
-        "club": "Newcastle United",
-        "age": 34
-      },
-      {
-        "name": "Elliot Anderson",
-        "position": "MF",
-        "club": "Nottingham Forest",
-        "age": 24
-      },
-      {
-        "name": "Ollie Watkins",
-        "position": "FW",
-        "club": "Aston Villa",
-        "age": 31
       },
       {
         "name": "Anthony Gordon",
@@ -7809,9 +7737,81 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
+        "name": "Jordan Pickford",
+        "position": "GK",
+        "club": "Everton",
+        "age": 32
+      },
+      {
+        "name": "James Trafford",
+        "position": "GK",
+        "club": "Manchester City",
+        "age": 24
+      },
+      {
+        "name": "Marc Guéhi",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 26
+      },
+      {
+        "name": "Ezri Konsa",
+        "position": "DF",
+        "club": "Aston Villa",
+        "age": 29
+      },
+      {
+        "name": "Tino Livramento",
+        "position": "DF",
+        "club": "Newcastle United",
+        "age": 24
+      },
+      {
+        "name": "Nico O'Reilly",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 21
+      },
+      {
+        "name": "Jordan Henderson",
+        "position": "MF",
+        "club": "Ajax",
+        "age": 36
+      },
+      {
+        "name": "Jude Bellingham",
+        "position": "MF",
+        "club": "Real Madrid",
+        "age": 23
+      },
+      {
+        "name": "Morgan Rogers",
+        "position": "MF",
+        "club": "Aston Villa",
+        "age": 24
+      },
+      {
+        "name": "Elliot Anderson",
+        "position": "MF",
+        "club": "Nottingham Forest",
+        "age": 24
+      },
+      {
+        "name": "Marcus Rashford",
+        "position": "FW",
+        "club": "Manchester United",
+        "age": 29
+      },
+      {
+        "name": "Ollie Watkins",
+        "position": "FW",
+        "club": "Aston Villa",
+        "age": 31
+      },
+      {
         "name": "Noni Madueke",
         "position": "FW",
-        "club": "Arsenal",
+        "club": "Chelsea",
         "age": 24
       }
     ]
@@ -7832,34 +7832,28 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Dominik Livaković",
-        "position": "GK",
-        "club": "Dinamo Zagreb",
-        "age": 31
-      },
-      {
         "name": "Dominik Kotarski",
         "position": "GK",
         "club": "Copenhagen",
         "age": 26
       },
       {
-        "name": "Ivor Pandur",
-        "position": "GK",
-        "club": "Hull City",
+        "name": "Joško Gvardiol",
+        "position": "DF",
+        "club": "Manchester City",
+        "age": 24
+      },
+      {
+        "name": "Josip Šutalo",
+        "position": "DF",
+        "club": "Ajax",
         "age": 26
       },
       {
-        "name": "Duje Ćaleta-Car",
+        "name": "Marin Pongračić",
         "position": "DF",
-        "club": "Real Sociedad",
-        "age": 30
-      },
-      {
-        "name": "Martin Erlić",
-        "position": "DF",
-        "club": "Midtjylland",
-        "age": 28
+        "club": "Fiorentina",
+        "age": 29
       },
       {
         "name": "Luka Vušković",
@@ -7868,21 +7862,27 @@ const seeds: TeamSeed[] = [
         "age": 19
       },
       {
+        "name": "Mateo Kovačić",
+        "position": "MF",
+        "club": "Manchester City",
+        "age": 32
+      },
+      {
         "name": "Nikola Vlašić",
         "position": "MF",
         "club": "Torino",
         "age": 29
       },
       {
-        "name": "Luka Sučić",
-        "position": "MF",
-        "club": "Real Sociedad",
-        "age": 24
-      },
-      {
         "name": "Martin Baturina",
         "position": "MF",
         "club": "Como",
+        "age": 23
+      },
+      {
+        "name": "Petar Sučić",
+        "position": "MF",
+        "club": "Inter Milan",
         "age": 23
       },
       {
@@ -7898,22 +7898,34 @@ const seeds: TeamSeed[] = [
         "age": 35
       },
       {
-        "name": "Ante Budimir",
+        "name": "Marco Pašalić",
         "position": "FW",
-        "club": "Osasuna",
-        "age": 35
-      },
-      {
-        "name": "Joško Gvardiol",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 24
-      },
-      {
-        "name": "Josip Šutalo",
-        "position": "DF",
-        "club": "Ajax",
+        "club": "Orlando City",
         "age": 26
+      },
+      {
+        "name": "Igor Matanović",
+        "position": "FW",
+        "club": "SC Freiburg",
+        "age": 23
+      },
+      {
+        "name": "Dominik Livaković",
+        "position": "GK",
+        "club": "Dinamo Zagreb",
+        "age": 31
+      },
+      {
+        "name": "Ivor Pandur",
+        "position": "GK",
+        "club": "Hull City",
+        "age": 26
+      },
+      {
+        "name": "Duje Ćaleta-Car",
+        "position": "DF",
+        "club": "Real Sociedad",
+        "age": 30
       },
       {
         "name": "Josip Stanišić",
@@ -7922,10 +7934,10 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Marin Pongračić",
+        "name": "Martin Erlić",
         "position": "DF",
-        "club": "Fiorentina",
-        "age": 29
+        "club": "Midtjylland",
+        "age": 28
       },
       {
         "name": "Luka Modrić",
@@ -7934,28 +7946,22 @@ const seeds: TeamSeed[] = [
         "age": 41
       },
       {
-        "name": "Mateo Kovačić",
-        "position": "MF",
-        "club": "Manchester City",
-        "age": 32
-      },
-      {
         "name": "Mario Pašalić",
         "position": "MF",
         "club": "Atalanta",
         "age": 31
       },
       {
+        "name": "Luka Sučić",
+        "position": "MF",
+        "club": "Real Sociedad",
+        "age": 24
+      },
+      {
         "name": "Kristijan Jakić",
         "position": "MF",
         "club": "FC Augsburg",
         "age": 29
-      },
-      {
-        "name": "Petar Sučić",
-        "position": "MF",
-        "club": "Inter Milan",
-        "age": 23
       },
       {
         "name": "Nikola Moro",
@@ -7970,22 +7976,16 @@ const seeds: TeamSeed[] = [
         "age": 37
       },
       {
-        "name": "Marco Pašalić",
+        "name": "Ante Budimir",
         "position": "FW",
-        "club": "Orlando City",
-        "age": 26
+        "club": "Osasuna",
+        "age": 35
       },
       {
         "name": "Petar Musa",
         "position": "FW",
         "club": "FC Dallas",
         "age": 28
-      },
-      {
-        "name": "Igor Matanović",
-        "position": "FW",
-        "club": "SC Freiburg",
-        "age": 23
       }
     ]
   },
@@ -8005,10 +8005,34 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Luis Mejía",
+        "name": "Orlando Mosquera",
         "position": "GK",
-        "club": "Nacional",
+        "club": "Al-Fayha",
+        "age": 32
+      },
+      {
+        "name": "Eric Davis",
+        "position": "DF",
+        "club": "Plaza Amador",
         "age": 35
+      },
+      {
+        "name": "Amir Murillo",
+        "position": "DF",
+        "club": "Marseille",
+        "age": 30
+      },
+      {
+        "name": "Andrés Andrade",
+        "position": "DF",
+        "club": "LASK",
+        "age": 28
+      },
+      {
+        "name": "José Córdoba",
+        "position": "DF",
+        "club": "Norwich City",
+        "age": 25
       },
       {
         "name": "Jorge Gutiérrez",
@@ -8017,34 +8041,58 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Cecilio Waterman",
-        "position": "FW",
-        "club": "Universidad de Concepción",
-        "age": 35
+        "name": "Aníbal Godoy",
+        "position": "MF",
+        "club": "San Diego",
+        "age": 36
       },
       {
-        "name": "Amir Murillo",
-        "position": "DF",
-        "club": "Beşiktaş",
+        "name": "Yoel Bárcenas",
+        "position": "MF",
+        "club": "Unattached",
+        "age": 33
+      },
+      {
+        "name": "José Luis Rodríguez",
+        "position": "MF",
+        "club": "Juárez",
+        "age": 28
+      },
+      {
+        "name": "César Yanis",
+        "position": "MF",
+        "club": "Cobresal",
         "age": 30
       },
       {
-        "name": "Orlando Mosquera",
+        "name": "Azarias Londoño",
+        "position": "MF",
+        "club": "Universidad Católica",
+        "age": 25
+      },
+      {
+        "name": "Ismael Díaz",
+        "position": "FW",
+        "club": "León",
+        "age": 29
+      },
+      {
+        "name": "Tomás Rodríguez",
+        "position": "FW",
+        "club": "Saprissa",
+        "age": 27
+      },
+      {
+        "name": "Luis Mejía",
         "position": "GK",
-        "club": "Al-Fayha",
-        "age": 32
+        "club": "Nacional",
+        "age": 35
       },
       {
         "name": "César Samudio",
         "position": "GK",
         "club": "Marathón",
         "age": 32
-      },
-      {
-        "name": "Eric Davis",
-        "position": "DF",
-        "club": "Plaza Amador",
-        "age": 35
       },
       {
         "name": "Fidel Escobar",
@@ -8059,22 +8107,10 @@ const seeds: TeamSeed[] = [
         "age": 34
       },
       {
-        "name": "Andrés Andrade",
-        "position": "DF",
-        "club": "LASK",
-        "age": 28
-      },
-      {
         "name": "César Blackman",
         "position": "DF",
         "club": "Slovan Bratislava",
         "age": 28
-      },
-      {
-        "name": "José Córdoba",
-        "position": "DF",
-        "club": "Norwich City",
-        "age": 25
       },
       {
         "name": "Jiovany Ramos",
@@ -8089,33 +8125,15 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
-        "name": "Aníbal Godoy",
-        "position": "MF",
-        "club": "San Diego",
-        "age": 36
-      },
-      {
         "name": "Alberto Quintero",
         "position": "MF",
         "club": "Plaza Amador",
         "age": 39
       },
       {
-        "name": "Yoel Bárcenas",
-        "position": "MF",
-        "club": "Unattached",
-        "age": 33
-      },
-      {
         "name": "Adalberto Carrasquilla",
         "position": "MF",
         "club": "UNAM",
-        "age": 28
-      },
-      {
-        "name": "José Luis Rodríguez",
-        "position": "MF",
-        "club": "Juárez",
         "age": 28
       },
       {
@@ -8125,22 +8143,10 @@ const seeds: TeamSeed[] = [
         "age": 29
       },
       {
-        "name": "César Yanis",
-        "position": "MF",
-        "club": "Cobresal",
-        "age": 30
-      },
-      {
         "name": "Carlos Harvey",
         "position": "MF",
         "club": "Minnesota United",
         "age": 26
-      },
-      {
-        "name": "Azarias Londoño",
-        "position": "MF",
-        "club": "Universidad Católica",
-        "age": 25
       },
       {
         "name": "José Fajardo",
@@ -8149,16 +8155,10 @@ const seeds: TeamSeed[] = [
         "age": 33
       },
       {
-        "name": "Ismael Díaz",
+        "name": "Cecilio Waterman",
         "position": "FW",
-        "club": "León",
-        "age": 29
-      },
-      {
-        "name": "Tomás Rodríguez",
-        "position": "FW",
-        "club": "Saprissa",
-        "age": 27
+        "club": "Universidad de Concepción",
+        "age": 35
       }
     ]
   },
@@ -8178,28 +8178,16 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Paul Reverson",
+        "name": "Benjamin Asare",
         "position": "GK",
-        "club": "Jong Ajax",
-        "age": 21
-      },
-      {
-        "name": "Alidu Seidu",
-        "position": "DF",
-        "club": "Rennes",
-        "age": 26
+        "club": "Hearts of Oak",
+        "age": 34
       },
       {
         "name": "Lawrence Ati-Zigi",
         "position": "GK",
         "club": "St. Gallen",
         "age": 30
-      },
-      {
-        "name": "Benjamin Asare",
-        "position": "GK",
-        "club": "Hearts of Oak",
-        "age": 34
       },
       {
         "name": "Solomon Agbasi",
@@ -8220,12 +8208,6 @@ const seeds: TeamSeed[] = [
         "age": 32
       },
       {
-        "name": "Gideon Mensah",
-        "position": "DF",
-        "club": "Auxerre",
-        "age": 28
-      },
-      {
         "name": "Alexander Djiku",
         "position": "DF",
         "club": "Spartak Moscow",
@@ -8236,60 +8218,6 @@ const seeds: TeamSeed[] = [
         "position": "DF",
         "club": "İstanbul Başakşehir",
         "age": 28
-      },
-      {
-        "name": "Kojo Peprah Oppong",
-        "position": "DF",
-        "club": "Nice",
-        "age": 22
-      },
-      {
-        "name": "Thomas Partey",
-        "position": "MF",
-        "club": "Villarreal",
-        "age": 33
-      },
-      {
-        "name": "Abdul Fatawu",
-        "position": "MF",
-        "club": "Leicester City",
-        "age": 22
-      },
-      {
-        "name": "Kamaldeen Sulemana",
-        "position": "MF",
-        "club": "Atalanta",
-        "age": 24
-      },
-      {
-        "name": "Augustine Boakye",
-        "position": "MF",
-        "club": "Saint-Étienne",
-        "age": 26
-      },
-      {
-        "name": "Jordan Ayew",
-        "position": "FW",
-        "club": "Leicester City",
-        "age": 35
-      },
-      {
-        "name": "Antoine Semenyo",
-        "position": "FW",
-        "club": "Manchester City",
-        "age": 26
-      },
-      {
-        "name": "Iñaki Williams",
-        "position": "FW",
-        "club": "Athletic Bilbao",
-        "age": 32
-      },
-      {
-        "name": "Jonas Adjetey",
-        "position": "DF",
-        "club": "VfL Wolfsburg",
-        "age": 23
       },
       {
         "name": "Abdul Mumin",
@@ -8304,16 +8232,16 @@ const seeds: TeamSeed[] = [
         "age": 25
       },
       {
+        "name": "Abdul Fatawu",
+        "position": "MF",
+        "club": "Leicester City",
+        "age": 22
+      },
+      {
         "name": "Elisha Owusu",
         "position": "MF",
         "club": "Auxerre",
         "age": 29
-      },
-      {
-        "name": "Caleb Yirenkyi",
-        "position": "MF",
-        "club": "Nordsjælland",
-        "age": 20
       },
       {
         "name": "Kwasi Sibo",
@@ -8322,16 +8250,88 @@ const seeds: TeamSeed[] = [
         "age": 28
       },
       {
-        "name": "Ernest Nuamah",
+        "name": "Jordan Ayew",
         "position": "FW",
-        "club": "Lyon",
-        "age": 23
+        "club": "Leicester City",
+        "age": 35
+      },
+      {
+        "name": "Iñaki Williams",
+        "position": "FW",
+        "club": "Athletic Bilbao",
+        "age": 32
       },
       {
         "name": "Christopher Bonsu Baah",
         "position": "FW",
         "club": "Al-Qadsiah",
         "age": 22
+      },
+      {
+        "name": "Paul Reverson",
+        "position": "GK",
+        "club": "Jong Ajax",
+        "age": 21
+      },
+      {
+        "name": "Gideon Mensah",
+        "position": "DF",
+        "club": "Auxerre",
+        "age": 28
+      },
+      {
+        "name": "Alidu Seidu",
+        "position": "DF",
+        "club": "Rennes",
+        "age": 26
+      },
+      {
+        "name": "Jonas Adjetey",
+        "position": "DF",
+        "club": "VfL Wolfsburg",
+        "age": 23
+      },
+      {
+        "name": "Kojo Peprah Oppong",
+        "position": "DF",
+        "club": "Nice",
+        "age": 22
+      },
+      {
+        "name": "Thomas Partey",
+        "position": "MF",
+        "club": "Villarreal",
+        "age": 33
+      },
+      {
+        "name": "Kamaldeen Sulemana",
+        "position": "MF",
+        "club": "Atalanta",
+        "age": 24
+      },
+      {
+        "name": "Caleb Yirenkyi",
+        "position": "MF",
+        "club": "Nordsjælland",
+        "age": 20
+      },
+      {
+        "name": "Augustine Boakye",
+        "position": "MF",
+        "club": "Saint-Étienne",
+        "age": 26
+      },
+      {
+        "name": "Antoine Semenyo",
+        "position": "FW",
+        "club": "Manchester City",
+        "age": 26
+      },
+      {
+        "name": "Ernest Nuamah",
+        "position": "FW",
+        "club": "Lyon",
+        "age": 23
       }
     ]
   }
