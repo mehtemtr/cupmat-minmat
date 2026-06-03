@@ -544,6 +544,7 @@ export function Header() {
                 <div className="ml-6 border-l-2 border-emerald-500/40 pl-4 py-1.5 space-y-1.5 text-zinc-400 text-xs">
                   <div>🔐 <strong>Giriş Yöntemi:</strong> E-posta adresiniz veya sosyal hesaplarınızla hızlıca üye olabilirsiniz.</div>
                   <div>✏️ <strong>Takma Adı (Nick) Düzenleme:</strong> Giriş yaptıktan sonra, sağ üstteki kutucukta otomatik atanan adınızı göreceksiniz. Bu kutucuğa tıklayarak istediğiniz takma adı yazıp <strong>Enter</strong> tuşuna basarak veya kutucuk dışına tıklayarak veritabanına otomatik olarak kaydedebilirsiniz.</div>
+                  <div>📄 <strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/kullanim.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">tıklayınız</a>.</div>
                 </div>
 
                 <li className="flex items-start gap-2.5">
