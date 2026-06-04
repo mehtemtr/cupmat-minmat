@@ -544,7 +544,91 @@ export function Header() {
                 <div className="ml-6 border-l-2 border-emerald-500/40 pl-4 py-1.5 space-y-1.5 text-zinc-400 text-xs">
                   <div>🔐 <strong>Giriş Yöntemi:</strong> E-posta adresiniz veya sosyal hesaplarınızla hızlıca üye olabilirsiniz.</div>
                   <div>✏️ <strong>Takma Adı (Nick) Düzenleme:</strong> Giriş yaptıktan sonra, sağ üstteki kutucukta otomatik atanan adınızı göreceksiniz. Bu kutucuğa tıklayarak istediğiniz takma adı yazıp <strong>Enter</strong> tuşuna basarak veya kutucuk dışına tıklayarak veritabanına otomatik olarak kaydedebilirsiniz.</div>
-                  <div>📄 <strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/kullanim.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">tıklayınız</a>.</div>
+                  <div>
+                    📄 <strong>{
+                      locale === "tr" ? "Kullanım Kılavuzu:" :
+                      locale === "de" ? "Benutzerhandbuch:" :
+                      locale === "fr" ? "Guide de l'utilisateur:" :
+                      locale === "es" ? "Guía del usuario:" :
+                      locale === "pt" ? "Guia do Usuário:" :
+                      locale === "ar" ? "دليل المستخدم:" :
+                      locale === "ko" ? "사용자 가이드:" :
+                      locale === "it" ? "Guida Utente:" :
+                      "User Guide:"
+                    }</strong>{" "}
+                    {locale === "tr" ? (
+                      <>
+                        Giriş ve kayıt örneği için{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          tıklayınız
+                        </a>.
+                      </>
+                    ) : locale === "de" ? (
+                      <>
+                        Bitte{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          klicken Sie hier
+                        </a>{" "}
+                        für das Login- und Registrierungsbeispiel.
+                      </>
+                    ) : locale === "fr" ? (
+                      <>
+                        Veuillez{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          cliquer ici
+                        </a>{" "}
+                        pour l'exemple de connexion et d'inscription.
+                      </>
+                    ) : locale === "es" ? (
+                      <>
+                        Por favor,{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          haga clic aquí
+                        </a>{" "}
+                        para ver el ejemplo de inicio de sesión y registro.
+                      </>
+                    ) : locale === "pt" ? (
+                      <>
+                        Por favor,{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          clique aqui
+                        </a>{" "}
+                        para o exemplo de login e registro.
+                      </>
+                    ) : locale === "ar" ? (
+                      <>
+                        يرجى{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          النقر هنا
+                        </a>{" "}
+                        لمشاهدة مثال تسجيل الدخول والتسجيل.
+                      </>
+                    ) : locale === "ko" ? (
+                      <>
+                        로그인 및 회원가입 예시를 보시려면{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          여기를 클릭
+                        </a>{" "}
+                        하세요.
+                      </>
+                    ) : locale === "it" ? (
+                      <>
+                        Si prega di{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          cliccare qui
+                        </a>{" "}
+                        per l'esempio di accesso e registrazione.
+                      </>
+                    ) : (
+                      <>
+                        Please{" "}
+                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                          click here
+                        </a>{" "}
+                        for login and registration example.
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <li className="flex items-start gap-2.5">

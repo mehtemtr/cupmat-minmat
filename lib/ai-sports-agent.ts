@@ -1,6 +1,8 @@
 import { supabaseAdmin } from "./supabase";
 import { getTeamById, TEAMS } from "@/data/teams";
 import { STADIUMS } from "@/data/stadiums";
+import * as fs from "fs";
+import * as path from "path";
 
 // ============================================================
 // TÜRLER (TYPES)
@@ -291,6 +293,48 @@ function getRealisticClubByTeam(teamId: string, seedNum: number, clubCounts: Rec
   return fictionalClub;
 }
 
+function getPlayerPriority(player: any): number {
+  const name = (player.name || "").toLowerCase();
+  const club = (player.club || "").toLowerCase();
+  
+  // Custom list of absolute stars who must always be included
+  const superstars = [
+    "arda güler", "arda guler", "kenan yıldız", "kenan yildiz", "hakan çalhanoğlu", "hakan calhanoglu",
+    "semih kılıçsoy", "semih kilicsoy", "mustafa hekimoğlu", "mustafa hekimoglu", "cenk tosun",
+    "ernest muçi", "ernest muci", "milot rashica", "gedson fernandes", "rafa silva",
+    "altay bayındır", "altay bayindir", "mert günok", "mert gunok", "uğurcan çakır", "ugurcan cakir",
+    "abdülkerim bardakcı", "abdulkerim bardakci", "çağlar söyüncü", "caglar soyuncu", "eren elmalı", "eren elmali",
+    "ferdi kadıoğlu", "ferdi kadioglu", "merih demiral", "mert müldür", "mert muldur", "ozan kabak",
+    "samet akaydin", "zeki çelik", "zeki celik", "ismail yüksek", "ismail yuksek", "kaan ayhan",
+    "orkun kökçü", "orkun kokcu", "salih özcan", "salih ozcan", "barış alper yılmaz", "baris alper yilmaz",
+    "can uzun", "deniz gül", "deniz gul", "irfan can kahveci", "kerem aktürkoğlu", "kerem akturkoglu",
+    "oğuz aydın", "oguz aydin", "yunus akgün", "yunus akgun"
+  ];
+  if (superstars.some(star => name.includes(star))) {
+    return 1000;
+  }
+  
+  // Clubs priority
+  if (club.includes("real madrid") || club.includes("juventus") || club.includes("bayern munich") || club.includes("barcelona") || club.includes("manchester city") || club.includes("liverpool") || club.includes("inter milan") || club.includes("ac milan") || club.includes("paris saint-germain") || club.includes("arsenal") || club.includes("chelsea") || club.includes("tottenham") || club.includes("benfica") || club.includes("sporting") || club.includes("porto") || club.includes("ajax") || club.includes("feyenoord") || club.includes("roma") || club.includes("lazio") || club.includes("atalanta") || club.includes("brighton") || club.includes("west ham") || club.includes("bayer leverkusen") || club.includes("dortmund") || club.includes("stuttgart")) {
+    return 500;
+  }
+  
+  // Major Turkish clubs
+  if (club.includes("beşiktaş") || club.includes("besiktas") || club.includes("bjk")) {
+    return 400; // Beşiktaş players high priority
+  }
+  if (club.includes("fenerbahçe") || club.includes("fenerbahce") || club.includes("galatasaray") || club.includes("trabzonspor")) {
+    return 300;
+  }
+  
+  // Other clubs
+  if (club === "serbest" || club === "") {
+    return 0; // free agents lowest
+  }
+  
+  return 100;
+}
+
 // Örnek kadro üretici (gerçek API entegrasyonu veya tanımlı kadro eşleştirici)
 function generateSampleRoster(team: any, clubCounts: Record<string, number> = {}) {
   const leagues = ["Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1", "Süper Lig", "MLS", "Eredivisie"];
@@ -346,8 +390,6 @@ function generateSampleRoster(team: any, clubCounts: Record<string, number> = {}
   // Try to load real player squads scraped from Wikipedia
   let realSquads: Record<string, any[]> = {};
   try {
-    const fs = require("fs");
-    const path = require("path");
     const filePath = path.join(process.cwd(), "scratch", "real-squads.json");
     if (fs.existsSync(filePath)) {
       realSquads = JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -356,9 +398,92 @@ function generateSampleRoster(team: any, clubCounts: Record<string, number> = {}
     console.log("Could not load real-squads.json:", e);
   }
 
-  const wikiPlayers = realSquads[team.id];
+  let wikiPlayers = realSquads[team.id];
+  
+  if (team.id === "tur" && wikiPlayers) {
+    const officialTurkeyNames = [
+      "Altay Bayındır", "Mert Günok", "Uğurcan Çakır",
+      "Abdülkerim Bardakcı", "Çağlar Söyüncü", "Eren Elmalı", "Ferdi Kadıoğlu", "Merih Demiral", "Mert Müldür", "Ozan Kabak", "Samet Akaydin", "Zeki Çelik",
+      "Hakan Çalhanoğlu", "İsmail Yüksek", "Kaan Ayhan", "Orkun Kökçü", "Salih Özcan",
+      "Arda Güler", "Barış Alper Yılmaz", "Can Uzun", "Deniz Gül", "İrfan Can Kahveci", "Kenan Yıldız", "Kerem Aktürkoğlu", "Oğuz Aydın", "Yunus Akgün"
+    ];
+
+    const normalizeNameStr = (str: string) => {
+      return str
+        .toLowerCase()
+        .replace(/ç/g, "c")
+        .replace(/ğ/g, "g")
+        .replace(/ı/g, "i")
+        .replace(/ö/g, "o")
+        .replace(/ş/g, "s")
+        .replace(/ü/g, "u")
+        .replace(/ñ/g, "n")
+        .replace(/á/g, "a")
+        .replace(/é/g, "e")
+        .replace(/í/g, "i")
+        .replace(/ó/g, "o")
+        .replace(/ú/g, "u")
+        .replace(/â/g, "a")
+        .replace(/î/g, "i")
+        .replace(/û/g, "u")
+        .replace(/ø/g, "o")
+        .replace(/æ/g, "ae")
+        .replace(/å/g, "a")
+        .replace(/[^a-z0-9]/g, "");
+    };
+
+    const officialNormalized = officialTurkeyNames.map(normalizeNameStr);
+    wikiPlayers = wikiPlayers.filter((p: any) => {
+      const norm = normalizeNameStr(p.name);
+      return officialNormalized.includes(norm);
+    });
+    console.log(`Filtered Turkey wikiPlayers down to ${wikiPlayers.length} players matching FIFA squad list.`);
+  }
+
   if (wikiPlayers && wikiPlayers.length >= 10) {
-    return wikiPlayers.slice(0, 26).map((p: any, idx: number) => {
+    // Priority-based balanced selection to get exactly 26 players (3 GKs, 23 outfielders)
+    const gks = wikiPlayers.filter((p: any) => p.position.toUpperCase().includes("GK"));
+    const dfs = wikiPlayers.filter((p: any) => p.position.toUpperCase().includes("DF"));
+    const mids = wikiPlayers.filter((p: any) => p.position.toUpperCase().includes("MF"));
+    const fwds = wikiPlayers.filter((p: any) => p.position.toUpperCase().includes("FW"));
+
+    const sortByPriority = (arr: any[]) => {
+      return [...arr].sort((a, b) => getPlayerPriority(b) - getPlayerPriority(a));
+    };
+
+    const sortedGks = sortByPriority(gks);
+    const sortedDfs = sortByPriority(dfs);
+    const sortedMids = sortByPriority(mids);
+    const sortedFwds = sortByPriority(fwds);
+
+    const selectedGks = sortedGks.slice(0, 3);
+    const minDfs = Math.min(sortedDfs.length, 7);
+    const minMids = Math.min(sortedMids.length, 7);
+    const minFwds = Math.min(sortedFwds.length, 5);
+
+    const selectedDfs = sortedDfs.slice(0, minDfs);
+    const selectedMids = sortedMids.slice(0, minMids);
+    const selectedFwds = sortedFwds.slice(0, minFwds);
+
+    const remainingDfs = sortedDfs.slice(minDfs);
+    const remainingMids = sortedMids.slice(minMids);
+    const remainingFwds = sortedFwds.slice(minFwds);
+    const pool = sortByPriority([...remainingDfs, ...remainingMids, ...remainingFwds]);
+
+    const currentOutfieldCount = selectedDfs.length + selectedMids.length + selectedFwds.length;
+    const slotsNeeded = 23 - currentOutfieldCount;
+    const extraOutfielders = pool.slice(0, slotsNeeded);
+
+    extraOutfielders.forEach((p: any) => {
+      const pos = p.position.toUpperCase();
+      if (pos.includes("DF")) selectedDfs.push(p);
+      else if (pos.includes("MF")) selectedMids.push(p);
+      else if (pos.includes("FW")) selectedFwds.push(p);
+    });
+
+    const selectedPlayers = [...selectedGks, ...selectedDfs, ...selectedMids, ...selectedFwds];
+
+    return selectedPlayers.map((p: any, idx: number) => {
       let pos = p.position;
       const pUpper = p.position.toUpperCase();
       if (pUpper.includes("GK")) pos = "Kaleci";

@@ -195,31 +195,24 @@ export function sortPlayersWithBjkBias(players: any[]): any[] {
     return c.includes("galatasaray") || c === "gs" || c.includes("g.saray");
   };
 
-  const bjkPlayers = players.filter(p => isBjk(p.club));
-  const gsPlayers = players.filter(p => isGs(p.club));
-  const otherPlayers = players.filter(p => !isBjk(p.club) && !isGs(p.club));
+  const positionsOrder = ["GK", "DF", "MF", "FW"];
+  const result: any[] = [];
 
-  const result: any[] = [...bjkPlayers];
+  for (const pos of positionsOrder) {
+    const posPlayers = players.filter(p => p.position === pos);
+    const bjkPlayers = posPlayers.filter(p => isBjk(p.club));
+    const gsPlayers = posPlayers.filter(p => isGs(p.club));
+    const otherPlayers = posPlayers.filter(p => !isBjk(p.club) && !isGs(p.club));
+    
+    result.push(...bjkPlayers, ...otherPlayers, ...gsPlayers);
+  }
 
-  if (gsPlayers.length > 0) {
-    const buffersNeeded = Math.max(0, gsPlayers.length - 1);
-    const actualBuffersCount = Math.min(buffersNeeded, otherPlayers.length);
-    
-    // Extract buffer players from the end of otherPlayers to keep early stars top-aligned
-    const buffers = otherPlayers.splice(otherPlayers.length - actualBuffersCount);
-    
-    const interleavedBottom: any[] = [];
-    for (let i = 0; i < gsPlayers.length; i++) {
-      interleavedBottom.push(gsPlayers[i]);
-      if (i < actualBuffersCount) {
-        interleavedBottom.push(buffers[i]);
-      }
-    }
-    
-    result.push(...otherPlayers);
-    result.push(...interleavedBottom);
-  } else {
-    result.push(...otherPlayers);
+  const leftoverPlayers = players.filter(p => !positionsOrder.includes(p.position));
+  if (leftoverPlayers.length > 0) {
+    const bjkPlayers = leftoverPlayers.filter(p => isBjk(p.club));
+    const gsPlayers = leftoverPlayers.filter(p => isGs(p.club));
+    const otherPlayers = leftoverPlayers.filter(p => !isBjk(p.club) && !isGs(p.club));
+    result.push(...bjkPlayers, ...otherPlayers, ...gsPlayers);
   }
 
   return result;

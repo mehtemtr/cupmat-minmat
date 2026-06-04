@@ -1123,7 +1123,7 @@
   <div id="helpModal" class="modal-backdrop" onclick="closeModal('helpModal')">
     <div class="modal-container" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h2 class="modal-title">Nasıl Oynanır?</h2>
+        <h2 class="modal-title" id="helpModalTitle">Nasıl Oynanır?</h2>
       </div>
       <div class="modal-body">
         <ul class="modal-list">
@@ -1131,11 +1131,11 @@
           <li><strong>Eşleştirme:</strong> Gizlenen işlem kartı ile doğru sonuç kartını bulun.</li>
           <li><strong>Seviye Atlama:</strong> Süre ve can bitmeden tüm eşleşmeleri tamamlayarak seviye atlayın.</li>
           <li><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!</li>
-          <li><strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/kullanim.pdf" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">tıklayınız</a>.</li>
+          <li id="helpGuideItem"><strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">tıklayınız</a>.</li>
         </ul>
       </div>
       <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
-        <button class="modal-close-btn" onclick="closeModal('helpModal')">❌ Kapat</button>
+        <button class="modal-close-btn" id="helpModalCloseBtn" onclick="closeModal('helpModal')">❌ Kapat</button>
       </div>
     </div>
   </div>
@@ -1338,6 +1338,40 @@
       if (sit) sit.innerText = t("sysInfoTitle");
       let sic = document.getElementById("sysInfoContent");
       if (sic) sic.innerHTML = t("sysInfoContent");
+
+      let hmt = document.getElementById("helpModalTitle");
+      if (hmt) {
+        hmt.innerText = currentLang === "tr" ? "Nasıl Oynanır?" : "How to Play?";
+      }
+      let hmcb = document.getElementById("helpModalCloseBtn");
+      if (hmcb) {
+        hmcb.innerText = currentLang === "tr" ? "❌ Kapat" : "❌ Close";
+      }
+      let hgl = document.getElementById("helpGuideItem");
+      if (hgl) {
+        const guideName = "rehber_tr.pdf";
+        if (currentLang === "tr") {
+          hgl.innerHTML = `<strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">tıklayınız</a>.`;
+        } else {
+          let label = `<strong>User Guide:</strong> Please <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">click here</a> for login and registration example.`;
+          if (currentLang === "de") {
+            label = `<strong>Benutzerhandbuch:</strong> Bitte <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">klicken Sie hier</a> für das Login- und Registrierungsbeispiel.`;
+          } else if (currentLang === "fr") {
+            label = `<strong>Guide de l'utilisateur:</strong> Veuillez <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">cliquer ici</a> pour l'exemple de connexion et d'inscription.`;
+          } else if (currentLang === "es") {
+            label = `<strong>Guía del usuario:</strong> Por favor, <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">haga clic aquí</a> para ver el ejemplo de inicio de sesión y registro.`;
+          } else if (currentLang === "pt") {
+            label = `<strong>Guia do Usuário:</strong> Por favor, <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">clique aqui</a> para o exemplo de login e registro.`;
+          } else if (currentLang === "ar") {
+            label = `<strong>دليل المستخدم:</strong> يرجى <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">النقر هنا</a> لمشاهدة مثال تسجيل الدخول والتسجيل.`;
+          } else if (currentLang === "ko") {
+            label = `<strong>사용자 가이드:</strong> 로그인 및 회원가입 예시를 보시려면 <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">여기를 클릭</a>하세요.`;
+          } else if (currentLang === "it") {
+            label = `<strong>Guida Utente:</strong> Si prega di <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">cliccare qui</a> per l'esempio di accesso e registrazione.`;
+          }
+          hgl.innerHTML = label;
+        }
+      }
 
       let ms = document.getElementById("menuSub");
       if (ms) ms.innerText = t("subtitle");

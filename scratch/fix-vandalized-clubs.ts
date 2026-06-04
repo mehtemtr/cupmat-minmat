@@ -53,13 +53,13 @@ const corrections: Record<string, string> = {
   "Uğurcan Çakır": "Galatasaray",
   "Mert Günok": "Fenerbahçe",
   "Eren Elmalı": "Trabzonspor",
-  "Samet Akaydin": "Fenerbahçe",
+  "Samet Akaydin": "Çaykur Rizespor",
   "Yusuf Akçiçek": "Fenerbahçe",
   "Mustafa Eskihellaç": "Gaziantep FK",
   "Ahmetcan Kaplan": "Ajax",
   "Kerem Aktürkoğlu": "Fenerbahçe",
-  "İrfan Can Kahveci": "Fenerbahçe",
-  "Orkun Kökçü": "Benfica",
+  "İrfan Can Kahveci": "Kasımpaşa",
+  "Orkun Kökçü": "Beşiktaş",
   "Demir Ege Tıknaz": "Braga",
 
   // Portugal
@@ -105,12 +105,12 @@ const corrections: Record<string, string> = {
 
   // Other vandalized non-Turkey players
   "Edson Álvarez": "West Ham United",
-  "Oh Hyeon-gyu": "Genk",
+  "Oh Hyeon-gyu": "Beşiktaş",
   "Nihad Mujakić": "Partizan",
   "Frantzdy Pierrot": "AEK Athens",
   "Yahia Fofana": "Angers",
   "Wilfried Singo": "Monaco",
-  "Emmanuel Agbadou": "Reims",
+  "Emmanuel Agbadou": "Beşiktaş",
   "Christopher Opéri": "Le Havre",
   "Christ Inao Oulaï": "Serbest",
   "Joshua Brenet": "Serbest",
@@ -122,7 +122,7 @@ const corrections: Record<string, string> = {
   "Eldor Shomurodov": "Roma",
   "Abbosbek Fayzullaev": "CSKA Moscow",
   "Meschak Elia": "Young Boys",
-  "Amir Murillo": "Marseille",
+  "Amir Murillo": "Beşiktaş",
 
   // England
   "Jarell Quansah": "Liverpool",
