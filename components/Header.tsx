@@ -456,6 +456,26 @@ export function Header() {
                 </h3>
                 <p className="ml-4 text-zinc-400">v1.0.0 (Mayıs 2026)</p>
               </div>
+
+              <div>
+                <h3 className="text-[15px] font-bold text-sky-400 flex items-center gap-2 mb-1.5">
+                  📣 {locale === "tr" ? "Sosyal Medya & İletişim" : "Social Media & Contact"}
+                </h3>
+                <div className="ml-4 flex flex-col gap-2 text-zinc-300">
+                  <a href="https://x.com/Statmatikcom" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-sky-400 transition-colors w-fit text-sm">
+                    <span className="text-zinc-400">X:</span> @Statmatikcom
+                  </a>
+                  <a href="https://www.instagram.com/statmatik/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-pink-500 transition-colors w-fit text-sm">
+                    <span className="text-zinc-400">Instagram:</span> @statmatik
+                  </a>
+                  <a href="https://www.facebook.com/profile.php?id=61590443797517" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-blue-500 transition-colors w-fit text-sm">
+                    <span className="text-zinc-400">Facebook:</span> Statmatik
+                  </a>
+                  <a href="mailto:info.mahtemyazilim@gmail.com" className="flex items-center gap-2 hover:text-emerald-400 transition-colors w-fit text-sm">
+                    <span className="text-zinc-400">E-mail:</span> info.mahtemyazilim@gmail.com
+                  </a>
+                </div>
+              </div>
               
               <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-transparent p-5 text-center shadow-lg shadow-yellow-500/5">
                 <h4 className="text-[13px] font-extrabold text-yellow-500 tracking-[1.5px] uppercase mb-2.5">

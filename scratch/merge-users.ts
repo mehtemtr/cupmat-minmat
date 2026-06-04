@@ -3,13 +3,14 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Identifiers
-const SOURCE_USER_ID = "user_3E8kqkxyJNRRH46L63efdjLyme6";
-const TARGET_USER_ID = "user_3ESNNI2nIvZXozuY8hdqFnLi5y7";
+const SOURCE_USER_ID = "user_3E1moQp7w4ETZnBAGPLuFjIQjr0";
+const TARGET_USER_ID = "user_3ESNMt3VVkj9ixjcPx2fH4gdRDp";
 
-const SOURCE_EMAIL = "user_3E8kqkxyJNRRH46L63efdjLyme6@no-email.statmatik.com";
-const TARGET_EMAIL = "hamemaht@gmail.com";
+const SOURCE_EMAIL = "";
+const SOURCE_DISPLAY_NAME = "ismail toptaş";
 
-const TARGET_DISPLAY_NAME = "Ben_Harun";
+const TARGET_EMAIL = "ismail.huzursokagi@gmail.com";
+const TARGET_DISPLAY_NAME = "ismail_toptas";
 
 function loadEnv() {
   const dir = path.join(__dirname, "..");
@@ -67,8 +68,8 @@ async function main() {
   const isLive = args.includes("--live");
 
   console.log(`=== RUNNING USER ACCOUNT MERGE (${isLive ? "LIVE" : "DRY-RUN"}) ===`);
-  console.log(`Source: ${SOURCE_USER_ID} (${SOURCE_EMAIL})`);
-  console.log(`Target: ${TARGET_USER_ID} (${TARGET_EMAIL})`);
+  console.log(`Source: ${SOURCE_USER_ID} ("${SOURCE_DISPLAY_NAME}")`);
+  console.log(`Target: ${TARGET_USER_ID} ("${TARGET_DISPLAY_NAME}" <${TARGET_EMAIL}>)`);
   console.log("-----------------------------------------");
 
   const redis = new Redis({
@@ -93,7 +94,7 @@ async function main() {
   let u2 = u2Index >= 0 ? gamificationStore.userActivities[u2Index] : null;
 
   if (!u1) {
-    console.log(`⚠️ Source user ${SOURCE_USER_ID} not found in gamification_store.`);
+    console.log(`⚠️ Source user ${SOURCE_USER_ID} not found in gamification_store (already merged or non-existent).`);
   }
   if (!u2) {
     console.log(`ℹ️ Target user ${TARGET_USER_ID} not found in gamification_store, will initialize default.`);
@@ -120,6 +121,8 @@ async function main() {
       cupMatRewardSeconds: 0,
       cupMatRewardPoints: 0,
       minmatMaxLevels: { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
+      minmatUnlockedModes: { sub: false, mul: false, div: false, mix: false },
+      minmatGamesPlayedCount: { add: 0, sub: 0, mul: 0, div: 0, mix: 0 },
       lastPageStayClaimAt: "",
       pageStayClaimsTodayCount: 0,
       pageStayHistory: {}
@@ -134,6 +137,7 @@ async function main() {
 
   if (u1) {
     console.log("Found source user stats:", {
+      displayName: u1.displayName,
       taraftarPuani: u1.taraftarPuani,
       mevcutPeriyotPuani: u1.mevcutPeriyotPuani,
       minmatEkSure: u1.minmatEkSure,
@@ -142,6 +146,8 @@ async function main() {
 
     const mergedUser = {
       ...u2,
+      displayName: TARGET_DISPLAY_NAME,
+      email: TARGET_EMAIL,
       taraftarPuani: (u2.taraftarPuani || 0) + (u1.taraftarPuani || 0),
       gunlukGirisSayisi: Math.max(u2.gunlukGirisSayisi || 0, u1.gunlukGirisSayisi || 0),
       sonGirisTarihi: getLatestDate(u2.sonGirisTarihi, u1.sonGirisTarihi),
@@ -164,6 +170,19 @@ async function main() {
         mul: Math.max((u2.minmatMaxLevels?.mul || 1), (u1.minmatMaxLevels?.mul || 1)),
         div: Math.max((u2.minmatMaxLevels?.div || 1), (u1.minmatMaxLevels?.div || 1)),
         mix: Math.max((u2.minmatMaxLevels?.mix || 1), (u1.minmatMaxLevels?.mix || 1)),
+      },
+      minmatUnlockedModes: {
+        sub: u2.minmatUnlockedModes?.sub || u1.minmatUnlockedModes?.sub || false,
+        mul: u2.minmatUnlockedModes?.mul || u1.minmatUnlockedModes?.mul || false,
+        div: u2.minmatUnlockedModes?.div || u1.minmatUnlockedModes?.div || false,
+        mix: u2.minmatUnlockedModes?.mix || u1.minmatUnlockedModes?.mix || false,
+      },
+      minmatGamesPlayedCount: {
+        add: (u2.minmatGamesPlayedCount?.add || 0) + (u1.minmatGamesPlayedCount?.add || 0),
+        sub: (u2.minmatGamesPlayedCount?.sub || 0) + (u1.minmatGamesPlayedCount?.sub || 0),
+        mul: (u2.minmatGamesPlayedCount?.mul || 0) + (u1.minmatGamesPlayedCount?.mul || 0),
+        div: (u2.minmatGamesPlayedCount?.div || 0) + (u1.minmatGamesPlayedCount?.div || 0),
+        mix: (u2.minmatGamesPlayedCount?.mix || 0) + (u1.minmatGamesPlayedCount?.mix || 0),
       },
       lastPageStayClaimAt: getLatestDate(u2.lastPageStayClaimAt, u1.lastPageStayClaimAt),
       pageStayClaimsTodayCount: Math.max(u2.pageStayClaimsTodayCount || 0, u1.pageStayClaimsTodayCount || 0),
@@ -206,6 +225,16 @@ async function main() {
     }
   } else {
     console.log("No changes needed in Redis gamification_store since source user was not found.");
+    // In case target displayName is not updated to ismail_toptas in Redis, let's update it!
+    if (u2Index >= 0 && gamificationStore.userActivities[u2Index].displayName !== TARGET_DISPLAY_NAME) {
+      gamificationStore.userActivities[u2Index].displayName = TARGET_DISPLAY_NAME;
+      if (isLive) {
+        await redis.set(gamificationKey, gamificationStore);
+        console.log("✅ Successfully updated target user displayName to ismail_toptas in Redis!");
+      } else {
+        console.log(`⏳ [DRY-RUN] Would update target user displayName in Redis to: ${TARGET_DISPLAY_NAME}`);
+      }
+    }
   }
 
   // 2. REDIS: cupmat_leaderboard (Predictions)
@@ -221,14 +250,14 @@ async function main() {
     const l2 = l2Index >= 0 ? leaderboardStore[l2Index] : null;
 
     if (l1) {
-      console.log("Found source user tournament submission:", {
+      console.log("Found source user tournament submission in leaderboardStore:", {
         points: l1.points,
         predictionsCount: Object.keys(l1.matchPredictions || {}).length,
         submittedAt: l1.submittedAt
       });
 
       if (l2) {
-        console.log("Found target user tournament submission:", {
+        console.log("Found target user tournament submission in leaderboardStore:", {
           points: l2.points,
           predictionsCount: Object.keys(l2.matchPredictions || {}).length,
           submittedAt: l2.submittedAt
@@ -242,6 +271,7 @@ async function main() {
 
         const mergedSubmission = {
           ...l2,
+          displayName: TARGET_DISPLAY_NAME,
           matchPredictions: mergedPredictions,
           points: Math.max(l2.points || 0, l1.points || 0),
           groupsComplete: l2.groupsComplete || l1.groupsComplete,
@@ -272,6 +302,16 @@ async function main() {
       }
     } else {
       console.log("No predictions found for source user.");
+      // Just make sure target gets their displayName updated if they exist
+      if (l2 && l2.displayName !== TARGET_DISPLAY_NAME) {
+        l2.displayName = TARGET_DISPLAY_NAME;
+        if (isLive) {
+          await redis.set(leaderboardKey, leaderboardStore);
+          console.log("✅ Successfully updated target user displayName in cupmat_leaderboard.");
+        } else {
+          console.log(`⏳ [DRY-RUN] Would update target user displayName in cupmat_leaderboard to: ${TARGET_DISPLAY_NAME}`);
+        }
+      }
     }
   } else {
     console.log("No tournament submissions found in cupmat_leaderboard.");
@@ -286,29 +326,29 @@ async function main() {
     const p1 = profiles?.find(p => p.user_id === SOURCE_USER_ID);
     const p2 = profiles?.find(p => p.user_id === TARGET_USER_ID);
 
-    if (p1) {
-      console.log("Found source user profile:", p1);
-      if (p2) {
-        console.log("Found target user profile, merging score fields:", p2);
-        // Combine profile fields if any (though usually 0 in check)
-        const updatedTarget = {
-          cupmat_general_score: Math.max(p2.cupmat_general_score || 0, p1.cupmat_general_score || 0),
-          cupmat_reward_score: Math.max(p2.cupmat_reward_score || 0, p1.cupmat_reward_score || 0),
-        };
+    if (p2) {
+      console.log("Found target user profile, updating nickname and email:", p2);
+      const updatedTarget = {
+        nickname: TARGET_DISPLAY_NAME,
+        email: TARGET_EMAIL
+      };
 
+      if (isLive) {
+        const { error: uError } = await supabaseAdmin
+          .from("profiles")
+          .update(updatedTarget)
+          .eq("user_id", TARGET_USER_ID);
+        if (uError) {
+          console.error("❌ Error updating target profile:", uError);
+        } else {
+          console.log("✅ Target profile updated.");
+        }
+      } else {
+        console.log(`⏳ [DRY-RUN] Would update target profile fields to:`, updatedTarget);
+      }
+
+      if (p1) {
         if (isLive) {
-          // Update target
-          const { error: uError } = await supabaseAdmin
-            .from("profiles")
-            .update(updatedTarget)
-            .eq("user_id", TARGET_USER_ID);
-          if (uError) {
-            console.error("❌ Error updating target profile:", uError);
-          } else {
-            console.log("✅ Target profile updated.");
-          }
-
-          // Delete source profile
           const { error: dError } = await supabaseAdmin
             .from("profiles")
             .delete()
@@ -319,11 +359,12 @@ async function main() {
             console.log("✅ Source profile deleted.");
           }
         } else {
-          console.log(`⏳ [DRY-RUN] Would update target profile fields to:`, updatedTarget);
           console.log(`⏳ [DRY-RUN] Would delete source profile: ${SOURCE_USER_ID}`);
         }
-      } else {
-        // Change user_id of source to target
+      }
+    } else {
+      if (p1) {
+        console.log("Target profile not found but source profile found. Moving source profile to target...");
         if (isLive) {
           const { error: uError } = await supabaseAdmin
             .from("profiles")
@@ -337,9 +378,25 @@ async function main() {
         } else {
           console.log(`⏳ [DRY-RUN] Would update source profile user_id, email, and nickname to target's.`);
         }
+      } else {
+        console.log("Neither source nor target profile found in Supabase profiles. Creating new profile for target user...");
+        if (isLive) {
+          const { error: iError } = await supabaseAdmin
+            .from("profiles")
+            .insert({
+              user_id: TARGET_USER_ID,
+              email: TARGET_EMAIL,
+              nickname: TARGET_DISPLAY_NAME
+            });
+          if (iError) {
+            console.error("❌ Error creating target profile:", iError);
+          } else {
+            console.log("✅ Target profile created.");
+          }
+        } else {
+          console.log(`⏳ [DRY-RUN] Would create new target profile: ${TARGET_USER_ID} / ${TARGET_DISPLAY_NAME}`);
+        }
       }
-    } else {
-      console.log("Source user profile not found in Supabase profiles.");
     }
   }
 
@@ -349,8 +406,11 @@ async function main() {
   if (scError) {
     console.error("❌ Error fetching minmat leaderboard:", scError);
   } else {
-    // Find all rows where email or name matches User 1
-    const matchingScores = scores?.filter(s => s.email === SOURCE_EMAIL || s.name === "hartem" || s.name === "Eagle_1923") || [];
+    // Find all rows where email or name matches source
+    const matchingScores = scores?.filter(s => 
+      (SOURCE_EMAIL && s.email === SOURCE_EMAIL) || 
+      s.name === SOURCE_DISPLAY_NAME
+    ) || [];
     console.log(`Found ${matchingScores.length} matching score rows for source user.`);
 
     if (matchingScores.length > 0) {

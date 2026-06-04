@@ -1,0 +1,18 @@
+{
+  "user1": {
+    "id": "user_3E1moQp7w4ETZnBAGPLuFjIQjr0",
+    "error": "HTTP 404: {\"errors\":[{\"message\":\"not found\",\"long_message\":\"No user was found with id user_3E1moQp7w4ETZnBAGPLuFjIQjr0\",\"code\":\"resource_not_found\"}],\"clerk_trace_id\":\"84c1079e7ba8d46e531bfa522c495ffc\"}"
+  },
+  "user2": {
+    "id": "user_3ESNMt3VVkj9ixjcPx2fH4gdRDp",
+    "firstName": "ismail",
+    "lastName": "toptaş",
+    "username": "ismail_topta_",
+    "emails": [
+      "ismail.huzursokagi@gmail.com"
+    ],
+    "phoneNumbers": [],
+    "externalAccounts": [],
+    "createdAt": 1780167965533
+  }
+}
