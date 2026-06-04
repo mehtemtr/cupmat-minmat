@@ -244,7 +244,7 @@ export function Header() {
         />
 
         <div className="max-w-7xl mx-auto px-4 w-full flex h-16 items-center justify-between sm:px-6 lg:px-8">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Link
               href="/cupmat"
               className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-400"
@@ -254,10 +254,10 @@ export function Header() {
             </Link>
             <Link
               href="/cupmat"
-              className="flex items-center gap-2.5 text-white"
+              className="flex items-center gap-2 sm:gap-2.5 text-white"
             >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/25">
-              <Trophy className="h-5 w-5 text-[#060b14]" strokeWidth={2.5} />
+            <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/25">
+              <Trophy className="h-4 w-4 sm:h-5 sm:w-5 text-[#060b14]" strokeWidth={2.5} />
             </span>
             <span className="hidden font-bold tracking-tight sm:block">
               {t("nav.logoTitle")}
@@ -270,7 +270,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#060b14]/80 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-emerald-500/10 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-300"
+              className="inline-flex items-center gap-1 sm:gap-2 rounded-xl border border-white/10 bg-[#060b14]/80 px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-500/10 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-300"
             >
               CUPMAT MENÜ
               <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
@@ -342,7 +342,7 @@ export function Header() {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* Hakkında (ℹ️) Butonu */}
             <button
               type="button"
@@ -566,7 +566,7 @@ export function Header() {
                     ) : locale === "de" ? (
                       <>
                         Bitte{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_de.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           klicken Sie hier
                         </a>{" "}
                         für das Login- und Registrierungsbeispiel.
@@ -574,7 +574,7 @@ export function Header() {
                     ) : locale === "fr" ? (
                       <>
                         Veuillez{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_fr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           cliquer ici
                         </a>{" "}
                         pour l'exemple de connexion et d'inscription.
@@ -582,7 +582,7 @@ export function Header() {
                     ) : locale === "es" ? (
                       <>
                         Por favor,{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_es.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           haga clic aquí
                         </a>{" "}
                         para ver el ejemplo de inicio de sesión y registro.
@@ -590,7 +590,7 @@ export function Header() {
                     ) : locale === "pt" ? (
                       <>
                         Por favor,{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_pt.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           clique aqui
                         </a>{" "}
                         para o exemplo de login e registro.
@@ -598,7 +598,7 @@ export function Header() {
                     ) : locale === "ar" ? (
                       <>
                         يرجى{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_ar.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           النقر هنا
                         </a>{" "}
                         لمشاهدة مثال تسجيل الدخول والتسجيل.
@@ -606,7 +606,7 @@ export function Header() {
                     ) : locale === "ko" ? (
                       <>
                         로그인 및 회원가입 예시를 보시려면{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_ko.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           여기를 클릭
                         </a>{" "}
                         하세요.
@@ -614,7 +614,7 @@ export function Header() {
                     ) : locale === "it" ? (
                       <>
                         Si prega di{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_it.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           cliccare qui
                         </a>{" "}
                         per l'esempio di accesso e registrazione.
@@ -622,7 +622,7 @@ export function Header() {
                     ) : (
                       <>
                         Please{" "}
-                        <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
+                        <a href="/rehber_en.pdf" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline font-bold">
                           click here
                         </a>{" "}
                         for login and registration example.

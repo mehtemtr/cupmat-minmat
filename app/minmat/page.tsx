@@ -2,9 +2,19 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { useEffect } from "react";
+import { useLocale } from "@/contexts/LocaleContext";
 
 export default function MinMatPage() {
   const { getToken } = useAuth();
+  const { locale } = useLocale();
+
+  useEffect(() => {
+    const iframe = document.querySelector("iframe");
+    if (iframe && iframe.contentWindow) {
+      console.log("[PARENT] Sending LOCALE_CHANGED to iframe:", locale);
+      iframe.contentWindow.postMessage({ type: "LOCALE_CHANGED", locale }, "*");
+    }
+  }, [locale]);
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent) => {

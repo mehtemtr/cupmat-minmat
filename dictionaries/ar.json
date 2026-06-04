@@ -177,5 +177,60 @@
     "avgHeight": "معدل الطول",
     "avgWeight": "معدل الوزن",
     "emptyData": "جاري تحميل البيانات أو لا تتوفر إحصائيات."
+  },
+  "gamification": {
+    "raceBadge": "سباق فترة 3 أيام",
+    "leaderboardTitle": "لوحة متصدرين المشجعين",
+    "leaderboardDesc": "سباق مثير لمدة 3 أيام يتكون من مجموع نقاط المشجعين التي تجمعها من خلال تصفح الموقع ونقاط التوقع الخاصة بك (مضاعف 10x)!",
+    "resettingRemaining": "الوقت المتبقي حتى إعادة التعيين:",
+    "calculating": "جاري الحساب...",
+    "resetting": "جاري إعادة التعيين...",
+    "rank": "الترتيب",
+    "username": "اسم المستخدم",
+    "totalPoints": "إجمالي النقاط",
+    "you": "أنت",
+    "points": "نقاط",
+    "noParticipants": "لم يشارك أي مستخدم في هذه الفترة بعد. كن أول من يربح النقاط!",
+    "yourStatus": "حالتك",
+    "joinMugadele": "انضم إلى سباق المتصدرين!",
+    "yourRank": "ترتيبك:",
+    "rankValue": "المرتبة {rank}",
+    "outOfRank": "خارج التصنيف",
+    "yourPointsColon": "نقاطك:",
+    "guestPrompt": "سجل الدخول لرؤية مركزك في لوحة المتصدرين والفوز بجوائز السباق!",
+    "loginNow": "سجل الدخول الآن",
+    "cupMatRewardsTitle": "ترتيب جوائز CupMat",
+    "cupMatRewardsDesc": "جوائز MinMat التي تُمنح لأول 3 فائزين في هذه الفترة تكون نشطة فقط في الفترة التالية البالغة 3 أيام.",
+    "noEligibleUsers": "لا يوجد مستخدمون مؤهلون في هذه الفترة بعد.",
+    "minMatRewardsTitle": "ترتيب جوائز MinMat",
+    "minMatRewardsDesc": "مكافأة CupMat الممنوحة لأول 3 فائزين في MinMat هذه الفترة تكون صالحة فقط في الفترة التالية البالغة 3 أيام.",
+    "pastChampions": "أبطال الفترات السابقة",
+    "noPastChampions": "لا توجد فترة مكتملة بعد. سيتم عرض الأبطال الأوائل خلال 3 أيام!",
+    "periodResultsTitle": "نتائج فترة {date}",
+    "placeValue": "المركز {rank}",
+    "rewards": {
+      "cupMat": {
+        "rank1": "+10 ثوانٍ لكل مستوى في MinMat",
+        "rank2": "+5 نقاط لكل مستوى in MinMat",
+        "rank3": "+2 نقطة لكل مستوى في MinMat"
+      },
+      "minMat": {
+        "rank1": "+50 نقطة عامة و5 حقوق تغيير التوقع في CupMat",
+        "rank2": "+30 نقطة عامة و3 حقوق تغيير التوقع في CupMat",
+        "rank3": "+15 نقطة عامة وحق واحد لتغيير التوقع في CupMat"
+      }
+    },
+    "customRewards": {
+      "minmatSecs": "+{value} ثانية لكل مستوى في MinMat",
+      "minmatPts": "+{value} نقطة لكل مستوى في MinMat",
+      "cupmatPtsRights": "+{pts} نقطة عامة و{rights} حقوق تغيير التوقع في CupMat"
+    },
+    "modes": {
+      "add": "الجمع",
+      "sub": "الطرح",
+      "mul": "الضرب",
+      "div": "القسمة",
+      "mix": "مختلط"
+    }
   }
 }

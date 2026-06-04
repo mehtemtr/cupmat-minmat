@@ -177,5 +177,60 @@
     "avgHeight": "Média de Altura",
     "avgWeight": "Média de Peso",
     "emptyData": "Carregando dados ou nenhuma estatística disponível."
+  },
+  "gamification": {
+    "raceBadge": "Corrida de período de 3 dias",
+    "leaderboardTitle": "Classificação de torcedores",
+    "leaderboardDesc": "Uma emocionante corrida de 3 dias que consiste na soma dos Pontos de Torcedor que você acumula ao navegar pelo site e seus Pontos de Previsão (multiplicador 10x)!",
+    "resettingRemaining": "Tempo restante para reiniciar:",
+    "calculating": "Calculando...",
+    "resetting": "Reiniciando...",
+    "rank": "Posição",
+    "username": "Nome de usuário",
+    "totalPoints": "Pontos totais",
+    "you": "Você",
+    "points": "Pontos",
+    "noParticipants": "Nenhum usuário participou deste período ainda. Seja o primeiro a ganhar pontos!",
+    "yourStatus": "Seu status",
+    "joinMugadele": "Junte-se à corrida de classificação!",
+    "yourRank": "Sua posição:",
+    "rankValue": "Rank {rank}",
+    "outOfRank": "Sem classificação",
+    "yourPointsColon": "Seus pontos:",
+    "guestPrompt": "Faça login para ver sua própria posição no ranking e ganhar recompensas de corrida!",
+    "loginNow": "Entrar agora",
+    "cupMatRewardsTitle": "Classificação de recompensas CupMat",
+    "cupMatRewardsDesc": "As recompensas MinMat para os 3 primeiros deste período só ficam ativas no próximo período de 3 dias.",
+    "noEligibleUsers": "Nenhum usuário elegível neste período ainda.",
+    "minMatRewardsTitle": "Classificação de recompensas MinMat",
+    "minMatRewardsDesc": "O bônus CupMat para os 3 primeiros do MinMat deste período só é válido no próximo período de 3 dias.",
+    "pastChampions": "Campeões de períodos anteriores",
+    "noPastChampions": "Ainda não há nenhum período concluído. Os primeiros campeões serão listados em 3 dias!",
+    "periodResultsTitle": "Resultados do período {date}",
+    "placeValue": "Lugar {rank}",
+    "rewards": {
+      "cupMat": {
+        "rank1": "+10 segundos por nível no MinMat",
+        "rank2": "+5 pontos por nível no MinMat",
+        "rank3": "+2 pontos por nível no MinMat"
+      },
+      "minMat": {
+        "rank1": "+50 pontos globais e 5 direitos de alteração de previsão no CupMat",
+        "rank2": "+30 pontos globais e 3 direitos de alteração de previsão no CupMat",
+        "rank3": "+15 pontos globais e 1 direito de alteração de previsão no CupMat"
+      }
+    },
+    "customRewards": {
+      "minmatSecs": "+{value} segundos por nível no MinMat",
+      "minmatPts": "+{value} pontos por nível no MinMat",
+      "cupmatPtsRights": "+{pts} pontos globais e {rights} direitos de alteração de previsão no CupMat"
+    },
+    "modes": {
+      "add": "Adição",
+      "sub": "Subtração",
+      "mul": "Multiplicação",
+      "div": "Divisão",
+      "mix": "Misto"
+    }
   }
 }

@@ -22,6 +22,7 @@ export async function GET() {
       const { getOrCreateProfile } = await import("@/lib/store/gamification-store");
       const profile = await getOrCreateProfile(user.id, displayName, email);
       const minmatMaxLevels = profile.minmatMaxLevels || { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+      const minmatUnlockedModes = profile.minmatUnlockedModes || { sub: false, mul: false, div: false, mix: false };
 
       return NextResponse.json({
         isAuthenticated: true,
@@ -30,7 +31,8 @@ export async function GET() {
           email: email,
           username: user.username || null,
           displayName: displayName,
-          minmatMaxLevels: minmatMaxLevels
+          minmatMaxLevels: minmatMaxLevels,
+          minmatUnlockedModes: minmatUnlockedModes
         }
       });
     }
@@ -60,6 +62,7 @@ export async function GET() {
         const { getOrCreateProfile } = await import("@/lib/store/gamification-store");
         const profile = await getOrCreateProfile(userFromSdk.id, displayName, email);
         const minmatMaxLevels = profile.minmatMaxLevels || { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+        const minmatUnlockedModes = profile.minmatUnlockedModes || { sub: false, mul: false, div: false, mix: false };
 
         return NextResponse.json({
           isAuthenticated: true,
@@ -68,7 +71,8 @@ export async function GET() {
             email: email,
             username: userFromSdk.username || null,
             displayName: displayName,
-            minmatMaxLevels: minmatMaxLevels
+            minmatMaxLevels: minmatMaxLevels,
+            minmatUnlockedModes: minmatUnlockedModes
           }
         });
       }

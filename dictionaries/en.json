@@ -177,5 +177,60 @@
     "avgHeight": "Avg. Height",
     "avgWeight": "Avg. Weight",
     "emptyData": "Loading data or no statistics available."
+  },
+  "gamification": {
+    "raceBadge": "3-Day Period Race",
+    "leaderboardTitle": "Fan Leaderboard",
+    "leaderboardDesc": "An exciting 3-day period race consisting of the sum of the Fan Points you collect by browsing the site and your Prediction Points (10x multiplier)!",
+    "resettingRemaining": "Time Remaining until Reset:",
+    "calculating": "Calculating...",
+    "resetting": "Resetting...",
+    "rank": "Rank",
+    "username": "Username",
+    "totalPoints": "Total Points",
+    "you": "You",
+    "points": "Points",
+    "noParticipants": "No users have participated in this period yet. Be the first to earn points!",
+    "yourStatus": "Your Status",
+    "joinMugadele": "Join the leaderboard race!",
+    "yourRank": "Your Rank:",
+    "rankValue": "Rank {rank}",
+    "outOfRank": "Not ranked",
+    "yourPointsColon": "Your Points:",
+    "guestPrompt": "Log in to see your own position in the rankings and win period race rewards!",
+    "loginNow": "Log In Now",
+    "cupMatRewardsTitle": "CupMat Reward Standings",
+    "cupMatRewardsDesc": "MinMat rewards to be given to those who enter the top 3 of this period are only active in the next 3-day period.",
+    "noEligibleUsers": "No eligible users in this period yet.",
+    "minMatRewardsTitle": "MinMat Reward Standings",
+    "minMatRewardsDesc": "The CupMat bonus to be given to the MinMat top 3 this period is only valid in the next 3-day period.",
+    "pastChampions": "Past Period Champions",
+    "noPastChampions": "There is no completed period yet. First champions will be listed in 3 days!",
+    "periodResultsTitle": "Results of {date} Period",
+    "placeValue": "Place {rank}",
+    "rewards": {
+      "cupMat": {
+        "rank1": "+10 seconds per level in MinMat",
+        "rank2": "+5 points per level in MinMat",
+        "rank3": "+2 points per level in MinMat"
+      },
+      "minMat": {
+        "rank1": "+50 global points and 5 prediction change rights in CupMat",
+        "rank2": "+30 global points and 3 prediction change rights in CupMat",
+        "rank3": "+15 global points and 1 prediction change right in CupMat"
+      }
+    },
+    "customRewards": {
+      "minmatSecs": "+{value} seconds per level in MinMat",
+      "minmatPts": "+{value} points per level in MinMat",
+      "cupmatPtsRights": "+{pts} global points and {rights} prediction change rights in CupMat"
+    },
+    "modes": {
+      "add": "Addition",
+      "sub": "Subtraction",
+      "mul": "Multiplication",
+      "div": "Division",
+      "mix": "Mixed"
+    }
   }
 }

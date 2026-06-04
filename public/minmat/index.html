@@ -923,8 +923,8 @@
   <!-- Top Right Navigation Panel (Unified flexbox aligned to prevent mobile overlap) -->
   <div class="topRightNav" style="gap: 8px; z-index: 10000; align-items: center; display: flex; flex-direction: row-reverse;">
     <div id="minmatAuthPanel" style="display: flex; gap: 8px;"></div>
-    <button class="topRightBtn" onclick="openAbout()" title="Hakkında">ℹ️</button>
-    <button class="topRightBtn" onclick="openHelp()" title="Yardım">❓</button>
+    <button class="topRightBtn" onclick="openAbout()" id="btnAbout" title="Hakkında">ℹ️</button>
+    <button class="topRightBtn" onclick="openHelp()" id="btnHelp" title="Yardım">❓</button>
   </div>
 
   <!-- MENU -->
@@ -988,9 +988,11 @@
       <div class="topRow">
         <span id="score">⭐ 0</span>
         <span id="time">⏱️ 30</span>
-        <span id="extraTimeBadge" class="extraTimeActive" style="display: none;"></span>
         <span id="levelLabel">Tur 1</span>
         <button id="pauseBtn" onclick="togglePause()">⏸️</button>
+      </div>
+      <div id="extraTimeRow" style="display: none; justify-content: center; margin: 4px 0; width: 100%;">
+        <span id="extraTimeBadge" class="extraTimeActive" style="margin-left: 0;"></span>
       </div>
       <div class="topRow">
         <span id="lives">❤️❤️❤️</span>
@@ -1096,25 +1098,25 @@
         <h2 class="modal-title">MahTEM</h2>
       </div>
       <div class="modal-body">
-        <p>Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.</p>
-        <div class="modal-section-title">🚀 Yapımcı Stüdyo</div>
+        <p id="aboutDesc">Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.</p>
+        <div class="modal-section-title" id="aboutStudioTitle">🚀 Yapımcı Stüdyo</div>
         <p style="margin:0 0 10px 15px; font-weight:600; color:white;">MahTEM Oyun Stüdyosu</p>
-        <div class="modal-section-title">💻 Geliştirici Ekibi</div>
+        <div class="modal-section-title" id="aboutTeamTitle">💻 Geliştirici Ekibi</div>
         <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mehmet Ali Hayri Temizel & Mehtap Temizel & Harun Temizel</p>
-        <div class="modal-section-title">📌 Sürüm</div>
-        <p style="margin:0 0 10px 15px; color:#94a3b8;">v1.0.0 (Mayıs 2026)</p>
+        <div class="modal-section-title" id="aboutVersionTitle">📌 Sürüm</div>
+        <p style="margin:0 0 10px 15px; color:#94a3b8;" id="aboutVersionVal">v1.0.0 (Mayıs 2026)</p>
         <div class="memorial-card">
-          <div class="memorial-title">✨ Anılarına, Saygı Sevgi ve Rahmetle ✨</div>
+          <div class="memorial-title" id="aboutMemorialTitle">✨ Anılarına, Saygı Sevgi ve Rahmetle ✨</div>
           <div class="memorial-names">
             Mehmet Ali KILIÇ • Hayri TEMİZEL<br>
             Lütfiye TEMİZEL • Hüseyin TEMİZEL<br>
             Şükran TEMİZEL • Abdurrahman Hayri TEMİZEL
           </div>
-          <div class="memorial-footer" style="margin-top:8px; font-size:12px; color:#fef08a;">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
+          <div class="memorial-footer" id="aboutMemorialFooter" style="margin-top:8px; font-size:12px; color:#fef08a;">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
         </div>
       </div>
       <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
-        <button class="modal-close-btn" onclick="closeModal('aboutModal')">❌ Kapat</button>
+        <button class="modal-close-btn" id="aboutModalCloseBtn" onclick="closeModal('aboutModal')">❌ Kapat</button>
       </div>
     </div>
   </div>
@@ -1127,11 +1129,10 @@
       </div>
       <div class="modal-body">
         <ul class="modal-list">
-          <li><strong>Mod Seçimi:</strong> Oyun ekranından oynamak istediğiniz matematik modunu seçin.</li>
-          <li><strong>Eşleştirme:</strong> Gizlenen işlem kartı ile doğru sonuç kartını bulun.</li>
-          <li><strong>Seviye Atlama:</strong> Süre ve can bitmeden tüm eşleşmeleri tamamlayarak seviye atlayın.</li>
-          <li><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!</li>
-          <li id="helpGuideItem"><strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/rehber_tr.pdf" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">tıklayınız</a>.</li>
+          <li id="helpSelectMode"><strong>Mod Seçimi:</strong> Oyun ekranından oynamak istediğiniz matematik modunu seçin.</li>
+          <li id="helpMatch"><strong>Eşleştirme:</strong> Gizlenen işlem kartı ile doğru sonuç kartını bulun.</li>
+          <li id="helpLevelUp"><strong>Seviye Atlama:</strong> Süre ve can bitmeden tüm eşleşmeleri tamamlayarak seviye atlayın.</li>
+          <li id="helpLevelLocks"><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!</li>
         </ul>
       </div>
       <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
@@ -1160,7 +1161,27 @@
         cupmatSwitch: "🏆 Cupmat'a Geç (Yeni Güncellemeleri İncele)",
         saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!",
         sysInfoTitle: "🔄 Sistem Güncellendi!",
-        sysInfoContent: "• Yeni <strong>e-posta + şifre</strong> sistemi aktif<br>• <strong>Misafirler</strong> ödül kazanamaz ve liderlik tablosunda görünmez<br>• Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır<br>• CupMat'taki yeni turnuva güncellemelerini inceleyebilirsiniz!"
+        sysInfoContent: "• Yeni <strong>e-posta + şifre</strong> sistemi aktif<br>• <strong>Misafirler</strong> ödül kazanamaz ve liderlik tablosunda görünmez<br>• Oturum <strong>MinMat &amp; CupMat</strong> arasında ortaktır<br>• CupMat'taki yeni turnuva güncellemelerini inceleyebilirsiniz!",
+        btnGuestText: "👤 Misafir Olarak Devam Et",
+        btnLoginMenuText: "🔑 Giriş Yap / Kayıt Ol",
+        guestMode: "👤 Misafir Modu:",
+        change: "Değiştir",
+        signin: "Giriş Yap",
+        about: "Hakkında",
+        help: "Yardım",
+        aboutDesc: "Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.",
+        aboutStudio: "🚀 Yapımcı Stüdyo",
+        aboutTeam: "💻 Geliştirici Ekibi",
+        aboutVersion: "📌 Sürüm",
+        aboutVersionValue: "v1.0.0 (Mayıs 2026)",
+        aboutMemorialTitle: "✨ Anılarına, Saygı Sevgi ve Rahmetle ✨",
+        aboutMemorialFooter: "Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.",
+        helpTitle: "Nasıl Oynanır?",
+        helpClose: "❌ Kapat",
+        helpSelectMode: "<strong>Mod Seçimi:</strong> Oyun ekranından oynamak istediğiniz matematik modunu seçin.",
+        helpMatch: "<strong>Eşleştirme:</strong> Gizlenen işlem kartı ile doğru sonuç kartını bulun.",
+        helpLevelUp: "<strong>Seviye Atlama:</strong> Süre ve can bitmeden tüm eşleşmeleri tamamlayarak seviye atlayın.",
+        helpLevelLocks: "<strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!"
       },
       en: {
         placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
@@ -1177,7 +1198,27 @@
         cupmatSwitch: "🏆 Go to Cupmat (Check New Updates)",
         saving: "⏳ Saving...", saved: "✓ Saved successfully!",
         sysInfoTitle: "🔄 System Updated!",
-        sysInfoContent: "• New <strong>email + password</strong> system is active<br>• <strong>Guests</strong> cannot earn rewards or appear on the leaderboard<br>• Session is shared between <strong>MinMat &amp; CupMat</strong><br>• You can review the new tournament updates on CupMat!"
+        sysInfoContent: "• New <strong>email + password</strong> system is active<br>• <strong>Guests</strong> cannot earn rewards or appear on the leaderboard<br>• Session is shared between <strong>MinMat &amp; CupMat</strong><br>• You can review the new tournament updates on CupMat!",
+        btnGuestText: "👤 Continue as Guest",
+        btnLoginMenuText: "🔑 Sign In / Sign Up",
+        guestMode: "👤 Guest Mode:",
+        change: "Change",
+        signin: "Sign In",
+        about: "About",
+        help: "Help",
+        aboutDesc: "This game is designed to develop mental calculation speed, mathematical intelligence, and strategic thinking in a fun way through the integration of CupMat & MinMat.",
+        aboutStudio: "🚀 Production Studio",
+        aboutTeam: "💻 Developer Team",
+        aboutVersion: "📌 Version",
+        aboutVersionValue: "v1.0.0 (May 2026)",
+        aboutMemorialTitle: "✨ In Loving Memory, with Respect and Grace ✨",
+        aboutMemorialFooter: "Dedicated to their cherished memory. May their souls rest in peace, and their names live forever.",
+        helpTitle: "How to Play?",
+        helpClose: "❌ Close",
+        helpSelectMode: "<strong>Select Mode:</strong> Select the math mode you want to play on the game screen.",
+        helpMatch: "<strong>Matching:</strong> Match the hidden operation card with the correct result card.",
+        helpLevelUp: "<strong>Level Up:</strong> Complete all matches before your time or lives run out to level up.",
+        helpLevelLocks: "<strong>Level Locks:</strong> Reaching Level 4 in Addition mode unlocks Subtraction mode!"
       },
       de: {
         placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
@@ -1194,7 +1235,27 @@
         cupmatSwitch: "🏆 Zu Cupmat (Neue Updates ansehen)",
         saving: "⏳ Speichern...", saved: "✓ Erfolgreich gespeichert!",
         sysInfoTitle: "🔄 System Aktualisiert!",
-        sysInfoContent: "• Neues <strong>E-Mail + Passwort</strong>-System ist aktiv<br>• <strong>Gäste</strong> können keine Belohnungen erhalten oder auf der Bestenliste erscheinen<br>• Die Sitzung wird zwischen <strong>MinMat &amp; CupMat</strong> geteilt<br>• Sie können die neuen Turnier-Updates auf CupMat ansehen!"
+        sysInfoContent: "• Neues <strong>E-Mail + Passwort</strong>-System ist aktiv<br>• <strong>Gäste</strong> können keine Belohnungen erhalten oder auf der Bestenliste erscheinen<br>• Die Sitzung wird zwischen <strong>MinMat &amp; CupMat</strong> geteilt<br>• Sie können die neuen Turnier-Updates auf CupMat ansehen!",
+        btnGuestText: "👤 Als Gast fortfahren",
+        btnLoginMenuText: "🔑 Einloggen / Registrieren",
+        guestMode: "👤 Gastmodus:",
+        change: "Ändern",
+        signin: "Einloggen",
+        about: "Über",
+        help: "Hilfe",
+        aboutDesc: "Dieses Spiel wurde entwickelt, um die mentale Rechengeschwindigkeit, die mathematische Intelligenz und das strategische Denken auf spielerische Weise durch die Integration von CupMat & MinMat zu fördern.",
+        aboutStudio: "🚀 Produktionsstudio",
+        aboutTeam: "💻 Entwicklerteam",
+        aboutVersion: "📌 Version",
+        aboutVersionValue: "v1.0.0 (Mai 2026)",
+        aboutMemorialTitle: "✨ In liebevollem Gedenken, mit Respekt und Gnade ✨",
+        aboutMemorialFooter: "Ihrem geschätzten Andenken gewidmet. Mögen ihre Seelen in Frieden ruhen und ihre Namen ewig leben.",
+        helpTitle: "Spielanleitung",
+        helpClose: "❌ Schließen",
+        helpSelectMode: "<strong>Modus wählen:</strong> Wählen Sie auf dem Spielbildschirm den gewünschten Mathe-Modus aus.",
+        helpMatch: "<strong>Zuordnung:</strong> Ordnen Sie die verdeckte Rechenkarte der richtigen Ergebniskarte zu.",
+        helpLevelUp: "<strong>Level-Up:</strong> Schließen Sie alle Zuordnungen ab, bevor die Zeit oder die Leben ablaufen, um das nächste Level zu erreichen.",
+        helpLevelLocks: "<strong>Level-Sperren:</strong> Das Erreichen von Level 4 im Additionsmodus schaltet den Subtraktionsmodus frei!"
       },
       fr: {
         placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
@@ -1211,7 +1272,27 @@
         cupmatSwitch: "🏆 Aller à Cupmat (Voir les nouveautés)",
         saving: "⏳ Enregistrement...", saved: "✓ Enregistré avec succès!",
         sysInfoTitle: "🔄 Système Mis à Jour !",
-        sysInfoContent: "• Le nouveau système <strong>e-mail + mot de passe</strong> est actif<br>• Les <strong>invités</strong> ne peuvent pas gagner de récompenses ni figurer au classement<br>• La session est partagée entre <strong>MinMat &amp; CupMat</strong><br>• Vous pouvez consulter les nouvelles mises à jour du tournoi sur CupMat !"
+        sysInfoContent: "• Le nouveau système <strong>e-mail + mot de passe</strong> est actif<br>• Les <strong>invités</strong> ne peuvent pas gagner de récompenses ni figurer au classement<br>• La session est partagée entre <strong>MinMat &amp; CupMat</strong><br>• Vous pouvez consulter les nouvelles mises à jour du tournoi sur CupMat !",
+        btnGuestText: "👤 Continuer en tant qu'invité",
+        btnLoginMenuText: "🔑 Se connecter / S'inscrire",
+        guestMode: "👤 Mode invité :",
+        change: "Modifier",
+        signin: "Se connecter",
+        about: "À propos",
+        help: "Aide",
+        aboutDesc: "Ce jeu est conçu pour développer la vitesse de calcul mental, l'intelligence mathématique et la pensée stratégique de manière ludique grâce à l'intégration de CupMat & MinMat.",
+        aboutStudio: "🚀 Studio de Production",
+        aboutTeam: "💻 Équipe de Développement",
+        aboutVersion: "📌 Version",
+        aboutVersionValue: "v1.0.0 (Mai 2026)",
+        aboutMemorialTitle: "✨ À leur mémoire, avec respect, amour et grâce ✨",
+        aboutMemorialFooter: "Dédié à leur précieuse mémoire. Que leurs âmes reposent en paix et que leurs noms vivent pour toujours.",
+        helpTitle: "Comment jouer ?",
+        helpClose: "❌ Fermer",
+        helpSelectMode: "<strong>Sélection du mode :</strong> Sélectionnez le mode mathématique auquel vous souhaitez jouer sur l'écran de jeu.",
+        helpMatch: "<strong>Association :</strong> Associez la carte d'opération cachée à la bonne carte de résultat.",
+        helpLevelUp: "<strong>Passage au niveau supérieur :</strong> Terminez toutes les associations avant de manquer de temps ou de vies pour passer au niveau supérieur.",
+        helpLevelLocks: "<strong>Verrouillage de niveau :</strong> Atteindre le niveau 4 en mode Addition déverrouille le mode Soustraction !"
       },
       es: {
         placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
@@ -1228,7 +1309,27 @@
         cupmatSwitch: "🏆 Ir a Cupmat (Ver nuevas actualizaciones)",
         saving: "⏳ Guardando...", saved: "✓ Guardado con éxito!",
         sysInfoTitle: "🔄 ¡Sistema Actualizado!",
-        sysInfoContent: "• El nuevo sistema de <strong>correo electrónico + contraseña</strong> está activo<br>• Los <strong>invitados</strong> no pueden ganar recompenses ni aparecer en la tabla de clasificación<br>• La sesión se comparte entre <strong>MinMat y CupMat</strong><br>• ¡Puedes revisar las nuevas actualizaciones del torneo en CupMat!"
+        sysInfoContent: "• El nuevo sistema de <strong>correo electrónico + contraseña</strong> está activo<br>• Los <strong>invitados</strong> no pueden ganar recompenses ni aparecer en la tabla de clasificación<br>• La sesión se comparte entre <strong>MinMat y CupMat</strong><br>• ¡Puedes revisar las nuevas actualizaciones del torneo en CupMat!",
+        btnGuestText: "👤 Continuar como invitado",
+        btnLoginMenuText: "🔑 Iniciar sesión / Registrarse",
+        guestMode: "👤 Modo invitado:",
+        change: "Cambiar",
+        signin: "Iniciar sesión",
+        about: "Acerca de",
+        help: "Ayuda",
+        aboutDesc: "Este juego está diseñado para desarrollar la velocidad del cálculo mental, la inteligencia matemática y el pensamiento estratégico de una manera divertida a través de la integración de CupMat y MinMat.",
+        aboutStudio: "🚀 Estudio de Producción",
+        aboutTeam: "💻 Equipo de Desarrollo",
+        aboutVersion: "📌 Versión",
+        aboutVersionValue: "v1.0.0 (Mayo 2026)",
+        aboutMemorialTitle: "✨ En memoria amorosa, con respeto y gracia ✨",
+        aboutMemorialFooter: "Dedicado a su preciada memoria. Que sus almas descansen en paz y sus nombres vivan para siempre.",
+        helpTitle: "¿Cómo jugar?",
+        helpClose: "❌ Cerrar",
+        helpSelectMode: "<strong>Seleccionar modo:</strong> Selecciona el modo matemático que deseas jugar en la pantalla del juego.",
+        helpMatch: "<strong>Emparejamiento:</strong> Empareja la tarjeta de operación oculta con la tarjeta de resultado correcta.",
+        helpLevelUp: "<strong>Subir de nivel:</strong> Completa todos los emparejamientos antes de que se acabe el tiempo o las vidas para subir de nivel.",
+        helpLevelLocks: "<strong>Bloqueos de nivel:</strong> ¡Alcanzar el nivel 4 en el modo Suma desbloquea el modo Resta!"
       },
       pt: {
         placeholder: "Digite seu nome...", start: "Iniciar", home: "🏠 Voltar ao Início", puanTablosu: "🏆 Classificação",
@@ -1245,7 +1346,27 @@
         cupmatSwitch: "🏆 Ir para o Cupmat (Ver Novas Atualizações)",
         saving: "⏳ Salvando...", saved: "✓ Salvo com sucesso!",
         sysInfoTitle: "🔄 Sistema Atualizado!",
-        sysInfoContent: "• Novo sistema de <strong>e-mail + senha</strong> está ativo<br>• <strong>Convidados</strong> não podem ganhar recompensas ou aparecer no ranking<br>• A sessão é compartilhada entre <strong>MinMat e CupMat</strong><br>• Você pode revisar as novas updates no CupMat!"
+        sysInfoContent: "• Novo sistema de <strong>e-mail + senha</strong> está ativo<br>• <strong>Convidados</strong> não podem ganhar recompensas ou aparecer no ranking<br>• A sessão é compartilhada entre <strong>MinMat e CupMat</strong><br>• Você pode revisar as novas updates no CupMat!",
+        btnGuestText: "👤 Continuar como convidado",
+        btnLoginMenuText: "🔑 Entrar / Cadastrar-se",
+        guestMode: "👤 Modo convidado:",
+        change: "Alterar",
+        signin: "Entrar",
+        about: "Sobre",
+        help: "Ajuda",
+        aboutDesc: "Este jogo foi projetado para desenvolver a velocidade do cálculo mental, a inteligência matemática e o pensamento estratégico de forma divertida por meio da integração do CupMat & MinMat.",
+        aboutStudio: "🚀 Estúdio de Produção",
+        aboutTeam: "💻 Equipe de Desenvolvimento",
+        aboutVersion: "📌 Versão",
+        aboutVersionValue: "v1.0.0 (Maio 2026)",
+        aboutMemorialTitle: "✨ Em memória amorosa, com respeito e graça ✨",
+        aboutMemorialFooter: "Dedicado à sua querida memória. Que suas almas descansem em paz e seus nomes vivam para sempre.",
+        helpTitle: "Como jogar?",
+        helpClose: "❌ Fechar",
+        helpSelectMode: "<strong>Selecionar Modo:</strong> Selecione o modo matemático que deseja jogar na tela do jogo.",
+        helpMatch: "<strong>Combinação:</strong> Combine a carta de operação oculta com a carta de resultado correta.",
+        helpLevelUp: "<strong>Subir de Nível:</strong> Complete todas as combinações antes que o tempo ou as vidas acabem para subir de nível.",
+        helpLevelLocks: "<strong>Bloqueios de Nível:</strong> Alcançar o Nível 4 no modo Adição desbloqueia o modo Subtração!"
       },
       ar: {
         placeholder: "أدخل اسمك...", start: "ابدأ", home: "🏠 العودة للرئيسية", puanTablosu: "🏆 جدول الترتيب",
@@ -1262,7 +1383,27 @@
         cupmatSwitch: "🏆 الذهاب إلى Cupmat (تحقق من التحديثات الجديدة)",
         saving: "⏳ جاري الحفظ...", saved: "✓ تم الحفظ بنجاح!",
         sysInfoTitle: "🔄 تم تحديث النظام!",
-        sysInfoContent: "• نظام <strong>البريد الإلكتروني + كلمة المرور</strong> الجديد نشط<br>• لا يمكن <strong>للضيوف</strong> كسب مكافآت أو الظهور في جدول الترتيب<br>• الجلسة مشتركة بين <strong>MinMat و CupMat</strong><br>• يمكنك مراجعة تحديثات البطولة الجديدة على CupMat!"
+        sysInfoContent: "• نظام <strong>البريد الإلكتروني + كلمة المرور</strong> الجديد نشط<br>• لا يمكن <strong>للضيوف</strong> كسب مكافآت أو الظهور في جدول الترتيب<br>• الجلسة مشتركة بين <strong>MinMat و CupMat</strong><br>• يمكنك مراجعة تحديثات البطولة الجديدة على CupMat!",
+        btnGuestText: "👤 المتابعة كضيف",
+        btnLoginMenuText: "🔑 تسجيل الدخول / التسجيل",
+        guestMode: "👤 وضع الضيف:",
+        change: "تغيير",
+        signin: "تسجيل الدخول",
+        about: "حول",
+        help: "مساعدة",
+        aboutDesc: "تم تصميم هذه اللعبة لتطوير سرعة الحساب الذهني، والذكاء الرياضي، والتفكير الاستراتيجي بطريقة ممتعة من خلال التكامل بين CupMat و MinMat.",
+        aboutStudio: "🚀 استوديو الإنتاج",
+        aboutTeam: "💻 فريق التطوير",
+        aboutVersion: "📌 الإصدار",
+        aboutVersionValue: "v1.0.0 (مايو 2026)",
+        aboutMemorialTitle: "✨ في ذكرى محبة، مع الاحترام والرحمة ✨",
+        aboutMemorialFooter: "مكرس لذكراهم العزيزة. لتسترح أرواحهم بسلام، ولتعش أسماؤهم إلى الأبد.",
+        helpTitle: "كيف تلعب؟",
+        helpClose: "❌ إغلاق",
+        helpSelectMode: "<strong>اختيار الوضع:</strong> اختر وضع الرياضيات الذي تريد لعبه من شاشة اللعبة.",
+        helpMatch: "<strong>المطابقة:</strong> طابق بطاقة العملية الحسابية المخفية مع بطاقة النتيجة الصحيحة.",
+        helpLevelUp: "<strong>ترقية المستوى:</strong> أكمل جميع المطابقات قبل نفاد الوقت أو المحاولات لترقية المستوى.",
+        helpLevelLocks: "<strong>قفل المستويات:</strong> الوصول إلى المستوى 4 في وضع الجمع يفتح وضع الطرح!"
       },
       ko: {
         placeholder: "이름을 입력하세요...", start: "시작", home: "🏠 홈으로 돌아가기", puanTablosu: "🏆 순위표",
@@ -1279,7 +1420,27 @@
         cupmatSwitch: "🏆 Cupmat으로 이동 (새 업데이트 확인)",
         saving: "⏳ 저장 중...", saved: "✓ 성공적으로 저장되었습니다!",
         sysInfoTitle: "🔄 시스템 업데이트 완료!",
-        sysInfoContent: "• 새로운 <strong>이메일 + 비밀번호</strong> 시스템 활성화<br>• <strong>게스트</strong>는 보상을 받거나 순위표에 표시되지 않습니다<br>• <strong>MinMat &amp; CupMat</strong> 간에 세션이 공유됩니다<br>• CupMat에서 새로운 토너먼트 업데이트를 확인하세요!"
+        sysInfoContent: "• 새로운 <strong>이메일 + 비밀번호</strong> 시스템 활성화<br>• <strong>게스트</strong>는 보상을 받거나 순위표에 표시되지 않습니다<br>• <strong>MinMat &amp; CupMat</strong> 간에 세션이 공유됩니다<br>• CupMat에서 새로운 토너먼트 업데이트를 확인하세요!",
+        btnGuestText: "👤 게스트로 계속하기",
+        btnLoginMenuText: "🔑 로그인 / 회원가입",
+        guestMode: "👤 게스트 모드:",
+        change: "변경",
+        signin: "로그인",
+        about: "정보",
+        help: "도움말",
+        aboutDesc: "이 게임은 CupMat 및 MinMat의 통합을 통해 재미있는 방식으로 암산 속도, 수학적 지능 및 전략적 사고를 개발하도록 설계되었습니다.",
+        aboutStudio: "🚀 제작 스튜디오",
+        aboutTeam: "💻 개발자 팀",
+        aboutVersion: "📌 버전",
+        aboutVersionValue: "v1.0.0 (2026년 5월)",
+        aboutMemorialTitle: "✨ 존경과 사랑, 은혜를 담아 그들의 기억을 기립니다 ✨",
+        aboutMemorialFooter: "그들의 소중한 기억에 바칩니다. 영혼이 평안히 쉬기를, 그리고 그들의 이름이 영원히 기억되기를.",
+        helpTitle: "게임 방법",
+        helpClose: "❌ 닫기",
+        helpSelectMode: "<strong>모드 선택:</strong> 게임 화면에서 플레이하려는 수학 모드를 선택하세요.",
+        helpMatch: "<strong>매칭:</strong> 숨겨진 연산 카드와 올바른 결과 카드를 매칭하세요.",
+        helpLevelUp: "<strong>레벨 업:</strong> 시간이나 하트가 소진되기 전에 모든 매칭을 완료하여 레벨을 올리세요.",
+        helpLevelLocks: "<strong>레벨 잠금:</strong> 덧셈 모드에서 4레벨에 도달하면 뺄셈 모드가 잠금 해제됩니다!"
       },
       it: {
         placeholder: "Inserisci il tuo nome...", start: "Inizia", home: "🏠 Torna alla Home", puanTablosu: "🏆 Classifica",
@@ -1341,37 +1502,50 @@
 
       let hmt = document.getElementById("helpModalTitle");
       if (hmt) {
-        hmt.innerText = currentLang === "tr" ? "Nasıl Oynanır?" : "How to Play?";
+        hmt.innerText = t("helpTitle");
       }
       let hmcb = document.getElementById("helpModalCloseBtn");
       if (hmcb) {
-        hmcb.innerText = currentLang === "tr" ? "❌ Kapat" : "❌ Close";
+        hmcb.innerText = t("helpClose");
       }
-      let hgl = document.getElementById("helpGuideItem");
-      if (hgl) {
-        const guideName = "rehber_tr.pdf";
-        if (currentLang === "tr") {
-          hgl.innerHTML = `<strong>Kullanım Kılavuzu:</strong> Giriş ve kayıt örneği için <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">tıklayınız</a>.`;
-        } else {
-          let label = `<strong>User Guide:</strong> Please <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">click here</a> for login and registration example.`;
-          if (currentLang === "de") {
-            label = `<strong>Benutzerhandbuch:</strong> Bitte <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">klicken Sie hier</a> für das Login- und Registrierungsbeispiel.`;
-          } else if (currentLang === "fr") {
-            label = `<strong>Guide de l'utilisateur:</strong> Veuillez <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">cliquer ici</a> pour l'exemple de connexion et d'inscription.`;
-          } else if (currentLang === "es") {
-            label = `<strong>Guía del usuario:</strong> Por favor, <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">haga clic aquí</a> para ver el ejemplo de inicio de sesión y registro.`;
-          } else if (currentLang === "pt") {
-            label = `<strong>Guia do Usuário:</strong> Por favor, <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">clique aqui</a> para o exemplo de login e registro.`;
-          } else if (currentLang === "ar") {
-            label = `<strong>دليل المستخدم:</strong> يرجى <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">النقر هنا</a> لمشاهدة مثال تسجيل الدخول والتسجيل.`;
-          } else if (currentLang === "ko") {
-            label = `<strong>사용자 가이드:</strong> 로그인 및 회원가입 예시를 보시려면 <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">여기를 클릭</a>하세요.`;
-          } else if (currentLang === "it") {
-            label = `<strong>Guida Utente:</strong> Si prega di <a href="/${guideName}" target="_blank" rel="noopener noreferrer" style="color: #4ade80; text-decoration: underline; font-weight: bold;">cliccare qui</a> per l'esempio di accesso e registrazione.`;
-          }
-          hgl.innerHTML = label;
-        }
+      let amcb = document.getElementById("aboutModalCloseBtn");
+      if (amcb) {
+        amcb.innerText = t("helpClose");
       }
+
+      let hsm = document.getElementById("helpSelectMode");
+      if (hsm) hsm.innerHTML = t("helpSelectMode");
+      let hm = document.getElementById("helpMatch");
+      if (hm) hm.innerHTML = t("helpMatch");
+      let hlu = document.getElementById("helpLevelUp");
+      if (hlu) hlu.innerHTML = t("helpLevelUp");
+      let hll = document.getElementById("helpLevelLocks");
+      if (hll) hll.innerHTML = t("helpLevelLocks");
+
+      let ad = document.getElementById("aboutDesc");
+      if (ad) ad.innerText = t("aboutDesc");
+      let ast = document.getElementById("aboutStudioTitle");
+      if (ast) ast.innerText = t("aboutStudio");
+      let att = document.getElementById("aboutTeamTitle");
+      if (att) att.innerText = t("aboutTeam");
+      let avt = document.getElementById("aboutVersionTitle");
+      if (avt) avt.innerText = t("aboutVersion");
+      let avv = document.getElementById("aboutVersionVal");
+      if (avv) avv.innerText = t("aboutVersionValue");
+      let amt = document.getElementById("aboutMemorialTitle");
+      if (amt) amt.innerText = t("aboutMemorialTitle");
+      let amf = document.getElementById("aboutMemorialFooter");
+      if (amf) amf.innerText = t("aboutMemorialFooter");
+
+      let bab = document.getElementById("btnAbout");
+      if (bab) bab.title = t("about");
+      let bhb = document.getElementById("btnHelp");
+      if (bhb) bhb.title = t("help");
+
+      let bg = document.getElementById("btnGuest");
+      if (bg) bg.innerText = t("btnGuestText");
+      let blm2 = document.getElementById("btnLoginMenu");
+      if (blm2) blm2.innerText = t("btnLoginMenuText");
 
       let ms = document.getElementById("menuSub");
       if (ms) ms.innerText = t("subtitle");
@@ -1560,15 +1734,38 @@
             };
             console.log("kullanıcı giriş yaptı: " + (userSession.displayName || userSession.username || userSession.email || "Adsız"));
             
-            // Sync levels: Database values override local storage for authenticated users
+            // Sync levels and unlocked states: merge local progress with database values
+            let hasLocalUpdates = false;
+
             if (userSession.minmatMaxLevels) {
               let modes = ["add", "sub", "mul", "div", "mix"];
               modes.forEach(m => {
                 let dbVal = userSession.minmatMaxLevels[m] || 1;
-                // Force local storage to be exactly the database progress
-                localStorage.setItem("minmat_maxLevel_" + m, dbVal);
+                let localVal = parseInt(localStorage.getItem("minmat_maxLevel_" + m)) || 1;
+                if (localVal > dbVal) {
+                  hasLocalUpdates = true;
+                }
+                localStorage.setItem("minmat_maxLevel_" + m, Math.max(dbVal, localVal));
               });
-              updateModeButtons();
+            }
+
+            if (userSession.minmatUnlockedModes) {
+              let unlockModes = ["sub", "mul", "div", "mix"];
+              unlockModes.forEach(m => {
+                let dbVal = userSession.minmatUnlockedModes[m] === true;
+                let localVal = localStorage.getItem("minmat_unlocked_" + m) === "true";
+                if (localVal && !dbVal) {
+                  hasLocalUpdates = true;
+                }
+                localStorage.setItem("minmat_unlocked_" + m, (dbVal || localVal) ? "true" : "false");
+              });
+            }
+
+            updateModeButtons();
+
+            if (hasLocalUpdates) {
+              console.log("[IFRAME] Yerelde daha yüksek ilerleme tespit edildi, veritabanı güncelleniyor...");
+              submitProgressToDb();
             }
           } else {
             userSession = { isAuthenticated: false };
@@ -1602,16 +1799,27 @@
           div: getMaxLevel("div"),
           mix: getMaxLevel("mix")
         };
+        const unlocked = {
+          sub: localStorage.getItem("minmat_unlocked_sub") === "true",
+          mul: localStorage.getItem("minmat_unlocked_mul") === "true",
+          div: localStorage.getItem("minmat_unlocked_div") === "true",
+          mix: localStorage.getItem("minmat_unlocked_mix") === "true"
+        };
         
         const response = await fetch("/api/profile/minmat-progress", {
           method: "POST",
           headers,
-          body: JSON.stringify({ levels })
+          body: JSON.stringify({ levels, unlocked })
         });
         if (response.ok) {
           const data = await response.json();
-          if (data.success && data.minmatMaxLevels) {
-            userSession.minmatMaxLevels = data.minmatMaxLevels;
+          if (data.success) {
+            if (data.minmatMaxLevels) {
+              userSession.minmatMaxLevels = data.minmatMaxLevels;
+            }
+            if (data.minmatUnlockedModes) {
+              userSession.minmatUnlockedModes = data.minmatUnlockedModes;
+            }
           }
         }
       } catch (e) {
@@ -1646,14 +1854,14 @@
         minmatAuthPanel.innerHTML = `
           <div style="display:flex; align-items:center; gap:8px; padding:6px 12px; background:rgba(6,11,20,0.8); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.1); border-radius:999px; cursor:default;">
             <span style="font-size:13px; font-weight:700; color:#4ade80;">${displayName}</span>
-            <button onclick="redirectToSignOut()" style="background:transparent; border:none; color:#ef4444; font-size:12px; cursor:pointer; font-weight:700; padding:0; margin-left:4px;">Çıkış</button>
+            <button onclick="redirectToSignOut()" style="background:transparent; border:none; color:#ef4444; font-size:12px; cursor:pointer; font-weight:700; padding:0; margin-left:4px;">${t("signout").split(" ")[0]}</button>
           </div>
         `;
       } else {
         minmatAuthPanel.innerHTML = `
           <button onclick="openClerkSignIn()" style="display:flex; align-items:center; gap:6px; padding:8px 14px; background:linear-gradient(135deg, rgba(34,197,94,0.2), rgba(59,130,246,0.2)); border:1px solid rgba(74,222,128,0.4); color:white; border-radius:999px; font-size:13px; font-weight:800; cursor:pointer;">
             <span>🔑</span>
-            <span>Giriş Yap</span>
+            <span>${t("signin")}</span>
           </button>
         `;
         
@@ -1701,8 +1909,8 @@
         
         authContainer.innerHTML = `
           <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.35); padding: 10px 12px; border-radius: 12px; color: #a5b4fc; font-size: 12px; font-weight: 700;">
-            👤 Misafir Modu: ${guestUsername}
-            <button onclick="exitGuestMode()" style="background:transparent; border:none; color:#f87171; text-decoration:underline; font-size:11px; cursor:pointer; font-weight:bold; margin-left:8px; padding:0;">[Değiştir]</button>
+            ${t("guestMode")} ${guestUsername}
+            <button onclick="exitGuestMode()" style="background:transparent; border:none; color:#f87171; text-decoration:underline; font-size:11px; cursor:pointer; font-weight:bold; margin-left:8px; padding:0;">[${t("change")}]</button>
           </div>
         `;
         if (authSaveContainer) {
@@ -1776,7 +1984,7 @@
     document.addEventListener("DOMContentLoaded", async () => {
       applyLang();
       
-      // Listen to nickname updates from parent
+      // Listen to updates from parent
       window.addEventListener("message", (event) => {
         if (event.data && event.data.type === "NICKNAME_UPDATED") {
           console.log("[IFRAME] Received NICKNAME_UPDATED from parent:", event.data.nickname);
@@ -1787,6 +1995,9 @@
             input.value = event.data.nickname;
           }
           updateAuthUI();
+        } else if (event.data && event.data.type === "LOCALE_CHANGED") {
+          console.log("[IFRAME] Received LOCALE_CHANGED from parent:", event.data.locale);
+          setLang(event.data.locale);
         }
       });
 
@@ -1810,6 +2021,20 @@
         const switchBtn = document.getElementById('btnCupmatSwitch');
         if (switchBtn) {
           switchBtn.style.display = 'none';
+        }
+        
+        // Mükerrer dil dropdownlarını gizle
+        const menuLangDropdownContainer = document.getElementById('menuLangDropdownContainer');
+        if (menuLangDropdownContainer) {
+          menuLangDropdownContainer.style.display = 'none';
+        }
+        const gameLangDropdownContainer = document.getElementById('gameLangDropdownContainer');
+        if (gameLangDropdownContainer) {
+          gameLangDropdownContainer.style.display = 'none';
+        }
+        const goLangDropdownContainer = document.getElementById('goLangDropdownContainer');
+        if (goLangDropdownContainer) {
+          goLangDropdownContainer.style.display = 'none';
         }
         
         checkAuthSession();
@@ -1990,6 +2215,13 @@
       let current = getMaxLevel(mode);
       if (lvl > current) {
         localStorage.setItem("minmat_maxLevel_" + mode, lvl);
+        
+        // Seviye 4 veya üzerine ulaşıldığında bir sonraki kategorinin kilidini aç
+        if (mode === "add" && lvl >= 4) localStorage.setItem("minmat_unlocked_sub", "true");
+        if (mode === "sub" && lvl >= 4) localStorage.setItem("minmat_unlocked_mul", "true");
+        if (mode === "mul" && lvl >= 4) localStorage.setItem("minmat_unlocked_div", "true");
+        if (mode === "div" && lvl >= 4) localStorage.setItem("minmat_unlocked_mix", "true");
+
         updateModeButtons();
         if (userSession.isAuthenticated) {
           submitProgressToDb();
@@ -1999,6 +2231,11 @@
 
     function isModeUnlocked(mode) {
       if (mode === "add") return true;
+
+      // Öncelikle yerel kilit açılma bayrağına bak
+      if (localStorage.getItem("minmat_unlocked_" + mode) === "true") return true;
+
+      // Yedek seviye sınırı kontrolü
       if (mode === "sub") return getMaxLevel("add") >= 4;
       if (mode === "mul") return getMaxLevel("sub") >= 4;
       if (mode === "div") return getMaxLevel("mul") >= 4;
@@ -2063,7 +2300,9 @@
       periodSecondsPerLevel = 0;
       periodPointsPerLevel = 0;
       let badgeEl = document.getElementById("extraTimeBadge");
+      let rowEl = document.getElementById("extraTimeRow");
       if (badgeEl) badgeEl.style.display = "none";
+      if (rowEl) rowEl.style.display = "none";
 
       try {
         const res = await fetch("/api/gamification?displayName=" + encodeURIComponent(playerName));
@@ -2102,6 +2341,7 @@
               }
               badgeEl.innerText = label;
               badgeEl.style.display = "inline-flex";
+              if (rowEl) rowEl.style.display = "flex";
             }
           }
         }

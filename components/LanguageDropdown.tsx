@@ -31,7 +31,7 @@ export function LanguageDropdown({ buttonClassName, showFullLabelOnDesktop = fal
     setIsOpen(false);
   };
 
-  const defaultButtonClass = "flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white";
+  const defaultButtonClass = "flex items-center gap-1 sm:gap-2 rounded-lg border border-white/10 bg-white/5 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-zinc-200 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white";
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>

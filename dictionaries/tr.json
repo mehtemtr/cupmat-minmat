@@ -177,5 +177,60 @@
     "avgHeight": "Ort. Boy",
     "avgWeight": "Ort. Kilo",
     "emptyData": "Veriler yükleniyor veya istatistik bulunamadı."
+  },
+  "gamification": {
+    "raceBadge": "3 Günlük Periyot Yarışı",
+    "leaderboardTitle": "Taraftar Liderlik Tablosu",
+    "leaderboardDesc": "Sitede gezinerek topladığınız Taraftar Puanları ile Tahmin Puanlarınızın (10x katı) toplamından oluşan 3 günlük heyecan dolu periyot yarışı!",
+    "resettingRemaining": "Sıfırlanmaya Kalan:",
+    "calculating": "Hesaplanıyor...",
+    "resetting": "Sıfırlanıyor...",
+    "rank": "Sıra",
+    "username": "Kullanıcı Adı",
+    "totalPoints": "Toplam Puan",
+    "you": "Siz",
+    "points": "Puan",
+    "noParticipants": "Bu periyotta henüz katılım gösteren bir kullanıcı yok. İlk puanı siz kazanın!",
+    "yourStatus": "Sizin Durumunuz",
+    "joinMugadele": "Liderlik mücadelesine katılın!",
+    "yourRank": "Sıranız:",
+    "rankValue": "{rank}. Sıra",
+    "outOfRank": "Sıralama dışı",
+    "yourPointsColon": "Puanınız:",
+    "guestPrompt": "Sıralamada kendi yerinizi görmek ve periyot yarışı ödüllerini kazanabilmek için giriş yapın!",
+    "loginNow": "Hemen Giriş Yap",
+    "cupMatRewardsTitle": "CupMat Ödül Sıralaması",
+    "cupMatRewardsDesc": "Bu periyot ilk 3'e girenlere verilecek MinMat ödülleri, yalnızca sonraki 3 günlük periyotta aktif olur.",
+    "noEligibleUsers": "Bu periyotta henüz uygun kullanıcı yok.",
+    "minMatRewardsTitle": "MinMat Ödül Sıralaması",
+    "minMatRewardsDesc": "Bu periyot MinMat ilk 3'üne verilecek CupMat bonusu, yalnızca sonraki 3 günlük periyotta geçerlidir.",
+    "pastChampions": "Geçmiş Dönem Şampiyonları",
+    "noPastChampions": "Henüz tamamlanmış bir periyot bulunmuyor. İlk şampiyonlar 3 gün sonra listelenecek!",
+    "periodResultsTitle": "{date} Periyodu Sonuçları",
+    "placeValue": "{rank}. Derece",
+    "rewards": {
+      "cupMat": {
+        "rank1": "MinMat'ta her seviyede +10 saniye",
+        "rank2": "MinMat'ta her seviyede +5 puan",
+        "rank3": "MinMat'ta her seviyede +2 puan"
+      },
+      "minMat": {
+        "rank1": "CupMat'ta +50 global puan ve 5 tahmin değiştirme hakkı",
+        "rank2": "CupMat'ta +30 global puan ve 3 tahmin değiştirme hakkı",
+        "rank3": "CupMat'ta +15 global puan ve 1 tahmin değiştirme hakkı"
+      }
+    },
+    "customRewards": {
+      "minmatSecs": "MinMat'ta her seviyede +{value} saniye",
+      "minmatPts": "MinMat'ta her seviyede +{value} puan",
+      "cupmatPtsRights": "CupMat'ta +{pts} global puan ve {rights} tahmin değiştirme hakkı"
+    },
+    "modes": {
+      "add": "Toplama",
+      "sub": "Çıkarma",
+      "mul": "Çarpma",
+      "div": "Bölme",
+      "mix": "Karışık"
+    }
   }
 }

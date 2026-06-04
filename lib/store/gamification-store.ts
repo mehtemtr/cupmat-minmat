@@ -44,6 +44,7 @@ export interface UserActivity {
   cupMatRewardSeconds: number;
   cupMatRewardPoints: number;
   minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number };
+  minmatUnlockedModes?: { sub: boolean; mul: boolean; div: boolean; mix: boolean };
   minmatGamesPlayedCount?: { add: number; sub: number; mul: number; div: number; mix: number };
   lastPageStayClaimAt: string;     // ISO string of the last page stay claim
   pageStayClaimsTodayCount: number; // Number of page stay sessions today
@@ -74,6 +75,7 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     cupMatRewardSeconds: 0,
     cupMatRewardPoints: 0,
     minmatMaxLevels: raw.minmatMaxLevels ?? { add: 1, sub: 1, mul: 1, div: 1, mix: 1 },
+    minmatUnlockedModes: raw.minmatUnlockedModes ?? { sub: false, mul: false, div: false, mix: false },
     minmatGamesPlayedCount: raw.minmatGamesPlayedCount ?? { add: 0, sub: 0, mul: 0, div: 0, mix: 0 },
     lastPageStayClaimAt: raw.lastPageStayClaimAt ?? "",
     pageStayClaimsTodayCount: raw.pageStayClaimsTodayCount ?? 0,

@@ -144,17 +144,17 @@ export default function AuthPanel() {
     };
 
     return (
-      <div className="flex items-center gap-2 relative z-50">
+      <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
         <input
           type="text"
           value={getDefaultNickname(locale)}
           readOnly
-          className="px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all bg-white/10 border border-white/20 text-white/50 cursor-not-allowed w-44"
+          className="px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold focus:outline-none transition-all bg-white/10 border border-white/20 text-white/50 cursor-not-allowed w-20 min-[380px]:w-24 sm:w-44"
           title={getTooltipText(locale)}
         />
         <SignInButton mode="modal">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 text-emerald-950 font-bold text-sm hover:bg-emerald-400 transition-colors">
-            <UserIcon className="h-4 w-4" />
+          <button className="flex items-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-emerald-500 text-emerald-950 font-bold text-xs sm:text-sm hover:bg-emerald-400 transition-colors">
+            <UserIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             {getSignInText(locale)}
           </button>
         </SignInButton>
@@ -163,9 +163,9 @@ export default function AuthPanel() {
   }
 
   return (
-    <div className="flex items-center gap-3 relative z-50">
+    <div className="flex items-center gap-1.5 sm:gap-3 relative z-50">
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <input
             type="text"
             value={tempNickname}
@@ -176,7 +176,7 @@ export default function AuthPanel() {
                 handleBlur();
               }
             }}
-            className={`px-4 py-2 rounded-full text-sm font-semibold focus:outline-none transition-all w-44 ${
+            className={`px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold focus:outline-none transition-all w-20 min-[380px]:w-24 sm:w-44 ${
               error 
                 ? "bg-red-500/10 border border-red-500/50 text-red-300 focus:border-red-400" 
                 : "bg-white/10 border border-white/20 text-white focus:border-emerald-500"
@@ -185,16 +185,16 @@ export default function AuthPanel() {
           />
           
           {loading && (
-            <div className="flex items-center gap-1 px-3 py-2 text-yellow-400 text-xs font-semibold">
+            <div className="flex items-center gap-1 px-2 py-1.5 text-yellow-400 text-[10px] sm:text-xs font-semibold">
               <span className="animate-pulse">⏳</span>
-              Kaydediliyor...
+              <span className="hidden sm:inline">Kaydediliyor...</span>
             </div>
           )}
         </div>
 
         {error && (
-          <div className="flex items-center gap-1.5 text-red-400 text-xs font-semibold">
-            <AlertCircle className="h-3 w-3" />
+          <div className="flex items-center gap-1.5 text-red-400 text-[10px] sm:text-xs font-semibold">
+            <AlertCircle className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
             {error}
           </div>
         )}
@@ -202,10 +202,10 @@ export default function AuthPanel() {
 
       <button
         onClick={() => setShowSettings(!showSettings)}
-        className="p-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/20 transition-colors"
+        className="p-1.5 sm:p-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/20 transition-colors"
         title="Ayarlar"
       >
-        <Settings className="h-4 w-4 text-white" />
+        <Settings className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
       </button>
 
       {showSettings && (

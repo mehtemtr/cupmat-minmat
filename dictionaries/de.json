@@ -177,5 +177,60 @@
     "avgHeight": "Ø Größe",
     "avgWeight": "Ø Gewicht",
     "emptyData": "Daten werden geladen oder keine Statistiken verfügbar."
+  },
+  "gamification": {
+    "raceBadge": "3-Tage-Periodenrennen",
+    "leaderboardTitle": "Fan-Bestenliste",
+    "leaderboardDesc": "Ein spannendes 3-Tage-Periodenrennen, das sich aus der Summe der Fan-Punkte, die Sie durch das Durchsuchen der Website sammeln, und Ihren Vorhersagepunkten (10-facher Multiplikator) zusammensetzt!",
+    "resettingRemaining": "Verbleibende Zeit bis zum Zurücksetzen:",
+    "calculating": "Berechnung...",
+    "resetting": "Zurücksetzen...",
+    "rank": "Rang",
+    "username": "Benutzername",
+    "totalPoints": "Gesamtpunkte",
+    "you": "Du",
+    "points": "Punkte",
+    "noParticipants": "In diesem Zeitraum haben noch keine Benutzer teilgenommen. Seien Sie der Erste, der Punkte sammelt!",
+    "yourStatus": "Ihr Status",
+    "joinMugadele": "Nehmen Sie am Bestenlisten-Rennen teil!",
+    "yourRank": "Ihr Rang:",
+    "rankValue": "Rang {rank}",
+    "outOfRank": "Nicht platziert",
+    "yourPointsColon": "Ihre Punkte:",
+    "guestPrompt": "Melden Sie sich an, um Ihre eigene Position in der Rangliste zu sehen und Belohnungen zu gewinnen!",
+    "loginNow": "Jetzt anmelden",
+    "cupMatRewardsTitle": "CupMat-Belohnungsrangliste",
+    "cupMatRewardsDesc": "Die MinMat-Belohnungen für die Top 3 dieses Zeitraums sind nur im nächsten 3-Tage-Zeitraum aktiv.",
+    "noEligibleUsers": "In diesem Zeitraum gibt es noch keine qualifizierten Benutzer.",
+    "minMatRewardsTitle": "MinMat-Belohnungsrangliste",
+    "minMatRewardsDesc": "Der CupMat-Bonus für die MinMat Top 3 dieses Zeitraums ist nur im nächsten 3-Tage-Zeitraum gültig.",
+    "pastChampions": "Champions vergangener Zeiträume",
+    "noPastChampions": "Es gibt noch keinen abgeschlossenen Zeitraum. Die ersten Champions werden in 3 Tagen aufgelistet!",
+    "periodResultsTitle": "Ergebnisse des Zeitraums {date}",
+    "placeValue": "Platz {rank}",
+    "rewards": {
+      "cupMat": {
+        "rank1": "+10 Sekunden pro Level in MinMat",
+        "rank2": "+5 Punkte pro Level in MinMat",
+        "rank3": "+2 Punkte pro Level in MinMat"
+      },
+      "minMat": {
+        "rank1": "+50 globale Punkte und 5 Vorhersageänderungsrechte in CupMat",
+        "rank2": "+30 globale Punkte und 3 Vorhersageänderungsrechte in CupMat",
+        "rank3": "+15 globale Punkte und 1 Vorhersageänderungsrecht in CupMat"
+      }
+    },
+    "customRewards": {
+      "minmatSecs": "+{value} Sekunden pro Level in MinMat",
+      "minmatPts": "+{value} Punkte pro Level in MinMat",
+      "cupmatPtsRights": "+{pts} globale Punkte und {rights} Vorhersageänderungsrechte in CupMat"
+    },
+    "modes": {
+      "add": "Addition",
+      "sub": "Subtraktion",
+      "mul": "Multiplikation",
+      "div": "Division",
+      "mix": "Gemischt"
+    }
   }
 }

@@ -177,5 +177,60 @@
     "avgHeight": "평균 신장",
     "avgWeight": "평균 체중",
     "emptyData": "데이터를 불러오는 중이거나 통계가 제공되지 않습니다."
+  },
+  "gamification": {
+    "raceBadge": "3일 주기 레이스",
+    "leaderboardTitle": "팬 리더보드",
+    "leaderboardDesc": "사이트 탐색을 통해 획득한 팬 포인트와 예측 포인트(10배 승수)의 합계로 구성된 흥미진진한 3일간의 주기 레이스입니다!",
+    "resettingRemaining": "초기화까지 남은 시간:",
+    "calculating": "계산 중...",
+    "resetting": "초기화 중...",
+    "rank": "순위",
+    "username": "사용자 이름",
+    "totalPoints": "총 포인트",
+    "you": "나",
+    "points": "포인트",
+    "noParticipants": "이 주기에 참여한 사용자가 아직 없습니다. 첫 포인트를 획득해보세요!",
+    "yourStatus": "나의 상태",
+    "joinMugadele": "리더보드 경쟁에 동참하세요!",
+    "yourRank": "나의 순위:",
+    "rankValue": "{rank}위",
+    "outOfRank": "순위 외",
+    "yourPointsColon": "나의 포인트:",
+    "guestPrompt": "순위표에서 자신의 위치를 확인하고 주기 레이스 보상을 받으려면 로그인하세요!",
+    "loginNow": "지금 로그인",
+    "cupMatRewardsTitle": "CupMat 보상 순위",
+    "cupMatRewardsDesc": "이번 주기의 상위 3명에게 제공되는 MinMat 보상은 다음 3일간의 주기에만 활성화됩니다.",
+    "noEligibleUsers": "이번 주기에 아직 조건에 맞는 사용자가 없습니다.",
+    "minMatRewardsTitle": "MinMat 보상 순위",
+    "minMatRewardsDesc": "이번 주기 MinMat 상위 3명에게 제공되는 CupMat 보너스는 다음 3일간의 주기에만 유효합니다.",
+    "pastChampions": "지난 주기 우승자",
+    "noPastChampions": "아직 완료된 주기가 없습니다. 첫 우승자는 3일 후에 표시됩니다!",
+    "periodResultsTitle": "{date} 주기 결과",
+    "placeValue": "{rank}위",
+    "rewards": {
+      "cupMat": {
+        "rank1": "MinMat의 모든 레벨에서 +10초",
+        "rank2": "MinMat의 모든 레벨에서 +5점",
+        "rank3": "MinMat의 모든 레벨에서 +2점"
+      },
+      "minMat": {
+        "rank1": "CupMat에서 +50 글로벌 포인트 및 5회의 예측 변경 권한",
+        "rank2": "CupMat에서 +30 글로벌 포인트 및 3회의 예측 변경 권한",
+        "rank3": "CupMat에서 +15 글로벌 포인트 및 1회의 예측 변경 권한"
+      }
+    },
+    "customRewards": {
+      "minmatSecs": "MinMat의 모든 레벨에서 +{value}초",
+      "minmatPts": "MinMat의 모든 레벨에서 +{value}점",
+      "cupmatPtsRights": "CupMat에서 +{pts} 글로벌 포인트 및 {rights}회의 예측 변경 권한"
+    },
+    "modes": {
+      "add": "더하기",
+      "sub": "빼기",
+      "mul": "곱하기",
+      "div": "나누기",
+      "mix": "혼합"
+    }
   }
 }
