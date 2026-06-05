@@ -8,6 +8,7 @@ import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import AuthPanel from "./AuthPanel";
 import { LanguageDropdown } from "./LanguageDropdown";
+import { aboutHelpTranslations, type TranslationLang } from "@/data/about-help-translations";
 
 const navKeys = [
   { href: "/teams", key: "nav.teams" },
@@ -15,6 +16,7 @@ const navKeys = [
   { href: "/groups", key: "nav.groups" },
   { href: "/venues", key: "nav.venues" },
   { href: "/tahminler", key: "nav.predictions" },
+  { href: "/hakemler", key: "hero.referees" },
   // { href: "/fantasy", key: "nav.fantasy" },
   { href: "/leaderboard", key: "nav.leaderboard" },
   { href: "/stats", key: "nav.stats" },
@@ -31,6 +33,9 @@ export function Header() {
   const [taraftarPuani, setTaraftarPuani] = useState<number | null>(null);
   const [hakkindaTiklandi, setHakkindaTiklandi] = useState<boolean>(false);
   const [yardimTiklandi, setYardimTiklandi] = useState<boolean>(false);
+
+  const activeLang = (locale in aboutHelpTranslations ? locale : "en") as TranslationLang;
+  const mt = aboutHelpTranslations[activeLang];
   
   const [aboutSecondsLeft, setAboutSecondsLeft] = useState(10);
   const [aboutClaimedThisSession, setAboutClaimedThisSession] = useState(false);
@@ -278,7 +283,7 @@ export function Header() {
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 mt-3 w-64 rounded-2xl border border-white/10 bg-[#060b14]/95 backdrop-blur-xl shadow-2xl shadow-emerald-500/10 z-50 overflow-hidden">
+              <div className="absolute left-[-30px] translate-x-0 sm:left-1/2 sm:-translate-x-1/2 mt-3 w-64 rounded-2xl border border-white/10 bg-[#060b14]/95 backdrop-blur-xl shadow-2xl shadow-emerald-500/10 z-50 overflow-hidden">
                 <div className="p-2">
                   {/* MinMat Link */}
                   <Link
@@ -408,23 +413,21 @@ export function Header() {
                   <span className="text-xl">🎁</span>
                   <div>
                     <h4 className="text-sm font-bold text-white">
-                      {locale === "tr" ? "İnceleme Ödülü" : "Review Reward"}
+                      {mt.reviewReward}
                     </h4>
                     <p className="text-xs text-zinc-400">
-                      {locale === "tr" 
-                        ? "Hakkında sayfasını 10 saniye inceleyerek +5 Taraftar Puanı kazanın." 
-                        : "Spend 10 seconds reviewing the About page to earn +5 Fans Points."}
+                      {mt.aboutRewardDesc}
                     </p>
                   </div>
                 </div>
                 <div>
                   {hakkindaTiklandi || aboutClaimedThisSession ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">
-                      ✓ {locale === "tr" ? "Puan Alındı" : "Points Claimed"}
+                      {mt.pointsClaimed}
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400 border border-amber-500/30 animate-pulse">
-                      ⏱️ {aboutSecondsLeft}s
+                      {mt.timerRemaining.replace("{seconds}", aboutSecondsLeft.toString())}
                     </span>
                   )}
                 </div>
@@ -433,33 +436,33 @@ export function Header() {
             
             <div className="text-[14px] leading-relaxed text-zinc-300 space-y-5">
               <p>
-                Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.
+                {mt.aboutDesc}
               </p>
               
               <div>
                 <h3 className="text-[15px] font-bold text-sky-400 flex items-center gap-2 mb-1.5">
-                  🚀 Yapımcı Stüdyo
+                  {mt.studioTitle}
                 </h3>
-                <p className="ml-4 font-semibold text-white">MahTEM Oyun Stüdyosu</p>
+                <p className="ml-4 font-semibold text-white">{mt.studioName}</p>
               </div>
               
               <div>
                 <h3 className="text-[15px] font-bold text-sky-400 flex items-center gap-2 mb-1.5">
-                  💻 Geliştirici Ekibi
+                  {mt.teamTitle}
                 </h3>
-                <p className="ml-4 font-semibold text-white">Mehmet Ali Hayri Temizel & Mehtap Temizel & Harun Temizel</p>
+                <p className="ml-4 font-semibold text-white">{mt.teamNames}</p>
               </div>
               
               <div>
                 <h3 className="text-[15px] font-bold text-sky-400 flex items-center gap-2 mb-1.5">
-                  📌 Sürüm
+                  {mt.versionTitle}
                 </h3>
-                <p className="ml-4 text-zinc-400">v1.0.0 (Mayıs 2026)</p>
+                <p className="ml-4 text-zinc-400">{mt.versionValue}</p>
               </div>
-
+ 
               <div>
                 <h3 className="text-[15px] font-bold text-sky-400 flex items-center gap-2 mb-1.5">
-                  📣 {locale === "tr" ? "Sosyal Medya & İletişim" : "Social Media & Contact"}
+                  {mt.socialTitle}
                 </h3>
                 <div className="ml-4 flex flex-col gap-2 text-zinc-300">
                   <a href="https://x.com/Statmatikcom" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-sky-400 transition-colors w-fit text-sm">
@@ -479,7 +482,7 @@ export function Header() {
               
               <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-transparent p-5 text-center shadow-lg shadow-yellow-500/5">
                 <h4 className="text-[13px] font-extrabold text-yellow-500 tracking-[1.5px] uppercase mb-2.5">
-                  ✨ Anılarına, Saygı, Sevgi ve Rahmetle ✨
+                  {mt.dedicationTitle}
                 </h4>
                 <p className="text-[14px] font-bold text-yellow-100/90 leading-relaxed">
                   Mehmet Ali KILIÇ • Hayri TEMİZEL<br />
@@ -487,7 +490,7 @@ export function Header() {
                   Şükran TEMİZEL • Abdurrahman Hayri TEMİZEL
                 </p>
                 <p className="text-[11px] italic text-zinc-400 mt-2.5">
-                  Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.
+                  {mt.dedicationFooter}
                 </p>
               </div>
             </div>
@@ -497,13 +500,13 @@ export function Header() {
                 onClick={() => setAboutOpen(false)}
                 className="rounded-xl bg-gradient-to-r from-red-500 to-red-700 px-6 py-2.5 text-[15px] font-bold text-white shadow-lg shadow-red-500/25 transition hover:scale-105 active:scale-95"
               >
-                ❌ Kapat
+                {mt.closeBtn}
               </button>
             </div>
           </div>
         </div>
       )}
-
+ 
       {/* YARDIM MODAL */}
       {helpOpen && (
         <div 
@@ -519,7 +522,7 @@ export function Header() {
                 ❓
               </span>
               <h2 className="text-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
-                Nasıl Oynanır & Tahmin Yapılır?
+                {mt.helpTitle}
               </h2>
             </div>
             
@@ -530,23 +533,21 @@ export function Header() {
                   <span className="text-xl">🎁</span>
                   <div>
                     <h4 className="text-sm font-bold text-white">
-                      {locale === "tr" ? "İnceleme Ödülü" : "Review Reward"}
+                      {mt.reviewReward}
                     </h4>
                     <p className="text-xs text-zinc-400">
-                      {locale === "tr" 
-                        ? "Yardım sayfasını 10 saniye inceleyerek +5 Taraftar Puanı kazanın." 
-                        : "Spend 10 seconds reviewing the Help page to earn +5 Fans Points."}
+                      {mt.helpRewardDesc}
                     </p>
                   </div>
                 </div>
                 <div>
                   {yardimTiklandi || helpClaimedThisSession ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">
-                      ✓ {locale === "tr" ? "Puan Alındı" : "Points Claimed"}
+                      {mt.pointsClaimed}
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-400 border border-amber-500/30 animate-pulse">
-                      ⏱️ {helpSecondsLeft}s
+                      {mt.timerRemaining.replace("{seconds}", helpSecondsLeft.toString())}
                     </span>
                   )}
                 </div>
@@ -558,12 +559,12 @@ export function Header() {
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Üye Girişi & Takma Ad (Nick) Değiştirme:</strong> Tahmin yapabilmek, puanlarınızı kaydetmek ve sıralamada yer alabilmek için sağ üst köşedeki <strong>Giriş Yap</strong> butonunu kullanarak hesabınızı oluşturun.
+                    <strong>{mt.loginTitle}</strong> {mt.loginText}
                   </span>
                 </li>
                 <div className="ml-6 border-l-2 border-emerald-500/40 pl-4 py-1.5 space-y-1.5 text-zinc-400 text-xs">
-                  <div>🔐 <strong>Giriş Yöntemi:</strong> E-posta adresiniz veya sosyal hesaplarınızla hızlıca üye olabilirsiniz.</div>
-                  <div>✏️ <strong>Takma Adı (Nick) Düzenleme:</strong> Giriş yaptıktan sonra, sağ üstteki kutucukta otomatik atanan adınızı göreceksiniz. Bu kutucuğa tıklayarak istediğiniz takma adı yazıp <strong>Enter</strong> tuşuna basarak veya kutucuk dışına tıklayarak veritabanına otomatik olarak kaydedebilirsiniz.</div>
+                  <div>{mt.loginSub1}</div>
+                  <div>{mt.loginSub2}</div>
                   <div>
                     📄 <strong>{
                       locale === "tr" ? "Kullanım Kılavuzu:" :
@@ -650,53 +651,53 @@ export function Header() {
                     )}
                   </div>
                 </div>
-
+ 
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Tahminlerini Kaydet:</strong> Menüden <strong>Tahminler</strong> sayfasına gidin. 2026 Dünya Kupası grup ve eleme aşaması maçları için skor tahminlerinizi yazın ve kaydet butonuna basın.
+                    <strong>{mt.predictTitle}</strong> {mt.predictText}
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Maç Sonu Puanları:</strong> Gerçek hayattaki maçlar oynandıkça ve sonuçlar girildikçe puanlarınız otomatik olarak hesaplanır:
+                    <strong>{mt.pointsTitle}</strong> {mt.pointsText}
                   </span>
                 </li>
                 <div className="ml-6 border-l-2 border-emerald-500/40 pl-4 py-1 space-y-1 text-zinc-400">
-                  <div>🎯 <strong>Tam Skor Tahmini:</strong> 5 Puan (Örn: 2-1 tahmin ettiniz, maç 2-1 bitti)</div>
-                  <div>⚡ <strong>Doğru Kazanan & Fark:</strong> 3 Puan (Örn: 2-0 tahmin ettiniz, maç 3-1 bitti)</div>
-                  <div>🔥 <strong>Sadece Doğru Kazanan:</strong> 2 Puan (Örn: 1-0 tahmin ettiniz, maç 3-0 bitti)</div>
+                  <div>{mt.pointsSub1}</div>
+                  <div>{mt.pointsSub2}</div>
+                  <div>{mt.pointsSub3}</div>
                 </div>
-
+ 
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Aktif Katılım ve Ek Puanlar:</strong> Sitede gezinerek ve aktif kalarak ekstra <strong>Taraftar Puanı</strong> ve MinMat zeka oyununda kullanabileceğiniz <strong>Ek Süreler (⏱️)</strong> kazanabilirsiniz:
+                    <strong>{mt.activePointsTitle}</strong> {mt.activePointsText}
                   </span>
                 </li>
                 <div className="ml-6 border-l-2 border-indigo-500/40 pl-4 py-1 space-y-1 text-zinc-400">
-                  <div>📅 <strong>Günlük Giriş Ödülü:</strong> Günde 1 kez giriş yapınca <strong>+10 Taraftar Puanı</strong> ve <strong>+2 saniye MinMat süresi</strong>.</div>
-                  <div>ℹ️ <strong>Keşif Ödülleri (Hakkında/Yardım):</strong> Günde 1 kez Hakkında ve Yardım pencerelerini incelediğinizde <strong>+5 Puan</strong>.</div>
-                  <div>⏳ <strong>Gezinme Sayacı (Ana Sayfalar):</strong> Takımlar, Futbolcular, Gruplar, Stadyumlar, Tahminler ve İstatistikler sayfalarında 30 saniye kaldığınızda sayfa altındaki sayaç tamamlanır ve <strong>+10 Taraftar Puanı</strong> ile <strong>+2 saniye MinMat ek süresi</strong> kazanırsınız.</div>
-                  <div>📄 <strong>Detay Keşfi (Alt Sayfalar):</strong> Futbolcu, ülke, hakem ve stadyum detay sayfalarında 10 saniye kaldığınızda sayaç tamamlanır ve <strong>+1 Taraftar Puanı</strong> kazanırsınız.</div>
+                  <div>{mt.activePointsSub1}</div>
+                  <div>{mt.activePointsSub2}</div>
+                  <div>{mt.activePointsSub3}</div>
+                  <div>{mt.activePointsSub4}</div>
                 </div>
-
+ 
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>MinMat Zeka Oyunu ve Tahmin Güncelleme:</strong> CupMat tahminlerinizi kaydettikten sonra değiştirmek için <strong>Güncelleme Anahtarı (🔑)</strong> gerekir:
+                    <strong>{mt.minmatTitle}</strong> {mt.minmatText}
                   </span>
                 </li>
                 <div className="ml-6 border-l-2 border-yellow-500/40 pl-4 py-1 space-y-1 text-zinc-400">
-                  <div>🔑 <strong>Anahtar Kazanma:</strong> MinMat oyununu oynayıp 300 puan veya üzeri skor elde ettiğiniz her oyun için <strong>+1 Tahmin Güncelleme Anahtarı</strong> kazanırsınız.</div>
-                  <div>⏱️ <strong>Ek Süre Kullanımı:</strong> MinMat oyununda zorlandığınızda, CupMat ile kazandığınız ek süreleri (⏱️) harcayarak oyuna ek süreyle başlayabilir ve daha kolay rekor kırabilirsiniz!</div>
+                  <div>{mt.minmatSub1}</div>
+                  <div>{mt.minmatSub2}</div>
                 </div>
-
+ 
                 <li className="flex items-start gap-2.5">
                   <span className="text-emerald-400 font-bold mt-0.5">•</span>
                   <span>
-                    <strong>Global Rekabet:</strong> Kazandığınız toplam puanlarla <strong>Puan Durumu</strong> liderlik tablosunda diğer oyuncularla yarışın, {"CupMat 2026'nın"} şampiyonu siz olun!
+                    <strong>{mt.globalTitle}</strong> {mt.globalText}
                   </span>
                 </li>
               </ul>
@@ -707,7 +708,7 @@ export function Header() {
                 onClick={() => setHelpOpen(false)}
                 className="rounded-xl bg-gradient-to-r from-red-500 to-red-700 px-6 py-2.5 text-[15px] font-bold text-white shadow-lg shadow-red-500/25 transition hover:scale-105 active:scale-95"
               >
-                ❌ Kapat
+                {mt.closeBtn}
               </button>
             </div>
           </div>

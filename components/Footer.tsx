@@ -70,6 +70,12 @@ export function Footer() {
 
           <p className="text-xs text-zinc-600">{t("footer.rights")}</p>
           
+          <div className="flex justify-center gap-4 text-xs text-zinc-500 mb-2">
+            <a href="/privacy.html" target="_blank" className="hover:text-emerald-400 transition-colors underline decoration-zinc-700 underline-offset-4">
+              Gizlilik Politikası / Privacy Policy
+            </a>
+          </div>
+
           <div className="max-w-4xl rounded-lg border border-zinc-800/50 bg-zinc-900/30 p-4 text-center text-[10px] leading-relaxed text-zinc-500 sm:text-xs">
             <strong className="text-zinc-400">Yasal Uyarı:</strong> statmatik.com / Statmatik uygulamasında yer alan tüm içerikler, istatistikler ve tahminler yalnızca bilgilendirme ve analiz amaçlıdır; kesinlikle yatırım tavsiyesi, iddaa veya şans oyunları yönlendirmesi içermez. Bu verilerin kullanımından doğabilecek maddi/manevi zararlardan ve tüm hukuki sonuçlardan tamamen kullanıcının kendisi sorumludur. Uygulamamız kumar veya bahis oynatmaz.
           </div>

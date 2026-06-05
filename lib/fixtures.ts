@@ -16,6 +16,8 @@ export function generateGroupFixtures(): MatchResult[] {
   const matches: MatchResult[] = [];
   let dayOffset = 0;
 
+  const hourOffsetsUTC = ["13:00", "16:00", "19:00", "21:00"];
+
   for (const group of GROUP_IDS) {
     const teams = getTeamsByGroup(group);
     const pairs = roundRobinPairs(teams.map((t) => t.id));
@@ -34,12 +36,21 @@ export function generateGroupFixtures(): MatchResult[] {
         awayScore: null,
         played: false,
         date: date.toISOString().split("T")[0],
+        time: hourOffsetsUTC[dayOffset % 4],
       });
       dayOffset++;
     });
   }
 
   return matches;
+}
+
+export function sortMatchesChronologically(matches: MatchResult[]): MatchResult[] {
+  return [...matches].sort((a, b) => {
+    const dateTimeA = `${a.date}T${a.time || "00:00"}:00Z`;
+    const dateTimeB = `${b.date}T${b.time || "00:00"}:00Z`;
+    return new Date(dateTimeA).getTime() - new Date(dateTimeB).getTime();
+  });
 }
 
 export function getMatchesForGroup(

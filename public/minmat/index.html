@@ -913,6 +913,69 @@
         font-size: 15px;
       }
     }
+
+    /* Custom MinMat Badges and Glowing Themes */
+    .minmat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .minmat-badge-tier0 {
+      display: none;
+    }
+
+    .minmat-badge-tier1 { /* Level 10 - Matematik Savaşçısı */
+      background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(205, 127, 50, 0.4));
+      color: #cd7f32;
+      border-color: rgba(205, 127, 50, 0.5);
+      box-shadow: 0 0 8px rgba(205, 127, 50, 0.25);
+    }
+
+    .minmat-badge-tier2 { /* Level 15 - Zihin Ustası */
+      background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.45));
+      color: #cbd5e1;
+      border-color: rgba(148, 163, 184, 0.5);
+      box-shadow: 0 0 10px rgba(148, 163, 184, 0.3);
+    }
+
+    .minmat-badge-tier3 { /* Level 20 - Sayıların Efendisi */
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.45));
+      color: #facc15;
+      border-color: rgba(234, 179, 8, 0.5);
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.35);
+      text-shadow: 0 0 2px rgba(234, 179, 8, 0.5);
+    }
+
+    .minmat-badge-tier4 { /* Level 25 - Zeka Efsanesi */
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      animation: pulseGlow 2s infinite ease-in-out;
+      text-shadow: 0 0 4px rgba(56, 189, 248, 0.6);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); border-color: rgba(56, 189, 248, 0.5); }
+      50% { box-shadow: 0 0 22px rgba(56, 189, 248, 0.7); border-color: rgba(168, 85, 247, 0.8); color: #c084fc; }
+    }
+
+    .lobby-badge-wrapper {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
   </style>
 </head>
 
@@ -964,6 +1027,7 @@
         </div>
       </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
+      <div id="minmatUserBadgeContainer" class="lobby-badge-wrapper" style="margin-bottom: 16px; display: none;"></div>
       <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">🎮 Oyunu Başlat</button>
       <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
       <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
@@ -981,8 +1045,9 @@
     <div id="gameTitle">
       <p id="gameSubtitle" style="font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px;">MinMat — Zeka ve Matematik Oyunu</p>
     </div>
-    <div id="playerBar">
+    <div id="playerBar" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
       <span id="modeText">🎯 Topla</span>
+      <span id="gameHudBadge" class="minmat-badge minmat-badge-tier0" style="display: none;"></span>
     </div>
     <div id="topBar">
       <div class="topRow">
@@ -1044,6 +1109,7 @@
   <div id="gameOverScreen" class="screen">
     <h1 id="gameOverTitle">Oyun Bitti</h1>
     <p id="finalScoreRow"><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
+    <div id="gameOverBadgeContainer" style="margin-top: -6px; margin-bottom: 12px; display: none;"></div>
     <div id="authSaveContainer" style="width: 100%; max-width: 320px; margin: 0 auto;"></div>
     <div id="leaderboardTabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:12px;">
       <button onclick="switchTab('scores')" id="tabScores" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(16,185,129,0.2); color:#6ee7b7; font-weight:700; font-size:13px; cursor:pointer;">🏆 Puan Tablosu</button>
@@ -1942,6 +2008,7 @@
         }
       }
       checkInput();
+      updateLobbyBadge();
     }
 
     function exitGuestMode() {
@@ -2205,7 +2272,89 @@
     let extraTimeSeconds = 0;
     let periodSecondsPerLevel = 0;
     let periodPointsPerLevel = 0;
+    let badgeExtraTimeSeconds = 0;
+    let badgeScoreMultiplier = 1.00;
     let activeTab = "scores";
+
+    function getOverallMaxLevel() {
+      let modes = ["add", "sub", "mul", "div", "mix"];
+      let maxVal = 1;
+      modes.forEach(m => {
+        let lvl = parseInt(localStorage.getItem("minmat_maxLevel_" + m)) || 1;
+        if (lvl > maxVal) maxVal = lvl;
+      });
+      return maxVal;
+    }
+
+    function getMinMatTier(maxLevel) {
+      if (maxLevel >= 25) {
+        return {
+          tier: 4,
+          name: currentLang === "tr" ? "💎 Zeka Efsanesi" : "💎 Math Legend",
+          extraSeconds: 6,
+          multiplier: 1.25,
+          className: "minmat-badge-tier4"
+        };
+      } else if (maxLevel >= 20) {
+        return {
+          tier: 3,
+          name: currentLang === "tr" ? "🥇 Sayıların Efendisi" : "🥇 Lord of Numbers",
+          extraSeconds: 4,
+          multiplier: 1.15,
+          className: "minmat-badge-tier3"
+        };
+      } else if (maxLevel >= 15) {
+        return {
+          tier: 2,
+          name: currentLang === "tr" ? "🥈 Zihin Ustası" : "🥈 Mind Master",
+          extraSeconds: 2,
+          multiplier: 1.10,
+          className: "minmat-badge-tier2"
+        };
+      } else if (maxLevel >= 10) {
+        return {
+          tier: 1,
+          name: currentLang === "tr" ? "🥉 Matematik Savaşçısı" : "🥉 Math Warrior",
+          extraSeconds: 1,
+          multiplier: 1.05,
+          className: "minmat-badge-tier1"
+        };
+      }
+      return {
+        tier: 0,
+        name: "",
+        extraSeconds: 0,
+        multiplier: 1.00,
+        className: "minmat-badge-tier0"
+      };
+    }
+
+    function updateLobbyBadge() {
+      const badgeContainer = document.getElementById("minmatUserBadgeContainer");
+      if (!badgeContainer) return;
+
+      const maxLevel = getOverallMaxLevel();
+      const tierInfo = getMinMatTier(maxLevel);
+
+      if (tierInfo.tier > 0) {
+        let rewardText = "";
+        if (currentLang === "tr") {
+          rewardText = `Bonus: +${tierInfo.extraSeconds}sn/tur | +%${Math.round((tierInfo.multiplier - 1) * 100)} Puan`;
+        } else {
+          rewardText = `Bonus: +${tierInfo.extraSeconds}s/round | +${Math.round((tierInfo.multiplier - 1) * 100)}% Pts`;
+        }
+
+        badgeContainer.innerHTML = `
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <span class="minmat-badge ${tierInfo.className}">${tierInfo.name}</span>
+            <span style="font-size: 11px; font-weight: 700; color: #a5b4fc; opacity: 0.95;">${rewardText}</span>
+          </div>
+        `;
+        badgeContainer.style.display = "flex";
+      } else {
+        badgeContainer.style.display = "none";
+      }
+    }
 
     function getMaxLevel(mode) {
       return parseInt(localStorage.getItem("minmat_maxLevel_" + mode)) || 1;
@@ -2296,6 +2445,24 @@
       }
       document.getElementById("modeText").innerText = "🎯 " + shortModeName(gameMode);
 
+      // Initialize badge bonuses based on overall max level achieved
+      const maxLvl = getOverallMaxLevel();
+      const tierInfo = getMinMatTier(maxLvl);
+      badgeExtraTimeSeconds = tierInfo.extraSeconds;
+      badgeScoreMultiplier = tierInfo.multiplier;
+
+      // Update HUD badge display
+      const hudBadge = document.getElementById("gameHudBadge");
+      if (hudBadge) {
+        if (tierInfo.tier > 0) {
+          hudBadge.className = `minmat-badge ${tierInfo.className}`;
+          hudBadge.innerText = tierInfo.name;
+          hudBadge.style.display = "inline-flex";
+        } else {
+          hudBadge.style.display = "none";
+        }
+      }
+
       extraTimeSeconds = 0;
       periodSecondsPerLevel = 0;
       periodPointsPerLevel = 0;
@@ -2377,6 +2544,9 @@
       }
       if (periodSecondsPerLevel > 0) {
         timeLeft += periodSecondsPerLevel;
+      }
+      if (badgeExtraTimeSeconds > 0) {
+        timeLeft += badgeExtraTimeSeconds;
       }
 
       updateUI();
@@ -2543,6 +2713,11 @@
           matchPoints += periodPointsPerLevel * 5;
         }
 
+        // Apply badge score multiplier
+        if (badgeScoreMultiplier > 1.0) {
+          matchPoints = Math.round(matchPoints * badgeScoreMultiplier);
+        }
+
         score += matchPoints;
         matched += 2;
         reset();
@@ -2551,8 +2726,13 @@
           clearInterval(timer);
           
           // Calculate bonuses
-          const completionBonus = 100 + (level - 1) * 50;
-          const timeBonus = timeLeft * 10;
+          let completionBonus = 100 + (level - 1) * 50;
+          let timeBonus = timeLeft * 10;
+          
+          if (badgeScoreMultiplier > 1.0) {
+            completionBonus = Math.round(completionBonus * badgeScoreMultiplier);
+            timeBonus = Math.round(timeBonus * badgeScoreMultiplier);
+          }
           score += completionBonus + timeBonus;
           
           // Show effect
@@ -2617,6 +2797,30 @@
       if (scoreRow) scoreRow.style.display = "block";
 
       document.getElementById("finalScore").innerText = score;
+      
+      // Update Game Over badge display
+      const goBadgeContainer = document.getElementById("gameOverBadgeContainer");
+      if (goBadgeContainer) {
+        const tierInfo = getMinMatTier(getOverallMaxLevel());
+        if (tierInfo.tier > 0) {
+          let bonusDesc = "";
+          if (currentLang === "tr") {
+            bonusDesc = `Rozet Bonusu: +${tierInfo.extraSeconds}sn/tur | +%${Math.round((tierInfo.multiplier - 1) * 100)} Skor Çarpanı Aktif`;
+          } else {
+            bonusDesc = `Badge Bonus: +${tierInfo.extraSeconds}s/round | +${Math.round((tierInfo.multiplier - 1) * 100)}% Score Multiplier Active`;
+          }
+          goBadgeContainer.innerHTML = `
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-bottom: 8px;">
+              <span class="minmat-badge ${tierInfo.className}">${tierInfo.name}</span>
+              <span style="font-size:11px; font-weight:700; color:#cbd5e1;">${bonusDesc}</span>
+            </div>
+          `;
+          goBadgeContainer.style.display = "block";
+        } else {
+          goBadgeContainer.style.display = "none";
+        }
+      }
+
       saveScore();
 
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));

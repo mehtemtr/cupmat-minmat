@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Maç bulunamadı." }, { status: 404 });
       }
 
-      const matchDate = new Date(targetMatch.date + "T00:00:00");
+      const matchDate = new Date(`${targetMatch.date}T${targetMatch.time || "00:00"}:00Z`);
       const now = new Date();
       if (now >= matchDate) {
         return NextResponse.json({
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
     for (const matchId of Object.keys(predictions)) {
       const targetMatch = fixtures.find((m) => m.id === matchId);
       if (targetMatch) {
-        const matchDate = new Date(targetMatch.date + "T00:00:00");
+        const matchDate = new Date(`${targetMatch.date}T${targetMatch.time || "00:00"}:00Z`);
         if (now < matchDate) {
           const score = predictions[matchId];
           if (score && typeof score.home === "number" && typeof score.away === "number") {

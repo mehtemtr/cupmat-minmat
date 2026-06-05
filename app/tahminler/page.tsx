@@ -5,7 +5,7 @@ import { TournamentGate } from "@/components/TournamentGate";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useUser, SignInButton } from "@clerk/nextjs";
 import { useState, useEffect, useMemo } from "react";
-import { generateGroupFixtures } from "@/lib/fixtures";
+import { generateGroupFixtures, sortMatchesChronologically } from "@/lib/fixtures";
 import { getTeamById } from "@/data/teams";
 import type { UserActivity } from "@/lib/store/gamification-store";
 import type { MatchResult } from "@/lib/types/tournament";
@@ -179,9 +179,10 @@ export default function PredictionCenterPage() {
 
   // Generate the first round matches of all groups (A-L) - 24 matches total
   const upcomingMatches = useMemo(() => {
-    return generateGroupFixtures().filter(
+    const raw = generateGroupFixtures().filter(
       (m) => m.id.endsWith("-1") || m.id.endsWith("-6")
     );
+    return sortMatchesChronologically(raw);
   }, []);
 
   // Fetch prediction and profile details
@@ -524,17 +525,17 @@ export default function PredictionCenterPage() {
 
             if (!home || !away) return null;
 
-            // Calculate dynamic timezone kickoff date and time
+            // Calculate dynamic timezone kickoff date and time using static UTC time
             const selectedTimezone = TIMEZONES.find((t) => t.id === timezoneId) || TIMEZONES[0];
-            const matchIndex = upcomingMatches.findIndex((m) => m.id === match.id);
-            const hourOffsetsUTC = [13, 16, 19, 21];
-            const utcHour = hourOffsetsUTC[matchIndex % 4];
+            const [utcHourStr, utcMinStr] = (match.time || "12:00").split(":");
+            const utcHour = parseInt(utcHourStr, 10);
+            const utcMin = parseInt(utcMinStr, 10);
 
             const [yearStr, monthStr, dayStr] = match.date.split("-");
             const year = parseInt(yearStr, 10);
             const month = parseInt(monthStr, 10) - 1;
             const day = parseInt(dayStr, 10);
-            const utcDate = new Date(Date.UTC(year, month, day, utcHour, 0, 0));
+            const utcDate = new Date(Date.UTC(year, month, day, utcHour, utcMin, 0));
 
             // Apply selected timezone offset
             const convertedDate = new Date(utcDate.getTime() + selectedTimezone.offset * 60 * 60 * 1000);

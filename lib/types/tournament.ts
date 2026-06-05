@@ -66,6 +66,7 @@ export type MatchResult = {
   awayScore: number | null;
   played: boolean;
   date: string; // ISO format or human readable
+  time?: string; // Kickoff time e.g., "13:00" (UTC)
 };
 
 export type StandingRow = {
