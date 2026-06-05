@@ -40,6 +40,22 @@ export async function GET(request: Request) {
     }
 
     const emailToNicknameMap = new Map<string, string>();
+    const emailToBadgeEmojiMap = new Map<string, string>();
+    const nameToBadgeEmojiMap = new Map<string, string>();
+
+    const getOverallMaxLevel = (minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number }) => {
+      if (!minmatMaxLevels) return 1;
+      const values = Object.values(minmatMaxLevels);
+      return values.length > 0 ? Math.max(...values) : 1;
+    };
+
+    const getMinMatBadgeEmoji = (maxLevel: number) => {
+      if (maxLevel >= 25) return "💎";
+      if (maxLevel >= 20) return "🥇";
+      if (maxLevel >= 15) return "🥈";
+      if (maxLevel >= 10) return "🥉";
+      return "";
+    };
     
     // Redis gamification store'dan e-posta -> nick eşleştirmelerini RAM'e yükle
     try {
@@ -48,6 +64,16 @@ export async function GET(request: Request) {
       store.userActivities.forEach((u) => {
         if (u.email) {
           emailToNicknameMap.set(u.email.toLowerCase().trim(), u.displayName);
+        }
+        const maxLvl = getOverallMaxLevel(u.minmatMaxLevels);
+        const emoji = getMinMatBadgeEmoji(maxLvl);
+        if (emoji) {
+          if (u.email) {
+            emailToBadgeEmojiMap.set(u.email.toLowerCase().trim(), emoji);
+          }
+          if (u.displayName) {
+            nameToBadgeEmojiMap.set(u.displayName.toLowerCase().trim(), emoji);
+          }
         }
       });
     } catch (e) {
@@ -85,7 +111,14 @@ export async function GET(request: Request) {
 
     const formattedData = scores?.map(item => {
       const emailKey = item.email?.toLowerCase().trim();
-      const finalNick = (emailKey && emailToNicknameMap.get(emailKey)) || item.name || "Kullanıcı";
+      const rawNick = (emailKey && emailToNicknameMap.get(emailKey)) || item.name || "Kullanıcı";
+      
+      const badgeEmoji = (emailKey && emailToBadgeEmojiMap.get(emailKey)) || 
+                         (rawNick && nameToBadgeEmojiMap.get(rawNick.toLowerCase().trim())) || 
+                         "";
+      
+      const finalNick = badgeEmoji ? `${rawNick} ${badgeEmoji}` : rawNick;
+
       return {
         id: item.id,
         nickname: finalNick,

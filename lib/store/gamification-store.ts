@@ -537,10 +537,92 @@ export async function getOrCreateProfile(
   return enrichProfileWithPeriodRewardsFn(profile, store.periodEnd);
 }
 
+async function syncHistoricalMinMatLevels(store: GamificationStore): Promise<boolean> {
+  let changed = false;
+  try {
+    const { data: scores, error } = await supabaseAdmin
+      .from("minmat_leaderboard")
+      .select("email, name, level, mode");
+
+    if (error || !scores) {
+      return false;
+    }
+
+    const maxLevelsByEmail: Record<string, Record<string, number>> = {};
+    const maxLevelsByName: Record<string, Record<string, number>> = {};
+
+    const normalizeMode = (m: string): "add" | "sub" | "mul" | "div" | "mix" => {
+      const modeLower = m.toLowerCase().trim();
+      if (modeLower === "add" || modeLower === "topla" || modeLower === "toplama") return "add";
+      if (modeLower === "sub" || modeLower === "cikar" || modeLower === "çıkarma") return "sub";
+      if (modeLower === "mul" || modeLower === "carp" || modeLower === "çarpma") return "mul";
+      if (modeLower === "div" || modeLower === "bol" || modeLower === "bölme") return "div";
+      if (modeLower === "mix" || modeLower === "karisik" || modeLower === "karışık") return "mix";
+      return "mix";
+    };
+
+    for (const s of scores) {
+      const modeKey = normalizeMode(s.mode);
+      const lvl = Number(s.level) || 1;
+
+      if (s.email) {
+        const emailKey = s.email.toLowerCase().trim();
+        if (!maxLevelsByEmail[emailKey]) {
+          maxLevelsByEmail[emailKey] = { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+        }
+        maxLevelsByEmail[emailKey][modeKey] = Math.max(maxLevelsByEmail[emailKey][modeKey], lvl);
+      }
+
+      if (s.name) {
+        const nameKey = s.name.toLowerCase().trim();
+        if (!maxLevelsByName[nameKey]) {
+          maxLevelsByName[nameKey] = { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+        }
+        maxLevelsByName[nameKey][modeKey] = Math.max(maxLevelsByName[nameKey][modeKey], lvl);
+      }
+    }
+
+    for (const u of store.userActivities) {
+      if (!u.minmatMaxLevels) {
+        u.minmatMaxLevels = { add: 1, sub: 1, mul: 1, div: 1, mix: 1 };
+      }
+
+      const emailKey = u.email ? u.email.toLowerCase().trim() : "";
+      const nameKey = u.displayName ? u.displayName.toLowerCase().trim() : "";
+
+      const dbMaxLevelsEmail = emailKey ? maxLevelsByEmail[emailKey] : null;
+      const dbMaxLevelsName = nameKey ? maxLevelsByName[nameKey] : null;
+
+      const modes = ["add", "sub", "mul", "div", "mix"] as const;
+      for (const mode of modes) {
+        const dbValEmail = dbMaxLevelsEmail ? (dbMaxLevelsEmail[mode] || 1) : 1;
+        const dbValName = dbMaxLevelsName ? (dbMaxLevelsName[mode] || 1) : 1;
+        const dbVal = Math.max(dbValEmail, dbValName);
+
+        const currentVal = u.minmatMaxLevels[mode] || 1;
+        if (dbVal > currentVal) {
+          u.minmatMaxLevels[mode] = dbVal;
+          changed = true;
+        }
+      }
+    }
+  } catch (err) {
+    console.error("Error syncing historical MinMat levels:", err);
+  }
+  return changed;
+}
+
 // Get sorted active leaderboard for current 3-day period
 export async function getGamificationLeaderboard(): Promise<UserActivity[]> {
   await checkAndResetPeriod();
   const store = await getStore();
+  
+  // Sync historical MinMat levels from Supabase
+  const storeChanged = await syncHistoricalMinMatLevels(store);
+  if (storeChanged) {
+    await saveStore(store);
+  }
+
   const predictions = await getLeaderboard();
 
   const userNickMap = new Map<string, string>();

@@ -364,7 +364,20 @@ export default function LeaderboardPage() {
                         }`}>
                           {entry.rank}
                         </span>
-                        <span className="font-medium text-zinc-200 truncate max-w-[100px]">{entry.displayName}</span>
+                        <span className="flex items-center gap-1.5 min-w-0">
+                          <span className="font-medium text-zinc-200 truncate max-w-[80px]">{entry.displayName}</span>
+                          {(() => {
+                            const userActivity = leaderboard.find(u => u.displayName === entry.displayName);
+                            const maxLvl = userActivity ? getOverallMaxLevel(userActivity.minmatMaxLevels) : 1;
+                            const badge = getMinMatBadge(maxLvl, locale);
+                            if (!badge) return null;
+                            return (
+                              <span className={`inline-flex items-center rounded-full border px-1 py-0.5 text-[7px] uppercase tracking-wider font-extrabold shadow-sm ${badge.colorClass}`}>
+                                {badge.name.split(" ")[0]}
+                              </span>
+                            );
+                          })()}
+                        </span>
                       </div>
                       <div className="text-right">
                         <div className="font-mono text-xs font-bold text-white">{entry.score} <span className="text-zinc-500 font-normal">P</span></div>
@@ -411,7 +424,20 @@ export default function LeaderboardPage() {
                         }`}>
                           {entry.rank}
                         </span>
-                        <span className="font-medium text-zinc-200 truncate max-w-[100px]">{entry.displayName}</span>
+                        <span className="flex items-center gap-1.5 min-w-0">
+                          <span className="font-medium text-zinc-200 truncate max-w-[80px]">{entry.displayName}</span>
+                          {(() => {
+                            const userActivity = leaderboard.find(u => u.displayName === entry.displayName);
+                            const maxLvl = userActivity ? getOverallMaxLevel(userActivity.minmatMaxLevels) : 1;
+                            const badge = getMinMatBadge(maxLvl, locale);
+                            if (!badge) return null;
+                            return (
+                              <span className={`inline-flex items-center rounded-full border px-1 py-0.5 text-[7px] uppercase tracking-wider font-extrabold shadow-sm ${badge.colorClass}`}>
+                                {badge.name.split(" ")[0]}
+                              </span>
+                            );
+                          })()}
+                        </span>
                       </div>
                       <div className="text-right">
                         <div className="font-mono text-xs font-bold text-white">{entry.score} <span className="text-zinc-500 font-normal">P</span></div>
