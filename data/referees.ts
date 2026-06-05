@@ -69,51 +69,51 @@ export const REFEREES: Referee[] = [
     }
   },
   {
-    id: "meler",
-    name: "Halil Umut Meler",
-    age: 39,
-    image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80",
-    yellowCardsAvg: 4.62,
-    redCardsAvg: 0.24,
+    id: "zwayer",
+    name: "Felix Zwayer",
+    age: 45,
+    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80",
+    yellowCardsAvg: 4.12,
+    redCardsAvg: 0.14,
     country: {
-      tr: "Türkiye",
-      en: "Türkiye",
-      es: "Turquía",
-      fr: "Turquie",
-      de: "Türkei"
+      tr: "Almanya",
+      en: "Germany",
+      es: "Alemania",
+      fr: "Allemagne",
+      de: "Deutschland"
     },
     bio: {
-      tr: "Halil Umut Meler, Türkiye'nin son yıllardaki en başarılı UEFA elit kategori hakemidir. Üstün saha görüşü, kart disiplinindeki kararlılığı ve oyun akışını koruma yeteneğiyle öne çıkar. Avrupa arenasında birçok kritik Şampiyonlar Ligi ve Avrupa Ligi müsabakası yönetmiştir.",
-      en: "Halil Umut Meler is Turkey's most successful UEFA Elite category referee in recent years. He stands out with his outstanding field vision, decisiveness in card discipline, and ability to preserve the game's flow. He has directed several critical Champions League matches.",
-      es: "Halil Umut Meler es el árbitro de categoría Elite de la UEFA más exitoso de Turquía en los últimos años. Destaca por su excelente visión de juego, su firmeza en la disciplina de tarjetas y su capacidad para mantener la fluidez del juego.",
-      fr: "Halil Umut Meler est l'arbitre de la catégorie UEFA Elite le plus performant de Turquie ces dernières années. Il se distingue par sa vision du jeu, sa fermeté disciplinaire et sa capacité à préserver la fluidité du jeu.",
-      de: "Halil Umut Meler ist der erfolgreichste türkische UEFA-Elite-Schiedsrichter der letzten Jahre. Er besticht durch seine hervorragende Spielübersicht, konsequente Kartenvergabe und die Fähigkeit, den Spielfluss aufrechtzuerhalten."
+      tr: "Felix Zwayer, Almanya'nın en tecrübeli Bundesliga ve UEFA elit kategori hakemlerinden biridir. Sahadaki kararlı yönetimi, taktiksel oyun anlayışı ve sakinliği ile tanınır. 2023 UEFA Uluslar Ligi finali de dahil olmak üzere birçok üst düzey kulüp ve milli takım müsabakasını yönetmiştir.",
+      en: "Felix Zwayer is one of Germany's most experienced Bundesliga and UEFA Elite category referees. He is known for his decisive management on the pitch, tactical game understanding, and composure. He has refereed many top-level club and national team matches, including the 2023 UEFA Nations League Final.",
+      es: "Felix Zwayer es uno de los árbitros de la Bundesliga y de la categoría Elite de la UEFA más experimentados de Alemania. Destaca por su arbitraje firme, su comprensión táctica del juego y su templanza.",
+      fr: "Felix Zwayer est l'un des arbitres de Bundesliga et de la catégorie UEFA Elite les plus expérimentés d'Allemagne. Il est réputé pour son autorité sur le terrain, sa lecture tactique et son calme.",
+      de: "Felix Zwayer ist einer der erfahrensten Bundesliga- und UEFA-Elite-Schiedsrichter Deutschlands. Er ist bekannt für seine konsequente Spielleitung, sein taktisches Verständnis und seine Gelassenheit. Er leitete unter anderem das UEFA Nations League Finale 2023."
     },
     importantMatches: {
       tr: [
-        "2024 UEFA Şampiyonlar Ligi Çeyrek Finali",
-        "2023 UEFA Konferans Ligi Yarı Finali (West Ham - AZ)",
-        "Çok sayıda Türkiye Süper Lig Derbisi (GS - FB - BJK)"
+        "2023 UEFA Uluslar Ligi Finali (Hırvatistan - İspanya)",
+        "2024 UEFA Euro Yarı Finali (Hollanda - İngiltere)",
+        "Çok sayıda UEFA Şampiyonlar Ligi ve Bundesliga Derbisi"
       ],
       en: [
-        "2024 UEFA Champions League Quarter-Final",
-        "2023 UEFA Conference League Semi-Final (West Ham vs AZ)",
-        "Numerous Turkish Süper Lig Derbies (GS - FB - BJK)"
+        "2023 UEFA Nations League Final (Croatia vs Spain)",
+        "2024 UEFA Euro Semi-Final (Netherlands vs England)",
+        "Numerous UEFA Champions League and Bundesliga Derbies"
       ],
       es: [
-        "Cuartos de final de la UEFA Champions League 2024",
-        "Semifinal de la UEFA Conference League 2023 (West Ham vs AZ)",
-        "Numerosos derbis de la Süper Lig turca (GS - FB - BJK)"
+        "Final de la UEFA Nations League 2023 (Croacia vs España)",
+        "Semifinal de la UEFA Euro 2024 (Países Bajos vs Inglaterra)",
+        "Numerosos partidos de UEFA Champions League y derbis de la Bundesliga"
       ],
       fr: [
-        "Quart de finale de la Ligue des Champions de l'UEFA 2024",
-        "Demi-finale de l'UEFA Conference League 2023 (West Ham vs AZ)",
-        "Nombreux derbys de la Süper Lig turque (GS - FB - BJK)"
+        "Finale de la Ligue des Nations de l'UEFA 2023 (Croatie vs Espagne)",
+        "Demi-finale de l'UEFA Euro 2024 (Pays-Bas vs Angleterre)",
+        "Nombreux matchs de Ligue des Champions et derbys de Bundesliga"
       ],
       de: [
-        "UEFA Champions League Viertelfinale 2024",
-        "UEFA Conference League Halbfinale 2023 (West Ham - AZ)",
-        "Zahlreiche türkische Süper Lig Derbys (GS - FB - BJK)"
+        "UEFA Nations League Finale 2023 (Kroatien - Spanien)",
+        "UEFA Euro Halbfinale 2024 (Niederlande - England)",
+        "Zahlreiche UEFA Champions League und Bundesliga Derbys"
       ]
     }
   },

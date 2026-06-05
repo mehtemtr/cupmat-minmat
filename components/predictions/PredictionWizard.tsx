@@ -384,7 +384,7 @@ export function PredictionWizard() {
             </h5>
             <div className="mt-2 space-y-1 border-t border-white/5 pt-2">
               {[
-                { id: "meler", name: "H. Umut Meler (TR)" },
+                { id: "zwayer", name: "F. Zwayer (DE)" },
                 { id: "marciniak", name: "S. Marciniak (PL)" },
                 { id: "taylor", name: "A. Taylor (UK)" },
                 { id: "turpin", name: "C. Turpin (FR)" }

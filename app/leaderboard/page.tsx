@@ -1,10 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useUser, SignInButton } from "@clerk/nextjs";
 import { Trophy, ShieldAlert, Award, Calendar, Timer, User, Gift } from "lucide-react";
 import type { UserActivity, GecmisSampiyon, RewardEntry } from "@/lib/store/gamification-store";
 import { useTranslation } from "@/contexts/LocaleContext";
+
+const getOverallMaxLevel = (minmatMaxLevels?: { add: number; sub: number; mul: number; div: number; mix: number }) => {
+  if (!minmatMaxLevels) return 1;
+  const values = Object.values(minmatMaxLevels);
+  return values.length > 0 ? Math.max(...values) : 1;
+};
+
+const getMinMatBadge = (maxLevel: number, locale: string) => {
+  if (maxLevel >= 25) {
+    return {
+      name: locale === "tr" ? "💎 Zeka Efsanesi" : "💎 Math Legend",
+      colorClass: "bg-gradient-to-r from-cyan-400 to-blue-500 text-white border-cyan-400/30",
+    };
+  }
+  if (maxLevel >= 20) {
+    return {
+      name: locale === "tr" ? "🥇 Sayıların Efendisi" : "🥇 Lord of Numbers",
+      colorClass: "bg-gradient-to-r from-amber-400 to-yellow-500 text-black border-amber-400/30 font-bold",
+    };
+  }
+  if (maxLevel >= 15) {
+    return {
+      name: locale === "tr" ? "🥈 Zihin Ustası" : "🥈 Mind Master",
+      colorClass: "bg-gradient-to-r from-zinc-300 to-zinc-400 text-black border-zinc-300/30 font-bold",
+    };
+  }
+  if (maxLevel >= 10) {
+    return {
+      name: locale === "tr" ? "🥉 Matematik Savaşçısı" : "🥉 Math Warrior",
+      colorClass: "bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-600/30",
+    };
+  }
+  return null;
+};
 
 export default function LeaderboardPage() {
   const { t, locale } = useTranslation();
@@ -17,6 +51,21 @@ export default function LeaderboardPage() {
   const [cupMatRewards, setCupMatRewards] = useState<RewardEntry[]>([]);
   const [minMatRewards, setMinMatRewards] = useState<RewardEntry[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const badgeEarners = useMemo(() => {
+    return leaderboard
+      .map((row) => {
+        const maxLvl = getOverallMaxLevel(row.minmatMaxLevels);
+        const badge = getMinMatBadge(maxLvl, locale);
+        return {
+          ...row,
+          maxLvl,
+          badge,
+        };
+      })
+      .filter((entry) => entry.badge !== null)
+      .sort((a, b) => b.maxLvl - a.maxLvl);
+  }, [leaderboard, locale]);
 
   // Fetch Leaderboard & Profile Data
   useEffect(() => {
@@ -197,16 +246,26 @@ export default function LeaderboardPage() {
                               {rank}
                             </span>
                           </td>
-                          <td className="py-3.5 px-4">
-                            <span className="flex items-center gap-2.5">
+                           <td className="py-3.5 px-4">
+                            <span className="flex flex-wrap items-center gap-2">
                               {isCurrentUser && (
                                 <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-bold uppercase text-emerald-400">
                                   {t("gamification.you")}
                                 </span>
                               )}
-                              <span className="truncate max-w-[150px] sm:max-w-none">
+                              <span className="truncate max-w-[120px] sm:max-w-none font-semibold text-white">
                                 {row.displayName}
                               </span>
+                              {(() => {
+                                const maxLvl = getOverallMaxLevel(row.minmatMaxLevels);
+                                const badge = getMinMatBadge(maxLvl, locale);
+                                if (!badge) return null;
+                                return (
+                                  <span className={`inline-flex items-center rounded-full border px-1.5 py-0.5 text-[8px] uppercase tracking-wider font-extrabold shadow-sm ${badge.colorClass}`}>
+                                    {badge.name}
+                                  </span>
+                                );
+                              })()}
                             </span>
                           </td>
                           <td className="py-3.5 px-4 text-right font-black font-mono text-white text-sm sm:text-base">
@@ -365,6 +424,50 @@ export default function LeaderboardPage() {
                         {entry.rank <= 3 && (
                           <div className="text-[10px] text-purple-400 mt-0.5">{getMinMatRewardText(entry.rank)}</div>
                         )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* MinMat Rozet Kürsüsü (Badge Hall of Fame) */}
+            <div className="rounded-2xl border border-cyan-500/20 bg-gradient-to-b from-cyan-500/5 to-[#060b14]/50 p-6 shadow-xl backdrop-blur-md">
+              <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-white sm:text-xl">
+                <Award className="h-5 w-5 text-cyan-400" />
+                {locale === "tr" ? "MinMat Rozet Kürsüsü" : "MinMat Badge Hall of Fame"}
+              </h2>
+              <p className="mb-4 text-xs text-zinc-400">
+                {locale === "tr"
+                  ? "Zeka oyununda Seviye 10 ve üzerine ulaşıp rozet kazanan kahramanlar:"
+                  : "Heroes who reached Level 10 and above in the brain game and earned badges:"}
+              </p>
+              {badgeEarners.length === 0 ? (
+                <div className="py-6 text-center text-sm text-zinc-500">
+                  {locale === "tr" ? "Henüz rozet kazanan oyuncu bulunmuyor." : "No players have earned badges yet."}
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                  {badgeEarners.map((entry) => (
+                    <div
+                      key={entry.userId}
+                      className="flex items-center justify-between rounded-lg px-3 py-2 text-sm border border-white/5 bg-zinc-950/40"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="font-bold text-zinc-200 truncate max-w-[100px]">{entry.displayName}</span>
+                        {entry.userId === user?.id && (
+                          <span className="rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[8px] font-bold text-emerald-400">
+                            {t("gamification.you")}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-col items-end gap-0.5 shrink-0">
+                        <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-wider font-extrabold shadow-sm ${entry.badge!.colorClass}`}>
+                          {entry.badge!.name}
+                        </span>
+                        <span className="text-[10px] text-zinc-500 font-mono">
+                          Max Lvl: {entry.maxLvl}
+                        </span>
                       </div>
                     </div>
                   ))}
