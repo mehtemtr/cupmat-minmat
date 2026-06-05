@@ -3853,160 +3853,160 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "İsveç Oyuncu 10",
+        "name": "Viktor Johansson",
         "position": "GK",
-        "club": "Real Madrid",
-        "age": 21
-      },
-      {
-        "name": "İsveç Oyuncu 20",
-        "position": "GK",
-        "club": "AC Milan",
-        "age": 26
-      },
-      {
-        "name": "İsveç Oyuncu 1",
-        "position": "DF",
-        "club": "Feyenoord",
+        "club": "Stoke City",
         "age": 27
       },
       {
-        "name": "İsveç Oyuncu 3",
-        "position": "DF",
-        "club": "Athletic Stockholm",
-        "age": 29
+        "name": "Kristoffer Nordfeldt",
+        "position": "GK",
+        "club": "AIK",
+        "age": 36
       },
       {
-        "name": "İsveç Oyuncu 5",
-        "position": "DF",
-        "club": "Deportivo Stockholm",
-        "age": 31
-      },
-      {
-        "name": "İsveç Oyuncu 11",
-        "position": "DF",
-        "club": "Bayer Leverkusen",
-        "age": 20
-      },
-      {
-        "name": "İsveç Oyuncu 13",
-        "position": "DF",
-        "club": "Serbest",
-        "age": 18
-      },
-      {
-        "name": "İsveç Oyuncu 15",
-        "position": "DF",
-        "club": "Stockholm Club",
-        "age": 34
-      },
-      {
-        "name": "İsveç Oyuncu 21",
-        "position": "DF",
-        "club": "Sporting Stockholm",
-        "age": 25
-      },
-      {
-        "name": "İsveç Oyuncu 23",
-        "position": "DF",
-        "club": "City Stockholm",
-        "age": 23
-      },
-      {
-        "name": "İsveç Oyuncu 25",
-        "position": "DF",
-        "club": "Deportivo Stockholm",
-        "age": 21
-      },
-      {
-        "name": "İsveç Oyuncu 2",
-        "position": "DF",
-        "club": "Aston Villa",
+        "name": "Jacob Widell Zetterström",
+        "position": "GK",
+        "club": "Derby County",
         "age": 28
       },
       {
-        "name": "İsveç Oyuncu 8",
+        "name": "Victor Lindelöf",
         "position": "DF",
-        "club": "Stockholm FC",
-        "age": 34
-      },
-      {
-        "name": "İsveç Oyuncu 12",
-        "position": "DF",
-        "club": "City Stockholm",
-        "age": 19
-      },
-      {
-        "name": "İsveç Oyuncu 18",
-        "position": "DF",
-        "club": "Sporting Stockholm",
+        "club": "Aston Villa",
         "age": 31
       },
       {
-        "name": "İsveç Oyuncu 22",
+        "name": "Isak Hien",
         "position": "DF",
-        "club": "Serbest",
-        "age": 24
+        "club": "Atalanta",
+        "age": 27
       },
       {
-        "name": "İsveç Oyuncu 4",
-        "position": "MF",
-        "club": "Serbest",
+        "name": "Carl Starfelt",
+        "position": "DF",
+        "club": "Celta de Vigo",
         "age": 30
       },
       {
-        "name": "İsveç Oyuncu 14",
-        "position": "MF",
-        "club": "Deportivo Stockholm",
-        "age": 35
+        "name": "Gabriel Gudmundsson",
+        "position": "DF",
+        "club": "Leeds United",
+        "age": 26
       },
       {
-        "name": "İsveç Oyuncu 24",
+        "name": "Hjalmar Ekdal",
+        "position": "DF",
+        "club": "Burnley",
+        "age": 27
+      },
+      {
+        "name": "Emil Holm",
+        "position": "DF",
+        "club": "Juventus",
+        "age": 26
+      },
+      {
+        "name": "Gustaf Lagerbielke",
+        "position": "DF",
+        "club": "SC Braga",
+        "age": 26
+      },
+      {
+        "name": "Eric Smith",
+        "position": "DF",
+        "club": "St. Pauli",
+        "age": 29
+      },
+      {
+        "name": "Daniel Svensson",
+        "position": "DF",
+        "club": "Borussia Dortmund",
+        "age": 23
+      },
+      {
+        "name": "Mattias Svanberg",
         "position": "MF",
-        "club": "Stockholm Real",
+        "club": "Wolfsburg",
+        "age": 27
+      },
+      {
+        "name": "Jesper Karlström",
+        "position": "MF",
+        "club": "Udinese",
+        "age": 30
+      },
+      {
+        "name": "Lucas Bergvall",
+        "position": "MF",
+        "club": "Tottenham Hotspur",
+        "age": 20
+      },
+      {
+        "name": "Yasin Ayari",
+        "position": "MF",
+        "club": "Brighton & Hove Albion",
         "age": 22
       },
       {
-        "name": "İsveç Oyuncu 7",
-        "position": "FW",
-        "club": "City Stockholm",
-        "age": 33
-      },
-      {
-        "name": "İsveç Oyuncu 9",
-        "position": "FW",
-        "club": "Sporting Stockholm",
-        "age": 35
-      },
-      {
-        "name": "İsveç Oyuncu 17",
-        "position": "FW",
-        "club": "Stockholm United",
+        "name": "Ken Sema",
+        "position": "MF",
+        "club": "Pafos FC",
         "age": 32
       },
       {
-        "name": "İsveç Oyuncu 19",
-        "position": "FW",
-        "club": "Serbest",
-        "age": 30
+        "name": "Benjamin Nygren",
+        "position": "MF",
+        "club": "Celtic",
+        "age": 24
       },
       {
-        "name": "İsveç Oyuncu 6",
-        "position": "FW",
-        "club": "Stockholm Real",
-        "age": 32
+        "name": "Besfort Zeneli",
+        "position": "MF",
+        "club": "Union Saint-Gilloise",
+        "age": 23
       },
       {
-        "name": "İsveç Oyuncu 16",
+        "name": "Viktor Gyökeres",
         "position": "FW",
-        "club": "Athletic Stockholm",
-        "age": 33
+        "club": "Arsenal",
+        "age": 27
       },
       {
-        "name": "İsveç Oyuncu 26",
+        "name": "Alexander Isak",
         "position": "FW",
-        "club": "Stockholm Club",
-        "age": 20
+        "club": "Liverpool",
+        "age": 26
+      },
+      {
+        "name": "Anthony Elanga",
+        "position": "FW",
+        "club": "Newcastle United",
+        "age": 24
+      },
+      {
+        "name": "Gustaf Nilsson",
+        "position": "FW",
+        "club": "Club Brugge",
+        "age": 28
+      },
+      {
+        "name": "Taha Ali",
+        "position": "FW",
+        "club": "Malmö FF",
+        "age": 27
+      },
+      {
+        "name": "Alexander Bernhardsson",
+        "position": "FW",
+        "club": "Holstein Kiel",
+        "age": 27
+      },
+      {
+        "name": "Elliot Stroud",
+        "position": "DF",
+        "club": "Mjällby",
+        "age": 23
       }
     ]
   },
@@ -4712,160 +4712,160 @@ const seeds: TeamSeed[] = [
     },
     "players": [
       {
-        "name": "Yeni Zelanda Oyuncu 10",
+        "name": "Max Crocombe",
         "position": "GK",
-        "club": "Manchester United",
-        "age": 20
+        "club": "Millwall",
+        "age": 32
       },
       {
-        "name": "Yeni Zelanda Oyuncu 20",
+        "name": "Alex Paulsen",
         "position": "GK",
-        "club": "Athletic Auckland",
-        "age": 33
+        "club": "Lechia Gdańsk",
+        "age": 23
       },
       {
-        "name": "Yeni Zelanda Oyuncu 22",
-        "position": "DF",
-        "club": "Deportivo Auckland",
-        "age": 35
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 11",
-        "position": "DF",
-        "club": "Deportivo Auckland",
-        "age": 21
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 25",
-        "position": "DF",
+        "name": "Michael Woud",
+        "position": "GK",
         "club": "Auckland FC",
-        "age": 20
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 15",
-        "position": "DF",
-        "club": "Sporting Auckland",
-        "age": 25
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 8",
-        "position": "DF",
-        "club": "Deportivo Auckland",
-        "age": 19
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 5",
-        "position": "DF",
-        "club": "Manchester City",
-        "age": 22
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 3",
-        "position": "DF",
-        "club": "Serbest",
-        "age": 24
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 13",
-        "position": "DF",
-        "club": "City Auckland",
-        "age": 23
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 12",
-        "position": "DF",
-        "club": "Auckland Real",
-        "age": 22
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 2",
-        "position": "DF",
-        "club": "Athletic Auckland",
-        "age": 25
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 23",
-        "position": "DF",
-        "club": "Serbest",
-        "age": 18
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 18",
-        "position": "DF",
-        "club": "Napoli",
-        "age": 28
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 1",
-        "position": "DF",
-        "club": "Auckland Club",
-        "age": 26
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 21",
-        "position": "DF",
-        "club": "Auckland Club",
-        "age": 34
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 14",
-        "position": "MF",
-        "club": "Serbest",
-        "age": 24
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 4",
-        "position": "MF",
-        "club": "Sporting Auckland",
-        "age": 23
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 24",
-        "position": "MF",
-        "club": "City Auckland",
-        "age": 19
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 7",
-        "position": "FW",
-        "club": "Bayern Munich",
-        "age": 20
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 16",
-        "position": "FW",
-        "club": "Auckland United",
-        "age": 26
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 6",
-        "position": "FW",
-        "club": "Borussia Dortmund",
-        "age": 21
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 9",
-        "position": "FW",
-        "club": "Serbest",
-        "age": 18
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 26",
-        "position": "FW",
-        "club": "Sporting Auckland",
-        "age": 21
-      },
-      {
-        "name": "Yeni Zelanda Oyuncu 17",
-        "position": "FW",
-        "club": "Athletic Auckland",
         "age": 27
       },
       {
-        "name": "Yeni Zelanda Oyuncu 19",
+        "name": "Tyler Bindon",
+        "position": "DF",
+        "club": "Nottingham Forest",
+        "age": 21
+      },
+      {
+        "name": "Michael Boxall",
+        "position": "DF",
+        "club": "Minnesota United",
+        "age": 37
+      },
+      {
+        "name": "Liberato Cacace",
+        "position": "DF",
+        "club": "Wrexham",
+        "age": 25
+      },
+      {
+        "name": "Francis de Vries",
+        "position": "DF",
+        "club": "Auckland FC",
+        "age": 31
+      },
+      {
+        "name": "Callan Elliot",
+        "position": "DF",
+        "club": "Auckland FC",
+        "age": 26
+      },
+      {
+        "name": "Tim Payne",
+        "position": "DF",
+        "club": "Wellington Phoenix",
+        "age": 32
+      },
+      {
+        "name": "Nando Pijnaker",
+        "position": "DF",
+        "club": "Auckland FC",
+        "age": 27
+      },
+      {
+        "name": "Tommy Smith",
+        "position": "DF",
+        "club": "Braintree Town",
+        "age": 36
+      },
+      {
+        "name": "Finn Surman",
+        "position": "DF",
+        "club": "Portland Timbers",
+        "age": 22
+      },
+      {
+        "name": "Lachlan Bayliss",
+        "position": "MF",
+        "club": "Newcastle Jets",
+        "age": 23
+      },
+      {
+        "name": "Joe Bell",
+        "position": "MF",
+        "club": "Viking FK",
+        "age": 27
+      },
+      {
+        "name": "Matt Garbett",
+        "position": "MF",
+        "club": "Peterborough United",
+        "age": 24
+      },
+      {
+        "name": "Eli Just",
+        "position": "MF",
+        "club": "Motherwell",
+        "age": 26
+      },
+      {
+        "name": "Callum McCowatt",
+        "position": "MF",
+        "club": "Silkeborg IF",
+        "age": 27
+      },
+      {
+        "name": "Ben Old",
+        "position": "MF",
+        "club": "Saint-Étienne",
+        "age": 23
+      },
+      {
+        "name": "Alex Rufer",
+        "position": "MF",
+        "club": "Wellington Phoenix",
+        "age": 30
+      },
+      {
+        "name": "Marko Stamenic",
+        "position": "MF",
+        "club": "Swansea City",
+        "age": 24
+      },
+      {
+        "name": "Sarpreet Singh",
+        "position": "MF",
+        "club": "Wellington Phoenix",
+        "age": 27
+      },
+      {
+        "name": "Ryan Thomas",
+        "position": "MF",
+        "club": "PEC Zwolle",
+        "age": 31
+      },
+      {
+        "name": "Kosta Barbarouses",
         "position": "FW",
-        "club": "Sporting CP",
-        "age": 29
+        "club": "Western Sydney Wanderers",
+        "age": 36
+      },
+      {
+        "name": "Jesse Randall",
+        "position": "FW",
+        "club": "Auckland FC",
+        "age": 23
+      },
+      {
+        "name": "Ben Waine",
+        "position": "FW",
+        "club": "Port Vale",
+        "age": 25
+      },
+      {
+        "name": "Chris Wood",
+        "position": "FW",
+        "club": "Nottingham Forest",
+        "age": 34
       }
     ]
   },
