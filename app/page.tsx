@@ -211,10 +211,70 @@ const promoDict = {
   }
 };
 
+const promoTexts = [
+  "Senin için Yamal'ın akıl dolu golleri Amerika'da atması...! statmatik.com'u hemen kaydet.",
+  "Luis Díaz'ın sol kanattan fırtına gibi içeri kat edip, üç kişiyi birden arkasında bırakarak topu uzak köşeye asması ve stadyumdaki o çılgın gümbürtü...! statmatik.com",
+  "Martínez'in uzatmalarda o bitirici vuruşla kupayı getirdiği an yaşanacak o çılgınlığa eşlik etmek istemez misin? statmatik.com",
+  "Vinícius Jr. o baş döndüren çalımları atarken ve sambasını yaparken kalbinin ritmini durdurabilecek misin? Bu büyük şovun parçası olmak için statmatik.com",
+  "Martínez veya Maignan’ın fizik kurallarına meydan okuyarak o imkansız topları çizgiden çıkardığı an kalbinin durması... Bu devasa kapışmada yerini almak için statmatik.com’a kaydolmakta gecikme!",
+  "Kane'in penaltı noktasına doğru ilerlerken stadyumda oluşan o derin sessizlik ve kalecinin gözlerindeki korku... Senin için şutun ağlarla buluşması? statmatik.com",
+  "Haaland’ın o durdurulamaz gol makinesine dönüşeceği o büyük anları beklemek ve rakiplerini tek tek dize getirmek...! Geç kalmadan statmatik.com",
+  "Valverde'nin orta sahadan söktüğü topla başlattığı o amansız karşı atak ve tribünlerin o an yaşadığı adrenalin patlaması...! Şampiyonluk yarışında o tek koltuğu kapmak için statmatik.com",
+  "Kalabalığın arasından uzanan o dev el, doksanı gören topun çizgiyi geçmesine izin vermiyor ve büyük final rotası tamamen yeniden çiziliyor...! Bu şova ortak olmak için statmatik.com",
+  "Oh Hyeon-gyu'nun ceza sahasındaki o bitirici vuruşları ağlarla buluşturması...! statmatik.com",
+  "Mbappé'nin o durdurulmaz hızlanmasıyla rakip defansı çaresiz bırakışı ve stadyumdaki o uğultunun çığlığa dönüşmesinden önce senin gollll diye bağırman...! statmatik.com",
+  "Bellingham’ın orta sahayı tek başına domine edişini yakından hissetmek...! statmatik.com'u takip et.",
+  "Genç dâhinin Amerika stadyumlarını ayağa kaldıracak o akıl dolu resitalleri ve jeneriklik golleri senin için atması...! statmatik.com",
+  "De Bruyne'in yeşil sahayı bir satranç tahtası gibi görüp attığı o dâhice pasın, turnuvadaki tüm dengeleri senin lehine değiştirmesi...! statmatik.com",
+  "Orkun Kökçü’nün Amerika stadyumlarında iğne deliğinden geçireceği o milimetrik asistleri heyecanla beklemek... statmatik.com’a kaydolmakta gecikme!",
+  "Davies’in sol kanattaki durdurulamaz fırtınası ve Gvardiol’ün geçit vermez duvarıyla adrenalin patlaması yaşamak... Zirvedeki tek koltuk için statmatik.com’a kaydol!",
+  "Ronaldo'nun son saniyede imkansız bir frikikle stadyumu ayağa kaldırışı ve o muazzam \"SIUUU\" haykırışına eşlik edeceksin! statmatik.com",
+  "Griezmann’ın zekası, sahanın her yerine basan o dinamizmi ve turnuvanın tüm gidişatını tek bir dokunuşla senin lehine çevirmesi...! statmatik.com'a kaydolmakta gecikme!",
+  "Saka o sağ kanattan içeri kat edip uzak köşeye mermiyi bıraktığı an yaşanacak o adrenalin patlaması...! Büyük şölene erkenden dahil olmak için statmatik.com",
+  "Ceza sahasında havada asılı kalan Lewandowski, imkansız bir kafa vuruşu ve tüm planları altüst eden o son saniye golü...! Bu devasa şölende geride kalmamak için statmatik.com",
+  "Van Dijk’ın o geçit vermez duvar savunmasıyla rakiplerine sahayı dar ettiği o amansız kapışma anı...!  statmatik.com",
+  "Vlahovic'in ceza sahası dışından, o imkansız açıdan topu çatala astığı an yaşanacak o büyük patlamaya ortak olmak...! İlk adımı atmak için statmatik.com",
+  "Salah’ın savunmaları çaresiz bırakan o baş döndürücü deparları ve resital tadındaki golleri... statmatik.com’a kaydolmakta gecikme!",
+  "Musiala'nın dar alanda üç kişiyi birden bakkala gönderdiği o dâhice çalımları senin için atması ve tribünleri yıkması...! Bu muazzam şovun tam ortasında yer almak için statmatik.com",
+  "Son’un ceza sahası dışından atacağı o jeneriklik füzeleri stadyumdaki taraftarlarla aynı saniyede, tam kalbinde hissetmek...! statmatik.com'u sıkı izle."
+];
+
+const getPromoText = (now: Date): string => {
+  // Reference dates in local timezone
+  const d1Start = new Date(2026, 5, 5, 0, 0, 0); // June 5, 2026
+  const d2Start = new Date(2026, 5, 6, 0, 0, 0); // June 6, 2026
+  const d3Start = new Date(2026, 5, 7, 0, 0, 0); // June 7, 2026
+
+  let cumulativeIndex = 0;
+
+  if (now < d2Start) {
+    // Phase 1: Today (June 5) - change every hour
+    const diffMs = Math.max(0, now.getTime() - d1Start.getTime());
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    cumulativeIndex = hours;
+  } else if (now < d3Start) {
+    // Phase 2: Tonight after 00:00 (June 6) - change every 45 minutes
+    const diffMs = Math.max(0, now.getTime() - d2Start.getTime());
+    const minutes = Math.floor(diffMs / (1000 * 60));
+    const slots = Math.floor(minutes / 45);
+    cumulativeIndex = 24 + slots;
+  } else {
+    // Phase 3: Tomorrow after 23:59 (June 7 onwards) - change every 30 minutes in a loop
+    const diffMs = Math.max(0, now.getTime() - d3Start.getTime());
+    const minutes = Math.floor(diffMs / (1000 * 60));
+    const slots = Math.floor(minutes / 30);
+    cumulativeIndex = 24 + 32 + slots;
+  }
+
+  const idx = cumulativeIndex % promoTexts.length;
+  return promoTexts[idx];
+};
+
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const [activeBanners, setActiveBanners] = useState<string[]>([]);
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const checkDate = () => {
@@ -224,10 +284,12 @@ export default function EntryPage() {
       if (preview) {
         // Can be comma-separated list of previews, e.g. ?preview=istanbul,kurban
         setActiveBanners(preview.split(","));
+        setCurrentDate(new Date());
         return;
       }
 
       const now = new Date();
+      setCurrentDate(now);
       const year = now.getFullYear();
       const month = now.getMonth(); // 4 = May (0-indexed)
       const date = now.getDate();
@@ -302,76 +364,83 @@ export default function EntryPage() {
           </div>
         </header>
 
-        {/* Giriş ve Aktarım Duyurusu */}
-        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-amber-500/20 bg-gradient-to-r from-amber-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-amber-500/30">
-          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-600/10 to-yellow-600/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
-          <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 ring-1 ring-amber-400/20">
-              <span className="text-2xl">📢</span>
+        {/* Sistem Duyuruları ve Yenilikler */}
+        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 via-[#060b14]/90 to-zinc-950/50 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
+          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600/10 via-amber-600/10 to-sky-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+          
+          <div className="relative z-10">
+            {/* Header / Badge */}
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-400/20">
+                <span className="text-xl">📢</span>
+              </div>
+              <div className="text-left">
+                <h2 className="text-lg font-black text-white tracking-wide">
+                  {locale === "tr" ? "Sistem Duyuruları & Yenilikler" : "System Announcements & Updates"}
+                </h2>
+                <p className="text-xs text-zinc-500">
+                  {locale === "tr" ? "StatMatik dünyasındaki en son güncellemeler" : "Latest updates from the StatMatik world"}
+                </p>
+              </div>
             </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-lg font-black text-white mb-2">
-                {locale === "tr" ? "Kullanıcı Geçişi ve Giriş Duyurusu" : "User Migration & Login Announcement"}
-              </h3>
-              <p className="text-sm text-zinc-300 leading-relaxed">
-                {locale === "tr" ? (
-                  "Sisteme kayıtlı olup giriş yaparken sorun yaşayan veya şifresi kabul edilmeyen üyelerimizin dikkatine: Hesaplarınız yeni sisteme güvenli bir şekilde aktarılmıştır. Giriş yapabilmek için sisteme kayıtlı olan e-posta adresinizi ve şifre olarak e-posta adresinizin @ işaretinden önceki ilk 8 karakterini yazabilirsiniz (Örn: veli.yilmaz@gmail.com için geçici şifreniz veli.yil olacaktır). Giriş yaptıktan sonra şifrenizi profil ayarlarınızdan değiştirebilirsiniz."
-                ) : (
-                  "Attention to our members who have problems logging in or whose password is not accepted: Your accounts have been securely migrated to the new system. To log in, you can write your registered email address and, as a password, the first 8 characters of your email address before the @ sign (e.g. for veli.yilmaz@gmail.com your temporary password will be veli.yil). You can update your password from your profile settings after logging in."
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* MinMat Puan Güncellemesi Duyurusu */}
-        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-violet-500/20 bg-gradient-to-r from-violet-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-violet-500/30">
-          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-650/10 to-indigo-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
-          <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-violet-500/10 text-violet-400 ring-1 ring-violet-400/20">
-              <span className="text-2xl">🧮</span>
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-lg font-black text-white mb-2">
-                {locale === "tr" ? "MinMat Puanlama Sistemi Güncellendi!" : "MinMat Scoring System Updated!"}
-              </h3>
-              <p className="text-sm text-zinc-300 leading-relaxed">
-                {locale === "tr" ? (
-                  <>
-                    MinMat zeka oyununda artık seviye tamamlama ve kalan süre bonusları aktif! Yeni puanlama güncellemesiyle <strong>çok daha fazla puan kazanacaksınız</strong>, hemen girip yeni puanları ve rekorlarınızı deneyebilirsiniz!
-                  </>
-                ) : (
-                  <>
-                    Level completion and remaining time bonuses are now active in the MinMat math game! With the new scoring update, <strong>you will earn much more points</strong>. Try it out now to set new records!
-                  </>
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
+            {/* Grid layout for the 3 announcements */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-left">
+              
+              {/* Bölüm 1: Kullanıcı Geçişi ve Giriş */}
+              <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
+                <h3 className="text-sm font-extrabold text-amber-400 flex items-center gap-2">
+                  <span>🔑</span> {locale === "tr" ? "Kullanıcı Geçişi & Giriş" : "User Migration & Login"}
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                  {locale === "tr" ? (
+                    <>
+                      Hesaplarınız yeni sisteme güvenle aktarılmıştır. Giriş sorunu yaşıyorsanız, kayıtlı e-posta adresinizi yazıp şifre olarak e-postanızın <code>@</code> işaretinden önceki <strong>ilk 8 karakterini</strong> girerek giriş yapabilirsiniz (Örn: <code>veli.yilmaz@gmail.com</code> için geçici şifreniz <code>veli.yil</code> olacaktır). Giriş sonrası şifrenizi profil ayarlarından güncellemeyi unutmayın. Detaylı bilgi için <strong>Yardım</strong> menüsünü inceleyebilirsiniz.
+                    </>
+                  ) : (
+                    <>
+                      Your accounts have been securely migrated to our new system. If you experience login issues, you can log in by entering your registered email address and using the <strong>first 8 characters</strong> of your email before the <code>@</code> symbol as your temporary password (e.g. for <code>veli.yilmaz@gmail.com</code> your password will be <code>veli.yil</code>). Please update your password under profile settings after logging in. For details, refer to the <strong>Help</strong> menu.
+                    </>
+                  )}
+                </p>
+              </div>
 
-        {/* Yeni Dil Destekleri Duyurusu */}
-        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-sky-500/20 bg-gradient-to-r from-sky-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-sky-500/30">
-          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-sky-650/10 to-blue-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
-          <div className="relative flex flex-col md:flex-row items-center gap-4 sm:gap-6 z-10">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-400/20">
-              <span className="text-2xl">🌐</span>
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-lg font-black text-white mb-2">
-                {locale === "tr" ? "Yeni Dil Destekleri Eklendi! 🇧🇷🇵🇹 🇦🇪🇸🇦 🇰🇷 🇮🇹" : "New Language Support Added! 🇧🇷🇵🇹 🇦🇪🇸🇦 🇰🇷 🇮🇹"}
-              </h3>
-              <p className="text-sm text-zinc-300 leading-relaxed">
-                {locale === "tr" ? (
-                  <>
-                    Sistem genelinde dil seçeneklerimizi 5'ten 9'a çıkardık! Artık CupMat, yapay zeka analizleri ve MinMat zeka oyununun tamamını <strong>Portekizce, Arapça, Korece ve İtalyanca</strong> olarak deneyimleyebilirsiniz. Bu güncellemeyle birlikte artık neredeyse dünyanın yarısı bizi anlayacak! Dil seçiminizi sağ üst köşedeki dünya simgesine tıklayarak anında değiştirebilirsiniz.
-                  </>
-                ) : (
-                  <>
-                    We have expanded our language options from 5 to 9 across the system! You can now experience CupMat, AI match analysis, and the MinMat math game in <strong>Portuguese, Arabic, Korean, and Italian</strong>. With this update, almost half of the world will understand us now! Change your preferences instantly using the language dropdown in the top-right corner.
-                  </>
-                )}
-              </p>
+              {/* Bölüm 2: MinMat Puanlama Sistemi Güncellendi! */}
+              <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
+                <h3 className="text-sm font-extrabold text-violet-400 flex items-center gap-2">
+                  <span>🧮</span> {locale === "tr" ? "MinMat Puan Sistemi" : "MinMat Scoring Updated"}
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                  {locale === "tr" ? (
+                    <>
+                      MinMat zeka oyununda seviye tamamlama ve kalan süre bonusları aktif edildi! Yeni puanlama sistemiyle <strong>çok daha fazla puan kazanabilir</strong> ve sıralamada hızla yükselebilirsiniz. Hemen girip yeni puanları ve rekorlarınızı deneyin!
+                    </>
+                  ) : (
+                    <>
+                      Level completion and remaining time bonuses are now active in the MinMat math game! With this update, <strong>you will earn much more points</strong>. Play now and beat your records!
+                    </>
+                  )}
+                </p>
+              </div>
+
+              {/* Bölüm 3: Yeni Dil Destekleri */}
+              <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
+                <h3 className="text-sm font-extrabold text-sky-400 flex items-center gap-2">
+                  <span>🌐</span> {locale === "tr" ? "9 Dil Desteğiyle Yayındayız!" : "Now Live in 9 Languages!"}
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                  {locale === "tr" ? (
+                    <>
+                      Uygulamamıza <strong>Portekizce, Arapça, Korece ve İtalyanca</strong> seçeneklerini ekleyerek dil yelpazemizi genişlettik. Artık platformumuzu sırasıyla <strong>Türkçe, Almanca, İngilizce, İspanyolca, Fransızca, İtalyanca, Portekizce, Arapça ve Korece</strong> olmak üzere 9 farklı dil seçeneğiyle tam uyumlu olarak kullanabilirsiniz. Tercihinizi sağ üstteki dünya simgesinden değiştirebilirsiniz.
+                    </>
+                  ) : (
+                    <>
+                      We have expanded our reach by adding <strong>Portuguese, Arabic, Korean, and Italian</strong>! You can now experience our platform in <strong>9 languages</strong> in order: <strong>Turkish, German, English, Spanish, French, Italian, Portuguese, Arabic, and Korean</strong>. Change your preferences instantly using the globe icon in the top-right corner.
+                    </>
+                  )}
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -732,6 +801,12 @@ export default function EntryPage() {
 
         {activeBanners.includes("statmatik_promo") && (() => {
           const activePromo = promoDict[locale in promoDict ? (locale as keyof typeof promoDict) : "en"];
+          const displayText = locale === "tr" && currentDate
+            ? getPromoText(currentDate)
+            : activePromo.text;
+          const splitParts = displayText.includes("statmatik.com")
+            ? displayText.split("statmatik.com")
+            : [displayText, ""];
           return (
             <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-r from-emerald-950/20 via-[#060b14]/85 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
               <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600 to-teal-600 opacity-10 blur transition duration-500 group-hover:opacity-15" />
@@ -747,9 +822,11 @@ export default function EntryPage() {
                     {activePromo.title}
                   </h3>
                   <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-semibold">
-                    {activePromo.text.split("statmatik.com")[0]}
-                    <span className="text-emerald-400 font-extrabold underline decoration-emerald-400/30 underline-offset-4">statmatik.com</span>
-                    {activePromo.text.split("statmatik.com")[1]}
+                    {splitParts[0]}
+                    {displayText.includes("statmatik.com") && (
+                      <span className="text-emerald-400 font-extrabold underline decoration-emerald-400/30 underline-offset-4">statmatik.com</span>
+                    )}
+                    {splitParts[1]}
                   </p>
                 </div>
               </div>
