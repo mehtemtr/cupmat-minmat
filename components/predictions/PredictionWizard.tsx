@@ -387,7 +387,9 @@ export function PredictionWizard() {
                 { id: "zwayer", name: "F. Zwayer (DE)" },
                 { id: "marciniak", name: "S. Marciniak (PL)" },
                 { id: "taylor", name: "A. Taylor (UK)" },
-                { id: "turpin", name: "C. Turpin (FR)" }
+                { id: "turpin", name: "C. Turpin (FR)" },
+                { id: "makkelie", name: "D. Makkelie (NL)" },
+                { id: "vincic", name: "S. Vinčić (SI)" }
               ].map((ref) => (
                 <Link
                   key={ref.id}

@@ -76,6 +76,62 @@ const localDict = {
     confederation: "Konföderation",
     personalInfo: "Persönliche Daten",
     eliteBadge: "FIFA Elite Kategorie"
+  },
+  pt: {
+    back: "← Voltar",
+    notFound: "Árbitro Não Encontrado",
+    age: "anos",
+    country: "País",
+    yellowCards: "Média Cartões Amarelos (Por Jogo)",
+    redCards: "Média Cartões Vermelhos (Por Jogo)",
+    bio: "Perfil e Biografia do Árbitro",
+    importantMatches: "Jogos Importantes Dirigidos",
+    stats: "Estatísticas de Cartões e Disciplina",
+    confederation: "Confederação",
+    personalInfo: "Detalhes Pessoais",
+    eliteBadge: "Categoria de Elite da FIFA"
+  },
+  it: {
+    back: "← Torna indietro",
+    notFound: "Arbitro non trovato",
+    age: "anni",
+    country: "Paese",
+    yellowCards: "Media Cartellini Gialli (Per Partita)",
+    redCards: "Media Cartellini Rossi (Per Partita)",
+    bio: "Profilo e biografia dell'arbitro",
+    importantMatches: "Partite importanti arbitrate",
+    stats: "Statistiche cartellini e disciplina",
+    confederation: "Confederazione",
+    personalInfo: "Dettagli Personali",
+    eliteBadge: "Categoria Elite FIFA"
+  },
+  ko: {
+    back: "← 뒤로 가기",
+    notFound: "심판을 찾을 수 없음",
+    age: "세",
+    country: "국가",
+    yellowCards: "경기당 평균 옐로우 카드",
+    redCards: "경기당 평균 레드 카드",
+    bio: "심판 프로필 및 약력",
+    importantMatches: "주요 판정 경기",
+    stats: "카드 통계 및 필드 규율",
+    confederation: "연맹",
+    personalInfo: "개인 정보",
+    eliteBadge: "FIFA 엘리트 등급"
+  },
+  ar: {
+    back: "← العودة",
+    notFound: "الحكم غير موجود",
+    age: "سنة",
+    country: "البلد",
+    yellowCards: "معدل البطاقات الصفراء (لكل مباراة)",
+    redCards: "معدل البطاقات الحمراء (لكل مباراة)",
+    bio: "ملف الحكم والسيرة الذاتية",
+    importantMatches: "المباريات الهامة التي أدارها",
+    stats: "إحصائيات البطاقات والانضباط في الملعب",
+    confederation: "الاتحاد",
+    personalInfo: "تفاصيل شخصية",
+    eliteBadge: "فئة النخبة الفيفا"
   }
 };
 
