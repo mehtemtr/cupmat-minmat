@@ -130,6 +130,7 @@ export const ALLOWED_GAMIFICATION_ACTIONS = new Set([
   "earn_prediction_right",
   "use_minmat_time",
   "use_prediction_right",
+  "poll_answered",
 ]);
 
 export function isAllowedGamificationAction(action: string): boolean {

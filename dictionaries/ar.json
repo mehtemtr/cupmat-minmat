@@ -17,7 +17,9 @@
     "signout": "تسجيل الخروج",
     "logoTitle": "CupMat — الشاشة الخاصة لبطولة العالم 2026",
     "stats": "الإحصائيات",
-    "fantasy": "تكتيكات CupMat"
+    "fantasy": "تكتيكات CupMat",
+    "leagues": "الدوريات الخاصة",
+    "polls": "الاستطلاعات والأسئلة"
   },
   "hero": {
     "badge": "StatMatik — بطولة العالم 2026",
@@ -232,5 +234,41 @@
       "div": "القسمة",
       "mix": "مختلط"
     }
+  },
+  "leagues": {
+    "title": "الدوريات الخاصة",
+    "subtitle": "أنشئ لوحات صدارة مخصصة، وادعُ أصدقاءك برمز انضمام، واعرف من يتصدر!",
+    "createLeague": "إنشاء دوري",
+    "joinLeague": "انضمام لدوري",
+    "leagueName": "اسم الدوري",
+    "enterCode": "أدخل رمز الانضمام",
+    "joinBtn": "انضمام",
+    "createBtn": "إنشاء",
+    "emptyState": "لم تنضم إلى أي دوري خاص بعد.",
+    "createdBy": "أنشئت بواسطة",
+    "membersCount": "أعضاء",
+    "joinCode": "رمز الانضمام",
+    "copied": "تم النسخ!",
+    "leaveLeague": "مغادرة الدوري",
+    "typePredictions": "التوقعات",
+    "typeFantasy": "مبارزات الفانتزي",
+    "typeTaraftar": "نقاط المشجعين",
+    "rank": "الترتيب",
+    "user": "المستخدم",
+    "score": "النقاط"
+  },
+  "polls": {
+    "title": "الاستطلاعات والأسئلة",
+    "subtitle": "صوّت أو أجب عن أسئلة معلوماتية لاختبار معرفتك وكسب نقاط المشجعين!",
+    "triviaHeader": "سؤال معلوماتي",
+    "pollHeader": "استطلاع رأي",
+    "pointsReward": "مكافأة",
+    "correctAnswer": "إجابة صحيحة!",
+    "incorrectAnswer": "خاطئ. الإجابة الصحيحة كانت: {answer}",
+    "votedHeader": "إجابتك",
+    "pointsEarned": "لقد كسبت +{points} من نقاط المشجعين!",
+    "noActive": "لا توجد استطلاعات نشطة حاليًا. تحقق لاحقًا!",
+    "voteBtn": "إرسال الإجابة",
+    "alreadyVoted": "لقد أجبت عن هذا السؤال بالفعل"
   }
 }

@@ -17,7 +17,9 @@
     "signout": "Abmelden",
     "logoTitle": "CupMat — 2026 Weltmeisterschaft Spezial-Bildschirm",
     "stats": "Statistiken",
-    "fantasy": "CupMat Taktik"
+    "fantasy": "CupMat Taktik",
+    "leagues": "Private Ligen",
+    "polls": "Umfragen & Quiz"
   },
   "hero": {
     "badge": "StatMatik — 2026 Weltmeisterschaft",
@@ -232,5 +234,41 @@
       "div": "Division",
       "mix": "Gemischt"
     }
+  },
+  "leagues": {
+    "title": "Private Ligen",
+    "subtitle": "Erstelle eigene Ranglisten, lade deine Freunde ein und finde heraus, wer führt!",
+    "createLeague": "Liga erstellen",
+    "joinLeague": "Liga beitreten",
+    "leagueName": "Name der Liga",
+    "enterCode": "Zugangscode eingeben",
+    "joinBtn": "Beitreten",
+    "createBtn": "Erstellen",
+    "emptyState": "Du bist noch in keiner privaten Liga.",
+    "createdBy": "Erstellt von",
+    "membersCount": "Mitglieder",
+    "joinCode": "Zugangscode",
+    "copied": "Kopiert!",
+    "leaveLeague": "Liga verlassen",
+    "typePredictions": "Tipps",
+    "typeFantasy": "Fantasy-Duelle",
+    "typeTaraftar": "Fan-Punkte",
+    "rank": "Rang",
+    "user": "Benutzer",
+    "score": "Punkte"
+  },
+  "polls": {
+    "title": "Umfragen & Quiz",
+    "subtitle": "Stimme ab oder beantworte Quizfragen, um dein Wissen zu testen und Fan-Punkte zu sammeln!",
+    "triviaHeader": "Quizfrage",
+    "pollHeader": "Meinungsumfrage",
+    "pointsReward": "Belohnung",
+    "correctAnswer": "Richtige Antwort!",
+    "incorrectAnswer": "Falsch. Die richtige Antwort war: {answer}",
+    "votedHeader": "Deine Antwort",
+    "pointsEarned": "Du hast +{points} Fan-Punkte verdient!",
+    "noActive": "Derzeit gibt es keine aktiven Umfragen. Schau später wieder vorbei!",
+    "voteBtn": "Antwort senden",
+    "alreadyVoted": "Du hast diese Frage bereits beantwortet"
   }
 }

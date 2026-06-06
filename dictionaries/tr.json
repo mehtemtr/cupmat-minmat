@@ -17,7 +17,9 @@
     "signout": "Çıkış Yap",
     "logoTitle": "CupMat — 2026 Dünya Şampiyonası Özel Ekranı",
     "stats": "İstatistikler",
-    "fantasy": "CupMat Taktik"
+    "fantasy": "CupMat Taktik",
+    "leagues": "Özel Ligler",
+    "polls": "Anket & Soru"
   },
   "hero": {
     "badge": "StatMatik — 2026 Dünya Şampiyonası",
@@ -232,5 +234,41 @@
       "div": "Bölme",
       "mix": "Karışık"
     }
+  },
+  "leagues": {
+    "title": "Özel Ligler",
+    "subtitle": "Kendi liderlik tablolarınızı oluşturun, arkadaşlarınızı davet edin ve kimin lider olduğunu görün!",
+    "createLeague": "Lig Oluştur",
+    "joinLeague": "Lige Katıl",
+    "leagueName": "Lig Adı",
+    "enterCode": "Giriş Kodunu Girin",
+    "joinBtn": "Katıl",
+    "createBtn": "Oluştur",
+    "emptyState": "Henüz hiçbir özel lige dahil değilsiniz.",
+    "createdBy": "Kurucu",
+    "membersCount": "üye",
+    "joinCode": "Giriş Kodu",
+    "copied": "Kopyalandı!",
+    "leaveLeague": "Ligden Ayrıl",
+    "typePredictions": "Tahmin Puanı",
+    "typeFantasy": "Fantezi Düello",
+    "typeTaraftar": "Taraftar Puanı",
+    "rank": "Sıra",
+    "user": "Kullanıcı",
+    "score": "Puan"
+  },
+  "polls": {
+    "title": "Anket & Soru",
+    "subtitle": "Bilginizi test etmek ve Taraftar Puanı kazanmak için oy verin veya soruları yanıtlayın!",
+    "triviaHeader": "Bilgi Yarışması Sorusu",
+    "pollHeader": "Kamuoyu Anketi",
+    "pointsReward": "Ödül",
+    "correctAnswer": "Tebrikler! Doğru cevap.",
+    "incorrectAnswer": "Yanlış cevap! Doğru cevap: {answer}",
+    "votedHeader": "Cevabınız",
+    "pointsEarned": "+{points} Taraftar Puanı kazandınız!",
+    "noActive": "Şu anda aktif anket veya soru bulunmamaktadır. Daha sonra tekrar kontrol edin!",
+    "voteBtn": "Cevabı Gönder",
+    "alreadyVoted": "Bu soruyu zaten cevapladınız"
   }
 }

@@ -78,46 +78,11 @@
       "dateOfBirth": "2000-05-23"
     },
     {
-      "name": "Jesús Alberto Angulo",
-      "position": "DF",
-      "club": "UANL",
-      "age": 28,
-      "dateOfBirth": "1998-01-30"
-    },
-    {
-      "name": "Julián Araujo",
-      "position": "DF",
-      "club": "Celtic",
-      "age": 25,
-      "dateOfBirth": "2001-08-13"
-    },
-    {
       "name": "Mateo Chávez",
       "position": "DF",
       "club": "AZ",
       "age": 22,
       "dateOfBirth": "2004-05-11"
-    },
-    {
-      "name": "Víctor Guzmán",
-      "position": "DF",
-      "club": "Monterrey",
-      "age": 24,
-      "dateOfBirth": "2002-03-07"
-    },
-    {
-      "name": "Richard Ledezma",
-      "position": "DF",
-      "club": "Guadalajara",
-      "age": 26,
-      "dateOfBirth": "2000-09-06"
-    },
-    {
-      "name": "Alejandro Gómez",
-      "position": "DF",
-      "club": "Tijuana",
-      "age": 24,
-      "dateOfBirth": "2002-01-31"
     },
     {
       "name": "Everardo López",
@@ -155,13 +120,6 @@
       "dateOfBirth": "1996-03-24"
     },
     {
-      "name": "Carlos Rodríguez",
-      "position": "MF",
-      "club": "Cruz Azul",
-      "age": 29,
-      "dateOfBirth": "1997-01-03"
-    },
-    {
       "name": "Roberto Alvarado",
       "position": "MF",
       "club": "Guadalajara",
@@ -181,13 +139,6 @@
       "club": "Dynamo Moscow",
       "age": 30,
       "dateOfBirth": "1996-01-15"
-    },
-    {
-      "name": "Érick Sánchez",
-      "position": "MF",
-      "club": "América",
-      "age": 27,
-      "dateOfBirth": "1999-09-27"
     },
     {
       "name": "Diego Lainez",
@@ -356,6 +307,41 @@
       "club": "Guadalajara",
       "age": 23,
       "dateOfBirth": "2003-04-20"
+    },
+    {
+      "name": "Alvaro Fidalgo",
+      "position": "MF",
+      "club": "Betis",
+      "age": 29,
+      "dateOfBirth": "1997-04-09"
+    },
+    {
+      "name": "Armando Gonzalez",
+      "position": "FW",
+      "club": "Guadalajara",
+      "age": 23,
+      "dateOfBirth": "2003-04-20"
+    },
+    {
+      "name": "Brian Gutierrez",
+      "position": "MF",
+      "club": "Guadalajara",
+      "age": 23,
+      "dateOfBirth": "2003-06-17"
+    },
+    {
+      "name": "Erik Lira",
+      "position": "MF",
+      "club": "Cruz Azul",
+      "age": 26,
+      "dateOfBirth": "2000-05-08"
+    },
+    {
+      "name": "Guillermo Martinez",
+      "position": "FW",
+      "club": "UNAM",
+      "age": 31,
+      "dateOfBirth": "1995-03-15"
     }
   ],
   "kor": [
@@ -402,13 +388,6 @@
       "dateOfBirth": "1998-12-05"
     },
     {
-      "name": "Cho Yu-min",
-      "position": "DF",
-      "club": "Sharjah",
-      "age": 30,
-      "dateOfBirth": "1996-11-17"
-    },
-    {
       "name": "Lee Tae-seok",
       "position": "DF",
       "club": "Austria Wien",
@@ -444,8 +423,8 @@
       "dateOfBirth": "2003-07-29"
     },
     {
-      "name": "Lee Ki-hyuk",
-      "position": "DF",
+      "name": "Lee Gihyuk",
+      "position": "MF",
       "club": "Gangwon FC",
       "age": 26,
       "dateOfBirth": "2000-07-07"
@@ -540,6 +519,13 @@
       "club": "Beşiktaş",
       "age": 25,
       "dateOfBirth": "2001-04-12"
+    },
+    {
+      "name": "Cho Wi-je",
+      "position": "DF",
+      "club": "Jeonbuk Hyundai Motors",
+      "age": 24,
+      "dateOfBirth": "2001-08-25"
     }
   ],
   "cze": [
@@ -670,20 +656,6 @@
       "dateOfBirth": "2001-04-10"
     },
     {
-      "name": "Tomáš Ladra",
-      "position": "MF",
-      "club": "Viktoria Plzeň",
-      "age": 29,
-      "dateOfBirth": "1997-05-24"
-    },
-    {
-      "name": "Pavel Bucha",
-      "position": "MF",
-      "club": "Cincinnati",
-      "age": 28,
-      "dateOfBirth": "1998-03-11"
-    },
-    {
       "name": "Hugo Sochůrek",
       "position": "MF",
       "club": "Sparta Prague",
@@ -699,7 +671,7 @@
     },
     {
       "name": "Denis Višinský",
-      "position": "MF",
+      "position": "FW",
       "club": "Viktoria Plzeň",
       "age": 23,
       "dateOfBirth": "2003-03-21"
@@ -1364,13 +1336,6 @@
       "dateOfBirth": "1998-04-15"
     },
     {
-      "name": "Arjan Malić",
-      "position": "DF",
-      "club": "Sturm Graz",
-      "age": 21,
-      "dateOfBirth": "2005-08-28"
-    },
-    {
       "name": "Stjepan Radeljić",
       "position": "DF",
       "club": "Rijeka",
@@ -1574,13 +1539,6 @@
       "club": "Al-Arabi",
       "age": 23,
       "dateOfBirth": "2003-08-15"
-    },
-    {
-      "name": "Rayyan Al-Ali",
-      "position": "DF",
-      "club": "Al-Gharafa",
-      "age": 20,
-      "dateOfBirth": "2006-03-26"
     },
     {
       "name": "Jassem Gaber",
@@ -1916,13 +1874,6 @@
       "dateOfBirth": "1991-11-20"
     },
     {
-      "name": "Luke Graham",
-      "position": "DF",
-      "club": "Dundee",
-      "age": 22,
-      "dateOfBirth": "2004-02-11"
-    },
-    {
       "name": "Jack Hendry",
       "position": "DF",
       "club": "Al-Ettifaq",
@@ -2024,7 +1975,7 @@
       "name": "Lewis Ferguson",
       "position": "MF",
       "club": "Bologna",
-      "age": 27,
+      "age": 26,
       "dateOfBirth": "1999-08-24"
     },
     {
@@ -2033,13 +1984,6 @@
       "club": "Charlton Athletic",
       "age": 31,
       "dateOfBirth": "1995-10-07"
-    },
-    {
-      "name": "James Wilson",
-      "position": "FW",
-      "club": "Tottenham Hotspur",
-      "age": 19,
-      "dateOfBirth": "2007-03-06"
     },
     {
       "name": "George Hirst",
@@ -2066,7 +2010,7 @@
       "name": "Ross Stewart",
       "position": "FW",
       "club": "Southampton",
-      "age": 30,
+      "age": 29,
       "dateOfBirth": "1996-07-11"
     }
   ],
@@ -2079,7 +2023,7 @@
       "dateOfBirth": "1991-04-05"
     },
     {
-      "name": "Munir Mohamedi",
+      "name": "Munir El Kajoui",
       "position": "GK",
       "club": "RS Berkane",
       "age": 37,
@@ -2631,13 +2575,6 @@
       "dateOfBirth": "1988-03-29"
     },
     {
-      "name": "Carlos Coronel",
-      "position": "GK",
-      "club": "São Paulo",
-      "age": 30,
-      "dateOfBirth": "1996-12-29"
-    },
-    {
       "name": "Orlando Gill",
       "position": "GK",
       "club": "San Lorenzo",
@@ -2701,13 +2638,6 @@
       "dateOfBirth": "2000-06-01"
     },
     {
-      "name": "Blas Riveros",
-      "position": "DF",
-      "club": "Cerro Porteño",
-      "age": 28,
-      "dateOfBirth": "1998-02-03"
-    },
-    {
       "name": "Gustavo Velázquez",
       "position": "DF",
       "club": "Cerro Porteño",
@@ -2715,32 +2645,11 @@
       "dateOfBirth": "1991-04-17"
     },
     {
-      "name": "Alan Benítez",
-      "position": "DF",
-      "club": "Libertad",
-      "age": 32,
-      "dateOfBirth": "1994-01-25"
-    },
-    {
-      "name": "Agustín Sández",
-      "position": "DF",
-      "club": "Rosario Central",
-      "age": 25,
-      "dateOfBirth": "2001-01-16"
-    },
-    {
       "name": "Mateo Gamarra",
       "position": "DF",
       "club": "Cruzeiro",
       "age": 33,
       "dateOfBirth": "1993-05-06"
-    },
-    {
-      "name": "Saúl Salcedo",
-      "position": "DF",
-      "club": "Newell's Old Boys",
-      "age": 29,
-      "dateOfBirth": "1997-08-28"
     },
     {
       "name": "José Canale",
@@ -2760,7 +2669,7 @@
       "name": "Alexandro Maidana",
       "position": "DF",
       "club": "Talleres",
-      "age": 21,
+      "age": 20,
       "dateOfBirth": "2005-07-26"
     },
     {
@@ -2792,15 +2701,8 @@
       "dateOfBirth": "1994-02-10"
     },
     {
-      "name": "Mathías Villasanti",
-      "position": "MF",
-      "club": "Grêmio",
-      "age": 29,
-      "dateOfBirth": "1997-01-24"
-    },
-    {
-      "name": "Kaku",
-      "position": "MF",
+      "name": "Alejandro Romero Gamarra",
+      "position": "FW",
       "club": "Al Ain",
       "age": 31,
       "dateOfBirth": "1995-01-11"
@@ -2904,20 +2806,6 @@
       "dateOfBirth": "2004-02-09"
     },
     {
-      "name": "Óscar Romero",
-      "position": "FW",
-      "club": "Huracán",
-      "age": 34,
-      "dateOfBirth": "1992-07-04"
-    },
-    {
-      "name": "Ángel Romero",
-      "position": "FW",
-      "club": "Boca Juniors",
-      "age": 34,
-      "dateOfBirth": "1992-07-04"
-    },
-    {
       "name": "Antonio Sanabria",
       "position": "FW",
       "club": "Cremonese",
@@ -2982,7 +2870,7 @@
     },
     {
       "name": "Gustavo Caballero",
-      "position": "FW",
+      "position": "MF",
       "club": "Portsmouth",
       "age": 25,
       "dateOfBirth": "2001-09-21"
@@ -3007,6 +2895,34 @@
       "club": "LDU Quito",
       "age": 26,
       "dateOfBirth": "2000-02-22"
+    },
+    {
+      "name": "Alex Arce",
+      "position": "FW",
+      "club": "Independiente Rivadavia",
+      "age": 31,
+      "dateOfBirth": "1995-06-16"
+    },
+    {
+      "name": "Gaston Olveira",
+      "position": "GK",
+      "club": "Club Olimpia",
+      "age": 33,
+      "dateOfBirth": "1993-04-21"
+    },
+    {
+      "name": "Jose Canale",
+      "position": "DF",
+      "club": "Lanús",
+      "age": 29,
+      "dateOfBirth": "1996-07-20"
+    },
+    {
+      "name": "Mauricio",
+      "position": "MF",
+      "club": "Palmeiras",
+      "age": 25,
+      "dateOfBirth": "2001-06-22"
     }
   ],
   "aus": [
@@ -3051,13 +2967,6 @@
       "club": "Parma",
       "age": 23,
       "dateOfBirth": "2003-10-10"
-    },
-    {
-      "name": "Kye Rowles",
-      "position": "DF",
-      "club": "D.C. United",
-      "age": 28,
-      "dateOfBirth": "1998-06-24"
     },
     {
       "name": "Jordan Bos",
@@ -3156,13 +3065,6 @@
       "club": "FC St. Pauli",
       "age": 33,
       "dateOfBirth": "1993-03-07"
-    },
-    {
-      "name": "Martin Boyle",
-      "position": "FW",
-      "club": "Hibernian",
-      "age": 33,
-      "dateOfBirth": "1993-04-25"
     },
     {
       "name": "Mathew Leckie",
@@ -3647,13 +3549,6 @@
   ],
   "ecu": [
     {
-      "name": "Cristhian Loor",
-      "position": "GK",
-      "club": "Botafogo",
-      "age": 20,
-      "dateOfBirth": "2006-03-09"
-    },
-    {
       "name": "Moisés Ramírez",
       "position": "GK",
       "club": "Kifisia",
@@ -3682,13 +3577,6 @@
       "dateOfBirth": "1997-01-11"
     },
     {
-      "name": "Fricio Caicedo",
-      "position": "DF",
-      "club": "LDU Quito",
-      "age": 18,
-      "dateOfBirth": "2008-04-17"
-    },
-    {
       "name": "Joel Ordóñez",
       "position": "DF",
       "club": "Club Brugge",
@@ -3710,25 +3598,11 @@
       "dateOfBirth": "1998-02-18"
     },
     {
-      "name": "José Hurtado",
-      "position": "DF",
-      "club": "Red Bull Bragantino",
-      "age": 25,
-      "dateOfBirth": "2001-12-23"
-    },
-    {
       "name": "Jackson Porozo",
       "position": "DF",
       "club": "Tijuana",
       "age": 26,
       "dateOfBirth": "2000-08-04"
-    },
-    {
-      "name": "Deinner Ordóñez",
-      "position": "DF",
-      "club": "Independiente del Valle",
-      "age": 17,
-      "dateOfBirth": "2009-10-29"
     },
     {
       "name": "Jordy Alcívar",
@@ -3759,43 +3633,8 @@
       "dateOfBirth": "2007-05-04"
     },
     {
-      "name": "Luis Fragozo",
-      "position": "MF",
-      "club": "Emelec",
-      "age": 16,
-      "dateOfBirth": "2010-04-08"
-    },
-    {
-      "name": "Malcom Dacosta",
-      "position": "MF",
-      "club": "Bournemouth",
-      "age": 18,
-      "dateOfBirth": "2008-04-17"
-    },
-    {
-      "name": "Darwin Guagua",
-      "position": "MF",
-      "club": "Independiente del Valle",
-      "age": 19,
-      "dateOfBirth": "2007-11-06"
-    },
-    {
-      "name": "Bruno Caicedo",
-      "position": "MF",
-      "club": "Vancouver Whitecaps",
-      "age": 21,
-      "dateOfBirth": "2005-01-15"
-    },
-    {
-      "name": "Ederson Castillo",
-      "position": "MF",
-      "club": "LDU Quito",
-      "age": 18,
-      "dateOfBirth": "2008-12-10"
-    },
-    {
       "name": "Yaimar Medina",
-      "position": "MF",
+      "position": "DF",
       "club": "Genk",
       "age": 22,
       "dateOfBirth": "2004-11-05"
@@ -3816,7 +3655,7 @@
     },
     {
       "name": "Gonzalo Plata",
-      "position": "MF",
+      "position": "FW",
       "club": "Flamengo",
       "age": 26,
       "dateOfBirth": "2000-11-01"
@@ -3857,13 +3696,6 @@
       "dateOfBirth": "1997-11-18"
     },
     {
-      "name": "John Mercado",
-      "position": "FW",
-      "club": "Sparta Prague",
-      "age": 24,
-      "dateOfBirth": "2002-06-03"
-    },
-    {
       "name": "Nilson Angulo",
       "position": "FW",
       "club": "Sunderland",
@@ -3883,6 +3715,20 @@
       "club": "Pachuca",
       "age": 37,
       "dateOfBirth": "1989-11-04"
+    },
+    {
+      "name": "Piero Hincapie",
+      "position": "DF",
+      "club": "Arsenal",
+      "age": 24,
+      "dateOfBirth": "2002-01-09"
+    },
+    {
+      "name": "Willian Pacho",
+      "position": "DF",
+      "club": "Paris Saint-Germain",
+      "age": 24,
+      "dateOfBirth": "2001-10-16"
     }
   ],
   "civ": [
@@ -4516,13 +4362,6 @@
       "dateOfBirth": "1999-05-12"
     },
     {
-      "name": "Maya Yoshida",
-      "position": "DF",
-      "club": "LA Galaxy",
-      "age": 38,
-      "dateOfBirth": "1988-08-24"
-    },
-    {
       "name": "Junnosuke Suzuki",
       "position": "DF",
       "club": "Copenhagen",
@@ -5138,20 +4977,6 @@
       "dateOfBirth": "1994-09-10"
     },
     {
-      "name": "Omid Noorafkan",
-      "position": "MF",
-      "club": "Sepahan",
-      "age": 29,
-      "dateOfBirth": "1997-04-09"
-    },
-    {
-      "name": "Hadi Habibinejad",
-      "position": "MF",
-      "club": "Chadormalou",
-      "age": 31,
-      "dateOfBirth": "1995-10-17"
-    },
-    {
       "name": "Amirmohammad Razzaghinia",
       "position": "MF",
       "club": "Esteghlal",
@@ -5187,7 +5012,7 @@
       "dateOfBirth": "1995-11-11"
     },
     {
-      "name": "Dennis Eckert",
+      "name": "Dennis Dargahi",
       "position": "FW",
       "club": "Standard Liège",
       "age": 29,
@@ -5212,6 +5037,20 @@
       "position": "FW",
       "club": "Kalba",
       "age": 32,
+      "dateOfBirth": "1994-12-21"
+    },
+    {
+      "name": "Amirmohammad Razaghinia",
+      "position": "MF",
+      "club": "Esteghlal FC",
+      "age": 20,
+      "dateOfBirth": "2006-04-11"
+    },
+    {
+      "name": "Shahriyar Moghanloo",
+      "position": "FW",
+      "club": "Kalba FC",
+      "age": 31,
       "dateOfBirth": "1994-12-21"
     }
   ],
@@ -5336,7 +5175,7 @@
       "dateOfBirth": "2001-07-30"
     },
     {
-      "name": "Nabil Emad",
+      "name": "Nabil Donga",
       "position": "MF",
       "club": "Al-Najma",
       "age": 30,
@@ -5397,6 +5236,13 @@
       "club": "Barcelona B",
       "age": 18,
       "dateOfBirth": "2008-01-01"
+    },
+    {
+      "name": "Mahdy Soliman",
+      "position": "GK",
+      "club": "Zamalek",
+      "age": 39,
+      "dateOfBirth": "1987-06-08"
     }
   ],
   "esp": [
@@ -5655,13 +5501,6 @@
       "dateOfBirth": "1998-11-09"
     },
     {
-      "name": "José Luis Rodríguez",
-      "position": "DF",
-      "club": "Vasco da Gama",
-      "age": 29,
-      "dateOfBirth": "1997-03-14"
-    },
-    {
       "name": "Joaquín Piquerez",
       "position": "DF",
       "club": "Palmeiras",
@@ -5718,13 +5557,6 @@
       "dateOfBirth": "2000-02-15"
     },
     {
-      "name": "Nicolás Fonseca",
-      "position": "MF",
-      "club": "Oviedo",
-      "age": 28,
-      "dateOfBirth": "1998-10-19"
-    },
-    {
       "name": "Darwin Núñez",
       "position": "FW",
       "club": "Al-Hilal",
@@ -5760,13 +5592,6 @@
       "dateOfBirth": "1998-06-30"
     },
     {
-      "name": "Facundo Torres",
-      "position": "FW",
-      "club": "Austin FC",
-      "age": 26,
-      "dateOfBirth": "2000-04-13"
-    },
-    {
       "name": "Agustín Álvarez",
       "position": "FW",
       "club": "Monza",
@@ -5776,9 +5601,23 @@
     {
       "name": "Rodrigo Aguirre",
       "position": "FW",
-      "club": "UANL",
-      "age": 32,
+      "club": "Tigres UANL",
+      "age": 31,
       "dateOfBirth": "1994-10-01"
+    },
+    {
+      "name": "Rodrigo Bentancur",
+      "position": "MF",
+      "club": "Tottenham Hotspur",
+      "age": 28,
+      "dateOfBirth": "1997-06-25"
+    },
+    {
+      "name": "Rodrigo Zalazar",
+      "position": "MF",
+      "club": "Braga",
+      "age": 26,
+      "dateOfBirth": "1999-08-12"
     }
   ],
   "ksa": [
@@ -5881,13 +5720,6 @@
       "dateOfBirth": "2001-07-21"
     },
     {
-      "name": "Zakaria Hawsawi",
-      "position": "DF",
-      "club": "Al-Ahli",
-      "age": 25,
-      "dateOfBirth": "2001-01-12"
-    },
-    {
       "name": "Nasser Al-Dawsari",
       "position": "MF",
       "club": "Al-Hilal",
@@ -5986,11 +5818,18 @@
       "dateOfBirth": "2000-11-08"
     },
     {
-      "name": "Abdullah Al-Salem",
+      "name": "Aiman Yahya",
       "position": "FW",
-      "club": "Al-Qadsiah",
-      "age": 34,
-      "dateOfBirth": "1992-12-19"
+      "club": "Al-Nassr",
+      "age": 25,
+      "dateOfBirth": "2001-05-14"
+    },
+    {
+      "name": "Ziyad Aljohani",
+      "position": "MF",
+      "club": "Al-Ahli",
+      "age": 24,
+      "dateOfBirth": "2001-11-11"
     }
   ],
   "cpv": [
@@ -6561,32 +6400,18 @@
       "dateOfBirth": "1991-05-18"
     },
     {
-      "name": "Kumel Al-Rekabe",
-      "position": "GK",
-      "club": "Erbil",
-      "age": 22,
-      "dateOfBirth": "2004-08-19"
-    },
-    {
       "name": "Ahmed Basil",
       "position": "GK",
       "club": "Al-Shorta",
-      "age": 30,
+      "age": 29,
       "dateOfBirth": "1996-08-19"
     },
     {
-      "name": "Rebin Sulaka",
+      "name": "Rebin Ghareeb",
       "position": "DF",
       "club": "Port",
       "age": 34,
       "dateOfBirth": "1992-04-12"
-    },
-    {
-      "name": "Maitham Jabbar",
-      "position": "DF",
-      "club": "Al-Zawraa",
-      "age": 26,
-      "dateOfBirth": "2000-11-10"
     },
     {
       "name": "Zaid Tahseen",
@@ -6624,20 +6449,6 @@
       "dateOfBirth": "1995-07-01"
     },
     {
-      "name": "Dario Naamo",
-      "position": "DF",
-      "club": "Dundee United",
-      "age": 21,
-      "dateOfBirth": "2005-06-14"
-    },
-    {
-      "name": "Ahmed Maknzi",
-      "position": "DF",
-      "club": "Al-Karma",
-      "age": 25,
-      "dateOfBirth": "2001-09-24"
-    },
-    {
       "name": "Frans Putros",
       "position": "DF",
       "club": "Persib",
@@ -6666,25 +6477,11 @@
       "dateOfBirth": "2003-07-12"
     },
     {
-      "name": "Hasan Abdulkareem",
-      "position": "MF",
-      "club": "Al-Zawraa",
-      "age": 27,
-      "dateOfBirth": "1999-01-01"
-    },
-    {
       "name": "Zidane Iqbal",
       "position": "MF",
       "club": "Utrecht",
       "age": 23,
       "dateOfBirth": "2003-04-27"
-    },
-    {
-      "name": "Jussef Nasrawe",
-      "position": "MF",
-      "club": "SV Ried",
-      "age": 19,
-      "dateOfBirth": "2007-03-22"
     },
     {
       "name": "Kevin Yakob",
@@ -6724,7 +6521,7 @@
     {
       "name": "Ibrahim Bayesh",
       "position": "MF",
-      "club": "Al-Dhafra",
+      "club": "Al-Riyadh",
       "age": 26,
       "dateOfBirth": "2000-05-01"
     },
@@ -6732,13 +6529,13 @@
       "name": "Amir Al-Ammari",
       "position": "MF",
       "club": "Cracovia",
-      "age": 29,
+      "age": 28,
       "dateOfBirth": "1997-07-27"
     },
     {
       "name": "Ali Jasim",
-      "position": "MF",
-      "club": "Al-Najma",
+      "position": "FW",
+      "club": "Como",
       "age": 22,
       "dateOfBirth": "2004-01-20"
     },
@@ -6746,7 +6543,7 @@
       "name": "Youssef Amyn",
       "position": "MF",
       "club": "AEK Larnaca",
-      "age": 23,
+      "age": 22,
       "dateOfBirth": "2003-08-21"
     },
     {
@@ -6776,6 +6573,13 @@
       "club": "Al-Karma",
       "age": 30,
       "dateOfBirth": "1996-03-22"
+    },
+    {
+      "name": "Zaid Ismael",
+      "position": "MF",
+      "club": "Al-Talaba",
+      "age": 24,
+      "dateOfBirth": "2002-01-03"
     }
   ],
   "sen": [
@@ -6855,20 +6659,6 @@
       "club": "Chelsea",
       "age": 21,
       "dateOfBirth": "2005-08-29"
-    },
-    {
-      "name": "Ilay Camara",
-      "position": "DF",
-      "club": "Anderlecht",
-      "age": 23,
-      "dateOfBirth": "2003-01-18"
-    },
-    {
-      "name": "Moustapha Mbow",
-      "position": "DF",
-      "club": "Paris",
-      "age": 26,
-      "dateOfBirth": "2000-03-08"
     },
     {
       "name": "Idrissa Gueye",
@@ -6972,8 +6762,8 @@
       "name": "Assane Diao",
       "position": "FW",
       "club": "Como",
-      "age": 21,
-      "dateOfBirth": "2005-12-07"
+      "age": 20,
+      "dateOfBirth": "2005-09-07"
     }
   ],
   "arg": [
@@ -7162,20 +6952,6 @@
   ],
   "alg": [
     {
-      "name": "Anthony Mandrea",
-      "position": "GK",
-      "club": "Caen",
-      "age": 30,
-      "dateOfBirth": "1996-12-25"
-    },
-    {
-      "name": "Kilian Belazzoug",
-      "position": "GK",
-      "club": "Rennes B",
-      "age": 20,
-      "dateOfBirth": "2006-07-18"
-    },
-    {
       "name": "Luca Zidane",
       "position": "GK",
       "club": "Granada",
@@ -7197,13 +6973,6 @@
       "dateOfBirth": "1991-10-22"
     },
     {
-      "name": "Mehdi Dorval",
-      "position": "DF",
-      "club": "Bari",
-      "age": 25,
-      "dateOfBirth": "2001-02-09"
-    },
-    {
       "name": "Achref Abada",
       "position": "DF",
       "club": "USM Alger",
@@ -7216,13 +6985,6 @@
       "club": "JS Kabylie",
       "age": 27,
       "dateOfBirth": "1999-03-20"
-    },
-    {
-      "name": "Sohaib Naïr",
-      "position": "DF",
-      "club": "Guingamp",
-      "age": 24,
-      "dateOfBirth": "2002-04-23"
     },
     {
       "name": "Rayan Aït-Nouri",
@@ -7274,13 +7036,6 @@
       "dateOfBirth": "1999-09-23"
     },
     {
-      "name": "Adil Aouchiche",
-      "position": "MF",
-      "club": "Schalke 04",
-      "age": 24,
-      "dateOfBirth": "2002-07-15"
-    },
-    {
       "name": "Ibrahim Maza",
       "position": "MF",
       "club": "Bayer Leverkusen",
@@ -7330,13 +7085,6 @@
       "dateOfBirth": "2000-05-09"
     },
     {
-      "name": "Amin Chiakha",
-      "position": "FW",
-      "club": "Rosenborg",
-      "age": 20,
-      "dateOfBirth": "2006-03-12"
-    },
-    {
       "name": "Adil Boulbina",
       "position": "FW",
       "club": "Al-Duhail",
@@ -7349,6 +7097,41 @@
       "club": "Feyenoord",
       "age": 24,
       "dateOfBirth": "2002-02-11"
+    },
+    {
+      "name": "Jaouen Hadjam",
+      "position": "DF",
+      "club": "Young Boys",
+      "age": 23,
+      "dateOfBirth": "2003-03-26"
+    },
+    {
+      "name": "Mohamed Amine Tougai",
+      "position": "DF",
+      "club": "Espérance de Tunis",
+      "age": 26,
+      "dateOfBirth": "2000-01-22"
+    },
+    {
+      "name": "Nabil Bentaleb",
+      "position": "MF",
+      "club": "Lille",
+      "age": 31,
+      "dateOfBirth": "1994-11-24"
+    },
+    {
+      "name": "Oussama Benbot",
+      "position": "GK",
+      "club": "USM Alger",
+      "age": 31,
+      "dateOfBirth": "1994-10-11"
+    },
+    {
+      "name": "Samir Chergui",
+      "position": "DF",
+      "club": "Paris FC",
+      "age": 27,
+      "dateOfBirth": "1999-02-06"
     }
   ],
   "aut": [
@@ -7558,13 +7341,6 @@
       "dateOfBirth": "1993-01-25"
     },
     {
-      "name": "Ihsan Haddad",
-      "position": "DF",
-      "club": "Al-Hussein",
-      "age": 32,
-      "dateOfBirth": "1994-02-05"
-    },
-    {
       "name": "Yazan Al-Arab",
       "position": "DF",
       "club": "FC Seoul",
@@ -7586,7 +7362,7 @@
       "dateOfBirth": "1997-02-01"
     },
     {
-      "name": "Husam Abu Dahab",
+      "name": "Husam Abudahab",
       "position": "DF",
       "club": "Al-Faisaly",
       "age": 26,
@@ -7670,20 +7446,6 @@
       "dateOfBirth": "1992-12-04"
     },
     {
-      "name": "Yousef Qashi",
-      "position": "MF",
-      "club": "Al-Hussein",
-      "age": 21,
-      "dateOfBirth": "2005-04-15"
-    },
-    {
-      "name": "Mohammad Taha",
-      "position": "MF",
-      "club": "Al-Hussein",
-      "age": 21,
-      "dateOfBirth": "2005-07-13"
-    },
-    {
       "name": "Mahmoud Al-Mardi",
       "position": "FW",
       "club": "Al-Hussein",
@@ -7731,6 +7493,13 @@
       "club": "Al-Shabab",
       "age": 22,
       "dateOfBirth": "2004-04-13"
+    },
+    {
+      "name": "Odeh Fakhoury",
+      "position": "FW",
+      "club": "Pyramids",
+      "age": 20,
+      "dateOfBirth": "2005-11-22"
     }
   ],
   "por": [
@@ -8236,20 +8005,6 @@
       "dateOfBirth": "1998-02-22"
     },
     {
-      "name": "Jasurbek Jaloliddinov",
-      "position": "MF",
-      "club": "Sogdiana",
-      "age": 24,
-      "dateOfBirth": "2002-05-15"
-    },
-    {
-      "name": "Umarali Rakhmonaliev",
-      "position": "MF",
-      "club": "Sabah",
-      "age": 23,
-      "dateOfBirth": "2003-08-18"
-    },
-    {
       "name": "Sherzod Esanov",
       "position": "MF",
       "club": "Bukhara",
@@ -8293,7 +8048,7 @@
     },
     {
       "name": "Abbosbek Fayzullaev",
-      "position": "FW",
+      "position": "MF",
       "club": "CSKA Moscow",
       "age": 23,
       "dateOfBirth": "2003-10-03"
@@ -9086,13 +8841,6 @@
       "dateOfBirth": "2000-06-08"
     },
     {
-      "name": "Paul Reverson",
-      "position": "GK",
-      "club": "Jong Ajax",
-      "age": 21,
-      "dateOfBirth": "2005-06-20"
-    },
-    {
       "name": "Abdul Rahman Baba",
       "position": "DF",
       "club": "PAOK",
@@ -9105,13 +8853,6 @@
       "club": "Auxerre",
       "age": 28,
       "dateOfBirth": "1998-07-18"
-    },
-    {
-      "name": "Alexander Djiku",
-      "position": "DF",
-      "club": "Spartak Moscow",
-      "age": 32,
-      "dateOfBirth": "1994-08-09"
     },
     {
       "name": "Alidu Seidu",
@@ -9163,15 +8904,15 @@
       "dateOfBirth": "1993-06-13"
     },
     {
-      "name": "Abdul Fatawu",
-      "position": "MF",
+      "name": "Fatawu Issahaku",
+      "position": "FW",
       "club": "Leicester City",
       "age": 22,
       "dateOfBirth": "2004-03-08"
     },
     {
       "name": "Kamaldeen Sulemana",
-      "position": "MF",
+      "position": "FW",
       "club": "Atalanta",
       "age": 24,
       "dateOfBirth": "2002-02-15"
@@ -9252,6 +8993,22 @@
       "club": "Viktoria Plzeň",
       "age": 23,
       "dateOfBirth": "2003-09-23"
+    },
+    {
+      "name": "Derrick Luckassen",
+      "position": "DF",
+      "club": "Pafos",
+      "age": 30,
+      "dateOfBirth": "1995-07-03"
+    }
+  ],
+  "swe": [
+    {
+      "name": "Herman Johansson",
+      "position": "DF",
+      "club": "FC Dallas",
+      "age": 28,
+      "dateOfBirth": "1997-10-16"
     }
   ]
 }

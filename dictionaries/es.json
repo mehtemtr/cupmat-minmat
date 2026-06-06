@@ -17,7 +17,9 @@
     "signout": "Cerrar sesión",
     "logoTitle": "CupMat — Pantalla Especial del Campeonato Mundial 2026",
     "stats": "Estadísticas",
-    "fantasy": "CupMat Táctica"
+    "fantasy": "CupMat Táctica",
+    "leagues": "Ligas Privadas",
+    "polls": "Encuestas y Preguntas"
   },
   "hero": {
     "badge": "StatMatik — Campeonato Mundial 2026",
@@ -232,5 +234,41 @@
       "div": "División",
       "mix": "Mixto"
     }
+  },
+  "leagues": {
+    "title": "Ligas Privadas",
+    "subtitle": "¡Crea tablas de clasificación personalizadas, invita a tus amigos y mira quién lidera!",
+    "createLeague": "Crear Liga",
+    "joinLeague": "Unirse a Liga",
+    "leagueName": "Nombre de la Liga",
+    "enterCode": "Introduce Código de Acceso",
+    "joinBtn": "Unirse",
+    "createBtn": "Crear",
+    "emptyState": "Aún no estás en ninguna liga privada.",
+    "createdBy": "Creado por",
+    "membersCount": "miembros",
+    "joinCode": "Código de Acceso",
+    "copied": "¡Copiado!",
+    "leaveLeague": "Salir de la Liga",
+    "typePredictions": "Predicciones",
+    "typeFantasy": "Duelos de Fantasía",
+    "typeTaraftar": "Puntos de Aficionado",
+    "rank": "Rango",
+    "user": "Usuario",
+    "score": "Puntos"
+  },
+  "polls": {
+    "title": "Encuestas y Preguntas",
+    "subtitle": "¡Vota o responde preguntas para poner a cabo tus conocimientos y ganar puntos!",
+    "triviaHeader": "Pregunta de Trivia",
+    "pollHeader": "Encuesta de Opinión",
+    "pointsReward": "Premio",
+    "correctAnswer": "¡Respuesta Correcta!",
+    "incorrectAnswer": "Incorrecto. La respuesta correcta era: {answer}",
+    "votedHeader": "Tu Respuesta",
+    "pointsEarned": "¡Ganaste +{points} Puntos de Aficionado!",
+    "noActive": "No hay encuestas activas en este momento. ¡Vuelve más tarde!",
+    "voteBtn": "Enviar Respuesta",
+    "alreadyVoted": "Ya has respondido a esta pregunta"
   }
 }

@@ -17,7 +17,9 @@
     "signout": "Sign Out",
     "logoTitle": "CupMat — 2026 World Championship Special Screen",
     "stats": "Stats",
-    "fantasy": "CupMat Tactics"
+    "fantasy": "CupMat Tactics",
+    "leagues": "Private Leagues",
+    "polls": "Polls & Trivia"
   },
   "hero": {
     "badge": "StatMatik — 2026 World Championship",
@@ -232,5 +234,41 @@
       "div": "Division",
       "mix": "Mixed"
     }
+  },
+  "leagues": {
+    "title": "Private Leagues",
+    "subtitle": "Create custom leaderboards, invite your friends with a join code, and see who rules!",
+    "createLeague": "Create League",
+    "joinLeague": "Join League",
+    "leagueName": "League Name",
+    "enterCode": "Enter Join Code",
+    "joinBtn": "Join",
+    "createBtn": "Create",
+    "emptyState": "You are not in any custom leagues yet.",
+    "createdBy": "Created by",
+    "membersCount": "members",
+    "joinCode": "Join Code",
+    "copied": "Copied!",
+    "leaveLeague": "Leave League",
+    "typePredictions": "Predictions",
+    "typeFantasy": "Fantasy Duels",
+    "typeTaraftar": "Fan Points",
+    "rank": "Rank",
+    "user": "User",
+    "score": "Score"
+  },
+  "polls": {
+    "title": "Polls & Trivia",
+    "subtitle": "Cast your vote or answer trivia questions to test your knowledge and earn Fan Points!",
+    "triviaHeader": "Trivia Question",
+    "pollHeader": "Opinion Poll",
+    "pointsReward": "Reward",
+    "correctAnswer": "Correct Answer!",
+    "incorrectAnswer": "Incorrect. The correct answer was: {answer}",
+    "votedHeader": "Your Response",
+    "pointsEarned": "You earned +{points} Fan Points!",
+    "noActive": "No active polls at the moment. Check back later!",
+    "voteBtn": "Submit Answer",
+    "alreadyVoted": "You have answered this question"
   }
 }

@@ -1045,6 +1045,14 @@ export async function handleGamificationAction(
       break;
     }
 
+    case "poll_answered": {
+      const added = amount || 10;
+      profile.taraftarPuani += added;
+      profile.mevcutPeriyotPuani += added;
+      message = `Anket/Soru cevaplama ödülü: +${added} Taraftar Puanı!`;
+      break;
+    }
+
     default:
       return { success: false, profile, message: "Bilinmeyen eylem tipi." };
   }
