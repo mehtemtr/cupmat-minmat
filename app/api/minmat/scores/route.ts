@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     
     const { data: scores, error: scoreError } = await query
       .order("score", { ascending: false })
-      .limit(10);
+      .limit(100);
 
     console.log("[API GET] Çekilen skorlar:", scores);
     if (scoreError) {

@@ -261,6 +261,12 @@
       font-weight: bold;
     }
 
+    .myScoreHighlight {
+      border: 1.5px solid #22c55e !important;
+      background: rgba(34, 197, 94, 0.15) !important;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+    }
+
     .retryBtn {
       width: 100%;
       max-width: 480px;
@@ -976,10 +982,41 @@
       justify-content: center;
       width: 100%;
     }
+
+    #pauseOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    #pauseOverlay .pause-icon {
+      font-size: 80px;
+      animation: pausePulse 1.5s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes pausePulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- Pause Overlay -->
+  <div id="pauseOverlay" onclick="togglePause()">
+    <div class="pause-icon">▶️</div>
+  </div>
 
   <button type="button" class="cupmatWorldSwitch" id="btnCupmatSwitch" onclick="goToCupmat()">🏆 Cupmat'a Geç</button>
 
@@ -2186,6 +2223,11 @@
     function backToMenu() {
       clearInterval(timer);
       isGameOver = true;
+      isPaused = false;
+      let overlay = document.getElementById("pauseOverlay");
+      if (overlay) overlay.style.display = "none";
+      let btn = document.getElementById("pauseBtn");
+      if (btn) btn.innerText = "⏸️";
       show("menuScreen");
     }
 
@@ -2435,6 +2477,11 @@
       localStorage.setItem("minmat_last_name", playerName);
       isGameOver = false;
       isGameOverSaved = false;
+      isPaused = false;
+      let overlay = document.getElementById("pauseOverlay");
+      if (overlay) overlay.style.display = "none";
+      let pauseBtn = document.getElementById("pauseBtn");
+      if (pauseBtn) pauseBtn.innerText = "⏸️";
       score = 0;
       lives = 3;
       updateLivesUI();
@@ -2923,12 +2970,15 @@
       if (isGameOver) return;
       isPaused = !isPaused;
       let btn = document.getElementById("pauseBtn");
+      let overlay = document.getElementById("pauseOverlay");
       if (isPaused) {
         clearInterval(timer);
         btn.innerText = "▶️";
+        if (overlay) overlay.style.display = "flex";
       } else {
         startTimer();
         btn.innerText = "⏸️";
+        if (overlay) overlay.style.display = "none";
       }
     }
 
@@ -3153,7 +3203,19 @@
       if (scores.length === 0) {
         html += `<div style="text-align:center; padding:20px; color:#64748b;">Henüz skor kaydı bulunamadı.</div>`;
       } else {
-        scores.forEach((s, i) => {
+        const top10 = scores.slice(0, 10);
+        
+        // Normalize names to handle potential badge emojis appended in the backend
+        const normPlayerName = (playerName || "").toLowerCase().trim();
+        const isMeFunc = (name) => {
+          if (!normPlayerName) return false;
+          const n = (name || "").toLowerCase().trim();
+          return n === normPlayerName || n.startsWith(normPlayerName + " ");
+        };
+        
+        let myTop10Index = top10.findIndex(s => isMeFunc(s.name));
+        
+        top10.forEach((s, i) => {
           let medal = i + 1;
           if (i === 0) medal = "🏆";
           if (i === 1) medal = "⚡";
@@ -3163,6 +3225,11 @@
           if (i === 0) cls = "firstPlace";
           if (i === 1) cls = "secondPlace";
           if (i === 2) cls = "thirdPlace";
+
+          // If this is the current player, highlight their row
+          if (isMeFunc(s.name)) {
+            cls += " myScoreHighlight";
+          }
 
           let displayDate = s.date;
           if (s.timestamp) {
@@ -3180,6 +3247,30 @@
             </div>
           `;
         });
+
+        // If I am NOT in the top 10, check if I am in the top 100
+        if (myTop10Index === -1 && normPlayerName) {
+          const myOverallIndex = scores.findIndex(s => isMeFunc(s.name));
+          if (myOverallIndex !== -1) {
+            const myScoreObj = scores[myOverallIndex];
+            let displayDate = myScoreObj.date;
+            if (myScoreObj.timestamp) {
+              displayDate = new Date(myScoreObj.timestamp).toLocaleDateString("tr-TR", {hour: '2-digit', minute:'2-digit'});
+            }
+            
+            html += `
+              <div style="margin: 8px 0; border-top: 2px dashed rgba(255,255,255,0.15); height: 1px;"></div>
+              <div class="scoreRow myScoreHighlight">
+                <span>${myOverallIndex + 1}</span>
+                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHTML(myScoreObj.name)} <span style="font-size: 10px; color: #22c55e;">(Sen)</span></span>
+                <span style="font-size:11px; color:#94a3b8;">${escapeHTML(displayDate)}</span>
+                <span>${modeName(myScoreObj.mode)}</span>
+                <span>Lv${myScoreObj.level}</span>
+                <span>⭐ ${myScoreObj.score}</span>
+              </div>
+            `;
+          }
+        }
       }
 
       document.getElementById("leaderboard").innerHTML = html;
