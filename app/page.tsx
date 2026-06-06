@@ -275,6 +275,11 @@ export default function EntryPage() {
   const { locale } = useLocale();
   const [activeBanners, setActiveBanners] = useState<string[]>([]);
   const [currentDate, setCurrentDate] = useState<Date | null>(null);
+  const [bannerSrc, setBannerSrc] = useState<string>(`/announcements/afis_${locale}.png`);
+
+  useEffect(() => {
+    setBannerSrc(`/announcements/afis_${locale}.png`);
+  }, [locale]);
 
   useEffect(() => {
     const checkDate = () => {
@@ -364,83 +369,21 @@ export default function EntryPage() {
           </div>
         </header>
 
-        {/* Sistem Duyuruları ve Yenilikler */}
-        <div className="w-full mb-8 relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 via-[#060b14]/90 to-zinc-950/50 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30">
-          <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600/10 via-amber-600/10 to-sky-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
-          
-          <div className="relative z-10">
-            {/* Header / Badge */}
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-400/20">
-                <span className="text-xl">📢</span>
-              </div>
-              <div className="text-left">
-                <h2 className="text-lg font-black text-white tracking-wide">
-                  {locale === "tr" ? "Sistem Duyuruları & Yenilikler" : "System Announcements & Updates"}
-                </h2>
-                <p className="text-xs text-zinc-500">
-                  {locale === "tr" ? "StatMatik dünyasındaki en son güncellemeler" : "Latest updates from the StatMatik world"}
-                </p>
-              </div>
-            </div>
-
-            {/* Grid layout for the 3 announcements */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-left">
-              
-              {/* Bölüm 1: Kullanıcı Geçişi ve Giriş */}
-              <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
-                <h3 className="text-sm font-extrabold text-amber-400 flex items-center gap-2">
-                  <span>🔑</span> {locale === "tr" ? "Kullanıcı Geçişi & Giriş" : "User Migration & Login"}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                  {locale === "tr" ? (
-                    <>
-                      Hesaplarınız yeni sisteme güvenle aktarılmıştır. Giriş sorunu yaşıyorsanız, kayıtlı e-posta adresinizi yazıp şifre olarak e-postanızın <code>@</code> işaretinden önceki <strong>ilk 8 karakterini</strong> girerek giriş yapabilirsiniz (Örn: <code>veli.yilmaz@gmail.com</code> için geçici şifreniz <code>veli.yil</code> olacaktır). Giriş sonrası şifrenizi profil ayarlarından güncellemeyi unutmayın. Detaylı bilgi için <strong>Yardım</strong> menüsünü inceleyebilirsiniz.
-                    </>
-                  ) : (
-                    <>
-                      Your accounts have been securely migrated to our new system. If you experience login issues, you can log in by entering your registered email address and using the <strong>first 8 characters</strong> of your email before the <code>@</code> symbol as your temporary password (e.g. for <code>veli.yilmaz@gmail.com</code> your password will be <code>veli.yil</code>). Please update your password under profile settings after logging in. For details, refer to the <strong>Help</strong> menu.
-                    </>
-                  )}
-                </p>
-              </div>
-
-              {/* Bölüm 2: MinMat Puanlama Sistemi Güncellendi! */}
-              <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
-                <h3 className="text-sm font-extrabold text-violet-400 flex items-center gap-2">
-                  <span>🧮</span> {locale === "tr" ? "MinMat Puan Sistemi" : "MinMat Scoring Updated"}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                  {locale === "tr" ? (
-                    <>
-                      MinMat zeka oyununda seviye tamamlama ve kalan süre bonusları aktif edildi! Yeni puanlama sistemiyle <strong>çok daha fazla puan kazanabilir</strong> ve sıralamada hızla yükselebilirsiniz. Hemen girip yeni puanları ve rekorlarınızı deneyin!
-                    </>
-                  ) : (
-                    <>
-                      Level completion and remaining time bonuses are now active in the MinMat math game! With this update, <strong>you will earn much more points</strong>. Play now and beat your records!
-                    </>
-                  )}
-                </p>
-              </div>
-
-              {/* Bölüm 3: Yeni Dil Destekleri */}
-              <div className="flex flex-col gap-2 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
-                <h3 className="text-sm font-extrabold text-sky-400 flex items-center gap-2">
-                  <span>🌐</span> {locale === "tr" ? "9 Dil Desteğiyle Yayındayız!" : "Now Live in 9 Languages!"}
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                  {locale === "tr" ? (
-                    <>
-                      Uygulamamıza <strong>Portekizce, Arapça, Korece ve İtalyanca</strong> seçeneklerini ekleyerek dil yelpazemizi genişlettik. Artık platformumuzu sırasıyla <strong>Türkçe, Almanca, İngilizce, İspanyolca, Fransızca, İtalyanca, Portekizce, Arapça ve Korece</strong> olmak üzere 9 farklı dil seçeneğiyle tam uyumlu olarak kullanabilirsiniz. Tercihinizi sağ üstteki dünya simgesinden değiştirebilirsiniz.
-                    </>
-                  ) : (
-                    <>
-                      We have expanded our reach by adding <strong>Portuguese, Arabic, Korean, and Italian</strong>! You can now experience our platform in <strong>9 languages</strong> in order: <strong>Turkish, German, English, Spanish, French, Italian, Portuguese, Arabic, and Korean</strong>. Change your preferences instantly using the globe icon in the top-right corner.
-                    </>
-                  )}
-                </p>
-              </div>
-
+        {/* Tanıtım Banner'ı */}
+        <div className="w-full mb-12 flex justify-center">
+          <div className="relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 via-[#060b14]/90 to-zinc-950/50 p-2 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30 w-full max-w-[450px]">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600/10 via-amber-600/10 to-sky-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
+            <div className="relative z-10 w-full rounded-2xl overflow-hidden bg-zinc-950/50 flex justify-center items-center">
+              <img
+                src={bannerSrc}
+                onError={() => {
+                  if (bannerSrc !== '/announcements/afis_tr.png') {
+                    setBannerSrc('/announcements/afis_tr.png');
+                  }
+                }}
+                alt="Statmatik Banner"
+                className="w-full h-auto object-contain select-none pointer-events-none transition-all duration-700 group-hover:scale-[1.01]"
+              />
             </div>
           </div>
         </div>
