@@ -14,6 +14,7 @@ import LazyCronAgent from "@/components/LazyCronAgent";
 import AdminBackdoor from "@/components/AdminBackdoor";
 import { AdminNickPanel } from "@/components/AdminNickPanel";
 import IOSInstallPrompt from "@/components/IOSInstallPrompt";
+import BottomNavbar from "@/components/BottomNavbar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -131,7 +132,8 @@ export default async function RootLayout({
             <AdminBackdoor />
             <AdminNickPanel />
             <IOSInstallPrompt />
-            <main>{children}</main>
+            <main className="pb-20 md:pb-0">{children}</main>
+            <BottomNavbar />
             <Footer />
           </Providers>
         </body>

@@ -57,6 +57,18 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Listen to mobile bottom navigation requests to open About/Help modals
+  useEffect(() => {
+    const handleOpenAbout = () => setAboutOpen(true);
+    const handleOpenHelp = () => setHelpOpen(true);
+    window.addEventListener("open-about-modal", handleOpenAbout);
+    window.addEventListener("open-help-modal", handleOpenHelp);
+    return () => {
+      window.removeEventListener("open-about-modal", handleOpenAbout);
+      window.removeEventListener("open-help-modal", handleOpenHelp);
+    };
+  }, []);
+
   // Fetch initial gamification points
   useEffect(() => {
     if (!isSignedIn || !user) return;
@@ -244,7 +256,7 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#060b14]/80 backdrop-blur-xl">
+      <header className="hidden md:block fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#060b14]/80 backdrop-blur-xl">
         <div
           className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent"
           aria-hidden
