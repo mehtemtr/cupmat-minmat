@@ -1,6 +1,6 @@
 "use client";
 
-import { Trophy, Instagram, Facebook, Mail } from "lucide-react";
+import { Trophy, Instagram, Facebook, Mail, Youtube } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "@/contexts/LocaleContext";
 
@@ -56,6 +56,16 @@ export function Footer() {
             >
               <Facebook className="h-4 w-4" />
               <span>Facebook</span>
+            </a>
+            <a 
+              href="https://www.youtube.com/channel/UC3VXE2d4hkwnmMiW6W0gYjA" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-2 hover:text-red-500 transition-colors duration-200 text-xs sm:text-sm font-medium"
+              title="YouTube"
+            >
+              <Youtube className="h-4 w-4" />
+              <span>YouTube</span>
             </a>
             <span className="hidden sm:inline text-zinc-700">|</span>
             <a 

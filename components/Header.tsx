@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Trophy, Info, HelpCircle, Calculator, ChevronDown } from "lucide-react";
+import { Home, Trophy, Info, HelpCircle, Calculator, ChevronDown, Youtube } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
@@ -488,6 +488,9 @@ export function Header() {
                   <a href="https://www.facebook.com/profile.php?id=61590443797517" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-blue-500 transition-colors w-fit text-sm">
                     <span className="text-zinc-400">Facebook:</span> Statmatik
                   </a>
+                  <a href="https://www.youtube.com/channel/UC3VXE2d4hkwnmMiW6W0gYjA" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-red-500 transition-colors w-fit text-sm">
+                    <span className="text-zinc-400">YouTube:</span> @MahTEMYazılım
+                  </a>
                   <a href="mailto:info.mahtemyazilim@gmail.com" className="flex items-center gap-2 hover:text-emerald-400 transition-colors w-fit text-sm">
                     <span className="text-zinc-400">E-mail:</span> info.mahtemyazilim@gmail.com
                   </a>
@@ -661,6 +664,35 @@ export function Header() {
                           click here
                         </a>{" "}
                         for login and registration example.
+                      </>
+                    )}
+                  </div>
+                  <div className="mt-2 text-xs">
+                    🎥 <strong>{
+                      locale === "tr" ? "Görsel Rehber:" :
+                      locale === "de" ? "Videoguide:" :
+                      locale === "fr" ? "Guide Vidéo:" :
+                      locale === "es" ? "Guía de Video:" :
+                      locale === "pt" ? "Guia em Vídeo:" :
+                      locale === "ar" ? "دليل الفيديو:" :
+                      locale === "ko" ? "비디오 가이드:" :
+                      locale === "it" ? "Guida Video:" :
+                      "Video Guide:"
+                    }</strong>{" "}
+                    {locale === "tr" ? (
+                      <>
+                        YouTube kayıt olma ve giriş videosu için{" "}
+                        <a href="https://youtu.be/cxMMKBup6NY" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:underline font-bold">
+                          tıklayınız
+                        </a>.
+                      </>
+                    ) : (
+                      <>
+                        Click{" "}
+                        <a href="https://youtu.be/cxMMKBup6NY" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:underline font-bold">
+                          here
+                        </a>{" "}
+                        for the YouTube registration and login video guide.
                       </>
                     )}
                   </div>
