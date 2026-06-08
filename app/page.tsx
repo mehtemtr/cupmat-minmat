@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation, useLocale } from "@/contexts/LocaleContext";
@@ -270,12 +270,43 @@ const getPromoText = (now: Date): string => {
   return promoTexts[idx];
 };
 
+const UNLOCK_TIME = new Date("2026-06-08T19:23:00+03:00");
+
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const [activeBanners, setActiveBanners] = useState<string[]>([]);
   const [currentDate, setCurrentDate] = useState<Date | null>(null);
   const [bannerSrc, setBannerSrc] = useState<string>(`/announcements/afis_${locale}.png`);
+
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setCurrentTime(new Date());
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const isFullyUnlocked = useMemo(() => {
+    if (typeof window !== "undefined") {
+      const teaserBypass = localStorage.getItem("wc2026_fantasy_bypass") === "true";
+      if (teaserBypass) return true;
+    }
+    if (!currentTime) return false;
+    return currentTime >= UNLOCK_TIME;
+  }, [currentTime]);
+
+  const countdownText = useMemo(() => {
+    if (!currentTime) return "00:00";
+    const diffMs = UNLOCK_TIME.getTime() - currentTime.getTime();
+    if (diffMs <= 0) return "00:00";
+    const totalSecs = Math.floor(diffMs / 1000);
+    const mins = Math.floor(totalSecs / 60);
+    const secs = totalSecs % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  }, [currentTime]);
 
   useEffect(() => {
     setBannerSrc(`/announcements/afis_${locale}.png`);
@@ -364,22 +395,47 @@ export default function EntryPage() {
           </div>
         </header>
 
-        {/* Tanıtım Banner'ı */}
+        {/* Taktik Ligi Geri Sayım Kartı */}
         <div className="w-full mb-12 flex justify-center">
-          <div className="relative group rounded-3xl overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 via-[#060b14]/90 to-zinc-950/50 p-2 backdrop-blur-md shadow-2xl transition duration-500 hover:border-emerald-500/30 w-full max-w-[450px]">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600/10 via-amber-600/10 to-sky-650/10 opacity-10 blur transition duration-500 group-hover:opacity-15" />
-            <div className="relative z-10 w-full rounded-2xl overflow-hidden bg-zinc-950/50 flex justify-center items-center">
-              <img
-                src={bannerSrc}
-                onError={() => {
-                  if (bannerSrc !== '/announcements/afis_tr.png') {
-                    setBannerSrc('/announcements/afis_tr.png');
-                  }
-                }}
-                alt="Statmatik Banner"
-                className="w-full h-auto object-contain select-none pointer-events-none transition-all duration-700 group-hover:scale-[1.01]"
-              />
+          <div className="flex flex-col items-center text-center p-8 md:p-10 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl shadow-2xl relative overflow-hidden w-full max-w-[650px]">
+            {/* Ambient glows */}
+            <div className="absolute -top-20 -left-20 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-wider mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              {isFullyUnlocked ? "Taktik Ligi Açıldı" : "Taktik Ligi Tanıtımı Yayında"}
             </div>
+
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3 uppercase">
+              {isFullyUnlocked ? (
+                <>Taktik Ligi <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">Açıldı!</span></>
+              ) : (
+                <>Taktik Ligi <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">19:23</span>'te Açılıyor!</>
+              )}
+            </h2>
+            <p className="text-slate-400 text-xs md:text-sm max-w-md mb-6 leading-relaxed">
+              Dünya Kupası heyecanını zeka ve taktik becerilerinizle birleştirin. Takımınızın kaderi sizin elinizde!
+            </p>
+
+            {isFullyUnlocked ? (
+              <Link
+                href="/fantasy"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black text-sm shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 transition-all hover:-translate-y-0.5 active:translate-y-0"
+              >
+                Taktik Ligi'ne Katıl <ChevronRight className="w-4 h-4" />
+              </Link>
+            ) : (
+              /* Countdown Display */
+              <div className="bg-slate-950/80 px-6 py-4 rounded-xl border border-slate-800 shadow-inner inline-flex flex-col items-center">
+                <span className="text-3xl md:text-4xl font-mono font-black text-emerald-400 tracking-wider">
+                  {countdownText}
+                </span>
+                <span className="text-[9px] text-slate-500 font-extrabold uppercase tracking-wider mt-1.5">
+                  Kadro Kurulumunun Başlamasına Kalan Süre
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
