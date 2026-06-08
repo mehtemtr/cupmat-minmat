@@ -26,6 +26,10 @@ for (const [group, teams] of Object.entries(OFFICIAL_GROUP_DRAW)) {
   }
 }
 
+// Local timezone targets for June 8, 2026
+const TEASER_TIME = new Date("2026-06-08T19:03:00+03:00");
+const UNLOCK_TIME = new Date("2026-06-08T19:23:00+03:00");
+
 export default function FantasyPage() {
   const { user: clerkUser, isSignedIn: clerkIsSignedIn } = useUser();
   const { locale } = useLocale();
@@ -81,6 +85,41 @@ export default function FantasyPage() {
   const [adminBypass, setAdminBypass] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saveStatus, setSaveStatus] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setCurrentTime(new Date());
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Is the page fully unlocked? (after 19:23, or if admin/bypass is active)
+  const isFullyUnlocked = useMemo(() => {
+    if (teaserBypass) return true;
+    if (!currentTime) return false;
+    return currentTime >= UNLOCK_TIME;
+  }, [teaserBypass, currentTime]);
+
+  // Is the teaser visible? (from 19:03 onwards)
+  const isTeaserVisible = useMemo(() => {
+    if (isFullyUnlocked) return true;
+    if (!currentTime) return false;
+    return currentTime >= TEASER_TIME;
+  }, [isFullyUnlocked, currentTime]);
+
+  // Countdown timer string (minutes and seconds until 19:23)
+  const countdownText = useMemo(() => {
+    if (!currentTime) return "00:00";
+    const diffMs = UNLOCK_TIME.getTime() - currentTime.getTime();
+    if (diffMs <= 0) return "00:00";
+    const totalSecs = Math.floor(diffMs / 1000);
+    const mins = Math.floor(totalSecs / 60);
+    const secs = totalSecs % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  }, [currentTime]);
 
   // Derive mock session for local development testing
   const isSignedIn = clerkIsSignedIn || teaserBypass;
@@ -441,10 +480,131 @@ export default function FantasyPage() {
     }
   };
 
-  // Render Teaser Page initially (for all users, whether logged in or not)
-  if (!teaserBypass) {
+  // Render Teaser / Pre-teaser Page initially (for all users, whether logged in or not)
+  if (!isFullyUnlocked) {
+    if (!isTeaserVisible) {
+      return (
+        <PageShell title="CupMat Taktik Ligi" subtitle="Dünya Kupası Heyecanı ve Matematik Taktikleri!">
+          <div className="flex flex-col items-center justify-center text-center py-20 px-6 bg-slate-900/40 rounded-3xl border border-slate-800/80 backdrop-blur-xl max-w-2xl mx-auto shadow-2xl">
+            <Shield className="w-16 h-16 text-slate-500 mb-6 animate-pulse" />
+            <h2 className="text-2xl font-black text-slate-200 mb-3 uppercase tracking-wider">Taktik Ligi Çok Yakında</h2>
+            <p className="text-slate-400 text-sm max-w-md mb-8 leading-relaxed">
+              Dünya Kupası kadrolarınızı kurup rakiplerinizle düello yapabileceğiniz CupMat Taktik Ligi yakında açılıyor. 
+              Detaylar, önizleme ve taktik rehberi bugün saat <strong className="text-emerald-400">19:03</strong>'te burada paylaşılacaktır!
+            </p>
+            <div className="text-xs text-slate-600 font-semibold">
+              Lütfen bekleyin...
+            </div>
+          </div>
+        </PageShell>
+      );
+    }
+
     return (
-      <div className="min-h-screen bg-[#060b14]" />
+      <PageShell title="CupMat Taktik Ligi" subtitle="Kendi Dünya Kupası kadronuzu kurun ve H2H Düello Ligi'nde yarışın!">
+        <div className="max-w-3xl mx-auto space-y-8">
+          {/* Header & Countdown Card */}
+          <div className="flex flex-col items-center text-center p-8 md:p-12 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+            {/* Ambient glows */}
+            <div className="absolute -top-20 -left-20 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-wider mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              Taktik Ligi Tanıtımı Yayında
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4 uppercase">
+              Taktik Ligi <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">19:23</span>'te Açılıyor!
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base max-w-lg mb-8 leading-relaxed">
+              Dünya Kupası heyecanını zeka ve taktik becerilerinizle birleştirin. Takımınızın kaderi sizin elinizde!
+            </p>
+
+            {/* Countdown Display */}
+            <div className="bg-slate-950/80 px-8 py-5 rounded-2xl border border-slate-800 shadow-inner inline-flex flex-col items-center">
+              <span className="text-4xl md:text-5xl font-mono font-black text-emerald-400 tracking-wider">
+                {countdownText}
+              </span>
+              <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider mt-2">
+                Kadro Kurulumunun Başlamasına Kalan Süre
+              </span>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="bg-slate-900/40 rounded-3xl border border-slate-800/80 p-8 shadow-xl">
+            <h3 className="text-lg font-black text-white mb-6 uppercase tracking-wider text-center">
+              Taktik Ligi'nde Sizi Neler Bekliyor?
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Feature 1 */}
+              <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
+                <Users className="w-10 h-10 text-emerald-400 flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">Kendi Elit Kadronu Kur</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Dünya Kupası'ndaki gerçek oyuncular arasından 11'ini seç. Stratejini belirle, en iyi dizilişle sahaya çık.
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
+                <Award className="w-10 h-10 text-emerald-400 flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">Yedekler ve Ek Takımlar</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    MinMat zeka oyunundaki başarılarınla yedek kulübeni genişlet ve 1'den fazla takım kurma hakkı kazan!
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
+                <Shield className="w-10 h-10 text-emerald-400 flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">H2H Düello Ligi</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Diğer menajerlerle bire bir düellolara katıl. Her maç günü puanlarını toplayıp ligde zirveye oyna.
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
+                <Calendar className="w-10 h-10 text-emerald-400 flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">MinMat Aktivite Şartı</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Kadro güncellemesi ve transferler kilitli kalmasın diye, yaptığın transfer başına günlük MinMat oyunlarını tamamla.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Admin Bypass box for local testing / quick entry */}
+            <div className="mt-8 pt-6 border-t border-slate-800/60 flex flex-col items-center">
+              <form onSubmit={handleBypassSubmit} className="flex gap-2 max-w-sm w-full">
+                <input
+                  type="password"
+                  placeholder="Geliştirici Şifresi..."
+                  value={adminSecretInput}
+                  onChange={(e) => setAdminSecretInput(e.target.value)}
+                  className="bg-slate-950 text-white text-xs px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 flex-grow"
+                />
+                <button
+                  type="submit"
+                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold px-3 py-2 rounded-xl transition-all"
+                >
+                  Bypass
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </PageShell>
     );
   }
 
