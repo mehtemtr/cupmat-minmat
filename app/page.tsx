@@ -319,11 +319,6 @@ export default function EntryPage() {
         }
       }
 
-      // Show statmatik_promo from June 2, 2026 19:03 local time onwards
-      const targetTime = new Date(2026, 5, 2, 19, 3, 0); // Month is 5 (June)
-      if (now >= targetTime) {
-        banners.push("statmatik_promo");
-      }
 
       setActiveBanners(banners);
     };

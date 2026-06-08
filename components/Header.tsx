@@ -19,7 +19,7 @@ const navKeys = [
   { href: "/hakemler", key: "hero.referees" },
   { href: "/leagues", key: "nav.leagues" },
   { href: "/polls", key: "nav.polls" },
-  // { href: "/fantasy", key: "nav.fantasy" },
+  { href: "/fantasy", key: "nav.fantasy" },
   { href: "/leaderboard", key: "nav.leaderboard" },
   { href: "/stats", key: "nav.stats" },
 ] as const;
