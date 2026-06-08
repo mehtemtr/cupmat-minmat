@@ -428,19 +428,21 @@ export default function FantasyPage() {
     setSaveStatus(null);
     const filledStarters = starters.filter(Boolean);
     if (filledStarters.length < 11) {
-      setSaveStatus({ type: "error", msg: "Kadronuzu kaydetmek için 11 ilk 11 oyuncusunu da seçmelisiniz." });
+      setSaveStatus({ type: "error", msg: t("fantasy.startersRequired") });
       return;
     }
 
     if (!teamName.trim()) {
-      setSaveStatus({ type: "error", msg: "Kadro adı girilmelidir." });
+      setSaveStatus({ type: "error", msg: t("fantasy.teamNameRequired") });
       return;
     }
 
     if (!limitsStatus.countryLimitPassed) {
       setSaveStatus({
         type: "error",
-        msg: `Ülke limiti aşıldı! Seçilen aşamada bir ülkeden en fazla ${limitsStatus.countryLimit} oyuncu seçebilirsiniz. Aşım yapılan ülkeler: ${limitsStatus.countryViolations.join(", ")}`,
+        msg: t("fantasy.countryLimitPassed")
+          .replace("{limit}", limitsStatus.countryLimit.toString())
+          .replace("{countries}", limitsStatus.countryViolations.join(", ")),
       });
       return;
     }
@@ -448,7 +450,8 @@ export default function FantasyPage() {
     if (!limitsStatus.groupLimitPassed) {
       setSaveStatus({
         type: "error",
-        msg: `Grup limiti aşıldı! Aynı gruptan en fazla 5 oyuncu seçebilirsiniz. Aşım yapılan gruplar: ${limitsStatus.groupViolations.join(", ")}`,
+        msg: t("fantasy.groupLimitPassed")
+          .replace("{groups}", limitsStatus.groupViolations.join(", ")),
       });
       return;
     }
@@ -473,10 +476,10 @@ export default function FantasyPage() {
         setSaveStatus({ type: "success", msg: data.message });
         loadStatusAndData();
       } else {
-        setSaveStatus({ type: "error", msg: data.error || "Kadro kaydedilirken hata oluştu." });
+        setSaveStatus({ type: "error", msg: data.error || t("fantasy.saveError") });
       }
     } catch (e: any) {
-      setSaveStatus({ type: "error", msg: "Ağ hatası: " + e.message });
+      setSaveStatus({ type: "error", msg: t("fantasy.networkError").replace("{msg}", e.message) });
     }
   };
 
@@ -484,16 +487,15 @@ export default function FantasyPage() {
   if (!isFullyUnlocked) {
     if (!isTeaserVisible) {
       return (
-        <PageShell title="CupMat Taktik Ligi" subtitle="Dünya Kupası Heyecanı ve Matematik Taktikleri!">
+        <PageShell title={t("fantasy.title")} subtitle={t("fantasy.subtitle")}>
           <div className="flex flex-col items-center justify-center text-center py-20 px-6 bg-slate-900/40 rounded-3xl border border-slate-800/80 backdrop-blur-xl max-w-2xl mx-auto shadow-2xl">
             <Shield className="w-16 h-16 text-slate-500 mb-6 animate-pulse" />
-            <h2 className="text-2xl font-black text-slate-200 mb-3 uppercase tracking-wider">Taktik Ligi Çok Yakında</h2>
+            <h2 className="text-2xl font-black text-slate-200 mb-3 uppercase tracking-wider">{t("fantasy.teaserWaitTitle")}</h2>
             <p className="text-slate-400 text-sm max-w-md mb-8 leading-relaxed">
-              Dünya Kupası kadrolarınızı kurup rakiplerinizle düello yapabileceğiniz CupMat Taktik Ligi yakında açılıyor. 
-              Detaylar, önizleme ve taktik rehberi bugün saat <strong className="text-emerald-400">19:03</strong>'te burada paylaşılacaktır!
+              {t("fantasy.teaserWaitDesc").replace("{time}", "19:03")}
             </p>
             <div className="text-xs text-slate-600 font-semibold">
-              Lütfen bekleyin...
+              {t("fantasy.teaserWaitPending")}
             </div>
           </div>
         </PageShell>
@@ -501,7 +503,7 @@ export default function FantasyPage() {
     }
 
     return (
-      <PageShell title="CupMat Taktik Ligi" subtitle="Kendi Dünya Kupası kadronuzu kurun ve H2H Düello Ligi'nde yarışın!">
+      <PageShell title={t("fantasy.title")} subtitle={t("fantasy.subtitle")}>
         <div className="max-w-3xl mx-auto space-y-8">
           {/* Header & Countdown Card */}
           <div className="flex flex-col items-center text-center p-8 md:p-12 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl shadow-2xl relative overflow-hidden">
@@ -511,14 +513,14 @@ export default function FantasyPage() {
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-wider mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-              Taktik Ligi Tanıtımı Yayında
+              {t("fantasy.teaserLiveBadge")}
             </div>
 
             <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4 uppercase">
-              Taktik Ligi <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">19:23</span>'te Açılıyor!
+              {t("fantasy.teaserTitle").replace("{time}", "19:23")}
             </h2>
             <p className="text-slate-400 text-sm md:text-base max-w-lg mb-8 leading-relaxed">
-              Dünya Kupası heyecanını zeka ve taktik becerilerinizle birleştirin. Takımınızın kaderi sizin elinizde!
+              {t("fantasy.teaserDesc")}
             </p>
 
             {/* Countdown Display */}
@@ -527,7 +529,7 @@ export default function FantasyPage() {
                 {countdownText}
               </span>
               <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-wider mt-2">
-                Kadro Kurulumunun Başlamasına Kalan Süre
+                {t("fantasy.teaserCountdownLabel")}
               </span>
             </div>
           </div>
@@ -535,7 +537,7 @@ export default function FantasyPage() {
           {/* Features Grid */}
           <div className="bg-slate-900/40 rounded-3xl border border-slate-800/80 p-8 shadow-xl">
             <h3 className="text-lg font-black text-white mb-6 uppercase tracking-wider text-center">
-              Taktik Ligi'nde Sizi Neler Bekliyor?
+              {t("fantasy.teaserIntroTitle")}
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -543,9 +545,9 @@ export default function FantasyPage() {
               <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
                 <Users className="w-10 h-10 text-emerald-400 flex-shrink-0" />
                 <div>
-                  <h4 className="text-sm font-black text-slate-200 mb-1">Kendi Elit Kadronu Kur</h4>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">{t("fantasy.feature1Title")}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Dünya Kupası'ndaki gerçek oyuncular arasından 11'ini seç. Stratejini belirle, en iyi dizilişle sahaya çık.
+                    {t("fantasy.feature1Desc")}
                   </p>
                 </div>
               </div>
@@ -554,9 +556,9 @@ export default function FantasyPage() {
               <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
                 <Award className="w-10 h-10 text-emerald-400 flex-shrink-0" />
                 <div>
-                  <h4 className="text-sm font-black text-slate-200 mb-1">Yedekler ve Ek Takımlar</h4>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">{t("fantasy.feature2Title")}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    MinMat zeka oyunundaki başarılarınla yedek kulübeni genişlet ve 1'den fazla takım kurma hakkı kazan!
+                    {t("fantasy.feature2Desc")}
                   </p>
                 </div>
               </div>
@@ -565,9 +567,9 @@ export default function FantasyPage() {
               <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
                 <Shield className="w-10 h-10 text-emerald-400 flex-shrink-0" />
                 <div>
-                  <h4 className="text-sm font-black text-slate-200 mb-1">H2H Düello Ligi</h4>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">{t("fantasy.feature3Title")}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Diğer menajerlerle bire bir düellolara katıl. Her maç günü puanlarını toplayıp ligde zirveye oyna.
+                    {t("fantasy.feature3Desc")}
                   </p>
                 </div>
               </div>
@@ -576,9 +578,9 @@ export default function FantasyPage() {
               <div className="flex gap-4 p-5 bg-slate-950/40 rounded-2xl border border-slate-900 hover:border-slate-800 transition-all duration-300">
                 <Calendar className="w-10 h-10 text-emerald-400 flex-shrink-0" />
                 <div>
-                  <h4 className="text-sm font-black text-slate-200 mb-1">MinMat Aktivite Şartı</h4>
+                  <h4 className="text-sm font-black text-slate-200 mb-1">{t("fantasy.feature4Title")}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Kadro güncellemesi ve transferler kilitli kalmasın diye, yaptığın transfer başına günlük MinMat oyunlarını tamamla.
+                    {t("fantasy.feature4Desc")}
                   </p>
                 </div>
               </div>
@@ -589,7 +591,7 @@ export default function FantasyPage() {
               <form onSubmit={handleBypassSubmit} className="flex gap-2 max-w-sm w-full">
                 <input
                   type="password"
-                  placeholder="Geliştirici Şifresi..."
+                  placeholder={t("fantasy.devPasswordPlaceholder")}
                   value={adminSecretInput}
                   onChange={(e) => setAdminSecretInput(e.target.value)}
                   className="bg-slate-950 text-white text-xs px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 flex-grow"
@@ -611,12 +613,12 @@ export default function FantasyPage() {
   // Once bypassed, enforce sign-in (or mock it for dev)
   if (!isSignedIn) {
     return (
-      <PageShell title="CupMat Taktik Ligi" subtitle="Kendi Dünya Kupası kadronuzu kurun ve H2H Düello Liginde yarışın!">
+      <PageShell title={t("fantasy.title")} subtitle={t("fantasy.subtitle")}>
         <div className="flex flex-col items-center justify-center text-center py-20 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl">
           <Shield className="w-16 h-16 text-emerald-400 mb-6 animate-pulse" />
-          <h2 className="text-2xl font-black text-white mb-2">Giriş Yapmalısınız</h2>
+          <h2 className="text-2xl font-black text-white mb-2">{t("fantasy.needLogin")}</h2>
           <p className="text-slate-400 max-w-md mb-8">
-            Kadro kurup düello ligine katılabilmek ve ödüller kazanabilmek için sisteme giriş yapmalısınız.
+            {t("fantasy.needLoginDesc")}
           </p>
         </div>
       </PageShell>
@@ -625,8 +627,8 @@ export default function FantasyPage() {
 
   return (
     <PageShell
-      title="CupMat Taktik Ligi"
-      subtitle="Kendi elit takımınızı kurun, matematik başarınızla yedeklerinizi ve takım haklarınızı açın, ikili düellolarda kapışın!"
+      title={t("fantasy.title")}
+      subtitle={t("fantasy.subtitle")}
     >
       {/* Admin Settings bar */}
       {adminBypass && (
@@ -669,28 +671,37 @@ export default function FantasyPage() {
         <div className="mb-8 p-6 bg-rose-500/10 border border-rose-500/20 rounded-3xl flex flex-col md:flex-row items-center gap-6">
           <AlertTriangle className="w-12 h-12 text-rose-400 flex-shrink-0" />
           <div>
-            <h3 className="text-lg font-black text-white mb-2">Kadro Kurma Kilitli!</h3>
+            <h3 className="text-lg font-black text-white mb-2">{t("fantasy.lockedTitle")}</h3>
             <p className="text-sm text-slate-400 mb-4 max-w-xl">
               {isStageActive
-                ? "Aşama devam ettiği için geç katılım şartı uygulanmaktadır: Kadro açabilmek için herhangi bir MinMat kategorisinde en az Seviye 7'ye ulaşmış olmalısınız."
-                : "Dünya Kupası kadronuzu açabilmek için tüm MinMat kategorilerinde en az Seviye 3 bitirmeli ve 5 başarılı oyun oynamalısınız."}
+                ? t("fantasy.lockedStageActive")
+                : t("fantasy.lockedStageInactive")}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {unlockProgress.categoryStatus.map((c: any) => {
                 const reqLvl = isStageActive ? 7 : 3;
                 const isLvlPassed = c.level >= reqLvl;
+                
+                // Translate category name
+                let categoryName = c.category;
+                if (c.category === "add") categoryName = t("gamification.modes.add");
+                else if (c.category === "sub") categoryName = t("gamification.modes.sub");
+                else if (c.category === "mul") categoryName = t("gamification.modes.mul");
+                else if (c.category === "div") categoryName = t("gamification.modes.div");
+                else if (c.category === "mix") categoryName = t("gamification.modes.mix");
+
                 return (
                   <div key={c.category} className="bg-slate-950/40 p-3 rounded-xl border border-slate-900">
                     <p className="text-xs font-bold text-slate-300 capitalize mb-1">
-                      {c.category === "add" ? "Toplama" : c.category === "sub" ? "Çıkarma" : c.category === "mul" ? "Çarpma" : c.category === "div" ? "Bölme" : "Karışık"}
+                      {categoryName}
                     </p>
                     <div className="flex flex-col gap-0.5">
                       <span className={`text-[10px] ${isLvlPassed ? "text-emerald-400" : "text-rose-400"}`}>
-                        Seviye: {c.level}/{reqLvl} {isLvlPassed ? "✓" : ""}
+                        {t("fantasy.levelLabel").replace("{lvl}", c.level.toString()).replace("{req}", reqLvl.toString()).replace("{check}", isLvlPassed ? "✓" : "")}
                       </span>
                       {!isStageActive && (
                         <span className={`text-[10px] ${c.gamesPlayed >= 5 ? "text-emerald-400" : "text-rose-400"}`}>
-                          Oyun: {c.gamesPlayed}/5 {c.gamesPlayed >= 5 ? "✓" : ""}
+                          {t("fantasy.gameLabel").replace("{played}", c.gamesPlayed.toString()).replace("{check}", c.gamesPlayed >= 5 ? "✓" : "")}
                         </span>
                       )}
                     </div>
@@ -702,7 +713,7 @@ export default function FantasyPage() {
               href="/minmat"
               className="inline-flex items-center gap-2 mt-4 text-emerald-400 font-bold hover:text-emerald-300 text-sm"
             >
-              MinMat oynamaya git <ArrowRight className="w-4 h-4" />
+              {t("fantasy.minmatGoBtn")} <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -717,27 +728,31 @@ export default function FantasyPage() {
             <div className="flex flex-wrap gap-4 items-center">
               {/* Stage selector */}
               <div>
-                <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">Dönem/Maç Günü</label>
+                <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">
+                  {t("fantasy.stageSelectorLabel")}
+                </label>
                 <select
                   value={stage}
                   onChange={(e) => setStage(e.target.value)}
                   className="bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500"
                 >
-                  <option value="matchday_1">1. Maç Günü (Grup)</option>
-                  <option value="matchday_2">2. Maç Günü (Grup)</option>
-                  <option value="matchday_3">3. Maç Günü (Grup)</option>
-                  <option value="round_of_32">Son 32</option>
-                  <option value="round_of_16">Son 16</option>
-                  <option value="quarter_finals">Çeyrek Final</option>
-                  <option value="semi_finals">Yarı Final</option>
-                  <option value="finals">Final</option>
+                  <option value="matchday_1">{t("fantasy.stages.matchday_1")}</option>
+                  <option value="matchday_2">{t("fantasy.stages.matchday_2")}</option>
+                  <option value="matchday_3">{t("fantasy.stages.matchday_3")}</option>
+                  <option value="round_of_32">{t("fantasy.stages.round_of_32")}</option>
+                  <option value="round_of_16">{t("fantasy.stages.round_of_16")}</option>
+                  <option value="quarter_finals">{t("fantasy.stages.quarter_finals")}</option>
+                  <option value="semi_finals">{t("fantasy.stages.semi_finals")}</option>
+                  <option value="finals">{t("fantasy.stages.finals")}</option>
                 </select>
               </div>
 
               {/* Team Index selector (maxTeams count) */}
               {maxTeams > 1 && (
                 <div>
-                  <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">Aktif Takımım</label>
+                  <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">
+                    {t("fantasy.activeTeamLabel")}
+                  </label>
                   <div className="flex gap-1.5">
                     {Array.from({ length: maxTeams }).map((_, i) => (
                       <button
@@ -749,7 +764,7 @@ export default function FantasyPage() {
                             : "bg-slate-950 text-slate-400 border border-slate-800 hover:bg-slate-900"
                         }`}
                       >
-                        {i + 1}. Takım
+                        {t("fantasy.teamUnitNumbered").replace("{num}", (i + 1).toString())}
                       </button>
                     ))}
                   </div>
@@ -759,7 +774,9 @@ export default function FantasyPage() {
 
             {/* Formation selector */}
             <div>
-              <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">Diziliş Formasyonu</label>
+              <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">
+                {t("fantasy.formationSelectorLabel")}
+              </label>
               <select
                 value={formation}
                 onChange={(e) => setFormation(e.target.value)}
@@ -781,7 +798,7 @@ export default function FantasyPage() {
             <div className="mb-6">
               <input
                 type="text"
-                placeholder="Kadro Adı Giriniz (örn: Matematik Fırtınası)"
+                placeholder={t("fantasy.teamNamePlaceholder")}
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
                 className="bg-slate-950 text-white font-extrabold text-lg px-4 py-3 rounded-2xl border border-slate-800 focus:outline-none focus:border-emerald-500 w-full"
@@ -818,7 +835,7 @@ export default function FantasyPage() {
                           {p ? p.name.charAt(0) : "+"}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
-                          {p ? p.name : "Forvet"}
+                          {p ? p.name : t("fantasy.forward")}
                         </span>
                         {p && (
                           <div
@@ -850,7 +867,7 @@ export default function FantasyPage() {
                           {p ? p.name.charAt(0) : "+"}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
-                          {p ? p.name : "Orta Saha"}
+                          {p ? p.name : t("fantasy.midfielder")}
                         </span>
                         {p && (
                           <div
@@ -882,7 +899,7 @@ export default function FantasyPage() {
                           {p ? p.name.charAt(0) : "+"}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
-                          {p ? p.name : "Defans"}
+                          {p ? p.name : t("fantasy.defender")}
                         </span>
                         {p && (
                           <div
@@ -912,7 +929,7 @@ export default function FantasyPage() {
                           {p ? p.name.charAt(0) : "+"}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
-                          {p ? p.name : "Kaleci"}
+                          {p ? p.name : t("fantasy.goalkeeper")}
                         </span>
                         {p && (
                           <div
@@ -932,7 +949,7 @@ export default function FantasyPage() {
             {/* Bench (Yedekler) Slots */}
             {allowedBenchSlots > 0 && (
               <div className="mt-6 pt-6 border-t border-slate-800">
-                <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">Yedek Kulübesi ({allowedBenchSlots} Slot Açık)</h4>
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">{t("fantasy.benchTitle").replace("{slots}", allowedBenchSlots.toString())}</h4>
                 <div className="flex gap-4">
                   {Array.from({ length: allowedBenchSlots }).map((_, idx) => {
                     const p = detailedBench[idx];
@@ -948,7 +965,7 @@ export default function FantasyPage() {
                           {p ? p.name.charAt(0) : "+"}
                         </div>
                         <span className="text-[9px] text-slate-300 font-extrabold bg-slate-950/40 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
-                          {p ? p.name : "Yedek"}
+                          {p ? p.name : t("fantasy.benchUnit")}
                         </span>
                         {p && (
                           <div
@@ -979,7 +996,7 @@ export default function FantasyPage() {
                   onClick={saveRoster}
                   className="w-full md:w-auto px-6 py-3.5 bg-emerald-500 text-slate-950 hover:bg-emerald-400 font-black rounded-2xl shadow-lg transition-all"
                 >
-                  Kadroyu Kaydet 💾
+                  {t("fantasy.saveBtn")}
                 </button>
               </div>
             </div>
@@ -991,58 +1008,58 @@ export default function FantasyPage() {
           {/* Qualifications & Dynamic Limits panel */}
           <div className="p-6 bg-slate-900/60 rounded-3xl border border-slate-800 backdrop-blur-xl space-y-4">
             <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2 mb-4">
-              <Users className="w-4 h-4 text-emerald-400" /> Kadro Sınırları & Kriterleri
+              <Users className="w-4 h-4 text-emerald-400" /> {t("fantasy.limitsTitle")}
             </h3>
             
             <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
-              <span className="text-xs text-slate-400">İlk Giriş Durumu</span>
+              <span className="text-xs text-slate-400">{t("fantasy.initialStatus")}</span>
               <span className={`inline-flex items-center gap-1 text-xs font-black ${unlocked ? "text-emerald-400" : "text-rose-400"}`}>
-                {unlocked ? "Açık ✓" : "Kilitli ⚠"}
+                {unlocked ? t("fantasy.unlocked") : t("fantasy.locked")}
               </span>
             </div>
 
             <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
-              <span className="text-xs text-slate-400">Açık Takım Hakkı</span>
-              <span className="text-xs font-black text-white">{maxTeams} Takım</span>
+              <span className="text-xs text-slate-400">{t("fantasy.openRights")}</span>
+              <span className="text-xs font-black text-white">{maxTeams} {t("fantasy.teamUnit")}</span>
             </div>
 
             <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
-              <span className="text-xs text-slate-400">Maksimum Ülke Limiti</span>
+              <span className="text-xs text-slate-400">{t("fantasy.countryLimitLabel")}</span>
               <span className={`inline-flex items-center gap-1 text-xs font-black ${limitsStatus.countryLimitPassed ? "text-emerald-400" : "text-rose-400"}`}>
-                Aşama Başına {limitsStatus.countryLimit} Oyuncu {limitsStatus.countryLimitPassed ? "✓" : "⚠"}
+                {t("fantasy.countryLimitValue").replace("{limit}", limitsStatus.countryLimit.toString())} {limitsStatus.countryLimitPassed ? "✓" : "⚠"}
               </span>
             </div>
 
             <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
-              <span className="text-xs text-slate-400">Maksimum Grup Limiti</span>
+              <span className="text-xs text-slate-400">{t("fantasy.groupLimitLabel")}</span>
               <span className={`inline-flex items-center gap-1 text-xs font-black ${limitsStatus.groupLimitPassed ? "text-emerald-400" : "text-rose-400"}`}>
-                Aynı Gruptan Max 5 Oyuncu {limitsStatus.groupLimitPassed ? "✓" : "⚠"}
+                {t("fantasy.groupLimitValue")} {limitsStatus.groupLimitPassed ? "✓" : "⚠"}
               </span>
             </div>
 
             {isStageActive && originalRoster && (
               <div className="flex flex-col gap-2 pt-3 border-t border-slate-800/60">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-amber-400 font-bold">Aktif Aşama Transferi</span>
-                  <span className="text-[10px] px-1.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-md font-semibold">Aktif</span>
+                  <span className="text-xs text-amber-400 font-bold">{t("fantasy.transferActive")}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-md font-semibold">{t("fantasy.transferActiveLabel")}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400">Değişen Oyuncu (Transfer)</span>
-                  <span className="text-xs font-black text-white">{newTransfersCount} Oyuncu</span>
+                  <span className="text-xs text-slate-400">{t("fantasy.changedPlayers")}</span>
+                  <span className="text-xs font-black text-white">{newTransfersCount} {t("fantasy.playersUnit")}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400">Bugünkü MinMat Oyununuz</span>
+                  <span className="text-xs text-slate-400">{t("fantasy.minmatPlayedToday")}</span>
                   <span className={`text-xs font-black ${minmatGamesToday >= newTransfersCount * 3 ? "text-emerald-400" : "text-rose-400"}`}>
-                    {minmatGamesToday} Oyun
+                    {minmatGamesToday} {t("fantasy.gamesUnit")}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400">Gereken MinMat Oyunu</span>
-                  <span className="text-xs font-black text-white">{newTransfersCount * 3} Oyun</span>
+                  <span className="text-xs text-slate-400">{t("fantasy.minmatRequired")}</span>
+                  <span className="text-xs font-black text-white">{newTransfersCount * 3} {t("fantasy.gamesUnit")}</span>
                 </div>
                 {newTransfersCount > 0 && minmatGamesToday < newTransfersCount * 3 && (
                   <div className="mt-1 p-2 bg-rose-500/10 border border-rose-500/20 rounded-xl text-[10px] text-rose-400 font-bold leading-normal">
-                    ⚠ Değişiklikleri kaydedebilmek için bugün en az {newTransfersCount * 3 - minmatGamesToday} MinMat oyunu daha oynamalısınız.
+                    {t("fantasy.minmatAlert").replace("{diff}", (newTransfersCount * 3 - minmatGamesToday).toString())}
                   </div>
                 )}
               </div>
@@ -1058,7 +1075,7 @@ export default function FantasyPage() {
                   activeTab === "builder" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
                 }`}
               >
-                Kadro
+                {t("fantasy.tabBuilder")}
               </button>
               <button
                 onClick={() => setActiveTab("standings")}
@@ -1066,7 +1083,7 @@ export default function FantasyPage() {
                   activeTab === "standings" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
                 }`}
               >
-                Puan Durumu
+                {t("fantasy.tabStandings")}
               </button>
               <button
                 onClick={() => setActiveTab("fixtures")}
@@ -1074,7 +1091,7 @@ export default function FantasyPage() {
                   activeTab === "fixtures" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
                 }`}
               >
-                Fikstür & Canlı
+                {t("fantasy.tabFixtures")}
               </button>
             </div>
 
@@ -1084,11 +1101,11 @@ export default function FantasyPage() {
                 <table className="w-full text-left text-xs">
                   <thead>
                     <tr className="text-slate-500 uppercase tracking-wider border-b border-slate-800">
-                      <th className="pb-2 font-black">#</th>
-                      <th className="pb-2 font-black">Kullanıcı</th>
-                      <th className="pb-2 font-black text-center">OM</th>
-                      <th className="pb-2 font-black text-center">P</th>
-                      <th className="pb-2 font-black text-right">KP</th>
+                      <th className="pb-2 font-black">{t("fantasy.colRank")}</th>
+                      <th className="pb-2 font-black">{t("fantasy.colUser")}</th>
+                      <th className="pb-2 font-black text-center">{t("fantasy.colGp")}</th>
+                      <th className="pb-2 font-black text-center">{t("fantasy.colPts")}</th>
+                      <th className="pb-2 font-black text-right">{t("fantasy.colTp")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1103,7 +1120,7 @@ export default function FantasyPage() {
                     ))}
                     {standings.length === 0 && (
                       <tr>
-                        <td colSpan={5} className="text-center py-4 text-slate-500 font-semibold">Düello puan durumu henüz oluşmadı.</td>
+                        <td colSpan={5} className="text-center py-4 text-slate-500 font-semibold">{t("fantasy.noStandings")}</td>
                       </tr>
                     )}
                   </tbody>
@@ -1118,13 +1135,13 @@ export default function FantasyPage() {
                 {userDuel ? (
                   <div className="bg-slate-950/80 p-4 rounded-2xl border border-emerald-500/20">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-[10px] text-emerald-400 font-black tracking-wider uppercase">İKİLİ CANLI DÜELLO</span>
-                      <span className="inline-flex items-center gap-1 text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-lg font-black tracking-widest animate-pulse">CANLI</span>
+                      <span className="text-[10px] text-emerald-400 font-black tracking-wider uppercase">{t("fantasy.liveDuel")}</span>
+                      <span className="inline-flex items-center gap-1 text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-lg font-black tracking-widest animate-pulse">{t("fantasy.liveLabel")}</span>
                     </div>
                     <div className="flex justify-between items-center text-center">
                       <div className="flex-1">
                         <p className="font-extrabold text-xs text-white truncate">{userDuel.team1.name}</p>
-                        <p className="text-[10px] text-slate-500">Oyuncu</p>
+                        <p className="text-[10px] text-slate-500">{t("fantasy.userLabel")}</p>
                       </div>
                       <div className="px-4 py-1.5 bg-slate-900 rounded-xl">
                         <span className="font-black text-white text-lg">{userDuel.team1.score}</span>
@@ -1133,14 +1150,14 @@ export default function FantasyPage() {
                       </div>
                       <div className="flex-1">
                         <p className="font-extrabold text-xs text-white truncate">{userDuel.team2.name}</p>
-                        <p className="text-[10px] text-slate-500">Rakip</p>
+                        <p className="text-[10px] text-slate-500">{t("fantasy.opponentLabel")}</p>
                       </div>
                     </div>
 
                     {/* Live events ticker list */}
                     {userDuel.ticker && userDuel.ticker.length > 0 && (
                       <div className="mt-4 pt-3 border-t border-slate-900 space-y-1.5 max-h-32 overflow-y-auto">
-                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">CANLI MAÇ LOGLARI</p>
+                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">{t("fantasy.liveLogs")}</p>
                         {userDuel.ticker.map((ticker: any, tIdx: number) => (
                           <div key={tIdx} className={`text-[10px] flex justify-between ${ticker.team === 1 ? "text-emerald-400" : "text-sky-400"}`}>
                             <span>{ticker.player}</span>
@@ -1151,12 +1168,12 @@ export default function FantasyPage() {
                     )}
                   </div>
                 ) : (
-                  <p className="text-xs text-slate-500 font-semibold italic text-center py-2">Bu aşamada düello maçınız bulunmuyor.</p>
+                  <p className="text-xs text-slate-500 font-semibold italic text-center py-2">{t("fantasy.noDuelThisStage")}</p>
                 )}
 
                 {/* List of other matches */}
                 <div className="space-y-2">
-                  <p className="text-[10px] text-slate-500 font-black tracking-wider uppercase">TÜM EŞLEŞMELER</p>
+                  <p className="text-[10px] text-slate-500 font-black tracking-wider uppercase">{t("fantasy.allDuels")}</p>
                   <div className="space-y-1.5 max-h-48 overflow-y-auto">
                     {duels.map((d) => (
                       <div key={d.id} className="bg-slate-950/30 p-2.5 rounded-xl border border-slate-900 flex justify-between items-center text-xs">
@@ -1166,7 +1183,7 @@ export default function FantasyPage() {
                       </div>
                     ))}
                     {duels.length === 0 && (
-                      <p className="text-xs text-slate-500 font-semibold italic text-center py-2">Fikstür bulunamadı.</p>
+                      <p className="text-xs text-slate-500 font-semibold italic text-center py-2">{t("fantasy.noFixtures")}</p>
                     )}
                   </div>
                 </div>
@@ -1177,13 +1194,13 @@ export default function FantasyPage() {
             {activeTab === "builder" && (
               <div className="text-xs text-slate-400 leading-relaxed space-y-2">
                 <p>
-                  ⚽ <b>Formasyon Kuralları:</b> Seçtiğiniz dizilişe uygun sayıda oyuncuyu sahaya yerleştirin.
+                  ⚽ <b>{t("fantasy.ruleFormation")}</b> {t("fantasy.ruleFormationDesc")}
                 </p>
                 <p>
-                  🏆 <b>Puan Çeşitlendirmesi:</b> Puan eşitliğini önlemek amacıyla oyuncu golleri ve asistleri pozisyona göre farklı puanlanır.
+                  🏆 <b>{t("fantasy.rulePoints")}</b> {t("fantasy.rulePointsDesc")}
                 </p>
                 <p>
-                  🛠️ <b>Transfer Kuralı:</b> Aşama öncesi tüm kadro güncellemeleri ücretsizdir. Ancak aşama devam ederken kadroda değişiklik yapabilmek için herhangi bir MinMat kategorisinde en az Seviye 7'ye ulaşmış olmanız gerekir!
+                  🛠️ <b>{t("fantasy.ruleTransfer")}</b> {t("fantasy.ruleTransferDesc")}
                 </p>
               </div>
             )}
@@ -1197,7 +1214,14 @@ export default function FantasyPage() {
           <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
             <div className="p-6 border-b border-slate-800 flex justify-between items-center">
               <h3 className="text-lg font-black text-white flex items-center gap-2">
-                <Star className="w-5 h-5 text-emerald-400" /> Futbolcu Seçimi ({selectorModal.positionFilter})
+                <Star className="w-5 h-5 text-emerald-400" /> {(() => {
+                  let posName = "";
+                  if (selectorModal.positionFilter === "GK") posName = t("fantasy.goalkeeper");
+                  else if (selectorModal.positionFilter === "DEF") posName = t("fantasy.defender");
+                  else if (selectorModal.positionFilter === "MID") posName = t("fantasy.midfielder");
+                  else if (selectorModal.positionFilter === "FWD") posName = t("fantasy.forward");
+                  return t("fantasy.playerSelection").replace("{pos}", posName);
+                })()}
               </h3>
               <button
                 onClick={() => setSelectorModal({ isOpen: false, slotIndex: null, isBench: false, positionFilter: null })}
@@ -1211,7 +1235,7 @@ export default function FantasyPage() {
             <div className="p-4 border-b border-slate-800 space-y-3 bg-slate-950/30">
               <input
                 type="text"
-                placeholder="Futbolcu veya kulüp ara..."
+                placeholder={t("fantasy.searchPlaceholder")}
                 value={playerSearchQuery}
                 onChange={(e) => setPlayerSearchQuery(e.target.value)}
                 className="w-full bg-slate-950 text-slate-200 text-sm px-4 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500"
@@ -1221,7 +1245,7 @@ export default function FantasyPage() {
                 onChange={(e) => setPlayerSearchTeamFilter(e.target.value)}
                 className="w-full bg-slate-950 text-slate-300 text-xs px-4 py-2 rounded-xl border border-slate-800 focus:outline-none"
               >
-                <option value="">Tüm Takımlar</option>
+                <option value="">{t("fantasy.allTeams")}</option>
                 {Object.values(OFFICIAL_GROUP_DRAW).flat().map((teamCode) => (
                   <option key={teamCode} value={teamCode}>{teamCode.toUpperCase()}</option>
                 ))}
@@ -1246,16 +1270,22 @@ export default function FantasyPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg text-emerald-400 font-extrabold capitalize">
-                      {player.position}
+                      {(() => {
+                        const genPos = getGeneralPosition(player.position);
+                        if (genPos === "GK") return t("fantasy.goalkeeper");
+                        if (genPos === "DEF") return t("fantasy.defender");
+                        if (genPos === "MID") return t("fantasy.midfielder");
+                        return t("fantasy.forward");
+                      })()}
                     </span>
                     <button className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-black hover:bg-emerald-500 hover:text-slate-950">
-                      Seç
+                      {t("fantasy.selectBtn")}
                     </button>
                   </div>
                 </div>
               ))}
               {searchablePlayers.length === 0 && (
-                <p className="text-center text-slate-500 py-10 font-semibold text-xs">Aradığınız kriterlere uygun seçilebilir oyuncu bulunamadı.</p>
+                <p className="text-center text-slate-500 py-10 font-semibold text-xs">{t("fantasy.noPlayersFound")}</p>
               )}
             </div>
           </div>
