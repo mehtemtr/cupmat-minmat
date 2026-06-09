@@ -63,6 +63,7 @@ export async function GET(request: Request) {
         teamName: r.team_name,
         nickname: r.user_id ? nickMap[r.user_id] || "Katılımcı" : "Statmatik Bot",
         formation: r.formation,
+        userId: r.user_id,
       }));
 
       // Sort alphabetically by teamName (case-insensitive, localized to Turkish)

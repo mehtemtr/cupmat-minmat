@@ -4,29 +4,99 @@ import { requireApiAuth } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { handleGamificationAction } from "@/lib/store/gamification-store";
 
-// GET: Fetch all active polls. Optionally include current user's submissions.
+// Deterministic seeded shuffle function
+function seededShuffle<T>(array: T[], seed: string): T[] {
+  if (array.length === 0) return [];
+  let currentIndex = array.length, temporaryValue, randomIndex;
+  
+  // Simple hash function to generate numeric seed
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  
+  const random = () => {
+    const x = Math.sin(hash++) * 10000;
+    return x - Math.floor(x);
+  };
+
+  const arr = [...array];
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
+  }
+  return arr;
+}
+
+// GET: Fetch the 4 daily polls for the user (deterministic based on user ID & date) and the daily opinion poll
 export async function GET() {
   try {
     const { userId } = await auth();
+    const effectiveUserId = userId || "guest";
 
-    // Query active polls (where active_until is null or in the future)
-    const { data: polls, error: pollsError } = await supabaseAdmin
+    // 1. Fetch all polls
+    const { data: allPolls, error: pollsError } = await supabaseAdmin
       .from("polls")
-      .select("*")
-      .or(`active_until.is.null,active_until.gt.${new Date().toISOString()}`)
-      .order("created_at", { ascending: false });
+      .select("*");
 
     if (pollsError) {
       console.error("Error fetching polls:", pollsError);
       return NextResponse.json({ success: false, error: "Veritabanı hatası" }, { status: 500 });
     }
 
+    if (!allPolls || allPolls.length === 0) {
+      return NextResponse.json({ success: true, polls: [], dailyOpinionPoll: null });
+    }
+
+    // Separate trivia questions and opinion polls
+    const triviaPolls = allPolls.filter((p) => p.correct_option_index >= 0);
+    const opinionPolls = allPolls.filter((p) => p.correct_option_index === -1);
+
+    // Group trivia by category
+    const sitePolls = triviaPolls.filter((p) => p.category === "site");
+    const pastWcPolls = triviaPolls.filter((p) => p.category === "past_wc");
+    const currentWcPolls = triviaPolls.filter((p) => p.category === "current_wc");
+
+    // Get current date string in Europe/Istanbul timezone (UTC+3)
+    const dateStr = new Date().toLocaleDateString("en-US", { timeZone: "Europe/Istanbul" });
+    const seed = `${effectiveUserId}_${dateStr}`;
+
+    // Select trivia questions
+    const selectedPolls: any[] = [];
+
+    // Pick 1 from site category
+    if (sitePolls.length > 0) {
+      const shuf = seededShuffle(sitePolls, seed + "_site");
+      selectedPolls.push(shuf[0]);
+    }
+
+    // Pick 2 from past_wc category
+    if (pastWcPolls.length > 0) {
+      const shuf = seededShuffle(pastWcPolls, seed + "_past");
+      selectedPolls.push(...shuf.slice(0, 2));
+    }
+
+    // Pick 1 from current_wc category
+    if (currentWcPolls.length > 0) {
+      const shuf = seededShuffle(currentWcPolls, seed + "_current");
+      selectedPolls.push(shuf[0]);
+    }
+
+    // Shuffle the final 4 trivia questions together so the sequence is randomized per user
+    const dailyPolls = seededShuffle(selectedPolls, seed + "_final");
+
+    // Fetch user submissions for today's selected trivia polls
     let userSubmissions: any[] = [];
-    if (userId) {
+    if (userId && dailyPolls.length > 0) {
+      const pollIds = dailyPolls.map((p) => p.id);
       const { data: subs, error: subsError } = await supabaseAdmin
         .from("poll_submissions")
         .select("*")
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .in("poll_id", pollIds);
 
       if (subsError) {
         console.error("Error fetching submissions:", subsError);
@@ -35,10 +105,51 @@ export async function GET() {
       }
     }
 
+    // Handle daily opinion poll (same for all users today based on date string)
+    let dailyOpinionPoll: any = null;
+    let opinionPollStats: number[] = [];
+    let userOpinionSubmission: any = null;
+
+    if (opinionPolls.length > 0) {
+      const opinionSeed = dateStr;
+      const shufOpinions = seededShuffle(opinionPolls, opinionSeed);
+      dailyOpinionPoll = shufOpinions[0];
+
+      // Fetch all submissions for this daily opinion poll to calculate percentage stats
+      const { data: opSubs, error: opSubsError } = await supabaseAdmin
+        .from("poll_submissions")
+        .select("selected_option_index")
+        .eq("poll_id", dailyOpinionPoll.id);
+
+      if (!opSubsError && opSubs) {
+        const counts = new Array(dailyOpinionPoll.options.length).fill(0);
+        opSubs.forEach((sub) => {
+          if (sub.selected_option_index >= 0 && sub.selected_option_index < counts.length) {
+            counts[sub.selected_option_index]++;
+          }
+        });
+        opinionPollStats = counts;
+      }
+
+      // Fetch current user's submission for this opinion poll if logged in
+      if (userId) {
+        const { data: userOpSub } = await supabaseAdmin
+          .from("poll_submissions")
+          .select("*")
+          .eq("poll_id", dailyOpinionPoll.id)
+          .eq("user_id", userId)
+          .maybeSingle();
+        userOpinionSubmission = userOpSub || null;
+      }
+    }
+
     return NextResponse.json({
       success: true,
-      polls: polls || [],
+      polls: dailyPolls,
       userSubmissions,
+      dailyOpinionPoll,
+      userOpinionSubmission,
+      opinionPollStats,
     });
   } catch (error) {
     console.error("Polls GET error:", error);
@@ -46,7 +157,7 @@ export async function GET() {
   }
 }
 
-// POST: Submit answer/vote for a poll
+// POST: Submit answer for a poll (with progressive scoring for trivia)
 export async function POST(request: Request) {
   try {
     const authResult = await requireApiAuth();
@@ -72,19 +183,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Anket bulunamadı" }, { status: 404 });
     }
 
-    // Check if active_until has passed
-    if (poll.active_until && new Date(poll.active_until).getTime() < Date.now()) {
-      return NextResponse.json({ success: false, error: "Bu anketin süresi dolmuş" }, { status: 400 });
-    }
-
     // Validate option index range
     const options = Array.isArray(poll.options) ? poll.options : [];
-    if (selectedOptionIndex < 0 || selectedOptionIndex >= options.length) {
+    if (selectedOptionIndex !== -1 && (selectedOptionIndex < 0 || selectedOptionIndex >= options.length)) {
       return NextResponse.json({ success: false, error: "Geçersiz seçenek" }, { status: 400 });
     }
 
     // 2. Check if already submitted
-    const { data: existingSub, error: subCheckError } = await supabaseAdmin
+    const { data: existingSub } = await supabaseAdmin
       .from("poll_submissions")
       .select("id")
       .eq("poll_id", pollId)
@@ -92,23 +198,68 @@ export async function POST(request: Request) {
       .maybeSingle();
 
     if (existingSub) {
-      return NextResponse.json({ success: false, error: "Bu anketi zaten cevapladınız" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Bu soruyu zaten cevapladınız" }, { status: 400 });
     }
 
-    // 3. Determine correctness and points
-    let isCorrect = true;
+    // 3. Determine correctness & trivia type
+    const isTrivia = poll.correct_option_index >= 0;
+    let isCorrect = false;
+
+    if (selectedOptionIndex !== -1) {
+      if (isTrivia) {
+        isCorrect = selectedOptionIndex === poll.correct_option_index;
+      } else {
+        isCorrect = false; // Opinion polls have no correct/incorrect state
+      }
+    }
+
+    // 4. Calculate points
     let pointsAwarded = 0;
+    if (isTrivia) {
+      if (isCorrect) {
+        // Find start of today in Europe/Istanbul timezone (UTC+3)
+        const istanbulDateStr = new Date().toLocaleDateString("en-US", { timeZone: "Europe/Istanbul" });
+        const [month, day, year] = istanbulDateStr.split("/");
+        const midnightIstanbul = new Date(
+          Number(year),
+          Number(month) - 1,
+          Number(day),
+          0, 0, 0, 0
+        );
+        const startOfTodayIso = midnightIstanbul.toISOString();
 
-    if (poll.correct_option_index >= 0) {
-      isCorrect = selectedOptionIndex === poll.correct_option_index;
-      pointsAwarded = isCorrect ? poll.points_reward : 0;
+        // Fetch user's correct trivia submissions today (opinion polls have is_correct = false, so they are not counted)
+        const { data: todayCorrectSubs } = await supabaseAdmin
+          .from("poll_submissions")
+          .select("id")
+          .eq("user_id", authResult.userId)
+          .eq("is_correct", true)
+          .gte("submitted_at", startOfTodayIso);
+
+        const correctCountToday = todayCorrectSubs ? todayCorrectSubs.length : 0;
+        const nextCorrectNumber = correctCountToday + 1;
+
+        // Progressive scale: 1st -> 20, 2nd -> 30 (+30, total 50), 3rd -> 50 (+50, total 100), 4th -> 100 (+100, total 200)
+        if (nextCorrectNumber === 1) {
+          pointsAwarded = 20;
+        } else if (nextCorrectNumber === 2) {
+          pointsAwarded = 30;
+        } else if (nextCorrectNumber === 3) {
+          pointsAwarded = 50;
+        } else if (nextCorrectNumber === 4) {
+          pointsAwarded = 100;
+        } else {
+          pointsAwarded = 10;
+        }
+      }
     } else {
-      // Opinion poll - points awarded for participation
-      isCorrect = true;
-      pointsAwarded = poll.points_reward;
+      // For opinion polls, award a flat participation points reward (if not timed out)
+      if (selectedOptionIndex !== -1) {
+        pointsAwarded = poll.points_reward || 10;
+      }
     }
 
-    // 4. Save submission
+    // 5. Save submission
     const { error: insertError } = await supabaseAdmin
       .from("poll_submissions")
       .insert({
@@ -124,7 +275,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Cevap kaydedilemedi" }, { status: 500 });
     }
 
-    // 5. Update gamification score if points awarded
+    // 6. Update gamification score if points awarded
     let gamificationMsg = "";
     if (pointsAwarded > 0) {
       const gamificationResult = await handleGamificationAction(
@@ -144,7 +295,7 @@ export async function POST(request: Request) {
       isCorrect,
       correctOptionIndex: poll.correct_option_index,
       pointsAwarded,
-      message: gamificationMsg || (isCorrect ? "Cevabınız kaydedildi!" : "Cevabınız kaydedildi, ancak yanlış."),
+      message: gamificationMsg || (isTrivia ? (isCorrect ? `Doğru! +${pointsAwarded} Puan kazandınız.` : "Yanlış cevap.") : `Katılımınız için teşekkürler! +${pointsAwarded} Puan kazandınız.`),
     });
 
   } catch (error) {

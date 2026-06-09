@@ -18,23 +18,28 @@ envContent.split('\n').forEach(line => {
 
 const supabaseUrl = "https://ewdfexbuhgtsnsxveobc.supabase.co";
 const supabaseServiceKey = envVars.SUPABASE_SERVICE_ROLE_KEY;
+
 const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
 async function main() {
-  const { data, error } = await supabaseAdmin
-    .from('team_rosters')
-    .select('id, player_name, team_id')
-    .eq('team_id', 'ned');
+  const { data: polls, error } = await supabaseAdmin
+    .from('polls')
+    .select('*');
 
   if (error) {
-    console.error(error);
+    console.error("Error fetching polls:", error);
     return;
   }
 
-  console.log(`Found ${data.length} players for team_id "ned":`);
-  data.forEach(p => {
-    console.log(`- ${p.player_name} (ID: ${p.id})`);
-  });
+  const opinionPolls = polls.filter(p => p.correct_option_index === -1);
+  console.log(`Opinion polls count (correct_option_index === -1): ${opinionPolls.length}`);
+  
+  if (opinionPolls.length > 0) {
+    console.log("Opinion Polls:");
+    opinionPolls.forEach((p, i) => {
+      console.log(`${i+1}. Q(TR): ${p.question_tr} | Category: ${p.category}`);
+    });
+  }
 }
 
 main();

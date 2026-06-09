@@ -1144,7 +1144,16 @@ export default function FantasyPage() {
                     {standings.map((row, idx) => (
                       <tr key={row.user_id} className="border-b border-slate-800/40 last:border-0">
                         <td className="py-2.5 font-bold text-slate-400">{idx + 1}</td>
-                        <td className="py-2.5 font-extrabold text-white truncate max-w-[100px]">{row.nickname}</td>
+                        <td className="py-2.5 font-extrabold text-white truncate max-w-[100px]">
+                          <div className="flex items-center gap-1.5">
+                            <span className="truncate">{row.nickname}</span>
+                            {row.user_id && ["bot_user_usa_1", "bot_user_eng_1", "bot_user_fra_1"].includes(row.user_id) && (
+                              <span className="shrink-0 inline-flex items-center rounded bg-blue-500/10 px-1.5 py-0.5 text-[9px] font-black text-blue-400 border border-blue-500/20 uppercase tracking-wider scale-90">
+                                BOT
+                              </span>
+                            )}
+                          </div>
+                        </td>
                         <td className="py-2.5 font-semibold text-center text-slate-300">{row.played}</td>
                         <td className="py-2.5 font-black text-center text-emerald-400">{row.points}</td>
                         <td className="py-2.5 font-bold text-right text-slate-300">{row.total_roster_points}</td>
@@ -1209,9 +1218,23 @@ export default function FantasyPage() {
                   <div className="space-y-1.5 max-h-48 overflow-y-auto">
                     {duels.map((d) => (
                       <div key={d.id} className="bg-slate-950/30 p-2.5 rounded-xl border border-slate-900 flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-300 truncate max-w-[80px]">{d.name1}</span>
-                        <span className="bg-slate-950 px-2 py-0.5 rounded font-black text-emerald-400">{d.score1} - {d.score2}</span>
-                        <span className="font-bold text-slate-300 truncate max-w-[80px] text-right">{d.name2}</span>
+                        <span className="font-bold text-slate-300 truncate max-w-[100px] flex items-center gap-1">
+                          <span className="truncate">{d.name1}</span>
+                          {d.userId1 && ["bot_user_usa_1", "bot_user_eng_1", "bot_user_fra_1"].includes(d.userId1) && (
+                            <span className="shrink-0 inline-flex items-center rounded bg-blue-500/10 px-1 py-0.2 text-[8px] font-black text-blue-400 border border-blue-500/20 scale-90">
+                              BOT
+                            </span>
+                          )}
+                        </span>
+                        <span className="bg-slate-950 px-2 py-0.5 rounded font-black text-emerald-400 shrink-0">{d.score1} - {d.score2}</span>
+                        <span className="font-bold text-slate-300 truncate max-w-[100px] flex items-center gap-1 justify-end text-right">
+                          {d.userId2 && ["bot_user_usa_1", "bot_user_eng_1", "bot_user_fra_1"].includes(d.userId2) && (
+                            <span className="shrink-0 inline-flex items-center rounded bg-blue-500/10 px-1 py-0.2 text-[8px] font-black text-blue-400 border border-blue-500/20 scale-90">
+                              BOT
+                            </span>
+                          )}
+                          <span className="truncate">{d.name2}</span>
+                        </span>
                       </div>
                     ))}
                     {duels.length === 0 && (
@@ -1239,7 +1262,16 @@ export default function FantasyPage() {
                       <tr key={idx} className="border-b border-slate-800/40 last:border-0 hover:bg-slate-800/20 transition-all">
                         <td className="py-2.5 font-bold text-slate-400">{idx + 1}</td>
                         <td className="py-2.5 font-black text-white truncate max-w-[120px]">{team.teamName}</td>
-                        <td className="py-2.5 font-extrabold text-emerald-400 truncate max-w-[100px]">{team.nickname}</td>
+                        <td className="py-2.5 font-extrabold text-emerald-400 truncate max-w-[100px]">
+                          <div className="flex items-center gap-1.5">
+                            <span className="truncate">{team.nickname}</span>
+                            {team.userId && ["bot_user_usa_1", "bot_user_eng_1", "bot_user_fra_1"].includes(team.userId) && (
+                              <span className="shrink-0 inline-flex items-center rounded bg-blue-500/10 px-1.5 py-0.5 text-[9px] font-black text-blue-400 border border-blue-500/20 uppercase tracking-wider scale-90">
+                                BOT
+                              </span>
+                            )}
+                          </div>
+                        </td>
                         <td className="py-2.5 font-semibold text-right text-slate-300">{team.formation}</td>
                       </tr>
                     ))}
