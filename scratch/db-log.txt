@@ -1,0 +1,62 @@
+Fetching current fantasy_rosters for stage matchday_1...
+Found 1 rosters in database:
+- ID: 88e057ad-1469-465e-999c-d896c7f2ba45, UserID: bot_user_tr_1, TeamName: Boğazın Kaplanları, Stage: matchday_1
+
+Cleaning up old mock/test/bot rosters...
+Deleting rosters with IDs: 88e057ad-1469-465e-999c-d896c7f2ba45
+Successfully deleted old rosters!
+
+Checking bot profiles in 'profiles' table...
+Found 52 profiles:
+- ID: 40, UserID: user_3ESNNBS9DXg1WmPevB7cdvXFyWj, Nickname: Fatmab, Email: fatmabaskayavia@gmail.com
+- ID: 2, UserID: user_3EBPcQKjN7fmwETYT9d8kEkDXa1, Nickname: Kartal1903, Email: mehtem2016@gmail.com
+- ID: 44, UserID: user_3ESNN9uOWCm5ul0SbT2nDjfdEaL, Nickname: Eagle_1923, Email: rbaskaya11@gmail.com
+- ID: 45, UserID: user_3Enud8gh1lSWiu9RDSjzyXJJz2U, Nickname: Eagle_1924, Email: playtest@statmatik.com
+- ID: 3, UserID: user_3EJiZoD4WQb2lFsxWeOTFNbCGN0, Nickname: YükselG, Email: yuksel436@gmail.com
+- ID: 47, UserID: user_3EomhMXUBX5IkzjDbLHYlq8u6kP, Nickname: Statmatik_Test, Email: info.mahtemyazilim@gmail.com
+- ID: 4, UserID: user_3EOyWI355VlOau18PtPSJugbm6p, Nickname: 46Dedee, Email: ahmet46dede@gmail.com
+- ID: 6, UserID: user_3ESNNI2nIvZXozuY8hdqFnLi5y7, Nickname: Harun, Email: hamemaht@gmail.com
+- ID: 8, UserID: user_3EUeBuIz7wuK3XxmOp8IWf1AxeO, Nickname: Mehtap, Email: meht2016bjk@gmail.com
+- ID: 9, UserID: user_mock_1, Nickname: FanteziKoçu_1, Email: mock_user_1@statmatik-test.com
+- ID: 10, UserID: user_mock_2, Nickname: FanteziKoçu_2, Email: mock_user_2@statmatik-test.com
+- ID: 11, UserID: user_mock_3, Nickname: FanteziKoçu_3, Email: mock_user_3@statmatik-test.com
+- ID: 12, UserID: user_mock_4, Nickname: FanteziKoçu_4, Email: mock_user_4@statmatik-test.com
+- ID: 13, UserID: user_mock_5, Nickname: FanteziKoçu_5, Email: mock_user_5@statmatik-test.com
+- ID: 14, UserID: user_mock_6, Nickname: FanteziKoçu_6, Email: mock_user_6@statmatik-test.com
+- ID: 15, UserID: user_mock_7, Nickname: FanteziKoçu_7, Email: mock_user_7@statmatik-test.com
+- ID: 16, UserID: user_mock_8, Nickname: FanteziKoçu_8, Email: mock_user_8@statmatik-test.com
+- ID: 17, UserID: user_mock_9, Nickname: FanteziKoçu_9, Email: mock_user_9@statmatik-test.com
+- ID: 18, UserID: user_mock_10, Nickname: FanteziKoçu_10, Email: mock_user_10@statmatik-test.com
+- ID: 19, UserID: user_mock_11, Nickname: FanteziKoçu_11, Email: mock_user_11@statmatik-test.com
+- ID: 20, UserID: user_mock_12, Nickname: FanteziKoçu_12, Email: mock_user_12@statmatik-test.com
+- ID: 21, UserID: user_mock_13, Nickname: FanteziKoçu_13, Email: mock_user_13@statmatik-test.com
+- ID: 22, UserID: user_mock_14, Nickname: FanteziKoçu_14, Email: mock_user_14@statmatik-test.com
+- ID: 23, UserID: user_mock_15, Nickname: FanteziKoçu_15, Email: mock_user_15@statmatik-test.com
+- ID: 24, UserID: user_mock_16, Nickname: FanteziKoçu_16, Email: mock_user_16@statmatik-test.com
+- ID: 25, UserID: user_mock_17, Nickname: FanteziKoçu_17, Email: mock_user_17@statmatik-test.com
+- ID: 26, UserID: user_mock_18, Nickname: FanteziKoçu_18, Email: mock_user_18@statmatik-test.com
+- ID: 27, UserID: user_mock_19, Nickname: FanteziKoçu_19, Email: mock_user_19@statmatik-test.com
+- ID: 28, UserID: user_mock_20, Nickname: FanteziKoçu_20, Email: mock_user_20@statmatik-test.com
+- ID: 29, UserID: user_mock_21, Nickname: FanteziKoçu_21, Email: mock_user_21@statmatik-test.com
+- ID: 30, UserID: user_mock_22, Nickname: FanteziKoçu_22, Email: mock_user_22@statmatik-test.com
+- ID: 31, UserID: user_mock_23, Nickname: FanteziKoçu_23, Email: mock_user_23@statmatik-test.com
+- ID: 32, UserID: user_mock_24, Nickname: FanteziKoçu_24, Email: mock_user_24@statmatik-test.com
+- ID: 33, UserID: user_mock_25, Nickname: FanteziKoçu_25, Email: mock_user_25@statmatik-test.com
+- ID: 34, UserID: user_mock_26, Nickname: FanteziKoçu_26, Email: mock_user_26@statmatik-test.com
+- ID: 35, UserID: user_mock_27, Nickname: FanteziKoçu_27, Email: mock_user_27@statmatik-test.com
+- ID: 36, UserID: user_mock_28, Nickname: FanteziKoçu_28, Email: mock_user_28@statmatik-test.com
+- ID: 37, UserID: user_mock_29, Nickname: FanteziKoçu_29, Email: mock_user_29@statmatik-test.com
+- ID: 38, UserID: user_mock_30, Nickname: FanteziKoçu_30, Email: mock_user_30@statmatik-test.com
+- ID: 39, UserID: user_mock_31, Nickname: FanteziKoçu_31, Email: mock_user_31@statmatik-test.com
+- ID: 48, UserID: user_3ESNNYSDS1yiHjikzMrcgFGROp2, Nickname: Hsyntmzl, Email: hsyntmzl12@gmail.com
+- ID: 41, UserID: user_3Ed4r9eLLfHPm3GEiLlKzgBMy7z, Nickname: Mehmet, Email: mehmet.temizel.gadirli@gmail.com
+- ID: 49, UserID: user_3ESNNmmNbGD6D4JdmQvyJpIe4Zc, Nickname: Tem199513, Email: tem199513@gmail.com
+- ID: 42, UserID: user_3ESNMeG0f7JZ2teYdv2CJIT9aQr, Nickname: Temomar, Email: omartemizel@gmail.com
+- ID: 43, UserID: user_3ESNNKu9vX64gQNhOGebQHVEGz5, Nickname: FurkanB, Email: fbaskaya07@gmail.com
+- ID: 7, UserID: user_3ESNMt3VVkj9ixjcPx2fH4gdRDp, Nickname: ismail_toptas, Email: ismail.huzursokagi@gmail.com
+- ID: 50, UserID: user_3ESNNc14FhPTkeU9HuSEm4ZoSNB, Nickname: MehmetT, Email: mehtemizel1903@gmail.com
+- ID: 51, UserID: user_3ESNMyyOEUiQOVlrGZ9oF6Jk6X8, Nickname: Furtuna, Email: eskicephatt@gmail.com
+- ID: 52, UserID: user_3ESNMmgMs6K0bUA7lKiCzNlHNl0, Nickname: MetinK, Email: kilicmetin838@gmail.com
+- ID: 46, UserID: user_3Eo7PBZiHQaKC8eNaHOhZVTWsoU, Nickname: Hsynlc, Email: hsynlc.46@yandex.com
+- ID: 53, UserID: user_3EtEvPgMWfFyHwI0RUEQrNK2gF4, Nickname: Rüm, Email: rumeysatemizel004@gmail.com
+- ID: 54, UserID: bot_user_tr_1, Nickname: KaanYalcin, Email: kaan.y@cupmat.com

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { verifyAdminSecret } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
-import { calculatePlayerPoints, getGeneralPosition } from "../duels/route";
+import { calculatePlayerPoints, getGeneralPosition } from "@/lib/fantasy/points";
 import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
 
 // Function to calculate manager points

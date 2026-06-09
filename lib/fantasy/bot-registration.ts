@@ -25,7 +25,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_1",
     email: "kaan.y@cupmat.com",
-    nickname: "Kaan Yalçın",
+    nickname: "KaanYalcin",
     teamName: "Boğazın Kaplanları",
     country: "tur",
     formation: "4-4-2"
@@ -34,7 +34,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_2",
     email: "serkan.k@cupmat.com",
-    nickname: "Serkan Kartal",
+    nickname: "SerkanKartal",
     teamName: "Kadıköy Rüzgarı",
     country: "tur",
     formation: "4-3-3"
@@ -43,7 +43,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_usa_1",
     email: "john.smith@cupmat.com",
-    nickname: "John Smith",
+    nickname: "JohnSmith",
     teamName: "Liberty FC",
     country: "usa",
     formation: "4-3-3"
@@ -52,7 +52,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_3",
     email: "yasin.a@cupmat.com",
-    nickname: "Yasin Aslan",
+    nickname: "YasinAslan",
     teamName: "Aslan Yuvası",
     country: "tur",
     formation: "3-5-2"
@@ -61,7 +61,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_fra_1",
     email: "pierre.dupont@cupmat.com",
-    nickname: "Pierre Dupont",
+    nickname: "PierreDupont",
     teamName: "Étoile de Paris",
     country: "fra",
     formation: "4-2-3-1"
@@ -70,7 +70,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_4",
     email: "mert.f@cupmat.com",
-    nickname: "Mert Fener",
+    nickname: "MertFener",
     teamName: "Sarı Kanaryalar",
     country: "tur",
     formation: "4-4-2"
@@ -79,7 +79,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_esp_1",
     email: "carlos.gomez@cupmat.com",
-    nickname: "Carlos Gomez",
+    nickname: "CarlosGomez",
     teamName: "Furia Roja FC",
     country: "esp",
     formation: "4-3-3"
@@ -88,7 +88,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_5",
     email: "cemil.f@cupmat.com",
-    nickname: "Cemil Fırtına",
+    nickname: "CemilFirtina",
     teamName: "Fırtına Spor",
     country: "tur",
     formation: "4-2-3-1"
@@ -97,7 +97,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_6",
     email: "yigit.s@cupmat.com",
-    nickname: "Yiğit Selçuk",
+    nickname: "YigitSelcuk",
     teamName: "Anadolu Kartalları",
     country: "tur",
     formation: "4-4-2"
@@ -106,7 +106,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_por_1",
     email: "joao.silva@cupmat.com",
-    nickname: "João Silva",
+    nickname: "JoaoSilva",
     teamName: "Os Navegadores",
     country: "por",
     formation: "4-4-2"
@@ -115,7 +115,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_7",
     email: "hakan.d@cupmat.com",
-    nickname: "Hakan Deha",
+    nickname: "HakanDeha",
     teamName: "Taktik United",
     country: "tur",
     formation: "4-3-3"
@@ -124,7 +124,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_tr_8",
     email: "alperen.e@cupmat.com",
-    nickname: "Alperen Efsane",
+    nickname: "AlperenEfsane",
     teamName: "Karadeniz Gücü",
     country: "tur",
     formation: "3-5-2"
@@ -133,7 +133,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_mex_1",
     email: "javier.h@cupmat.com",
-    nickname: "Javier Hernandez",
+    nickname: "JavierHernandez",
     teamName: "Azteca Warriors",
     country: "mex",
     formation: "4-3-3"
@@ -142,7 +142,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_bra_1",
     email: "thiago.s@cupmat.com",
-    nickname: "Thiago Silva",
+    nickname: "ThiagoSilva",
     teamName: "Samba Boys",
     country: "bra",
     formation: "4-2-3-1"
@@ -151,7 +151,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_arg_1",
     email: "lucas.m@cupmat.com",
-    nickname: "Lucas Martinez",
+    nickname: "LucasMartinez",
     teamName: "Pampa Stars",
     country: "arg",
     formation: "4-3-3"
@@ -160,7 +160,7 @@ export const BOT_POOL: BotProfile[] = [
   {
     userId: "bot_user_eng_1",
     email: "harry.w@cupmat.com",
-    nickname: "Harry Wright",
+    nickname: "HarryWright",
     teamName: "Three Lions FC",
     country: "eng",
     formation: "4-4-2"
@@ -213,10 +213,10 @@ export async function ensureTimeSpacedBots(stage: string, forceAll = false): Pro
       const startTimeStr = STAGE_START_DATES[stage] || "2026-06-08T19:23:00+03:00";
       const startTime = new Date(startTimeStr);
       const elapsedMs = Date.now() - startTime.getTime();
-      const elapsedHours = Math.max(0, Math.floor(elapsedMs / (60 * 60 * 1000)));
+      const elapsedDays = Math.max(0, Math.floor(elapsedMs / (24 * 60 * 60 * 1000)));
 
-      // 1 bot per hour
-      botsAllowed = Math.min(maxBotsNeeded, elapsedHours + 1);
+      // 1 bot per 24 hours (day)
+      botsAllowed = Math.min(maxBotsNeeded, elapsedDays + 1);
     }
 
     if (botsAllowed <= 0) return;
@@ -255,16 +255,28 @@ export async function ensureTimeSpacedBots(stage: string, forceAll = false): Pro
       console.log(`Creating bot team: ${bot.teamName} (${bot.nickname})`);
 
       // 5. Ensure profile exists in 'profiles'
-      await supabaseAdmin.from("profiles").upsert(
-        {
-          id: bot.userId,
-          email: bot.email,
-          nickname: bot.nickname,
-          cupmat_general_score: 0,
-          cupmat_reward_score: 0,
-        },
-        { onConflict: "id" }
-      );
+      const { data: existingProfile } = await supabaseAdmin
+        .from("profiles")
+        .select("id, nickname")
+        .eq("user_id", bot.userId)
+        .maybeSingle();
+
+      if (existingProfile) {
+        if (existingProfile.nickname !== bot.nickname) {
+          await supabaseAdmin
+            .from("profiles")
+            .update({ nickname: bot.nickname })
+            .eq("user_id", bot.userId);
+        }
+      } else {
+        await supabaseAdmin
+          .from("profiles")
+          .insert({
+            user_id: bot.userId,
+            email: bot.email,
+            nickname: bot.nickname,
+          });
+      }
 
       // 6. Generate roster matching formation
       const parts = bot.formation.split("-").map(Number);
