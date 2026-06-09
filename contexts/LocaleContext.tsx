@@ -91,7 +91,7 @@ export function LocaleProvider({
 
   const t = useCallback(
     (key: string) => {
-      return getNestedValue(dictionary, key) ?? key;
+      return getNestedValue(dictionary, key) ?? getNestedValue(en, key) ?? key;
     },
     [dictionary],
   );

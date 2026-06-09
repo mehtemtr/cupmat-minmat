@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { getOrCreateProfile, getGamificationLeaderboard, getStore } from "@/lib/store/gamification-store";
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Redis } from "@upstash/redis";
+import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
 
 const redis = Redis.fromEnv();
 
@@ -36,6 +37,9 @@ export async function GET(request: Request) {
     const userId = authResult.userId;
     const { searchParams } = new URL(request.url);
     const stage = searchParams.get("stage") || "matchday_1";
+
+    // Ensure bots are registered lazily as time progresses
+    await ensureTimeSpacedBots(stage, false);
 
     const { data: rosters, error } = await supabaseAdmin
       .from("fantasy_rosters")

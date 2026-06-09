@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { verifyAdminSecret } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { calculatePlayerPoints, getGeneralPosition } from "../duels/route";
+import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
 
 // Function to calculate manager points
 function calculateManagerPoints(stats: any): number {
@@ -39,6 +40,9 @@ export async function POST(request: Request) {
     // ==========================================
     if (action === "pair" || action === "all") {
       reports.push("Starting H2H matchmaking...");
+
+      // Force register all needed bots to ensure league is complete
+      await ensureTimeSpacedBots(stage, true);
 
       // Fetch all rosters for this stage
       const { data: rosters, error: rostersError } = await supabaseAdmin
@@ -174,12 +178,13 @@ export async function POST(request: Request) {
           const r2 = shuffled[i + 1];
 
           if (r1 && r2) {
+            // Treat bot users normally so they show up in H2H standings
             duelInserts.push({
               stage,
               roster_id_1: r1.id,
               roster_id_2: r2.id,
-              user_id_1: r1.user_id === "statmatik_bot" ? null : r1.user_id,
-              user_id_2: r2.user_id === "statmatik_bot" ? null : r2.user_id,
+              user_id_1: r1.user_id,
+              user_id_2: r2.user_id,
               score_1: 0,
               score_2: 0,
               result: null,

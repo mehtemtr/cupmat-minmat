@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireApiAuth } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Redis } from "@upstash/redis";
+import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
 
 const redis = Redis.fromEnv();
 
@@ -167,6 +168,9 @@ export async function GET(request: Request) {
     const activeStage = (await redis.get<string>("fantasy_active_stage")) || "matchday_1";
     const stage = searchParams.get("stage") || activeStage;
 
+    // Ensure bots are lazily registered as time progresses
+    await ensureTimeSpacedBots(stage, false);
+
     // 1. Fetch H2H Duel Standings
     const { data: standings, error: standingsError } = await supabaseAdmin
       .from("fantasy_duel_standings")
@@ -175,6 +179,41 @@ export async function GET(request: Request) {
       .order("total_roster_points", { ascending: false });
 
     if (standingsError) throw standingsError;
+
+    // Fetch all registered rosters for this stage to display in "Tüm Takımlar" tab
+    const { data: allStageRosters } = await supabaseAdmin
+      .from("fantasy_rosters")
+      .select("team_name, user_id, formation")
+      .eq("stage", stage);
+
+    let registeredTeams: Array<{ teamName: string; nickname: string; formation: string }> = [];
+    if (allStageRosters && allStageRosters.length > 0) {
+      // Find all user IDs to load their nicknames
+      const uIds = allStageRosters.map((r) => r.user_id).filter(Boolean);
+      let nickMap: Record<string, string> = {};
+
+      if (uIds.length > 0) {
+        const { data: profiles } = await supabaseAdmin
+          .from("profiles")
+          .select("id, nickname")
+          .in("id", uIds);
+
+        if (profiles) {
+          profiles.forEach((p) => {
+            nickMap[p.id] = p.nickname || "Katılımcı";
+          });
+        }
+      }
+
+      registeredTeams = allStageRosters.map((r) => ({
+        teamName: r.team_name,
+        nickname: r.user_id ? nickMap[r.user_id] || "Katılımcı" : "Statmatik Bot",
+        formation: r.formation,
+      }));
+
+      // Sort alphabetically by teamName (case-insensitive, localized to Turkish)
+      registeredTeams.sort((a, b) => a.teamName.localeCompare(b.teamName, "tr"));
+    }
 
     // 2. Fetch Fixtures for Current Stage
     const { data: duels, error: duelsError } = await supabaseAdmin
@@ -395,6 +434,7 @@ export async function GET(request: Request) {
       duels: formattedDuels,
       userDuel: userDuelDetails,
       commonMindXI,
+      registeredTeams,
     });
   } catch (error: any) {
     console.error("GET duels error:", error);

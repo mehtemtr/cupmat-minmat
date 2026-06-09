@@ -35,7 +35,7 @@ export default function FantasyPage() {
   const { locale } = useLocale();
   const { t } = useTranslation();
 
-  const [activeTab, setActiveTab] = useState<"builder" | "standings" | "fixtures" | "commonXI">("builder");
+  const [activeTab, setActiveTab] = useState<"builder" | "standings" | "fixtures" | "commonXI" | "allTeams">("builder");
   const [stage, setStage] = useState("matchday_1");
   const [teamIndex, setTeamIndex] = useState(1);
   const [teamName, setTeamName] = useState("");
@@ -78,6 +78,7 @@ export default function FantasyPage() {
   const [duels, setDuels] = useState<any[]>([]);
   const [userDuel, setUserDuel] = useState<any>(null);
   const [commonMindXI, setCommonMindXI] = useState<any[]>([]);
+  const [registeredTeams, setRegisteredTeams] = useState<any[]>([]);
 
   // UI state
   const [teaserBypass, setTeaserBypass] = useState(false);
@@ -236,6 +237,7 @@ export default function FantasyPage() {
         setDuels(dataDuels.duels || []);
         setUserDuel(dataDuels.userDuel || null);
         setCommonMindXI(dataDuels.commonMindXI || []);
+        setRegisteredTeams(dataDuels.registeredTeams || []);
       }
     } catch (e) {
       console.error("Error loading fantasy data:", e);
@@ -1093,6 +1095,14 @@ export default function FantasyPage() {
               >
                 {t("fantasy.tabFixtures")}
               </button>
+              <button
+                onClick={() => setActiveTab("allTeams")}
+                className={`flex-1 pb-3 text-xs font-black border-b-2 transition-all ${
+                  activeTab === "allTeams" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400"
+                }`}
+              >
+                {t("fantasy.allTeams")}
+              </button>
             </div>
 
             {/* TAB CONTENT: STANDINGS */}
@@ -1187,6 +1197,37 @@ export default function FantasyPage() {
                     )}
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: ALL TEAMS */}
+            {activeTab === "allTeams" && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="text-slate-500 uppercase tracking-wider border-b border-slate-800">
+                      <th className="pb-2 font-black">#</th>
+                      <th className="pb-2 font-black">{t("fantasy.teamUnit")}</th>
+                      <th className="pb-2 font-black">{t("fantasy.colUser")}</th>
+                      <th className="pb-2 font-black text-right">{t("fantasy.formationSelectorLabel")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {registeredTeams.map((team, idx) => (
+                      <tr key={idx} className="border-b border-slate-800/40 last:border-0 hover:bg-slate-800/20 transition-all">
+                        <td className="py-2.5 font-bold text-slate-400">{idx + 1}</td>
+                        <td className="py-2.5 font-black text-white truncate max-w-[120px]">{team.teamName}</td>
+                        <td className="py-2.5 font-extrabold text-emerald-400 truncate max-w-[100px]">{team.nickname}</td>
+                        <td className="py-2.5 font-semibold text-right text-slate-300">{team.formation}</td>
+                      </tr>
+                    ))}
+                    {registeredTeams.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="text-center py-4 text-slate-500 font-semibold">{t("fantasy.noStandings")}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
             )}
 
