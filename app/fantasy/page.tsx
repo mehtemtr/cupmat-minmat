@@ -18,6 +18,28 @@ function getGeneralPosition(pos: string): "GK" | "DEF" | "MID" | "FWD" {
   return "FWD";
 }
 
+function getBenchDefaultPosition(slotIdx: number, totalSlots: number): "GK" | "DEF" | "MID" | "FWD" {
+  if (totalSlots === 1) {
+    return "MID";
+  }
+  if (totalSlots === 2) {
+    if (slotIdx === 0) return "MID";
+    return "DEF";
+  }
+  if (totalSlots === 3) {
+    if (slotIdx === 0) return "GK";
+    if (slotIdx === 1) return "MID";
+    return "DEF";
+  }
+  if (totalSlots >= 4) {
+    if (slotIdx === 0) return "GK";
+    if (slotIdx === 1) return "DEF";
+    if (slotIdx === 2) return "MID";
+    return "FWD";
+  }
+  return "MID";
+}
+
 // Map country codes to World Cup Groups (A-L)
 const teamToGroup: Record<string, string> = {};
 for (const [group, teams] of Object.entries(OFFICIAL_GROUP_DRAW)) {
@@ -958,7 +980,7 @@ export default function FantasyPage() {
                     return (
                       <button
                         key={idx}
-                        onClick={() => openSelector(idx, true, p ? getGeneralPosition(p.position) : "MID")}
+                        onClick={() => openSelector(idx, true, p ? getGeneralPosition(p.position) : getBenchDefaultPosition(idx, allowedBenchSlots))}
                         className="flex flex-col items-center justify-center relative group"
                       >
                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black border-2 shadow-md ${

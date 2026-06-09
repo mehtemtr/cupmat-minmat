@@ -5,19 +5,9 @@ import { getOrCreateProfile, getGamificationLeaderboard, getStore } from "@/lib/
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Redis } from "@upstash/redis";
 import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
+import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic } from "@/lib/fantasy/points";
 
 const redis = Redis.fromEnv();
-
-// Helper to map player positions to general categories
-function getGeneralPosition(pos: string): "GK" | "DEF" | "MID" | "FWD" {
-  const p = pos?.toLowerCase() || "";
-  if (p.includes("kaleci")) return "GK";
-  if (p.includes("defans") || p.includes("bek") || p.includes("stoper")) return "DEF";
-  if (p.includes("orta saha") || p.includes("libero") || p.includes("midfielder")) return "MID";
-  if (p.includes("açık")) return "MID"; // wingers mapped as midfielders
-  if (p.includes("forvet")) return "FWD";
-  return "FWD";
-}
 
 // Map country codes to World Cup Groups (A-L)
 const teamToGroup: Record<string, string> = {};
@@ -52,6 +42,8 @@ export async function GET(request: Request) {
       throw error;
     }
 
+    const mapping = await getPlayerMapping();
+
     // Join player details for each roster
     const rostersWithDetails = await Promise.all(
       (rosters || []).map(async (roster) => {
@@ -74,8 +66,31 @@ export async function GET(request: Request) {
           }
         }
 
-        const startersWithDetails = (roster.starters || []).map((id: string) => playersMap[id] || { id });
-        const benchWithDetails = (roster.bench || []).map((id: string) => playersMap[id] || { id });
+        const startersWithDetails = (roster.starters || []).map((id: string) => {
+          const dbPlayer = playersMap[id];
+          const staticId = translateToStatic(id, mapping);
+          if (dbPlayer && staticId) {
+            return {
+              ...dbPlayer,
+              id: staticId,
+              generalPosition: getGeneralPosition(dbPlayer.player_position)
+            };
+          }
+          return { id: staticId || id };
+        });
+
+        const benchWithDetails = (roster.bench || []).map((id: string) => {
+          const dbPlayer = playersMap[id];
+          const staticId = translateToStatic(id, mapping);
+          if (dbPlayer && staticId) {
+            return {
+              ...dbPlayer,
+              id: staticId,
+              generalPosition: getGeneralPosition(dbPlayer.player_position)
+            };
+          }
+          return { id: staticId || id };
+        });
 
         return {
           ...roster,
@@ -111,11 +126,15 @@ export async function POST(request: Request) {
       teamName,
       stage = "matchday_1",
       formation = "4-4-2",
-      starters = [],
-      bench = [],
+      starters: clientStarters = [],
+      bench: clientBench = [],
       managerId,
       teamIndex = 1,
     } = body;
+
+    const mapping = await getPlayerMapping();
+    const starters = clientStarters.map((id: string) => translateToUuid(id, mapping)).filter(Boolean);
+    const bench = clientBench.map((id: string) => translateToUuid(id, mapping)).filter(Boolean);
 
     // 1. Validate basic inputs
     if (!teamName || starters.length !== 11) {
@@ -228,6 +247,32 @@ export async function POST(request: Request) {
     dbPlayers.forEach((p) => {
       playerMap[p.id] = p;
     });
+
+    // Validate Bench Positions
+    if (bench.length > 0) {
+      const benchGks = bench.map((id: string) => playerMap[id]).filter((p: any) => p && getGeneralPosition(p.player_position) === "GK").length;
+      const benchDefs = bench.map((id: string) => playerMap[id]).filter((p: any) => p && getGeneralPosition(p.player_position) === "DEF").length;
+      const benchMids = bench.map((id: string) => playerMap[id]).filter((p: any) => p && getGeneralPosition(p.player_position) === "MID").length;
+      const benchFwds = bench.map((id: string) => playerMap[id]).filter((p: any) => p && getGeneralPosition(p.player_position) === "FWD").length;
+
+      if (allowedBenchSlots === 1) {
+        if (benchGks > 0 || benchDefs > 0 || benchMids > 1 || benchFwds > 0) {
+          return NextResponse.json({ error: "Yedek kadronuzda sadece 1 Orta Saha oyuncusu bulunabilir." }, { status: 400 });
+        }
+      } else if (allowedBenchSlots === 2) {
+        if (benchGks > 0 || benchDefs > 1 || benchMids > 1 || benchFwds > 0) {
+          return NextResponse.json({ error: "Yedek kadronuzda sadece 1 Defans ve 1 Orta Saha oyuncusu bulunabilir." }, { status: 400 });
+        }
+      } else if (allowedBenchSlots === 3) {
+        if (benchGks > 1 || benchDefs > 1 || benchMids > 1 || benchFwds > 0) {
+          return NextResponse.json({ error: "Yedek kadronuzda sadece 1 Kaleci, 1 Defans ve 1 Orta Saha oyuncusu bulunabilir." }, { status: 400 });
+        }
+      } else if (allowedBenchSlots >= 4) {
+        if (benchGks > 1 || benchDefs > 1 || benchMids > 1 || benchFwds > 1) {
+          return NextResponse.json({ error: "Yedek kadronuzda her mevkiden en fazla 1'er oyuncu bulunabilir." }, { status: 400 });
+        }
+      }
+    }
 
     // 4. Validate Formation Slots
     const formationParts = formation.split("-").map(Number);

@@ -1,3 +1,11 @@
+import { getAllPlayers } from "@/data/teams";
+import { supabaseAdmin } from "@/lib/supabase";
+
+export interface PlayerMapping {
+  staticToUuid: Record<string, string>;
+  uuidToStatic: Record<string, string>;
+}
+
 export function getGeneralPosition(pos: string): "GK" | "DEF" | "MID" | "FWD" {
   const p = pos?.toLowerCase() || "";
   if (p.includes("kaleci") || p.includes("gk")) return "GK";
@@ -141,4 +149,131 @@ export function getPlayerEvents(stats: any): string[] {
     events.push("❌ Penaltı Kaçırdı");
   }
   return events;
+}
+
+export async function getPlayerMapping(): Promise<PlayerMapping> {
+  const staticPlayers = getAllPlayers();
+  
+  // Fetch all players from team_rosters (with pagination)
+  const dbPlayers: any[] = [];
+  let from = 0;
+  let to = 999;
+  let hasMore = true;
+
+  while (hasMore) {
+    const { data, error } = await supabaseAdmin
+      .from("team_rosters")
+      .select("id, team_id, player_name, player_position")
+      .range(from, to);
+
+    if (error) {
+      console.error("Error fetching database players for mapping:", error);
+      break;
+    }
+
+    if (data && data.length > 0) {
+      dbPlayers.push(...data);
+      if (data.length < 1000) {
+        hasMore = false;
+      } else {
+        from += 1000;
+        to += 1000;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
+
+  const staticToUuid: Record<string, string> = {};
+  const uuidToStatic: Record<string, string> = {};
+
+  const normalizeName = (name: string) => {
+    return name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ç/g, "c")
+      .replace(/ğ/g, "g")
+      .replace(/ı/g, "i")
+      .replace(/ö/g, "o")
+      .replace(/ş/g, "s")
+      .replace(/ü/g, "u")
+      .replace(/[^a-z0-9]/g, "");
+  };
+
+  const dbPlayerMap: Record<string, any[]> = {};
+  dbPlayers.forEach((p) => {
+    const tId = p.team_id.toLowerCase();
+    if (!dbPlayerMap[tId]) dbPlayerMap[tId] = [];
+    dbPlayerMap[tId].push(p);
+  });
+
+  const missingPlayers: any[] = [];
+
+  for (const sp of staticPlayers) {
+    const tId = sp.teamId.toLowerCase();
+    const candidates = dbPlayerMap[tId] || [];
+    const spNorm = normalizeName(sp.name);
+
+    // Try exact match
+    let match = candidates.find((c) => normalizeName(c.player_name) === spNorm);
+
+    // Try partial containment match
+    if (!match) {
+      match = candidates.find((c) => {
+        const cNorm = normalizeName(c.player_name);
+        return cNorm.includes(spNorm) || spNorm.includes(cNorm);
+      });
+    }
+
+    if (match) {
+      staticToUuid[sp.id] = match.id;
+      uuidToStatic[match.id] = sp.id;
+    } else {
+      missingPlayers.push(sp);
+    }
+  }
+
+  // Insert any missing players on the fly
+  if (missingPlayers.length > 0) {
+    console.log(`Inserting ${missingPlayers.length} missing players from static data into team_rosters...`);
+    for (const sp of missingPlayers) {
+      const { data: inserted, error: insertError } = await supabaseAdmin
+        .from("team_rosters")
+        .insert({
+          team_id: sp.teamId,
+          player_name: sp.name,
+          player_position: sp.position === "GK" ? "Kaleci" : sp.position === "DF" ? "Defans" : sp.position === "MF" ? "Orta Saha" : "Forvet",
+          player_number: 99,
+          club: sp.club || "Serbest"
+        })
+        .select("id")
+        .maybeSingle();
+
+      if (insertError) {
+        console.error(`Failed to insert missing player ${sp.name}:`, insertError);
+      } else if (inserted) {
+        staticToUuid[sp.id] = inserted.id;
+        uuidToStatic[inserted.id] = sp.id;
+      }
+    }
+  }
+
+  return { staticToUuid, uuidToStatic };
+}
+
+export function translateToUuid(id: string, mapping: PlayerMapping): string | null {
+  if (!id) return null;
+  if (id.length === 36 && id.includes("-")) {
+    return id; // already a UUID
+  }
+  return mapping.staticToUuid[id] || null;
+}
+
+export function translateToStatic(id: string, mapping: PlayerMapping): string | null {
+  if (!id) return null;
+  if (id.includes("-p")) {
+    return id; // already a static ID
+  }
+  return mapping.uuidToStatic[id] || null;
 }
