@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
 import { useTranslation } from "@/contexts/LocaleContext";
 
-const KICKOFF = new Date("2026-06-11T00:00:00").getTime();
+const KICKOFF = new Date("2026-06-11T05:00:00+03:00").getTime();
 
 type TimeLeft = {
   days: number;
@@ -31,12 +31,31 @@ export function Countdown() {
   const { t } = useTranslation();
   const [time, setTime] = useState<TimeLeft>(calcTimeLeft);
   const [mounted, setMounted] = useState(false);
+  const [isOver, setIsOver] = useState(() => {
+    if (typeof window !== "undefined") {
+      return Date.now() >= KICKOFF;
+    }
+    return false;
+  });
 
   useEffect(() => {
     setMounted(true);
-    const id = setInterval(() => setTime(calcTimeLeft()), 1000);
+    if (Date.now() >= KICKOFF) {
+      setIsOver(true);
+      return;
+    }
+    const id = setInterval(() => {
+      const left = calcTimeLeft();
+      setTime(left);
+      if (left.days === 0 && left.hours === 0 && left.minutes === 0 && left.seconds === 0) {
+        setIsOver(true);
+        clearInterval(id);
+      }
+    }, 1000);
     return () => clearInterval(id);
   }, []);
+
+  if (isOver) return null;
 
   const units = [
     { value: time.days, label: t("countdown.days") },

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StatMatik Logo Oluşturucu</title>
+  <!-- Google Fonts: Montserrat & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #0a1220;
+      --card-bg: #111a2e;
+      --accent-color: #10b981;
+      --accent-hover: #059669;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #10b981, #06b6d4, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+
+    /* Preview Card */
+    .preview-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 450px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .preview-canvas-container {
+      background: #0a1220;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    #preview-canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    /* Control Panel */
+    .control-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    select, input[type="text"], input[type="range"] {
+      background: #0d1627;
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .range-value {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .range-value span {
+      font-size: 0.85rem;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: #ffffff;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Hide the actual canvas used for high-res download */
+    #download-canvas {
+      display: none;
+    }
+
+    .badge-mode-toggle {
+      display: flex;
+      background: #0d1627;
+      border-radius: 12px;
+      padding: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    .toggle-tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .toggle-tab.active {
+      background: var(--accent-color);
+      color: #ffffff;
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>StatMatik Logo Studio</h1>
+    <p>Hizalamaları ve oranları ekran görüntünüzle birebir eşlenmiş kare logo aracı</p>
+  </header>
+
+  <div class="container">
+    <!-- Preview Panel -->
+    <div class="preview-section">
+      <div class="preview-canvas-container" id="preview-container">
+        <canvas id="preview-canvas" width="320" height="320"></canvas>
+      </div>
+      
+      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1.5rem; text-align: center;">
+        * Önizleme 320x320 boyutundadır. İndirme butonu <strong>1024x1024 kare</strong> yüksek çözünürlüklü PNG üretir.
+      </p>
+    </div>
+
+    <!-- Controls Panel -->
+    <div class="control-section">
+      <!-- Logo Mode -->
+      <div class="control-group">
+        <label>Logo Modu</label>
+        <div class="badge-mode-toggle">
+          <div class="toggle-tab active" id="tab-full" onclick="setMode('full')">Metinli Logo</div>
+          <div class="toggle-tab" id="tab-symbol" onclick="setMode('symbol')">Sadece İkon</div>
+        </div>
+      </div>
+
+      <!-- Main Text -->
+      <div class="control-group" id="main-text-group">
+        <label>Ana Başlık</label>
+        <input type="text" id="main-text-input" value="StatMatik" oninput="updatePreview()">
+      </div>
+
+      <!-- Sub Texts -->
+      <div class="control-group" id="sub-text-group">
+        <label>Alt Başlıklar (Soldaki - Sağdaki)</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <input type="text" id="subtext-left-input" value="Cupmat" oninput="updatePreview()">
+          <input type="text" id="subtext-right-input" value="Minmat" oninput="updatePreview()">
+        </div>
+      </div>
+
+      <!-- Font Selection -->
+      <div class="control-group">
+        <label>Yazı Tipi (Font)</label>
+        <select id="font-select" onchange="updatePreview()">
+          <option value="'Montserrat', sans-serif">Montserrat (Geometrik - Resimdeki Font)</option>
+          <option value="'Outfit', sans-serif">Outfit (Modern & Oval)</option>
+          <option value="sans-serif">System Sans-Serif</option>
+        </select>
+      </div>
+
+      <!-- Sizing and Spacing -->
+      <div class="control-group" id="aspect-ratio-group">
+        <div class="range-value">
+          <label>S Logosunu Genişlet (En/Boy Oranı)</label>
+          <span id="val-aspect-ratio">1.25</span>
+        </div>
+        <input type="range" id="input-aspect-ratio" min="1.0" max="1.60" step="0.05" value="1.25" oninput="updatePreview()">
+      </div>
+
+      <div class="control-group" id="text-size-group">
+        <div class="range-value">
+          <label>Yazı Boyutu (Font Büyüklüğü)</label>
+          <span id="val-text-size">95px</span>
+        </div>
+        <input type="range" id="input-text-size" min="60" max="140" value="95" oninput="updatePreview()">
+      </div>
+
+      <div class="control-group" id="spacing-logo-text-group">
+        <div class="range-value">
+          <label>İkon - Başlık Mesafesi (Negatif Boşluk)</label>
+          <span id="val-spacing-logo-text">-55px</span>
+        </div>
+        <!-- Allowed negative space down to -150 to strip transparent margins -->
+        <input type="range" id="input-spacing-logo-text" min="-150" max="50" value="-55" oninput="updatePreview()">
+      </div>
+
+      <div class="control-group" id="spacing-text-subtext-group">
+        <div class="range-value">
+          <label>Başlık - Alt Başlık Mesafesi</label>
+          <span id="val-spacing-text-subtext">32px</span>
+        </div>
+        <input type="range" id="input-spacing-text-subtext" min="10" max="60" value="32" oninput="updatePreview()">
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="button-row">
+        <button class="btn btn-secondary" onclick="resetSettings()">Sıfırla</button>
+        <button class="btn" onclick="downloadLogo()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Kare PNG İndir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden high-res canvas -->
+  <canvas id="download-canvas" width="1024" height="1024"></canvas>
+
+  <footer>
+    <p>StatMatik &copy; 2026. Tüm hakları saklıdır. <a href="/cupmat">CupMat Ana Sayfası</a></p>
+  </footer>
+
+  <script>
+    let currentMode = 'full';
+    const logoImg = new Image();
+    logoImg.src = '/logo_s_clean.png';
+    
+    logoImg.onload = function() {
+      updatePreview();
+    };
+
+    function setMode(mode) {
+      currentMode = mode;
+      
+      document.getElementById('tab-full').classList.toggle('active', mode === 'full');
+      document.getElementById('tab-symbol').classList.toggle('active', mode === 'symbol');
+      
+      const mainTextGroup = document.getElementById('main-text-group');
+      const subTextGroup = document.getElementById('sub-text-group');
+      const textSizeGroup = document.getElementById('text-size-group');
+      const aspectRatioGroup = document.getElementById('aspect-ratio-group');
+      const spacingLogoTextGroup = document.getElementById('spacing-logo-text-group');
+      const spacingTextSubtextGroup = document.getElementById('spacing-text-subtext-group');
+      
+      if (mode === 'symbol') {
+        mainTextGroup.style.display = 'none';
+        subTextGroup.style.display = 'none';
+        textSizeGroup.style.display = 'none';
+        aspectRatioGroup.style.display = 'none';
+        spacingLogoTextGroup.style.display = 'none';
+        spacingTextSubtextGroup.style.display = 'none';
+      } else {
+        mainTextGroup.style.display = 'flex';
+        subTextGroup.style.display = 'flex';
+        textSizeGroup.style.display = 'flex';
+        aspectRatioGroup.style.display = 'flex';
+        spacingLogoTextGroup.style.display = 'flex';
+        spacingTextSubtextGroup.style.display = 'flex';
+      }
+      updatePreview();
+    }
+
+    function drawLogo(canvas) {
+      const ctx = canvas.getContext('2d');
+      const size = canvas.width;
+      const baseScale = size / 1024;
+
+      // 1. Background
+      ctx.fillStyle = '#0a1220';
+      ctx.fillRect(0, 0, size, size);
+
+      if (!logoImg.complete) return;
+
+      if (currentMode === 'symbol') {
+        // DRAW ONLY SYMBOL
+        const iconDrawSize = size * 0.70;
+        const x = (size - iconDrawSize) / 2;
+        const y = (size - iconDrawSize) / 2;
+        ctx.drawImage(logoImg, x, y, iconDrawSize, iconDrawSize);
+      } else {
+        // DRAW FULL LOGO WITH TEXTS
+        const mainTextVal = document.getElementById('main-text-input').value;
+        const subLeftVal = document.getElementById('subtext-left-input').value;
+        const subRightVal = document.getElementById('subtext-right-input').value;
+        const fontSelect = document.getElementById('font-select').value;
+        const cleanFontName = fontSelect.split(',')[0].replace(/'/g, "");
+
+        const rawTextSize = parseFloat(document.getElementById('input-text-size').value);
+        const mainTextSize = rawTextSize * baseScale;
+        const logoAspectRatio = parseFloat(document.getElementById('input-aspect-ratio').value);
+        const spacing1 = parseFloat(document.getElementById('input-spacing-logo-text').value) * baseScale;
+        const spacing2 = parseFloat(document.getElementById('input-spacing-text-subtext').value) * baseScale;
+        const subTextSize = mainTextSize * 0.40; // 40% of main font size
+
+        // Measure main text width
+        ctx.font = `900 ${mainTextSize}px ${cleanFontName}, sans-serif`;
+        const mainTextWidth = ctx.measureText(mainTextVal).width;
+
+        // Dynamic widths match exactly
+        const logoWidth = mainTextWidth;
+        const logoHeight = logoWidth / logoAspectRatio;
+
+        // Total height calculation
+        const totalHeight = logoHeight + spacing1 + mainTextSize + spacing2 + subTextSize;
+
+        // Center position offsets
+        const logoY = (size - totalHeight) / 2;
+        const logoX = (size - logoWidth) / 2;
+
+        const mainTextY = logoY + logoHeight + spacing1 + mainTextSize * 0.82; 
+        const subTextY = mainTextY + spacing2 + subTextSize * 0.90;
+
+        // A) Draw S Logo
+        ctx.drawImage(logoImg, logoX, logoY, logoWidth, logoHeight);
+
+        // B) Draw Main Text "StatMatik"
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `900 ${mainTextSize}px ${cleanFontName}, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillText(mainTextVal, size / 2, mainTextY);
+
+        // C) Draw Subtexts aligned exactly to the outer margins of the main text
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = `600 ${subTextSize}px ${cleanFontName}, sans-serif`;
+
+        const leftX = size / 2 - mainTextWidth / 2;
+        const rightX = size / 2 + mainTextWidth / 2;
+
+        ctx.textAlign = 'left';
+        ctx.fillText(subLeftVal, leftX, subTextY);
+
+        ctx.textAlign = 'right';
+        ctx.fillText(subRightVal, rightX, subTextY);
+      }
+    }
+
+    function updatePreview() {
+      const aspectRatioVal = document.getElementById('input-aspect-ratio').value;
+      const textSizeVal = document.getElementById('input-text-size').value;
+      const spacing1Val = document.getElementById('input-spacing-logo-text').value;
+      const spacing2Val = document.getElementById('input-spacing-text-subtext').value;
+
+      document.getElementById('val-aspect-ratio').innerText = aspectRatioVal;
+      document.getElementById('val-text-size').innerText = textSizeVal + 'px';
+      document.getElementById('val-spacing-logo-text').innerText = spacing1Val + 'px';
+      document.getElementById('val-spacing-text-subtext').innerText = spacing2Val + 'px';
+
+      const previewCanvas = document.getElementById('preview-canvas');
+      drawLogo(previewCanvas);
+    }
+
+    function resetSettings() {
+      document.getElementById('main-text-input').value = 'StatMatik';
+      document.getElementById('subtext-left-input').value = 'Cupmat';
+      document.getElementById('subtext-right-input').value = 'Minmat';
+      document.getElementById('font-select').selectedIndex = 0;
+      document.getElementById('input-aspect-ratio').value = 1.25;
+      document.getElementById('input-text-size').value = 95;
+      document.getElementById('input-spacing-logo-text').value = -55;
+      document.getElementById('input-spacing-text-subtext').value = 32;
+      setMode('full');
+      updatePreview();
+    }
+
+    function downloadLogo() {
+      const canvas = document.getElementById('download-canvas');
+      drawLogo(canvas);
+
+      const link = document.createElement('a');
+      link.download = currentMode === 'symbol' ? 'statmatik-ikon.png' : 'statmatik-logo-kare.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    window.onload = function() {
+      document.fonts.ready.then(() => {
+        updatePreview();
+      });
+    };
+  </script>
+</body>
+</html>

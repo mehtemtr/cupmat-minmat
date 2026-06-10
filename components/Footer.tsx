@@ -69,12 +69,12 @@ export function Footer() {
             </a>
             <span className="hidden sm:inline text-zinc-700">|</span>
             <a 
-              href="mailto:info.mahtemyazilim@gmail.com" 
+              href="mailto:bilgi@statmatik.com" 
               className="flex items-center gap-2 hover:text-emerald-400 transition-colors duration-200 text-xs sm:text-sm font-medium"
               title="E-posta"
             >
               <Mail className="h-4 w-4" />
-              <span>info.mahtemyazilim@gmail.com</span>
+              <span>bilgi@statmatik.com</span>
             </a>
           </div>
 

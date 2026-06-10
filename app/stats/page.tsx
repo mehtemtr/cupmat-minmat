@@ -3,7 +3,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { PageShell } from "@/components/PageShell";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
-import { TEAMS } from "@/data/teams";
+import { TEAMS, getTeamById } from "@/data/teams";
+import { generateGroupFixtures } from "@/lib/fixtures";
 import {
   Users,
   Award,
@@ -51,6 +52,139 @@ interface CountryAverage {
   playerCount: number;
 }
 
+interface SimEvent {
+  minute: number;
+  type: "start" | "half" | "goal" | "card" | "sub" | "end" | "commentary";
+  textTr: string;
+  textEn: string;
+  scoreAfter?: { home: number; away: number };
+}
+
+function generateSimulation(match: any, homePlayers: any[], awayPlayers: any[]): SimEvent[] {
+  const hashString = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return Math.abs(hash);
+  };
+
+  const seed = hashString(match.id);
+  
+  const rand = (s: number) => {
+    const x = Math.sin(s) * 10000;
+    return x - Math.floor(x);
+  };
+
+  const events: SimEvent[] = [];
+  let homeScore = 0;
+  let awayScore = 0;
+
+  const getDeterministicPlayer = (isHome: boolean, s: number) => {
+    const list = isHome ? homePlayers : awayPlayers;
+    if (!list || list.length === 0) return isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu";
+    const idx = Math.floor(rand(s) * list.length);
+    return list[idx].name;
+  };
+
+  events.push({
+    minute: 1,
+    type: "start",
+    textTr: "🏁 Hakem düdüğünü çaldı ve maç başladı!",
+    textEn: "🏁 The referee blows the whistle and the match begins!",
+    scoreAfter: { home: 0, away: 0 }
+  });
+
+  const g1Min = Math.floor(rand(seed + 1) * 25) + 10;
+  const g1Home = rand(seed + 2) > 0.5;
+  if (g1Home) homeScore++; else awayScore++;
+  const scorer1 = getDeterministicPlayer(g1Home, seed + 3);
+  events.push({
+    minute: g1Min,
+    type: "goal",
+    textTr: `⚽ GOL! ${g1Home ? "Ev sahibi" : "Deplasman"} ekip golü buluyor! Golü atan oyuncu: ${scorer1}!`,
+    textEn: `⚽ GOAL! The ${g1Home ? "home" : "away"} side scores! Goal by ${scorer1}!`,
+    scoreAfter: { home: homeScore, away: awayScore }
+  });
+
+  const c1Min = Math.floor(rand(seed + 4) * 20) + 20;
+  const c1Home = rand(seed + 5) > 0.5;
+  const playerCard1 = getDeterministicPlayer(c1Home, seed + 6);
+  events.push({
+    minute: c1Min,
+    type: "card",
+    textTr: `🟨 Sarı Kart: ${playerCard1} rakibine yaptığı sert müdahale sonrası sarı kart görüyor.`,
+    textEn: `🟨 Yellow Card: ${playerCard1} receives a yellow card for a hard tackle.`,
+  });
+
+  events.push({
+    minute: 45,
+    type: "half",
+    textTr: `⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: ${homeScore} - ${awayScore}`,
+    textEn: `⏸️ Halftime. Teams head to the dressing room. Score: ${homeScore} - ${awayScore}`,
+    scoreAfter: { home: homeScore, away: awayScore }
+  });
+
+  events.push({
+    minute: 46,
+    type: "start",
+    textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
+    textEn: "🏁 Second half kicked off. Good luck to both teams!",
+  });
+
+  const subMin = Math.floor(rand(seed + 7) * 15) + 50;
+  const subHome = rand(seed + 8) > 0.5;
+  const subOut = getDeterministicPlayer(subHome, seed + 9);
+  const subIn = getDeterministicPlayer(subHome, seed + 10);
+  if (subOut !== subIn) {
+    events.push({
+      minute: subMin,
+      type: "sub",
+      textTr: `🔄 Oyuncu Değişikliği: ${subHome ? "Ev sahibi" : "Deplasman"} takımda oyuncu değişikliği. ${subOut} kenara gelirken ${subIn} oyuna dahil oluyor.`,
+      textEn: `🔄 Substitution: For the ${subHome ? "home" : "away"} team, ${subIn} comes on to replace ${subOut}.`,
+    });
+  }
+
+  const g2Min = Math.floor(rand(seed + 11) * 20) + 65;
+  const g2Home = rand(seed + 12) > 0.5;
+  if (g2Home) homeScore++; else awayScore++;
+  const scorer2 = getDeterministicPlayer(g2Home, seed + 13);
+  events.push({
+    minute: g2Min,
+    type: "goal",
+    textTr: `⚽ GOL! Maçta heyecan dorukta! ${scorer2} topu ağlara gönderiyor!`,
+    textEn: `⚽ GOAL! The excitement is high! ${scorer2} sends the ball into the back of the net!`,
+    scoreAfter: { home: homeScore, away: awayScore }
+  });
+
+  const c2Min = Math.floor(rand(seed + 14) * 19) + 70;
+  const c2Home = rand(seed + 15) > 0.5;
+  const playerCard2 = getDeterministicPlayer(c2Home, seed + 16);
+  events.push({
+    minute: c2Min,
+    type: "card",
+    textTr: `🟨 Sarı Kart: ${playerCard2} hakeme yaptığı itirazlar sonrası sarı kartla cezalandırılıyor.`,
+    textEn: `🟨 Yellow Card: ${playerCard2} is booked for protesting.`,
+  });
+
+  events.push({
+    minute: 90,
+    type: "commentary",
+    textTr: "⏱️ Maçın sonuna en az 4 uzatma dakikası eklendi.",
+    textEn: "⏱️ A minimum of 4 minutes of added time announced.",
+  });
+
+  events.push({
+    minute: 94,
+    type: "end",
+    textTr: `🔚 Son düdük çaldı! Maç bitti. Skor: ${homeScore} - ${awayScore}`,
+    textEn: `🔚 Full-time! The match is over. Final Score: ${homeScore} - ${awayScore}`,
+    scoreAfter: { home: homeScore, away: awayScore }
+  });
+
+  return events.sort((a, b) => a.minute - b.minute);
+}
+
 export default function StatisticsPage() {
   const { locale } = useLocale();
   const { t } = useTranslation();
@@ -58,6 +192,181 @@ export default function StatisticsPage() {
   const [activeTab, setActiveTab] = useState<"squad" | "live" | "history">("squad");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Live simulation states
+  const [simMatchId, setSimMatchId] = useState<string | null>(null);
+  const [simRunning, setSimRunning] = useState(false);
+  const [simMinute, setSimMinute] = useState(1);
+  const [simScore, setSimScore] = useState<{ home: number; away: number }>({ home: 0, away: 0 });
+  const [simEvents, setSimEvents] = useState<any[]>([]);
+  const [simAllEvents, setSimAllEvents] = useState<any[]>([]);
+
+  // Real clock state
+  const [currentRealTime, setCurrentRealTime] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCurrentRealTime(Date.now());
+    }, 10000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Get today's matches (June 11, 2026)
+  const [localMatches, setLocalMatches] = useState<any[]>(() => {
+    return generateGroupFixtures().filter(m => m.date === "2026-06-11");
+  });
+
+  const displayMatches = useMemo(() => {
+    return localMatches.map(m => {
+      // 1. If manually simulating
+      if (simMatchId && m.id === simMatchId) {
+        return {
+          ...m,
+          homeScore: simScore.home,
+          awayScore: simScore.away,
+          played: simMinute >= 94,
+          isLive: simMinute < 94,
+          elapsedMin: simMinute
+        };
+      }
+
+      // 2. Real clock calculations
+      const [hourStr, minStr] = (m.time || "12:00").split(":");
+      const [yrStr, moStr, dyStr] = m.date.split("-");
+      const kickoffTime = new Date(Date.UTC(
+        parseInt(yrStr, 10),
+        parseInt(moStr, 10) - 1,
+        parseInt(dyStr, 10),
+        parseInt(hourStr, 10),
+        parseInt(minStr, 10),
+        0
+      )).getTime();
+
+      const isRealLive = currentRealTime >= kickoffTime && currentRealTime < kickoffTime + (120 * 60 * 1000);
+      const isRealFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);
+
+      if (isRealLive || isRealFinished) {
+        const homeTeam = getTeamById(m.homeTeamId);
+        const awayTeam = getTeamById(m.awayTeamId);
+        const homePlayers = homeTeam?.players || [];
+        const awayPlayers = awayTeam?.players || [];
+        const eventsList = generateSimulation(m, homePlayers, awayPlayers);
+        
+        const elapsedMin = isRealFinished 
+          ? 94 
+          : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000)));
+
+        const activeEvents = eventsList.filter(e => e.minute <= elapsedMin);
+        const scoreEvents = activeEvents.filter(e => e.scoreAfter);
+        const latestScore = scoreEvents.length > 0 
+          ? scoreEvents[scoreEvents.length - 1].scoreAfter 
+          : { home: 0, away: 0 };
+
+        return {
+          ...m,
+          homeScore: latestScore?.home ?? 0,
+          awayScore: latestScore?.away ?? 0,
+          played: isRealFinished,
+          isLive: isRealLive,
+          elapsedMin
+        };
+      }
+
+      return m;
+    });
+  }, [localMatches, simMatchId, simScore, simMinute, currentRealTime]);
+
+  const realLiveMatch = useMemo(() => {
+    if (simMatchId) return null;
+    return displayMatches.find(m => m.isLive);
+  }, [displayMatches, simMatchId]);
+
+  const realLiveEvents = useMemo(() => {
+    if (!realLiveMatch) return [];
+    const homeTeam = getTeamById(realLiveMatch.homeTeamId);
+    const awayTeam = getTeamById(realLiveMatch.awayTeamId);
+    const homePlayers = homeTeam?.players || [];
+    const awayPlayers = awayTeam?.players || [];
+    const eventsList = generateSimulation(realLiveMatch, homePlayers, awayPlayers);
+    return eventsList.filter(e => e.minute <= (realLiveMatch.elapsedMin || 1));
+  }, [realLiveMatch]);
+
+  // Unified Commentary selectors
+  const activeCommMatch = useMemo(() => {
+    if (simMatchId) {
+      return displayMatches.find(m => m.id === simMatchId) || null;
+    }
+    return realLiveMatch || null;
+  }, [simMatchId, displayMatches, realLiveMatch]);
+
+  const activeCommEvents = useMemo(() => {
+    if (simMatchId) return simEvents;
+    return realLiveEvents;
+  }, [simMatchId, simEvents, realLiveEvents]);
+
+  const activeCommScore = useMemo(() => {
+    if (simMatchId) return simScore;
+    return { home: activeCommMatch?.homeScore ?? 0, away: activeCommMatch?.awayScore ?? 0 };
+  }, [simMatchId, simScore, activeCommMatch]);
+
+  const activeCommMinute = useMemo(() => {
+    if (simMatchId) return simMinute;
+    return activeCommMatch?.elapsedMin ?? 1;
+  }, [simMatchId, simMinute, activeCommMatch]);
+
+  const startSimulation = (match: any) => {
+    const homeTeam = getTeamById(match.homeTeamId);
+    const awayTeam = getTeamById(match.awayTeamId);
+    const homePlayers = homeTeam?.players || [];
+    const awayPlayers = awayTeam?.players || [];
+
+    const eventsList = generateSimulation(match, homePlayers, awayPlayers);
+    
+    setSimMatchId(match.id);
+    setSimMinute(1);
+    setSimScore({ home: 0, away: 0 });
+    setSimAllEvents(eventsList);
+    setSimEvents(eventsList.filter(e => e.minute <= 1));
+    setSimRunning(true);
+  };
+
+  const stopSimulation = () => {
+    setSimRunning(false);
+    setSimMatchId(null);
+    setSimMinute(1);
+    setSimScore({ home: 0, away: 0 });
+    setSimEvents([]);
+    setSimAllEvents([]);
+  };
+
+  // Simulation clock logic
+  useEffect(() => {
+    if (!simRunning || !simMatchId) return;
+
+    const intervalId = setInterval(() => {
+      setSimMinute((prevMin) => {
+        const nextMin = prevMin + 1;
+        if (nextMin >= 94) {
+          setSimRunning(false);
+          clearInterval(intervalId);
+        }
+
+        const activeEvents = simAllEvents.filter((ev) => ev.minute <= nextMin);
+        setSimEvents(activeEvents);
+
+        const scoreEvents = activeEvents.filter((ev) => ev.scoreAfter);
+        if (scoreEvents.length > 0) {
+          const latestScore = scoreEvents[scoreEvents.length - 1].scoreAfter;
+          if (latestScore) {
+            setSimScore(latestScore);
+          }
+        }
+
+        return nextMin;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [simRunning, simMatchId, simAllEvents]);
 
   // API Data States
   const [youngest, setYoungest] = useState<PlayerStat[]>([]);
@@ -544,16 +853,243 @@ export default function StatisticsPage() {
           {activeTab === "live" && (
             <div className="space-y-8 animate-fadeIn">
               
-              {/* Info Alert banner */}
-              <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6 flex flex-col sm:flex-row gap-4 items-center sm:items-start text-amber-400">
-                <Activity className="h-6 w-6 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-bold text-base text-white">Canlı Turnuva Raporu Hazırlığı</h4>
-                  <p className="text-sm text-zinc-400 mt-1">
-                    {t("statsPage.liveNote") || "Bu istatistikler, turnuva maçları başladığında canlı olarak otomatik güncellenecektir."}
-                  </p>
+              {/* Dynamic Info Alert banner */}
+              {simMatchId || realLiveMatch ? (
+                <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-6 flex flex-col sm:flex-row gap-4 items-center sm:items-start text-red-400">
+                  <Activity className="h-6 w-6 shrink-0 mt-0.5 animate-pulse text-red-500" />
+                  <div>
+                    <h4 className="font-bold text-base text-white">
+                      {simMatchId 
+                        ? (locale === "tr" ? "🔴 Canlı Maç Simülasyonu Aktif" : "🔴 Live Match Simulation Active")
+                        : (locale === "tr" ? "🔴 Canlı Maç Devam Ediyor!" : "🔴 Live Match in Progress!")
+                      }
+                    </h4>
+                    <p className="text-sm text-zinc-400 mt-1">
+                      {simMatchId 
+                        ? (locale === "tr" 
+                            ? "Hızlandırılmış (1 saniye = 1 dakika) simülasyon şu an çalışıyor. Maç durumunu ve canlı olayları anlık takip edebilirsiniz." 
+                            : "Fast-forward simulation (1 second = 1 minute) is active. You can track match stats and live events in real-time.")
+                        : (locale === "tr"
+                            ? `${locale === "tr" ? getTeamById(realLiveMatch?.homeTeamId ?? "")?.nameTr : getTeamById(realLiveMatch?.homeTeamId ?? "")?.nameEn} - ${locale === "tr" ? getTeamById(realLiveMatch?.awayTeamId ?? "")?.nameTr : getTeamById(realLiveMatch?.awayTeamId ?? "")?.nameEn} maçı şu an canlı olarak oynanıyor. Anlık anlatım aşağıda listelenmektedir.`
+                            : `The match between ${getTeamById(realLiveMatch?.homeTeamId ?? "")?.nameEn} and ${getTeamById(realLiveMatch?.awayTeamId ?? "")?.nameEn} is currently live. Live commentary is listed below.`)
+                      }
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6 flex flex-col sm:flex-row gap-4 items-center sm:items-start text-amber-400">
+                  <Activity className="h-6 w-6 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-bold text-base text-white">
+                      {locale === "tr" ? "Canlı Turnuva Skorları ve Anlatım" : "Live Tournament Scores & Commentary"}
+                    </h4>
+                    <p className="text-sm text-zinc-400 mt-1">
+                      {locale === "tr" 
+                        ? "11 Haziran 2026 Dünya Şampiyonası açılış günü maçları aşağıda listelenmiştir. Canlı anlatımı test etmek için herhangi bir maçta 'Simüle Et' butonuna tıklayabilirsiniz." 
+                        : "World Cup 2026 opening matches (June 11, 2026) are listed below. Click 'Simulate' on any match to test the live commentary ticker."}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Today's Matches Board */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-emerald-400" />
+                  <span>{locale === "tr" ? "Günün Maçları (11 Haziran 2026)" : "Matches of the Day (June 11, 2026)"}</span>
+                </h3>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  {displayMatches.map((m) => {
+                    const homeTeam = getTeamById(m.homeTeamId);
+                    const awayTeam = getTeamById(m.awayTeamId);
+                    const homeName = locale === "tr" ? homeTeam?.nameTr : homeTeam?.nameEn;
+                    const awayName = locale === "tr" ? awayTeam?.nameTr : awayTeam?.nameEn;
+                    const isSimulated = simMatchId === m.id;
+                    const isLive = m.isLive;
+                    const isFinished = m.played;
+
+                    return (
+                      <div 
+                        key={m.id} 
+                        className={`rounded-2xl border bg-[#0b1329]/30 p-5 backdrop-blur transition-all duration-300 ${
+                          isLive 
+                            ? "border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.1)]" 
+                            : "border-white/10"
+                        }`}
+                      >
+                        <div className="flex justify-between items-center mb-3">
+                          <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">
+                            {locale === "tr" ? `Grup ${m.group}` : `Group ${m.group}`}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            {isLive ? (
+                              <span className="flex items-center gap-1 text-xs font-bold text-red-500 animate-pulse">
+                                <span className="h-2 w-2 rounded-full bg-red-500" />
+                                CANLI {m.elapsedMin}'
+                              </span>
+                            ) : isFinished ? (
+                              <span className="text-xs font-bold text-zinc-500">
+                                {locale === "tr" ? "MS" : "FT"}
+                              </span>
+                            ) : (
+                              <span className="text-xs font-semibold text-emerald-400/80">
+                                {locale === "tr" ? `Bugün ${m.time}` : `Today ${m.time}`}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-4 py-2">
+                          {/* Home Team */}
+                          <div className="flex items-center gap-3 w-5/12 overflow-hidden">
+                            <img 
+                              src={getFlagUrl(m.homeTeamId)} 
+                              alt="" 
+                              className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0"
+                            />
+                            <span className="font-bold text-white text-sm truncate">{homeName}</span>
+                          </div>
+
+                          {/* Score / VS */}
+                          <div className="flex items-center justify-center font-mono font-bold text-lg text-white w-2/12 bg-black/40 py-1 px-3 rounded-lg border border-white/5 shrink-0">
+                            {isLive || isFinished ? (
+                              <span>{m.homeScore} - {m.awayScore}</span>
+                            ) : (
+                              <span className="text-zinc-500 text-sm">VS</span>
+                            )}
+                          </div>
+
+                          {/* Away Team */}
+                          <div className="flex items-center justify-end gap-3 w-5/12 text-right overflow-hidden">
+                            <span className="font-bold text-white text-sm truncate">{awayName}</span>
+                            <img 
+                              src={getFlagUrl(m.awayTeamId)} 
+                              alt="" 
+                              className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                          <span className="text-[10px] text-zinc-500">
+                            {locale === "tr" ? "11 Haziran 2026" : "June 11, 2026"}
+                          </span>
+                          {!isSimulated && !simMatchId && (
+                            <button
+                              onClick={() => startSimulation(m)}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition"
+                            >
+                              <span>{locale === "tr" ? "Simüle Et" : "Simulate"}</span>
+                              <ChevronRight className="h-3 w-3" />
+                            </button>
+                          )}
+                          {isSimulated && (
+                            <button
+                              onClick={stopSimulation}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold text-red-400 hover:text-red-300 transition"
+                            >
+                              <span>{locale === "tr" ? "Simülasyonu Durdur" : "Stop Simulation"}</span>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
+
+              {/* Simulation Commentary & Pitch view */}
+              {activeCommMatch && (
+                <div className="rounded-2xl border border-emerald-500/20 bg-[#081225]/40 p-6 backdrop-blur space-y-6">
+                  <div className="flex justify-between items-center pb-4 border-b border-white/5">
+                    <div className="flex items-center gap-2">
+                      <Activity className="h-5 w-5 text-emerald-400 animate-pulse" />
+                      <h3 className="text-lg font-bold text-white">
+                        {locale === "tr" ? "Canlı Anlatım ve Önemli Anlar" : "Live Commentary & Key Moments"}
+                      </h3>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {simRunning || (!simMatchId && activeCommMatch.isLive) ? (
+                        <span className="flex items-center gap-1.5 rounded-full bg-red-500/10 px-3 py-1 text-xs font-bold text-red-400">
+                          <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
+                          {locale === "tr" ? "DEVAM EDİYOR" : "IN PROGRESS"}
+                        </span>
+                      ) : (
+                        <span className="rounded-full bg-zinc-500/10 px-3 py-1 text-xs font-bold text-zinc-400">
+                          {activeCommMinute >= 94 
+                            ? (locale === "tr" ? "BİTTİ" : "FINISHED")
+                            : (locale === "tr" ? "DURAKLATILDI" : "PAUSED")
+                          }
+                        </span>
+                      )}
+                      {simMatchId && (
+                        <button
+                          onClick={stopSimulation}
+                          className="rounded-lg bg-red-500/10 px-3 py-1 text-xs font-bold text-red-400 hover:bg-red-500/20 transition"
+                        >
+                          {locale === "tr" ? "Kapat" : "Close"}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Live Pitch/Score representation */}
+                  <div className="rounded-xl bg-gradient-to-r from-emerald-950/20 to-teal-950/20 p-6 border border-emerald-500/10 text-center">
+                    <p className="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-2">
+                      {locale === "tr" ? `${activeCommMinute}. Dakika` : `Minute ${activeCommMinute}`}
+                    </p>
+                    <div className="flex items-center justify-center gap-6">
+                      <span className="font-extrabold text-2xl text-white">
+                        {locale === "tr" ? getTeamById(activeCommMatch.homeTeamId)?.nameTr : getTeamById(activeCommMatch.homeTeamId)?.nameEn}
+                      </span>
+                      <span className="font-mono font-extrabold text-4xl bg-black/60 px-5 py-3 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-lg min-w-[120px]">
+                        {activeCommScore.home} - {activeCommScore.away}
+                      </span>
+                      <span className="font-extrabold text-2xl text-white">
+                        {locale === "tr" ? getTeamById(activeCommMatch.awayTeamId)?.nameTr : getTeamById(activeCommMatch.awayTeamId)?.nameEn}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Timeline events scroll box */}
+                  <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
+                    {activeCommEvents.length === 0 ? (
+                      <p className="text-zinc-500 text-center text-sm py-8">
+                        {locale === "tr" ? "Maç başlasın diye bekleniyor..." : "Waiting for match kick-off..."}
+                      </p>
+                    ) : (
+                      [...activeCommEvents].reverse().map((ev, idx) => {
+                        const isGoal = ev.type === "goal";
+                        const isCard = ev.type === "card";
+                        const isStartOrEnd = ev.type === "start" || ev.type === "end" || ev.type === "half";
+
+                        return (
+                          <div 
+                            key={idx} 
+                            className={`flex gap-4 p-3.5 rounded-xl border transition-all duration-300 animate-slideUp ${
+                              isGoal 
+                                ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
+                                : isCard
+                                  ? "bg-amber-500/10 border-amber-500/20 text-amber-300"
+                                  : isStartOrEnd
+                                    ? "bg-blue-500/10 border-blue-500/20 text-blue-300"
+                                    : "bg-white/[0.02] border-white/5 text-zinc-300"
+                            }`}
+                          >
+                            <div className="font-mono font-extrabold text-sm shrink-0 bg-black/30 w-10 h-7 flex items-center justify-center rounded border border-white/5">
+                              {ev.minute}'
+                            </div>
+                            <div className="text-sm font-medium leading-relaxed">
+                              {locale === "tr" ? ev.textTr : ev.textEn}
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Grid representation */}
               <div className="grid gap-8 md:grid-cols-2">

@@ -491,8 +491,8 @@ export function Header() {
                   <a href="https://www.youtube.com/channel/UC3VXE2d4hkwnmMiW6W0gYjA" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-red-500 transition-colors w-fit text-sm">
                     <span className="text-zinc-400">YouTube:</span> @MahTEMYazılım
                   </a>
-                  <a href="mailto:info.mahtemyazilim@gmail.com" className="flex items-center gap-2 hover:text-emerald-400 transition-colors w-fit text-sm">
-                    <span className="text-zinc-400">E-mail:</span> info.mahtemyazilim@gmail.com
+                  <a href="mailto:bilgi@statmatik.com" className="flex items-center gap-2 hover:text-emerald-400 transition-colors w-fit text-sm">
+                    <span className="text-zinc-400">E-mail:</span> bilgi@statmatik.com
                   </a>
                 </div>
               </div>
