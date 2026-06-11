@@ -146,7 +146,7 @@ export default function StatisticsPage() {
         parseInt(hourStr, 10),
         parseInt(minStr, 10),
         0
-      )).getTime();
+      )).getTime() - (3 * 60 * 60 * 1000); // Base time is stored in TSİ (UTC+3), convert to UTC
 
       const isRealLive = currentRealTime >= kickoffTime && currentRealTime < kickoffTime + (120 * 60 * 1000);
       const isRealFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);

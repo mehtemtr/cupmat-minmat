@@ -525,20 +525,22 @@ export default function PredictionCenterPage() {
 
             if (!home || !away) return null;
 
-            // Calculate dynamic timezone kickoff date and time using static UTC time
+            // Calculate dynamic timezone kickoff date and time using base TSİ time (UTC+3)
             const selectedTimezone = TIMEZONES.find((t) => t.id === timezoneId) || TIMEZONES[0];
-            const [utcHourStr, utcMinStr] = (match.time || "12:00").split(":");
-            const utcHour = parseInt(utcHourStr, 10);
-            const utcMin = parseInt(utcMinStr, 10);
+            const [tsiHourStr, tsiMinStr] = (match.time || "12:00").split(":");
+            const tsiHour = parseInt(tsiHourStr, 10);
+            const tsiMin = parseInt(tsiMinStr, 10);
 
             const [yearStr, monthStr, dayStr] = match.date.split("-");
             const year = parseInt(yearStr, 10);
             const month = parseInt(monthStr, 10) - 1;
             const day = parseInt(dayStr, 10);
-            const utcDate = new Date(Date.UTC(year, month, day, utcHour, utcMin, 0));
+            const rawDate = new Date(Date.UTC(year, month, day, tsiHour, tsiMin, 0));
+            // Base time is in TSİ (UTC+3), convert to actual UTC Date
+            const actualUtcDate = new Date(rawDate.getTime() - 3 * 60 * 60 * 1000);
 
-            // Apply selected timezone offset
-            const convertedDate = new Date(utcDate.getTime() + selectedTimezone.offset * 60 * 60 * 1000);
+            // Apply selected timezone offset compared to actual UTC time
+            const convertedDate = new Date(actualUtcDate.getTime() + selectedTimezone.offset * 60 * 60 * 1000);
 
             const formattedDate = convertedDate.toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US", {
               day: "numeric",
@@ -556,7 +558,7 @@ export default function PredictionCenterPage() {
             });
 
             // Check timing locks
-            const isMatchStarted = new Date() >= utcDate;
+            const isMatchStarted = new Date() >= actualUtcDate;
 
             // Check prediction input state
             // Unlocked if:
