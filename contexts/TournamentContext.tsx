@@ -17,6 +17,7 @@ import type {
   MatchResult,
 } from "@/lib/types/tournament";
 import { generateGroupFixtures } from "@/lib/fixtures";
+import { getAdjustedTime } from "@/lib/tournament/time-helper";
 import { sanitizeStoredMatches } from "@/lib/tournament/sanitize-matches";
 import { TOURNAMENT_DATA_VERSION, getTeamById } from "@/data/teams";
 import {
@@ -142,7 +143,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   const [aiEnabled, setAiEnabled] = useState(false);
   const [aiAnalyses, setAiAnalyses] = useState<AiAnalysis[]>([]);
   const [ready, setReady] = useState(false);
-  const [knockoutBracket, setKnockoutBracket] = useState<KnockoutMatch[]>([]);
+
   const [groupTableOverrides, setGroupTableOverrides] = useState<Record<GroupId, string[]>>({} as Record<GroupId, string[]>);
 
   // Global live simulation states
@@ -182,6 +183,73 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   const [simEvents, setSimEvents] = useState<any[]>([]);
   const [simAllEvents, setSimAllEvents] = useState<any[]>([]);
 
+  // Real clock state for matching schedule simulation
+  const [currentRealTime, setCurrentRealTime] = useState(() => getAdjustedTime());
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCurrentRealTime(getAdjustedTime());
+    }, 10000); // Check every 10 seconds
+    return () => clearInterval(id);
+  }, []);
+
+  const getMatchKickoffTime = useCallback((m: MatchResult) => {
+    const [hourStr, minStr] = (m.time || "12:00").split(":");
+    const [yrStr, moStr, dyStr] = m.date.split("-");
+    return new Date(Date.UTC(
+      parseInt(yrStr, 10),
+      parseInt(moStr, 10) - 1,
+      parseInt(dyStr, 10),
+      parseInt(hourStr, 10),
+      parseInt(minStr, 10),
+      0
+    )).getTime() - (3 * 60 * 60 * 1000); // Base time is stored in TSİ (UTC+3), convert to UTC
+  }, []);
+
+  const simulatedMatches = useMemo(() => {
+    return matches.map((m) => {
+      // If the user has manually set a score (e.g. m.played is true and score is set), respect that manually edited score!
+      if (m.played && m.homeScore !== null && m.awayScore !== null) {
+        return m;
+      }
+
+      // Check if kickoff time is in the past
+      const kickoffTime = getMatchKickoffTime(m);
+      if (currentRealTime >= kickoffTime) {
+        const homeTeam = getTeamById(m.homeTeamId);
+        const awayTeam = getTeamById(m.awayTeamId);
+        const homePlayers = homeTeam?.players || [];
+        const awayPlayers = awayTeam?.players || [];
+        const eventsList = generateSimulation(m, homePlayers, awayPlayers);
+
+        const isFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);
+        const elapsedMin = isFinished
+          ? 94
+          : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000)));
+
+        const activeEvents = eventsList.filter((e) => e.minute <= elapsedMin);
+        const scoreEvents = activeEvents.filter((e) => e.scoreAfter);
+        const latestScore = scoreEvents.length > 0
+          ? scoreEvents[scoreEvents.length - 1].scoreAfter
+          : { home: 0, away: 0 };
+
+        return {
+          ...m,
+          homeScore: latestScore?.home ?? 0,
+          awayScore: latestScore?.away ?? 0,
+          played: isFinished,
+          isLive: !isFinished,
+          elapsedMin,
+        };
+      }
+
+      return m;
+    });
+  }, [matches, currentRealTime, getMatchKickoffTime]);
+
+  const knockoutBracket = useMemo(() => {
+    return buildFullKnockoutBracket(simulatedMatches, predictions, groupTableOverrides);
+  }, [simulatedMatches, predictions, groupTableOverrides]);
+
   useEffect(() => {
     const saved = loadState();
     const isFirstVisit = !localStorage.getItem(VERSION_KEY);
@@ -210,9 +278,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setAiAnalyses(saved.aiAnalyses ?? []);
     setGroupTableOverrides((saved.groupTableOverrides ?? {}) as Record<GroupId, string[]>);
     
-    if (allGroupsComplete(initialMatches, saved.groupTableOverrides) && Object.keys(initialPredictions).length > 0) {
-      setKnockoutBracket(buildFullKnockoutBracket(initialMatches, initialPredictions, saved.groupTableOverrides));
-    }
+
     
     setReady(true);
   }, []);
@@ -265,9 +331,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
           },
         };
         
-        if (allGroupsComplete(matches, groupTableOverrides)) {
-          setKnockoutBracket(buildFullKnockoutBracket(matches, next, groupTableOverrides));
-        }
+
         
         return next;
       });
@@ -279,7 +343,6 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setPredictions({});
     setAiAnalyses([]);
     setAiEnabled(false);
-    setKnockoutBracket([]);
     setGroupTableOverrides({} as Record<GroupId, string[]>);
     // Completely reset matches state - clear all scores and played status
     setMatches((prev) => prev.map(m => ({ 
@@ -296,7 +359,6 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
         ...prev,
         [groupId]: teamIds,
       };
-      setKnockoutBracket(buildFullKnockoutBracket(matches, predictions, nextOverrides));
       return nextOverrides;
     });
   }, [matches, predictions]);
@@ -305,7 +367,6 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setGroupTableOverrides((prev) => {
       const nextOverrides = { ...prev };
       delete nextOverrides[groupId];
-      setKnockoutBracket(buildFullKnockoutBracket(matches, predictions, nextOverrides));
       return nextOverrides;
     });
   }, [matches, predictions]);
@@ -323,10 +384,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
         };
       });
 
-      // Update bracket when applying group predictions
-      if (allGroupsComplete(nextMatches, groupTableOverrides)) {
-        setKnockoutBracket(buildFullKnockoutBracket(nextMatches, predictions, groupTableOverrides));
-      }
+
       
       return nextMatches;
     });
@@ -336,19 +394,19 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setAiEnabled((prevAi) => {
       const nextAi = !prevAi;
       if (nextAi || targetMatchIds) {
-        const isGroupsComplete = allGroupsComplete(matches, groupTableOverrides);
+        const isGroupsComplete = allGroupsComplete(simulatedMatches, groupTableOverrides);
         
         // Determine which matches to predict
         let matchesToPredict: { id: string; homeTeamId: string | null; awayTeamId: string | null }[] = [];
         
         if (targetMatchIds) {
           // If specific IDs provided, only predict those
-          const allPotential = [...matches, ...knockoutBracket];
+          const allPotential = [...simulatedMatches, ...knockoutBracket];
           matchesToPredict = allPotential.filter(m => targetMatchIds.includes(m.id));
         } else {
           // Default: predict what makes sense for current progress
           matchesToPredict = !isGroupsComplete 
-            ? matches 
+            ? simulatedMatches 
             : knockoutBracket.filter(m => m.homeTeamId && m.awayTeamId);
         }
 
@@ -367,15 +425,10 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
         const nextPredictions = { ...predictions, ...sourceAiPreds };
         setPredictions(nextPredictions);
         setAiAnalyses((prev) => [...prev, ...analyses]);
-
-        // Explicitly update bracket after AI prediction if in knockout phase
-        if (isGroupsComplete) {
-          setKnockoutBracket(buildFullKnockoutBracket(matches, nextPredictions, groupTableOverrides));
-        }
       }
       return targetMatchIds ? prevAi : nextAi; // Don't toggle global AI state if just predicting specific round
     });
-  }, [matches, locale, predictions, knockoutBracket, groupTableOverrides]);
+  }, [simulatedMatches, locale, predictions, knockoutBracket, groupTableOverrides]);
 
   const simulateRandomLiveNews = useCallback((currentGroup: GroupId) => {
     if (!aiEnabled) return;
@@ -407,7 +460,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, [aiEnabled, matches, aiAnalyses, predictions, locale]);
 
   const submitToLeaderboard = useCallback(async () => {
-    const points = totalPredictionPoints(predictions, matches);
+    const points = totalPredictionPoints(predictions, simulatedMatches);
     await fetch("/api/leaderboard", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -416,10 +469,10 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
         displayName,
         matchPredictions: predictions,
         points,
-        groupsComplete: allGroupsComplete(matches),
+        groupsComplete: allGroupsComplete(simulatedMatches),
       }),
     });
-  }, [predictions, matches, displayName]);
+  }, [predictions, simulatedMatches, displayName]);
 
   const startSimulation = useCallback((match: any) => {
     const homeTeam = getTeamById(match.homeTeamId);
@@ -514,6 +567,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     }
   }, []);
 
+
+
   // Global background simulation clock
   useEffect(() => {
     if (!simRunning || !simMatchId) return;
@@ -591,23 +646,23 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, [simRunning, simMatchId, simAllEvents]);
 
   const standingsByGroup = useMemo(
-    () => getGroupStandingsMap(matches, predictions, groupTableOverrides),
-    [matches, predictions, groupTableOverrides],
+    () => getGroupStandingsMap(simulatedMatches, predictions, groupTableOverrides),
+    [simulatedMatches, predictions, groupTableOverrides],
   );
 
   const knockoutUnlocked = useMemo(() => {
-    return allGroupsComplete(matches, groupTableOverrides);
-  }, [matches, groupTableOverrides]);
+    return allGroupsComplete(simulatedMatches, groupTableOverrides);
+  }, [simulatedMatches, groupTableOverrides]);
 
   const predictionPoints = useMemo(
-    () => totalPredictionPoints(predictions, matches),
-    [predictions, matches],
+    () => totalPredictionPoints(predictions, simulatedMatches),
+    [predictions, simulatedMatches],
   );
 
   const value = useMemo(
     () => ({
       ready,
-      matches,
+      matches: simulatedMatches,
       predictions,
       displayName,
       aiEnabled,
@@ -644,7 +699,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     }),
     [
       ready,
-      matches,
+      simulatedMatches,
       predictions,
       displayName,
       aiEnabled,

@@ -6,6 +6,7 @@ import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useTournament } from "@/contexts/TournamentContext";
 import { TEAMS, getTeamById } from "@/data/teams";
 import { generateGroupFixtures } from "@/lib/fixtures";
+import { getAdjustedTime } from "@/lib/tournament/time-helper";
 import {
   Users,
   Award,
@@ -66,6 +67,7 @@ export default function StatisticsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const {
+    matches,
     simMatchId,
     simRunning,
     simMinute,
@@ -83,10 +85,10 @@ export default function StatisticsPage() {
   } = useTournament();
 
   // Real clock state
-  const [currentRealTime, setCurrentRealTime] = useState(() => Date.now());
+  const [currentRealTime, setCurrentRealTime] = useState(() => getAdjustedTime());
   useEffect(() => {
     const id = setInterval(() => {
-      setCurrentRealTime(Date.now());
+      setCurrentRealTime(getAdjustedTime());
     }, 10000);
     return () => clearInterval(id);
   }, []);
@@ -117,13 +119,9 @@ export default function StatisticsPage() {
     prevMissedCount.current = simMissedMinutes.length;
   }, [simMissedMinutes, t]);
 
-  // Get today's matches (June 11, 2026)
-  const [localMatches, setLocalMatches] = useState<any[]>(() => {
-    return generateGroupFixtures().filter(m => m.date === "2026-06-11");
-  });
-
   const displayMatches = useMemo(() => {
-    return localMatches.map(m => {
+    const june11Matches = matches.filter(m => m.date === "2026-06-11");
+    return june11Matches.map(m => {
       // 1. If manually simulating
       if (simMatchId && m.id === simMatchId) {
         return {
@@ -135,80 +133,42 @@ export default function StatisticsPage() {
           elapsedMin: simMinute
         };
       }
-
-      // 2. Real clock calculations
-      const [hourStr, minStr] = (m.time || "12:00").split(":");
-      const [yrStr, moStr, dyStr] = m.date.split("-");
-      const kickoffTime = new Date(Date.UTC(
-        parseInt(yrStr, 10),
-        parseInt(moStr, 10) - 1,
-        parseInt(dyStr, 10),
-        parseInt(hourStr, 10),
-        parseInt(minStr, 10),
-        0
-      )).getTime() - (3 * 60 * 60 * 1000); // Base time is stored in TSİ (UTC+3), convert to UTC
-
-      const isRealLive = currentRealTime >= kickoffTime && currentRealTime < kickoffTime + (120 * 60 * 1000);
-      const isRealFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);
-
-      if (isRealLive || isRealFinished) {
-        const homeTeam = getTeamById(m.homeTeamId);
-        const awayTeam = getTeamById(m.awayTeamId);
-        const homePlayers = homeTeam?.players || [];
-        const awayPlayers = awayTeam?.players || [];
-        const eventsList = generateSimulation(m, homePlayers, awayPlayers);
-        
-        const elapsedMin = isRealFinished 
-          ? 94 
-          : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000)));
-
-        const activeEvents = eventsList.filter(e => e.minute <= elapsedMin);
-        const scoreEvents = activeEvents.filter(e => e.scoreAfter);
-        const latestScore = scoreEvents.length > 0 
-          ? scoreEvents[scoreEvents.length - 1].scoreAfter 
-          : { home: 0, away: 0 };
-
-        return {
-          ...m,
-          homeScore: latestScore?.home ?? 0,
-          awayScore: latestScore?.away ?? 0,
-          played: isRealFinished,
-          isLive: isRealLive,
-          elapsedMin
-        };
-      }
-
       return m;
     });
-  }, [localMatches, simMatchId, simScore, simMinute, currentRealTime]);
+  }, [matches, simMatchId, simScore, simMinute]);
 
   const realLiveMatch = useMemo(() => {
     if (simMatchId) return null;
     return displayMatches.find(m => m.isLive);
   }, [displayMatches, simMatchId]);
 
-  const realLiveEvents = useMemo(() => {
-    if (!realLiveMatch) return [];
-    const homeTeam = getTeamById(realLiveMatch.homeTeamId);
-    const awayTeam = getTeamById(realLiveMatch.awayTeamId);
-    const homePlayers = homeTeam?.players || [];
-    const awayPlayers = awayTeam?.players || [];
-    const eventsList = generateSimulation(realLiveMatch, homePlayers, awayPlayers);
-    return eventsList.filter(e => e.minute <= (realLiveMatch.elapsedMin || 1));
-  }, [realLiveMatch]);
-
   // Unified Commentary selectors
+  const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
+
   const activeCommMatch = useMemo(() => {
     if (simMatchId) {
       return displayMatches.find(m => m.id === simMatchId) || null;
     }
-    return realLiveMatch || null;
-  }, [simMatchId, displayMatches, realLiveMatch]);
+    if (selectedMatchId) {
+      return displayMatches.find(m => m.id === selectedMatchId) || null;
+    }
+    if (realLiveMatch) return realLiveMatch;
+    // Default to first match if available
+    return displayMatches[0] || null;
+  }, [simMatchId, selectedMatchId, displayMatches, realLiveMatch]);
 
   const activeCommEvents = useMemo(() => {
     if (simMatchId) return simEvents;
-    return realLiveEvents;
-  }, [simMatchId, simEvents, realLiveEvents]);
+    if (activeCommMatch) {
+      const homeTeam = getTeamById(activeCommMatch.homeTeamId);
+      const awayTeam = getTeamById(activeCommMatch.awayTeamId);
+      const homePlayers = homeTeam?.players || [];
+      const awayPlayers = awayTeam?.players || [];
+      const eventsList = generateSimulation(activeCommMatch, homePlayers, awayPlayers);
+      return eventsList.filter(e => e.minute <= (activeCommMatch.elapsedMin || 94));
+    }
+    return [];
+  }, [simMatchId, simEvents, activeCommMatch]);
 
   const activeCommScore = useMemo(() => {
     if (simMatchId) return simScore;
@@ -219,6 +179,79 @@ export default function StatisticsPage() {
     if (simMatchId) return simMinute;
     return activeCommMatch?.elapsedMin ?? 1;
   }, [simMatchId, simMinute, activeCommMatch]);
+
+  // Aggregate scorers and cards from all matches in simulated real-time
+  const tournamentStats = useMemo(() => {
+    const scorersMap: Record<string, { player: any, team: any, goals: number }> = {};
+    const cardsMap: Record<string, { player: any, team: any, yellow_cards: number }> = {};
+
+    matches.forEach((m) => {
+      // Parse kickoff time
+      const [hourStr, minStr] = (m.time || "12:00").split(":");
+      const [yrStr, moStr, dyStr] = m.date.split("-");
+      const kickoffTime = new Date(Date.UTC(
+        parseInt(yrStr, 10),
+        parseInt(moStr, 10) - 1,
+        parseInt(dyStr, 10),
+        parseInt(hourStr, 10),
+        parseInt(minStr, 10),
+        0
+      )).getTime() - (3 * 60 * 60 * 1000); // TSİ to UTC
+
+      if (currentRealTime >= kickoffTime) {
+        const homeTeam = getTeamById(m.homeTeamId);
+        const awayTeam = getTeamById(m.awayTeamId);
+        if (!homeTeam || !awayTeam) return;
+
+        const homePlayers = homeTeam.players || [];
+        const awayPlayers = awayTeam.players || [];
+        const allMatchPlayers = [...homePlayers, ...awayPlayers];
+
+        const eventsList = generateSimulation(m, homePlayers, awayPlayers);
+
+        const isFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);
+        const elapsedMin = isFinished
+          ? 94
+          : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000)));
+
+        const activeEvents = eventsList.filter((e) => e.minute <= elapsedMin);
+
+        activeEvents.forEach((ev) => {
+          if (ev.type === "goal") {
+            const player = allMatchPlayers.find(p => 
+              ev.textTr.includes(p.name) || ev.textEn.includes(p.name)
+            );
+            if (player) {
+              const team = homePlayers.some(p => p.id === player.id) ? homeTeam : awayTeam;
+              if (!scorersMap[player.id]) {
+                scorersMap[player.id] = { player, team, goals: 0 };
+              }
+              scorersMap[player.id].goals++;
+            }
+          } else if (ev.type === "card") {
+            const player = allMatchPlayers.find(p => 
+              ev.textTr.includes(p.name) || ev.textEn.includes(p.name)
+            );
+            if (player) {
+              const team = homePlayers.some(p => p.id === player.id) ? homeTeam : awayTeam;
+              if (!cardsMap[player.id]) {
+                cardsMap[player.id] = { player, team, yellow_cards: 0 };
+              }
+              cardsMap[player.id].yellow_cards = (cardsMap[player.id].yellow_cards || 0) + 1;
+            }
+          }
+        });
+      }
+    });
+
+    const sortedScorers = Object.values(scorersMap).sort((a, b) => b.goals - a.goals);
+    const sortedCards = Object.values(cardsMap).sort((a, b) => (b.yellow_cards || 0) - (a.yellow_cards || 0));
+
+    return {
+      scorers: sortedScorers,
+      cards: sortedCards
+    };
+  }, [matches, currentRealTime]);
 
 
 
@@ -766,10 +799,13 @@ export default function StatisticsPage() {
                     return (
                       <div 
                         key={m.id} 
-                        className={`rounded-2xl border bg-[#0b1329]/30 p-5 backdrop-blur transition-all duration-300 ${
+                        onClick={() => setSelectedMatchId(m.id)}
+                        className={`rounded-2xl border bg-[#0b1329]/30 p-5 backdrop-blur transition-all duration-300 cursor-pointer hover:border-emerald-500/30 ${
                           isLive 
                             ? "border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.1)]" 
-                            : "border-white/10"
+                            : activeCommMatch?.id === m.id
+                              ? "border-indigo-500/40 bg-indigo-950/10 shadow-[0_0_15px_rgba(99,102,241,0.08)]"
+                              : "border-white/10"
                         }`}
                       >
                         <div className="flex justify-between items-center mb-3">
@@ -1011,47 +1047,79 @@ export default function StatisticsPage() {
               {/* Grid representation */}
               <div className="grid gap-8 md:grid-cols-2">
                 
-                {/* Live Scorers Placeholder */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-80">
+                {/* Live Scorers */}
+                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur">
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
                     <span>⚽ {t("statsPage.liveScorers") || "Turnuva Gol Krallığı"}</span>
-                    <span className="text-xs text-zinc-500 font-normal">TBD</span>
+                    <span className="text-xs text-emerald-400 font-bold uppercase tracking-wider">{locale === "tr" ? "Aktif" : "Active"}</span>
                   </h3>
-                  <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {t("statsPage.liveNote") || "Maçlar başladığında goller burada güncellenecektir."}
-                  </div>
+                  {tournamentStats.scorers.length === 0 ? (
+                    <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
+                      {t("statsPage.liveNote") || "Maçlar başladığında goller burada güncellenecektir."}
+                    </div>
+                  ) : (
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                      {tournamentStats.scorers.map(({ player, team, goals }, idx) => (
+                        <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                          <div className="flex items-center gap-3">
+                            <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
+                            <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
+                            <span className="font-bold text-white text-sm">{player.name}</span>
+                            <span className="text-xs text-zinc-400">({locale === "tr" ? team.nameTr : team.nameEn})</span>
+                          </div>
+                          <span className="font-extrabold text-emerald-400 text-sm">{goals} Gol</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* Live Assists Placeholder */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-80">
+                {/* Live Assists */}
+                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-60">
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
                     <span>👟 {t("statsPage.liveAssists") || "Turnuva Asist Krallığı"}</span>
                     <span className="text-xs text-zinc-500 font-normal">TBD</span>
                   </h3>
                   <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {t("statsPage.liveNote") || "Asistler burada güncellenecektir."}
+                    {locale === "tr" ? "Asistler simülasyon takibi dışındadır." : "Assists are not tracked in simulation mode."}
                   </div>
                 </div>
 
-                {/* Live Cards Placeholder */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-80">
+                {/* Live Cards */}
+                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur">
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
                     <span>🟨🟥 {t("statsPage.liveCards") || "Kart Raporları"}</span>
-                    <span className="text-xs text-zinc-500 font-normal">TBD</span>
+                    <span className="text-xs text-amber-400 font-bold uppercase tracking-wider">{locale === "tr" ? "Aktif" : "Active"}</span>
                   </h3>
-                  <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {t("statsPage.liveNote") || "Sarı ve kırmızı kart istatistikleri burada listelenecektir."}
-                  </div>
+                  {tournamentStats.cards.length === 0 ? (
+                    <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
+                      {t("statsPage.liveNote") || "Sarı ve kırmızı kart istatistikleri burada listelenecektir."}
+                    </div>
+                  ) : (
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                      {tournamentStats.cards.map(({ player, team, yellow_cards }, idx) => (
+                        <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                          <div className="flex items-center gap-3">
+                            <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
+                            <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
+                            <span className="font-bold text-white text-sm">{player.name}</span>
+                            <span className="text-xs text-zinc-400">({locale === "tr" ? team.nameTr : team.nameEn})</span>
+                          </div>
+                          <span className="font-extrabold text-amber-400 text-sm">{yellow_cards} Sarı</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* Live Own Goals Placeholder */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-80">
+                {/* Live Own Goals */}
+                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-60">
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
                     <span>🤦‍♂️ {t("statsPage.liveOwnGoals") || "Kendi Kalesine Goller"}</span>
                     <span className="text-xs text-zinc-500 font-normal">TBD</span>
                   </h3>
                   <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {t("statsPage.liveNote") || "Kendi kalesine atılan goller burada listelenecektir."}
+                    {locale === "tr" ? "Kendi kalesine goller simülasyon takibi dışındadır." : "Own goals are not tracked in simulation mode."}
                   </div>
                 </div>
 

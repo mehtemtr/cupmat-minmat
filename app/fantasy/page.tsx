@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useState, useEffect, useMemo } from "react";
 import { getAllPlayers } from "@/data/teams";
+import { getAdjustedDate } from "@/lib/tournament/time-helper";
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Shield, Users, Award, Calendar, Settings, Play, CheckCircle, AlertTriangle, ArrowRight, Star, RefreshCw, Lock } from "lucide-react";
 
@@ -113,9 +114,9 @@ export default function FantasyPage() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   useEffect(() => {
-    setCurrentTime(new Date());
+    setCurrentTime(getAdjustedDate());
     const interval = setInterval(() => {
-      setCurrentTime(new Date());
+      setCurrentTime(getAdjustedDate());
     }, 1000);
     return () => clearInterval(interval);
   }, []);

@@ -68,6 +68,8 @@ export type MatchResult = {
   date: string; // ISO format or human readable
   time?: string; // Kickoff time e.g., "13:00" (UTC)
   stadium?: string;
+  isLive?: boolean;
+  elapsedMin?: number;
 };
 
 export type StandingRow = {

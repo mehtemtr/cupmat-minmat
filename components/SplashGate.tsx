@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Play } from "lucide-react";
+import { getAdjustedTime } from "@/lib/tournament/time-helper";
 import { useTranslation } from "@/contexts/LocaleContext";
 
 const KICKOFF = new Date("2026-06-11T22:00:00+03:00").getTime();
@@ -17,7 +18,7 @@ export function SplashGate({ children }: { children: React.ReactNode }) {
     setMounted(true);
     
     const checkTime = () => {
-      const now = Date.now();
+      const now = getAdjustedTime();
       if (now >= KICKOFF) {
         setIsDismissed(true);
         return true;

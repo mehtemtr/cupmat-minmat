@@ -3,6 +3,7 @@ import { requireApiAuth } from "@/lib/auth/api-auth";
 import { getOrCreateProfile } from "@/lib/store/gamification-store";
 import { getLeaderboard, upsertSubmission } from "@/lib/store/leaderboard-store";
 import { generateGroupFixtures } from "@/lib/fixtures";
+import { getAdjustedDate } from "@/lib/tournament/time-helper";
 import type { PredictionSubmission, MatchPrediction } from "@/lib/types/tournament";
 
 export async function GET() {
@@ -69,7 +70,7 @@ export async function POST(request: Request) {
       }
 
       const matchDate = new Date(`${targetMatch.date}T${targetMatch.time || "00:00"}:00Z`);
-      const now = new Date();
+      const now = getAdjustedDate();
       if (now >= matchDate) {
         return NextResponse.json({
           error: "Maç günü veya saati geldiği için bu maça ait tahmin değiştirilemez!"
@@ -116,7 +117,7 @@ export async function POST(request: Request) {
     }
 
     const matchPredictions: Record<string, MatchPrediction> = {};
-    const now = new Date();
+    const now = getAdjustedDate();
     for (const matchId of Object.keys(predictions)) {
       const targetMatch = fixtures.find((m) => m.id === matchId);
       if (targetMatch) {

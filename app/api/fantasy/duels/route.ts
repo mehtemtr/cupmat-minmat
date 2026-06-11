@@ -3,6 +3,7 @@ import { requireApiAuth } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Redis } from "@upstash/redis";
 import { ensureTimeSpacedBots, STAGE_START_DATES } from "@/lib/fantasy/bot-registration";
+import { getAdjustedDate } from "@/lib/tournament/time-helper";
 
 const redis = Redis.fromEnv();
 
@@ -181,7 +182,7 @@ export async function GET(request: Request) {
       };
 
       const startDateStr = STAGE_START_DATES[stage.toLowerCase()];
-      const isStageStarted = startDateStr ? (new Date() >= new Date(startDateStr)) : false;
+      const isStageStarted = startDateStr ? (getAdjustedDate() >= new Date(startDateStr)) : false;
 
       const starters1 = (isStageStarted || userDuel.userId1 === userId)
         ? await fetchRosterPlayers(rosterId1 || "")

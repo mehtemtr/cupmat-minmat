@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
+import { getAdjustedTime } from "@/lib/tournament/time-helper";
 import { useTranslation } from "@/contexts/LocaleContext";
 
 const KICKOFF = new Date("2026-06-11T22:00:00+03:00").getTime();
@@ -14,7 +15,7 @@ type TimeLeft = {
 };
 
 function calcTimeLeft(): TimeLeft {
-  const diff = Math.max(0, KICKOFF - Date.now());
+  const diff = Math.max(0, KICKOFF - getAdjustedTime());
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
     hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
@@ -33,14 +34,14 @@ export function Countdown() {
   const [mounted, setMounted] = useState(false);
   const [isOver, setIsOver] = useState(() => {
     if (typeof window !== "undefined") {
-      return Date.now() >= KICKOFF;
+      return getAdjustedTime() >= KICKOFF;
     }
     return false;
   });
 
   useEffect(() => {
     setMounted(true);
-    if (Date.now() >= KICKOFF) {
+    if (getAdjustedTime() >= KICKOFF) {
       setIsOver(true);
       return;
     }

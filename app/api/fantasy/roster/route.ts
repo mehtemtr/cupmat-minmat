@@ -5,6 +5,7 @@ import { getOrCreateProfile, getGamificationLeaderboard, getStore } from "@/lib/
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Redis } from "@upstash/redis";
 import { ensureTimeSpacedBots, STAGE_START_DATES } from "@/lib/fantasy/bot-registration";
+import { getAdjustedDate } from "@/lib/tournament/time-helper";
 import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic } from "@/lib/fantasy/points";
 
 const redis = Redis.fromEnv();
@@ -101,7 +102,7 @@ export async function GET(request: Request) {
     );
 
     const startDateStr = STAGE_START_DATES[stage.toLowerCase()];
-    const isLocked = startDateStr ? (new Date() >= new Date(startDateStr)) : false;
+    const isLocked = startDateStr ? (getAdjustedDate() >= new Date(startDateStr)) : false;
 
     return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked });
   } catch (error: any) {
@@ -140,7 +141,7 @@ export async function POST(request: Request) {
     const startDateStr = STAGE_START_DATES[stageKey];
     if (startDateStr) {
       const startDate = new Date(startDateStr);
-      const now = new Date();
+      const now = getAdjustedDate();
       if (now >= startDate) {
         return NextResponse.json(
           { error: "Bu aşama başladı. Kadro güncelleme süresi dolmuştur." },

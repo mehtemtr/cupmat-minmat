@@ -7,6 +7,8 @@ import { useUser, SignInButton } from "@clerk/nextjs";
 import { useState, useEffect, useMemo } from "react";
 import { generateGroupFixtures, sortMatchesChronologically } from "@/lib/fixtures";
 import { getTeamById } from "@/data/teams";
+import { getAdjustedDate } from "@/lib/tournament/time-helper";
+import { useTournament } from "@/contexts/TournamentContext";
 import type { UserActivity } from "@/lib/store/gamification-store";
 import type { MatchResult } from "@/lib/types/tournament";
 
@@ -155,6 +157,7 @@ const TIMEZONES = [
 export default function PredictionCenterPage() {
   const { locale } = useTranslation();
   const { user, isLoaded: authLoaded } = useUser();
+  const { matches } = useTournament();
 
   const activeLang = (locale in localDict ? locale : "en") as keyof typeof localDict;
   const dict = localDict[activeLang];
@@ -179,11 +182,11 @@ export default function PredictionCenterPage() {
 
   // Generate the first round matches of all groups (A-L) - 24 matches total
   const upcomingMatches = useMemo(() => {
-    const raw = generateGroupFixtures().filter(
+    const raw = matches.filter(
       (m) => m.id.endsWith("-1") || m.id.endsWith("-6")
     );
     return sortMatchesChronologically(raw);
-  }, []);
+  }, [matches]);
 
   // Fetch prediction and profile details
   const fetchData = async () => {
@@ -558,7 +561,7 @@ export default function PredictionCenterPage() {
             });
 
             // Check timing locks
-            const isMatchStarted = new Date() >= actualUtcDate;
+            const isMatchStarted = getAdjustedDate() >= actualUtcDate;
 
             // Check prediction input state
             // Unlocked if:
