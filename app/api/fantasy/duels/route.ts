@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireApiAuth } from "@/lib/auth/api-auth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { Redis } from "@upstash/redis";
-import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
+import { ensureTimeSpacedBots, STAGE_START_DATES } from "@/lib/fantasy/bot-registration";
 
 const redis = Redis.fromEnv();
 
@@ -180,8 +180,15 @@ export async function GET(request: Request) {
         });
       };
 
-      const starters1 = await fetchRosterPlayers(rosterId1 || "");
-      const starters2 = await fetchRosterPlayers(rosterId2 || "");
+      const startDateStr = STAGE_START_DATES[stage.toLowerCase()];
+      const isStageStarted = startDateStr ? (new Date() >= new Date(startDateStr)) : false;
+
+      const starters1 = (isStageStarted || userDuel.userId1 === userId)
+        ? await fetchRosterPlayers(rosterId1 || "")
+        : [];
+      const starters2 = (isStageStarted || userDuel.userId2 === userId)
+        ? await fetchRosterPlayers(rosterId2 || "")
+        : [];
 
       // Build live event ticker combined for both teams
       const tickerEvents: Array<{ time: string; player: string; event: string; team: 1 | 2 }> = [];

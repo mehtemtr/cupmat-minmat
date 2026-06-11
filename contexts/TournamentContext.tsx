@@ -17,7 +17,7 @@ import type {
 } from "@/lib/types/tournament";
 import { generateGroupFixtures } from "@/lib/fixtures";
 import { sanitizeStoredMatches } from "@/lib/tournament/sanitize-matches";
-import { TOURNAMENT_DATA_VERSION } from "@/data/teams";
+import { TOURNAMENT_DATA_VERSION, getTeamById } from "@/data/teams";
 import {
   allGroupsComplete,
   buildFullKnockoutBracket,
@@ -27,6 +27,8 @@ import { generateAiPredictions } from "@/lib/ai-predictions";
 import { simulateLiveUpdate } from "@/lib/ai-live-fetcher";
 import { useLocale } from "@/contexts/LocaleContext";
 import { totalPredictionPoints } from "@/lib/predictions/scoring";
+import { playWhistleSound, playGoalSound } from "@/lib/audio";
+import { generateSimulation } from "@/lib/simulation";
 
 const STORAGE_KEY = "wc2026-tournament-state";
 const VERSION_KEY = "wc2026-tournament-version";
@@ -83,6 +85,16 @@ export type TournamentContextValue = {
   simulateRandomLiveNews: (currentGroup: GroupId) => void;
   submitToLeaderboard: () => Promise<void>;
   predictionPoints: number;
+
+  // Global simulation exports
+  simMatchId: string | null;
+  simRunning: boolean;
+  simMinute: number;
+  simScore: { home: number; away: number };
+  simEvents: any[];
+  simAllEvents: any[];
+  startSimulation: (match: any) => void;
+  stopSimulation: () => void;
 };
 
 const TournamentContext = createContext<TournamentContextValue | null>(null);
@@ -119,6 +131,14 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   const [aiAnalyses, setAiAnalyses] = useState<AiAnalysis[]>([]);
   const [ready, setReady] = useState(false);
   const [knockoutBracket, setKnockoutBracket] = useState<KnockoutMatch[]>([]);
+
+  // Global live simulation states
+  const [simMatchId, setSimMatchId] = useState<string | null>(null);
+  const [simRunning, setSimRunning] = useState(false);
+  const [simMinute, setSimMinute] = useState(1);
+  const [simScore, setSimScore] = useState<{ home: number; away: number }>({ home: 0, away: 0 });
+  const [simEvents, setSimEvents] = useState<any[]>([]);
+  const [simAllEvents, setSimAllEvents] = useState<any[]>([]);
 
   useEffect(() => {
     const saved = loadState();
@@ -336,6 +356,77 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     });
   }, [predictions, matches, displayName]);
 
+  const startSimulation = useCallback((match: any) => {
+    const homeTeam = getTeamById(match.homeTeamId);
+    const awayTeam = getTeamById(match.awayTeamId);
+    const homePlayers = homeTeam?.players || [];
+    const awayPlayers = awayTeam?.players || [];
+
+    const eventsList = generateSimulation(match, homePlayers, awayPlayers);
+    
+    setSimMatchId(match.id);
+    setSimMinute(1);
+    setSimScore({ home: 0, away: 0 });
+    setSimAllEvents(eventsList);
+    setSimEvents(eventsList.filter(e => e.minute <= 1));
+    setSimRunning(true);
+    
+    // Play kickoff whistle immediately
+    playWhistleSound("start");
+  }, []);
+
+  const stopSimulation = useCallback(() => {
+    setSimRunning(false);
+    setSimMatchId(null);
+    setSimMinute(1);
+    setSimScore({ home: 0, away: 0 });
+    setSimEvents([]);
+    setSimAllEvents([]);
+  }, []);
+
+  // Global background simulation clock
+  useEffect(() => {
+    if (!simRunning || !simMatchId) return;
+
+    const intervalId = setInterval(() => {
+      setSimMinute((prevMin) => {
+        const nextMin = prevMin + 1;
+        
+        // Play whistle/goal sounds when events occur at nextMin
+        const minuteEvents = simAllEvents.filter((ev) => ev.minute === nextMin);
+        minuteEvents.forEach((ev) => {
+          if (ev.type === "start" || ev.type === "half") {
+            playWhistleSound(ev.type);
+          } else if (ev.type === "end") {
+            playWhistleSound("end");
+          } else if (ev.type === "goal") {
+            playGoalSound();
+          }
+        });
+
+        if (nextMin >= 94) {
+          setSimRunning(false);
+          clearInterval(intervalId);
+        }
+
+        const activeEvents = simAllEvents.filter((ev) => ev.minute <= nextMin);
+        setSimEvents(activeEvents);
+
+        const scoreEvents = activeEvents.filter((ev) => ev.scoreAfter);
+        if (scoreEvents.length > 0) {
+          const latestScore = scoreEvents[scoreEvents.length - 1].scoreAfter;
+          if (latestScore) {
+            setSimScore(latestScore);
+          }
+        }
+
+        return nextMin;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [simRunning, simMatchId, simAllEvents]);
+
   const standingsByGroup = useMemo(
     () => getGroupStandingsMap(matches, predictions),
     [matches, predictions],
@@ -373,6 +464,14 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       simulateRandomLiveNews,
       submitToLeaderboard,
       predictionPoints,
+      simMatchId,
+      simRunning,
+      simMinute,
+      simScore,
+      simEvents,
+      simAllEvents,
+      startSimulation,
+      stopSimulation,
     }),
     [
       ready,
@@ -393,6 +492,14 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       simulateRandomLiveNews,
       submitToLeaderboard,
       predictionPoints,
+      simMatchId,
+      simRunning,
+      simMinute,
+      simScore,
+      simEvents,
+      simAllEvents,
+      startSimulation,
+      stopSimulation,
     ],
   );
 

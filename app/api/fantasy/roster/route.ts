@@ -4,7 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { getOrCreateProfile, getGamificationLeaderboard, getStore } from "@/lib/store/gamification-store";
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Redis } from "@upstash/redis";
-import { ensureTimeSpacedBots } from "@/lib/fantasy/bot-registration";
+import { ensureTimeSpacedBots, STAGE_START_DATES } from "@/lib/fantasy/bot-registration";
 import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic } from "@/lib/fantasy/points";
 
 const redis = Redis.fromEnv();
@@ -100,7 +100,10 @@ export async function GET(request: Request) {
       })
     );
 
-    return NextResponse.json({ success: true, rosters: rostersWithDetails });
+    const startDateStr = STAGE_START_DATES[stage.toLowerCase()];
+    const isLocked = startDateStr ? (new Date() >= new Date(startDateStr)) : false;
+
+    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked });
   } catch (error: any) {
     console.error("GET rosters error:", error);
     return NextResponse.json(
@@ -131,6 +134,20 @@ export async function POST(request: Request) {
       managerId,
       teamIndex = 1,
     } = body;
+
+    // Kickoff lock check
+    const stageKey = stage.toLowerCase();
+    const startDateStr = STAGE_START_DATES[stageKey];
+    if (startDateStr) {
+      const startDate = new Date(startDateStr);
+      const now = new Date();
+      if (now >= startDate) {
+        return NextResponse.json(
+          { error: "Bu aşama başladı. Kadro güncelleme süresi dolmuştur." },
+          { status: 403 }
+        );
+      }
+    }
 
     const mapping = await getPlayerMapping();
     const starters = clientStarters.map((id: string) => translateToUuid(id, mapping)).filter(Boolean);

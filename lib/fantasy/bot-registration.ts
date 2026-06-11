@@ -21,7 +21,7 @@ export const STAGE_START_DATES: Record<string, string> = {
 };
 
 export const BOT_POOL: BotProfile[] = [
-  // 1. Turkish Bot
+  // --- REALISTIC TURKISH BOTS ---
   {
     userId: "bot_user_tr_1",
     email: "kaan.y@cupmat.com",
@@ -30,7 +30,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "tur",
     formation: "4-4-2"
   },
-  // 2. Turkish Bot
   {
     userId: "bot_user_tr_2",
     email: "serkan.k@cupmat.com",
@@ -39,16 +38,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "tur",
     formation: "4-3-3"
   },
-  // 3. USA Bot
-  {
-    userId: "bot_user_usa_1",
-    email: "john.smith@cupmat.com",
-    nickname: "JohnSmith",
-    teamName: "Liberty FC",
-    country: "usa",
-    formation: "4-3-3"
-  },
-  // 4. Turkish Bot
   {
     userId: "bot_user_tr_3",
     email: "yasin.a@cupmat.com",
@@ -57,16 +46,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "tur",
     formation: "3-5-2"
   },
-  // 5. France Bot
-  {
-    userId: "bot_user_fra_1",
-    email: "pierre.dupont@cupmat.com",
-    nickname: "PierreDupont",
-    teamName: "Étoile de Paris",
-    country: "fra",
-    formation: "4-2-3-1"
-  },
-  // 6. Turkish Bot
   {
     userId: "bot_user_tr_4",
     email: "mert.f@cupmat.com",
@@ -75,25 +54,14 @@ export const BOT_POOL: BotProfile[] = [
     country: "tur",
     formation: "4-4-2"
   },
-  // 7. Spain Bot
-  {
-    userId: "bot_user_esp_1",
-    email: "carlos.gomez@cupmat.com",
-    nickname: "CarlosGomez",
-    teamName: "Furia Roja FC",
-    country: "esp",
-    formation: "4-3-3"
-  },
-  // 8. Turkish Bot
   {
     userId: "bot_user_tr_5",
     email: "cemil.f@cupmat.com",
     nickname: "CemilFirtina",
-    teamName: "Fırtına Spor",
+    teamName: "Trabzon Gücü",
     country: "tur",
     formation: "4-2-3-1"
   },
-  // 9. Turkish Bot
   {
     userId: "bot_user_tr_6",
     email: "yigit.s@cupmat.com",
@@ -102,16 +70,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "tur",
     formation: "4-4-2"
   },
-  // 10. Portugal Bot
-  {
-    userId: "bot_user_por_1",
-    email: "joao.silva@cupmat.com",
-    nickname: "JoaoSilva",
-    teamName: "Os Navegadores",
-    country: "por",
-    formation: "4-4-2"
-  },
-  // 11. Turkish Bot
   {
     userId: "bot_user_tr_7",
     email: "hakan.d@cupmat.com",
@@ -120,16 +78,122 @@ export const BOT_POOL: BotProfile[] = [
     country: "tur",
     formation: "4-3-3"
   },
-  // 12. Turkish Bot
   {
     userId: "bot_user_tr_8",
     email: "alperen.e@cupmat.com",
     nickname: "AlperenEfsane",
-    teamName: "Karadeniz Gücü",
+    teamName: "Karadeniz Fırtınası",
     country: "tur",
     formation: "3-5-2"
   },
-  // 13. Mexico Bot
+  {
+    userId: "bot_user_tr_9",
+    email: "burak.y@cupmat.com",
+    nickname: "BurakYilmaz99",
+    teamName: "Liman Spor",
+    country: "tur",
+    formation: "4-4-2"
+  },
+  {
+    userId: "bot_user_tr_10",
+    email: "umut.b@cupmat.com",
+    nickname: "UmutBulut",
+    teamName: "Ankara Gücü",
+    country: "tur",
+    formation: "4-3-3"
+  },
+  {
+    userId: "bot_user_tr_11",
+    email: "omer.c@cupmat.com",
+    nickname: "OmerCelik",
+    teamName: "Zirve Yolcuları",
+    country: "tur",
+    formation: "4-4-2"
+  },
+  {
+    userId: "bot_user_tr_12",
+    email: "selim.a@cupmat.com",
+    nickname: "SelimAksoy",
+    teamName: "Ege Fırtınası",
+    country: "tur",
+    formation: "4-2-3-1"
+  },
+  {
+    userId: "bot_user_tr_13",
+    email: "tolgahan.a@cupmat.com",
+    nickname: "TolgahanAslan",
+    teamName: "Toros Kaplanları",
+    country: "tur",
+    formation: "3-4-3"
+  },
+
+  // --- OBVIOUS BOT PROFILES (3-5 bots) ---
+  {
+    userId: "bot_user_ai_1",
+    email: "ai.taktik@cupmat.com",
+    nickname: "TaktikBot_AI",
+    teamName: "Robo Coach FC",
+    country: "tur",
+    formation: "4-4-2"
+  },
+  {
+    userId: "bot_user_ai_2",
+    email: "ai.cupmat@cupmat.com",
+    nickname: "CUPMAT_Algoritma",
+    teamName: "Binary Striker FC",
+    country: "usa",
+    formation: "4-3-3"
+  },
+  {
+    userId: "bot_user_ai_3",
+    email: "ai.coach@cupmat.com",
+    nickname: "AI_Coach_2026",
+    teamName: "Neural Network Athletic",
+    country: "ger",
+    formation: "3-5-2"
+  },
+  {
+    userId: "bot_user_ai_4",
+    email: "ai.robo@cupmat.com",
+    nickname: "RoboTrainer_Cup",
+    teamName: "Deep Learning United",
+    country: "fra",
+    formation: "4-2-3-1"
+  },
+
+  // --- INTERNATIONAL BOTS ---
+  {
+    userId: "bot_user_usa_1",
+    email: "john.smith@cupmat.com",
+    nickname: "JohnSmith",
+    teamName: "Liberty FC",
+    country: "usa",
+    formation: "4-3-3"
+  },
+  {
+    userId: "bot_user_fra_1",
+    email: "pierre.dupont@cupmat.com",
+    nickname: "PierreDupont",
+    teamName: "Étoile de Paris",
+    country: "fra",
+    formation: "4-2-3-1"
+  },
+  {
+    userId: "bot_user_esp_1",
+    email: "carlos.gomez@cupmat.com",
+    nickname: "CarlosGomez",
+    teamName: "Furia Roja FC",
+    country: "esp",
+    formation: "4-3-3"
+  },
+  {
+    userId: "bot_user_por_1",
+    email: "joao.silva@cupmat.com",
+    nickname: "JoaoSilva",
+    teamName: "Os Navegadores",
+    country: "por",
+    formation: "4-4-2"
+  },
   {
     userId: "bot_user_mex_1",
     email: "javier.h@cupmat.com",
@@ -138,7 +202,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "mex",
     formation: "4-3-3"
   },
-  // 14. Brazil Bot
   {
     userId: "bot_user_bra_1",
     email: "thiago.s@cupmat.com",
@@ -147,7 +210,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "bra",
     formation: "4-2-3-1"
   },
-  // 15. Argentina Bot
   {
     userId: "bot_user_arg_1",
     email: "lucas.m@cupmat.com",
@@ -156,7 +218,6 @@ export const BOT_POOL: BotProfile[] = [
     country: "arg",
     formation: "4-3-3"
   },
-  // 16. England Bot
   {
     userId: "bot_user_eng_1",
     email: "harry.w@cupmat.com",
@@ -164,6 +225,22 @@ export const BOT_POOL: BotProfile[] = [
     teamName: "Three Lions FC",
     country: "eng",
     formation: "4-4-2"
+  },
+  {
+    userId: "bot_user_ger_1",
+    email: "hans.m@cupmat.com",
+    nickname: "HansMueller",
+    teamName: "Munich Eagle FC",
+    country: "ger",
+    formation: "4-4-2"
+  },
+  {
+    userId: "bot_user_ita_1",
+    email: "giovanni.r@cupmat.com",
+    nickname: "GiovanniRossi",
+    teamName: "Milano Gladiators",
+    country: "ita",
+    formation: "3-5-2"
   }
 ];
 
@@ -213,10 +290,10 @@ export async function ensureTimeSpacedBots(stage: string, forceAll = false): Pro
       const startTimeStr = STAGE_START_DATES[stage] || "2026-06-08T19:23:00+03:00";
       const startTime = new Date(startTimeStr);
       const elapsedMs = Date.now() - startTime.getTime();
-      const elapsedDays = Math.max(0, Math.floor(elapsedMs / (24 * 60 * 60 * 1000)));
+      const elapsedMinutes = Math.max(0, Math.floor(elapsedMs / (15 * 60 * 1000)));
 
-      // 1 bot per 24 hours (day)
-      botsAllowed = Math.min(maxBotsNeeded, elapsedDays + 1);
+      // 1 bot per 15 minutes, starting with 4 bots initially
+      botsAllowed = Math.min(maxBotsNeeded, elapsedMinutes + 4);
     }
 
     if (botsAllowed <= 0) return;

@@ -6,7 +6,7 @@ import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useState, useEffect, useMemo } from "react";
 import { getAllPlayers } from "@/data/teams";
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
-import { Shield, Users, Award, Calendar, Settings, Play, CheckCircle, AlertTriangle, ArrowRight, Star, RefreshCw } from "lucide-react";
+import { Shield, Users, Award, Calendar, Settings, Play, CheckCircle, AlertTriangle, ArrowRight, Star, RefreshCw, Lock } from "lucide-react";
 
 // Position mapper helper
 function getGeneralPosition(pos: string): "GK" | "DEF" | "MID" | "FWD" {
@@ -101,6 +101,7 @@ export default function FantasyPage() {
   const [userDuel, setUserDuel] = useState<any>(null);
   const [commonMindXI, setCommonMindXI] = useState<any[]>([]);
   const [registeredTeams, setRegisteredTeams] = useState<any[]>([]);
+  const [isStageLocked, setIsStageLocked] = useState<boolean>(false);
 
   // UI state
   const [teaserBypass, setTeaserBypass] = useState(false);
@@ -218,37 +219,43 @@ export default function FantasyPage() {
       // 2. Fetch rosters
       const resRosters = await fetch(`/api/fantasy/roster?stage=${stage}`);
       const dataRosters = await resRosters.json();
-      if (dataRosters.success && dataRosters.rosters) {
-        const activeRoster = dataRosters.rosters.find((r: any) => r.team_index === teamIndex);
-        if (activeRoster) {
-          setOriginalRoster(activeRoster);
-          setTeamName(activeRoster.team_name || "");
-          setFormation(activeRoster.formation || "4-4-2");
-          setSelectedManager(activeRoster.manager_id || null);
-          
-          // Rebuild starters array
-          const newStarters = Array(11).fill(null);
-          (activeRoster.starters || []).forEach((p: any, idx: number) => {
-            if (p && p.id) newStarters[idx] = p.id;
-          });
-          setStarters(newStarters);
+      if (dataRosters.success) {
+        setIsStageLocked(!!dataRosters.isLocked);
+        if (dataRosters.rosters) {
+          const activeRoster = dataRosters.rosters.find((r: any) => r.team_index === teamIndex);
+          if (activeRoster) {
+            setOriginalRoster(activeRoster);
+            setTeamName(activeRoster.team_name || "");
+            setFormation(activeRoster.formation || "4-4-2");
+            setSelectedManager(activeRoster.manager_id || null);
+            
+            // Rebuild starters array
+            const newStarters = Array(11).fill(null);
+            (activeRoster.starters || []).forEach((p: any, idx: number) => {
+              if (p && p.id) newStarters[idx] = p.id;
+            });
+            setStarters(newStarters);
 
-          // Rebuild bench array
-          const newBench = Array(dataUnlock.benchSlots).fill(null);
-          (activeRoster.bench || []).forEach((p: any, idx: number) => {
-            if (p && p.id && idx < newBench.length) newBench[idx] = p.id;
-          });
-          setBench(newBench);
+            // Rebuild bench array
+            const newBench = Array(dataUnlock.benchSlots).fill(null);
+            (activeRoster.bench || []).forEach((p: any, idx: number) => {
+              if (p && p.id && idx < newBench.length) newBench[idx] = p.id;
+            });
+            setBench(newBench);
+          } else {
+            setOriginalRoster(null);
+            // Clear
+            setTeamName("");
+            setStarters(Array(11).fill(null));
+            setBench(Array(dataUnlock.benchSlots).fill(null));
+            setSelectedManager(null);
+          }
         } else {
           setOriginalRoster(null);
-          // Clear
-          setTeamName("");
-          setStarters(Array(11).fill(null));
-          setBench(Array(dataUnlock.benchSlots).fill(null));
-          setSelectedManager(null);
         }
       } else {
         setOriginalRoster(null);
+        setIsStageLocked(false);
       }
 
       // 3. Fetch duels / standings
@@ -408,6 +415,7 @@ export default function FantasyPage() {
 
   // Open player drawer modal
   const openSelector = (slotIndex: number, isBench: boolean, position: "GK" | "DEF" | "MID" | "FWD") => {
+    if (isStageLocked) return;
     setSelectorModal({
       isOpen: true,
       slotIndex,
@@ -436,6 +444,7 @@ export default function FantasyPage() {
   };
 
   const removePlayer = (slotIndex: number, isBench: boolean) => {
+    if (isStageLocked) return;
     if (isBench) {
       const newBench = [...bench];
       newBench[slotIndex] = null;
@@ -449,6 +458,7 @@ export default function FantasyPage() {
 
   // Save Roster to database
   const saveRoster = async () => {
+    if (isStageLocked) return;
     setSaveStatus(null);
     const filledStarters = starters.filter(Boolean);
     if (filledStarters.length < 11) {
@@ -802,9 +812,10 @@ export default function FantasyPage() {
                 {t("fantasy.formationSelectorLabel")}
               </label>
               <select
+                disabled={isStageLocked}
                 value={formation}
                 onChange={(e) => setFormation(e.target.value)}
-                className="bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500"
+                className={`bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border focus:outline-none focus:border-emerald-500 ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
               >
                 <option value="4-4-2">4-4-2</option>
                 <option value="4-3-3">4-3-3</option>
@@ -821,13 +832,21 @@ export default function FantasyPage() {
             {/* Team details name input */}
             <div className="mb-6">
               <input
+                disabled={isStageLocked}
                 type="text"
                 placeholder={t("fantasy.teamNamePlaceholder")}
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
-                className="bg-slate-950 text-white font-extrabold text-lg px-4 py-3 rounded-2xl border border-slate-800 focus:outline-none focus:border-emerald-500 w-full"
+                className={`bg-slate-950 text-white font-extrabold text-lg px-4 py-3 rounded-2xl border focus:outline-none focus:border-emerald-500 w-full ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
               />
             </div>
+
+            {isStageLocked && (
+              <div className="mb-6 bg-amber-500/10 border border-amber-500/20 text-amber-400 p-4 rounded-2xl flex items-center gap-2.5 text-xs font-bold shadow-lg shadow-amber-500/5">
+                <Lock className="w-4.5 h-4.5 shrink-0" />
+                <span>{t("fantasy.stageLockedAlert")}</span>
+              </div>
+            )}
 
             {/* Visual Football Pitch */}
             <div className="bg-gradient-to-b from-emerald-950 to-emerald-900 relative rounded-3xl border border-emerald-800/80 shadow-2xl p-4 overflow-hidden aspect-[4/5] md:aspect-[3/4]">
@@ -850,18 +869,19 @@ export default function FantasyPage() {
                     return (
                       <button
                         key={i}
+                        disabled={isStageLocked}
                         onClick={() => openSelector(i, false, "FWD")}
-                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                        className={`flex flex-col items-center justify-center scale-90 transition-all duration-300 relative group ${isStageLocked ? "cursor-default opacity-85" : "hover:scale-100"}`}
                       >
                         <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
                           p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
                         }`}>
-                          {p ? p.name.charAt(0) : "+"}
+                          {p ? p.name.charAt(0) : (isStageLocked ? <Lock className="w-3.5 h-3.5" /> : "+")}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
                           {p ? p.name : t("fantasy.forward")}
                         </span>
-                        {p && (
+                        {p && !isStageLocked && (
                           <div
                             onClick={(e) => { e.stopPropagation(); removePlayer(i, false); }}
                             className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
@@ -882,18 +902,19 @@ export default function FantasyPage() {
                     return (
                       <button
                         key={i}
+                        disabled={isStageLocked}
                         onClick={() => openSelector(i, false, "MID")}
-                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                        className={`flex flex-col items-center justify-center scale-90 transition-all duration-300 relative group ${isStageLocked ? "cursor-default opacity-85" : "hover:scale-100"}`}
                       >
                         <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
                           p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
                         }`}>
-                          {p ? p.name.charAt(0) : "+"}
+                          {p ? p.name.charAt(0) : (isStageLocked ? <Lock className="w-3.5 h-3.5" /> : "+")}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
                           {p ? p.name : t("fantasy.midfielder")}
                         </span>
-                        {p && (
+                        {p && !isStageLocked && (
                           <div
                             onClick={(e) => { e.stopPropagation(); removePlayer(i, false); }}
                             className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
@@ -914,18 +935,19 @@ export default function FantasyPage() {
                     return (
                       <button
                         key={i}
+                        disabled={isStageLocked}
                         onClick={() => openSelector(i, false, "DEF")}
-                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                        className={`flex flex-col items-center justify-center scale-90 transition-all duration-300 relative group ${isStageLocked ? "cursor-default opacity-85" : "hover:scale-100"}`}
                       >
                         <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
                           p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
                         }`}>
-                          {p ? p.name.charAt(0) : "+"}
+                          {p ? p.name.charAt(0) : (isStageLocked ? <Lock className="w-3.5 h-3.5" /> : "+")}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
                           {p ? p.name : t("fantasy.defender")}
                         </span>
-                        {p && (
+                        {p && !isStageLocked && (
                           <div
                             onClick={(e) => { e.stopPropagation(); removePlayer(i, false); }}
                             className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
@@ -944,18 +966,19 @@ export default function FantasyPage() {
                     const p = detailedStarters[0];
                     return (
                       <button
+                        disabled={isStageLocked}
                         onClick={() => openSelector(0, false, "GK")}
-                        className="flex flex-col items-center justify-center scale-90 hover:scale-100 transition-all duration-300 relative group"
+                        className={`flex flex-col items-center justify-center scale-90 transition-all duration-300 relative group ${isStageLocked ? "cursor-default opacity-85" : "hover:scale-100"}`}
                       >
                         <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black border-2 shadow-lg ${
                           p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-emerald-950/60 border-dashed border-emerald-600 text-emerald-600"
                         }`}>
-                          {p ? p.name.charAt(0) : "+"}
+                          {p ? p.name.charAt(0) : (isStageLocked ? <Lock className="w-3.5 h-3.5" /> : "+")}
                         </div>
                         <span className="text-[10px] text-white font-extrabold bg-slate-950/80 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
                           {p ? p.name : t("fantasy.goalkeeper")}
                         </span>
-                        {p && (
+                        {p && !isStageLocked && (
                           <div
                             onClick={(e) => { e.stopPropagation(); removePlayer(0, false); }}
                             className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
@@ -980,18 +1003,19 @@ export default function FantasyPage() {
                     return (
                       <button
                         key={idx}
+                        disabled={isStageLocked}
                         onClick={() => openSelector(idx, true, p ? getGeneralPosition(p.position) : getBenchDefaultPosition(idx, allowedBenchSlots))}
-                        className="flex flex-col items-center justify-center relative group"
+                        className={`flex flex-col items-center justify-center relative group ${isStageLocked ? "cursor-default opacity-85" : "hover:scale-105"}`}
                       >
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black border-2 shadow-md ${
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black border-2 shadow-md transition-all ${
                           p ? "bg-slate-900 border-emerald-500 text-emerald-400" : "bg-slate-950/60 border-dashed border-slate-700 text-slate-500"
                         }`}>
-                          {p ? p.name.charAt(0) : "+"}
+                          {p ? p.name.charAt(0) : (isStageLocked ? <Lock className="w-3.5 h-3.5" /> : "+")}
                         </div>
                         <span className="text-[9px] text-slate-300 font-extrabold bg-slate-950/40 px-2 py-0.5 rounded-lg mt-1 max-w-[80px] truncate">
                           {p ? p.name : t("fantasy.benchUnit")}
                         </span>
-                        {p && (
+                        {p && !isStageLocked && (
                           <div
                             onClick={(e) => { e.stopPropagation(); removePlayer(idx, true); }}
                             className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full text-[9px] text-white flex items-center justify-center font-bold"
@@ -1017,10 +1041,22 @@ export default function FantasyPage() {
               )}
               <div className="w-full md:w-auto flex gap-3 ml-auto">
                 <button
+                  disabled={isStageLocked}
                   onClick={saveRoster}
-                  className="w-full md:w-auto px-6 py-3.5 bg-emerald-500 text-slate-950 hover:bg-emerald-400 font-black rounded-2xl shadow-lg transition-all"
+                  className={`w-full md:w-auto px-6 py-3.5 font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 ${
+                    isStageLocked
+                      ? "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/60 opacity-80"
+                      : "bg-emerald-500 text-slate-950 hover:bg-emerald-400"
+                  }`}
                 >
-                  {t("fantasy.saveBtn")}
+                  {isStageLocked ? (
+                    <>
+                      <Lock className="w-4 h-4" />
+                      Kadro Güncelleme Kilitli
+                    </>
+                  ) : (
+                    t("fantasy.saveBtn")
+                  )}
                 </button>
               </div>
             </div>

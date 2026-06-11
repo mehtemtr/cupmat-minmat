@@ -284,6 +284,7 @@
     "saveSuccess": "Kadro başarıyla kaydedildi!",
     "saveError": "Kadro kaydedilirken hata oluştu.",
     "saveBtn": "Kadroyu Kaydet 💾",
+    "stageLockedAlert": "Bu aşama başladığı için kadro güncellemeleri kilitlenmiştir.",
     "startersRequired": "Kadronuzu kaydetmek için 11 ilk 11 oyuncusunu da seçmelisiniz.",
     "teamNameRequired": "Kadro adı girilmelidir.",
     "countryLimitPassed": "Ülke limiti aşıldı! Seçilen aşamada bir ülkeden en fazla {limit} oyuncu seçebilirsiniz. Aşım yapılan ülkeler: {countries}",

@@ -287,6 +287,7 @@
     "saveSuccess": "Roster saved successfully!",
     "saveError": "Error saving roster.",
     "saveBtn": "Save Roster 💾",
+    "stageLockedAlert": "이 스테이지가 이미 시작되었으므로 스쿼드 업데이트가 잠겼습니다.",
     "startersRequired": "You must select all 11 starters to save your roster.",
     "teamNameRequired": "Team name must be entered.",
     "countryLimitPassed": "Country limit exceeded! You can select at most {limit} players from a single country in the selected stage. Exceeded countries: {countries}",
