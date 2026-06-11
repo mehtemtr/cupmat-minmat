@@ -45,7 +45,7 @@ export function buildFullKnockoutBracket(
 function buildR32Matches(qualifiers: string[]): KnockoutMatch[] {
   const matches: KnockoutMatch[] = [];
   for (let i = 0; i < 16; i++) {
-    const date = new Date(2026, 5, 28 + Math.floor(i / 4));
+    const date = new Date(Date.UTC(2026, 5, 28 + Math.floor(i / 4)));
     matches.push({
       id: `r32-${i + 1}`,
       round: "r32",
@@ -84,7 +84,7 @@ function buildNextRound(
     const homeTeamId = prev1 ? getWinner(prev1.id, prev1.homeTeamId, prev1.awayTeamId, predictions) : null;
     const awayTeamId = prev2 ? getWinner(prev2.id, prev2.homeTeamId, prev2.awayTeamId, predictions) : null;
 
-    const date = new Date(2026, 6, roundDates[roundType] + Math.floor(i / 2));
+    const date = new Date(Date.UTC(2026, 6, roundDates[roundType] + Math.floor(i / 2)));
 
     const p = predictions[`${roundType}-${i + 1}`];
 

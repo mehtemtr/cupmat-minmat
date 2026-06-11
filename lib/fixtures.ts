@@ -24,8 +24,8 @@ export function generateGroupFixtures(): MatchResult[] {
 
     pairs.forEach(([home, away], index) => {
       // Simple logic: 4 matches per day
-      const date = new Date(2026, 5, 11);
-      date.setDate(date.getDate() + Math.floor(dayOffset / 4));
+      const date = new Date(Date.UTC(2026, 5, 11));
+      date.setUTCDate(date.getUTCDate() + Math.floor(dayOffset / 4));
       
       matches.push({
         id: `${group}-${index + 1}`,
