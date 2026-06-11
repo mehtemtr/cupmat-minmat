@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
 import { useTranslation } from "@/contexts/LocaleContext";
 
-const KICKOFF = new Date("2026-06-11T05:00:00+03:00").getTime();
+const KICKOFF = new Date("2026-06-11T22:00:00+03:00").getTime();
 
 type TimeLeft = {
   days: number;
