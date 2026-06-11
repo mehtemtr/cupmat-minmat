@@ -3,8 +3,8 @@ import { generateGroupFixtures } from "../lib/fixtures";
 import { generateSimulation } from "../lib/simulation";
 import { calculatePlayerPoints, getGeneralPosition } from "../lib/fantasy/points";
 
-// Mock clock time (from user metadata)
-const MOCK_CURRENT_TIME = new Date("2026-06-11T23:44:37+03:00").getTime();
+// Current system time for syncing stats
+const MOCK_CURRENT_TIME = Date.now();
 
 // Helper to convert TSİ match time to UTC timestamp
 function getMatchKickoff(dateStr: string, timeStr: string): number {
@@ -97,7 +97,44 @@ async function run() {
     console.log(`  Simulated Score: ${homeGoals} - ${awayGoals}`);
 
     // Map positions helper
-    const getStarter11 = (players: any[]) => {
+    // Map positions helper
+    const getStarter11 = (players: any[], teamId: string) => {
+      if (match.id === "A-1") {
+        let starterIds: string[] = [];
+        if (teamId === "mex") {
+          starterIds = [
+            "3b5c9749-c76d-4d48-8e9d-46a09eb933ea", // Guillermo Ochoa
+            "d2cebdb2-8859-496c-9cc0-79bcc4f0601a", // César Montes
+            "c5a3e47a-b756-4596-b8f8-eadd9a08fc1d", // Johan Vásquez
+            "3519ded9-cf9a-4e70-9e4c-dd4b08d25525", // Jesús Gallardo
+            "3d0994b5-4bd1-4072-a0bb-34a4c12013e9", // Jorge Sánchez
+            "936ef0f7-d0c3-47f4-b800-8ed877588bf6", // Edson Álvarez
+            "a4b2c7c2-a855-42f2-bb7c-9af4de4eacf0", // Luis Romo
+            "8dd2867b-4eb1-4379-8838-787e8b5b2ee2", // Luis Chávez
+            "5b9e5d7c-b6b9-426b-beb9-3458e1eb2b3f", // Orbelín Pineda
+            "ddc7eb31-b167-4cff-af09-d60634badab4", // Raúl Jiménez
+            "02c75abe-396a-4d19-b878-a5e3867d125d"  // Julián Quiñones
+          ];
+        } else if (teamId === "rsa") {
+          starterIds = [
+            "dfc2e4af-a47c-4073-9a80-730419bed478", // Ronwen Williams
+            "722682a8-95a0-451b-bede-587e9b852773", // Aubrey Modiba
+            "afe2e14b-07c7-42f4-83ec-4bf4614a4028", // Khuliso Mudau
+            "49b6d45b-5e71-4e02-9e1d-11a59176b7af", // Thabang Matuludi
+            "39a27d39-2c67-48e9-b56c-5ce3914760ba", // Nkosinathi Sibisi
+            "16b6459d-5ecb-4d26-ba48-738deef36824", // Teboho Mokoena
+            "9c675a1f-9097-4ebe-9d9d-651c9fbc38e7", // Jayden Adams
+            "12082431-c39b-4f14-b8c9-c313be858ae1", // Yaya Sithole
+            "33b26f3f-7377-4a7c-a65a-6f66c123c2e6", // Relebohile Mofokeng
+            "7b3be35c-7c80-44ff-9351-b7b45c453e19", // Themba Zwane
+            "b74fb591-440c-40d4-ad4e-b7ceca7ba0fd"  // Lyle Foster
+          ];
+        }
+        const starters = players.filter(p => starterIds.includes(p.id));
+        const bench = players.filter(p => !starterIds.includes(p.id));
+        return { starters, bench };
+      }
+
       const gks = players.filter(p => getGeneralPosition(p.player_position) === "GK").slice(0, 1);
       const defs = players.filter(p => getGeneralPosition(p.player_position) === "DEF").slice(0, 4);
       const mids = players.filter(p => getGeneralPosition(p.player_position) === "MID").slice(0, 4);
@@ -109,8 +146,8 @@ async function run() {
       return { starters, bench };
     };
 
-    const homeSquad = getStarter11(homePlayers);
-    const awaySquad = getStarter11(awayPlayers);
+    const homeSquad = getStarter11(homePlayers, match.homeTeamId);
+    const awaySquad = getStarter11(awayPlayers, match.awayTeamId);
 
     // Initialize player stats map
     const statsMap: Record<string, any> = {};
@@ -154,15 +191,29 @@ async function run() {
           console.log(`    Goal Scorer: ${scorer.player_name}`);
         }
       } else if (ev.type === "card") {
-        const bookedName = ev.textTr.split("Sarı Kart: ")[1]?.split(" rakibine")[0]?.trim() || 
-                           ev.textEn.split("Yellow Card: ")[1]?.split(" receives")[0]?.trim() || "";
+        const isRed = ev.textTr.includes("Kırmızı Kart") || ev.textEn.includes("Red Card") || ev.isRedCard;
+        let bookedName = "";
+        if (isRed) {
+          bookedName = ev.textTr.split("Kırmızı Kart gören oyuncu: ")[1]?.replace(".", "")?.trim() || 
+                       ev.textEn.split("Red Card for ")[1]?.replace(".", "")?.trim() || "";
+        } else {
+          bookedName = ev.textTr.split("Sarı Kart: ")[1]?.split(" rakibine")[0]?.trim() || 
+                       ev.textEn.split("Yellow Card: ")[1]?.split(" receives")[0]?.trim() || "";
+        }
 
         const booked = homePlayers.find(p => p.player_name.includes(bookedName)) || 
                        awayPlayers.find(p => p.player_name.includes(bookedName));
 
         if (booked && statsMap[booked.id]) {
-          statsMap[booked.id].yellow_cards++;
-          console.log(`    Yellow Card: ${booked.player_name}`);
+          if (isRed) {
+            statsMap[booked.id].red_cards++;
+            // A red carded player only plays up to the card minute
+            statsMap[booked.id].minutes_played = ev.minute;
+            console.log(`    Red Card: ${booked.player_name} at minute ${ev.minute}`);
+          } else {
+            statsMap[booked.id].yellow_cards++;
+            console.log(`    Yellow Card: ${booked.player_name}`);
+          }
         }
       } else if (ev.type === "sub") {
         // substitution
@@ -221,8 +272,21 @@ async function run() {
     updateTeamOutcomes(homePlayers, homeSquad.starters, awayGoals, homeGoals, homeResult);
     updateTeamOutcomes(awayPlayers, awaySquad.starters, homeGoals, awayGoals, awayResult);
 
+    // Clear old player stats for these teams in this stage before upserting new ones
+    const playerIdsToClear = [...homePlayers, ...awayPlayers].map(p => p.id);
+    console.log(`  Clearing old player stats for ${playerIdsToClear.length} players...`);
+    const { error: deleteErr } = await supabaseAdmin
+      .from("player_stage_stats")
+      .delete()
+      .eq("stage", stage)
+      .in("player_id", playerIdsToClear);
+
+    if (deleteErr) {
+      console.error("  Error clearing old player stats:", deleteErr);
+    }
+
     // Upsert player stage stats to Supabase
-    const playerStatsArray = Object.values(statsMap).filter(s => s.minutes_played > 0 || s.goals > 0 || s.yellow_cards > 0);
+    const playerStatsArray = Object.values(statsMap).filter(s => s.minutes_played > 0 || s.goals > 0 || s.yellow_cards > 0 || s.red_cards > 0);
     console.log(`  Upserting ${playerStatsArray.length} player stats to player_stage_stats...`);
 
     const { error: upsertErr } = await supabaseAdmin

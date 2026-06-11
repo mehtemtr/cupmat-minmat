@@ -9,9 +9,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Mexico City Stadı",
     "id": "A-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 0
   },
   {
     "group": "A",

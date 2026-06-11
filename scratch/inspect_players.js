@@ -20,19 +20,18 @@ const supabaseServiceKey = getEnv('SUPABASE_SERVICE_ROLE_KEY');
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function run() {
-  const { data, error } = await supabase
-    .from('player_stage_stats')
-    .select('player_id, goals, yellow_cards, red_cards, clean_sheet, minutes_played, team_rosters(player_name, team_id, player_position)')
-    .eq('stage', 'matchday_1');
-
-  if (error) {
-    console.error("Error:", error);
-  } else {
-    console.log(`Found ${data.length} records in player_stage_stats for matchday_1:`);
-    data.forEach(d => {
-      const p = d.team_rosters || {};
-      console.log(`- ${p.player_name || d.player_id} (${p.team_id}, ${p.player_position}): Goals: ${d.goals}, YC: ${d.yellow_cards}, RC: ${d.red_cards}, CS: ${d.clean_sheet}, Mins: ${d.minutes_played}`);
-    });
+  const teams = ['mex', 'rsa'];
+  for (const team of teams) {
+    const { data, error } = await supabase
+      .from('team_rosters')
+      .select('id, player_name, player_position, team_id')
+      .eq('team_id', team);
+    if (error) {
+      console.error(`Error for ${team}:`, error.message);
+    } else {
+      console.log(`Roster for ${team} (${data.length} players):`);
+      data.forEach(p => console.log(`  ${p.id} - ${p.player_name} (${p.player_position})`));
+    }
   }
 }
 

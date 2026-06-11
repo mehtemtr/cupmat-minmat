@@ -1015,6 +1015,8 @@ export default function StatisticsPage() {
                       [...activeCommEvents].reverse().map((ev, idx) => {
                         const isGoal = ev.type === "goal";
                         const isCard = ev.type === "card";
+                        const isRedCard = isCard && (ev.isRedCard || ev.textTr?.includes("Kırmızı Kart") || ev.textEn?.includes("Red Card") || ev.textTr?.includes("🟥") || ev.textEn?.includes("🟥"));
+                        const isYellowCard = isCard && !isRedCard;
                         const isStartOrEnd = ev.type === "start" || ev.type === "end" || ev.type === "half";
 
                         return (
@@ -1023,11 +1025,13 @@ export default function StatisticsPage() {
                             className={`flex gap-4 p-3.5 rounded-xl border transition-all duration-300 animate-slideUp ${
                               isGoal 
                                 ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-                                : isCard
-                                  ? "bg-amber-500/10 border-amber-500/20 text-amber-300"
-                                  : isStartOrEnd
-                                    ? "bg-blue-500/10 border-blue-500/20 text-blue-300"
-                                    : "bg-white/[0.02] border-white/5 text-zinc-300"
+                                : isRedCard
+                                  ? "bg-red-500/10 border-red-500/20 text-red-400"
+                                  : isYellowCard
+                                    ? "bg-amber-500/10 border-amber-500/20 text-amber-300"
+                                    : isStartOrEnd
+                                      ? "bg-blue-500/10 border-blue-500/20 text-blue-300"
+                                      : "bg-white/[0.02] border-white/5 text-zinc-300"
                             }`}
                           >
                             <div className="font-mono font-extrabold text-sm shrink-0 bg-black/30 w-10 h-7 flex items-center justify-center rounded border border-white/5">
