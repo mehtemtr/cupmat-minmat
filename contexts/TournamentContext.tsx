@@ -122,6 +122,24 @@ function loadState(): Partial<TournamentState> {
   }
 }
 
+function getDeterministicRewardMinutes(matchId: string, isTurkeyOrLate: boolean) {
+  let hash = 0;
+  for (let i = 0; i < matchId.length; i++) {
+    hash = matchId.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const numRewards = isTurkeyOrLate ? 3 : 2;
+  const mins: number[] = [];
+  let s = Math.abs(hash);
+  while (mins.length < numRewards) {
+    s = (s * 9301 + 49297) % 233280;
+    const min = Math.floor((s / 233280) * 87) + 2; // [2, 88]
+    if (!mins.includes(min)) {
+      mins.push(min);
+    }
+  }
+  return mins;
+}
+
 export function TournamentProvider({ children }: { children: React.ReactNode }) {
   const { locale } = useLocale();
   const [matches, setMatches] = useState<MatchResult[]>(generateGroupFixtures);
@@ -492,30 +510,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     // Play kickoff whistle immediately
     playWhistleSound("start");
 
-    // Dynamic Reward Spawn minute generation
-    const isTurkeyMatch =
-      String(match.homeTeamId || "").toLowerCase() === "tur" ||
-      String(match.awayTeamId || "").toLowerCase() === "tur" ||
-      String(match.homeTeam?.id || "").toLowerCase() === "tur" ||
-      String(match.awayTeam?.id || "").toLowerCase() === "tur";
-
-    const stageStr = String(match.stage || match.id || "").toLowerCase();
-    const isLateKnockout =
-      stageStr.includes("quarter") ||
-      stageStr.includes("semi") ||
-      stageStr.includes("final") ||
-      stageStr.includes("qf") ||
-      stageStr.includes("sf");
-
-    const numRewards = (isTurkeyMatch || isLateKnockout) ? 3 : 2;
-    const mins: number[] = [];
-    while (mins.length < numRewards) {
-      const randomMin = Math.floor(Math.random() * 87) + 2; // [2, 88]
-      if (!mins.includes(randomMin)) {
-        mins.push(randomMin);
-      }
-    }
-    updateSimRewardMinutes(mins);
+    // Clear simulation reward states for manual simulation runs
+    updateSimRewardMinutes([]);
     updateSimClaimedMinutes([]);
     updateSimMissedMinutes([]);
     updateActiveReward(null);
@@ -569,28 +565,11 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
 
 
 
-  // Global background simulation clock
+  // Global background simulation clock (simplified, no rewards)
   useEffect(() => {
     if (!simRunning || !simMatchId) return;
 
     const intervalId = setInterval(() => {
-      // If there is an active reward, tick its duration instead of game minutes
-      const activeRew = activeRewardRef.current;
-      if (activeRew) {
-        const nextDur = activeRew.durationLeft - 1;
-        if (nextDur <= 0) {
-          // Missed!
-          updateSimMissedMinutes([...missedMinutesRef.current, activeRew.minute]);
-          updateActiveReward(null);
-        } else {
-          updateActiveReward({
-            ...activeRew,
-            durationLeft: nextDur,
-          });
-          return; // Skip incrementing match minute
-        }
-      }
-
       setSimMinute((prevMin) => {
         const nextMin = prevMin + 1;
         
@@ -605,22 +584,6 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
             playGoalSound();
           }
         });
-
-        // Trigger reward popups at specific minutes
-        const rewardMins = rewardMinutesRef.current;
-        if (
-          rewardMins.includes(nextMin) &&
-          !claimedMinutesRef.current.includes(nextMin) &&
-          !missedMinutesRef.current.includes(nextMin)
-        ) {
-          const rewardTypes: Array<"time" | "life" | "score"> = ["time", "life", "score"];
-          const randomType = rewardTypes[Math.floor(Math.random() * rewardTypes.length)];
-          updateActiveReward({
-            minute: nextMin,
-            type: randomType,
-            durationLeft: 15,
-          });
-        }
 
         if (nextMin >= 94) {
           setSimRunning(false);
@@ -644,6 +607,76 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
 
     return () => clearInterval(intervalId);
   }, [simRunning, simMatchId, simAllEvents]);
+
+  // Active reward countdown timer (runs whenever there is an active reward popup)
+  useEffect(() => {
+    if (!activeReward) return;
+
+    const intervalId = setInterval(() => {
+      const activeRew = activeRewardRef.current;
+      if (activeRew) {
+        const nextDur = activeRew.durationLeft - 1;
+        if (nextDur <= 0) {
+          // Missed!
+          updateSimMissedMinutes([...missedMinutesRef.current, activeRew.minute]);
+          updateActiveReward(null);
+        } else {
+          updateActiveReward({
+            ...activeRew,
+            durationLeft: nextDur,
+          });
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [activeReward]);
+
+  // Real-world live match reward trigger check
+  useEffect(() => {
+    if (simRunning) return; // Skip if user is running manual simulation
+
+    // Find currently active real live match (if any)
+    const liveMatch = simulatedMatches.find(m => m.isLive);
+    if (!liveMatch) return;
+
+    const isTurkeyMatch =
+      String(liveMatch.homeTeamId || "").toLowerCase() === "tur" ||
+      String(liveMatch.awayTeamId || "").toLowerCase() === "tur";
+
+    const stageStr = String(liveMatch.id || "").toLowerCase();
+    const isLateKnockout =
+      stageStr.includes("quarter") ||
+      stageStr.includes("semi") ||
+      stageStr.includes("final") ||
+      stageStr.includes("qf") ||
+      stageStr.includes("sf");
+
+    const rewardMins = getDeterministicRewardMinutes(liveMatch.id, isTurkeyMatch || isLateKnockout);
+    
+    if (JSON.stringify(simRewardMinutes) !== JSON.stringify(rewardMins)) {
+      updateSimRewardMinutes(rewardMins);
+    }
+
+    const currentMin = liveMatch.elapsedMin || 0;
+
+    // Trigger reward popups if the match minute matches and user hasn't claimed/missed it
+    if (
+      rewardMins.includes(currentMin) &&
+      !claimedMinutesRef.current.includes(currentMin) &&
+      !missedMinutesRef.current.includes(currentMin) &&
+      (!activeRewardRef.current || activeRewardRef.current.minute !== currentMin)
+    ) {
+      const rewardTypes: Array<"time" | "life" | "score"> = ["time", "life", "score"];
+      const randomType = rewardTypes[Math.floor(Math.random() * rewardTypes.length)];
+      
+      updateActiveReward({
+        minute: currentMin,
+        type: randomType,
+        durationLeft: 15, // 15 seconds to claim
+      });
+    }
+  }, [simulatedMatches, simRunning, simRewardMinutes]);
 
   const standingsByGroup = useMemo(
     () => getGroupStandingsMap(simulatedMatches, predictions, groupTableOverrides),

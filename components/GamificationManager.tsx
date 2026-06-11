@@ -183,7 +183,7 @@ export function GamificationManager() {
         clearInterval(timerRef.current);
       }
     };
-  }, [pathname, isSignedIn, user]);
+  }, [pathname, isSignedIn, user?.id]);
 
   const claimPoints = async (path: string, points: number, duration: number) => {
     if (!user || hasClaimedRef.current) return;
