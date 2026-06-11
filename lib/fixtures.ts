@@ -1,61 +1,875 @@
 import type { GroupId, MatchResult } from "@/lib/types/tournament";
-import { GROUP_IDS } from "@/lib/types/tournament";
-import { getTeamsByGroup } from "@/data/teams";
 
-function roundRobinPairs(teamIds: string[]): [string, string][] {
-  const pairs: [string, string][] = [];
-  for (let i = 0; i < teamIds.length; i++) {
-    for (let j = i + 1; j < teamIds.length; j++) {
-      pairs.push([teamIds[i], teamIds[j]]);
-    }
+const GROUP_FIXTURES: MatchResult[] = [
+  {
+    "group": "A",
+    "homeTeamId": "mex",
+    "awayTeamId": "rsa",
+    "date": "2026-06-11",
+    "time": "22:00",
+    "stadium": "Mexico City Stadı",
+    "id": "A-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "A",
+    "homeTeamId": "kor",
+    "awayTeamId": "cze",
+    "date": "2026-06-12",
+    "time": "05:00",
+    "stadium": "Guadalajara Stadı",
+    "id": "A-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "A",
+    "homeTeamId": "cze",
+    "awayTeamId": "rsa",
+    "date": "2026-06-18",
+    "time": "19:00",
+    "stadium": "Atlanta Stadı",
+    "id": "A-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "A",
+    "homeTeamId": "mex",
+    "awayTeamId": "kor",
+    "date": "2026-06-19",
+    "time": "04:00",
+    "stadium": "Guadalajara Stadı",
+    "id": "A-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "A",
+    "homeTeamId": "cze",
+    "awayTeamId": "mex",
+    "date": "2026-06-25",
+    "time": "04:00",
+    "stadium": "Mexico City Stadı",
+    "id": "A-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "A",
+    "homeTeamId": "rsa",
+    "awayTeamId": "kor",
+    "date": "2026-06-25",
+    "time": "04:00",
+    "stadium": "Monterrey Stadı",
+    "id": "A-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "B",
+    "homeTeamId": "can",
+    "awayTeamId": "bih",
+    "date": "2026-06-12",
+    "time": "22:00",
+    "stadium": "Toronto Stadı",
+    "id": "B-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "B",
+    "homeTeamId": "qat",
+    "awayTeamId": "sui",
+    "date": "2026-06-13",
+    "time": "22:00",
+    "stadium": "San Francisco Bay Area Stadı",
+    "id": "B-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "B",
+    "homeTeamId": "sui",
+    "awayTeamId": "bih",
+    "date": "2026-06-18",
+    "time": "22:00",
+    "stadium": "Los Angeles Stadı",
+    "id": "B-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "B",
+    "homeTeamId": "can",
+    "awayTeamId": "qat",
+    "date": "2026-06-19",
+    "time": "01:00",
+    "stadium": "BC Place Vancouver",
+    "id": "B-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "B",
+    "homeTeamId": "sui",
+    "awayTeamId": "can",
+    "date": "2026-06-24",
+    "time": "22:00",
+    "stadium": "BC Place Vancouver Stadı",
+    "id": "B-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "B",
+    "homeTeamId": "bih",
+    "awayTeamId": "qat",
+    "date": "2026-06-24",
+    "time": "22:00",
+    "stadium": "Seattle Stadı",
+    "id": "B-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "D",
+    "homeTeamId": "usa",
+    "awayTeamId": "par",
+    "date": "2026-06-13",
+    "time": "04:00",
+    "stadium": "Los Angeles Stadı",
+    "id": "D-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "D",
+    "homeTeamId": "aus",
+    "awayTeamId": "tur",
+    "date": "2026-06-14",
+    "time": "07:00",
+    "stadium": "BC Place Vancouver Stadı",
+    "id": "D-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "D",
+    "homeTeamId": "usa",
+    "awayTeamId": "aus",
+    "date": "2026-06-19",
+    "time": "22:00",
+    "stadium": "Seattle Stadı",
+    "id": "D-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "D",
+    "homeTeamId": "tur",
+    "awayTeamId": "par",
+    "date": "2026-06-20",
+    "time": "06:00",
+    "stadium": "San Francisco Bay Area Stadı",
+    "id": "D-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "D",
+    "homeTeamId": "tur",
+    "awayTeamId": "usa",
+    "date": "2026-06-26",
+    "time": "05:00",
+    "stadium": "Los Angeles Stadı",
+    "id": "D-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "D",
+    "homeTeamId": "par",
+    "awayTeamId": "aus",
+    "date": "2026-06-26",
+    "time": "05:00",
+    "stadium": "San Francisco Bay Area Stadı",
+    "id": "D-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "C",
+    "homeTeamId": "bra",
+    "awayTeamId": "mar",
+    "date": "2026-06-14",
+    "time": "01:00",
+    "stadium": "New York New Jersey Stadı",
+    "id": "C-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "C",
+    "homeTeamId": "hti",
+    "awayTeamId": "sco",
+    "date": "2026-06-14",
+    "time": "04:00",
+    "stadium": "Boston Stadı",
+    "id": "C-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "C",
+    "homeTeamId": "sco",
+    "awayTeamId": "mar",
+    "date": "2026-06-20",
+    "time": "01:00",
+    "stadium": "Boston Stadı",
+    "id": "C-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "C",
+    "homeTeamId": "bra",
+    "awayTeamId": "hti",
+    "date": "2026-06-20",
+    "time": "03:30",
+    "stadium": "Philadelphia Stadı",
+    "id": "C-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "C",
+    "homeTeamId": "sco",
+    "awayTeamId": "bra",
+    "date": "2026-06-25",
+    "time": "01:00",
+    "stadium": "Miami Stadı",
+    "id": "C-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "C",
+    "homeTeamId": "mar",
+    "awayTeamId": "hti",
+    "date": "2026-06-25",
+    "time": "01:00",
+    "stadium": "Atlanta Stadı",
+    "id": "C-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ger",
+    "awayTeamId": "cuw",
+    "date": "2026-06-14",
+    "time": "20:00",
+    "stadium": "Houston Stadı",
+    "id": "E-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "E",
+    "homeTeamId": "civ",
+    "awayTeamId": "ecu",
+    "date": "2026-06-15",
+    "time": "02:00",
+    "stadium": "Philadelphia Stadı",
+    "id": "E-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ger",
+    "awayTeamId": "civ",
+    "date": "2026-06-20",
+    "time": "23:00",
+    "stadium": "Toronto Stadı",
+    "id": "E-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ecu",
+    "awayTeamId": "cuw",
+    "date": "2026-06-21",
+    "time": "03:00",
+    "stadium": "Kansas City Stadı",
+    "id": "E-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "E",
+    "homeTeamId": "cuw",
+    "awayTeamId": "civ",
+    "date": "2026-06-25",
+    "time": "23:00",
+    "stadium": "Philadelphia Stadı",
+    "id": "E-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ecu",
+    "awayTeamId": "ger",
+    "date": "2026-06-25",
+    "time": "23:00",
+    "stadium": "New York New Jersey Stadı",
+    "id": "E-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "F",
+    "homeTeamId": "ned",
+    "awayTeamId": "jpn",
+    "date": "2026-06-14",
+    "time": "23:00",
+    "stadium": "Dallas Stadı",
+    "id": "F-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "F",
+    "homeTeamId": "swe",
+    "awayTeamId": "tun",
+    "date": "2026-06-15",
+    "time": "05:00",
+    "stadium": "Monterrey Stadı",
+    "id": "F-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "F",
+    "homeTeamId": "ned",
+    "awayTeamId": "swe",
+    "date": "2026-06-20",
+    "time": "20:00",
+    "stadium": "Houston Stadı",
+    "id": "F-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "F",
+    "homeTeamId": "tun",
+    "awayTeamId": "jpn",
+    "date": "2026-06-21",
+    "time": "07:00",
+    "stadium": "Monterrey Stadı",
+    "id": "F-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "F",
+    "homeTeamId": "jpn",
+    "awayTeamId": "swe",
+    "date": "2026-06-26",
+    "time": "02:00",
+    "stadium": "Dallas Stadı",
+    "id": "F-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "F",
+    "homeTeamId": "tun",
+    "awayTeamId": "ned",
+    "date": "2026-06-26",
+    "time": "02:00",
+    "stadium": "Kansas City Stadı",
+    "id": "F-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "H",
+    "homeTeamId": "esp",
+    "awayTeamId": "cpv",
+    "date": "2026-06-15",
+    "time": "19:00",
+    "stadium": "Atlanta Stadı",
+    "id": "H-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "H",
+    "homeTeamId": "ksa",
+    "awayTeamId": "uru",
+    "date": "2026-06-16",
+    "time": "01:00",
+    "stadium": "Miami Stadı",
+    "id": "H-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "H",
+    "homeTeamId": "esp",
+    "awayTeamId": "ksa",
+    "date": "2026-06-21",
+    "time": "19:00",
+    "stadium": "Atlanta Stadı",
+    "id": "H-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "H",
+    "homeTeamId": "uru",
+    "awayTeamId": "cpv",
+    "date": "2026-06-22",
+    "time": "01:00",
+    "stadium": "Miami Stadı",
+    "id": "H-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "H",
+    "homeTeamId": "cpv",
+    "awayTeamId": "ksa",
+    "date": "2026-06-27",
+    "time": "03:00",
+    "stadium": "Houston Stadı",
+    "id": "H-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "H",
+    "homeTeamId": "uru",
+    "awayTeamId": "esp",
+    "date": "2026-06-27",
+    "time": "03:00",
+    "stadium": "Guadalajara Stadı",
+    "id": "H-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "G",
+    "homeTeamId": "bel",
+    "awayTeamId": "egy",
+    "date": "2026-06-15",
+    "time": "22:00",
+    "stadium": "Seattle Stadı",
+    "id": "G-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "G",
+    "homeTeamId": "irn",
+    "awayTeamId": "nzl",
+    "date": "2026-06-16",
+    "time": "04:00",
+    "stadium": "Los Angeles Stadı",
+    "id": "G-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "G",
+    "homeTeamId": "bel",
+    "awayTeamId": "irn",
+    "date": "2026-06-21",
+    "time": "22:00",
+    "stadium": "Los Angeles Stadı",
+    "id": "G-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "G",
+    "homeTeamId": "nzl",
+    "awayTeamId": "egy",
+    "date": "2026-06-22",
+    "time": "04:00",
+    "stadium": "BC Place Vancouver Stadı",
+    "id": "G-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "G",
+    "homeTeamId": "egy",
+    "awayTeamId": "irn",
+    "date": "2026-06-27",
+    "time": "06:00",
+    "stadium": "Seattle Stadı",
+    "id": "G-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "G",
+    "homeTeamId": "nzl",
+    "awayTeamId": "bel",
+    "date": "2026-06-27",
+    "time": "06:00",
+    "stadium": "BC Place Vancouver Stadı",
+    "id": "G-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "I",
+    "homeTeamId": "fra",
+    "awayTeamId": "sen",
+    "date": "2026-06-16",
+    "time": "22:00",
+    "stadium": "New York New Jersey Stadı",
+    "id": "I-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "I",
+    "homeTeamId": "irq",
+    "awayTeamId": "nor",
+    "date": "2026-06-17",
+    "time": "01:00",
+    "stadium": "Boston Stadı",
+    "id": "I-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "I",
+    "homeTeamId": "fra",
+    "awayTeamId": "irq",
+    "date": "2026-06-23",
+    "time": "00:00",
+    "stadium": "Philadelphia Stadı",
+    "id": "I-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "I",
+    "homeTeamId": "nor",
+    "awayTeamId": "sen",
+    "date": "2026-06-23",
+    "time": "03:00",
+    "stadium": "New York New Jersey Stadı",
+    "id": "I-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "I",
+    "homeTeamId": "nor",
+    "awayTeamId": "fra",
+    "date": "2026-06-26",
+    "time": "22:00",
+    "stadium": "Boston Stadı",
+    "id": "I-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "I",
+    "homeTeamId": "sen",
+    "awayTeamId": "irq",
+    "date": "2026-06-26",
+    "time": "22:00",
+    "stadium": "Toronto Stadı",
+    "id": "I-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "J",
+    "homeTeamId": "arg",
+    "awayTeamId": "alg",
+    "date": "2026-06-17",
+    "time": "04:00",
+    "stadium": "Kansas City Stadı",
+    "id": "J-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "J",
+    "homeTeamId": "aut",
+    "awayTeamId": "jor",
+    "date": "2026-06-17",
+    "time": "07:00",
+    "stadium": "San Francisco Bay Area Stadı",
+    "id": "J-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "J",
+    "homeTeamId": "arg",
+    "awayTeamId": "aut",
+    "date": "2026-06-22",
+    "time": "20:00",
+    "stadium": "Dallas Stadı",
+    "id": "J-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "J",
+    "homeTeamId": "jor",
+    "awayTeamId": "alg",
+    "date": "2026-06-23",
+    "time": "06:00",
+    "stadium": "San Francisco Bay Area Stadı",
+    "id": "J-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "J",
+    "homeTeamId": "alg",
+    "awayTeamId": "aut",
+    "date": "2026-06-28",
+    "time": "05:00",
+    "stadium": "Kansas City Stadı",
+    "id": "J-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "J",
+    "homeTeamId": "jor",
+    "awayTeamId": "arg",
+    "date": "2026-06-28",
+    "time": "05:00",
+    "stadium": "Dallas Stadı",
+    "id": "J-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "K",
+    "homeTeamId": "por",
+    "awayTeamId": "cod",
+    "date": "2026-06-17",
+    "time": "20:00",
+    "stadium": "Houston Stadı",
+    "id": "K-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "K",
+    "homeTeamId": "uzb",
+    "awayTeamId": "col",
+    "date": "2026-06-18",
+    "time": "05:00",
+    "stadium": "Mexico City Stadı",
+    "id": "K-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "K",
+    "homeTeamId": "por",
+    "awayTeamId": "uzb",
+    "date": "2026-06-23",
+    "time": "20:00",
+    "stadium": "Houston Stadı",
+    "id": "K-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "K",
+    "homeTeamId": "col",
+    "awayTeamId": "cod",
+    "date": "2026-06-24",
+    "time": "05:00",
+    "stadium": "Guadalajara Stadı",
+    "id": "K-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "K",
+    "homeTeamId": "col",
+    "awayTeamId": "por",
+    "date": "2026-06-28",
+    "time": "02:30",
+    "stadium": "Miami Stadı",
+    "id": "K-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "K",
+    "homeTeamId": "cod",
+    "awayTeamId": "uzb",
+    "date": "2026-06-28",
+    "time": "02:30",
+    "stadium": "Atlanta Stadı",
+    "id": "K-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "L",
+    "homeTeamId": "eng",
+    "awayTeamId": "cro",
+    "date": "2026-06-17",
+    "time": "23:00",
+    "stadium": "Dallas Stadı",
+    "id": "L-1",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "L",
+    "homeTeamId": "gha",
+    "awayTeamId": "pan",
+    "date": "2026-06-18",
+    "time": "02:00",
+    "stadium": "Toronto Stadı",
+    "id": "L-6",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "L",
+    "homeTeamId": "eng",
+    "awayTeamId": "gha",
+    "date": "2026-06-23",
+    "time": "23:00",
+    "stadium": "Boston Stadı",
+    "id": "L-2",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "L",
+    "homeTeamId": "pan",
+    "awayTeamId": "cro",
+    "date": "2026-06-24",
+    "time": "02:00",
+    "stadium": "Toronto Stadı",
+    "id": "L-5",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "L",
+    "homeTeamId": "pan",
+    "awayTeamId": "eng",
+    "date": "2026-06-28",
+    "time": "00:00",
+    "stadium": "New York New Jersey Stadı",
+    "id": "L-3",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
+  },
+  {
+    "group": "L",
+    "homeTeamId": "cro",
+    "awayTeamId": "gha",
+    "date": "2026-06-28",
+    "time": "00:00",
+    "stadium": "Philadelphia Stadı",
+    "id": "L-4",
+    "played": false,
+    "homeScore": null,
+    "awayScore": null
   }
-  return pairs;
-}
+];
 
 export function generateGroupFixtures(): MatchResult[] {
-  const matches: MatchResult[] = [];
-  let dayOffset = 0;
-  const hourOffsetsUTC = ["13:00", "16:00", "19:00", "21:00"];
-
-  // Matchday definitions: mapping matchday to pair indices of roundRobinPairs
-  const matchdays = [
-    [0, 5], // Matchday 1
-    [1, 4], // Matchday 2
-    [2, 3], // Matchday 3
-  ];
-
-  for (const mday of [0, 1, 2]) {
-    const pairIndices = matchdays[mday];
-    
-    for (const group of GROUP_IDS) {
-      const teams = getTeamsByGroup(group);
-      const teamIds = teams.map((t) => t.id);
-      const pairs = roundRobinPairs(teamIds);
-
-      for (const pairIndex of pairIndices) {
-        const [home, away] = pairs[pairIndex];
-        
-        const date = new Date(Date.UTC(2026, 5, 11));
-        date.setUTCDate(date.getUTCDate() + Math.floor(dayOffset / 4));
-        
-        matches.push({
-          id: `${group}-${pairIndex + 1}`, // Keep the same ID format group-1 to group-6
-          group,
-          homeTeamId: home,
-          awayTeamId: away,
-          homeScore: null,
-          awayScore: null,
-          played: false,
-          date: date.toISOString().split("T")[0],
-          time: hourOffsetsUTC[dayOffset % 4],
-        });
-        
-        dayOffset++;
-      }
-    }
-  }
-
-  return matches;
+  // Return a fresh clone of the group fixtures
+  return GROUP_FIXTURES.map(m => ({ ...m }));
 }
 
 export function sortMatchesChronologically(matches: MatchResult[]): MatchResult[] {

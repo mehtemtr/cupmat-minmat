@@ -335,7 +335,7 @@ export default function BracketPage() {
         }`}
       >
         <div className="flex items-center justify-between text-[9px] uppercase tracking-wider text-zinc-500 mb-2 font-mono">
-          <span>{match.slot}</span>
+          <span>{match.slot} {match.time ? `• ${match.time}` : ""}</span>
           <span className="flex items-center gap-1">
             <Calendar className="h-2.5 w-2.5" />
             {match.date || "TBD"}
@@ -393,6 +393,12 @@ export default function BracketPage() {
             )}
           </div>
         </div>
+
+        {match.stadium && (
+          <div className="mt-2 border-t border-white/5 pt-1 text-[8px] text-zinc-600 font-mono truncate">
+            {match.stadium}
+          </div>
+        )}
       </div>
     );
   };
@@ -422,7 +428,7 @@ export default function BracketPage() {
                 <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-emerald-400 font-bold">{m.slot}</span>
                 <span className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
-                  {m.date || "TBD"}
+                  {m.date || "TBD"} {m.time ? `• ${m.time}` : ""}
                 </span>
               </div>
               <div className="space-y-3">
@@ -474,6 +480,12 @@ export default function BracketPage() {
                       <span className="font-bold text-amber-400">{pred.homePen ?? 0} - {pred.awayPen ?? 0}</span>
                     </div>
                   )}
+                </div>
+              )}
+
+              {m.stadium && (
+                <div className="mt-3 border-t border-white/5 pt-2 text-[10px] text-zinc-500 font-mono truncate">
+                  {m.stadium}
                 </div>
               )}
             </div>

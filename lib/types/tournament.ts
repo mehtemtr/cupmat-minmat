@@ -67,6 +67,7 @@ export type MatchResult = {
   played: boolean;
   date: string; // ISO format or human readable
   time?: string; // Kickoff time e.g., "13:00" (UTC)
+  stadium?: string;
 };
 
 export type StandingRow = {
@@ -95,6 +96,8 @@ export type KnockoutMatch = {
   awayPen?: number | null;
   winnerId: string | null;
   date: string;
+  time?: string;
+  stadium?: string;
 };
 
 export type MatchPrediction = {
