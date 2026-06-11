@@ -19,7 +19,8 @@
     "stats": "Statistiques",
     "fantasy": "CupMat Tactique",
     "leagues": "Ligues Privées",
-    "polls": "Sondages et Questions"
+    "polls": "Sondages et Questions",
+    "bracket": "Tableau du Tournoi"
   },
   "hero": {
     "badge": "StatMatik — Championnat du Monde 2026",
@@ -87,7 +88,11 @@
     "group": "Groupe",
     "team": "Équipe",
     "enterResults": "Saisir les résultats",
-    "resultsHint": "Mettez à jour les scores — les classements des 12 groupes sont recalculés instantanément."
+    "resultsHint": "Mettez à jour les scores — les classements des 12 groupes sont recalculés instantanément.",
+    "editStandings": "Modifier le classement",
+    "saveStandings": "Enregistrer",
+    "resetStandings": "Réinitialiser",
+    "cancelStandings": "Annuler"
   },
   "venues": {
     "title": "Stades hôtes",

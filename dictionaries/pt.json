@@ -19,7 +19,8 @@
     "stats": "Estatísticas",
     "fantasy": "Táticas CupMat",
     "leagues": "Ligas Privadas",
-    "polls": "Enquetes e Perguntas"
+    "polls": "Enquetes e Perguntas",
+    "bracket": "Chaveamento"
   },
   "hero": {
     "badge": "StatMatik — Campeonato Mundial de 2026",
@@ -87,7 +88,11 @@
     "group": "Grupo",
     "team": "Seleção",
     "enterResults": "Inserir Resultados",
-    "resultsHint": "Atualize os placares — as classificações nos 12 grupos são recalculadas instantaneamente."
+    "resultsHint": "Atualize os placares — as classificações nos 12 grupos são recalculadas instantaneamente.",
+    "editStandings": "Editar classificação",
+    "saveStandings": "Salvar",
+    "resetStandings": "Redefinir",
+    "cancelStandings": "Cancelar"
   },
   "venues": {
     "title": "Estádios-Sede",

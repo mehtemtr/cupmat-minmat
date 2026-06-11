@@ -19,7 +19,8 @@
     "stats": "Statistiken",
     "fantasy": "CupMat Taktik",
     "leagues": "Private Ligen",
-    "polls": "Umfragen & Quiz"
+    "polls": "Umfragen & Quiz",
+    "bracket": "Turnierbaum"
   },
   "hero": {
     "badge": "StatMatik — 2026 Weltmeisterschaft",
@@ -87,7 +88,11 @@
     "group": "Gruppe",
     "team": "Team",
     "enterResults": "Ergebnisse eingeben",
-    "resultsHint": "Aktualisieren Sie die Spielstände — die Ranglisten in den 12 Gruppen werden sofort neu berechnet."
+    "resultsHint": "Aktualisieren Sie die Spielstände — die Ranglisten in den 12 Gruppen werden sofort neu berechnet.",
+    "editStandings": "Platzierung bearbeiten",
+    "saveStandings": "Speichern",
+    "resetStandings": "Zurücksetzen",
+    "cancelStandings": "Abbrechen"
   },
   "venues": {
     "title": "Host-Stadien",

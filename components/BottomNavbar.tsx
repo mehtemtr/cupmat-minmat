@@ -194,6 +194,13 @@ export default function BottomNavbar() {
             <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">{moreLabel}</h4>
             <div className="grid grid-cols-2 gap-3">
               <Link
+                href="/kupa-yolu"
+                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
+              >
+                <Trophy className="h-4 w-4 text-emerald-400" />
+                <span>{t("nav.bracket")}</span>
+              </Link>
+              <Link
                 href="/leagues"
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >

@@ -19,7 +19,8 @@
     "stats": "Stats",
     "fantasy": "CupMat Tactics",
     "leagues": "Private Leagues",
-    "polls": "Polls & Trivia"
+    "polls": "Polls & Trivia",
+    "bracket": "Tournament Bracket"
   },
   "hero": {
     "badge": "StatMatik — 2026 World Championship",
@@ -87,7 +88,11 @@
     "group": "Group",
     "team": "Team",
     "enterResults": "Enter Match Results",
-    "resultsHint": "Update the scores — standings across 12 groups are recalculated instantly."
+    "resultsHint": "Update the scores — standings across 12 groups are recalculated instantly.",
+    "editStandings": "Edit Standings",
+    "saveStandings": "Save",
+    "resetStandings": "Reset",
+    "cancelStandings": "Cancel"
   },
   "venues": {
     "title": "Host Stadiums",

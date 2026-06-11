@@ -19,7 +19,8 @@
     "stats": "İstatistikler",
     "fantasy": "CupMat Taktik",
     "leagues": "Özel Ligler",
-    "polls": "Anket & Soru"
+    "polls": "Anket & Soru",
+    "bracket": "Kupa Yolu"
   },
   "hero": {
     "badge": "StatMatik — 2026 Dünya Şampiyonası",
@@ -87,7 +88,11 @@
     "group": "Grup",
     "team": "Takım",
     "enterResults": "Maç Sonuçlarını Gir",
-    "resultsHint": "Skorları güncelleyin — 12 gruptaki sıralama anında yeniden hesaplanır."
+    "resultsHint": "Skorları güncelleyin — 12 gruptaki sıralama anında yeniden hesaplanır.",
+    "editStandings": "Sıralamayı Düzenle",
+    "saveStandings": "Kaydet",
+    "resetStandings": "Sıfırla",
+    "cancelStandings": "Vazgeç"
   },
   "venues": {
     "title": "Ev Sahibi Stadyumlar",

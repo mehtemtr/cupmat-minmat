@@ -40,7 +40,9 @@ type TournamentState = {
   displayName: string;
   aiEnabled: boolean;
   aiAnalyses: AiAnalysis[];
+  groupTableOverrides?: Record<GroupId, string[]>;
 };
+
 
 function initMatchesFromStorage(): MatchResult[] {
   if (typeof window === "undefined") {
@@ -86,6 +88,9 @@ export type TournamentContextValue = {
   simulateRandomLiveNews: (currentGroup: GroupId) => void;
   submitToLeaderboard: () => Promise<void>;
   predictionPoints: number;
+  groupTableOverrides: Record<GroupId, string[]>;
+  updateGroupOrder: (groupId: GroupId, teamIds: string[]) => void;
+  resetGroupOrder: (groupId: GroupId) => void;
 
   // Global simulation exports
   simMatchId: string | null;
@@ -138,6 +143,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   const [aiAnalyses, setAiAnalyses] = useState<AiAnalysis[]>([]);
   const [ready, setReady] = useState(false);
   const [knockoutBracket, setKnockoutBracket] = useState<KnockoutMatch[]>([]);
+  const [groupTableOverrides, setGroupTableOverrides] = useState<Record<GroupId, string[]>>({} as Record<GroupId, string[]>);
 
   // Global live simulation states
   const [unlocked, setUnlocked] = useState<boolean | null>(null);
@@ -202,9 +208,10 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setDisplayName(saved.displayName ?? "Guest Predictor");
     setAiEnabled(saved.aiEnabled ?? false);
     setAiAnalyses(saved.aiAnalyses ?? []);
+    setGroupTableOverrides((saved.groupTableOverrides ?? {}) as Record<GroupId, string[]>);
     
-    if (allGroupsComplete(initialMatches) && Object.keys(initialPredictions).length > 0) {
-      setKnockoutBracket(buildFullKnockoutBracket(initialMatches, initialPredictions));
+    if (allGroupsComplete(initialMatches, saved.groupTableOverrides) && Object.keys(initialPredictions).length > 0) {
+      setKnockoutBracket(buildFullKnockoutBracket(initialMatches, initialPredictions, saved.groupTableOverrides));
     }
     
     setReady(true);
@@ -218,10 +225,11 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       displayName,
       aiEnabled,
       aiAnalyses,
+      groupTableOverrides,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     localStorage.setItem(VERSION_KEY, TOURNAMENT_DATA_VERSION);
-  }, [matches, predictions, displayName, aiEnabled, aiAnalyses, ready]);
+  }, [matches, predictions, displayName, aiEnabled, aiAnalyses, groupTableOverrides, ready]);
 
   const updateMatchScore = useCallback(
     (matchId: string, home: number, away: number) => {
@@ -257,14 +265,14 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
           },
         };
         
-        if (allGroupsComplete(matches)) {
-          setKnockoutBracket(buildFullKnockoutBracket(matches, next));
+        if (allGroupsComplete(matches, groupTableOverrides)) {
+          setKnockoutBracket(buildFullKnockoutBracket(matches, next, groupTableOverrides));
         }
         
         return next;
       });
     },
-    [matches],
+    [matches, groupTableOverrides],
   );
 
   const resetPredictions = useCallback(() => {
@@ -272,6 +280,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setAiAnalyses([]);
     setAiEnabled(false);
     setKnockoutBracket([]);
+    setGroupTableOverrides({} as Record<GroupId, string[]>);
     // Completely reset matches state - clear all scores and played status
     setMatches((prev) => prev.map(m => ({ 
       ...m, 
@@ -280,6 +289,26 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       played: false 
     })));
   }, []);
+
+  const updateGroupOrder = useCallback((groupId: GroupId, teamIds: string[]) => {
+    setGroupTableOverrides((prev) => {
+      const nextOverrides = {
+        ...prev,
+        [groupId]: teamIds,
+      };
+      setKnockoutBracket(buildFullKnockoutBracket(matches, predictions, nextOverrides));
+      return nextOverrides;
+    });
+  }, [matches, predictions]);
+
+  const resetGroupOrder = useCallback((groupId: GroupId) => {
+    setGroupTableOverrides((prev) => {
+      const nextOverrides = { ...prev };
+      delete nextOverrides[groupId];
+      setKnockoutBracket(buildFullKnockoutBracket(matches, predictions, nextOverrides));
+      return nextOverrides;
+    });
+  }, [matches, predictions]);
 
   const applyPredictionsToMatches = useCallback(() => {
     setMatches((prev) => {
@@ -295,19 +324,19 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       });
 
       // Update bracket when applying group predictions
-      if (allGroupsComplete(nextMatches)) {
-        setKnockoutBracket(buildFullKnockoutBracket(nextMatches, predictions));
+      if (allGroupsComplete(nextMatches, groupTableOverrides)) {
+        setKnockoutBracket(buildFullKnockoutBracket(nextMatches, predictions, groupTableOverrides));
       }
       
       return nextMatches;
     });
-  }, [predictions]);
+  }, [predictions, groupTableOverrides]);
 
   const toggleAiPredictions = useCallback((targetMatchIds?: string[]) => {
     setAiEnabled((prevAi) => {
       const nextAi = !prevAi;
       if (nextAi || targetMatchIds) {
-        const isGroupsComplete = allGroupsComplete(matches);
+        const isGroupsComplete = allGroupsComplete(matches, groupTableOverrides);
         
         // Determine which matches to predict
         let matchesToPredict: { id: string; homeTeamId: string | null; awayTeamId: string | null }[] = [];
@@ -341,12 +370,12 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
 
         // Explicitly update bracket after AI prediction if in knockout phase
         if (isGroupsComplete) {
-          setKnockoutBracket(buildFullKnockoutBracket(matches, nextPredictions));
+          setKnockoutBracket(buildFullKnockoutBracket(matches, nextPredictions, groupTableOverrides));
         }
       }
       return targetMatchIds ? prevAi : nextAi; // Don't toggle global AI state if just predicting specific round
     });
-  }, [matches, locale, predictions, knockoutBracket]);
+  }, [matches, locale, predictions, knockoutBracket, groupTableOverrides]);
 
   const simulateRandomLiveNews = useCallback((currentGroup: GroupId) => {
     if (!aiEnabled) return;
@@ -562,16 +591,13 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, [simRunning, simMatchId, simAllEvents]);
 
   const standingsByGroup = useMemo(
-    () => getGroupStandingsMap(matches, predictions),
-    [matches, predictions],
+    () => getGroupStandingsMap(matches, predictions, groupTableOverrides),
+    [matches, predictions, groupTableOverrides],
   );
 
   const knockoutUnlocked = useMemo(() => {
-    // Groups are complete AND at least one group prediction exists
-    const groupsDone = allGroupsComplete(matches);
-    const hasPredictions = Object.keys(predictions).some(id => !id.startsWith('r32') && !id.startsWith('r16') && !id.startsWith('qf') && !id.startsWith('sf') && !id.startsWith('final'));
-    return groupsDone && hasPredictions;
-  }, [matches, predictions]);
+    return allGroupsComplete(matches, groupTableOverrides);
+  }, [matches, groupTableOverrides]);
 
   const predictionPoints = useMemo(
     () => totalPredictionPoints(predictions, matches),
@@ -598,6 +624,9 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       simulateRandomLiveNews,
       submitToLeaderboard,
       predictionPoints,
+      groupTableOverrides,
+      updateGroupOrder,
+      resetGroupOrder,
       simMatchId,
       simRunning,
       simMinute,
@@ -632,6 +661,9 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       simulateRandomLiveNews,
       submitToLeaderboard,
       predictionPoints,
+      groupTableOverrides,
+      updateGroupOrder,
+      resetGroupOrder,
       simMatchId,
       simRunning,
       simMinute,

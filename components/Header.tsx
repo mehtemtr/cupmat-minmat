@@ -16,6 +16,7 @@ const navKeys = [
   { href: "/groups", key: "nav.groups" },
   { href: "/venues", key: "nav.venues" },
   { href: "/tahminler", key: "nav.predictions" },
+  { href: "/kupa-yolu", key: "nav.bracket" },
   { href: "/hakemler", key: "hero.referees" },
   { href: "/leagues", key: "nav.leagues" },
   { href: "/polls", key: "nav.polls" },

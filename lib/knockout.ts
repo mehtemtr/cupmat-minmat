@@ -6,19 +6,16 @@ import { getMatchesForGroup } from "@/lib/fixtures";
 
 export function buildFullKnockoutBracket(
   allMatches: MatchResult[],
-  predictions: Record<string, { home: number; away: number; homeET?: number; awayET?: number; homePen?: number; awayPen?: number }>
+  predictions: Record<string, { home: number; away: number; homeET?: number; awayET?: number; homePen?: number; awayPen?: number }>,
+  groupTableOverrides?: Record<GroupId, string[]>
 ): KnockoutMatch[] {
   const qualifiers: string[] = [];
   const thirdPlaceTeams: StandingRow[] = [];
 
+  const standingsMap = getGroupStandingsMap(allMatches, predictions, groupTableOverrides);
+
   for (const group of GROUP_IDS) {
-    const teams = getTeamsByGroup(group);
-    const groupMatches = getMatchesForGroup(allMatches, group);
-    
-    const standings = calculateStandingsFromMatches(
-      teams.map((t) => t.id),
-      groupMatches,
-    );
+    const standings = standingsMap[group];
     
     qualifiers.push(...standings.slice(0, 2).map((s) => s.teamId));
     if (standings[2]) {
@@ -153,15 +150,17 @@ function createPlaceholderBracket(): KnockoutMatch[] {
   }));
 }
 
-export function allGroupsComplete(allMatches: MatchResult[]): boolean {
-  return GROUP_IDS.every((g) =>
-    groupMatchesComplete(getMatchesForGroup(allMatches, g)),
-  );
+export function allGroupsComplete(allMatches: MatchResult[], groupTableOverrides?: Record<GroupId, string[]>): boolean {
+  return GROUP_IDS.every((g) => {
+    if (groupTableOverrides && groupTableOverrides[g]) return true;
+    return groupMatchesComplete(getMatchesForGroup(allMatches, g));
+  });
 }
 
 export function getGroupStandingsMap(
   allMatches: MatchResult[],
-  predictions: Record<string, { home: number; away: number }>
+  predictions: Record<string, { home: number; away: number }>,
+  groupTableOverrides?: Record<GroupId, string[]>
 ): Record<GroupId, StandingRow[]> {
   const map = {} as Record<GroupId, StandingRow[]>;
 
@@ -179,10 +178,31 @@ export function getGroupStandingsMap(
       return m;
     });
 
-    map[group] = calculateStandingsFromMatches(
+    let standings = calculateStandingsFromMatches(
       teams.map((t) => t.id),
       effectiveMatches,
     );
+
+    // If there is an override for this group, sort by the manual order and assign synthetic stats
+    if (groupTableOverrides && groupTableOverrides[group]) {
+      const order = groupTableOverrides[group];
+      const syntheticStats = [
+        { points: 9, won: 3, drawn: 0, lost: 0, goalsFor: 6, goalsAgainst: 1, goalDifference: 5, played: 3 },
+        { points: 6, won: 2, drawn: 0, lost: 1, goalsFor: 4, goalsAgainst: 2, goalDifference: 2, played: 3 },
+        { points: 3, won: 1, drawn: 0, lost: 2, goalsFor: 2, goalsAgainst: 4, goalDifference: -2, played: 3 },
+        { points: 0, won: 0, drawn: 0, lost: 3, goalsFor: 0, goalsAgainst: 5, goalDifference: -5, played: 3 },
+      ];
+
+      standings = order.map((teamId, idx) => {
+        const stats = syntheticStats[idx] || { points: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0, played: 3 };
+        return {
+          teamId,
+          ...stats,
+        };
+      });
+    }
+
+    map[group] = standings;
   }
 
   return map;

@@ -19,7 +19,8 @@
     "stats": "통계",
     "fantasy": "CupMat 전술",
     "leagues": "사설 리그",
-    "polls": "설문 및 퀴즈"
+    "polls": "설문 및 퀴즈",
+    "bracket": "토너먼트 대진표"
   },
   "hero": {
     "badge": "StatMatik — 2026 세계 선수권 대회",
@@ -87,7 +88,11 @@
     "group": "조",
     "team": "팀",
     "enterResults": "경기 결과 입력",
-    "resultsHint": "점수를 입력하세요 — 12개 조의 순위가 즉시 재계산됩니다."
+    "resultsHint": "점수를 입력하세요 — 12개 조의 순위가 즉시 재계산됩니다.",
+    "editStandings": "순위 편집",
+    "saveStandings": "저장",
+    "resetStandings": "초기화",
+    "cancelStandings": "취소"
   },
   "venues": {
     "title": "개최 도시 경기장",
