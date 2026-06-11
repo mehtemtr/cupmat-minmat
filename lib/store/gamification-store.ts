@@ -49,6 +49,10 @@ export interface UserActivity {
   lastPageStayClaimAt: string;     // ISO string of the last page stay claim
   pageStayClaimsTodayCount: number; // Number of page stay sessions today
   pageStayHistory: Record<string, { lastClaimedAt: string; claimsTodayCount: number }>;
+  minmatBoostTimeCharges?: number;
+  minmatBoostLifeCharges?: number;
+  minmatBoostScoreCharges?: number;
+  minmatBoostExpiresAt?: string;
 }
 
 function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }): UserActivity {
@@ -80,6 +84,10 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     lastPageStayClaimAt: raw.lastPageStayClaimAt ?? "",
     pageStayClaimsTodayCount: raw.pageStayClaimsTodayCount ?? 0,
     pageStayHistory: raw.pageStayHistory ?? {},
+    minmatBoostTimeCharges: raw.minmatBoostTimeCharges ?? 0,
+    minmatBoostLifeCharges: raw.minmatBoostLifeCharges ?? 0,
+    minmatBoostScoreCharges: raw.minmatBoostScoreCharges ?? 0,
+    minmatBoostExpiresAt: raw.minmatBoostExpiresAt ?? "",
   };
 }
 
@@ -158,6 +166,10 @@ const defaultStore: GamificationStore = {
       lastPageStayClaimAt: "",
       pageStayClaimsTodayCount: 0,
       pageStayHistory: {},
+      minmatBoostTimeCharges: 0,
+      minmatBoostLifeCharges: 0,
+      minmatBoostScoreCharges: 0,
+      minmatBoostExpiresAt: "",
     },
     {
       userId: "demo-2",
@@ -184,6 +196,10 @@ const defaultStore: GamificationStore = {
       lastPageStayClaimAt: "",
       pageStayClaimsTodayCount: 0,
       pageStayHistory: {},
+      minmatBoostTimeCharges: 0,
+      minmatBoostLifeCharges: 0,
+      minmatBoostScoreCharges: 0,
+      minmatBoostExpiresAt: "",
     }
   ],
   gecmisSampiyonlar: [
@@ -472,8 +488,24 @@ export async function getOrCreateProfile(
   const store = await getStore();
   let profile = store.userActivities.find((u) => u.userId === userId);
   let needsSave = false;
-
   const todayStr = new Date().toISOString().split("T")[0];
+
+  if (profile) {
+    const now = new Date();
+    if (profile.minmatBoostExpiresAt && now > new Date(profile.minmatBoostExpiresAt)) {
+      if (
+        (profile.minmatBoostTimeCharges || 0) > 0 ||
+        (profile.minmatBoostLifeCharges || 0) > 0 ||
+        (profile.minmatBoostScoreCharges || 0) > 0
+      ) {
+        profile.minmatBoostTimeCharges = 0;
+        profile.minmatBoostLifeCharges = 0;
+        profile.minmatBoostScoreCharges = 0;
+        profile.minmatBoostExpiresAt = "";
+        needsSave = true;
+      }
+    }
+  }
 
   if (!profile) {
     profile = normalizeUserActivity({

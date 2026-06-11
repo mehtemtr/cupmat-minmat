@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { PageShell } from "@/components/PageShell";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useTournament } from "@/contexts/TournamentContext";
@@ -74,6 +74,12 @@ export default function StatisticsPage() {
     simAllEvents,
     startSimulation,
     stopSimulation,
+    simRewardMinutes,
+    simClaimedMinutes,
+    simMissedMinutes,
+    activeReward,
+    claimReward,
+    dismissReward,
   } = useTournament();
 
   // Real clock state
@@ -84,6 +90,32 @@ export default function StatisticsPage() {
     }, 10000);
     return () => clearInterval(id);
   }, []);
+
+  // Reward claims and missed events toast triggers
+  const prevClaimedCount = useRef(simClaimedMinutes.length);
+  const prevMissedCount = useRef(simMissedMinutes.length);
+
+  useEffect(() => {
+    if (simClaimedMinutes.length > prevClaimedCount.current) {
+      window.dispatchEvent(
+        new CustomEvent("taraftar-puan-guncellendi", {
+          detail: { toast: t("fantasy.liveRewardEarned") },
+        })
+      );
+    }
+    prevClaimedCount.current = simClaimedMinutes.length;
+  }, [simClaimedMinutes, t]);
+
+  useEffect(() => {
+    if (simMissedMinutes.length > prevMissedCount.current) {
+      window.dispatchEvent(
+        new CustomEvent("taraftar-puan-guncellendi", {
+          detail: { toast: t("fantasy.liveRewardMissed") },
+        })
+      );
+    }
+    prevMissedCount.current = simMissedMinutes.length;
+  }, [simMissedMinutes, t]);
 
   // Get today's matches (June 11, 2026)
   const [localMatches, setLocalMatches] = useState<any[]>(() => {
@@ -855,6 +887,69 @@ export default function StatisticsPage() {
                       )}
                     </div>
                   </div>
+
+                  {/* Active Surprise Reward chest */}
+                  {activeReward && (
+                    <div className="relative overflow-hidden rounded-xl border border-amber-500/40 bg-gradient-to-br from-amber-950/40 via-amber-900/20 to-yellow-950/40 p-5 shadow-[0_0_30px_rgba(245,158,11,0.25)] flex flex-col sm:flex-row items-center justify-between gap-4 animate-pulse">
+                      <div className="flex items-center gap-4">
+                        <div className="relative">
+                          {/* Pulsing glow effect */}
+                          <div className="absolute -inset-2 rounded-full bg-amber-500/30 blur-md animate-ping" />
+                          <div className="relative text-4xl select-none filter drop-shadow-[0_0_10px_rgba(245,158,11,0.8)]">
+                            🎁
+                          </div>
+                        </div>
+                        <div className="text-left">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-amber-400">
+                            {locale === "tr" ? "SÜRPRİZ HEDİYE!" : "SURPRISE GIFT!"}
+                          </p>
+                          <h4 className="text-sm font-bold text-white">
+                            {activeReward.type === "time" && (locale === "tr" ? "MinMat Ek Süre (+10sn)" : "MinMat Extra Time (+10s)")}
+                            {activeReward.type === "life" && (locale === "tr" ? "MinMat Ek Can (+1 Can)" : "MinMat Extra Life (+1 Life)")}
+                            {activeReward.type === "score" && (locale === "tr" ? "MinMat Başlangıç Skoru (+250 Puan)" : "MinMat Starting Score Boost (+250 Pts)")}
+                          </h4>
+                          <p className="text-xs text-amber-200/70 mt-0.5">
+                            {locale === "tr" 
+                              ? "Lobi ekranından aktifleştirerek kullanabilirsin." 
+                              : "You can activate and use it from the lobby screen."}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4 shrink-0">
+                        {/* Countdown */}
+                        <div className="flex flex-col items-center justify-center bg-black/40 border border-amber-500/30 px-3 py-1.5 rounded-lg font-mono text-center">
+                          <span className="text-lg font-black text-amber-400">{activeReward.durationLeft}s</span>
+                          <span className="text-[8px] text-amber-500 uppercase tracking-wider">{locale === "tr" ? "Kalan Süre" : "Time Left"}</span>
+                        </div>
+                        <button
+                          onClick={() => claimReward(activeReward.minute)}
+                          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+                        >
+                          {locale === "tr" ? "KAP!" : "CLAIM!"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* FOMO Sitem Card */}
+                  {activeCommMinute >= 94 && simMissedMinutes.length >= 2 && (
+                    <div className="rounded-xl border border-amber-500/30 bg-gradient-to-r from-amber-950/20 to-zinc-950/40 p-5 text-left flex items-start gap-4">
+                      <span className="text-3xl shrink-0 select-none">😢</span>
+                      <div>
+                        <h4 className="text-sm font-black text-amber-400 uppercase tracking-wide">
+                          {locale === "tr" ? "ÖDÜLLERİ KAÇIRDIN!" : "YOU MISSED THE REWARDS!"}
+                        </h4>
+                        <p className="text-xs text-zinc-300 mt-1 leading-relaxed">
+                          {t("fantasy.liveRewardFomoBanner")}
+                        </p>
+                        <div className="mt-3 flex items-center gap-2 text-[10px] text-zinc-500 font-extrabold uppercase tracking-wider">
+                          <span>{locale === "tr" ? "Kaçırılan Ödül Sayısı:" : "Missed Rewards Count:"}</span>
+                          <span className="text-amber-500 font-black">{simMissedMinutes.length}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Live Pitch/Score representation */}
                   <div className="rounded-xl bg-gradient-to-r from-emerald-950/20 to-teal-950/20 p-6 border border-emerald-500/10 text-center">

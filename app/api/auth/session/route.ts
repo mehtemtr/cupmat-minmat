@@ -32,7 +32,11 @@ export async function GET() {
           username: user.username || null,
           displayName: displayName,
           minmatMaxLevels: minmatMaxLevels,
-          minmatUnlockedModes: minmatUnlockedModes
+          minmatUnlockedModes: minmatUnlockedModes,
+          minmatBoostTimeCharges: profile.minmatBoostTimeCharges || 0,
+          minmatBoostLifeCharges: profile.minmatBoostLifeCharges || 0,
+          minmatBoostScoreCharges: profile.minmatBoostScoreCharges || 0,
+          minmatBoostExpiresAt: profile.minmatBoostExpiresAt || ""
         }
       });
     }
@@ -72,7 +76,11 @@ export async function GET() {
             username: userFromSdk.username || null,
             displayName: displayName,
             minmatMaxLevels: minmatMaxLevels,
-            minmatUnlockedModes: minmatUnlockedModes
+            minmatUnlockedModes: minmatUnlockedModes,
+            minmatBoostTimeCharges: profile.minmatBoostTimeCharges || 0,
+            minmatBoostLifeCharges: profile.minmatBoostLifeCharges || 0,
+            minmatBoostScoreCharges: profile.minmatBoostScoreCharges || 0,
+            minmatBoostExpiresAt: profile.minmatBoostExpiresAt || ""
           }
         });
       }

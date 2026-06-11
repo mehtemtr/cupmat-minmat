@@ -155,3 +155,40 @@ export function playGoalSound() {
     console.error("Failed to synthesize goal sound:", err);
   }
 }
+
+export function playRewardSound() {
+  if (typeof window === "undefined") return;
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    const audioCtx = new AudioContextClass();
+    const now = audioCtx.currentTime;
+
+    const playChimeNode = (freq: number, startTime: number, duration: number) => {
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(0.15, startTime + 0.02);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    };
+
+    // Ascending major arpeggio chime (C5 -> E5 -> G5 -> C6)
+    playChimeNode(523.25, now, 0.35); // C5
+    playChimeNode(659.25, now + 0.08, 0.35); // E5
+    playChimeNode(783.99, now + 0.16, 0.35); // G5
+    playChimeNode(1046.50, now + 0.24, 0.5); // C6
+  } catch (err) {
+    console.error("Failed to synthesize reward sound:", err);
+  }
+}

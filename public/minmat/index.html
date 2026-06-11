@@ -1084,6 +1084,62 @@
       </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
       <div id="minmatUserBadgeContainer" class="lobby-badge-wrapper" style="margin-bottom: 16px; display: none;"></div>
+      
+      <!-- Boost Selection Container -->
+      <div id="boostSelectionContainer" style="display: none; width: 100%; margin-bottom: 16px; text-align: left; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 12px; box-sizing: border-box;">
+        <div style="font-size: 11px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <span id="boostBarTitle">⚡ Aktif Maç Hediyeleri</span>
+          <span id="boostExpiryLabel" style="font-size: 9px; color: #94a3b8; text-transform: none; font-weight: 600;"></span>
+        </div>
+        <div id="boostBarNoGifts" style="display: none; font-size: 11px; color: #94a3b8; text-align: center; padding: 8px 0;">
+          Aktif maç hediyeniz bulunmamaktadır.
+        </div>
+        <div id="boostBarGiftsList" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Time Boost -->
+          <div id="boostOpt-time" onclick="selectBoost('time')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">⏱️</span>
+              <div>
+                <div id="labelTimeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek Süre (+10sn)</div>
+                <div id="labelTimeDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 10 saniye fazladan başla</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="boostTimeStock" style="font-size: 10px; font-weight: 850; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 9999px;">0/3</span>
+              <div class="boostRadio" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"><div style="width: 6px; height: 6px; border-radius: 50%; background: transparent;"></div></div>
+            </div>
+          </div>
+          <!-- Life Boost -->
+          <div id="boostOpt-life" onclick="selectBoost('life')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">❤️</span>
+              <div>
+                <div id="labelLifeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek Can (+1 Can)</div>
+                <div id="labelLifeDesc" style="font-size: 9px; color: #94a3b8;">3 yerine 4 canla oyuna başla</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="boostLifeStock" style="font-size: 10px; font-weight: 850; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 9999px;">0/3</span>
+              <div class="boostRadio" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"><div style="width: 6px; height: 6px; border-radius: 50%; background: transparent;"></div></div>
+            </div>
+          </div>
+          <!-- Score Boost -->
+          <div id="boostOpt-score" onclick="selectBoost('score')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">⭐</span>
+              <div>
+                <div id="labelScoreTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Başlangıç Puanı (+250)</div>
+                <div id="labelScoreDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 250 puan önde başla</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="boostScoreStock" style="font-size: 10px; font-weight: 850; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 9999px;">0/3</span>
+              <div class="boostRadio" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"><div style="width: 6px; height: 6px; border-radius: 50%; background: transparent;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">🎮 Oyunu Başlat</button>
       <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
       <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
@@ -2009,6 +2065,8 @@
         if (btnLoginMenu) btnLoginMenu.style.display = "none";
         if (btnStart) btnStart.style.display = "block";
         
+        renderBoostSelection();
+        
         authContainer.innerHTML = `
           <div class="authStatusVerified">
             <span>${t("authVerified")}: ${displayName}</span>
@@ -2028,6 +2086,9 @@
         
         if (btnGuest) btnGuest.style.display = "none";
         if (btnLoginMenu) btnLoginMenu.style.display = "block";
+        
+        const container = document.getElementById("boostSelectionContainer");
+        if (container) container.style.display = "none";
         
         authContainer.innerHTML = `
           <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.35); padding: 10px 12px; border-radius: 12px; color: #a5b4fc; font-size: 12px; font-weight: 700;">
@@ -2050,6 +2111,9 @@
         
         if (btnGuest) btnGuest.style.display = "block";
         if (btnLoginMenu) btnLoginMenu.style.display = "block";
+        
+        const container = document.getElementById("boostSelectionContainer");
+        if (container) container.style.display = "none";
         
         authContainer.innerHTML = `
           <div class="authStatusWarn">${t("authWarn")}</div>
@@ -2312,6 +2376,259 @@
       }
     }
 
+    /* BOOST & MATCH REWARD VARIABLES & LOGIC */
+    let selectedBoost = null;
+    let activeGameBoost = null;
+
+    const boostDict = {
+      tr: {
+        title: "⚡ Aktif Maç Hediyeleri",
+        timeTitle: "Ek Süre (+10sn)",
+        timeDesc: "Oyuna 10 saniye fazladan başla",
+        lifeTitle: "Ek Can (+1 Can)",
+        lifeDesc: "3 yerine 4 canla oyuna başla",
+        scoreTitle: "Başlangıç Puanı (+250)",
+        scoreDesc: "Oyuna 250 puan önde başla",
+        expires: "Kalan Süre:",
+        noGifts: "Aktif maç hediyeniz bulunmamaktadır."
+      },
+      en: {
+        title: "⚡ Active Match Gifts",
+        timeTitle: "Extra Time (+10s)",
+        timeDesc: "Start the game with 10 extra seconds",
+        lifeTitle: "Extra Life (+1 Life)",
+        lifeDesc: "Start the game with 4 lives instead of 3",
+        scoreTitle: "Starting Score (+250)",
+        scoreDesc: "Start the game with 250 extra points",
+        expires: "Expires:",
+        noGifts: "You have no active match gifts."
+      },
+      de: {
+        title: "⚡ Aktive Spielgeschenke",
+        timeTitle: "Zusätzliche Zeit (+10s)",
+        timeDesc: "Starte das Spiel mit 10 zusätzlichen Sekunden",
+        lifeTitle: "Zusätzliches Leben (+1)",
+        lifeDesc: "Starte das Spiel mit 4 Leben statt 3",
+        scoreTitle: "Startpunktzahl (+250)",
+        scoreDesc: "Starte das Spiel mit 250 Extrapunkten",
+        expires: "Gültig bis:",
+        noGifts: "Sie haben keine aktiven Spielgeschenke."
+      },
+      fr: {
+        title: "⚡ Cadeaux de Match Actifs",
+        timeTitle: "Temps Supplémentaire (+10s)",
+        timeDesc: "Commencez le jeu avec 10 secondes supplémentaires",
+        lifeTitle: "Vie Supplémentaire (+1)",
+        lifeDesc: "Commencez le jeu avec 4 vies au lieu de 3",
+        scoreTitle: "Score de Départ (+250)",
+        scoreDesc: "Commencez le jeu avec 250 points d'avance",
+        expires: "Expire le:",
+        noGifts: "Vous n'avez pas de cadeaux de match actifs."
+      },
+      es: {
+        title: "⚡ Regalos de Partido Activos",
+        timeTitle: "Tiempo Extra (+10s)",
+        timeDesc: "Comienza el juego con 10 segundos extra",
+        lifeTitle: "Vida Extra (+1 Vida)",
+        lifeDesc: "Comienza el juego con 4 vidas en lugar de 3",
+        scoreTitle: "Puntuación Inicial (+250)",
+        scoreDesc: "Comienza el juego con 250 puntos de ventaja",
+        expires: "Vence el:",
+        noGifts: "No tienes regalos de partido activos."
+      },
+      pt: {
+        title: "⚡ Presentes de Jogo Ativos",
+        timeTitle: "Tempo Extra (+10s)",
+        timeDesc: "Comece o jogo com 10 segundos extras",
+        lifeTitle: "Vida Extra (+1 Vida)",
+        lifeDesc: "Comece o jogo com 4 vidas em vez de 3",
+        scoreTitle: "Pontuação Inicial (+250)",
+        scoreDesc: "Comece o jogo com 250 pontos extras",
+        expires: "Expira em:",
+        noGifts: "Você não tem presentes de jogo ativos."
+      },
+      it: {
+        title: "⚡ Regali Partita Attivi",
+        timeTitle: "Tempo Extra (+10s)",
+        timeDesc: "Inizia il gioco con 10 secondi in più",
+        lifeTitle: "Vita Extra (+1 Vita)",
+        lifeDesc: "Inizia il gioco con 4 vite invece di 3",
+        scoreTitle: "Punteggio Iniziale (+250)",
+        scoreDesc: "Inizia il gioco con 250 punti in più",
+        expires: "Scade il:",
+        noGifts: "Non hai regali partita attivi."
+      },
+      ko: {
+        title: "⚡ 활성 매치 선물",
+        timeTitle: "추가 시간 (+10초)",
+        timeDesc: "10초 추가 시간을 가지고 게임을 시작합니다",
+        lifeTitle: "추가 생명 (+1 목숨)",
+        lifeDesc: "목숨 3개 대신 4개로 게임을 시작합니다",
+        scoreTitle: "시작 점수 (+250점)",
+        scoreDesc: "250점을 획득한 상태로 게임을 시작합니다",
+        expires: "만료일:",
+        noGifts: "활성화된 매치 선물이 없습니다."
+      },
+      ar: {
+        title: "⚡ هدايا المباراة النشطة",
+        timeTitle: "وقت إضافي (+10 ثوانٍ)",
+        timeDesc: "ابدأ اللعبة مع 10 ثوانٍ إضافية",
+        lifeTitle: "حياة إضافية (+1 حياة)",
+        lifeDesc: "ابدأ اللعبة بـ 4 أرواح بدلاً من 3",
+        scoreTitle: "نقاط البدء (+250)",
+        scoreDesc: "ابدأ اللعبة بـ 250 نقطة إضافية",
+        expires: "تنتهي الصلاحية:",
+        noGifts: "ليس لديك هدايا مباراة نشطة."
+      }
+    };
+
+    function selectBoost(type) {
+      if (!userSession.isAuthenticated) return;
+      
+      let charges = 0;
+      if (type === "time") charges = userSession.minmatBoostTimeCharges || 0;
+      else if (type === "life") charges = userSession.minmatBoostLifeCharges || 0;
+      else if (type === "score") charges = userSession.minmatBoostScoreCharges || 0;
+
+      if (charges <= 0) return;
+
+      if (selectedBoost === type) {
+        selectedBoost = null;
+      } else {
+        selectedBoost = type;
+      }
+
+      updateBoostSelectionUI();
+    }
+
+    function updateBoostSelectionUI() {
+      const types = ["time", "life", "score"];
+      types.forEach(t => {
+        const el = document.getElementById("boostOpt-" + t);
+        if (!el) return;
+        
+        let charges = 0;
+        if (t === "time") charges = userSession.minmatBoostTimeCharges || 0;
+        else if (t === "life") charges = userSession.minmatBoostLifeCharges || 0;
+        else if (t === "score") charges = userSession.minmatBoostScoreCharges || 0;
+
+        const radioInner = el.querySelector(".boostRadio div");
+        
+        if (charges <= 0) {
+          el.style.opacity = "0.4";
+          el.style.cursor = "not-allowed";
+          el.style.borderColor = "#334155";
+          el.style.background = "#0f172a";
+          if (radioInner) radioInner.style.background = "transparent";
+        } else {
+          el.style.opacity = "1";
+          el.style.cursor = "pointer";
+          
+          if (selectedBoost === t) {
+            el.style.borderColor = "#f59e0b";
+            el.style.background = "rgba(245, 158, 11, 0.15)";
+            if (radioInner) radioInner.style.background = "#f59e0b";
+          } else {
+            el.style.borderColor = "#334155";
+            el.style.background = "#1e293b";
+            if (radioInner) radioInner.style.background = "transparent";
+          }
+        }
+      });
+    }
+
+    function renderBoostSelection() {
+      const container = document.getElementById("boostSelectionContainer");
+      if (!container) return;
+
+      if (!userSession.isAuthenticated) {
+        container.style.display = "none";
+        return;
+      }
+
+      const timeCharges = userSession.minmatBoostTimeCharges || 0;
+      const lifeCharges = userSession.minmatBoostLifeCharges || 0;
+      const scoreCharges = userSession.minmatBoostScoreCharges || 0;
+      const totalCharges = timeCharges + lifeCharges + scoreCharges;
+
+      const lang = boostDict[currentLang] || boostDict["en"];
+
+      document.getElementById("boostBarTitle").innerText = lang.title;
+      document.getElementById("labelTimeTitle").innerText = lang.timeTitle;
+      document.getElementById("labelTimeDesc").innerText = lang.timeDesc;
+      document.getElementById("labelLifeTitle").innerText = lang.lifeTitle;
+      document.getElementById("labelLifeDesc").innerText = lang.lifeDesc;
+      document.getElementById("labelScoreTitle").innerText = lang.scoreTitle;
+      document.getElementById("labelScoreDesc").innerText = lang.scoreDesc;
+
+      document.getElementById("boostTimeStock").innerText = `${timeCharges}/3`;
+      document.getElementById("boostLifeStock").innerText = `${lifeCharges}/3`;
+      document.getElementById("boostScoreStock").innerText = `${scoreCharges}/3`;
+
+      const expiryLabel = document.getElementById("boostExpiryLabel");
+      if (userSession.minmatBoostExpiresAt && totalCharges > 0) {
+        const now = new Date();
+        const expiresAt = new Date(userSession.minmatBoostExpiresAt);
+        const diffMs = expiresAt - now;
+        if (diffMs > 0) {
+          const hours = Math.floor(diffMs / (1000 * 60 * 60));
+          const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+          expiryLabel.innerText = currentLang === "tr" 
+            ? `${lang.expires} ${hours}s ${mins}d` 
+            : `${lang.expires} ${hours}h ${mins}m`;
+        } else {
+          expiryLabel.innerText = "";
+        }
+      } else {
+        expiryLabel.innerText = "";
+      }
+
+      const noGiftsEl = document.getElementById("boostBarNoGifts");
+      const giftsListEl = document.getElementById("boostBarGiftsList");
+
+      if (totalCharges <= 0) {
+        noGiftsEl.innerText = lang.noGifts;
+        noGiftsEl.style.display = "block";
+        giftsListEl.style.display = "none";
+      } else {
+        noGiftsEl.style.display = "none";
+        giftsListEl.style.display = "flex";
+      }
+
+      container.style.display = "block";
+      updateBoostSelectionUI();
+    }
+
+    async function consumeSelectedBoost() {
+      if (!selectedBoost || !userSession.isAuthenticated) return;
+      activeGameBoost = selectedBoost;
+      const consumedType = selectedBoost;
+      selectedBoost = null;
+      
+      try {
+        const token = await getClerkToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        const res = await fetch("/api/profile/consume-boost", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ boostType: consumedType }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log("Boost consumed successfully:", data);
+          userSession.minmatBoostTimeCharges = data.minmatBoostTimeCharges;
+          userSession.minmatBoostLifeCharges = data.minmatBoostLifeCharges;
+          userSession.minmatBoostScoreCharges = data.minmatBoostScoreCharges;
+          userSession.minmatBoostExpiresAt = data.minmatBoostExpiresAt;
+        }
+      } catch (err) {
+        console.error("Error consuming boost:", err);
+      }
+    }
+
     /* GAME LOGIC GLOBAL VARIABLES */
     let score = 0;
     let lives = 3;
@@ -2501,8 +2818,21 @@
       if (overlay) overlay.style.display = "none";
       let pauseBtn = document.getElementById("pauseBtn");
       if (pauseBtn) pauseBtn.innerText = "⏸️";
+
+      activeGameBoost = null;
+      if (selectedBoost && userSession.isAuthenticated) {
+        await consumeSelectedBoost();
+      }
+
       score = 0;
+      if (activeGameBoost === "score") {
+        score = 250;
+      }
+
       lives = 3;
+      if (activeGameBoost === "life") {
+        lives = 4;
+      }
       updateLivesUI();
       level = 1;
       const playerTextEl = document.getElementById("playerText");
@@ -2582,6 +2912,29 @@
         console.error("Failed to load minmatEkSure:", err);
       }
 
+      if (activeGameBoost) {
+        let label = "";
+        if (activeGameBoost === "time") {
+          label = currentLang === "tr" ? "⏱️ +10sn Ek Süre Aktif!" : "⏱️ +10s Extra Time Active!";
+        } else if (activeGameBoost === "life") {
+          label = currentLang === "tr" ? "❤️ +1 Ek Can Aktif!" : "❤️ +1 Extra Life Active!";
+        } else if (activeGameBoost === "score") {
+          label = currentLang === "tr" ? "⭐ +250 Başlangıç Puanı Aktif!" : "⭐ +250 Starting Score Active!";
+        }
+        
+        let badgeEl = document.getElementById("extraTimeBadge");
+        let rowEl = document.getElementById("extraTimeRow");
+        if (badgeEl) {
+          if (badgeEl.style.display === "inline-flex" && badgeEl.innerText) {
+            badgeEl.innerText = badgeEl.innerText + " | " + label;
+          } else {
+            badgeEl.innerText = label;
+            badgeEl.style.display = "inline-flex";
+            if (rowEl) rowEl.style.display = "flex";
+          }
+        }
+      }
+
       startLevel();
       show("gameScreen");
       updateModeButtons();
@@ -2613,6 +2966,9 @@
       }
       if (badgeExtraTimeSeconds > 0) {
         timeLeft += badgeExtraTimeSeconds;
+      }
+      if (activeGameBoost === "time") {
+        timeLeft += 10;
       }
 
       updateUI();

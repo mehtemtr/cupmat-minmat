@@ -418,6 +418,11 @@ export default function EntryPage() {
               Dünya Kupası heyecanını zeka ve taktik becerilerinizle birleştirin. Takımınızın kaderi sizin elinizde!
             </p>
 
+            {/* Live Reward Promo Badge */}
+            <div className="mb-6 px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold flex items-center gap-2 max-w-md shadow-[0_0_15px_rgba(245,158,11,0.05)] hover:border-amber-500/30 transition-colors">
+              <span>{t("fantasy.liveRewardPromo")}</span>
+            </div>
+
             {isFullyUnlocked ? (
               <Link
                 href="/fantasy"

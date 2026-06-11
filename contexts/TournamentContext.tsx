@@ -7,6 +7,7 @@ import {
   useEffect,
   useMemo,
   useState,
+  useRef,
 } from "react";
 import type {
   AiAnalysis,
@@ -27,7 +28,7 @@ import { generateAiPredictions } from "@/lib/ai-predictions";
 import { simulateLiveUpdate } from "@/lib/ai-live-fetcher";
 import { useLocale } from "@/contexts/LocaleContext";
 import { totalPredictionPoints } from "@/lib/predictions/scoring";
-import { playWhistleSound, playGoalSound } from "@/lib/audio";
+import { playWhistleSound, playGoalSound, playRewardSound } from "@/lib/audio";
 import { generateSimulation } from "@/lib/simulation";
 
 const STORAGE_KEY = "wc2026-tournament-state";
@@ -95,6 +96,12 @@ export type TournamentContextValue = {
   simAllEvents: any[];
   startSimulation: (match: any) => void;
   stopSimulation: () => void;
+  simRewardMinutes: number[];
+  simClaimedMinutes: number[];
+  simMissedMinutes: number[];
+  activeReward: { minute: number; type: "time" | "life" | "score"; durationLeft: number } | null;
+  claimReward: (minute: number) => Promise<void>;
+  dismissReward: (minute: number) => void;
 };
 
 const TournamentContext = createContext<TournamentContextValue | null>(null);
@@ -133,6 +140,35 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   const [knockoutBracket, setKnockoutBracket] = useState<KnockoutMatch[]>([]);
 
   // Global live simulation states
+  const [unlocked, setUnlocked] = useState<boolean | null>(null);
+
+  // Simulation Rewards States
+  const [simRewardMinutes, setSimRewardMinutes] = useState<number[]>([]);
+  const [simClaimedMinutes, setSimClaimedMinutes] = useState<number[]>([]);
+  const [simMissedMinutes, setSimMissedMinutes] = useState<number[]>([]);
+  const [activeReward, setActiveReward] = useState<{ minute: number; type: "time" | "life" | "score"; durationLeft: number } | null>(null);
+
+  const rewardMinutesRef = useRef<number[]>([]);
+  const claimedMinutesRef = useRef<number[]>([]);
+  const missedMinutesRef = useRef<number[]>([]);
+  const activeRewardRef = useRef<{ minute: number; type: "time" | "life" | "score"; durationLeft: number } | null>(null);
+
+  const updateSimRewardMinutes = (mins: number[]) => {
+    rewardMinutesRef.current = mins;
+    setSimRewardMinutes(mins);
+  };
+  const updateSimClaimedMinutes = (mins: number[]) => {
+    claimedMinutesRef.current = mins;
+    setSimClaimedMinutes(mins);
+  };
+  const updateSimMissedMinutes = (mins: number[]) => {
+    missedMinutesRef.current = mins;
+    setSimMissedMinutes(mins);
+  };
+  const updateActiveReward = (rew: typeof activeRewardRef.current) => {
+    activeRewardRef.current = rew;
+    setActiveReward(rew);
+  };
   const [simMatchId, setSimMatchId] = useState<string | null>(null);
   const [simRunning, setSimRunning] = useState(false);
   const [simMinute, setSimMinute] = useState(1);
@@ -373,6 +409,34 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     
     // Play kickoff whistle immediately
     playWhistleSound("start");
+
+    // Dynamic Reward Spawn minute generation
+    const isTurkeyMatch =
+      String(match.homeTeamId || "").toLowerCase() === "tur" ||
+      String(match.awayTeamId || "").toLowerCase() === "tur" ||
+      String(match.homeTeam?.id || "").toLowerCase() === "tur" ||
+      String(match.awayTeam?.id || "").toLowerCase() === "tur";
+
+    const stageStr = String(match.stage || match.id || "").toLowerCase();
+    const isLateKnockout =
+      stageStr.includes("quarter") ||
+      stageStr.includes("semi") ||
+      stageStr.includes("final") ||
+      stageStr.includes("qf") ||
+      stageStr.includes("sf");
+
+    const numRewards = (isTurkeyMatch || isLateKnockout) ? 3 : 2;
+    const mins: number[] = [];
+    while (mins.length < numRewards) {
+      const randomMin = Math.floor(Math.random() * 87) + 2; // [2, 88]
+      if (!mins.includes(randomMin)) {
+        mins.push(randomMin);
+      }
+    }
+    updateSimRewardMinutes(mins);
+    updateSimClaimedMinutes([]);
+    updateSimMissedMinutes([]);
+    updateActiveReward(null);
   }, []);
 
   const stopSimulation = useCallback(() => {
@@ -382,6 +446,43 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setSimScore({ home: 0, away: 0 });
     setSimEvents([]);
     setSimAllEvents([]);
+    updateSimRewardMinutes([]);
+    updateSimClaimedMinutes([]);
+    updateSimMissedMinutes([]);
+    updateActiveReward(null);
+  }, []);
+
+  const claimReward = useCallback(async (minute: number) => {
+    const activeRew = activeRewardRef.current;
+    if (!activeRew || activeRew.minute !== minute) return;
+
+    try {
+      const res = await fetch("/api/fantasy/claim-reward", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rewardType: activeRew.type }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          updateSimClaimedMinutes([...claimedMinutesRef.current, minute]);
+          updateActiveReward(null);
+          // Play success chime sound!
+          playRewardSound();
+        }
+      }
+    } catch (e) {
+      console.error("Error claiming reward:", e);
+    }
+  }, []);
+
+  const dismissReward = useCallback((minute: number) => {
+    const activeRew = activeRewardRef.current;
+    if (activeRew && activeRew.minute === minute) {
+      updateSimMissedMinutes([...missedMinutesRef.current, minute]);
+      updateActiveReward(null);
+    }
   }, []);
 
   // Global background simulation clock
@@ -389,6 +490,23 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     if (!simRunning || !simMatchId) return;
 
     const intervalId = setInterval(() => {
+      // If there is an active reward, tick its duration instead of game minutes
+      const activeRew = activeRewardRef.current;
+      if (activeRew) {
+        const nextDur = activeRew.durationLeft - 1;
+        if (nextDur <= 0) {
+          // Missed!
+          updateSimMissedMinutes([...missedMinutesRef.current, activeRew.minute]);
+          updateActiveReward(null);
+        } else {
+          updateActiveReward({
+            ...activeRew,
+            durationLeft: nextDur,
+          });
+          return; // Skip incrementing match minute
+        }
+      }
+
       setSimMinute((prevMin) => {
         const nextMin = prevMin + 1;
         
@@ -403,6 +521,22 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
             playGoalSound();
           }
         });
+
+        // Trigger reward popups at specific minutes
+        const rewardMins = rewardMinutesRef.current;
+        if (
+          rewardMins.includes(nextMin) &&
+          !claimedMinutesRef.current.includes(nextMin) &&
+          !missedMinutesRef.current.includes(nextMin)
+        ) {
+          const rewardTypes: Array<"time" | "life" | "score"> = ["time", "life", "score"];
+          const randomType = rewardTypes[Math.floor(Math.random() * rewardTypes.length)];
+          updateActiveReward({
+            minute: nextMin,
+            type: randomType,
+            durationLeft: 15,
+          });
+        }
 
         if (nextMin >= 94) {
           setSimRunning(false);
@@ -472,6 +606,12 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       simAllEvents,
       startSimulation,
       stopSimulation,
+      simRewardMinutes,
+      simClaimedMinutes,
+      simMissedMinutes,
+      activeReward,
+      claimReward,
+      dismissReward,
     }),
     [
       ready,
@@ -500,6 +640,12 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       simAllEvents,
       startSimulation,
       stopSimulation,
+      simRewardMinutes,
+      simClaimedMinutes,
+      simMissedMinutes,
+      activeReward,
+      claimReward,
+      dismissReward,
     ],
   );
 
