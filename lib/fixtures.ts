@@ -15,31 +15,44 @@ function roundRobinPairs(teamIds: string[]): [string, string][] {
 export function generateGroupFixtures(): MatchResult[] {
   const matches: MatchResult[] = [];
   let dayOffset = 0;
-
   const hourOffsetsUTC = ["13:00", "16:00", "19:00", "21:00"];
 
-  for (const group of GROUP_IDS) {
-    const teams = getTeamsByGroup(group);
-    const pairs = roundRobinPairs(teams.map((t) => t.id));
+  // Matchday definitions: mapping matchday to pair indices of roundRobinPairs
+  const matchdays = [
+    [0, 5], // Matchday 1
+    [1, 4], // Matchday 2
+    [2, 3], // Matchday 3
+  ];
 
-    pairs.forEach(([home, away], index) => {
-      // Simple logic: 4 matches per day
-      const date = new Date(Date.UTC(2026, 5, 11));
-      date.setUTCDate(date.getUTCDate() + Math.floor(dayOffset / 4));
-      
-      matches.push({
-        id: `${group}-${index + 1}`,
-        group,
-        homeTeamId: home,
-        awayTeamId: away,
-        homeScore: null,
-        awayScore: null,
-        played: false,
-        date: date.toISOString().split("T")[0],
-        time: hourOffsetsUTC[dayOffset % 4],
-      });
-      dayOffset++;
-    });
+  for (const mday of [0, 1, 2]) {
+    const pairIndices = matchdays[mday];
+    
+    for (const group of GROUP_IDS) {
+      const teams = getTeamsByGroup(group);
+      const teamIds = teams.map((t) => t.id);
+      const pairs = roundRobinPairs(teamIds);
+
+      for (const pairIndex of pairIndices) {
+        const [home, away] = pairs[pairIndex];
+        
+        const date = new Date(Date.UTC(2026, 5, 11));
+        date.setUTCDate(date.getUTCDate() + Math.floor(dayOffset / 4));
+        
+        matches.push({
+          id: `${group}-${pairIndex + 1}`, // Keep the same ID format group-1 to group-6
+          group,
+          homeTeamId: home,
+          awayTeamId: away,
+          homeScore: null,
+          awayScore: null,
+          played: false,
+          date: date.toISOString().split("T")[0],
+          time: hourOffsetsUTC[dayOffset % 4],
+        });
+        
+        dayOffset++;
+      }
+    }
   }
 
   return matches;
