@@ -5,6 +5,7 @@ import { generateGroupFixtures } from "./fixtures";
 import { generateSimulation } from "./simulation";
 import { getAdjustedTime } from "./tournament/time-helper";
 
+// Trigger Vercel auto-deploy with a new commit
 // Get list of API keys from env
 const getApiKeys = (): string[] => {
   const raw = process.env.API_FOOTBALL_KEY || "";
