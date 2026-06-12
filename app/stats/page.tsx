@@ -150,6 +150,11 @@ export default function StatisticsPage() {
   // Unified Commentary selectors
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
 
+  const handleCloseCommentary = () => {
+    stopSimulation();
+    setSelectedMatchId(null);
+  };
+
   const activeCommMatch = useMemo(() => {
     if (simMatchId) {
       return displayMatches.find(m => m.id === simMatchId) || null;
@@ -158,8 +163,7 @@ export default function StatisticsPage() {
       return displayMatches.find(m => m.id === selectedMatchId) || null;
     }
     if (realLiveMatch) return realLiveMatch;
-    // Default to first match if available
-    return displayMatches[0] || null;
+    return null;
   }, [simMatchId, selectedMatchId, displayMatches, realLiveMatch]);
 
   const activeCommEvents = useMemo(() => {
@@ -895,7 +899,7 @@ export default function StatisticsPage() {
                           )}
                           {isSimulated && (
                             <button
-                              onClick={stopSimulation}
+                              onClick={handleCloseCommentary}
                               className="inline-flex items-center gap-1.5 text-xs font-bold text-red-400 hover:text-red-300 transition"
                             >
                               <span>{locale === "tr" ? "Simülasyonu Durdur" : "Stop Simulation"}</span>
@@ -932,9 +936,9 @@ export default function StatisticsPage() {
                           }
                         </span>
                       )}
-                      {simMatchId && (
+                      {(simMatchId || selectedMatchId) && (
                         <button
-                          onClick={stopSimulation}
+                          onClick={handleCloseCommentary}
                           className="rounded-lg bg-red-500/10 px-3 py-1 text-xs font-bold text-red-400 hover:bg-red-500/20 transition"
                         >
                           {locale === "tr" ? "Kapat" : "Close"}
