@@ -188,7 +188,7 @@ export default function StatisticsPage() {
   // Aggregate scorers and cards from all matches in simulated real-time
   const tournamentStats = useMemo(() => {
     const scorersMap: Record<string, { player: any, team: any, goals: number }> = {};
-    const cardsMap: Record<string, { player: any, team: any, yellow_cards: number }> = {};
+    const cardsMap: Record<string, { player: any, team: any, yellow_cards: number, red_cards: number }> = {};
 
     matches.forEach((m) => {
       // Parse kickoff time
@@ -240,9 +240,14 @@ export default function StatisticsPage() {
             if (player) {
               const team = homePlayers.some(p => p.id === player.id) ? homeTeam : awayTeam;
               if (!cardsMap[player.id]) {
-                cardsMap[player.id] = { player, team, yellow_cards: 0 };
+                cardsMap[player.id] = { player, team, yellow_cards: 0, red_cards: 0 };
               }
-              cardsMap[player.id].yellow_cards = (cardsMap[player.id].yellow_cards || 0) + 1;
+              const isRed = ev.isRedCard || ev.textTr?.includes("Kırmızı Kart") || ev.textEn?.includes("Red Card") || ev.textTr?.includes("🟥") || ev.textEn?.includes("🟥");
+              if (isRed) {
+                cardsMap[player.id].red_cards = (cardsMap[player.id].red_cards || 0) + 1;
+              } else {
+                cardsMap[player.id].yellow_cards = (cardsMap[player.id].yellow_cards || 0) + 1;
+              }
             }
           }
         });
@@ -250,7 +255,16 @@ export default function StatisticsPage() {
     });
 
     const sortedScorers = Object.values(scorersMap).sort((a, b) => b.goals - a.goals);
-    const sortedCards = Object.values(cardsMap).sort((a, b) => (b.yellow_cards || 0) - (a.yellow_cards || 0));
+    const sortedCards = Object.values(cardsMap).sort((a, b) => {
+      const aRed = a.red_cards || 0;
+      const bRed = b.red_cards || 0;
+      const aYellow = a.yellow_cards || 0;
+      const bYellow = b.yellow_cards || 0;
+      if (bRed !== aRed) {
+        return bRed - aRed;
+      }
+      return bYellow - aYellow;
+    });
 
     return {
       scorers: sortedScorers,
@@ -1106,7 +1120,7 @@ export default function StatisticsPage() {
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                      {tournamentStats.cards.map(({ player, team, yellow_cards }, idx) => (
+                      {tournamentStats.cards.map(({ player, team, yellow_cards, red_cards }, idx) => (
                         <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
                           <div className="flex items-center gap-3">
                             <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
@@ -1114,7 +1128,18 @@ export default function StatisticsPage() {
                             <span className="font-bold text-white text-sm">{player.name}</span>
                             <span className="text-xs text-zinc-400">({locale === "tr" ? team.nameTr : team.nameEn})</span>
                           </div>
-                          <span className="font-extrabold text-amber-400 text-sm">{yellow_cards} Sarı</span>
+                          <div className="flex gap-2 text-xs font-extrabold">
+                            {(yellow_cards || 0) > 0 && (
+                              <span className="px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                {yellow_cards} {locale === "tr" ? "Sarı" : "Yellow"} 🟨
+                              </span>
+                            )}
+                            {(red_cards || 0) > 0 && (
+                              <span className="px-2 py-1 rounded bg-red-500/10 text-red-500 border border-red-500/20">
+                                {red_cards} {locale === "tr" ? "Kırmızı" : "Red"} 🟥
+                              </span>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>
