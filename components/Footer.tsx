@@ -14,7 +14,7 @@ export function Footer() {
   const { t } = useTranslation();
   const pathname = usePathname();
 
-  if (pathname === "/") return null;
+  if (pathname === "/" || pathname === "/minmat") return null;
 
   return (
     <footer className="border-t border-white/10 bg-[#060b14] py-12">
