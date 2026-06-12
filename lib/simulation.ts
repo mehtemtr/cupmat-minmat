@@ -161,10 +161,6 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
     return x - Math.floor(x);
   };
 
-  const events: SimEvent[] = [];
-  let homeScore = 0;
-  let awayScore = 0;
-
   const getDeterministicPlayer = (isHome: boolean, s: number) => {
     const list = isHome ? homePlayers : awayPlayers;
     if (!list || list.length === 0) return isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu";
@@ -173,57 +169,55 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
     return p.player_name || p.name || (isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu");
   };
 
-  events.push({
-    minute: 1,
-    type: "start",
-    textTr: "🏁 Hakem düdüğünü çaldı ve maç başladı!",
-    textEn: "🏁 The referee blows the whistle and the match begins!",
-    scoreAfter: { home: 0, away: 0 }
-  });
+  const hasRealScore = match && typeof match.homeScore === "number" && typeof match.awayScore === "number";
+  const targetHomeGoals = hasRealScore ? match.homeScore : (rand(seed + 2) > 0.5 ? 1 : 0) + (rand(seed + 12) > 0.5 ? 1 : 0);
+  const targetAwayGoals = hasRealScore ? match.awayScore : (2 - targetHomeGoals);
 
-  const g1Min = Math.floor(rand(seed + 1) * 25) + 10;
-  const g1Home = rand(seed + 2) > 0.5;
-  if (g1Home) homeScore++; else awayScore++;
-  const scorer1 = getDeterministicPlayer(g1Home, seed + 3);
-  events.push({
-    minute: g1Min,
-    type: "goal",
-    textTr: `⚽ GOL! ${g1Home ? "Ev sahibi" : "Deplasman"} ekip golü buluyor! Golü atan oyuncu: ${scorer1}!`,
-    textEn: `⚽ GOAL! The ${g1Home ? "home" : "away"} side scores! Goal by ${scorer1}!`,
-    scoreAfter: { home: homeScore, away: awayScore }
-  });
+  const gameEvents: SimEvent[] = [];
 
-  const c1Min = Math.floor(rand(seed + 4) * 20) + 20;
-  const c1Home = rand(seed + 5) > 0.5;
-  const playerCard1 = getDeterministicPlayer(c1Home, seed + 6);
-  events.push({
-    minute: c1Min,
-    type: "card",
-    textTr: `🟨 Sarı Kart: ${playerCard1} rakibine yaptığı sert müdahale sonrası sarı kart görüyor.`,
-    textEn: `🟨 Yellow Card: ${playerCard1} receives a yellow card for a hard tackle.`,
-  });
+  for (let i = 0; i < targetHomeGoals; i++) {
+    const min = Math.floor(rand(seed + 100 + i) * 80) + 5;
+    const scorer = getDeterministicPlayer(true, seed + 110 + i);
+    gameEvents.push({
+      minute: min === 45 ? 44 : min,
+      type: "goal",
+      textTr: `⚽ GOL! Ev sahibi ekip golü buluyor! Golü atan oyuncu: ${scorer}!`,
+      textEn: `⚽ GOAL! The home side scores! Goal by ${scorer}!`,
+      isHomeGoal: true
+    } as any);
+  }
 
-  events.push({
-    minute: 45,
-    type: "half",
-    textTr: `⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: ${homeScore} - ${awayScore}`,
-    textEn: `⏸️ Halftime. Teams head to the dressing room. Score: ${homeScore} - ${awayScore}`,
-    scoreAfter: { home: homeScore, away: awayScore }
-  });
+  for (let i = 0; i < targetAwayGoals; i++) {
+    const min = Math.floor(rand(seed + 200 + i) * 80) + 5;
+    const scorer = getDeterministicPlayer(false, seed + 220 + i);
+    gameEvents.push({
+      minute: min === 45 ? 44 : min,
+      type: "goal",
+      textTr: `⚽ GOL! Deplasman ekibi golü buluyor! Golü atan oyuncu: ${scorer}!`,
+      textEn: `⚽ GOAL! The away side scores! Goal by ${scorer}!`,
+      isHomeGoal: false
+    } as any);
+  }
 
-  events.push({
-    minute: 46,
-    type: "start",
-    textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
-    textEn: "🏁 Second half kicked off. Good luck to both teams!",
-  });
+  const cardCount = Math.floor(rand(seed + 300) * 3) + 1;
+  for (let i = 0; i < cardCount; i++) {
+    const min = Math.floor(rand(seed + 310 + i) * 80) + 5;
+    const isHomeCard = rand(seed + 320 + i) > 0.5;
+    const playerCard = getDeterministicPlayer(isHomeCard, seed + 330 + i);
+    gameEvents.push({
+      minute: min === 45 ? 44 : min,
+      type: "card",
+      textTr: `🟨 Sarı Kart: ${playerCard} rakibine yaptığı sert müdahale sonrası sarı kart görüyor.`,
+      textEn: `🟨 Yellow Card: ${playerCard} receives a yellow card for a hard tackle.`,
+    });
+  }
 
-  const subMin = Math.floor(rand(seed + 7) * 15) + 50;
-  const subHome = rand(seed + 8) > 0.5;
-  const subOut = getDeterministicPlayer(subHome, seed + 9);
-  const subIn = getDeterministicPlayer(subHome, seed + 10);
+  const subMin = Math.floor(rand(seed + 400) * 20) + 55;
+  const subHome = rand(seed + 410) > 0.5;
+  const subOut = getDeterministicPlayer(subHome, seed + 420);
+  const subIn = getDeterministicPlayer(subHome, seed + 430);
   if (subOut !== subIn) {
-    events.push({
+    gameEvents.push({
       minute: subMin,
       type: "sub",
       textTr: `🔄 Oyuncu Değişikliği: ${subHome ? "Ev sahibi" : "Deplasman"} takımda oyuncu değişikliği. ${subOut} kenara gelirken ${subIn} oyuna dahil oluyor.`,
@@ -231,42 +225,79 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
     });
   }
 
-  const g2Min = Math.floor(rand(seed + 11) * 20) + 65;
-  const g2Home = rand(seed + 12) > 0.5;
-  if (g2Home) homeScore++; else awayScore++;
-  const scorer2 = getDeterministicPlayer(g2Home, seed + 13);
-  events.push({
-    minute: g2Min,
-    type: "goal",
-    textTr: `⚽ GOL! Maçta heyecan dorukta! ${scorer2} topu ağlara gönderiyor!`,
-    textEn: `⚽ GOAL! The excitement is high! ${scorer2} sends the ball into the back of the net!`,
-    scoreAfter: { home: homeScore, away: awayScore }
+  gameEvents.sort((a, b) => a.minute - b.minute);
+
+  let hScore = 0;
+  let aScore = 0;
+  const processedEvents: SimEvent[] = [];
+
+  processedEvents.push({
+    minute: 1,
+    type: "start",
+    textTr: "🏁 Hakem düdüğünü çaldı ve maç başladı!",
+    textEn: "🏁 The referee blows the whistle and the match begins!",
+    scoreAfter: { home: 0, away: 0 }
   });
 
-  const c2Min = Math.floor(rand(seed + 14) * 19) + 70;
-  const c2Home = rand(seed + 15) > 0.5;
-  const playerCard2 = getDeterministicPlayer(c2Home, seed + 16);
-  events.push({
-    minute: c2Min,
-    type: "card",
-    textTr: `🟨 Sarı Kart: ${playerCard2} hakeme yaptığı itirazlar sonrası sarı kartla cezalandırılıyor.`,
-    textEn: `🟨 Yellow Card: ${playerCard2} is booked for protesting.`,
+  let halftimeAdded = false;
+
+  gameEvents.forEach((ev) => {
+    if (ev.minute > 45 && !halftimeAdded) {
+      processedEvents.push({
+        minute: 45,
+        type: "half",
+        textTr: `⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: ${hScore} - ${aScore}`,
+        textEn: `⏸️ Halftime. Teams head to the dressing room. Score: ${hScore} - ${aScore}`,
+        scoreAfter: { home: hScore, away: aScore }
+      });
+      processedEvents.push({
+        minute: 46,
+        type: "start",
+        textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
+        textEn: "🏁 Second half kicked off. Good luck to both teams!",
+      });
+      halftimeAdded = true;
+    }
+
+    if (ev.type === "goal") {
+      const isHomeGoal = (ev as any).isHomeGoal;
+      if (isHomeGoal) hScore++; else aScore++;
+      ev.scoreAfter = { home: hScore, away: aScore };
+    }
+
+    processedEvents.push(ev);
   });
 
-  events.push({
+  if (!halftimeAdded) {
+    processedEvents.push({
+      minute: 45,
+      type: "half",
+      textTr: `⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: ${hScore} - ${aScore}`,
+      textEn: `⏸️ Halftime. Teams head to the dressing room. Score: ${hScore} - ${aScore}`,
+      scoreAfter: { home: hScore, away: aScore }
+    });
+    processedEvents.push({
+      minute: 46,
+      type: "start",
+      textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
+      textEn: "🏁 Second half kicked off. Good luck to both teams!",
+    });
+  }
+
+  processedEvents.push({
     minute: 90,
     type: "commentary",
     textTr: "⏱️ Maçın sonuna en az 4 uzatma dakikası eklendi.",
     textEn: "⏱️ A minimum of 4 minutes of added time announced.",
   });
 
-  events.push({
+  processedEvents.push({
     minute: 94,
     type: "end",
-    textTr: `🔚 Son düdük çaldı! Maç bitti. Skor: ${homeScore} - ${awayScore}`,
-    textEn: `🔚 Full-time! The match is over. Final Score: ${homeScore} - ${awayScore}`,
-    scoreAfter: { home: homeScore, away: awayScore }
+    textTr: `🔚 Son düdük çaldı! Maç bitti. Skor: ${hScore} - ${aScore}`,
+    textEn: `🔚 Full-time! The match is over. Final Score: ${hScore} - ${aScore}`,
+    scoreAfter: { home: hScore, away: aScore }
   });
 
-  return events.sort((a, b) => a.minute - b.minute);
+  return processedEvents;
 }
