@@ -264,6 +264,33 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setGroupTableOverrides((saved.groupTableOverrides ?? {}) as Record<GroupId, string[]>);
     
     setReady(true);
+
+    // Fetch and merge live scores from Football-Data.org proxy API
+    fetch("/api/live-scores")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.matches)) {
+          console.log(`[TournamentContext] Merging ${data.matches.length} live scores...`);
+          setMatches((prevMatches) => {
+            return prevMatches.map((m) => {
+              const liveMatch = data.matches.find((lm: any) => lm.id === m.id);
+              if (liveMatch) {
+                const isPlayed = liveMatch.played;
+                const isLive = liveMatch.isLive;
+                return {
+                  ...m,
+                  homeScore: (isPlayed || isLive) ? liveMatch.homeScore : m.homeScore,
+                  awayScore: (isPlayed || isLive) ? liveMatch.awayScore : m.awayScore,
+                  played: isPlayed,
+                  isLive: isLive,
+                };
+              }
+              return m;
+            });
+          });
+        }
+      })
+      .catch((err) => console.error("Failed to load live scores from API:", err));
   }, []);
 
   useEffect(() => {

@@ -66,9 +66,22 @@ export function GroupMatchEditor() {
               >
                 {/* Match Info Header */}
                 <div className="flex items-center justify-between text-[10px] text-zinc-500 font-mono border-b border-white/5 pb-1.5 mb-1.5">
-                  <span className="rounded bg-zinc-800 px-1.5 py-0.5 font-bold text-zinc-300">
-                    Matchday {matchday}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="rounded bg-zinc-800 px-1.5 py-0.5 font-bold text-zinc-300">
+                      Matchday {matchday}
+                    </span>
+                    {match.isLive && (
+                      <span className="flex items-center gap-1 rounded bg-red-500/10 px-1.5 py-0.5 font-bold text-red-500 animate-pulse border border-red-500/20">
+                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                        LIVE
+                      </span>
+                    )}
+                    {match.played && !match.isLive && (
+                      <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 font-bold text-emerald-400 border border-emerald-500/20">
+                        FINISHED
+                      </span>
+                    )}
+                  </div>
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     {match.date} &bull; {match.time}
