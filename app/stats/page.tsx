@@ -901,7 +901,7 @@ export default function StatisticsPage() {
                           <span className="text-[10px] text-zinc-500">
                             {locale === "tr" ? "11 Haziran 2026" : "June 11, 2026"}
                           </span>
-                          {!isSimulated && !simMatchId && (
+                          {!isSimulated && !simMatchId && !isLive && !isFinished && (
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
