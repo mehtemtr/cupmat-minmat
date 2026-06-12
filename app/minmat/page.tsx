@@ -42,8 +42,8 @@ export default function MinMatPage() {
   }, [getToken]);
 
   return (
-    <div className="min-h-screen bg-[#060b14] pt-16">
-      <div className="w-full h-[calc(100vh-64px)]">
+    <div className="h-screen w-screen bg-[#060b14] pt-16 overflow-hidden flex flex-col">
+      <div className="w-full flex-1 overflow-hidden">
         <iframe 
           src="/minmat/index.html" 
           className="w-full h-full border-0 block"
