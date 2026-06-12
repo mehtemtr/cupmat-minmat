@@ -191,100 +191,34 @@ export default function StatisticsPage() {
     return activeCommMatch?.elapsedMin ?? 1;
   }, [simMatchId, simMinute, activeCommMatch]);
 
-  // Aggregate scorers and cards from all matches in simulated real-time
-  const tournamentStats = useMemo(() => {
-    const scorersMap: Record<string, { player: any, team: any, goals: number }> = {};
-    const cardsMap: Record<string, { player: any, team: any, yellow_cards: number, red_cards: number }> = {};
+  const [dbLeaders, setDbLeaders] = useState<{ scorers: any[]; cards: any[] }>({ scorers: [], cards: [] });
+  const [dbLeadersLoading, setDbLeadersLoading] = useState(true);
 
-    displayMatches.forEach((m) => {
-      const isManualSim = simMatchId && m.id === simMatchId;
-      const hasScore = m.homeScore !== null && m.awayScore !== null;
-      
-      // Do not aggregate stats for unplayed/unsimulated matches without real scores
-      if (!isManualSim && !hasScore) return;
-
-      // Parse kickoff time
-      const [hourStr, minStr] = (m.time || "12:00").split(":");
-      const [yrStr, moStr, dyStr] = m.date.split("-");
-      const kickoffTime = new Date(Date.UTC(
-        parseInt(yrStr, 10),
-        parseInt(moStr, 10) - 1,
-        parseInt(dyStr, 10),
-        parseInt(hourStr, 10),
-        parseInt(minStr, 10),
-        0
-      )).getTime() - (3 * 60 * 60 * 1000); // TSİ to UTC
-
-      if (isManualSim || currentRealTime >= kickoffTime) {
-        const homeTeam = getTeamById(m.homeTeamId);
-        const awayTeam = getTeamById(m.awayTeamId);
-        if (!homeTeam || !awayTeam) return;
-
-        const homePlayers = homeTeam.players || [];
-        const awayPlayers = awayTeam.players || [];
-        const allMatchPlayers = [...homePlayers, ...awayPlayers];
-
-        const eventsList = generateSimulation(m, homePlayers, awayPlayers);
-
-        const isFinished = isManualSim 
-          ? (simMinute >= 94) 
-          : (m.played || currentRealTime >= kickoffTime + (120 * 60 * 1000));
-        const elapsedMin = isManualSim
-          ? simMinute
-          : (isFinished ? 94 : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000))));
-
-        const activeEvents = eventsList.filter((e) => e.minute <= elapsedMin);
-
-        activeEvents.forEach((ev) => {
-          if (ev.type === "goal") {
-            const player = allMatchPlayers.find(p => 
-              ev.textTr.includes(p.name) || ev.textEn.includes(p.name)
-            );
-            if (player) {
-              const team = homePlayers.some(p => p.id === player.id) ? homeTeam : awayTeam;
-              if (!scorersMap[player.id]) {
-                scorersMap[player.id] = { player, team, goals: 0 };
-              }
-              scorersMap[player.id].goals++;
-            }
-          } else if (ev.type === "card") {
-            const player = allMatchPlayers.find(p => 
-              ev.textTr.includes(p.name) || ev.textEn.includes(p.name)
-            );
-            if (player) {
-              const team = homePlayers.some(p => p.id === player.id) ? homeTeam : awayTeam;
-              if (!cardsMap[player.id]) {
-                cardsMap[player.id] = { player, team, yellow_cards: 0, red_cards: 0 };
-              }
-              const isRed = ev.isRedCard || ev.textTr?.includes("Kırmızı Kart") || ev.textEn?.includes("Red Card") || ev.textTr?.includes("🟥") || ev.textEn?.includes("🟥");
-              if (isRed) {
-                cardsMap[player.id].red_cards = (cardsMap[player.id].red_cards || 0) + 1;
-              } else {
-                cardsMap[player.id].yellow_cards = (cardsMap[player.id].yellow_cards || 0) + 1;
-              }
-            }
+  useEffect(() => {
+    let active = true;
+    const loadLeaders = () => {
+      fetch("/api/stats/tournament-leaders")
+        .then((res) => res.json())
+        .then((data) => {
+          if (active && data.success) {
+            setDbLeaders({ scorers: data.scorers || [], cards: data.cards || [] });
+            setDbLeadersLoading(false);
           }
+        })
+        .catch((err) => {
+          console.error("Failed to load leaders:", err);
+          if (active) setDbLeadersLoading(false);
         });
-      }
-    });
-
-    const sortedScorers = Object.values(scorersMap).sort((a, b) => b.goals - a.goals);
-    const sortedCards = Object.values(cardsMap).sort((a, b) => {
-      const aRed = a.red_cards || 0;
-      const bRed = b.red_cards || 0;
-      const aYellow = a.yellow_cards || 0;
-      const bYellow = b.yellow_cards || 0;
-      if (bRed !== aRed) {
-        return bRed - aRed;
-      }
-      return bYellow - aYellow;
-    });
-
-    return {
-      scorers: sortedScorers,
-      cards: sortedCards
     };
-  }, [matches, currentRealTime]);
+
+    loadLeaders();
+    const interval = setInterval(loadLeaders, 15 * 60 * 1000);
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, []);
 
 
 
@@ -1100,23 +1034,26 @@ export default function StatisticsPage() {
                     <span>⚽ {t("statsPage.liveScorers") || "Turnuva Gol Krallığı"}</span>
                     <span className="text-xs text-emerald-400 font-bold uppercase tracking-wider">{locale === "tr" ? "Aktif" : "Active"}</span>
                   </h3>
-                  {tournamentStats.scorers.length === 0 ? (
+                  {dbLeaders.scorers.length === 0 ? (
                     <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
                       {t("statsPage.liveNote") || "Maçlar başladığında goller burada güncellenecektir."}
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                      {tournamentStats.scorers.map(({ player, team, goals }, idx) => (
-                        <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-                          <div className="flex items-center gap-3">
-                            <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
-                            <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
-                            <span className="font-bold text-white text-sm">{player.name}</span>
-                            <span className="text-xs text-zinc-400">({locale === "tr" ? team.nameTr : team.nameEn})</span>
+                      {dbLeaders.scorers.map(({ player, team, goals }, idx) => {
+                        const teamInfo = getTeamById(team.id);
+                        return (
+                          <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                            <div className="flex items-center gap-3">
+                              <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
+                              <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
+                              <span className="font-bold text-white text-sm">{player.name}</span>
+                              <span className="text-xs text-zinc-400">({teamInfo ? (locale === "tr" ? teamInfo.nameTr : teamInfo.nameEn) : ""})</span>
+                            </div>
+                            <span className="font-extrabold text-emerald-400 text-sm">{goals} Gol</span>
                           </div>
-                          <span className="font-extrabold text-emerald-400 text-sm">{goals} Gol</span>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -1128,7 +1065,7 @@ export default function StatisticsPage() {
                     <span className="text-xs text-zinc-500 font-normal">TBD</span>
                   </h3>
                   <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {locale === "tr" ? "Asistler simülasyon takibi dışındadır." : "Assists are not tracked in simulation mode."}
+                    {locale === "tr" ? "Asistler maç sonlarında güncellenecektir." : "Assists will be updated after matches end."}
                   </div>
                 </div>
 
@@ -1138,34 +1075,37 @@ export default function StatisticsPage() {
                     <span>🟨🟥 {t("statsPage.liveCards") || "Kart Raporları"}</span>
                     <span className="text-xs text-amber-400 font-bold uppercase tracking-wider">{locale === "tr" ? "Aktif" : "Active"}</span>
                   </h3>
-                  {tournamentStats.cards.length === 0 ? (
+                  {dbLeaders.cards.length === 0 ? (
                     <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
                       {t("statsPage.liveNote") || "Sarı ve kırmızı kart istatistikleri burada listelenecektir."}
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                      {tournamentStats.cards.map(({ player, team, yellow_cards, red_cards }, idx) => (
-                        <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-                          <div className="flex items-center gap-3">
-                            <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
-                            <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
-                            <span className="font-bold text-white text-sm">{player.name}</span>
-                            <span className="text-xs text-zinc-400">({locale === "tr" ? team.nameTr : team.nameEn})</span>
+                      {dbLeaders.cards.map(({ player, team, yellow_cards, red_cards }, idx) => {
+                        const teamInfo = getTeamById(team.id);
+                        return (
+                          <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                            <div className="flex items-center gap-3">
+                              <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
+                              <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
+                              <span className="font-bold text-white text-sm">{player.name}</span>
+                              <span className="text-xs text-zinc-400">({teamInfo ? (locale === "tr" ? teamInfo.nameTr : teamInfo.nameEn) : ""})</span>
+                            </div>
+                            <div className="flex gap-2 text-xs font-extrabold">
+                              {(yellow_cards || 0) > 0 && (
+                                <span className="px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                  {yellow_cards} {locale === "tr" ? "Sarı" : "Yellow"} 🟨
+                                </span>
+                              )}
+                              {(red_cards || 0) > 0 && (
+                                <span className="px-2 py-1 rounded bg-red-500/10 text-red-500 border border-red-500/20">
+                                  {red_cards} {locale === "tr" ? "Kırmızı" : "Red"} 🟥
+                                </span>
+                              )}
+                            </div>
                           </div>
-                          <div className="flex gap-2 text-xs font-extrabold">
-                            {(yellow_cards || 0) > 0 && (
-                              <span className="px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                                {yellow_cards} {locale === "tr" ? "Sarı" : "Yellow"} 🟨
-                              </span>
-                            )}
-                            {(red_cards || 0) > 0 && (
-                              <span className="px-2 py-1 rounded bg-red-500/10 text-red-500 border border-red-500/20">
-                                {red_cards} {locale === "tr" ? "Kırmızı" : "Red"} 🟥
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>
