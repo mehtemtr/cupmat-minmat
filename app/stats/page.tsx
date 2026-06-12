@@ -149,10 +149,12 @@ export default function StatisticsPage() {
 
   // Unified Commentary selectors
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
+  const [commentaryClosed, setCommentaryClosed] = useState(false);
 
   const handleCloseCommentary = () => {
     stopSimulation();
     setSelectedMatchId(null);
+    setCommentaryClosed(true);
   };
 
   const activeCommMatch = useMemo(() => {
@@ -194,7 +196,13 @@ export default function StatisticsPage() {
     const scorersMap: Record<string, { player: any, team: any, goals: number }> = {};
     const cardsMap: Record<string, { player: any, team: any, yellow_cards: number, red_cards: number }> = {};
 
-    matches.forEach((m) => {
+    displayMatches.forEach((m) => {
+      const isManualSim = simMatchId && m.id === simMatchId;
+      const hasScore = m.homeScore !== null && m.awayScore !== null;
+      
+      // Do not aggregate stats for unplayed/unsimulated matches without real scores
+      if (!isManualSim && !hasScore) return;
+
       // Parse kickoff time
       const [hourStr, minStr] = (m.time || "12:00").split(":");
       const [yrStr, moStr, dyStr] = m.date.split("-");
@@ -207,7 +215,7 @@ export default function StatisticsPage() {
         0
       )).getTime() - (3 * 60 * 60 * 1000); // TSİ to UTC
 
-      if (currentRealTime >= kickoffTime) {
+      if (isManualSim || currentRealTime >= kickoffTime) {
         const homeTeam = getTeamById(m.homeTeamId);
         const awayTeam = getTeamById(m.awayTeamId);
         if (!homeTeam || !awayTeam) return;
@@ -218,10 +226,12 @@ export default function StatisticsPage() {
 
         const eventsList = generateSimulation(m, homePlayers, awayPlayers);
 
-        const isFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);
-        const elapsedMin = isFinished
-          ? 94
-          : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000)));
+        const isFinished = isManualSim 
+          ? (simMinute >= 94) 
+          : (m.played || currentRealTime >= kickoffTime + (120 * 60 * 1000));
+        const elapsedMin = isManualSim
+          ? simMinute
+          : (isFinished ? 94 : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000))));
 
         const activeEvents = eventsList.filter((e) => e.minute <= elapsedMin);
 
@@ -822,7 +832,10 @@ export default function StatisticsPage() {
                     return (
                       <div 
                         key={m.id} 
-                        onClick={() => setSelectedMatchId(m.id)}
+                        onClick={() => {
+                          setSelectedMatchId(m.id);
+                          setCommentaryClosed(false);
+                        }}
                         className={`rounded-2xl border bg-[#0b1329]/30 p-5 backdrop-blur transition-all duration-300 cursor-pointer hover:border-emerald-500/30 ${
                           isLive 
                             ? "border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.1)]" 
@@ -890,7 +903,11 @@ export default function StatisticsPage() {
                           </span>
                           {!isSimulated && !simMatchId && (
                             <button
-                              onClick={() => startSimulation(m)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                startSimulation(m);
+                                setCommentaryClosed(false);
+                              }}
                               className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition"
                             >
                               <span>{locale === "tr" ? "Simüle Et" : "Simulate"}</span>
@@ -899,7 +916,10 @@ export default function StatisticsPage() {
                           )}
                           {isSimulated && (
                             <button
-                              onClick={handleCloseCommentary}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleCloseCommentary();
+                              }}
                               className="inline-flex items-center gap-1.5 text-xs font-bold text-red-400 hover:text-red-300 transition"
                             >
                               <span>{locale === "tr" ? "Simülasyonu Durdur" : "Stop Simulation"}</span>
@@ -913,7 +933,7 @@ export default function StatisticsPage() {
               </div>
 
               {/* Simulation Commentary & Pitch view */}
-              {activeCommMatch && (
+              {activeCommMatch && !commentaryClosed && (
                 <div className="rounded-2xl border border-emerald-500/20 bg-[#081225]/40 p-6 backdrop-blur space-y-6">
                   <div className="flex justify-between items-center pb-4 border-b border-white/5">
                     <div className="flex items-center gap-2">
