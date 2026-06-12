@@ -69,14 +69,22 @@ export async function POST(request: Request) {
   }
 }
 
-// Support GET requests for easy browser/manual testing if adminSecret query is provided
+// Support GET requests for easy browser/manual testing or Vercel Crons
 export async function GET(request: Request) {
   try {
+    const authHeader = request.headers.get("authorization");
+    const providedBearer = authHeader?.replace("Bearer ", "") || "";
+    const providedAdminSecret = request.headers.get("x-admin-secret") || "";
+
     const { searchParams } = new URL(request.url);
     const queryAdminSecret = searchParams.get("adminSecret") || "";
     const stage = searchParams.get("stage") || "matchday_1";
 
-    if (!ADMIN_API_SECRET || queryAdminSecret !== ADMIN_API_SECRET) {
+    const isAuthorized =
+      (CRON_SECRET && providedBearer === CRON_SECRET) ||
+      (ADMIN_API_SECRET && (providedAdminSecret === ADMIN_API_SECRET || queryAdminSecret === ADMIN_API_SECRET));
+
+    if (!isAuthorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -85,7 +93,8 @@ export async function GET(request: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-admin-secret": ADMIN_API_SECRET,
+        "authorization": authHeader || "",
+        "x-admin-secret": providedAdminSecret || queryAdminSecret || "",
       },
       body: JSON.stringify({ stage }),
     });
