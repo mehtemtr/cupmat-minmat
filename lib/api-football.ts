@@ -218,9 +218,53 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
 
   const MOCK_CURRENT_TIME = getAdjustedTime();
 
+  // Fetch real scores from Football-Data.org API to align simulated scorers/cards
+  const fdToken = process.env.FOOTBALL_DATA_TOKEN || "";
+  let liveMatches: any[] = [];
+  if (fdToken) {
+    try {
+      const res = await fetch("https://api.football-data.org/v4/competitions/WC/matches", {
+        headers: { "X-Auth-Token": fdToken }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        liveMatches = data.matches || [];
+        logs.push(`[Simulation-Sync] Successfully loaded ${liveMatches.length} real scores from Football-Data.org API.`);
+      } else {
+        logs.push(`[Simulation-Sync] Football-Data.org API returned status: ${res.status}`);
+      }
+    } catch (e: any) {
+      logs.push(`[Simulation-Sync] Failed to fetch real scores: ${e.message}`);
+    }
+  }
+
   const startedMatches = stageMatches.filter(m => {
     const kickoff = getMatchKickoff(m.date, m.time || "12:00");
     return MOCK_CURRENT_TIME >= kickoff;
+  });
+
+  // Merge real scores from liveMatches
+  startedMatches.forEach(m => {
+    const apiMatch = liveMatches.find((lm: any) => {
+      const apiHomeTla = (lm.homeTeam.tla || "").toLowerCase().trim();
+      const apiAwayTla = (lm.awayTeam.tla || "").toLowerCase().trim();
+      const homeTla = apiHomeTla === "hai" ? "hti" : (apiHomeTla === "ury" ? "uru" : apiHomeTla);
+      const awayTla = apiAwayTla === "hai" ? "hti" : (apiAwayTla === "ury" ? "uru" : apiAwayTla);
+      return homeTla === m.homeTeamId && awayTla === m.awayTeamId;
+    });
+
+    if (apiMatch) {
+      const status = apiMatch.status;
+      const played = status === "FINISHED";
+      const isLive = ["IN_PLAY", "PAUSED"].includes(status);
+      if (played || isLive) {
+        m.homeScore = apiMatch.score.fullTime.home;
+        m.awayScore = apiMatch.score.fullTime.away;
+        m.played = played;
+        m.isLive = isLive;
+        logs.push(`[Simulation-Sync] Match ${m.id} mapped to real score: ${m.homeScore} - ${m.awayScore} (status: ${status})`);
+      }
+    }
   });
 
   logs.push(`[Simulation-Sync] Found ${startedMatches.length}/${stageMatches.length} matches started/completed.`);
