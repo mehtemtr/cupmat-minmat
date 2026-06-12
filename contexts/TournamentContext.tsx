@@ -224,45 +224,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const simulatedMatches = useMemo(() => {
-    return matches.map((m) => {
-      // If the user has manually set a score (e.g. m.played is true and score is set), respect that manually edited score!
-      if (m.played && m.homeScore !== null && m.awayScore !== null) {
-        return m;
-      }
-
-      // Check if kickoff time is in the past
-      const kickoffTime = getMatchKickoffTime(m);
-      if (currentRealTime >= kickoffTime) {
-        const homeTeam = getTeamById(m.homeTeamId);
-        const awayTeam = getTeamById(m.awayTeamId);
-        const homePlayers = homeTeam?.players || [];
-        const awayPlayers = awayTeam?.players || [];
-        const eventsList = generateSimulation(m, homePlayers, awayPlayers);
-
-        const isFinished = currentRealTime >= kickoffTime + (120 * 60 * 1000);
-        const elapsedMin = isFinished
-          ? 94
-          : Math.min(94, Math.max(1, Math.floor((currentRealTime - kickoffTime) / 60000)));
-
-        const activeEvents = eventsList.filter((e) => e.minute <= elapsedMin);
-        const scoreEvents = activeEvents.filter((e) => e.scoreAfter);
-        const latestScore = scoreEvents.length > 0
-          ? scoreEvents[scoreEvents.length - 1].scoreAfter
-          : { home: 0, away: 0 };
-
-        return {
-          ...m,
-          homeScore: latestScore?.home ?? 0,
-          awayScore: latestScore?.away ?? 0,
-          played: isFinished,
-          isLive: !isFinished,
-          elapsedMin,
-        };
-      }
-
-      return m;
-    });
-  }, [matches, currentRealTime, getMatchKickoffTime]);
+    return matches;
+  }, [matches]);
 
   const knockoutBracket = useMemo(() => {
     return buildFullKnockoutBracket(simulatedMatches, predictions, groupTableOverrides);
@@ -272,18 +235,22 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     const saved = loadState();
     const isFirstVisit = !localStorage.getItem(VERSION_KEY);
     
-    // Load matches but CLEAR all scores and played status to ensure fresh start
-    // Standings will be driven by 'predictions' state automatically
+    // Load matches and preserve played match results from fixtures.ts
     const storedMatches = isFirstVisit 
       ? generateGroupFixtures() 
       : sanitizeStoredMatches(saved.matches);
     
-    const initialMatches = storedMatches.map(m => ({
-      ...m,
-      homeScore: null,
-      awayScore: null,
-      played: false
-    }));
+    const freshFixtures = generateGroupFixtures();
+    const initialMatches = storedMatches.map(m => {
+      const fresh = freshFixtures.find(f => f.id === m.id);
+      const isRealPlayed = !!fresh?.played;
+      return {
+        ...m,
+        homeScore: (isRealPlayed && fresh) ? fresh.homeScore : m.homeScore,
+        awayScore: (isRealPlayed && fresh) ? fresh.awayScore : m.awayScore,
+        played: isRealPlayed ? true : m.played
+      };
+    });
       
     const initialPredictions = isFirstVisit 
       ? {} 
@@ -295,8 +262,6 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
     setAiEnabled(saved.aiEnabled ?? false);
     setAiAnalyses(saved.aiAnalyses ?? []);
     setGroupTableOverrides((saved.groupTableOverrides ?? {}) as Record<GroupId, string[]>);
-    
-
     
     setReady(true);
   }, []);

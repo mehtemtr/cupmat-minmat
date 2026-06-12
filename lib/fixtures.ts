@@ -21,9 +21,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Guadalajara Stadı",
     "id": "A-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "group": "A",

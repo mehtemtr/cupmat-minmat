@@ -4,6 +4,7 @@ export interface SimEvent {
   textTr: string;
   textEn: string;
   scoreAfter?: { home: number; away: number };
+  isRedCard?: boolean;
 }
 
 export function generateSimulation(match: any, homePlayers: any[], awayPlayers: any[]): SimEvent[] {
@@ -76,6 +77,71 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
         textTr: "🔚 Son düdük çaldı! Maç bitti. Skor: 2 - 0",
         textEn: "🔚 Full-time! The match is over. Final Score: 2 - 0",
         scoreAfter: { home: 2, away: 0 }
+      }
+    ];
+  }
+
+  if (match.id === "A-6") {
+    return [
+      {
+        minute: 1,
+        type: "start",
+        textTr: "🏁 Hakem düdüğünü çaldı ve maç başladı!",
+        textEn: "🏁 The referee blows the whistle and the match begins!",
+        scoreAfter: { home: 0, away: 0 }
+      },
+      {
+        minute: 45,
+        type: "half",
+        textTr: "⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: 0 - 0",
+        textEn: "⏸️ Halftime. Teams head to the dressing room. Score: 0 - 0",
+        scoreAfter: { home: 0, away: 0 }
+      },
+      {
+        minute: 46,
+        type: "start",
+        textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
+        textEn: "🏁 Second half kicked off. Good luck to both teams!"
+      },
+      {
+        minute: 59,
+        type: "goal",
+        textTr: "⚽ GOL! Çekya öne geçiyor! Ceza sahasındaki kafa vuruşuyla Ladislav Krejčí topu ağlara gönderiyor. Golü atan oyuncu: Ladislav Krejčí!",
+        textEn: "⚽ GOAL! Czechia takes the lead! Ladislav Krejčí heads the ball into the net. Goal by Ladislav Krejčí!",
+        scoreAfter: { home: 0, away: 1 }
+      },
+      {
+        minute: 67,
+        type: "goal",
+        textTr: "⚽ GOL! Güney Kore eşitliği yakalıyor! Ceza sahası dışından Hwang In-beom harika bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Hwang In-beom!",
+        textEn: "⚽ GOAL! South Korea equalizes! Hwang In-beom sends a superb strike into the net from outside the box. Goal by Hwang In-beom!",
+        scoreAfter: { home: 1, away: 1 }
+      },
+      {
+        minute: 80,
+        type: "goal",
+        textTr: "⚽ GOL! Güney Kore galibiyet golünü buluyor! Oh Hyeon-gyu altıpas üzerinden yaptığı düzgün vuruşla takımını öne geçiriyor! Golü atan oyuncu: Oh Hyeon-gyu!",
+        textEn: "⚽ GOAL! South Korea scores the winner! Oh Hyeon-gyu slots it home from close range to put his side ahead! Goal by Oh Hyeon-gyu!",
+        scoreAfter: { home: 2, away: 1 }
+      },
+      {
+        minute: 90,
+        type: "commentary",
+        textTr: "⏱️ Maçın sonuna en az 6 uzatma dakikası eklendi.",
+        textEn: "⏱️ A minimum of 6 minutes of added time announced."
+      },
+      {
+        minute: 92,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Lee Gihyuk rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Lee Gihyuk receives a yellow card for a hard tackle.",
+      } as any,
+      {
+        minute: 94,
+        type: "end",
+        textTr: "🔚 Son düdük çaldı! Maç bitti. Skor: 2 - 1",
+        textEn: "🔚 Full-time! The match is over. Final Score: 2 - 1",
+        scoreAfter: { home: 2, away: 1 }
       }
     ];
   }
