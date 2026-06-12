@@ -50,6 +50,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "MahTEM",
     },
     icons: {
+      icon: "/icon.png",
+      shortcut: "/icon.png",
       apple: "/icon-192.png",
     },
     keywords: [
