@@ -120,8 +120,13 @@ export default function StatisticsPage() {
   }, [simMissedMinutes, t]);
 
   const displayMatches = useMemo(() => {
-    const june11Matches = matches.filter(m => m.date === "2026-06-11");
-    return june11Matches.map(m => {
+    // Convert currentRealTime to TSİ (UTC+3) date string
+    const tzOffset = 3 * 60 * 60 * 1000;
+    const localDate = new Date(currentRealTime + tzOffset);
+    const todayStr = localDate.toISOString().split("T")[0]; // e.g. "2026-06-12"
+
+    const activeMatches = matches.filter(m => m.date <= todayStr);
+    return activeMatches.map(m => {
       // 1. If manually simulating
       if (simMatchId && m.id === simMatchId) {
         return {
@@ -135,7 +140,7 @@ export default function StatisticsPage() {
       }
       return m;
     });
-  }, [matches, simMatchId, simScore, simMinute]);
+  }, [matches, simMatchId, simScore, simMinute, currentRealTime]);
 
   const realLiveMatch = useMemo(() => {
     if (simMatchId) return null;
