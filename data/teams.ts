@@ -167,6 +167,12 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
+        "name": "Brian Gutiérrez",
+        "position": "MF",
+        "club": "Chicago Fire",
+        "age": 22
+      },
+      {
         "name": "Efraín Álvarez",
         "position": "MF",
         "club": "Guadalajara",
@@ -662,7 +668,7 @@ const seeds: TeamSeed[] = [
         "age": 26
       },
       {
-        "name": "Yaya Sithole",
+        "name": "Sphephelo Sithole",
         "position": "MF",
         "club": "Tondela",
         "age": 27
@@ -2440,7 +2446,7 @@ const seeds: TeamSeed[] = [
         "age": 30
       },
       {
-        "name": "Julio Enciso",
+        "name": "Julio César Enciso",
         "position": "FW",
         "club": "Strasbourg",
         "age": 22
@@ -2456,6 +2462,12 @@ const seeds: TeamSeed[] = [
         "position": "FW",
         "club": "Independiente del Valle",
         "age": 33
+      },
+      {
+        "name": "Álex Arce",
+        "position": "FW",
+        "club": "LDU Quito",
+        "age": 30
       }
     ]
   },

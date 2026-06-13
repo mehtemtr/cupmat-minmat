@@ -200,6 +200,39 @@ function calculateManagerPoints(stats: any): number {
   return pts;
 }
 
+async function fetchAllDbRosters(): Promise<any[]> {
+  const dbPlayers: any[] = [];
+  let from = 0;
+  let to = 999;
+  let hasMore = true;
+
+  while (hasMore) {
+    const { data, error } = await supabaseAdmin
+      .from("team_rosters")
+      .select("*")
+      .range(from, to);
+
+    if (error) {
+      console.error("Error fetching database players for sync:", error);
+      break;
+    }
+
+    if (data && data.length > 0) {
+      dbPlayers.push(...data);
+      if (data.length < 1000) {
+        hasMore = false;
+      } else {
+        from += 1000;
+        to += 1000;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
+
+  return dbPlayers;
+}
+
 export async function syncSimulatedScores(stage: string): Promise<string[]> {
   const logs: string[] = [];
   logs.push(`[Simulation-Sync] Starting fallback simulation-based sync for Stage ${stage}...`);
@@ -212,8 +245,8 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
     return logs;
   }
 
-  const { data: dbRosters } = await supabaseAdmin.from("team_rosters").select("*");
-  if (!dbRosters || dbRosters.length === 0) {
+  const dbRosters = await fetchAllDbRosters();
+  if (dbRosters.length === 0) {
     throw new Error("No rosters found in database (team_rosters).");
   }
 
@@ -356,18 +389,25 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
         if (isOwnGoal) {
           const ogPlayerName = ev.textTr.split("kendi kalesine gol atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
                                ev.textEn.split("own goal by ")[1]?.replace("!", "")?.trim() || "";
-          const ogPlayer = homePlayers.find(p => p.player_name.includes(ogPlayerName)) || 
-                           awayPlayers.find(p => p.player_name.includes(ogPlayerName));
+          const ogPlayer = findBestPlayerMatch(ogPlayerName, [...homePlayers, ...awayPlayers]);
           if (ogPlayer && statsMap[ogPlayer.id]) {
             statsMap[ogPlayer.id].own_goals++;
           }
         } else {
-          const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
-                             ev.textEn.split("Goal by ")[1]?.replace("!", "")?.trim() || "";
-          const scorer = homePlayers.find(p => p.player_name.includes(scorerName)) || 
-                         awayPlayers.find(p => p.player_name.includes(scorerName));
+          const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.split(",")[0]?.replace("!", "")?.trim() || 
+                             ev.textEn.split("Goal by ")[1]?.split(",")[0]?.replace("!", "")?.trim() || "";
+          const scorer = findBestPlayerMatch(scorerName, [...homePlayers, ...awayPlayers]);
           if (scorer && statsMap[scorer.id]) {
             statsMap[scorer.id].goals++;
+          }
+
+          const assistName = ev.textTr.split("Asisti yapan oyuncu: ")[1]?.replace("!", "")?.trim() || 
+                             ev.textEn.split("Assist by ")[1]?.replace("!", "")?.trim() || "";
+          if (assistName) {
+            const assister = findBestPlayerMatch(assistName, [...homePlayers, ...awayPlayers]);
+            if (assister && statsMap[assister.id]) {
+              statsMap[assister.id].assists++;
+            }
           }
         }
       } else if (ev.type === "card") {
@@ -380,8 +420,7 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
           bookedName = ev.textTr.split("Sarı Kart: ")[1]?.split(" rakibine")[0]?.trim() || 
                        ev.textEn.split("Yellow Card: ")[1]?.split(" receives")[0]?.trim() || "";
         }
-        const booked = homePlayers.find(p => p.player_name.includes(bookedName)) || 
-                       awayPlayers.find(p => p.player_name.includes(bookedName));
+        const booked = findBestPlayerMatch(bookedName, [...homePlayers, ...awayPlayers]);
         if (booked && statsMap[booked.id]) {
           if (isRed) {
             statsMap[booked.id].red_cards++;
@@ -393,10 +432,8 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
       } else if (ev.type === "sub") {
         const outName = ev.textTr.split("oyuncu değişikliği. ")[1]?.split(" kenara")[0]?.trim() || "";
         const inName = ev.textTr.split("kenara gelirken ")[1]?.split(" oyuna")[0]?.trim() || "";
-        const subOut = homePlayers.find(p => p.player_name.includes(outName)) || 
-                       awayPlayers.find(p => p.player_name.includes(outName));
-        const subIn = homePlayers.find(p => p.player_name.includes(inName)) || 
-                      awayPlayers.find(p => p.player_name.includes(inName));
+        const subOut = findBestPlayerMatch(outName, [...homePlayers, ...awayPlayers]);
+        const subIn = findBestPlayerMatch(inName, [...homePlayers, ...awayPlayers]);
         if (subOut && statsMap[subOut.id]) {
           statsMap[subOut.id].minutes_played = ev.minute;
         }
@@ -511,8 +548,8 @@ export async function syncApiFootballScores(stage = "matchday_1"): Promise<strin
     logs.push(`Found ${apiFixtures.length} matches in API-Football World Cup 2026.`);
 
     // Load all matches from local database or definition to map them
-    const { data: dbRosters } = await supabaseAdmin.from("team_rosters").select("*");
-    if (!dbRosters || dbRosters.length === 0) {
+    const dbRosters = await fetchAllDbRosters();
+    if (dbRosters.length === 0) {
       throw new Error("No player rosters found in database (team_rosters).");
     }
 

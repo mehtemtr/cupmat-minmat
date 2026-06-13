@@ -20,9 +20,15 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
       {
         minute: 9,
         type: "goal",
-        textTr: "⚽ GOL! Meksika öne geçiyor! Ceza sahası sağ çaprazından Julián Quiñones şık bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Julián Quiñones!",
-        textEn: "⚽ GOAL! Mexico takes the lead! Julián Quiñones sends the ball into the net with a beautiful shot from the right side of the box. Goal by Julián Quiñones!",
+        textTr: "⚽ GOL! Meksika öne geçiyor! Ceza sahası sağ çaprazından Julián Quiñones şık bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Julián Quiñones, Asisti yapan oyuncu: Érik Lira!",
+        textEn: "⚽ GOAL! Mexico takes the lead! Julián Quiñones sends the ball into the net with a beautiful shot from the right side of the box. Goal by Julián Quiñones, Assist by Érik Lira!",
         scoreAfter: { home: 1, away: 0 }
+      },
+      {
+        minute: 34,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Nkosinathi Sibisi rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Nkosinathi Sibisi receives a yellow card for a hard tackle."
       },
       {
         minute: 45,
@@ -40,16 +46,28 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
       {
         minute: 49,
         type: "card",
-        textTr: "🟥 Kırmızı Kart! Güney Afrika takımında Yaya Sithole doğrudan kırmızı kart görerek oyun dışı kalıyor! Kırmızı Kart gören oyuncu: Yaya Sithole.",
-        textEn: "🟥 Red Card! Yaya Sithole from South Africa is shown a straight red card and is sent off! Red Card for Yaya Sithole.",
+        textTr: "🟥 Kırmızı Kart! Güney Afrika takımında Sphephelo Sithole doğrudan kırmızı kart görerek oyun dışı kalıyor! Kırmızı Kart gören oyuncu: Sphephelo Sithole.",
+        textEn: "🟥 Red Card! Sphephelo Sithole from South Africa is shown a straight red card and is sent off! Red Card for Sphephelo Sithole.",
         isRedCard: true
       } as any,
       {
+        minute: 58,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Teboho Mokoena rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Teboho Mokoena receives a yellow card for a hard tackle."
+      },
+      {
         minute: 66,
         type: "goal",
-        textTr: "⚽ GOL! Meksika farkı ikiye çıkarıyor! Raúl Jiménez ceza sahası içindeki karambolde düzgün bir vuruşla golü atıyor! Golü atan oyuncu: Raúl Jiménez!",
-        textEn: "⚽ GOAL! Mexico doubles their lead! Raúl Jiménez scores with a clean strike after a scramble in the box! Goal by Raúl Jiménez!",
+        textTr: "⚽ GOL! Meksika farkı ikiye çıkarıyor! Raúl Jiménez ceza sahası içindeki karambolde düzgün bir vuruşla golü atıyor! Golü atan oyuncu: Raúl Jiménez, Asisti yapan oyuncu: Roberto Alvarado!",
+        textEn: "⚽ GOAL! Mexico doubles their lead! Raúl Jiménez scores with a clean strike after a scramble in the box! Goal by Raúl Jiménez, Assist by Roberto Alvarado!",
         scoreAfter: { home: 2, away: 0 }
+      },
+      {
+        minute: 75,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Brian Gutiérrez rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Brian Gutiérrez receives a yellow card for a hard tackle."
       },
       {
         minute: 83,
@@ -106,22 +124,22 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
       {
         minute: 59,
         type: "goal",
-        textTr: "⚽ GOL! Çekya öne geçiyor! Ceza sahasındaki kafa vuruşuyla Ladislav Krejčí topu ağlara gönderiyor. Golü atan oyuncu: Ladislav Krejčí!",
-        textEn: "⚽ GOAL! Czechia takes the lead! Ladislav Krejčí heads the ball into the net. Goal by Ladislav Krejčí!",
+        textTr: "⚽ GOL! Çekya öne geçiyor! Ceza sahasındaki kafa vuruşuyla Ladislav Krejčí topu ağlara gönderiyor. Golü atan oyuncu: Ladislav Krejčí, Asisti yapan oyuncu: Vladimír Coufal!",
+        textEn: "⚽ GOAL! Czechia takes the lead! Ladislav Krejčí heads the ball into the net. Goal by Ladislav Krejčí, Assist by Vladimír Coufal!",
         scoreAfter: { home: 0, away: 1 }
       },
       {
         minute: 67,
         type: "goal",
-        textTr: "⚽ GOL! Güney Kore eşitliği yakalıyor! Ceza sahası dışından Hwang In-beom harika bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Hwang In-beom!",
-        textEn: "⚽ GOAL! South Korea equalizes! Hwang In-beom sends a superb strike into the net from outside the box. Goal by Hwang In-beom!",
+        textTr: "⚽ GOL! Güney Kore eşitliği yakalıyor! Ceza sahası dışından Hwang In-beom harika bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Hwang In-beom, Asisti yapan oyuncu: Lee Kang-in!",
+        textEn: "⚽ GOAL! South Korea equalizes! Hwang In-beom sends a superb strike into the net from outside the box. Goal by Hwang In-beom, Assist by Lee Kang-in!",
         scoreAfter: { home: 1, away: 1 }
       },
       {
         minute: 80,
         type: "goal",
-        textTr: "⚽ GOL! Güney Kore galibiyet golünü buluyor! Oh Hyeon-gyu altıpas üzerinden yaptığı düzgün vuruşla takımını öne geçiriyor! Golü atan oyuncu: Oh Hyeon-gyu!",
-        textEn: "⚽ GOAL! South Korea scores the winner! Oh Hyeon-gyu slots it home from close range to put his side ahead! Goal by Oh Hyeon-gyu!",
+        textTr: "⚽ GOL! Güney Kore galibiyet golünü buluyor! Oh Hyeon-gyu altıpas üzerinden yaptığı düzgün vuruşla takımını öne geçiriyor! Golü atan oyuncu: Oh Hyeon-gyu, Asisti yapan oyuncu: Hwang In-beom!",
+        textEn: "⚽ GOAL! South Korea scores the winner! Oh Hyeon-gyu slots it home from close range to put his side ahead! Goal by Oh Hyeon-gyu, Assist by Hwang In-beom!",
         scoreAfter: { home: 2, away: 1 }
       },
       {
@@ -158,9 +176,21 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
       {
         minute: 21,
         type: "goal",
-        textTr: "⚽ GOL! Bosna-Hersek öne geçiyor! Jovo Lukić ceza sahasında topla buluşup düzgün bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Jovo Lukić!",
-        textEn: "⚽ GOAL! Bosnia and Herzegovina take the lead! Jovo Lukić finds the ball in the box and slots it home. Goal by Jovo Lukić!",
+        textTr: "⚽ GOL! Bosna-Hersek öne geçiyor! Jovo Lukić ceza sahasında topla buluşup düzgün bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Jovo Lukić, Asisti yapan oyuncu: Sead Kolašinac!",
+        textEn: "⚽ GOAL! Bosnia and Herzegovina take the lead! Jovo Lukić finds the ball in the box and slots it home. Goal by Jovo Lukić, Assist by Sead Kolašinac!",
         scoreAfter: { home: 0, away: 1 }
+      },
+      {
+        minute: 33,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Alistair Johnston rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Alistair Johnston receives a yellow card for a hard tackle."
+      },
+      {
+        minute: 41,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Ermedin Demirović rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Ermedin Demirović receives a yellow card for a hard tackle."
       },
       {
         minute: 45,
@@ -176,6 +206,18 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
         textEn: "🏁 Second half kicked off. Good luck to both teams!"
       },
       {
+        minute: 55,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Jovo Lukić rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Jovo Lukić receives a yellow card for a hard tackle."
+      },
+      {
+        minute: 64,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Luc de Fougerolles rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Luc de Fougerolles receives a yellow card for a hard tackle."
+      },
+      {
         minute: 76,
         type: "sub",
         textTr: "🔄 Oyuncu Değişikliği: Kanada takımında oyuncu değişikliği. Cyle Larin oyuna dahil oluyor.",
@@ -184,9 +226,15 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
       {
         minute: 78,
         type: "goal",
-        textTr: "⚽ GOL! Kanada eşitliği yakalıyor! Cyle Larin oyuna girdikten iki dakika sonra ceza sahası dışından harika bir vuruşla golü atıyor! Golü atan oyuncu: Cyle Larin!",
-        textEn: "⚽ GOAL! Canada equalizes! Cyle Larin scores with a fantastic strike from outside the box just two minutes after coming on! Goal by Cyle Larin!",
+        textTr: "⚽ GOL! Kanada eşitliği yakalıyor! Cyle Larin oyuna girdikten iki dakika sonra ceza sahası dışından harika bir vuruşla golü atıyor! Golü atan oyuncu: Cyle Larin, Asisti yapan oyuncu: Promise David!",
+        textEn: "⚽ GOAL! Canada equalizes! Cyle Larin scores with a fantastic strike from outside the box just two minutes after coming on! Goal by Cyle Larin, Assist by Promise David!",
         scoreAfter: { home: 1, away: 1 }
+      },
+      {
+        minute: 88,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Nikola Katić rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Nikola Katić receives a yellow card for a hard tackle."
       },
       {
         minute: 90,
@@ -222,18 +270,30 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
         isHomeGoal: true
       } as any,
       {
+        minute: 12,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Tyler Adams rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Tyler Adams receives a yellow card for a hard tackle."
+      },
+      {
+        minute: 22,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Diego Gómez rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Diego Gómez receives a yellow card for a hard tackle."
+      },
+      {
         minute: 31,
         type: "goal",
-        textTr: "⚽ GOL! ABD farkı ikiye çıkarıyor! Folarin Balogun ceza sahası dışından sert vuruyor ve golü atıyor! Golü atan oyuncu: Folarin Balogun!",
-        textEn: "⚽ GOAL! USA doubles their lead! Folarin Balogun strikes hard from outside the box and scores! Goal by Folarin Balogun!",
+        textTr: "⚽ GOL! ABD farkı ikiye çıkarıyor! Folarin Balogun ceza sahası dışından sert vuruyor ve golü atıyor! Golü atan oyuncu: Folarin Balogun, Asisti yapan oyuncu: Christian Pulišić!",
+        textEn: "⚽ GOAL! USA doubles their lead! Folarin Balogun strikes hard from outside the box and scores! Goal by Folarin Balogun, Assist by Christian Pulišić!",
         scoreAfter: { home: 2, away: 0 },
         isHomeGoal: true
       } as any,
       {
         minute: 44,
         type: "goal",
-        textTr: "⚽ GOL! İlk yarının son anlarında Balogun bir kez daha sahnede! Ceza sahasındaki düzgün vuruşu ağlarla buluşuyor! Golü atan oyuncu: Folarin Balogun!",
-        textEn: "⚽ GOAL! Balogun on the stage once more at the end of the first half! His neat finish in the box finds the net! Goal by Folarin Balogun!",
+        textTr: "⚽ GOL! İlk yarının son anlarında Balogun bir kez daha sahnede! Ceza sahasındaki düzgün vuruşu ağlarla buluşuyor! Golü atan oyuncu: Folarin Balogun, Asisti yapan oyuncu: Malik Tillman!",
+        textEn: "⚽ GOAL! Balogun on the stage once more at the end of the first half! His neat finish in the box finds the net! Goal by Folarin Balogun, Assist by Malik Tillman!",
         scoreAfter: { home: 3, away: 0 },
         isHomeGoal: true
       } as any,
@@ -251,18 +311,42 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
         textEn: "🏁 Second half kicked off. Good luck to both teams!"
       },
       {
+        minute: 52,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Álex Arce rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Álex Arce receives a yellow card for a hard tackle."
+      },
+      {
+        minute: 60,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Juan José Cáceres rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Juan José Cáceres receives a yellow card for a hard tackle."
+      },
+      {
         minute: 73,
         type: "goal",
-        textTr: "⚽ GOL! Paraguay farkı ikiye indiriyor! Oyuna sonradan giren Maurício ceza sahasında topla buluşup şık bir gol atıyor! Golü atan oyuncu: Maurício!",
-        textEn: "⚽ GOAL! Paraguay reduces the deficit! Substitute Maurício gets the ball in the box and scores a lovely goal! Goal by Maurício!",
+        textTr: "⚽ GOL! Paraguay farkı ikiye indiriyor! Oyuna sonradan giren Maurício ceza sahasında topla buluşup şık bir gol atıyor! Golü atan oyuncu: Maurício, Asisti yapan oyuncu: Julio César Enciso!",
+        textEn: "⚽ GOAL! Paraguay reduces the deficit! Substitute Maurício gets the ball in the box and scores a lovely goal! Goal by Maurício, Assist by Julio César Enciso!",
         scoreAfter: { home: 3, away: 1 },
         isHomeGoal: false
       } as any,
       {
+        minute: 78,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Júnior Alonso rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Júnior Alonso receives a yellow card for a hard tackle."
+      },
+      {
+        minute: 84,
+        type: "card",
+        textTr: "🟨 Sarı Kart: Miguel Almirón rakibine yaptığı sert müdahale sonrası sarı kart görüyor.",
+        textEn: "🟨 Yellow Card: Miguel Almirón receives a yellow card for a hard tackle."
+      },
+      {
         minute: 90,
         type: "goal",
-        textTr: "⚽ GOL! ABD son sözü söylüyor! Giovanni Reyna harika bir kontra atak sonrası golü buluyor! Golü atan oyuncu: Giovanni Reyna!",
-        textEn: "⚽ GOAL! USA has the final say! Giovanni Reyna scores after a great counter-attack! Goal by Giovanni Reyna!",
+        textTr: "⚽ GOL! ABD son sözü söylüyor! Giovanni Reyna harika bir kontra atak sonrası golü buluyor! Golü atan oyuncu: Giovanni Reyna, Asisti yapan oyuncu: Alex Freeman!",
+        textEn: "⚽ GOAL! USA has the final say! Giovanni Reyna scores after a great counter-attack! Goal by Giovanni Reyna, Assist by Alex Freeman!",
         scoreAfter: { home: 4, away: 1 },
         isHomeGoal: true
       } as any,
