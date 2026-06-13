@@ -93,9 +93,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "San Francisco Bay Area Stadı",
     "id": "B-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "B",
