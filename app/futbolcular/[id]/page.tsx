@@ -34,7 +34,13 @@ const localDict = {
     positionDF: "Defans",
     positionMF: "Orta Saha",
     positionFW: "Forvet",
-    country: "Ülke"
+    country: "Ülke",
+    yellowCards: "Sarı Kart",
+    redCards: "Kırmızı Kart",
+    ownGoals: "Kendi Kalesine Gol",
+    cleanSheets: "Gol Yememe Maçı",
+    fantasyPoints: "Fantezi Puanı",
+    loading: "İstatistikler Yükleniyor..."
   },
   en: {
     back: "← All Footballers",
@@ -59,7 +65,13 @@ const localDict = {
     positionDF: "Defender",
     positionMF: "Midfielder",
     positionFW: "Forward",
-    country: "Country"
+    country: "Country",
+    yellowCards: "Yellow Cards",
+    redCards: "Red Cards",
+    ownGoals: "Own Goals",
+    cleanSheets: "Clean Sheets",
+    fantasyPoints: "Fantasy Points",
+    loading: "Loading stats..."
   },
   es: {
     back: "← Todos los Futbolistas",
@@ -84,7 +96,13 @@ const localDict = {
     positionDF: "Defensor",
     positionMF: "Centrocampista",
     positionFW: "Delantero",
-    country: "País"
+    country: "País",
+    yellowCards: "Tarjetas Amarillas",
+    redCards: "Tarjetas Rojas",
+    ownGoals: "Goles en Contra",
+    cleanSheets: "Portería a Cero",
+    fantasyPoints: "Puntos Fantasy",
+    loading: "Cargando..."
   },
   fr: {
     back: "← Tous les Joueurs",
@@ -109,7 +127,13 @@ const localDict = {
     positionDF: "Défenseur",
     positionMF: "Milieu",
     positionFW: "Attaquant",
-    country: "Pays"
+    country: "Pays",
+    yellowCards: "Cartons Jaunes",
+    redCards: "Cartons Rouges",
+    ownGoals: "Buts contre son camp",
+    cleanSheets: "Matchs sans encaisser",
+    fantasyPoints: "Points Fantasy",
+    loading: "Chargement..."
   },
   de: {
     back: "← Alle Spieler",
@@ -134,7 +158,13 @@ const localDict = {
     positionDF: "Abwehr",
     positionMF: "Mittelfeld",
     positionFW: "Sturm",
-    country: "Land"
+    country: "Land",
+    yellowCards: "Gelbe Karten",
+    redCards: "Rote Karten",
+    ownGoals: "Eigentore",
+    cleanSheets: "Weiße Weste",
+    fantasyPoints: "Fantasy-Punkte",
+    loading: "Laden..."
   }
 };
 
@@ -153,6 +183,30 @@ export default function FootballerDetailPage() {
   // Discovery Timer & Leaderboard States
   const [countdown, setCountdown] = useState(5);
   const [isDiscovered, setIsDiscovered] = useState(false);
+
+  // Tournament Stats States
+  const [realStats, setRealStats] = useState<any>(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+    let isMounted = true;
+    setLoadingStats(true);
+    fetch(`/api/stats/player-tournament-stats?id=${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.success && data.stats) {
+          setRealStats(data.stats);
+        }
+      })
+      .catch((err) => console.error("Error fetching tournament stats:", err))
+      .finally(() => {
+        if (isMounted) setLoadingStats(false);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
 
   useEffect(() => {
     if (!player) return;
@@ -384,45 +438,94 @@ export default function FootballerDetailPage() {
                 </div>
               </div>
 
-              {/* Stat row: Matches Played */}
-              <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                <span className="text-zinc-500 text-xs block">{dict.matchesPlayed}</span>
-                <span className="text-xl font-bold text-white mt-1 block">
-                  🏃‍♂️ {details.stats.matchesPlayed}
-                </span>
-              </div>
+              {loadingStats ? (
+                <div className="sm:col-span-2 py-12 text-center text-zinc-500 text-sm animate-pulse">
+                  {dict.loading}
+                </div>
+              ) : (() => {
+                const displayStats = realStats || {
+                  matchesPlayed: 0,
+                  goals: 0,
+                  assists: 0,
+                  yellowCards: 0,
+                  redCards: 0,
+                  ownGoals: 0,
+                  cleanSheets: 0,
+                  points: 0
+                };
 
-              {/* Stat row: Goals */}
-              <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                <span className="text-zinc-500 text-xs block">{dict.goals}</span>
-                <span className="text-xl font-bold text-white mt-1 block">
-                  ⚽ {details.stats.goals}
-                </span>
-              </div>
+                return (
+                  <>
+                    {/* Stat row: Matches Played */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <span className="text-zinc-500 text-xs block">{dict.matchesPlayed}</span>
+                      <span className="text-xl font-bold text-white mt-1 block">
+                        🏃‍♂️ {displayStats.matchesPlayed}
+                      </span>
+                    </div>
 
-              {/* Stat row: Assists */}
-              <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                <span className="text-zinc-500 text-xs block">{dict.assists}</span>
-                <span className="text-xl font-bold text-white mt-1 block">
-                  👟 {details.stats.assists}
-                </span>
-              </div>
+                    {/* Stat row: Fantasy Points */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <span className="text-zinc-500 text-xs block">{dict.fantasyPoints}</span>
+                      <span className="text-xl font-bold text-emerald-400 mt-1 block">
+                        💎 {displayStats.points}
+                      </span>
+                    </div>
 
-              {/* Stat row: Passes */}
-              <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                <span className="text-zinc-500 text-xs block">{dict.passes}</span>
-                <span className="text-xl font-bold text-white mt-1 block">
-                  🛡️ {details.stats.passes.toLocaleString()}
-                </span>
-              </div>
+                    {/* Stat row: Goals */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <span className="text-zinc-500 text-xs block">{dict.goals}</span>
+                      <span className="text-xl font-bold text-white mt-1 block">
+                        ⚽ {displayStats.goals}
+                      </span>
+                    </div>
 
-              {/* Stat row: Tackles */}
-              <div className="sm:col-span-2 p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                <span className="text-zinc-500 text-xs block">{dict.tackles}</span>
-                <span className="text-xl font-bold text-white mt-1 block">
-                  ⚔️ {details.stats.tackles}
-                </span>
-              </div>
+                    {/* Stat row: Assists */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <span className="text-zinc-500 text-xs block">{dict.assists}</span>
+                      <span className="text-xl font-bold text-white mt-1 block">
+                        👟 {displayStats.assists}
+                      </span>
+                    </div>
+
+                    {/* Stat row: Yellow Cards */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <span className="text-zinc-500 text-xs block">{dict.yellowCards}</span>
+                      <span className="text-xl font-bold text-amber-500 mt-1 block">
+                        🟨 {displayStats.yellowCards}
+                      </span>
+                    </div>
+
+                    {/* Stat row: Red Cards */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <span className="text-zinc-500 text-xs block">{dict.redCards}</span>
+                      <span className="text-xl font-bold text-rose-500 mt-1 block">
+                        🟥 {displayStats.redCards}
+                      </span>
+                    </div>
+
+                    {/* Stat row: Clean Sheets (Only for DF and GK) */}
+                    {(player.position.toUpperCase() === "DF" || player.position.toUpperCase() === "GK") && (
+                      <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                        <span className="text-zinc-500 text-xs block">{dict.cleanSheets}</span>
+                        <span className="text-xl font-bold text-sky-400 mt-1 block">
+                          🛡️ {displayStats.cleanSheets}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Stat row: Own Goals (Only if > 0) */}
+                    {displayStats.ownGoals > 0 && (
+                      <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                        <span className="text-zinc-500 text-xs block">{dict.ownGoals}</span>
+                        <span className="text-xl font-bold text-red-400 mt-1 block">
+                          😈 {displayStats.ownGoals}
+                        </span>
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
             </div>
           </div>
         </div>
