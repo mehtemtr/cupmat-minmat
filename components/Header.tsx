@@ -276,8 +276,12 @@ export function Header() {
               href="/cupmat"
               className="flex items-center gap-2 sm:gap-2.5 text-white"
             >
-            <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/25">
-              <Trophy className="h-4 w-4 sm:h-5 sm:w-5 text-[#060b14]" strokeWidth={2.5} />
+            <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-400/20 overflow-hidden p-1 shadow-md">
+              <img 
+                src="/logo_s_clean.png" 
+                alt="CupMat Logo" 
+                className="h-full w-full object-contain"
+              />
             </span>
             <span className="hidden font-bold tracking-tight sm:block">
               {t("nav.logoTitle")}

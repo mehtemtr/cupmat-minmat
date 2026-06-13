@@ -165,8 +165,12 @@ export default function BottomNavbar() {
         {/* Header Section */}
         <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-6">
           <div className="flex items-center gap-3">
-            <span className={`flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${isMinMatTheme ? "from-blue-400 to-blue-600" : "from-emerald-400 to-emerald-600"} shadow-lg`}>
-              <Trophy className="h-4 w-4 text-[#060b14]" strokeWidth={2.5} />
+            <span className={`flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${isMinMatTheme ? "from-blue-500/10 to-blue-500/5 border border-blue-500/20" : "from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20"} shadow-lg overflow-hidden p-1`}>
+              <img 
+                src={isMinMatTheme ? "/minmat/icon.png" : "/logo_s_clean.png"} 
+                alt="Logo" 
+                className="h-full w-full object-contain"
+              />
             </span>
             <span className="font-extrabold text-white text-lg tracking-tight">CupMat & MinMat</span>
           </div>
