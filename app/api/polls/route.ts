@@ -111,7 +111,17 @@ export async function GET() {
     let userOpinionSubmission: any = null;
 
     if (opinionPolls.length > 0) {
-      const opinionSeed = dateStr;
+      let opinionSeed = dateStr;
+      
+      // Keep today's poll (from June 13, 2026) active for a few days (June 13 to June 17, 2026)
+      const parsedDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+      const day = parsedDate.getDate();
+      const month = parsedDate.getMonth() + 1;
+      const year = parsedDate.getFullYear();
+      if (year === 2026 && month === 6 && day >= 13 && day <= 17) {
+        opinionSeed = "6/13/2026";
+      }
+
       const shufOpinions = seededShuffle(opinionPolls, opinionSeed);
       dailyOpinionPoll = shufOpinions[0];
 
