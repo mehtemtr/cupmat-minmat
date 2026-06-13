@@ -995,51 +995,17 @@ export default function StatisticsPage() {
                     </div>
                   </div>
 
-                  {/* Timeline events scroll box */}
-                  <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
-                    {activeCommEvents.length === 0 ? (
-                      <p className="text-zinc-500 text-center text-sm py-8">
-                        {locale === "tr" ? "Maç başlasın diye bekleniyor..." : "Waiting for match kick-off..."}
-                      </p>
-                    ) : (
-                      [...activeCommEvents].reverse().map((ev, idx) => {
-                        const isGoal = ev.type === "goal";
-                        const isCard = ev.type === "card";
-                        const isRedCard = isCard && (ev.isRedCard || ev.textTr?.includes("Kırmızı Kart") || ev.textEn?.includes("Red Card") || ev.textTr?.includes("🟥") || ev.textEn?.includes("🟥"));
-                        const isYellowCard = isCard && !isRedCard;
-                        const isStartOrEnd = ev.type === "start" || ev.type === "end" || ev.type === "half";
-
-                        return (
-                          <div 
-                            key={idx} 
-                            className={`flex gap-4 p-3.5 rounded-xl border transition-all duration-300 animate-slideUp ${
-                              isGoal 
-                                ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-                                : isRedCard
-                                  ? "bg-red-500/10 border-red-500/20 text-red-400"
-                                  : isYellowCard
-                                    ? "bg-amber-500/10 border-amber-500/20 text-amber-300"
-                                    : isStartOrEnd
-                                      ? "bg-blue-500/10 border-blue-500/20 text-blue-300"
-                                      : "bg-white/[0.02] border-white/5 text-zinc-300"
-                            }`}
-                          >
-                            <div className="font-mono font-extrabold text-sm shrink-0 bg-black/30 w-10 h-7 flex items-center justify-center rounded border border-white/5">
-                              {ev.minute}'
-                            </div>
-                            <div className="text-sm font-medium leading-relaxed">
-                              {locale === "tr" ? ev.textTr : ev.textEn}
-                            </div>
-                          </div>
-                        );
-                      })
-                    )}
+                  {/* Live status info */}
+                  <div className="pt-2 text-center text-xs text-zinc-500">
+                    {locale === "tr" 
+                      ? "Canlı anlatım ve detaylar simülasyon dışındadır. Gerçek maç skorları ve gol krallığı güncel olarak yansıtılacaktır."
+                      : "Live commentary and cards are disabled. Real match scores and top scorers are updated dynamically."}
                   </div>
                 </div>
               )}
 
-              {/* Grid representation */}
-              <div className="grid gap-8 md:grid-cols-2">
+              {/* Leaderboard representation */}
+              <div className="max-w-2xl mx-auto">
                 
                 {/* Live Scorers */}
                 <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur">
@@ -1069,69 +1035,6 @@ export default function StatisticsPage() {
                       })}
                     </div>
                   )}
-                </div>
-
-                {/* Live Assists */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-60">
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
-                    <span>👟 {t("statsPage.liveAssists") || "Turnuva Asist Krallığı"}</span>
-                    <span className="text-xs text-zinc-500 font-normal">TBD</span>
-                  </h3>
-                  <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {locale === "tr" ? "Asistler maç sonlarında güncellenecektir." : "Assists will be updated after matches end."}
-                  </div>
-                </div>
-
-                {/* Live Cards */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur">
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
-                    <span>🟨🟥 {t("statsPage.liveCards") || "Kart Raporları"}</span>
-                    <span className="text-xs text-amber-400 font-bold uppercase tracking-wider">{locale === "tr" ? "Aktif" : "Active"}</span>
-                  </h3>
-                  {dbLeaders.cards.length === 0 ? (
-                    <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                      {t("statsPage.liveNote") || "Sarı ve kırmızı kart istatistikleri burada listelenecektir."}
-                    </div>
-                  ) : (
-                    <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                      {dbLeaders.cards.map(({ player, team, yellow_cards, red_cards }, idx) => {
-                        const teamInfo = getTeamById(team.id);
-                        return (
-                          <div key={player.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-                            <div className="flex items-center gap-3">
-                              <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
-                              <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
-                              <span className="font-bold text-white text-sm">{player.name}</span>
-                              <span className="text-xs text-zinc-400">({teamInfo ? (locale === "tr" ? teamInfo.nameTr : teamInfo.nameEn) : ""})</span>
-                            </div>
-                            <div className="flex gap-2 text-xs font-extrabold">
-                              {(yellow_cards || 0) > 0 && (
-                                <span className="px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                                  {yellow_cards} {locale === "tr" ? "Sarı" : "Yellow"} 🟨
-                                </span>
-                              )}
-                              {(red_cards || 0) > 0 && (
-                                <span className="px-2 py-1 rounded bg-red-500/10 text-red-500 border border-red-500/20">
-                                  {red_cards} {locale === "tr" ? "Kırmızı" : "Red"} 🟥
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-
-                {/* Live Own Goals */}
-                <div className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur opacity-60">
-                  <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
-                    <span>🤦‍♂️ {t("statsPage.liveOwnGoals") || "Kendi Kalesine Goller"}</span>
-                    <span className="text-xs text-zinc-500 font-normal">TBD</span>
-                  </h3>
-                  <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
-                    {locale === "tr" ? "Kendi kalesine goller simülasyon takibi dışındadır." : "Own goals are not tracked in simulation mode."}
-                  </div>
                 </div>
 
               </div>
