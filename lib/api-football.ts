@@ -284,16 +284,16 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
     const homePlayers = dbRosters
       .filter(r => r.team_id === match.homeTeamId)
       .sort((a, b) => {
-        const indexA = homeTeam?.players.findIndex(p => p.id === a.id) ?? 0;
-        const indexB = homeTeam?.players.findIndex(p => p.id === b.id) ?? 0;
+        const indexA = homeTeam?.players.findIndex(p => p.name === a.player_name) ?? 0;
+        const indexB = homeTeam?.players.findIndex(p => p.name === b.player_name) ?? 0;
         return indexA - indexB;
       });
 
     const awayPlayers = dbRosters
       .filter(r => r.team_id === match.awayTeamId)
       .sort((a, b) => {
-        const indexA = awayTeam?.players.findIndex(p => p.id === a.id) ?? 0;
-        const indexB = awayTeam?.players.findIndex(p => p.id === b.id) ?? 0;
+        const indexA = awayTeam?.players.findIndex(p => p.name === a.player_name) ?? 0;
+        const indexB = awayTeam?.players.findIndex(p => p.name === b.player_name) ?? 0;
         return indexA - indexB;
       });
 
