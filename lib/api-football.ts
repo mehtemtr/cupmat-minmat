@@ -278,8 +278,24 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
 
     logs.push(`[Simulation-Sync] Processing Match ${match.id}: ${match.homeTeamId} vs ${match.awayTeamId} (${elapsedMinutes} mins)`);
 
-    const homePlayers = dbRosters.filter(r => r.team_id === match.homeTeamId);
-    const awayPlayers = dbRosters.filter(r => r.team_id === match.awayTeamId);
+    const homeTeam = TEAMS.find(t => t.id === match.homeTeamId);
+    const awayTeam = TEAMS.find(t => t.id === match.awayTeamId);
+
+    const homePlayers = dbRosters
+      .filter(r => r.team_id === match.homeTeamId)
+      .sort((a, b) => {
+        const indexA = homeTeam?.players.findIndex(p => p.id === a.id) ?? 0;
+        const indexB = homeTeam?.players.findIndex(p => p.id === b.id) ?? 0;
+        return indexA - indexB;
+      });
+
+    const awayPlayers = dbRosters
+      .filter(r => r.team_id === match.awayTeamId)
+      .sort((a, b) => {
+        const indexA = awayTeam?.players.findIndex(p => p.id === a.id) ?? 0;
+        const indexB = awayTeam?.players.findIndex(p => p.id === b.id) ?? 0;
+        return indexA - indexB;
+      });
 
     if (homePlayers.length === 0 || awayPlayers.length === 0) {
       logs.push(`[Simulation-Sync] Missing rosters for teams ${match.homeTeamId} or ${match.awayTeamId}.`);
