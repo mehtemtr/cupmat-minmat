@@ -15,6 +15,12 @@ export function sanitizeStoredMatches(
   const merged: MatchResult[] = [];
 
   for (const base of official) {
+    // If the official fixture has been played, prioritize the official result
+    if (base.played) {
+      merged.push(base);
+      continue;
+    }
+
     const saved = stored.find((m) => m.id === base.id);
     if (!saved) {
       merged.push(base);
