@@ -45,7 +45,7 @@ export async function GET() {
         const { data: creatorProfile } = await supabaseAdmin
           .from("profiles")
           .select("nickname")
-          .eq("id", league.created_by)
+          .eq("user_id", league.created_by)
           .maybeSingle();
 
         return {

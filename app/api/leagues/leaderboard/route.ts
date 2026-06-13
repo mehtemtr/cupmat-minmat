@@ -57,8 +57,8 @@ export async function GET(request: Request) {
     // 4. Fetch profiles to get nicknames and emails
     const { data: profiles, error: profilesError } = await supabaseAdmin
       .from("profiles")
-      .select("id, nickname, email")
-      .in("id", userIds);
+      .select("user_id, nickname, email")
+      .in("user_id", userIds);
 
     if (profilesError) {
       console.error("Error fetching member profiles:", profilesError);
@@ -66,7 +66,7 @@ export async function GET(request: Request) {
 
     const profileMap = new Map<string, { nickname: string; email: string }>();
     (profiles || []).forEach((p: any) => {
-      profileMap.set(p.id, {
+      profileMap.set(p.user_id, {
         nickname: p.nickname || p.email?.split("@")[0] || "Oyuncu",
         email: p.email || ""
       });
@@ -124,12 +124,30 @@ export async function GET(request: Request) {
         });
       });
 
+      // Fetch team names from fantasy_rosters
+      const { data: rosterRows, error: rosterError } = await supabaseAdmin
+        .from("fantasy_rosters")
+        .select("user_id, team_name")
+        .in("user_id", userIds);
+
+      if (rosterError) {
+        console.error("Error fetching roster team names:", rosterError);
+      }
+
+      const teamNameMap = new Map<string, string>();
+      (rosterRows || []).forEach((r: any) => {
+        if (r.team_name && r.team_name.trim()) {
+          teamNameMap.set(r.user_id, r.team_name.trim());
+        }
+      });
+
       standings = members.map((m: any) => {
         const prof = profileMap.get(m.user_id) || { nickname: `Oyuncu-${m.user_id.substring(0, 5)}`, email: "" };
         const scoreData = scoreMap.get(m.user_id) || { pts: 0, rosterPts: 0 };
+        const displayName = teamNameMap.get(m.user_id) || prof.nickname;
         return {
           userId: m.user_id,
-          nickname: prof.nickname,
+          nickname: displayName,
           score: scoreData.pts,
           rosterPoints: scoreData.rosterPts,
           joinedAt: m.joined_at,
