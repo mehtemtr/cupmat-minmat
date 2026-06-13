@@ -2422,6 +2422,12 @@ const seeds: TeamSeed[] = [
         "age": 24
       },
       {
+        "name": "Maurício",
+        "position": "MF",
+        "club": "Palmeiras",
+        "age": 24
+      },
+      {
         "name": "Alejandro Romero Gamarra",
         "position": "FW",
         "club": "Al Ain",

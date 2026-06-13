@@ -352,12 +352,23 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
 
     activeEvents.forEach(ev => {
       if (ev.type === "goal") {
-        const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
-                           ev.textEn.split("Goal by ")[1]?.replace("!", "")?.trim() || "";
-        const scorer = homePlayers.find(p => p.player_name.includes(scorerName)) || 
-                       awayPlayers.find(p => p.player_name.includes(scorerName));
-        if (scorer && statsMap[scorer.id]) {
-          statsMap[scorer.id].goals++;
+        const isOwnGoal = ev.textTr.includes("kendi kalesine") || ev.textEn.includes("own goal");
+        if (isOwnGoal) {
+          const ogPlayerName = ev.textTr.split("kendi kalesine gol atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
+                               ev.textEn.split("own goal by ")[1]?.replace("!", "")?.trim() || "";
+          const ogPlayer = homePlayers.find(p => p.player_name.includes(ogPlayerName)) || 
+                           awayPlayers.find(p => p.player_name.includes(ogPlayerName));
+          if (ogPlayer && statsMap[ogPlayer.id]) {
+            statsMap[ogPlayer.id].own_goals++;
+          }
+        } else {
+          const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
+                             ev.textEn.split("Goal by ")[1]?.replace("!", "")?.trim() || "";
+          const scorer = homePlayers.find(p => p.player_name.includes(scorerName)) || 
+                         awayPlayers.find(p => p.player_name.includes(scorerName));
+          if (scorer && statsMap[scorer.id]) {
+            statsMap[scorer.id].goals++;
+          }
         }
       } else if (ev.type === "card") {
         const isRed = ev.textTr.includes("Kırmızı Kart") || ev.textEn.includes("Red Card") || ev.isRedCard;
@@ -437,7 +448,7 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
       .eq("stage", stage)
       .in("player_id", playerIdsToClear);
 
-    const playerStatsArray = Object.values(statsMap).filter(s => s.minutes_played > 0 || s.goals > 0 || s.yellow_cards > 0 || s.red_cards > 0);
+    const playerStatsArray = Object.values(statsMap).filter(s => s.minutes_played > 0 || s.goals > 0 || s.yellow_cards > 0 || s.red_cards > 0 || s.own_goals > 0);
     
     playerStatsArray.forEach((ps) => {
       const playerInfo = dbRosters.find((r) => r.id === ps.player_id);

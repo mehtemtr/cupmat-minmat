@@ -81,9 +81,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Toronto Stadı",
     "id": "B-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "B",
@@ -153,9 +153,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Los Angeles Stadı",
     "id": "D-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 4,
+    "awayScore": 1
   },
   {
     "group": "D",

@@ -146,6 +146,136 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
     ];
   }
 
+  if (match.id === "B-1") {
+    return [
+      {
+        minute: 1,
+        type: "start",
+        textTr: "🏁 Hakem düdüğünü çaldı ve maç başladı!",
+        textEn: "🏁 The referee blows the whistle and the match begins!",
+        scoreAfter: { home: 0, away: 0 }
+      },
+      {
+        minute: 21,
+        type: "goal",
+        textTr: "⚽ GOL! Bosna-Hersek öne geçiyor! Jovo Lukić ceza sahasında topla buluşup düzgün bir vuruşla topu ağlara yolluyor. Golü atan oyuncu: Jovo Lukić!",
+        textEn: "⚽ GOAL! Bosnia and Herzegovina take the lead! Jovo Lukić finds the ball in the box and slots it home. Goal by Jovo Lukić!",
+        scoreAfter: { home: 0, away: 1 }
+      },
+      {
+        minute: 45,
+        type: "half",
+        textTr: "⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: 0 - 1",
+        textEn: "⏸️ Halftime. Teams head to the dressing room. Score: 0 - 1",
+        scoreAfter: { home: 0, away: 1 }
+      },
+      {
+        minute: 46,
+        type: "start",
+        textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
+        textEn: "🏁 Second half kicked off. Good luck to both teams!"
+      },
+      {
+        minute: 76,
+        type: "sub",
+        textTr: "🔄 Oyuncu Değişikliği: Kanada takımında oyuncu değişikliği. Cyle Larin oyuna dahil oluyor.",
+        textEn: "🔄 Substitution: For Canada, Cyle Larin comes on.",
+      },
+      {
+        minute: 78,
+        type: "goal",
+        textTr: "⚽ GOL! Kanada eşitliği yakalıyor! Cyle Larin oyuna girdikten iki dakika sonra ceza sahası dışından harika bir vuruşla golü atıyor! Golü atan oyuncu: Cyle Larin!",
+        textEn: "⚽ GOAL! Canada equalizes! Cyle Larin scores with a fantastic strike from outside the box just two minutes after coming on! Goal by Cyle Larin!",
+        scoreAfter: { home: 1, away: 1 }
+      },
+      {
+        minute: 90,
+        type: "commentary",
+        textTr: "⏱️ Maçın sonuna en az 4 uzatma dakikası eklendi.",
+        textEn: "⏱️ A minimum of 4 minutes of added time announced."
+      },
+      {
+        minute: 94,
+        type: "end",
+        textTr: "🔚 Son düdük çaldı! Maç bitti. Skor: 1 - 1",
+        textEn: "🔚 Full-time! The match is over. Final Score: 1 - 1",
+        scoreAfter: { home: 1, away: 1 }
+      }
+    ];
+  }
+
+  if (match.id === "D-1") {
+    return [
+      {
+        minute: 1,
+        type: "start",
+        textTr: "🏁 Hakem düdüğünü çaldı ve maç başladı!",
+        textEn: "🏁 The referee blows the whistle and the match begins!",
+        scoreAfter: { home: 0, away: 0 }
+      },
+      {
+        minute: 7,
+        type: "goal",
+        textTr: "⚽ GOL! ABD öne geçiyor! Damián Bobadilla kendi kalesine gol atıyor! kendi kalesine gol atan oyuncu: Damián Bobadilla!",
+        textEn: "⚽ GOAL! USA takes the lead! Damián Bobadilla scores an own goal! own goal by Damián Bobadilla!",
+        scoreAfter: { home: 1, away: 0 },
+        isHomeGoal: true
+      } as any,
+      {
+        minute: 31,
+        type: "goal",
+        textTr: "⚽ GOL! ABD farkı ikiye çıkarıyor! Folarin Balogun ceza sahası dışından sert vuruyor ve golü atıyor! Golü atan oyuncu: Folarin Balogun!",
+        textEn: "⚽ GOAL! USA doubles their lead! Folarin Balogun strikes hard from outside the box and scores! Goal by Folarin Balogun!",
+        scoreAfter: { home: 2, away: 0 },
+        isHomeGoal: true
+      } as any,
+      {
+        minute: 44,
+        type: "goal",
+        textTr: "⚽ GOL! İlk yarının son anlarında Balogun bir kez daha sahnede! Ceza sahasındaki düzgün vuruşu ağlarla buluşuyor! Golü atan oyuncu: Folarin Balogun!",
+        textEn: "⚽ GOAL! Balogun on the stage once more at the end of the first half! His neat finish in the box finds the net! Goal by Folarin Balogun!",
+        scoreAfter: { home: 3, away: 0 },
+        isHomeGoal: true
+      } as any,
+      {
+        minute: 45,
+        type: "half",
+        textTr: "⏸️ İlk yarı sona erdi. Takımlar soyunma odasına gidiyor. Skor: 3 - 0",
+        textEn: "⏸️ Halftime. Teams head to the dressing room. Score: 3 - 0",
+        scoreAfter: { home: 3, away: 0 }
+      },
+      {
+        minute: 46,
+        type: "start",
+        textTr: "🏁 İkinci yarı başladı. İki takıma da başarılar!",
+        textEn: "🏁 Second half kicked off. Good luck to both teams!"
+      },
+      {
+        minute: 73,
+        type: "goal",
+        textTr: "⚽ GOL! Paraguay farkı ikiye indiriyor! Oyuna sonradan giren Maurício ceza sahasında topla buluşup şık bir gol atıyor! Golü atan oyuncu: Maurício!",
+        textEn: "⚽ GOAL! Paraguay reduces the deficit! Substitute Maurício gets the ball in the box and scores a lovely goal! Goal by Maurício!",
+        scoreAfter: { home: 3, away: 1 },
+        isHomeGoal: false
+      } as any,
+      {
+        minute: 90,
+        type: "goal",
+        textTr: "⚽ GOL! ABD son sözü söylüyor! Giovanni Reyna harika bir kontra atak sonrası golü buluyor! Golü atan oyuncu: Giovanni Reyna!",
+        textEn: "⚽ GOAL! USA has the final say! Giovanni Reyna scores after a great counter-attack! Goal by Giovanni Reyna!",
+        scoreAfter: { home: 4, away: 1 },
+        isHomeGoal: true
+      } as any,
+      {
+        minute: 94,
+        type: "end",
+        textTr: "🔚 Son düdük çaldı! Maç bitti. Skor: 4 - 1",
+        textEn: "🔚 Full-time! The match is over. Final Score: 4 - 1",
+        scoreAfter: { home: 4, away: 1 }
+      }
+    ];
+  }
+
   const hashString = (str: string) => {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
