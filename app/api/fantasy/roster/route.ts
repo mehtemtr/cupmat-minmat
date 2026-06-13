@@ -6,7 +6,7 @@ import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Redis } from "@upstash/redis";
 import { ensureTimeSpacedBots, STAGE_START_DATES } from "@/lib/fantasy/bot-registration";
 import { getAdjustedDate } from "@/lib/tournament/time-helper";
-import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic } from "@/lib/fantasy/points";
+import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic, getLockedTeamsForStage } from "@/lib/fantasy/points";
 
 const redis = Redis.fromEnv();
 
@@ -27,7 +27,8 @@ export async function GET(request: Request) {
 
     const userId = authResult.userId;
     const { searchParams } = new URL(request.url);
-    const stage = searchParams.get("stage") || "matchday_1";
+    const activeStage = (await redis.get<string>("fantasy_active_stage")) || "matchday_1";
+    const stage = searchParams.get("stage") || activeStage;
 
     // Ensure bots are registered lazily as time progresses
     await ensureTimeSpacedBots(stage, false);
@@ -101,10 +102,31 @@ export async function GET(request: Request) {
       })
     );
 
-    const startDateStr = STAGE_START_DATES[stage.toLowerCase()];
-    const isLocked = startDateStr ? (getAdjustedDate() >= new Date(startDateStr)) : false;
+    const now = getAdjustedDate();
+    const lockedTeams = getLockedTeamsForStage(stage, now);
 
-    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked });
+    const stages = ["matchday_1", "matchday_2", "matchday_3", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
+    const currentIdx = stages.indexOf(stage.toLowerCase());
+    let isLocked = false;
+    
+    if (currentIdx !== -1) {
+      const nextStage = stages[currentIdx + 1];
+      if (nextStage) {
+        const nextStageStartStr = STAGE_START_DATES[nextStage];
+        if (nextStageStartStr) {
+          isLocked = getAdjustedDate() >= new Date(nextStageStartStr);
+        }
+      } else {
+        // Finals
+        const finalsStartStr = STAGE_START_DATES["finals"];
+        if (finalsStartStr) {
+          const finalsStart = new Date(finalsStartStr);
+          isLocked = getAdjustedDate().getTime() >= (finalsStart.getTime() + 3 * 24 * 60 * 60 * 1000);
+        }
+      }
+    }
+
+    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked, stage, lockedTeams });
   } catch (error: any) {
     console.error("GET rosters error:", error);
     return NextResponse.json(
@@ -136,19 +158,7 @@ export async function POST(request: Request) {
       teamIndex = 1,
     } = body;
 
-    // Kickoff lock check
-    const stageKey = stage.toLowerCase();
-    const startDateStr = STAGE_START_DATES[stageKey];
-    if (startDateStr) {
-      const startDate = new Date(startDateStr);
-      const now = getAdjustedDate();
-      if (now >= startDate) {
-        return NextResponse.json(
-          { error: "Bu aşama başladı. Kadro güncelleme süresi dolmuştur." },
-          { status: 403 }
-        );
-      }
-    }
+    // Global kickoff lock is bypassed in favor of per-team kickoff locks below
 
     const mapping = await getPlayerMapping();
     const starters = clientStarters.map((id: string) => translateToUuid(id, mapping)).filter(Boolean);
@@ -170,6 +180,117 @@ export async function POST(request: Request) {
       .eq("stage", stage)
       .eq("team_index", teamIndex)
       .maybeSingle();
+
+    // Player-level kickoff lock validation
+    const now = getAdjustedDate();
+    const lockedTeams = getLockedTeamsForStage(stage, now);
+
+    const allPlayerIdsForLockCheck = Array.from(new Set([
+      ...(prevRoster?.starters || []),
+      ...(prevRoster?.bench || []),
+      ...starters,
+      ...bench
+    ]));
+
+    const playerTeamMap = new Map<string, string>();
+    if (allPlayerIdsForLockCheck.length > 0) {
+      const { data: dbPlayers } = await supabaseAdmin
+        .from("team_rosters")
+        .select("id, team_id")
+        .in("id", allPlayerIdsForLockCheck);
+      
+      if (dbPlayers) {
+        dbPlayers.forEach(p => playerTeamMap.set(p.id, p.team_id.toLowerCase()));
+      }
+    }
+
+    if (!prevRoster) {
+      // First-time roster creation
+      for (const pid of [...starters, ...bench]) {
+        const teamId = playerTeamMap.get(pid);
+        if (teamId && lockedTeams.includes(teamId)) {
+          return NextResponse.json(
+            { error: `Maçı başlamış olan takımların oyuncuları kadroya eklenemez (${teamId.toUpperCase()}).` },
+            { status: 403 }
+          );
+        }
+      }
+      if (managerId && lockedTeams.includes(managerId.toLowerCase())) {
+        return NextResponse.json(
+          { error: `Maçı başlamış olan takımların menajerleri kadroya eklenemez (${managerId.toUpperCase()}).` },
+          { status: 403 }
+        );
+      }
+    } else {
+      // Roster update validation
+      const oldPlayers = new Set([...(prevRoster.starters || []), ...(prevRoster.bench || [])]);
+      const newPlayers = new Set([...starters, ...bench]);
+
+      // Check 1: No locked player can be removed
+      for (const pid of oldPlayers) {
+        const teamId = playerTeamMap.get(pid);
+        if (teamId && lockedTeams.includes(teamId)) {
+          if (!newPlayers.has(pid)) {
+            return NextResponse.json(
+              { error: "Maçı başlamış veya bitmiş oyuncular kadrodan çıkarılamaz." },
+              { status: 403 }
+            );
+          }
+        }
+      }
+
+      // Check 2: No locked player can be added
+      for (const pid of newPlayers) {
+        const teamId = playerTeamMap.get(pid);
+        if (teamId && lockedTeams.includes(teamId)) {
+          if (!oldPlayers.has(pid)) {
+            return NextResponse.json(
+              { error: "Maçı başlamış veya bitmiş olan takımların oyuncuları kadroya sonradan eklenemez." },
+              { status: 403 }
+            );
+          }
+        }
+      }
+
+      // Check 3: No locked player can be moved between starters and bench
+      const oldStartersSet = new Set(prevRoster.starters || []);
+      const oldBenchSet = new Set(prevRoster.bench || []);
+      for (const pid of newPlayers) {
+        const teamId = playerTeamMap.get(pid);
+        if (teamId && lockedTeams.includes(teamId)) {
+          if (oldStartersSet.has(pid) && !starters.includes(pid)) {
+            return NextResponse.json(
+              { error: "Maçı başlamış oyuncular ilk 11 ile yedekler arasında taşınamaz." },
+              { status: 403 }
+            );
+          }
+          if (oldBenchSet.has(pid) && !bench.includes(pid)) {
+            return NextResponse.json(
+              { error: "Maçı başlamış oyuncular yedekler ile ilk 11 arasında taşınamaz." },
+              { status: 403 }
+            );
+          }
+        }
+      }
+
+      // Check 4: Manager change
+      if (prevRoster.manager_id !== managerId) {
+        const oldManagerTeam = prevRoster.manager_id?.toLowerCase();
+        const newManagerTeam = managerId?.toLowerCase();
+        if (oldManagerTeam && lockedTeams.includes(oldManagerTeam)) {
+          return NextResponse.json(
+            { error: "Maçı başlamış olan menajer değiştirilemez." },
+            { status: 403 }
+          );
+        }
+        if (newManagerTeam && lockedTeams.includes(newManagerTeam)) {
+          return NextResponse.json(
+            { error: "Maçı başlamış olan bir menajer kadroya eklenemez." },
+            { status: 403 }
+          );
+        }
+      }
+    }
 
     // Check if stage is active
     const activeStage = (await redis.get<string>("fantasy_active_stage")) || "matchday_1";

@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
+import Link from "next/link";
 import { getTeamById, getTeamName } from "@/data/teams";
 import { getCountryDetail } from "@/data/country-details";
 import { useTranslation } from "@/contexts/LocaleContext";
@@ -303,9 +304,10 @@ export default function CountryDetailPage() {
             
             <div className="grid gap-4 sm:grid-cols-2">
               {team.players.map((player) => (
-                <div
+                <Link
                   key={player.id}
-                  className="group relative overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-4 hover:bg-zinc-900/70 hover:border-zinc-700/80 transition-all duration-300"
+                  href={`/futbolcular/${player.id}`}
+                  className="group block relative overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-4 hover:bg-zinc-900/70 hover:border-zinc-700/80 transition-all duration-300"
                 >
                   <div className="flex justify-between items-start">
                     <div>
@@ -330,7 +332,7 @@ export default function CountryDetailPage() {
                   <div className="mt-1 flex justify-between items-center text-xs text-zinc-400">
                     <span>{player.age} {dict.age}</span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

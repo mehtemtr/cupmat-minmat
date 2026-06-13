@@ -86,10 +86,15 @@ export function PredictionWizard() {
           <div className="animate-bounce rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 p-1 shadow-2xl shadow-amber-500/20">
             <div className="flex flex-col items-center justify-center rounded-[calc(1rem-1px)] bg-[#060b14] py-8 text-center">
               <Trophy className="mb-4 h-16 w-16 text-amber-400" />
-              <h2 className="mb-2 text-3xl font-black tracking-tighter text-white">
-                🏆 {t("predictions.champion")}: {(() => {
+              <h2 className="mb-2 text-3xl font-black tracking-tighter text-white flex flex-col sm:flex-row items-center justify-center gap-2">
+                <span>🏆 {t("predictions.champion")}:</span>
+                {(() => {
                   const team = getTeamById(winnerTeamId);
-                  return team ? getTeamName(team, locale).toUpperCase() : "TBD";
+                  return team ? (
+                    <Link href={`/ulkeler/${winnerTeamId}`} className="text-amber-400 hover:text-emerald-400 underline decoration-dotted transition-colors">
+                      {getTeamName(team, locale).toUpperCase()}
+                    </Link>
+                  ) : "TBD";
                 })()}
               </h2>
               <p className="text-amber-200/60">{t("predictions.completed")}</p>
@@ -414,14 +419,17 @@ function TeamLabel({ teamId }: { teamId: string }) {
   const team = getTeamById(teamId);
   if (!team) return null;
   return (
-    <div className="flex min-w-[120px] flex-col items-center gap-2">
-      <div className="relative h-8 w-12 overflow-hidden rounded">
+    <Link 
+      href={`/ulkeler/${teamId}`} 
+      className="flex min-w-[120px] flex-col items-center gap-2 hover:text-emerald-400 cursor-pointer group transition-colors"
+    >
+      <div className="relative h-8 w-12 overflow-hidden rounded group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
         <Image src={team.flagUrl} alt="" fill className="object-cover" unoptimized />
       </div>
-      <span className="text-center text-xs font-medium text-white">
+      <span className="text-center text-xs font-medium text-white group-hover:text-emerald-400 transition-colors">
         {getTeamName(team, locale)}
       </span>
-    </div>
+    </Link>
   );
 }
 

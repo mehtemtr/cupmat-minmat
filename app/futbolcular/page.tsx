@@ -6,6 +6,7 @@ import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { getPlayerStatus } from "@/lib/store/player-status-store";
 
 // Local translations for common terms on the player listing
@@ -241,18 +242,21 @@ export default function FootballersListPage() {
                 })()}
 
                 {/* Country Row */}
-                <div className="mt-4 pt-3 border-t border-zinc-900 flex items-center gap-2">
-                  <div className="relative w-6 h-4 overflow-hidden rounded shadow border border-zinc-800/40">
+                <Link 
+                  href={`/ulkeler/${player.teamId}`}
+                  className="mt-4 pt-3 border-t border-zinc-900 flex items-center gap-2 hover:text-emerald-400 cursor-pointer transition-colors group/team"
+                >
+                  <div className="relative w-6 h-4 overflow-hidden rounded shadow border border-zinc-800/40 group-hover/team:ring-1 group-hover/team:ring-emerald-500/35 transition-all">
                     <img
                       src={player.teamFlagUrl}
                       alt=""
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-zinc-300 text-xs font-semibold truncate">
+                  <span className="text-zinc-300 text-xs font-semibold truncate group-hover/team:text-emerald-400 transition-colors">
                     {locale === "tr" ? player.teamNameTr : player.teamNameEn}
                   </span>
-                </div>
+                </Link>
 
                 {/* Club Details */}
                 <p className="text-[11px] text-zinc-500 mt-1 flex items-center gap-1">

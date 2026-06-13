@@ -4,6 +4,7 @@ import { PageShell } from "@/components/PageShell";
 import { TournamentGate } from "@/components/TournamentGate";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useUser, SignInButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 import { generateGroupFixtures, sortMatchesChronologically } from "@/lib/fixtures";
 import { getTeamById } from "@/data/teams";
@@ -597,18 +598,21 @@ export default function PredictionCenterPage() {
                   {/* ROW 1: Team Info (VS Row) */}
                   <div className="flex items-center justify-between gap-4 py-2">
                     {/* Home Team */}
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="relative w-8 h-6 overflow-hidden rounded shadow border border-zinc-800/60">
+                    <Link 
+                      href={`/ulkeler/${home.id}`}
+                      className="flex items-center gap-3 flex-1 hover:text-emerald-400 cursor-pointer transition-colors group"
+                    >
+                      <div className="relative w-8 h-6 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
                         <img
                           src={home.flagUrl}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <span className="text-zinc-100 font-extrabold text-sm truncate">
+                      <span className="text-zinc-100 font-extrabold text-sm truncate group-hover:text-emerald-400 transition-colors">
                         {locale === "tr" ? home.nameTr : home.nameEn}
                       </span>
-                    </div>
+                    </Link>
 
                     {/* VS Indicator */}
                     <span className="text-zinc-600 font-black text-xs px-2 py-1 bg-zinc-900 border border-zinc-800 rounded-lg">
@@ -616,18 +620,21 @@ export default function PredictionCenterPage() {
                     </span>
 
                     {/* Away Team */}
-                    <div className="flex items-center gap-3 flex-1 justify-end text-right">
-                      <span className="text-zinc-100 font-extrabold text-sm truncate">
+                    <Link 
+                      href={`/ulkeler/${away.id}`}
+                      className="flex items-center gap-3 flex-1 justify-end text-right hover:text-emerald-400 cursor-pointer transition-colors group"
+                    >
+                      <span className="text-zinc-100 font-extrabold text-sm truncate group-hover:text-emerald-400 transition-colors">
                         {locale === "tr" ? away.nameTr : away.nameEn}
                       </span>
-                      <div className="relative w-8 h-6 overflow-hidden rounded shadow border border-zinc-800/60">
+                      <div className="relative w-8 h-6 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
                         <img
                           src={away.flagUrl}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
-                    </div>
+                    </Link>
                   </div>
 
                   {/* ROW 2: Real Result */}

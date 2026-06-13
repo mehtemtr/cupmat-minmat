@@ -7,6 +7,7 @@ import { getAllPlayers } from "@/data/teams";
 import { getPlayerDetail } from "@/data/player-details";
 import { useTranslation } from "@/contexts/LocaleContext";
 import Image from "next/image";
+import Link from "next/link";
 import { getPlayerStatus } from "@/lib/store/player-status-store";
 
 // Local translations for common detail page terms
@@ -341,8 +342,11 @@ export default function FootballerDetailPage() {
 
               <div className="flex justify-between items-center pt-2 border-t border-zinc-900">
                 <span className="text-zinc-500">{dict.country}</span>
-                <div className="flex items-center gap-1.5">
-                  <div className="relative w-5 h-3.5 overflow-hidden rounded border border-zinc-800/40">
+                <Link 
+                  href={`/ulkeler/${player.teamId}`}
+                  className="flex items-center gap-1.5 hover:text-emerald-400 cursor-pointer transition-colors group"
+                >
+                  <div className="relative w-5 h-3.5 overflow-hidden rounded border border-zinc-800/40 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
                     <Image
                       src={player.teamFlagUrl}
                       alt={`${countryName} flag`}
@@ -351,10 +355,10 @@ export default function FootballerDetailPage() {
                       className="object-cover"
                     />
                   </div>
-                  <span className="text-zinc-200 font-bold truncate max-w-[120px]">
+                  <span className="text-zinc-200 font-bold truncate max-w-[120px] group-hover:text-emerald-400 transition-colors">
                     {countryName}
                   </span>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

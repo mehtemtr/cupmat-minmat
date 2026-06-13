@@ -277,3 +277,58 @@ export function translateToStatic(id: string, mapping: PlayerMapping): string | 
   }
   return mapping.uuidToStatic[id] || null;
 }
+
+import { generateGroupFixtures } from "../fixtures";
+
+function getMatchKickoff(dateStr: string, timeStr: string): number {
+  const [hourStr, minStr] = timeStr.split(":");
+  const [yrStr, moStr, dyStr] = dateStr.split("-");
+  return new Date(Date.UTC(
+    parseInt(yrStr, 10),
+    parseInt(moStr, 10) - 1,
+    parseInt(dyStr, 10),
+    parseInt(hourStr, 10),
+    parseInt(minStr, 10),
+    0
+  )).getTime() - (3 * 60 * 60 * 1000); // TSİ (UTC+3) to UTC
+}
+
+function getMatchesForStage(stage: string, allMatches: any[]): any[] {
+  return allMatches.filter((m) => {
+    const dateStr = m.date;
+    if (!dateStr) return false;
+    const stg = stage.toLowerCase();
+    if (stg === "matchday_1") {
+      return dateStr >= "2026-06-08" && dateStr <= "2026-06-12";
+    } else if (stg === "matchday_2") {
+      return dateStr >= "2026-06-13" && dateStr <= "2026-06-17";
+    } else if (stg === "matchday_3") {
+      return dateStr >= "2026-06-18" && dateStr <= "2026-06-22";
+    } else if (stg === "round_of_32") {
+      return dateStr >= "2026-06-23" && dateStr <= "2026-06-26";
+    } else if (stg === "round_of_16") {
+      return dateStr >= "2026-06-27" && dateStr <= "2026-06-30";
+    } else if (stg === "quarter_finals") {
+      return dateStr >= "2026-07-01" && dateStr <= "2026-07-04";
+    } else if (stg === "semi_finals") {
+      return dateStr >= "2026-07-05" && dateStr <= "2026-07-08";
+    } else if (stg === "finals") {
+      return dateStr >= "2026-07-09";
+    }
+    return false;
+  });
+}
+
+export function getLockedTeamsForStage(stage: string, now: Date): string[] {
+  const fixtures = generateGroupFixtures();
+  const stageMatches = getMatchesForStage(stage, fixtures);
+  const locked: string[] = [];
+  stageMatches.forEach((m) => {
+    const kickoff = getMatchKickoff(m.date, m.time || "12:00");
+    if (now.getTime() >= kickoff) {
+      if (m.homeTeamId) locked.push(m.homeTeamId.toLowerCase());
+      if (m.awayTeamId) locked.push(m.awayTeamId.toLowerCase());
+    }
+  });
+  return locked;
+}

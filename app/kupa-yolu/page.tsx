@@ -347,14 +347,18 @@ export default function BracketPage() {
           <div className="flex items-center justify-between gap-2 h-7">
             <div className="flex items-center gap-2 overflow-hidden">
               {home ? (
-                <>
-                  <div className="relative h-4 w-6 shrink-0 overflow-hidden rounded ring-1 ring-white/10">
+                <Link 
+                  href={`/ulkeler/${home.id}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-2 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+                >
+                  <div className="relative h-4 w-6 shrink-0 overflow-hidden rounded ring-1 ring-white/10 group-hover:ring-emerald-500/35 transition-all">
                     <Image src={home.flagUrl} alt="" fill className="object-cover" unoptimized />
                   </div>
-                  <span className={`truncate text-xs font-semibold ${isHomeWinner ? "text-emerald-400 font-bold" : "text-white/80"}`}>
+                  <span className={`truncate text-xs font-semibold ${isHomeWinner ? "text-emerald-400 font-bold" : "text-white/80 group-hover:text-emerald-400 transition-colors"}`}>
                     {getTeamName(home, locale)}
                   </span>
-                </>
+                </Link>
               ) : (
                 <span className="text-[10px] text-zinc-500 font-mono">TBD</span>
               )}
@@ -372,14 +376,18 @@ export default function BracketPage() {
           <div className="flex items-center justify-between gap-2 h-7">
             <div className="flex items-center gap-2 overflow-hidden">
               {away ? (
-                <>
-                  <div className="relative h-4 w-6 shrink-0 overflow-hidden rounded ring-1 ring-white/10">
+                <Link 
+                  href={`/ulkeler/${away.id}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-2 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+                >
+                  <div className="relative h-4 w-6 shrink-0 overflow-hidden rounded ring-1 ring-white/10 group-hover:ring-emerald-500/35 transition-all">
                     <Image src={away.flagUrl} alt="" fill className="object-cover" unoptimized />
                   </div>
-                  <span className={`truncate text-xs font-semibold ${isAwayWinner ? "text-emerald-400 font-bold" : "text-white/80"}`}>
+                  <span className={`truncate text-xs font-semibold ${isAwayWinner ? "text-emerald-400 font-bold" : "text-white/80 group-hover:text-emerald-400 transition-colors"}`}>
                     {getTeamName(away, locale)}
                   </span>
-                </>
+                </Link>
               ) : (
                 <span className="text-[10px] text-zinc-500 font-mono">TBD</span>
               )}
@@ -743,8 +751,11 @@ export default function BracketPage() {
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 overflow-hidden">
                   {selectedMatch.homeTeamId && (
-                    <>
-                      <div className="relative h-6 w-9 shrink-0 overflow-hidden rounded shadow ring-1 ring-white/10">
+                    <Link 
+                      href={`/ulkeler/${selectedMatch.homeTeamId}`}
+                      className="flex items-center gap-3 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+                    >
+                      <div className="relative h-6 w-9 shrink-0 overflow-hidden rounded shadow ring-1 ring-white/10 group-hover:ring-emerald-500/35 transition-all">
                         <Image 
                           src={getTeamById(selectedMatch.homeTeamId)?.flagUrl || ""} 
                           alt="" 
@@ -753,10 +764,10 @@ export default function BracketPage() {
                           unoptimized 
                         />
                       </div>
-                      <span className="truncate text-sm font-bold text-white">
+                      <span className="truncate text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
                         {getTeamName(getTeamById(selectedMatch.homeTeamId)!, locale)}
                       </span>
-                    </>
+                    </Link>
                   )}
                 </div>
                 <input 
@@ -772,8 +783,11 @@ export default function BracketPage() {
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 overflow-hidden">
                   {selectedMatch.awayTeamId && (
-                    <>
-                      <div className="relative h-6 w-9 shrink-0 overflow-hidden rounded shadow ring-1 ring-white/10">
+                    <Link 
+                      href={`/ulkeler/${selectedMatch.awayTeamId}`}
+                      className="flex items-center gap-3 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+                    >
+                      <div className="relative h-6 w-9 shrink-0 overflow-hidden rounded shadow ring-1 ring-white/10 group-hover:ring-emerald-500/35 transition-all">
                         <Image 
                           src={getTeamById(selectedMatch.awayTeamId)?.flagUrl || ""} 
                           alt="" 
@@ -782,10 +796,10 @@ export default function BracketPage() {
                           unoptimized 
                         />
                       </div>
-                      <span className="truncate text-sm font-bold text-white">
+                      <span className="truncate text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
                         {getTeamName(getTeamById(selectedMatch.awayTeamId)!, locale)}
                       </span>
-                    </>
+                    </Link>
                   )}
                 </div>
                 <input 

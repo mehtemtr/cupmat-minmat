@@ -5,6 +5,7 @@ import { getTeamById, getTeamName } from "@/data/teams";
 import { useTournament } from "@/contexts/TournamentContext";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { Calendar } from "lucide-react";
+import Link from "next/link";
 
 export function GroupMatchEditor() {
   const { t } = useTranslation();
@@ -90,20 +91,27 @@ export function GroupMatchEditor() {
 
                 <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
                   {/* Home Team */}
-                  <div className="flex items-center justify-end gap-3 flex-1 text-right min-w-0">
-                    <span className="text-sm font-extrabold text-white truncate">
-                      {home ? getTeamName(home, locale) : "—"}
-                    </span>
-                    {home?.flagUrl && (
-                      <div className="relative w-8 h-6 shrink-0 overflow-hidden rounded shadow border border-white/10 bg-zinc-900">
-                        <img
-                          src={home.flagUrl}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-                  </div>
+                  {home ? (
+                    <Link 
+                      href={`/ulkeler/${home.id}`}
+                      className="flex items-center justify-end gap-3 flex-1 text-right min-w-0 hover:text-emerald-400 cursor-pointer transition-colors group"
+                    >
+                      <span className="text-sm font-extrabold text-white group-hover:text-emerald-400 truncate">
+                        {getTeamName(home, locale)}
+                      </span>
+                      {home.flagUrl && (
+                        <div className="relative w-8 h-6 shrink-0 overflow-hidden rounded shadow border border-white/10 bg-zinc-900 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
+                          <img
+                            src={home.flagUrl}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                    </Link>
+                  ) : (
+                    <div className="flex items-center justify-end gap-3 flex-1 text-right min-w-0 text-zinc-500">—</div>
+                  )}
 
                   {/* Score inputs */}
                   <div className="flex items-center gap-2.5 justify-center shrink-0">
@@ -137,20 +145,27 @@ export function GroupMatchEditor() {
                   </div>
 
                   {/* Away Team */}
-                  <div className="flex items-center justify-start gap-3 flex-1 text-left min-w-0">
-                    {away?.flagUrl && (
-                      <div className="relative w-8 h-6 shrink-0 overflow-hidden rounded shadow border border-white/10 bg-zinc-900">
-                        <img
-                          src={away.flagUrl}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-                    <span className="text-sm font-extrabold text-white truncate">
-                      {away ? getTeamName(away, locale) : "—"}
-                    </span>
-                  </div>
+                  {away ? (
+                    <Link 
+                      href={`/ulkeler/${away.id}`}
+                      className="flex items-center justify-start gap-3 flex-1 text-left min-w-0 hover:text-emerald-400 cursor-pointer transition-colors group"
+                    >
+                      {away.flagUrl && (
+                        <div className="relative w-8 h-6 shrink-0 overflow-hidden rounded shadow border border-white/10 bg-zinc-900 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
+                          <img
+                            src={away.flagUrl}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <span className="text-sm font-extrabold text-white group-hover:text-emerald-400 truncate">
+                        {getTeamName(away, locale)}
+                      </span>
+                    </Link>
+                  ) : (
+                    <div className="flex items-center justify-start gap-3 flex-1 text-left min-w-0 text-zinc-500">—</div>
+                  )}
                 </div>
               </li>
             );

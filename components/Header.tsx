@@ -416,7 +416,7 @@ export function Header() {
           >
             <div className="flex items-center gap-3.5 border-b border-white/10 pb-4 mb-5">
               <img 
-                src="/icon.png" 
+                src="/mahtem_assets/mahtem_logo_512x512.png" 
                 alt="MahTEM Logo" 
                 className="h-11 w-11 rounded-xl object-contain border border-white/10 bg-white/5 shadow-lg shadow-emerald-500/25"
               />

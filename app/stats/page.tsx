@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo, useRef } from "react";
 import { PageShell } from "@/components/PageShell";
+import Link from "next/link";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useTournament } from "@/contexts/TournamentContext";
 import { TEAMS, getTeamById } from "@/data/teams";
@@ -537,11 +538,13 @@ export default function StatisticsPage() {
                         {youngest.map((p, idx) => (
                           <tr key={p.id || idx} className="hover:bg-white/5 transition-colors">
                             <td className="px-4 py-3">
-                              <div className="font-semibold text-white truncate max-w-[150px]">{p.player_name}</div>
-                              <div className="text-zinc-500 flex items-center gap-1.5 mt-0.5">
-                                <img src={getFlagUrl(p.team_id)} alt="" className="h-3 w-4.5 object-cover rounded-sm" />
-                                <span>{getTeamName(p.team_id)}</span>
-                              </div>
+                              <Link href={`/futbolcular/${p.id}`} className="font-semibold text-white hover:text-emerald-400 transition-colors truncate max-w-[150px] block">
+                                {p.player_name}
+                              </Link>
+                              <Link href={`/ulkeler/${p.team_id}`} className="text-zinc-500 flex items-center gap-1.5 mt-0.5 hover:text-emerald-400 transition-colors group">
+                                <img src={getFlagUrl(p.team_id)} alt="" className="h-3 w-4.5 object-cover rounded-sm group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all" />
+                                <span className="group-hover:text-emerald-400 transition-colors">{getTeamName(p.team_id)}</span>
+                              </Link>
                             </td>
                             <td className="px-4 py-3 text-center font-bold text-emerald-400">{p.age}</td>
                             <td className="px-4 py-3">
@@ -574,11 +577,13 @@ export default function StatisticsPage() {
                         {oldest.map((p, idx) => (
                           <tr key={p.id || idx} className="hover:bg-white/5 transition-colors">
                             <td className="px-4 py-3">
-                              <div className="font-semibold text-white truncate max-w-[150px]">{p.player_name}</div>
-                              <div className="text-zinc-500 flex items-center gap-1.5 mt-0.5">
-                                <img src={getFlagUrl(p.team_id)} alt="" className="h-3 w-4.5 object-cover rounded-sm" />
-                                <span>{getTeamName(p.team_id)}</span>
-                              </div>
+                              <Link href={`/futbolcular/${p.id}`} className="font-semibold text-white hover:text-emerald-400 transition-colors truncate max-w-[150px] block">
+                                {p.player_name}
+                              </Link>
+                              <Link href={`/ulkeler/${p.team_id}`} className="text-zinc-500 flex items-center gap-1.5 mt-0.5 hover:text-emerald-400 transition-colors group">
+                                <img src={getFlagUrl(p.team_id)} alt="" className="h-3 w-4.5 object-cover rounded-sm group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all" />
+                                <span className="group-hover:text-emerald-400 transition-colors">{getTeamName(p.team_id)}</span>
+                              </Link>
                             </td>
                             <td className="px-4 py-3 text-center font-bold text-amber-400">{p.age}</td>
                             <td className="px-4 py-3">
@@ -802,14 +807,18 @@ export default function StatisticsPage() {
 
                         <div className="flex items-center justify-between gap-4 py-2">
                           {/* Home Team */}
-                          <div className="flex items-center gap-3 w-5/12 overflow-hidden">
+                          <Link 
+                            href={`/ulkeler/${m.homeTeamId}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center gap-3 w-5/12 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+                          >
                             <img 
                               src={getFlagUrl(m.homeTeamId)} 
                               alt="" 
-                              className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0"
+                              className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all"
                             />
-                            <span className="font-bold text-white text-sm truncate">{homeName}</span>
-                          </div>
+                            <span className="font-bold text-white text-sm truncate group-hover:text-emerald-400 transition-colors">{homeName}</span>
+                          </Link>
 
                           {/* Score / VS */}
                           <div className="flex items-center justify-center font-mono font-bold text-lg text-white w-2/12 bg-black/40 py-1 px-3 rounded-lg border border-white/5 shrink-0">
@@ -821,14 +830,18 @@ export default function StatisticsPage() {
                           </div>
 
                           {/* Away Team */}
-                          <div className="flex items-center justify-end gap-3 w-5/12 text-right overflow-hidden">
-                            <span className="font-bold text-white text-sm truncate">{awayName}</span>
+                          <Link 
+                            href={`/ulkeler/${m.awayTeamId}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center justify-end gap-3 w-5/12 text-right overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+                          >
+                            <span className="font-bold text-white text-sm truncate group-hover:text-emerald-400 transition-colors">{awayName}</span>
                             <img 
                               src={getFlagUrl(m.awayTeamId)} 
                               alt="" 
-                              className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0"
+                              className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all"
                             />
-                          </div>
+                          </Link>
                         </div>
 
                         <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Bot, Calendar, Trophy, User } from "lucide-react";
 import { useTournament } from "@/contexts/TournamentContext";
 import { getTeamById, getTeamName } from "@/data/teams";
+import Link from "next/link";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import type { KnockoutMatch, MatchPrediction, Team } from "@/lib/types/tournament";
 import type { Locale } from "@/lib/i18n/types";
@@ -185,19 +186,22 @@ function TeamRow({ team, locale, score, onChange }: { team: Team | null | undefi
 
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="flex items-center gap-2 overflow-hidden">
+      <Link 
+        href={`/ulkeler/${team.id}`}
+        className="flex items-center gap-2 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
+      >
         <Image
           src={team.flagUrl}
           alt=""
           width={24}
           height={16}
-          className="shrink-0 rounded object-cover"
+          className="shrink-0 rounded object-cover group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all"
           unoptimized
         />
-        <span className="truncate text-xs font-semibold text-white">
+        <span className="truncate text-xs font-semibold text-white group-hover:text-emerald-400 transition-colors">
           {getTeamName(team, locale)}
         </span>
-      </div>
+      </Link>
       <input
         type="number"
         min={0}
