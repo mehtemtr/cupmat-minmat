@@ -4,7 +4,7 @@ import { PageShell } from "@/components/PageShell";
 import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useState, useEffect, useMemo, useRef } from "react";
-import { getAllPlayers } from "@/data/teams";
+import { getAllPlayers, TEAMS } from "@/data/teams";
 import { getAdjustedDate } from "@/lib/tournament/time-helper";
 import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Shield, Users, Award, Calendar, Settings, Play, CheckCircle, AlertTriangle, ArrowRight, Star, RefreshCw, Lock } from "lucide-react";
@@ -864,24 +864,58 @@ export default function FantasyPage() {
               )}
             </div>
 
-            {/* Formation selector */}
-            <div>
-              <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">
-                {t("fantasy.formationSelectorLabel")}
-              </label>
-              <select
-                disabled={isStageLocked}
-                value={formation}
-                onChange={(e) => setFormation(e.target.value)}
-                className={`bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border focus:outline-none focus:border-emerald-500 ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
-              >
-                <option value="4-4-2">4-4-2</option>
-                <option value="4-3-3">4-3-3</option>
-                <option value="3-5-2">3-5-2</option>
-                <option value="3-4-3">3-4-3</option>
-                <option value="5-3-2">5-3-2</option>
-                <option value="5-4-1">5-4-1</option>
-              </select>
+            <div className="flex flex-wrap gap-4 items-center">
+              {/* Formation selector */}
+              <div>
+                <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">
+                  {t("fantasy.formationSelectorLabel")}
+                </label>
+                <select
+                  disabled={isStageLocked}
+                  value={formation}
+                  onChange={(e) => setFormation(e.target.value)}
+                  className={`bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border focus:outline-none focus:border-emerald-500 ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
+                >
+                  <option value="4-4-2">4-4-2</option>
+                  <option value="4-3-3">4-3-3</option>
+                  <option value="3-5-2">3-5-2</option>
+                  <option value="3-4-3">3-4-3</option>
+                  <option value="5-3-2">5-3-2</option>
+                  <option value="5-4-1">5-4-1</option>
+                </select>
+              </div>
+
+              {/* Manager selector */}
+              <div>
+                <label className="block text-[10px] text-slate-500 uppercase font-black tracking-wider mb-1">
+                  {t("manager") || "Teknik Direktör"}
+                </label>
+                <select
+                  disabled={isStageLocked}
+                  value={selectedManager || ""}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setSelectedManager(val === "" ? null : val);
+                  }}
+                  className={`bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border focus:outline-none focus:border-emerald-500 min-w-[160px] max-w-[220px] ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
+                >
+                  <option value="">{locale === "tr" ? "-- Seçiniz --" : "-- Select --"}</option>
+                  {TEAMS.map((team) => {
+                    const managerName = team.manager?.name || "Bilinmiyor";
+                    const teamName = locale === "tr" ? team.nameTr : team.nameEn;
+                    const isLocked = lockedTeams.includes(team.id.toLowerCase());
+                    return (
+                      <option 
+                        key={team.id} 
+                        value={team.id}
+                        disabled={isLocked}
+                      >
+                        {managerName} ({teamName}) {isLocked ? "🔒" : ""}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
           </div>
 
