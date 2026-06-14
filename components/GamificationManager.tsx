@@ -66,10 +66,16 @@ export function GamificationManager() {
 
   // 1. Determine page category and rules
   const getPageConfig = (path: string) => {
-    // General pages (30 seconds, +10 points)
-    const generalHubs = ["/teams", "/futbolcular", "/groups", "/venues", "/tahminler", "/stats"];
-    if (generalHubs.includes(path)) {
-      return { duration: 30, points: 10, category: "hub" };
+    // Exclude landing page, leaderboard, and authentication paths
+    if (
+      path === "/" ||
+      path === "/leaderboard" ||
+      path === "/auth-redirect" ||
+      path === "/auth-signout" ||
+      path.startsWith("/sign-in") ||
+      path.startsWith("/sign-up")
+    ) {
+      return null;
     }
 
     // Underlying detail pages (10 seconds, +1 point)
@@ -83,7 +89,8 @@ export function GamificationManager() {
       return { duration: 10, points: 1, category: "detail" };
     }
 
-    return null;
+    // All other main pages (30 seconds, +10 points)
+    return { duration: 30, points: 10, category: "hub" };
   };
 
   // Date helper (YYYY-MM-DD local timezone)
