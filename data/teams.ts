@@ -392,10 +392,10 @@ const seeds: TeamSeed[] = [
     "group": "A",
     "confederation": "UEFA",
     "manager": {
-      "name": "Ivan Hašek",
+      "name": "Miroslav Koubek",
       "nationality": "Czechia",
-      "age": 60,
-      "tenure": "2023–"
+      "age": 74,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -1257,10 +1257,10 @@ const seeds: TeamSeed[] = [
     "group": "B",
     "confederation": "AFC",
     "manager": {
-      "name": "Juan Ignacio Sánchez",
+      "name": "Julen Lopetegui Argote",
       "nationality": "Spain",
-      "age": 46,
-      "tenure": "2024–"
+      "age": 59,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -1430,10 +1430,10 @@ const seeds: TeamSeed[] = [
     "group": "C",
     "confederation": "CONMEBOL",
     "manager": {
-      "name": "Dorival Júnior",
-      "nationality": "Brazil",
-      "age": 62,
-      "tenure": "2024–"
+      "name": "Carlo Ancelotti",
+      "nationality": "Italy",
+      "age": 67,
+      "tenure": "2026–"
     },
     "players": [
       {
@@ -1776,10 +1776,10 @@ const seeds: TeamSeed[] = [
     "group": "C",
     "confederation": "CAF",
     "manager": {
-      "name": "Walid Regragui",
+      "name": "Mohamed Ouahbi",
       "nationality": "Morocco",
-      "age": 49,
-      "tenure": "2022–"
+      "age": 55,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -3864,10 +3864,10 @@ const seeds: TeamSeed[] = [
     "group": "F",
     "confederation": "UEFA",
     "manager": {
-      "name": "Jon Dahl Tomasson",
-      "nationality": "Denmark",
-      "age": 48,
-      "tenure": "2024–"
+      "name": "Graham Potter",
+      "nationality": "England",
+      "age": 51,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -4037,10 +4037,10 @@ const seeds: TeamSeed[] = [
     "group": "F",
     "confederation": "CAF",
     "manager": {
-      "name": "Sami Trabelsi",
-      "nationality": "Tunisia",
-      "age": 58,
-      "tenure": "2024–"
+      "name": "Sabri Lamouchi",
+      "nationality": "France",
+      "age": 54,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -4210,10 +4210,10 @@ const seeds: TeamSeed[] = [
     "group": "G",
     "confederation": "UEFA",
     "manager": {
-      "name": "Domenico Tedesco",
-      "nationality": "Italy",
-      "age": 39,
-      "tenure": "2023–"
+      "name": "Rudi Garcia",
+      "nationality": "France",
+      "age": 62,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -4723,10 +4723,10 @@ const seeds: TeamSeed[] = [
     "group": "G",
     "confederation": "OFC",
     "manager": {
-      "name": "Darije Kalezić",
-      "nationality": "Australia",
-      "age": 54,
-      "tenure": "2024–"
+      "name": "Darren Bazeley",
+      "nationality": "England",
+      "age": 53,
+      "tenure": "2023–"
     },
     "players": [
       {
@@ -5242,10 +5242,10 @@ const seeds: TeamSeed[] = [
     "group": "H",
     "confederation": "AFC",
     "manager": {
-      "name": "Roberto Mancini",
-      "nationality": "Italy",
-      "age": 60,
-      "tenure": "2023–"
+      "name": "Georgios Donis",
+      "nationality": "Greece",
+      "age": 56,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -5415,9 +5415,9 @@ const seeds: TeamSeed[] = [
     "group": "H",
     "confederation": "CAF",
     "manager": {
-      "name": "Bubista",
+      "name": "Pedro Leitao Brito",
       "nationality": "Cape Verde",
-      "age": 48,
+      "age": 56,
       "tenure": "2020–"
     },
     "players": [
@@ -5934,10 +5934,10 @@ const seeds: TeamSeed[] = [
     "group": "I",
     "confederation": "AFC",
     "manager": {
-      "name": "Jesús Casas",
-      "nationality": "Spain",
-      "age": 48,
-      "tenure": "2022–"
+      "name": "Graham Arnold",
+      "nationality": "Australia",
+      "age": 62,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -6453,10 +6453,10 @@ const seeds: TeamSeed[] = [
     "group": "J",
     "confederation": "CAF",
     "manager": {
-      "name": "Djamel Belmadi",
-      "nationality": "Algeria",
-      "age": 49,
-      "tenure": "2018–"
+      "name": "Vladimir Petkovic",
+      "nationality": "Switzerland",
+      "age": 62,
+      "tenure": "2024–"
     },
     "players": [
       {
@@ -6799,10 +6799,10 @@ const seeds: TeamSeed[] = [
     "group": "J",
     "confederation": "AFC",
     "manager": {
-      "name": "Hussein Ammouta",
+      "name": "Jamal Sellami",
       "nationality": "Morocco",
-      "age": 51,
-      "tenure": "2023–"
+      "age": 55,
+      "tenure": "2024–"
     },
     "players": [
       {
@@ -7318,10 +7318,10 @@ const seeds: TeamSeed[] = [
     "group": "K",
     "confederation": "AFC",
     "manager": {
-      "name": "Slavisa Jokanovic",
-      "nationality": "Serbia",
-      "age": 57,
-      "tenure": "2024–"
+      "name": "Fabio Cannavaro",
+      "nationality": "Italy",
+      "age": 52,
+      "tenure": "2025–"
     },
     "players": [
       {
@@ -8183,10 +8183,10 @@ const seeds: TeamSeed[] = [
     "group": "L",
     "confederation": "CAF",
     "manager": {
-      "name": "Otto Addo",
-      "nationality": "Ghana",
-      "age": 49,
-      "tenure": "2024–"
+      "name": "Carlos Queiroz",
+      "nationality": "Portugal",
+      "age": 73,
+      "tenure": "2025–"
     },
     "players": [
       {
