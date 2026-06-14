@@ -2874,7 +2874,37 @@
           if (data.success && data.profile) {
             const p = data.profile;
             if (typeof p.minmatEkSure === "number" && p.minmatEkSure > 0) {
-              extraTimeSeconds = p.minmatEkSure;
+              const secondsToUse = Math.min(p.minmatEkSure, 10);
+              if (secondsToUse > 0 && userSession.isAuthenticated) {
+                try {
+                  const token = await getClerkToken();
+                  const headers = { "Content-Type": "application/json" };
+                  if (token) {
+                    headers["Authorization"] = `Bearer ${token}`;
+                  }
+                  const consumeRes = await fetch("/api/gamification", {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify({
+                      action: "use_minmat_time",
+                      amount: secondsToUse
+                    })
+                  });
+                  if (consumeRes.ok) {
+                    const consumeData = await consumeRes.json();
+                    console.log("MinMat extra time consumed:", secondsToUse, consumeData);
+                    extraTimeSeconds = secondsToUse;
+                  } else {
+                    console.error("Failed to consume MinMat extra time");
+                    extraTimeSeconds = 0;
+                  }
+                } catch (consumeErr) {
+                  console.error("Error consuming MinMat extra time:", consumeErr);
+                  extraTimeSeconds = 0;
+                }
+              } else {
+                extraTimeSeconds = secondsToUse;
+              }
             }
             if (p.periyotOdulAktif) {
               periodSecondsPerLevel = Number(p.periyotOdulMinmatSaniyeSeviye) || 0;
@@ -2945,17 +2975,24 @@
       first = null;
       matched = 0;
 
+      const previousTimeLeft = timeLeft;
+
       createCards();
       let pairs = totalPairs / 2;
-      let timePerPair = Math.max(8 - level * 0.5, 4);
-      timeLeft = Math.floor(pairs * timePerPair);
+      let timePerPair = Math.max(8 - level * 0.5, 5);
+      let baseTime = Math.floor(pairs * timePerPair);
 
       showEffect(t("round") + " " + level);
 
       if (level === 1) {
         timeLeft = 30;
       } else {
-        timeLeft += 3;
+        const carryOver = Math.max(0, Math.floor(previousTimeLeft * 0.5));
+        let completionBonusSeconds = 5;
+        if (level >= 6) {
+          completionBonusSeconds = 5 + 2 * Math.floor((level - 3) / 3);
+        }
+        timeLeft = baseTime + carryOver + completionBonusSeconds;
       }
 
       if (extraTimeSeconds > 0) {
