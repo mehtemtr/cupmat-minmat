@@ -66,10 +66,12 @@ export function GamificationManager() {
 
   // 1. Determine page category and rules
   const getPageConfig = (path: string) => {
-    // Exclude landing page, leaderboard, and authentication paths
+    // Exclude landing page, leaderboard, authentication paths, and MinMat entry/game pages
     if (
       path === "/" ||
       path === "/leaderboard" ||
+      path === "/minmat" ||
+      path.startsWith("/minmat/") ||
       path === "/auth-redirect" ||
       path === "/auth-signout" ||
       path.startsWith("/sign-in") ||
