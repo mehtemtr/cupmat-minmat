@@ -1,0 +1,381 @@
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\CommandButton]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\CommandButton\MSCommandButtonWizard]
+@=""
+"Can Edit"="REG_DWORD:0"
+"Description"="REG_SZ:Komut Düðmesi Sihirbazý"
+"Function"="REG_SZ:bw_Entry"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\ComboBox]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\ComboBox\MSComboBoxWizard]
+@=""
+"Can Edit"="REG_DWORD:0"
+"Description"="REG_SZ:Açýlan Kutu Sihirbazý"
+"Function"="REG_SZ:cmb_Entry"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\ListBox]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\ListBox\MSListBoxWizard]
+@=""
+"Can Edit"="REG_DWORD:0"
+"Description"="REG_SZ:Liste Kutusu Sihirbazý"
+"Function"="REG_SZ:lst_Entry"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\OptionGroup]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\OptionGroup\MSOptionGroupWizard]
+@=""
+"Can Edit"="REG_DWORD:0"
+"Description"="REG_SZ:Seçenek Grubu Sihirbazý"
+"Function"="REG_SZ:ogrp_Entry"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\SubformSubreport]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Control Wizards\SubformSubreport\MSSubformBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:Altform Sihirbazý"
+"Function"="REG_SZ:sfr_Entry"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards]
+"AutoForm Max Levels"="REG_SZ:3"
+"AutoForm Policy"="REG_SZ:1"
+"Fixed Label Characters"="REG_SZ:20"
+"Form Height"="REG_SZ:4320"
+"Form Width"="REG_SZ:7920"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\OTOMATÝK FORM:  SÜTUNLU]
+"Argument1"="REG_SZ:1"
+"Argument2"="REG_SZ:2"
+"BitmapID"="REG_DWORD:13F"
+"Datasource Required"="REG_DWORD:1"
+"Description"="REG_SZ:Bu sihirbaz otomatik olarak sütunlu form yaratýr."
+"Function"="REG_SZ:auto_Entry"
+"Index"="REG_DWORD:2"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\OTOMATÝK FORM:  VERÝ SAYFASI]
+"Argument1"="REG_SZ:3"
+"Argument2"="REG_SZ:2"
+"BitmapID"="REG_DWORD:141"
+"Datasource Required"="REG_DWORD:1"
+"Description"="REG_SZ:Bu sihirbaz otomatik olarak veri sayfasý formu yaratýr."
+"Function"="REG_SZ:auto_Entry"
+"Index"="REG_DWORD:4"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\OTOMATÝK FORM:  SEKMELÝ]
+"Argument1"="REG_SZ:2"
+"Argument2"="REG_SZ:2"
+"BitmapID"="REG_DWORD:140"
+"Datasource Required"="REG_DWORD:1"
+"Description"="REG_SZ:Bu sihirbaz otomatik olarak sekmeli form yaratýr."
+"Function"="REG_SZ:auto_Entry"
+"Index"="REG_DWORD:3"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\TASARIM GÖRÜNÜMÜ]
+"BitmapID"="REG_DWORD:13D"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Sihirbaz kullanmadan yeni bir form yarat."
+"Index"="REG_DWORD:0"
+"InternalID"="REG_DWORD:1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\FORM SÝHÝRBAZI]
+"Argument1"="REG_SZ:2"
+"BitmapID"="REG_DWORD:13E"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Bu sihirbaz seçtiðiniz alanlara dayanarak otomatik olarak formunuzu yaratýr."
+"Function"="REG_SZ:frui_Entry"
+"Index"="REG_DWORD:1"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\GRAFÝK SÝHÝRBAZI]
+"Argument1"="REG_SZ:2"
+"Argument2"="REG_SZ:0"
+"BitmapID"="REG_DWORD:142"
+"Description"="REG_SZ:Bu form grafikli form yaratýr."
+"Function"="REG_SZ:cw_WizardEntry"
+"Index"="REG_DWORD:5"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Form Wizards\ÖZET TABLO SÝHÝRBAZI]
+"BitmapID"="REG_DWORD:143"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Bu sihirbaz, Microsoft Excel Özet Tablo'lu form yaratýr."
+"Function"="REG_SZ:pvt_Entry"
+"Index"="REG_DWORD:6"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\Picture]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\Picture\MSPictureBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:MS Resim Oluþturucu"
+"Function"="REG_SZ:pp_Entry"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\FieldName]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\FieldName\MSFieldBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:Alan Oluþturucu"
+"Function"="REG_SZ:tw_FieldEntry"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\InputMask]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\InputMask\MSInputMaskBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:Girdi Maskesi Sihirbazý"
+"Function"="REG_SZ:im_Entry"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\ODBCConnectStr]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\ODBCConnectStr\MSODBCConnectStrBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:ODBC Baðlantý Dize Oluþturucusu"
+"Function"="REG_SZ:zwBuilderODBCConnectString"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\LinkChildFields]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\LinkChildFields\MSLinkChildFieldsBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:Alan Baðlayýcý"
+"Function"="REG_SZ:flb_EntryChildLinker"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\LinkMasterFields]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Property Wizards\LinkMasterFields\MSLinkMasterFieldsBuilder]
+@=""
+"Can Edit"="REG_DWORD:1"
+"Description"="REG_SZ:Alan Baðlayýcý"
+"Function"="REG_SZ:flb_EntryMasterLinker"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Query Wizards]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Query Wizards\TASARIM GÖRÜNÜMÜ]
+"BitmapID"="REG_DWORD:144"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Sihirbaz kullanmadan yeni bir sorgu yarat."
+"Index"="REG_DWORD:0"
+"InternalID"="REG_DWORD:1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Query Wizards\BASÝT SORGU SÝHÝRBAZI]
+"BitmapID"="REG_DWORD:145"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Bu sihirbaz seçtiðiniz alanlardan seçim sorgusu yaratýr."
+"Function"="REG_SZ:ssq_Entry"
+"Index"="REG_DWORD:1"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Query Wizards\ÇAPRAZ SORGU SÝHÝRBAZI]
+@=""
+"BitmapID"="REG_DWORD:146"
+"Description"="REG_SZ:Bu sihirbaz düzenlenmiþ, elektronik tablo görünümlü biçimde görüntüleyen çapraz sorgu yaratýr."
+"Function"="REG_SZ:xtq_Entry"
+"Index"="REG_DWORD:2"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Query Wizards\YÝNELEMELERÝ BUL SORGU SÝHÝRBAZI]
+@=""
+"BitmapID"="REG_DWORD:147"
+"Description"="REG_SZ:Bu sihirbaz tek bir tablo veya sorgudaki yineleyen alan deðerlerini bulan sorguyu yaratýr."
+"Function"="REG_SZ:dup_Entry"
+"Index"="REG_DWORD:3"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Query Wizards\EÞLEÞMEYENLERÝ BUL SORGU SÝHÝRBAZI]
+@=""
+"BitmapID"="REG_DWORD:148"
+"Description"="REG_SZ:Bu sihirbaz bir tabloda bulunan ve baþka bir tablodakilerle iliþkili olmayan kayýtlarý (satýrlarý) bulur."
+"Function"="REG_SZ:dwz_Entry"
+"Index"="REG_DWORD:4"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards]
+"Fixed Label Characters"="REG_SZ:20"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards\OTOMATÝK RAPOR:  SÜTUNLU]
+@=""
+"Argument1"="REG_SZ:1"
+"Argument2"="REG_SZ:3"
+"BitmapID"="REG_DWORD:14B"
+"Datasource Required"="REG_DWORD:1"
+"Description"="REG_SZ:Bu sihirbaz otomatik olarak sütunlu bir rapor oluþturur."
+"Function"="REG_SZ:auto_Entry"
+"Index"="REG_DWORD:2"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards\OTOMATÝK RAPOR:  SEKMELÝ]
+@=""
+"Argument1"="REG_SZ:2"
+"Argument2"="REG_SZ:3"
+"BitmapID"="REG_DWORD:14C"
+"Datasource Required"="REG_DWORD:1"
+"Description"="REG_SZ:Bu sihirbaz otomatik olarak sekmeli rapor oluþturur."
+"Function"="REG_SZ:auto_Entry"
+"Index"="REG_DWORD:3"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards\TASARIM GÖRÜNÜMÜ]
+"BitmapID"="REG_DWORD:149"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Sihirbaz kulanmadan yeni bir rapor yaratýr."
+"Index"="REG_DWORD:0"
+"InternalID"="REG_DWORD:1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards\RAPOR SÝHÝRBAZI]
+@=""
+"Argument1"="REG_SZ:3"
+"BitmapID"="REG_DWORD:14A"
+"Datasource Required"="REG_DWORD:0"
+"Description"="REG_SZ:Bu sihirbaz, seçtiðiniz alanlara göre otomatik olarak raporunuzu yaratýr."
+"Function"="REG_SZ:frui_Entry"
+"Index"="REG_DWORD:1"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards\ETÝKET SÝHÝRBAZI]
+@=""
+"BitmapID"="REG_DWORD:14D"
+"DataSource Required"="REG_DWORD:1"
+"Description"="REG_SZ:Bu sihirbaz etiket üstüne yazdýrma için biçimlendirilmiþ rapor yaratýr."
+"Function"="REG_SZ:mlbl_Entry"
+"Index"="REG_DWORD:5"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Report Wizards\GRAFÝK SÝHÝRBAZI]
+@=""
+"Argument1"="REG_SZ:3"
+"Argument2"="REG_SZ:0"
+"BitmapID"="REG_DWORD:14E"
+"Description"="REG_SZ:Bu sihirbaz grafikli bir rapor yaratýr."
+"Function"="REG_SZ:cw_WizardEntry"
+"Index"="REG_DWORD:4"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Table Wizards\TABLO SÝHÝRBAZI]
+"BitmapID"="REG_DWORD:151"
+"Description"="REG_SZ:Bu sihirbaz veri saklamak için yeni bir tablo yaratýr."
+"Function"="REG_SZ:tw_Entry"
+"Index"="REG_DWORD:2"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Table Wizards\TABLO AL]
+"BitmapID"="REG_DWORD:152"
+"Description"="REG_SZ:Bu sihirbaz bir dýþ dosyadan geçerli veritabanýna tablo ve nesneleri alýr."
+"Index"="REG_DWORD:3"
+"InternalID"="REG_DWORD:2"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Table Wizards\TABLO BAÐLA]
+"BitmapID"="REG_DWORD:153"
+"Description"="REG_SZ:Bu sihirbaz, geçerli veritabanýnda dýþ dosyadaki tablolara  baðlý olan tablolar yaratýr."
+"Index"="REG_DWORD:4"
+"InternalID"="REG_DWORD:4"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Table Wizards\TASARIM GÖRÜNÜMÜ]
+"BitmapID"="REG_DWORD:14F"
+"Description"="REG_SZ:Tasarým görünümünde yeni bir tablo yarat."
+"Index"="REG_DWORD:1"
+"InternalID"="REG_DWORD:1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Table Wizards\VERÝ SAYFASI GÖRÜNÜMÜ]
+"BitmapID"="REG_DWORD:150"
+"Description"="REG_SZ:Veri sayfasý görünümünde yeni bir tablo yarat."
+"Index"="REG_DWORD:0"
+"InternalID"="REG_DWORD:3"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards]
+"AddInPath"="REG_SZ:<product path>\\"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Data Files]
+"Wizard Data File"="REG_SZ:<product path>\\wzdat80.mdt"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Replication Conflicts]
+"Path"="REG_SZ:<product path>\\Wzcnf80.mda"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Preferences]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Preferences\Documentor]
+"Option09"="REG_SZ:3"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Wizards\Preferences\AutoFormat]
+"FormAutoFormat"="REG_DWORD:50"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Menu Add-Ins]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Menu Add-Ins\&EKLENTÝ YÖNETÝCÝSÝ]
+"Expression"="REG_SZ:=wm_Entry()"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+"Quicktip"="REG_DWORD:1A775"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Menu Add-Ins\&VERÝTABANI BÖLÜCÜ]
+"Expression"="REG_SZ:=sp_Entry()"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+"Quicktip"="REG_DWORD:1A776"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Menu Add-Ins\BAÐLI &TABLO YÖNETÝCÝSÝ]
+"Expression"="REG_SZ:=att_Entry()"
+"Library"="REG_SZ:<product path>\\wztool80.mde;2"
+"Quicktip"="REG_DWORD:1A777"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\8.0\Access\Menu Add-Ins\&DENETÝM PANOSU YÖNETÝCÝSÝ]
+"Expression"="REG_SZ:=sbm_Entry()"
+"Library"="REG_SZ:<product path>\\wzmain80.mde;1"
+"Quicktip"="REG_DWORD:1A778"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Text]
+"ExportWizardFunction"="REG_SZ:mx_entry"
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Excel 3.0]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Excel 4.0]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Excel 5.0]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Excel 8.0]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Lotus WK1]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Lotus WK3]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\Lotus WK4]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Jet\3.5\ISAM Formats\HTML Import]
+"ImportWizardFunction"="REG_SZ:mx_entry"
+"WizardProject"="REG_SZ:wzlib80.mde"

@@ -1,0 +1,36 @@
+      McAfee VirusScan for DOS v3.0.2 (3006)
+
+Packing List and Validation Codes       PACKING.LST
+
+VirusScan Program                       SCAN.EXE
+Validate Program                        VALIDATE.EXE
+
+Virus Clean Up Data                     CLEAN.DAT
+Virus Names Data                        NAMES.DAT
+Virus Detection Data                    SCAN.DAT
+
+Listing of McAfee Authorized Resellers  RESELLER.TXT
+New features in this release            WHATSNEW.TXT
+
+Registration Information and
+Product Licensing Agreement             README.1ST
+
+BBS Zip File Identification             FILE_ID.DIZ
+
+
+Validation codes for the program and Virus Data Files 
+included in this package:
+
+SCAN     EXE    255986  06-16-97   3:02a   D166   739F
+VALIDATE EXE     16326  06-16-97   3:02a   1075   663D
+
+CLEAN    DAT    140070  06-16-97   3:02a   0A9F   C91B
+NAMES    DAT    353899  06-16-97   3:02a   1939   9745
+SCAN     DAT    342277  06-16-97   3:02a   8842   C1A6
+
+RESELLER TXT     28873  06-16-97   3:02a   E7E8   F1BA
+WHATSNEW TXT     21615  06-16-97   3:02a   5239   47DD
+
+README   1ST     16926  06-16-97   3:02a   3B5C   88D2
+
+FILE_ID  DIZ       147  06-16-97   3:02a   E3B7   C6E8

@@ -1,0 +1,46 @@
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+		    ANYWARE SOFTWARE CORPORATION
+
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+  aaw95367.zip
+  May 26, 1997 - v.3.00.467
+
+  Anyware Antivirus is a product developed by Anyware Software
+  a company specialized in security for personal computers and
+  local area networds. The company offers a wide range of 
+  computer security solutions. 
+  Anyware Antivirus is the fastest and friendliest antivirus 
+  software available, and works continuously in the background 
+  to protect you from virus attacks.
+
+  Anyware Antivirus provides the complete solution for the 
+  total Protection, Detection and Removal of viruses. It gives 
+  total security, because it protects the computer from all the
+  known viruses and detects the presence of new viruses.
+  Anyware Antivirus checks the integrity of all files across the 
+  online services and critical areas in your computer or local 
+  area network.
+
+  The safest method to scan viruses is booting from a clean 
+  floppy disk. We advise using Anyware Antivirus for Windows 95 
+  to do that.
+  Windows 95 version detect all macro viruses.
+
+
+  To install the program, execute "setup.exe".
+
+
+  Anyware Antivirus is a shareware program. Update via WWW at 
+                   http://www.helpvirus.com
+
+
+  For more information, please contact:
+
+  Anyware Software Corporation
+  109 S.Sycamore Ave (Los Angeles, CA 90036)
+  Tel: (213) 939-1177
+  Fax: (213) 939-1176
+  webmaster@helpvirus.com
+  http://www.helpvirus.com

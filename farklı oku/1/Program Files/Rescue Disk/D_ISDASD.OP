@@ -1,0 +1,43 @@
+$OS
+DOS
+$GENERIC
+d_isdasd.dt
+$FILENAME
+d_isdasd.dt
+$DESCRIP
+DASD Device Table
+$SHORT
+DASD
+$VERSION
+2
+$CLASS
+device
+$IN_ATTRIBUTE
+WRITE
+READ
+BLOCK
+$DEVICE_TYPE
+80
+$CONTROL_BYTE
+40
+$DD_ATTRIBUTE
+0
+$SCSI_ID
+0-7
+$LUN
+0-1
+$SCAN
+4
+0
+/T30/D10
+$IDENTIFY
+inquiry(20)
+noerror
+00 = 00
+#if the manufacture string is null fail (alpha drive ??)
+08 ~ 0
+#if the product string ends with a *F it is a floptical, so fail also
+1E ~ 2a
+1F ~ 46
+$DRIVE_LETTER
+

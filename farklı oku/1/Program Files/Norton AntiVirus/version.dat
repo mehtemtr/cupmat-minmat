@@ -1,0 +1,14 @@
+[Versions]
+PublicVersion=7.00
+PublicRevision=7.00.51F
+InternalVersion=7.00
+InternalRevision=7.00.51F
+NAVOEM=1
+OEMVendor=Soltek
+
+[DefAnnuity]
+SKU=07-00-77690-ML
+PNU=07-25-73138-ML
+VSKU=07-12-00371-IE
+PRO=DUB039
+ENV=1

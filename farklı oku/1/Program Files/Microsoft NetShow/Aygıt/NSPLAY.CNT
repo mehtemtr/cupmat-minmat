@@ -1,0 +1,29 @@
+:Base nsplay.hlp>main
+:Title Microsoft NetShow Yürütücüsü
+1 NetShow Yürütücüsü=IDH_NetShow_Player
+1 Sorun Giderme=IDH_Troubleshooting
+1 .Asf Dosyalarýný Yürütme
+2 .Asf dosyasýný açma=IDH_Opening_an_Asf_File
+2 .Asf dosyasýný açmak için gözatma=IDH_Using_Open_File
+2 .Asf Dosyasý için URL Girme=IDH_Using_Open_Location
+1 .Asf Dosyasý Hakkýnda Bilgi Alma
+2 Genel Bilgileri Görme=IDH_View_General
+2 Kullanýlan Codecs'i Görme=IDH_View_Codecs
+2 .Asf Dosyasýnýn Detaylarýný Görme=IDH_View_Details
+2 .Asf Dosyasý Veri Akýþýnýn Ýstatistiklerini Görme=IDH_View_Stat
+2 Ýmleyicileri Kullanma=IDH_Markers_tab
+1 NetShow Yürütücüsü'nü Kullanma veya Özelleþtirme
+2 .Asf Dosyasýnýn Kaç Kez Yürütüleceðini Ayarlama=IDH_Play_Times
+2 Pencere Boyutunu Ayarlama=IDH_Adj_Window
+2 Denetimleri Saklama ve Görüntüleme=IDH_Hide_Display_Controls
+2 HTTP Veri Akýþý için Yetkili Sunucuyu Belirleme=IDH_Proxy_Server
+2 .ASF Dosyasýný Almak için UDP Baðlantý Noktasýný Kullanma=IDH_UDP_Port
+2 .ASF Dosyasýnýn Arabellek Süresini Ayarlama=IDH_Adj_Buffer
+1 NetShow Yürütücüsü Özellik Sayfalarýný Kullanma
+2 Geliþmiþ Özellik Sayfasý=IDH_Advanced_tab
+2 Genel Bilgiler Özellik Sayfasý=IDH_General_tab
+2 Detaylar Özellik Sayfasý=IDH_Details_tab
+2 Ýstatistikler Özellik Sayfasý=IDH_Statistics_tab
+2 Ayarlar Özellik Sayfasý=IDH_Settings_tab
+2 Ýmleyicileri Kullanma=IDH_Markers_tab
+2 Codecs özellik sayfasý=IDH_Codecs_tab

@@ -1,0 +1,1564 @@
+       WELCOME TO SYMANTEC'S NORTON UTILITIES VERSION 8.0!
+                  Norton Utilities 8.0 Read Me
+                                
+
+Thank you for purchasing Symantec's Norton Utilities 8.0.  Please
+read this file for important information including:
+
+    *     Hardware and Software Compatibility
+    *     Additional Material and Tips
+
+To print this file, change to your \NU directory and type:
+
+    LP READ.ME /HEADER0 /L5 <ENTER>
+
+Please read the following before installation and review the
+Table of Contents for information on specific utilities.
+
+EMERGENCY STARTUP
+-----------------------------------------------------
+If your system is damaged and you can't restart your computer
+from your hard disk, place the EMERGENCY DISK in drive A: and
+reboot.
+
+EMERGENCY UNERASE
+-----------------------------------------------------
+Do not install Norton Utilities on a drive that needs repair or
+requires data recovery.  To unerase an accidentally deleted file,
+insert the EMERGENCY DISK, change to the floppy drive, and type:
+
+     UNERASE <ENTER>
+
+EMERGENCY REPAIR
+-----------------------------------------------------
+If you can't access part of your hard drive or suspect damage,
+insert the EMERGENCY DISK, change to the floppy drive and type:
+
+     NDD <ENTER>
+
+INSTALL REQUIREMENTS
+-----------------------------------------------------
+Install requires at least 450K free conventional memory.  If your
+normal configuration does not generate this amount, restart your
+computer loading only essential TSRs and device drivers.
+
+INSTALLATION ON COMPRESSED VOLUMES
+-----------------------------------------------------
+Before installing Norton Utilities on a compressed drive, run
+Norton Disk Doctor /COMPLETE on both the host (non-compressed)
+and compressed volumes.  If C: is your compressed volume, insert
+the EMERGENCY DISK, change to the floppy drive and type:
+
+     NDD C: /C <ENTER>
+STARTUP PROGRAM OPTIONS
+-----------------------------------------------------
+During installation, Norton Utilities allows you to configure
+your system to automatically load or run certain programs every
+time you start your system.
+
+PROBLEM INSTALLATION
+-----------------------------------------------------
+If you have problems installing Norton Utilities, edit your
+AUTOEXEC.BAT and CONFIG.SYS files to temporarily remove
+non-essential TSRs and device drivers.  If you are using MS-DOS
+6.0, you can simply reboot and tap the F5 function key to bypass
+your startup files.
+
+MANUAL INSTALLATION
+-----------------------------------------------------
+Manual installation requires the use of PKUNZIP.EXE 2.00 or
+later, a shareware utility available on most bulletin board
+services.  Below are step-by step instructions for manual
+installation from your A: drive (replace A: with an alternate
+drive letter if necessary):
+
+     1.   Check your drive for errors.  Insert disk #2 (the
+          EMERGENCY disk and type:
+               A:NDD C: /C <ENTER>
+
+     2.   Create a directory for Norton Utilities:
+               MD C:\NU <ENTER>
+
+     3.   Change into that directory
+               CD C:\NU <ENTER>
+
+     4.   Copy all the files from the four diskettes:
+               COPY A:*.* <ENTER>
+
+     5.   Place your diskette with PKUNZIP.EXE in drive A:. Use
+          it to uncompress the zipped files as follows:
+               A:PKUNZIP *.??! <ENTER>
+
+     6.   Automatically configure the Norton Windows Utilities
+          programs by entering:
+               NUCONFIG /$PR <ENTER>
+               NUCONFIG /$WI <ENTER>
+               NUCONFIG /$WD <ENTER>
+               NUCONFIG /$INSTALL <ENTER>
+
+     7.   Customize Norton Utilities for your system.  Run the
+          configuration program and exit to DOS:
+               NUCONFIG <ENTER>
+               <PRESS> X
+
+     8.   Create a rescue diskette by typing:
+               RESCUE <ENTER>
+
+     9.   Remove the RESCUE diskette from drive A:.
+
+     10.  Delete the *.??! and install files from the C:\NU
+          directory:
+               DEL *.??! <ENTER>
+               DEL INSTALL*.* <ENTER>
+
+    11.   Delete the files that help boot the emergency diskette:
+               DEL CONFIG.SYS <ENTER>
+               DEL STARTUP.EXE <ENTER>
+               DEL EMERGNCY.CMD <ENTER>
+
+GENERAL ADVICE
+-----------------------------------------------------
+Reboot your computer after installing Norton Utilities.  Doing so
+sets necessary environment variables correctly.
+
+Take a few moments to peruse the READ.ME file.  It contains
+detailed information not covered in your Users Guide.  
+
+                        TABLE OF CONTENTS
+
+COMPATIBILITY
+Supported compression utilities. . . . . . . . . . . . . . . .  1
+Windows for Workgroups 32-bit File Access. . . . . . . . . . .  1
+Novell DOS Peer to Peer Networks . . . . . . . . . . . . . . .  1
+Windows 3.1. . . . . . . . . . . . . . . . . . . . . . . . . .  2
+OS/2.x . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2
+
+PROGRAMS
+CALIBRATE
+Aborting CALIBRATE takes several minutes . . . . . . . . . . .  2
+
+DISKREET
+Using DISKREET with compressed drives. . . . . . . . . . . . .  3
+Creating NDISKs on a compressed volume . . . . . . . . . . . .  3
+Diskreet's drive letter remapped . . . . . . . . . . . . . . .  3
+Loading high with EMM386.EXE . . . . . . . . . . . . . . . . .  3
+SmartDrive 4.x and higher. . . . . . . . . . . . . . . . . . .  3
+Zenith DOS 3.3 and Wyse DOS 3.21 . . . . . . . . . . . . . . .  4
+Disk Manager or SpeedStor. . . . . . . . . . . . . . . . . . .  4
+Alternate keyboard drivers . . . . . . . . . . . . . . . . . .  4
+"Drive not Ready" critical error . . . . . . . . . . . . . . .  4
+
+DISKEDIT
+Aborting the directory scan. . . . . . . . . . . . . . . . . .  4
+Calculator precision . . . . . . . . . . . . . . . . . . . . .  4
+Advanced Recovery Mode . . . . . . . . . . . . . . . . . . . .  4
+
+DISKTOOL
+Marking clusters on compressed volumes . . . . . . . . . . . .  4
+Access to device driven floppy drives. . . . . . . . . . . . .  4
+
+DUPDISK
+Validating TARGET disk media . . . . . . . . . . . . . . . . .  5
+
+FILE COMPARE
+Usable DDE Commands. . . . . . . . . . . . . . . . . . . . . .  5
+
+FILEFIND
+Search and replace caution . . . . . . . . . . . . . . . . . .  5
+/BATCH switch limitations. . . . . . . . . . . . . . . . . . .  6
+
+FILEFIX
+Badly damaged Excel spreadsheets . . . . . . . . . . . . . . .  6
+Repaired WordPerfect file 6.0 causes GPF . . . . . . . . . . .  6
+Recovering text from WordPerfect 6.0's Viewer. . . . . . . . .  6
+
+INI EDITOR
+Create an association for your INI files . . . . . . . . . . .  6
+
+INITRAKD
+Numeric error codes defined. . . . . . . . . . . . . . . . . .  7
+
+INI TUNER
+F1 on Third Party Applet generates an error. . . . . . . . . .  7
+
+NCD
+Canceling directory scans. . . . . . . . . . . . . . . . . . .  8
+
+NCACHE
+How to print NCACHE.DOC. . . . . . . . . . . . . . . . . . . .  8
+DR-DOS 6 . . . . . . . . . . . . . . . . . . . . . . . . . . .  8
+
+NORTON DISK DOCTOR
+Compressed volumes . . . . . . . . . . . . . . . . . . . . . .  8
+Error report differs from OEM utility. . . . . . . . . . . . .  8
+Size estimate of some compressed volumes . . . . . . . . . . .  8
+DOS 3.3 with Disk Manager or large compressed drives . . . . .  8
+LANtastic drivers. . . . . . . . . . . . . . . . . . . . . . .  8
+Password protected SuperStor volumes . . . . . . . . . . . . .  9
+The NDD.MSG file . . . . . . . . . . . . . . . . . . . . . . .  9
+
+NORTON DISK DOCTOR FOR WINDOWS
+Out of memory conditions . . . . . . . . . . . . . . . . . . .  9
+Reports Stacker 3.1 CVF is seriously damaged . . . . . . . . .  9
+
+NDIAGS
+Functional components that fail. . . . . . . . . . . . . . . .  9
+Freeze at start up or during the IRQ Status Test . . . . . . .  9
+IRQ Status Test and 387 math coprocessors. . . . . . . . . . .  9
+Troubleshooting. . . . . . . . . . . . . . . . . . . . . . . .  9
+Problems exiting . . . . . . . . . . . . . . . . . . . . . . . 10
+Speaker test produces static . . . . . . . . . . . . . . . . . 10
+Freeze during speaker test . . . . . . . . . . . . . . . . . . 10
+Sound cards attached to external speakers. . . . . . . . . . . 10
+Serial and parallel port performance . . . . . . . . . . . . . 10
+Print screen key in the keyboard press test. . . . . . . . . . 10
+TURBO mode indicator changes state . . . . . . . . . . . . . . 10
+Cyrix 486 SLC/DLC processor. . . . . . . . . . . . . . . . . . 10
+Network adapter attached to the parallel port. . . . . . . . . 10
+Memory tests on the PS/2 Model 50Z . . . . . . . . . . . . . . 11
+Phantom joysticks .  .  .  . . . . . . . . . . . . . . . . . . 11
+PS/2 screen flickers erratically . . . . . . . . . . . . . . . 11
+ProAudio Spectrum cards .  . . . . . . . . . . . . . . . . . . 11
+IRQ Status Test identifies drive as "Unknown Device" . . . . . 11
+Serial and parallel loopback wiring logic. . . . . . . . . . . 11
+Undocumented Switches  . . . . . . . . . . . . . . . . . . . . 12
+
+NDOS
+Freeze during network logon procedure. . . . . . . . . . . . . 12
+Memory manager error messages. . . . . . . . . . . . . . . . . 12
+Bright background colors . . . . . . . . . . . . . . . . . . . 12
+How to restore blinking characters in applications . . . . . . 12
+How to print NDOS.DOC and APPNOTES.DOC . . . . . . . . . . . . 12
+Ordering a printed NDOS manual . . . . . . . . . . . . . . . . 12
+PROMPT date display formats. . . . . . . . . . . . . . . . . . 13
+NDOS and NetWare . . . . . . . . . . . . . . . . . . . . . . . 13
+
+NUCONFIG
+Settings don't take effect . . . . . . . . . . . . . . . . . . 13
+MS-DOS 6.x Multi Config files. . . . . . . . . . . . . . . . . 13
+Short names in Windows Groups. . . . . . . . . . . . . . . . . 13
+Old SHELL= statement not REMed . . . . . . . . . . . . . . . . 13
+
+RESCUE
+Use the highest capacity diskette. . . . . . . . . . . . . . . 13
+360K diskettes . . . . . . . . . . . . . . . . . . . . . . . . 13
+Adding unrecognized drivers. . . . . . . . . . . . . . . . . . 14
+Adding short names . . . . . . . . . . . . . . . . . . . . . . 14
+Insufficient disk space for all drivers. . . . . . . . . . . . 14
+Select NDD and the NDD Message File. . . . . . . . . . . . . . 14
+Test your RESCUE diskette. . . . . . . . . . . . . . . . . . . 14
+
+SFORMAT
+Bypass DBLSPACE.BIN on bootable floppies . . . . . . . . . . . 14
+With alternate command interpreters. . . . . . . . . . . . . . 14
+SuperStor swapped boot drives. . . . . . . . . . . . . . . . . 14
+
+SMARTCAN
+How to upgrade from Norton Utilities 5.0 . . . . . . . . . . . 14
+Recovering accidently ZAPPED dBase files . . . . . . . . . . . 15
+AUTOCAD release 12 . . . . . . . . . . . . . . . . . . . . . . 15
+Sharing violations . . . . . . . . . . . . . . . . . . . . . . 15
+
+SPEEDISK
+Before you optimize. . . . . . . . . . . . . . . . . . . . . . 15
+Speedisk's optimization methods. . . . . . . . . . . . . . . . 15
+Out of memory. . . . . . . . . . . . . . . . . . . . . . . . . 15
+Two passes on compressed volumes . . . . . . . . . . . . . . . 16
+Fragmentation report differs from OEM utility. . . . . . . . . 16
+
+SPEEDISK FOR WINDOWS
+Error writing to cluster . . . . . . . . . . . . . . . . . . . 16
+
+SYSINFO
+Within a Windows DOS box . . . . . . . . . . . . . . . . . . . 16
+Finds too many ports . . . . . . . . . . . . . . . . . . . . . 16
+/SPEC report parameter . . . . . . . . . . . . . . . . . . . . 16
+
+SYSWATCH
+Memory report differs from another utility . . . . . . . . . . 16
+Memory sensors seem imprecise. . . . . . . . . . . . . . . . . 17
+Cache sensor static or not available . . . . . . . . . . . . . 17
+New Reset Button . . . . . . . . . . . . . . . . . . . . . . . 17
+
+UNFORMAT
+On host drives . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+WIPEINFO
+New subdirectory management. . . . . . . . . . . . . . . . . . 17
+
+GENERAL INFORMATION
+Startup programs do not load . . . . . . . . . . . . . . . . . 17
+Swapped Stacker volumes. . . . . . . . . . . . . . . . . . . . 18
+Drive chatter. . . . . . . . . . . . . . . . . . . . . . . . . 18
+Automounting . . . . . . . . . . . . . . . . . . . . . . . . . 18
+PCANYWHERE . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+Norton Desktop 3.0 for Windows . . . . . . . . . . . . . . . . 19
+Norton AntiVirus 3.0 . . . . . . . . . . . . . . . . . . . . . 19
+Backgrounding. . . . . . . . . . . . . . . . . . . . . . . . . 20
+Multitasking environments. . . . . . . . . . . . . . . . . . . 20
+QEMM and stealth mode. . . . . . . . . . . . . . . . . . . . . 21
+Fastopen . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+Video display and mouse problems . . . . . . . . . . . . . . . 21
+Laptop computers . . . . . . . . . . . . . . . . . . . . . . . 22
+Hard disks with more than 1024 cylinders . . . . . . . . . . . 22
+Drive not ready. . . . . . . . . . . . . . . . . . . . . . . . 22
+Drive or device not ready. . . . . . . . . . . . . . . . . . . 22
+Special network notes. . . . . . . . . . . . . . . . . . . . . 22
+Optimizing performance . . . . . . . . . . . . . . . . . . . . 23
+Optimizing memory. . . . . . . . . . . . . . . . . . . . . . . 23
+Running the utilities from diskette. . . . . . . . . . . . . . 24
+
+COMPATIBILITY
+
+SUPPORTED COMPRESSION UTILITIES
+-----------------------------------------------------
+Norton Utilities 8.0 fully supports compressed volumes created
+with Stacker 2.0, Stacker 3.0, Stacker 3.1, SuperStor 2.0x,
+SuperStor Pro 1.0x, DR-DOS 6 SuperStor, Novell DOS 7 Stacker, IBM
+DOS 6.1 SuperStor/DS, and MS-DOS 6.x DoubleSpace.  Do not attempt
+to run either Speed Disk or Norton Disk Doctor on volumes created
+with other disk compression utilities.
+
+Norton Utilities 8.0 does not support Stacker 4.0.
+
+Norton Disk Doctor and Speed Disk identify compressed volumes
+specifically (i.e., DoubleSpace, Stacker) in drive selection
+boxes.  All other programs classify these volumes as Device
+Driven.
+
+WINDOWS FOR WORKGROUPS 32-BIT FILE ACCESS
+-----------------------------------------------------
+Windows for Workgroups 3.11 provides 32-bit File Access to
+increase performance on certain systems.  This feature reads disk
+information directly, bypassing DOS.  Because Norton Disk Doctor
+for Windows (NDDW) and Speed Disk for Windows (SDW) manipulate
+DOS structures, they cannot function with 32-bit File Access
+turned on.
+
+32-bit File Access is disabled by default. If you use this
+feature and want to run NDDW or SDW, simply start Windows as
+follows:
+
+     WIN /D:C <ENTER>
+
+This switch temporarily disables 32-bit File Access.  If you
+prefer compatibility with the Norton Utilities programs, you can
+use INI Tuner's 386 Enhanced CPL to reinstate 16-bit file access
+on your system.
+
+Note that 32-bit Disk Access is a separate feature that SDW and
+NDDW fully support.
+
+NOVELL DOS 7
+-----------------------------------------------------
+Norton Utilities 8.0 fully supports Novell DOS 7, its
+compression, and networking.  If the peer-to-peer network feature
+is in use, the server's drive letter is not available in SDW, SD,
+NDD and NDDW.  It is unwise to run any low-level Norton Utilities
+program on a Novell DOS 7 server.
+
+Novell DOS 7 (NWDOS 7) deletes the command processor during
+install, but does not change the SHELL= line in CONFIG.SYS.  If
+
+                                1
+you use NDOS, backup NDOS.COM and create a RESCUE disk before
+installing NWDOS 7.
+
+SYSINFO and NDOS report NWDOS 7 as version 6.  Novell DOS 7
+masquerades as DOS 6.0 for compatibility.
+
+WINDOWS 3.1 
+-----------------------------------------------------
+Norton Utilities 8.0 TSRs and device drivers are compatible with
+Windows 3.1 in both Standard and Enhanced mode.  The Windows 3.1
+SETUP program warning that certain Norton Utilities TSRs and
+device drivers are incompatible with Windows 3.1 relates to
+earlier Norton Utilities versions.
+
+OS/2 2.x
+-----------------------------------------------------
+OS/2 2.x is different from DOS and employs a distinct file
+system.  Some Norton programs function normally in this operating
+environment; however, utilities that perform direct disk access
+are not compatible.  These programs include Norton Disk Doctor,
+Calibrate, UnErase, Speed Disk, Norton Cache, Directory Sort,
+WipeInfo (file wiping works, but you cannot wipe disks), and NCD
+(Prune/Graft and Copy Tree don't function properly).
+
+It is possible to UNERASE files deleted on OS/2 FAT (not HPFS)
+partitions.  Shut down the machine and boot using DOS, either
+from a floppy disk or by using the dual boot option.
+
+To detect network drives when running SYSINFO from within an OS/2
+DOS box, be sure to set a preferred server.  SYSINFO only reports
+detailed network information when executed from a mapped drive.  
+
+Norton Disk Doctor for Windows, Speed Disk for Windows, Syswatch,
+and the INI utilities do not run in OS/2.
+
+PROGRAMS
+
+CALIBRATE
+-----------------------------------------------------
+In some instances, long delays occur when CALIBRATE encounters
+bad blocks.  Certain controller BIOSes execute several retry
+cycles while attempting to read bad blocks.  This delay is more
+pronounced on large drives with many sectors per track because
+CALIBRATE reads and saves each sector on the track before it
+attempts media repair.  When CALIBRATE tries to repair the bad
+block, the BIOS again enters a retry cycle.  Aborting CALIBRATE
+at this point may take several minutes because CALIBRATE waits
+for the BIOS to finish its retry cycle and then restores the data
+to disk before exiting.
+                                2
+DISKREET
+-----------------------------------------------------
+When using DISKREET and compressed drive technology, be aware of
+these guidelines:
+
+Dblspace and SuperStor/DS users:
+
+     1.   NDISKS should reside only on the uncompressed host
+          drive.  If necessary, create more space for NDISKS on
+          the host by shrinking your compressed volume.
+
+     2.   DBLSPACE.SYS must load before DISKREET.SYS in your
+          CONFIG.SYS file as follows:
+               DEVICE=C:\DOS\DBLSPACE.SYS /MOVE
+               DEVICE=C:\NU\DISKREET.SYS
+
+Stacker 3.1 users:
+
+     Run STACHIGH.SYS in the CONFIG.SYS file before the DISKREET
+     driver as follows:
+               DEVICE=C:\STACKER\STACHIGH.SYS
+               DEVICE=C:\NU\DISKREET.SYS
+
+When you create an NDISK on a Stacker or SuperStor compressed
+volume, Diskreet requires extra time to wipe the entire NDISK
+file.  NDISKS do not compress, and this process confirms that
+your compressed volume has enough free space to accommodate your
+NDISK.
+
+Use caution when mapping your network drives to ensure that you
+do not reassign Diskreet volume drive letters.  Doing so renders
+your Diskreet volumes inaccessible.
+
+If you run EMM386.EXE and use DOS=UMB to access upper memory
+blocks, DISKREET.SYS cannot automatically load itself into UMB
+regions.  In this case, a DEVICEHIGH statement is the only way to
+load DISKREET into upper memory.  If you use DEVICEHIGH, you must
+also specify the /SKIPHIGH switch.  /SKIPHIGH prevents DISKREET
+from loading itself high and transfers full upper memory block
+control to EMM386.EXE.  Your CONFIG.SYS file should be similar to
+this sample:
+
+          DEVICE=C:\DOS\HIMEM.SYS
+          DEVICE=C:\DOS\EMM386.EXE RAM
+          DOS=HIGH,UMB
+          DEVICEHIGH=C:\NU\DISKREET.SYS /SKIPHIGH
+
+DISKREET automatically informs SmartDrive 4.x and higher that it
+should not cache NDISK drives.  Do not override this safeguard by
+forcing SmartDrive to cache an NDISK or you may lose data.
+                                3
+DISKREET is incompatible with certain disk partitioning systems
+and some OEM versions of DOS, such as Zenith DOS 3.3 and Wyse DOS
+3.21.
+
+If you use an alternative partitioning software, such as Disk
+Manager or SpeedStor, DISKREET may not function properly.  Test
+DISKREET on these partitions before storing valuable data on
+NDISKs.
+
+If you use an alternate keyboard driver with DISKREET, specify
+"Prompt at First Access" with auto prompting NDISKs.  Doing so
+allows the keyboard driver to load before you enter the password.
+
+Drive letters reserved by DISKREET.SYS may generate the DOS
+"Drive not Ready" critical error message when certain programs
+poll all currently assigned drives, such as Central Point's Anti
+Virus.  To avoid this problem, configure your NDISK to mount
+automatically at boot.
+
+DISKEDIT
+-----------------------------------------------------
+After launching DISKEDIT, you can abort the directory scan by
+pressing any key or clicking the mouse.  Doing so saves time if
+you restrict your DISKEDIT activities to the system area or the
+current directory.  However, if you want dynamic links through
+directories and to the FATs, you must allow DISKEDIT to complete
+the directory scan.
+
+The DISKEDIT calculator handles positive integers with 32-bit
+precision up to approximately 4 billion and does not display an
+error when overflow occurs.  Use this calculator for simple
+decimal, hexadecimal, and binary conversions and arithmetic.
+
+Disk Edit's Advanced Recovery Mode (ARM) is a powerful tool that
+virtualizes, tests, and recommends settings to provide access to
+badly damaged disks.  ARM's flexibility allows you to redefine a
+disk's physical settings and does not prevent you from saving
+improper information.  Use caution before writing settings to
+disk because invalid settings can render disks inaccessible. 
+
+DISKTOOL
+-----------------------------------------------------
+It is inappropriate to use DISKTOOL to mark clusters on
+compressed volumes.  There should never be any physically bad
+clusters within a Stacker, SuperStor, or DoubleSpace Compressed
+Volume File (CVF).  Repair all bad clusters on the host drive
+using Norton Disk Doctor.
+
+DISKTOOL provides a new switch, /DEVICEDRIVEN, which gives
+"Revive a Defective Diskette" access to device driven floppy
+drives.  Use /DEVICEDRIVEN only if your external floppy drive
+does not appear in the Revive a Defective Diskette drive list.
+                                4
+DUPDISK
+-----------------------------------------------------
+DUPDISK does not validate TARGET floppy media.  If you want to be
+certain that the TARGET media has no bad sectors, turn the DOS
+VERIFY command ON.  Because VERIFY slows down many procedures,
+you may want to create a batch file to toggle VERIFY's status.
+For example:
+
+     DUP.BAT:
+     --------
+     VERIFY ON
+     DUPDISK
+     VERIFY OFF
+
+FILE COMPARE
+-----------------------------------------------------
+FILE COMPARE understands the following DDE execute command verbs:
+
+Note that items in angle-brackets are placeholders for actual
+text values. Do not use the angle brackets. For example,
+[compare(c:\windows\win.ini,c:\save\win.ini)] tells File Compare
+to load the two versions of win.ini.
+
+[compare(<left file name>,<right file name>)]
+
+[captions(<left-panel-caption>,<right-panel-caption>,
+          <main-caption-file-name>]
+
+[current(0|1|2)]    //Used to enable "Undo Selected Changes" menu
+                    item and orient "newer" bitmap.
+
+0 -- neither panel contains the current version of the file
+1 -- left panel contains the current version of the file
+2 -- right panel contains the current version of the file
+
+[window(<ascii-decimal-window-handle)]  //Tells File Compare  
+                                        which window to activate
+                                        when Return button is
+                                        pushed.
+
+[top()]   //Tells File Compare to bring itself to the top.
+
+FILEFIND
+-----------------------------------------------------
+Use caution when using FILEFIND to search and replace text in
+documents that have special formatting codes, such as Word for
+Windows and most spreadsheet software.  These applications
+contain position-sensitive codes.  If the original text is longer
+or shorter than the replacement text, these codes become skewed
+and may render documents inaccessible to the original
+application.
+                                5
+The /BATCH command does not apply to FILEFIND's search and
+replace feature.
+
+FILEFIX
+-----------------------------------------------------
+Occasionally, smooth recovery of badly damaged Excel spreadsheets
+is not possible.  If FILEFIX cannot repair one of your Excel
+spreadsheets, try the following technique:
+
+1.   Load Excel, create an empty spreadsheet, and save it as
+     EMPTY.XLS.
+
+2.   Quit Excel and run FILEFIX.
+
+3.   Repair your damaged Excel spreadsheet using the "Recover
+     cell data only" feature.  Save this file as DATAONLY.XLS and
+     exit FILEFIX.
+
+4.   From the DOS prompt type:
+
+          COPY /B EMPTY.XLS + DATAONLY.XLS NEWFIX.XLS <ENTER>
+
+5.   Launch FILEFIX and repair NEWFIX.XLS using the "Attempt
+     recovery of all data" option.  (Expect FILEFIX to discard a
+     section of this file.) 
+
+6.   Quit FILEFIX and run Excel.
+
+7.   Open FIXED.XLS.  You may have to try several times.
+
+8.   When the spreadsheet appears on screen, IMMEDIATELY save it
+     under a different name.  Reload the file and continue with
+     your work. 
+
+A badly damaged WordPerfect 6.0 (WP 6) file may not recover
+flawlessly, causing a GPF while you scroll through it.  If you
+GPF after recovering a WP 6 file, restart your computer, launch
+WP 6, open the file again, and immediately save it in WordPerfect
+5.1 format.  You can then open the new WordPerfect 5.1 file and
+save it back into WP 6 format.
+
+WP 6.0 has a file previewer located in the File/Open dialogue. 
+If you have greater success seeing the recovered text in the view
+window than in the editing window, highlight all the text in the
+view window and press CTRL-C.  Open a new document and press
+CTRL-V to paste the viewer's text.
+
+INI Editor
+-----------------------------------------------------
+Associations provide a handy way to launch specific applications
+by file type.  Here are directions for configuring INI files to
+automatically run INI Editor:
+                                6
+     Norton Desktop 3.0 Users
+     ------------------------
+     1. Open a drive window
+     2. Select File, Associate
+     3. In the extension box type: INI
+     4. In the application box type: C:\NU\INIEDITR.EXE
+
+     Program Manager Users
+     ---------------------
+     1. Run File Manager (winfile)
+     2. Select File, Associate
+     3. In the extension box type: INI
+     4. In the application box type: C:\NU\INIEDITR.EXE
+
+INITRAKD
+-----------------------------------------------------
+The DOS version of INI Tracker occasionally generates numeric
+error codes.  Here is a listing of their definitions:
+
+1000 "File Compare: insufficient memory"
+1001 "File Compare: could not open file 1"
+1002 "File Compare: could not open file 2"
+1003 "File Compare: error reading a file"
+1004 "File Compare: file has no data"
+1006 "File Compare: processing canceled by callback"
+1007 "File Compare: line too long, maybe binary file"
+1008 "File Compare: file too big to process"
+2001 "Sysmon: insufficient memory"
+2002 "Sysmon: memory lock failed"
+2003 "Sysmon: database create failed"
+2004 "Sysmon: database find failed"
+2005 "Sysmon: database update failed"
+2006 "Sysmon: database add failed"
+2007 "Sysmon: database read failed"
+2008 "Sysmon: file open failed"
+2009 "Sysmon: file read failed"
+2010 "Sysmon: file write failed (out of space?)"
+2011 "Sysmon: database delete failed"
+2012 "Sysmon: file is binary (not an error)"
+2013 "Sysmon: directory is tracked but cannot be restored"
+2014 "Sysmon: file delete failed (read only?)"
+2015 "Sysmon: file rename failed"
+2016 "Insufficient disk space to take snapshot."
+2017 "File is too big, snapshot not taken."
+2018 "Cannot track INI Tracker's data files, snapshot not taken."
+
+INI TUNER
+-----------------------------------------------------
+You may receive the error "Help file does not exist" when you
+press F1 on a third-party applet, such as video card applets. 
+Click OK to remove the error message and gain access to the help
+file.
+
+                                7
+NCD
+-----------------------------------------------------
+To cancel directory scans, press the ESCAPE key.
+
+NCACHE
+-----------------------------------------------------
+For detailed information on NCACHE, please refer to the
+NCACHE.DOC file.  This file can be printed by changing to your
+Norton Utilities subdirectory and entering:
+
+     COPY NCACHE.DOC PRN <ENTER>
+
+If you use NCACHE with DR-DOS 6 and want to save your current
+NCACHE configuration, you must indicate the path of the
+NCACHE.INI file using the /INI switch.  For example, if C:\NU is
+your Norton Utilities subdirectory, type the following from the
+command line:
+
+     NCACHE2 /SAVE /INI=C:\NU\NCACHE.INI <ENTER>
+
+
+NORTON DISK DOCTOR (NDD)
+-----------------------------------------------------
+Whenever NDD repairs a compressed volume, reboot and run NDD
+until no further problems are detected.  Always perform the
+decompression test (surface test) on compressed volumes.  Many
+errors on compressed volumes only appear during the decompression
+test.
+
+NDD and the OEM utility that came with your compression software
+may report problems and fixes differently.  NDD reports all
+errors it encounters and every repair it makes.  The OEM utility
+may fix some problems silently. 
+
+NDD's drive selection list box may overestimate the size of some
+compressed volumes.  Before diagnosing the drive, NDD calculates
+volume size based on the compression ratio.  If you override the
+default 2:1 ratio and/or store a large amount of incompressible
+data (e.g., *.ZIP files), you may not fully achieve the
+compression ratio.  In this case, less compression actually
+occurs and NDD'S list box shows a larger number than that which
+CHKDSK and DIR display.  NDD's final report, produced after
+diagnosis, shows the volume's functional size.
+
+If you have DOS 3.3 with a Disk Manager partition or a compressed
+volume larger than 32 MB, there are 1,024 bytes per sector rather
+than the standard 512 bytes per sector.  Such volumes cannot be
+completely diagnosed by NDD.
+
+NDD refuses to diagnose and repair hard disks when LANtastic
+drivers are resident in memory.  If you have a LANtastic network
+and suspect that your hard drive needs repair, boot from your
+                                8
+RESCUE diskette or restart without loading these drivers before
+running NDD.
+
+NDD does not support password protected SuperStor volumes because
+SuperStor alters certain bytes in the system area based on the
+password you assign to the volume.  NDD interprets the resulting
+structure as a "badly damaged CVF."
+
+Note that Norton Disk Doctor requires the NDD.MSG file to display
+your drive's status.
+
+NORTON DISK DOCTOR FOR WINDOWS (NDDW)
+-----------------------------------------------------
+If you receive an "Out of Memory" error message using NDDW, turn
+animations off, unload a few TSRs, or exit an application.  NDDW
+needs at least 8K of free DOS memory to begin the diagnosis.  The
+Windows Help About box may show that you have plenty of free
+memory, but it only displays the total memory available to
+Windows.  Use SYSWATCH to determine the amount of free DOS
+memory.  If this memory lies below 8K, unload an application or
+TSR before running NDDW again.
+
+If NDDW reports that your Stacker volume "is seriously damaged",
+exit Windows and run the DOS version.  If your volume is fine,
+restart Windows and use SYSWATCH to determine the amount of free
+DOS memory.  Although NDDW requires only 8K of DOS memory,
+Stacker requires a small additional amount.  If you receive this
+error and NDD DOS finds no problems, unload an application or TSR
+before running NDDW again.
+
+NDIAGS
+-----------------------------------------------------
+NDIAGS tests the individual components of your computer.  To
+ensure proper diagnosis, each of your computer's sub-systems must
+adhere to certain standard specifications.  One or several of
+your computer's components may not fully conform to these
+standards.  These components may be functional, yet may fail when
+NDIAGS tests them against these specifications.
+
+If NDIAGS freezes while starting up or performing the IRQ Status
+Test, reboot and run NDIAGS again.  The Crash Recovery feature
+reports which component NDIAGS was testing when the machine
+locked up and asks you if you want to retest, skip, or
+permanently disable the test on the component.
+
+If you own a 387 math coprocessor, you may need to use Crash
+Recovery to bypass its test.  NDIAGS may freeze while testing the
+coprocessor during the IRQ Status Test on certain motherboards.
+
+If your system locks up while testing with NDIAGS, restart your
+computer using your rescue diskette.  If you freeze again, test
+the failing component in another system.  For example, if your
+                                9
+computer locks up during the video test, place the video card on
+another motherboard using a different monitor.  This technique
+helps isolate the problem.
+
+If you consistently experience problems when exiting NDIAGS,
+launch it using the /NOSEARCH switch. If the /NOSEARCH option
+remedies your problem, isolate the responsible "search" feature
+by enabling the search tests (listed under the File-Options menu)
+one-by-one. If /NOSEARCH does not help, use /RESET to re-enable
+component identification.
+
+Moving the mouse during the speaker test may produce a "static"
+sound as the system responds to the mouse interrupts.  This side
+effect is not a problem.
+
+On some systems, such as the TOSHIBA 4400SX, do not disable the
+internal cache before running NDIAGS normal speaker test.  If you
+need to leave the cache disabled, use the Alternate Speaker Test
+available from NDIAGS File Options menu.
+
+If you use a sound card attached to external speakers, NDIAGS may
+route the sound through your sound card instead of the internal
+speaker.  Make sure that your external speakers are turned on
+before you run NDIAGS.  If it is inconvenient, use the Alternate
+Speaker Test from the File Options menu.
+
+Running a memory manager, such as QEMM or EMM386, can impair the
+performance of your serial and parallel ports.  Specifically, you
+may see lower numbers on the Parallel Port Data Throughput test
+and your serial ports may fail the higher speed tests (57K,
+115K).  Restart your computer without your memory manager to
+accurately benchmark your serial and parallel port throughput.
+
+Some keyboards, such as the Northgate keyboard, avoid accidental
+screen prints by requiring two Print Screen key presses before
+generating its scan code.  On these keyboards, you must press the
+Print Screen key twice to pass the keyboard test.
+
+When NDIAGS tests certain systems, the TURBO mode indicator light
+may change state.  This change does not affect your computer's
+speed (MHz setting), it simply toggles your TURBO indicator
+light.  To reset the TURBO indicator light, reboot your computer
+or consult your computer's reference manual.
+
+If your system uses the Cyrix 486 SLC/DLC processor, NDIAGS may
+fail the Arithmetic section of the System Board/CPU Test.  A
+known anomaly with this processor causes it to return an improper
+result from a particular integer instruction.  Fortunately, the
+processor's failure should not cause any problems with
+applications.
+
+                               10
+If you use a network adapter attached to the parallel port, such
+as the Xircom adapter, do not enable "Search for Parallel Ports"
+in the File Options menu or you will lose your network
+connection.
+
+If you own a PS/2 Model 50Z, you will not be able to perform
+NDIAGS comprehensive or extended memory tests.  This model uses a
+non-standard method of switching into protected mode and is not
+supported.
+
+Certain Logitech mouse drivers may cause NDIAGS to see a phantom
+joystick.
+
+If you own an old PS/2 with a basic VGA card (not XGA or Super
+VGA), your screen may flicker erratically during the IRQ status
+test and the system may crash.  Disable "Vertical Retrace" on the
+device list located in the File, Interrupt Configuration menu. 
+
+ProAudio Spectrum cards do not emulate the MPU-401 exactly. 
+Therefore, although NDIAGS sees this MIDI device, the IRQ Status
+Test cannot generate its interrupt.
+
+If a device driver or disk controller caches your hard disk,
+floppy drive, or CD-ROM, and NDIAGS cannot disable the cache, the
+IRQ Status Test identifies these devices as "Unknown."
+
+Undocumented NDIAGS Switches
+-----------------------------------------------------
+/NODMA    If your system locks up after the hard drive test, try  
+        using the /NODMA switch.
+
+/4PAR     If your system has four physical parallel ports and
+          NDIAGS does not recognize them, using the /4PAR switch
+          helps NDIAGS access the fourth parallel port.
+
+/OLDVIDEO If your system's BIOS predates 1987 and you are
+          experiencing video display problems in NDIAGS, try
+          using /OLDVIDEO.
+
+NDIAGS Serial and Parallel Loopbacks
+-----------------------------------------------------
+If you wish to make your own set of Serial and Parallel
+loopbacks, the pinouts are provided below.  Loopbacks are also
+available from Symantec directly at (800) 441-7234.
+
+WIRING LOGIC
+
+9 Pin Serial - DB9S Connector (Female)
+
+2  3  7  8  1  4  6  9
+|__|  |__|  |__|__|__|
+
+                               11
+25 Pin Serial - DB25S Connector (Female)
+
+2  3  4  5  6  8  20 22
+|__|  |__|  |__|__|__|
+
+
+25 Pin Parallel - DB25P Connector (Male)
+
+2  15 3  13 4  12 5  10 6  11
+|__|  |__|  |__|  |__|  |__|
+
+
+NDOS
+-----------------------------------------------------
+If your computer locks up when you log on to your network, load
+the NDOS environment into conventional rather than upper memory. 
+To modify the NDOS environment memory location, use NUCONFIG or
+edit the NDOS.INI file to specify UMBEnvironment=No.
+
+After installing NDOS, you may receive an error message from your
+memory manager.  This anomaly occurs when NDOS loads itself into
+upper memory blocks that your memory manager later allocates to
+other software.  To correct this situation, re-run your memory
+manager's optimizer.  If you continue to experience difficulty
+after optimization, run NUCONFIG to ensure that neither the NDOS
+command processor nor the environment load into upper memory.
+
+If you want bright background colors, yet end up with blinking
+foreground characters on a normal background, edit your NDOS.INI
+as follows:
+
+     BrightBG=YES   Adds bright background colors and removes
+                    blinking characters.
+
+After installing NDOS, some of your programs may not display
+blinking characters.  If you prefer blinking characters to bright
+background colors, edit your NDOS.INI as follows:
+
+     BrightBG=NO    Adds blinking characters and removes bright
+                    background colors.
+
+The file NDOS.DOC contains the NDOS reference documentation.  A
+companion file, APPNOTES.DOC, provides detailed compatibility
+information.  To print NDOS.DOC and APPNOTES.DOC, enter:
+
+     COPY NDOS.DOC PRN <ENTER>
+     COPY APPNOTES.DOC PRN <ENTER>
+
+To purchase a printed copy of the NDOS manual, call Customer
+Service at (800) 441-7234.
+                               12
+The NDOS Reference Manual lists incorrect date display formats
+for certain PROMPT command parameters.  Use PROMPT $D for word
+format ("Wed  Oct 6, 1999") and PROMPT $d for numeric format
+("Wed  10/06/99").
+
+NDOS AND NETWARE
+-----------------------------------------------------
+The NDOS FREE command returns incorrect information on Novell
+NetWare volumes greater than 256 MB.  Use the CHKVOL command
+instead.
+
+The NDOS REN command does not rename directories on Novell
+NetWare servers.  Use the RENDIR command instead.
+
+NUCONFIG
+-----------------------------------------------------
+If you lose your NUCONFIG settings, set the SYMANTEC and NU
+environment variables in your AUTOEXEC.BAT file and reboot your
+computer.  Assuming that Norton Utilities resides on drive C:,
+make sure the \SYMANTEC and \NU directories exist and add the
+following lines to your AUTOEXEC.BAT:
+
+     SET SYMANTEC=C:\SYMANTEC
+     SET NU=C:\NU
+
+Both NUCONFIG and INSTALL support MS-DOS 6.x and its MULTI CONFIG
+feature.  NUCONFIG and INSTALL place Norton device drivers and
+TSRs in the [COMMON] area of your MULTI CONFIG file.
+
+If you use Windows and select short names for the Norton
+Utilities programs, edit the group item icons to reflect this
+change.  NUCONFIG can not automatically alter these files.
+
+When you install the NDOS command processor, the original SHELL=
+statement is not REMed.  If you try NDOS and decide to restore
+COMMAND.COM, remove NDOS using NUCONFIG.  When you reboot, your
+original SHELL= statement becomes active.
+
+RESCUE
+-----------------------------------------------------
+When creating a rescue diskette, use the highest capacity
+diskette available to fit as many recovery utilities as possible.
+
+Rescue does not format 360K floppies because they don't have
+enough space for the DOS system files, the rescue utility, and
+basic recovery information.  If you only have 360K diskettes,
+copy RESCUE.EXE and the rescue information files onto one floppy
+and use SFORMAT A:/S on another.  With both floppies, you can
+start your machine and recover vital system information in
+emergency situations.
+
+                               13
+If an essential device driver does not appear in RESCUE's "Disk
+Contents" list, use BROWSE to select it.  BROWSE adds these items
+to the current RESCUE disk.  You can configure RESCUE to
+automatically copy the driver by editing the RESCUE.INI file and
+adding it to the [INCLUDE] section.
+
+If you use short names for the Norton Utilities programs (i.e.,
+SD instead of SPEEDISK), you can edit the RESCUE.INI file and add
+these names to the [SETUP] section.  RESCUE.INI is a text file.
+
+If you load several large drivers and TSRs, your RESCUE diskette
+may not have enough free space to hold all these programs, your
+RESCUE data files, and the default set of Norton Utilities
+applications.  If your RESCUE diskette fills up before copying
+all essential drivers and TSRs, deselect a Norton Utilities
+application.
+
+Make sure your RESCUE disk has both Norton Disk Doctor (NDD) and
+the NDD Message File.  NDD needs the message file in order to
+report your errors.
+
+After creating your RESCUE disk, press CTRL-ALT-DEL to ensure
+that it restarts your computer in an practical configuration.  If
+you want to add network drivers or upper memory managers, do so
+before a disaster ensues.
+
+SFORMAT
+-----------------------------------------------------
+If you use Dblspace, Stacker 3.1, Novell DOS 7's Stacker, or
+SuperStor/DS and do not want to transfer the 50K DBLSPACE.BIN
+(STACKER.BIN in Novell DOS 7) file onto bootable floppies, run
+SFORMAT with the /NODBL switch.
+
+The /COM: switch formats bootable floppies with an alternative
+command processor.  For example, to create an NDOS system
+diskette, enter the following:
+
+          SFORMAT A: /S /COM:C:\NU\NDOS.COM <ENTER>
+
+If you run SuperStor and swap the boot drive, SFORMAT and RESCUE
+cannot find the system files.
+
+SMARTCAN
+-----------------------------------------------------
+When you upgrade from Norton Utilities 5.0, the \TRASHCAN
+subdirectory created by FILESAVE is obsolete and should be
+deleted from your drive.  The \TRASHCAN directory is hidden.  To
+remove it, type the following from the root directory:
+
+               SMARTCAN /OFF <ENTER>
+               FA C:\TRASHCAN /dir /hid- <ENTER>
+               DEL C:\TRASHCAN <ENTER>
+                               14
+               RD C:\TRASHCAN <ENTER>
+               SMARTCAN /ON <ENTER>
+
+If you accidently ZAP a dBase file and SMARTCAN is on, use
+UNERASE to recover your data.  dBase copies the header of the
+zapped file to a new file, then deletes the original file.  With
+SMARTCAN on, UNERASE provides the most reliable method for file
+recovery.
+
+Turn SMARTCAN off before you run AUTOCAD release 12.  AUTOCAD 12
+reports a damaged configuration file when SMARTCAN is in memory.
+
+If you receive a sharing violation while running SMARTCAN, load
+SHARE before SMARTCAN in your AUTOEXEC.BAT file as follows:
+
+     C:\DOS\SHARE /L:200 /F:4096
+     C:\NU\SMARTCAN /ON
+
+SPEEDISK
+-----------------------------------------------------
+Back up your disk before running SPEEDISK for the first time. 
+You should also run NDD /C before you optimize, especially on
+compressed volumes.
+
+If you receive an "Out of Memory" message running SPEEDISK, try
+running SPEEDISK for Windows (SDW).  If SDW also runs out of
+memory, try the following techniques:
+
+1.   If you have a directory with many files (including deleted
+     entries), try running SPEEDISK with the /BIGDIR switch. 
+     SPEEDISK requires significantly more time to execute when
+     using the /BIGDIR switch.  However, you may need to use this
+     switch only one time because SPEEDISK trims deleted file
+     entries and directories when it optimizes.  After using
+     SPEEDISK /BIGDIR successfully, run SPEEDISK without the
+     /BIGDIR switch.  Running SPEEDISK frequently may help you
+     avoid the need to use the /BIGDIR switch.
+
+2.   Boot with an optimal configuration to give SPEEDISK as much
+     free memory as possible.  For example:
+
+          CONFIG.SYS:
+          -----------
+          DEVICE=C:\DOS\HIMEM.SYS
+          DEVICE=C:\DOS\EMM386.EXE NOEMS
+          DOS=HIGH,UMB
+
+          AUTOEXEC.BAT:
+          -------------
+          PROMPT $P$G
+          PATH C:\DOS\;C:\NU
+                               15
+          SET NU=C:\NU
+          SET SYMANTEC=C:\SYMANTEC
+
+3.   If neither the /BIGDIR switch or the optimal configuration
+     alone eliminate the "Out of Memory" error, use the two
+     techniques together.  Boot as shown in step 2 and use the
+     /BIGDIR switch.
+
+SPEEDISK performs two passes on compressed volumes.  The first
+pass optimizes the FAT and the second optimizes the compression
+structures.  These two areas are distinct, and SPEEDISK displays
+a unique layout for each.  SPEEDISK must complete both passes to
+guarantee full defragmentation.
+
+The fragmentation levels reported by SPEEDISK and your OEM
+defragmentation utility may differ because they use different
+algorithms to calculate fragmentation.  Note that this
+calculation has been improved since NU 7 and provides a more
+accurate measure.  Therefore, NU 7 fragmentation reports may also
+be different.
+
+SPEEDISK FOR WINDOWS (SDW)
+-----------------------------------------------------
+If SDW reports "error writing cluster" and NDD finds no error,
+exit Windows and run the DOS version of SPEEDISK.  If you still
+have difficulty, delete some files from the drive.
+
+SYSINFO
+-----------------------------------------------------
+The CPU, hard disk, and overall benchmarks vary widely when run
+within a DOS box under Windows because Windows time-slices CPU
+activity.
+
+When run with network drivers loaded, SYSINFO may find more
+parallel or serial ports than actually exist.  For a more
+accurate report, run SYSINFO with the /IDPORT switch.
+
+When using the /SPEC parameter for generating reports in SYSINFO,
+the SPEC file must reside in the directory indicated by the NU
+environment variable.
+
+SYSWATCH
+-----------------------------------------------------
+SYSWATCH's memory sensors may not match the amount reported by
+other third party vendors.  SYSWATCH's "Windows Memory" sensor
+includes the amount used by DOS boxes and applications; other
+utilities often ignore memory used by DOS programs.
+
+Make sure that you compare equivalently.  1 kilobyte (KB) equals
+1,024 bytes.  1 megabyte (MB) equals 1,024 KB or 1,048,576 bytes. 
+SYSWATCH offers the flexibility to display any sensor in MB, KB,
+or bytes.  Other utilities may not have this versatility.
+                               16
+If the memory sensors seem inaccurate, use INI Editor to add
+"PageOverCommit=8" to the [386Enh] section of the SYSTEM.INI. 
+This statement improves information given to SYSWATCH via the
+Windows Virtual Machine Manager (VMM).
+
+Check to see whether your permanent swap exceeds the amount
+recommended by Windows.  Swap files that surpass the
+recommendation translate into wasted disk space because Windows
+does not use it.
+
+If you use Windows for Workgroups 3.11's 32-bit File Access and
+its cache, VCACHE, SYSWATCH may not provide you with a cache
+sensor.  This sensor detects DOS caches such as SMARTDRV,
+NCACHE2, and SPEEDRV.  If a DOS cache is installed with VCACHE,
+SYSWATCH displays only the DOS cache hit rate.
+
+SYSWATCH has a "reset" command located in the control menu that
+sets the high and low history at their current values.
+
+UNFORMAT
+-----------------------------------------------------
+Exercise caution when using UNFORMAT on the host drive of a
+compressed volume.  If your drive contains IMAGE or MIRROR
+information, UNFORMAT can restore your data without difficulty. 
+However, if IMAGE or MIRROR information is not found, do not
+automatically search for and restore directories.  Most
+compression utilities pack data but not directory entries.  When
+performing automatic directory search in this situation, UNFORMAT
+finds and restores both the uncompressed directory entries (that
+actually belong to the compressed volume) and those located on
+the host drive.  Since both sets of directories end up on one
+volume, this operation creates havoc.  Keep your image files
+current by running IMAGE every time you boot.  If IMAGE is not in
+your AUTOEXEC.BAT file, add it with NUCONFIG.
+
+WIPEINFO
+-----------------------------------------------------
+WIPEINFO handles subdirectories differently in Norton Utilities
+8.0 than it did in version 6.0.  WIPEINFO from Norton Utilities
+6.0 removed subdirectory entries by default.  If you choose to
+Include Subdirectories, WIPEINFO now leaves the directory
+structure intact, removing only the files.
+
+GENERAL INFORMATION
+
+STARTUP PROGRAMS DO NOT LOAD
+-----------------------------------------------------
+If you run Windows or a menu program from your AUTOEXEC.BAT file,
+you may need to reposition the commands to run IMAGE, NDD,
+DISKMON, and SMARTCAN.  You can use NUCONFIG or a text editor to
+reorder the lines in your AUTOEXEC.BAT as follows:
+                               17
+          SMARTCAN /ON
+          DISKMON /LIGHT+
+          NDD C: /Q
+          IMAGE C:
+          WIN
+
+SWAPPED STACKER VOLUMES
+-----------------------------------------------------
+If you use Stacker version 2.0 or 3.0 and swap your drives (i.e.,
+the compressed volume is C: and the host is D:), make sure to use
+the /SYNC switch on the SSWAP.COM driver.  Below is a sample
+CONFIG.SYS:
+
+     DEVICE=C:\STACKER\STACKER.COM C:\STACVOL.DSK
+     DEVICE=C:\STACKER\SSWAP.COM C:\STACVOL.DSK /SYNC
+
+DRIVE CHATTER
+----------------------------------------------------
+When a compression utility's driver (e.g., Dblspace, Stacker) is
+configured to automount floppies, the floppy drives "chatter"
+when accessed by some of the Norton Utilities programs.  To
+eliminate the chatter, disable the automount feature of your
+driver.  Doing so also frees up extra memory and quickens program
+execution.
+
+IBM DOS 6.1:   Create an ADDSTOR.INI in the HOST DRIVE's root
+               directory.  Enter "NOAUTO" on its own line, save
+               the file, and reboot.
+
+SuperStor:     Add the /NOAUTO switch to the SSTORDRV.SYS device
+               in your CONFIG.SYS file.
+
+MS-DOS 6.x:    Run Dblspace, select Tools, Options, and uncheck
+               "Enable automounting."
+
+Stacker 3.1    Edit the STACKER.INI file and remove the line
+               referring to the floppy, i.e., A:STACVOL.DSK /RP
+
+AUTOMOUNTING
+----------------------------------------------------
+SFORMAT and RESCUE provide support for automounted DoubleSpace,
+Stacker, and SuperStor/DS compressed disks.  When you enter
+SFORMAT or RESCUE, the program detects the compression and
+indicates "Compressed" in the Size field.
+
+Because compressed volumes cannot be directly formatted, SFORMAT
+also lists the host drive letter, which you can format.  If you
+format the host drive, the diskette returns to its original
+uncompressed size.  (If you want the diskette to remain
+compressed, use the OEM format utility.)
+
+                               18
+RESCUE copies files to the compressed diskette without
+reformatting, however it cannot make the disk bootable.  To
+create a bootable RESCUE diskette, select the host drive letter.
+
+NOTE:  If you swap the type of diskette (compressed vs.
+non-compressed) while running SFORMAT or RESCUE, you must exit
+and restart the utility to refresh the drive information.
+
+USING NORTON UTILITIES WITH PCANYWHERE
+-----------------------------------------------------
+When pcANYWHERE is active, Norton Utilities automatically uses
+standard display mode.  However, if Norton Utilities is already
+running when a session is established, it remains in graphical
+display mode, which causes garbage on the remote computer's
+screen.  If you use pcANYWHERE often, run NUCONFIG and set the
+video mode to standard, or create an NDOS alias that starts the
+Norton Utilities programs with the /G0 switch.
+
+USING NORTON UTILITIES WITH NORTON DESKTOP 3.0
+-----------------------------------------------------
+Installing Norton Desktop 3.0 for Windows (NDW 3) after Norton
+Utilities 8.0 (NU 8) overwrites critical system files that are
+more up-to-date in NU 8.  Because NU 8's files work properly for
+NDW 3, and restore the NU 8 system files SYMEVNT.386 and
+SYMEVNT1.DLL as follows:
+
+     COPY A:SYMEVNT*.* C:\WINDOWS\SYSTEM <ENTER>
+
+NU 8's SDW and NDDW include backgrounding and many other
+enhancements to those found in NDW 3.0.  To save one megabyte of
+disk space, delete NDW 3's SDW and NDDW files as follows:  
+
+     CD C:\NDW <ENTER>
+     DEL SDW.* <ENTER>
+     DEL NDDW.* <ENTER>
+     DEL SDENGINE.DLL <ENTER>
+
+Remove NDDW and SDW from your "Norton Desktop Applications" group
+by highlighting their icons and pressing DEL.
+
+USING NORTON UTILITIES WITH NORTON ANTIVIRUS 3.0
+-----------------------------------------------------
+Installing Norton AntiVirus 3.0 (NAV 3) after Norton Utilities
+8.0 (NU 8) overwrites critical system files that are more up-to-
+date in NU 8.  Because NU 8's files work properly for NAV 3, it
+is important to restore the NU 8 system files SYMEVNT.386 and
+SYMEVNT1.DLL as follows:
+
+     COPY A:SYMEVNT*.* C:\WINDOWS\SYSTEM <ENTER>
+     CD C:\NAV <ENTER>
+     DEL SYMEVNT*.* <ENTER>
+                               19
+BACKGROUNDING
+-----------------------------------------------------
+Norton Disk Doctor for Windows (NDDW) and Speed Disk for Windows
+(SDW) provide "backgrounding" capability, which allows users to
+optimize and diagnose their drives while going about their daily
+work.
+
+When running in the background, SDW and NDDW do not hinder your
+computer's performance because they become active only when the
+system is idle for a predetermined time.  (You can adjust this
+timeout through the program's Customize features.)
+
+Backgrounding pauses whenever you move your mouse or type on the
+keyboard.  If you save a file to SDW's or NDDW's selected drive,
+the programs must restart because the file structure changed. If
+one of your applications saves temporary files to the disk (for
+example, word processors and screen savers), you may never
+complete the optimization process.  To avoid this situation, turn
+off applications that automatically write to the disk and use
+permanent swap files whenever possible.
+
+Do not run NDDW or SDW concurrently with another manufacturer's
+defragmentation or diagnostic utility.  Doing so could cause data
+loss.
+
+To avoid interrupting printer, modem, or FAX activity while
+running in the background, SDW and NDDW provide startup options
+in "Preferences" that configure these programs to watch for
+activity on COM1:, COM2:, LPT1:, and LPT2:.  Be careful to only
+select ports that have a printer, FAX board, or modem attached. 
+If you designate a port assigned to a mouse or network card, SDW
+and NDDW may never run.
+
+MULTITASKING ENVIRONMENTS
+-----------------------------------------------------
+In general, applications or commands that modify the File
+Allocation Table (FAT) can cause unpredictable results when run
+under multitasking environments.  
+
+Norton Utilities detects and disables use of the EMS page frame
+in the following multitasking environments run in Windows,
+DESQview, DOSSHELL from MS-DOS 5.0 or 6.x, PC-MOS, OS/2 2.x.  For
+this reason, you may run out of memory when performing certain
+functions.  In such situations, exit the environment and run the
+utility in DOS.  In addition, please be aware of the following
+issues when running multitasking environments: 
+
+     DISKEDIT: run in read-only mode.
+
+     DISKMON:  disables protection when running Windows.
+                               20
+     DISKREET: disables the Auto Open and Quick Close features
+               under Windows.  Use the DISKREET.EXE program to
+               manually open and close NDISKs in Windows.  Any
+               NDISKs opened before starting Windows remain open
+               and available.
+
+     SMARTCAN: As a general rule, turn SMARTCAN on before loading
+               Windows.
+
+     NCC:      affects only the active DOS window.
+
+     NCD:      affects only the active DOS window.
+
+     IMAGE:    Run before loading Windows or DESQview, not within
+               DOS boxes.
+
+QEMM AND STEALTH MODE
+-----------------------------------------------------
+When QEMM Stealth Mode is active, some programs may experience
+errors when writing to the disk via the EMS Page Frame.  To avoid
+this problem, Norton Utilities automatically disables its use of
+the EMS page frame whenever Stealth Mode is active.  As a result,
+Norton Utilities loses the use of the 64K page frame.  If you run
+into a low memory situation, you can access this additional
+memory without disabling Stealth.  QEMM provides a switch that
+sets aside a disk buffer in conventional memory.  Add the
+parameter "DBF=2" to your QEMM command line in the CONFIG.SYS
+file (see your QEMM manual for more information on this switch). 
+Running any of the Norton Utilities followed by the switch
+"/FRAME" enables it to use the EMS Page Frame despite the
+presence of Stealth Mode.
+
+THE DOS "FASTOPEN" PROGRAM
+-----------------------------------------------------
+NCACHE is a more effective and safe way to optimize your
+computer's performance than FASTOPEN.  FASTOPEN causes data loss
+in certain circumstances.  Some computer vendors automatically
+install FASTOPEN when they configure machines.  You may have
+FASTOPEN on your computer even if you didn't put it there.  Use
+an editor to remove the line that reads "INSTALL=FASTOPEN" from
+your CONFIG.SYS file or "FASTOPEN" from AUTOEXEC.BAT.
+
+VIDEO DISPLAY AND MOUSE PROBLEMS
+-----------------------------------------------------
+Some EGA and VGA adapters produce small dots that trail mouse
+movement when you use the graphical (arrow-shaped) mouse cursor.
+If you experience this degradation, try using the standard mouse
+pointer.  Quickly test whether bypassing the graphical mouse
+solves your problem by executing "NORTON /M0".  If successful,
+reset the mouse in NUCONFIG.  Run NUCONFIG, select "Video and
+Mouse Options," and deselect Graphical Mouse.  If you continue to
+                               21
+have difficulty, try changing the display mode to either "Some
+Graphical Controls" or "Standard" through NUCONFIG. 
+
+LAPTOP COMPUTERS
+-----------------------------------------------------
+To improve the viewing quality of an LCD laptop screen, try using
+the utilities with the /LCD switch.  To permanently use these
+colors, run NUCONFIG, select "Video and Mouse Options," and set
+the Screen Colors to Greyscale. 
+
+Some monochrome laptop screens do not fully support remapping of
+graphical characters.  Norton Utilities may not display the
+graphical mouse cursor or other graphic font enhancements on
+non-standard LCD displays.  If you see unusual characters on your
+screen, use NUCONFIG to set the "Standard" display mode.
+
+HARD DISKS WITH MORE THAN 1024 CYLINDERS
+-----------------------------------------------------
+Norton Utilities Version 8.0 provides limited support for hard
+disks with more than 1024 cylinders.  Accessing more than 1024
+cylinders is usually managed through hard drive controller sector
+translation.  However, Ontrack's Disk Manager or Storage
+Dimension's SpeedStor can create partitions past the 1024th
+cylinder without translation.  If your drive is configured in
+this manner, the following limitations apply:
+
+1.   CALIBRATE does not run on partitions which span past the
+     1024th cylinder.
+
+2.   SFORMAT does not access or format these areas.
+
+DRIVE NOT READY
+-----------------------------------------------------
+If SPEEDISK or NDD report the error "Drive not ready, close the
+drive door" while analyzing your hard drive, it may indicate that
+your hardware can't keep pace with the large reads these programs
+perform.  Call your vendor's technical support for more
+information.
+
+DRIVE OR DEVICE NOT READY ERROR CYCLES
+-----------------------------------------------------
+Many Norton Utilities programs poll your drives when launching or
+accessing low level information.  If a device-driven drive bay is
+empty, the programs execute several retry cycles and post the
+message "Drive or Device Not Ready."  You can avoid this cycle by
+keeping a disk in your CD-ROM, Bernoulli, and Syquest drives.
+
+SPECIAL NETWORK NOTES
+-----------------------------------------------------
+You can install Norton Utilities Version 8.0 on a network server. 
+In order to use the utilities effectively in a networking
+environment, create a \SYMANTEC directory on local hard disks and
+                               22
+set two environment variables in each AUTOEXEC.BAT file as
+follows:
+
+       SET NU=C:\SYMANTEC
+       SET SYMANTEC=C:\SYMANTEC
+
+OPTIMIZING PERFORMANCE
+-----------------------------------------------------
+ALL PROGRAMS:  The Norton Utilities use both conventional and
+virtual memory (Extended or Expanded memory).  The more free
+conventional memory you have, the less Norton Utilities relies
+upon slower virtual memory.  If your system has little free
+conventional memory, temporarily unload any non-essential TSRs
+and device drivers.
+
+On a very large disk, or a disk with many files and directories,
+make sure that you have at least one or two megabytes of EMS/XMS
+memory free (use SYSINFO to find out how much memory is
+available).  If a TSR, such as a disk cache or RAM drive, is
+consuming most of your extended memory, temporarily unload it or
+reduce its allocated memory.  See the OPTIMIZING MEMORY section
+below for additional tips.
+
+SPEEDISK:  When SPEEDISK defragments a disk, it shuffles large
+amounts of data.  If your disk is very full, SPEEDISK can only
+move data in small chunks and must relocate it frequently. 
+Confirm that your disk has at least one or two free megabytes
+before you optimize so SPEEDISK can run as quickly as possible. 
+On very large compressed drives, you might need even more free
+space due to the complex nature of these disks.  Archive files
+that you don't use regularly.
+
+OPTIMIZING MEMORY
+-----------------------------------------------------
+If your system uses an advanced memory manager such as QEMM,
+386Max, or MS-DOS 6.x EMM386, proper configuration can eliminate
+many problems.
+
+Fortunately, these memory managers provide utilities that
+automatically optimize the memory manager's configuration.  Use
+this optimization program to configure your memory manager for
+efficient and trouble-free use.
+
+The optimizers for each of these memory managers are:
+
+QEMM                     - OPTIMIZE
+MS-DOS 6.x EMM386        - MEMMAKER
+386Max                   - MAXIMIZE
+
+Please refer to the memory managers' documentation for more
+information.
+                               23
+RUNNING THE UTILITIES FROM DISKETTE
+-----------------------------------------------------
+If you want to run the Norton Utilities programs from diskette,
+you may need to include the NLIB200.RTL file.
+
+Programs that require the NLIB200.RTL:
+
+     calibrat.exe   diskedit.exe   diskmon.exe    diskreet.exe
+     disktool.exe   ds.exe         dupdisk.exe    filefind.exe
+     filefix.exe    initrakd.exe   ncc.exe        ncd.exe
+     ndoshelp.exe   norton.exe     rescue.exe     sformat.exe
+     smartcan.exe   sysinfo.exe    unerase.exe    unformat.exe
+
+Note that Norton Disk Doctor requires the NDD.MSG file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               24

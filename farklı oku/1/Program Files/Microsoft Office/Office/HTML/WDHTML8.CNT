@@ -1,0 +1,56 @@
+:Base wdhtml8.hlp>REF
+:Title Help Topics: Microsoft Word
+:Index Microsoft Word HTML Help=wdhtml8.hlp
+:Link WD9701.HLP
+:Link WD9702.HLP
+:Link WD9703.HLP
+:Link WD9704.HLP
+:Link WD9705.HLP
+:Link OF9701.HLP
+:Link OF9702.HLP
+:Link OF9703.HLP
+:Link OF9704.HLP
+:Link OF9705.HLP
+1 Web Sayfalarý Yaratma ve Bunlarla Çalýþma
+2 Web sayfasý yaratma
+3 Web sayfasý yaratma hakkýnda=wolrgHowToUseWordWithMailInternet@wdmain8.hlp>LgCard
+3 Web sayfasý yaratma=hthowCreateWebPage@wdhtml8.hlp>HowTo
+3 Web sayfalarýna ekleyebileceðiniz öðeler=hthowItemsYouCanAddToWebPages@wdhtml8.hlp>REF
+3 Microsoft Web bölgesinden daha fazla Web sayfasý grafikleri ve þablonlarý eld...=httbcObtainMoreGraphicsTemplatesFromMicrosoftWebSite@wdhtml8.hlp>REF
+3 Web sayfasý yaratmak için ipuçlarý=htconTipsForCreatingWebPages@wdhtml8.hlp>REF
+3 Web sayfasýna artalan sesi ekleme=hthowAddBackgroundSoundToWebPage@wdhtml8.hlp>HowTo
+3 Web sayfasýna yatay çizgi ekleme=hthowAddHorizontalLineToWebPage@wdhtml8.hlp>HowTo
+3 Web sayfasýna video ekleme=hthowAddVideoToWebPage@wdhtml8.hlp>HowTo
+3 Web sayfasýna kayan metin ekleme=hthowAddScrollingTextToWebPage@wdhtml8.hlp>HowTo
+3 Web sayfasýnýn dilini belirleme=httbcEncodeWebPageForInternationalCharacterSet@wdhtml8.hlp>HowTo
+3 Web sayfasýna baþlýk atama=htrefAddTitleToWebPage@wdhtml8.hlp>HowTo
+3 HTML biçimlendirmesi ekleme=htdecInsertHTMLMarkup@wdhtml8.hlp>HowTo
+3 Özel HTML þablonu yaratma=hthowCreateCustomHTMLTemplate@wdhtml8.hlp>HowTo
+2 Web sayfalarýnýn görünümünü deðiþtirme
+3 Web sayfalarýný biçimlendirmeyi öðrenme=htdccLearnAboutFormattingInWebPages@wdhtml8.hlp>REF
+3 Web sayfalarýnda tablolarla çalýþmayý öðrenme=hthowWorkingWithTablesInWebPages@wdhtml8.hlp>REF
+3 Tablolarý düzen aracý olarak kullanma=htconUseTablesAsLayoutTool@wdhtml8.hlp>REF
+3 Web sayfalarýndaki metin renklerini belirleme=hthowAddBackgroundToWebPage@wdhtml8.hlp>HowTo
+3 Web sayfalarýnda biçemlerle çalýþma=htdecWorkingWithStylesInWebPages@wdhtml8.hlp>REF
+3 Web sayfalarýnda madde imleri eklemeyi ve numaralandýrmayý öðrenme=hthowCreateBulletedListsInWebPages@wdhtml8.hlp>REF
+2 Web sayfalarýnda grafiklerle çalýþma
+3 Web sayfalarý üzerindeki grafiklerle çalýþmayý öðrenme=hthowAboutWorkingWithImagesInWebPages@wdhtml8.hlp>REF
+3 Resimleri Web sayfalarý üzerinde hizalama=hthowAboutAligningImagesInWebPages@wdhtml8.hlp>REF
+2 Web sayfalarýnda formlarla çalýþma
+3 Web sayfasý için form yaratma=htrefCreateFormForWebPage@wdhtml8.hlp>HowTo
+3 Web sayfasýnda kullanabileceðiniz form öðeleri=htconActiveXControlsYouCanUseInWebPage@wdhtml8.hlp>REF
+2 Web sayfalarýný ve HTML kaynaðýný görüntüleme
+3 Web sayfasýnýn HTML kaynaðýný görme=hthowViewHTMLSourceOfWebPage@wdhtml8.hlp>HowTo
+3 Web sayfasýný yazarken önizleme=htrefPreviewWebPageWhileAuthoringIt@wdhtml8.hlp>HowTo
+2 Web sayfalarýyla ve Web yazma araçlarýyla çalýþma
+3 Web yazým araçlarýnýn son sürümlerini alma=htrefGetLatestVersionOfWebAuthoringTools@wdhtml8.hlp>HowTo
+3 Web yazýmý sýrasýnda farklý olan veya kullanýlamayan Word özellikleri=hthowWordFeaturesNotSupportedInWebPages
+3 Word 97 belgesini Web sayfasý olarak kaydettiðinizde neler olacaðýný öðrenme=htdccLearnAboutWhatHappensWhenYouSaveYourDocumentAsWebPage@wdhtml8.hlp>REF
+3 Web sayfalarýndaki dosyalarý ve baðlantýlarý yönetmeyi öðrenme=htconLearnAboutManagingHyperlinksInWebPages@wdhtml8.hlp>REF
+3 Web sayfalarýndaki grafikler, denklemler ve diðer nesneler hakkýnda=htconWorkingWithGraphsChartsEquationsOtherObjects@wdhtml8.hlp>REF
+3 Web sayfanýza diðer kiþilerin eriþimini saðlama=htconPublishWebPage@wdhtml8.hlp>REF
+3 Web yazým kaynaklarý hakkýnda=htrefLearnAboutMoreWebPageAuthoringResources@wdhtml8.hlp>REF
+3 Web yazýmý için Word ve Microsoft FrontPage arasýndaki farklýlýklar=httbcAboutUsingMicrosoftWordWithMicrosoftFrontPage@wdhtml8.hlp>REF
+3 Web sayfasý yazým araçlarýný bulamýyorum.=hthowAccessWebAuthoringFeatures@wdhtml8.hlp>REF
+3 Açmak istediðim Web sayfasý dosyalarýný bulamýyorum.=httbcICantFindWebPageFilesToOpenThem@wdhtml8.hlp>REF
+3 Web sayfasý yazýmýndaki sorunlarý giderme=htconTroubleshootWebPageAuthoring@wdhtml8.hlp>REF

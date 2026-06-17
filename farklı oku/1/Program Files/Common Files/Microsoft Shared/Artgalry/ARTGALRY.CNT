@@ -1,0 +1,56 @@
+:Base artgalry.hlp>HowTo
+:Title Microsoft Clip Gallery 3.0
+1 Adding a clip to your document
+2 Adding an image to your document
+3 Add an image to your document=AGAddAnImage
+3 Replace one image in your document with another=AGReplaceAnImage
+3 Find a specific image in the Clip Gallery=AGFindAClip
+3 Make clip previews larger=AGMakeClipPreviewsLarger
+2 Adding a sound clip to your document
+3 Add a sound clip to your document=AGAddASoundClip
+3 Replace one sound clip in your document with another=AGReplaceASoundClip
+3 Find a specific sound clip in the Clip Gallery=AGFindAClip
+3 Play a sound clip in the Clip Gallery=AGPlayASoundClip
+2 Adding a video clip or animation to your document
+3 Add a video clip or animation to your document=AGAddAVideoClip
+3 Replace one video clip or animation in your document with another=AGReplaceAVideoClip
+3 Find a specific video clip or animation in the Clip Gallery=AGFindAClip
+3 Play a video clip or animation in the Clip Gallery=AGPlayAVideoClip
+3 Make clip previews larger=AGMakeClipPreviewsLarger
+1 Importing clips into the Clip Gallery
+2 Import clips into the Clip Gallery=AGImportClips
+2 Import clip packages into the Clip Gallery=AGImportClipPackages
+2 Import clips from Clip Gallery Live into the Clip Gallery=AGImportClipsFromClipGalleryLive
+1 Organizing clips in the Clip Gallery
+2 Change the categories or keywords of a clip=AGChangeCategoryOrKeywords
+2 Delete a clip preview=AGDeleteAClipPreview
+2 Update clip previews=AGUpdateClipPreviews
+2 Find a specific clip in the Clip Gallery=AGFindAClip
+2 Make clip previews larger=AGMakeClipPreviewsLarger
+1 Organizing Clip Gallery categories
+2 Add a new Clip Gallery category=AGAddACategory
+2 Delete a Clip Gallery category=AGDeleteACategory
+2 Rename a Clip Gallery category=AGRenameACategory
+2 Rename, delete, or add more than one Clip Gallery category at a time=AGRenameDeleteAddMultipleCategories
+1 General information about the Clip Gallery
+2 What is the Clip Gallery?=AGWhatIsTheClipGallery>ref
+2 What's the difference between clip art and pictures?=AGWhatsTheDifference>ref
+2 What is a video?=AGWhatIsAVideo>ref
+2 What is a keyword?=AGWhatIsAKeyword>ref
+2 What is Clip Gallery Live?=AGWhatIsClipGalleryLive>ref
+2 What's the advantage of adding clips to the Clip Gallery?=AGWhatIsTheAdvantageOfAddingClips>ref
+2 What is the Update feature and when should I use it?=AGWhatIsUpdate>ref
+2 File formats the Clip Gallery can import=AGFileFormatsTheClipGalleryCanImport>ref
+1 Troubleshooting
+2 What if I can't find the clip I'm looking for?=AGWhatIfICantFindTheClip>ref
+2 What if I can't add a particular image to my document?=AGWhatIfICantAddAParticularImage>ref
+2 What if I can't delete or change the categories or keywords of a particular clip?=AGWhatIfICantMakeChangesToAClip>ref
+2 What if I can't delete or rename a particular category?=AGWhatIfICantMakeChangesToACategory>ref
+2 What if I can't play a particular sound, video clip, or animation?=AGWhatIfICantPlayAClip>ref
+2 What if I change my mind about adding a clip package to the Clip Gallery?=AGWhatIfIChangeMyMind>ref
+2 What if I've moved a clip file and still want the Clip Gallery to be able to find it?=AGWhatIfIveMovedAClipFile>ref
+1 Information for network administrators
+2 Clip Gallery databases=AGClipGalleryDatabases>ref
+2 Create a shared Clip Gallery database and configure users' computers to access it=AGCreateAndConfigure
+2 Merge a Clip Gallery database=AGMergeAClipGalleryDatabase
+2 Maintain a user's shared Clip Gallery database configuration=AGMaintainAUsersConfiguration

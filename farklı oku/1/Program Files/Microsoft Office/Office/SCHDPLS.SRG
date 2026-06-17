@@ -1,0 +1,58 @@
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Schedule+\Application]
+"DefaultLocalPath"="<ürün yolu>"
+"ScheduleInterfaces"="msscd mscal"
+"ScheduleFinders"="mstre mscal"
+"FormsRegistered"="dword:0x1"
+"MapiPresent"="dword:0x1"
+"AppPath"="<ürün yolu>"
+[HKEY_CLASSES_ROOT\.SC2]
+@="SchedulePlus.Application.7"
+[HKEY_CLASSES_ROOT\.SCD]
+@="SchedulePlus.Application.7"
+[HKEY_CLASSES_ROOT\.SCH]
+@="SchedulePlus.Application.7"
+[HKEY_CLASSES_ROOT\SchedulePlus.Application]
+@="Microsoft Schedule+ Uygulamasý"
+[HKEY_CLASSES_ROOT\SchedulePlus.Application\CurVer]
+@="SchedulePlus.Application.7"
+[HKEY_CLASSES_ROOT\SchedulePlus.Application\CLSID]
+@="{0482E074-C5B7-101A-82E0-08002B36A333}"
+[HKEY_CLASSES_ROOT\SchedulePlus.Application.7\CLSID]
+@="{0482E074-C5B7-101A-82E0-08002B36A333}"
+[HKEY_CLASSES_ROOT\SchedulePlus.Application.7]
+@="Microsoft Schedule+ 7.0 Uygulamasý"
+[HKEY_CLASSES_ROOT\SchedulePlus.Application.7\shell\open\command]
+@="<product path>\\schdpl32.exe \"%1\""
+[HKEY_CLASSES_ROOT\CLSID\{0482E074-C5B7-101A-82E0-08002B36A333}]
+@="Microsoft Schedule+ 7.0 Uygulamasý"
+[HKEY_CLASSES_ROOT\CLSID\{0482E074-C5B7-101A-82E0-08002B36A333}\LocalServer32]
+@="<product path>\\schdpl32.exe -Automation"
+[HKEY_CLASSES_ROOT\CLSID\{0482E074-C5B7-101A-82E0-08002B36A333}\InprocHandler32]
+@="OLE32.dll"
+[HKEY_CLASSES_ROOT\CLSID\{0482E074-C5B7-101A-82E0-08002B36A333}\ProgID]
+@="SchedulePlus.Application.7"
+[HKEY_CLASSES_ROOT\CLSID\{0482E074-C5B7-101A-82E0-08002B36A333}\VersionIndependentProgID]
+@="SchedulePlus.Application"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\schdpl32.exe]
+@="<product path>\\schdpl32.exe"
+"Path"="<product path>"
+[HKEY_CLASSES_ROOT\SchedulePlus.Library]
+@="Microsoft Schedule+ Kitaplýðý"
+[HKEY_CLASSES_ROOT\SchedulePlus.Library\CurVer]
+@="SchedulePlus.Library.7"
+[HKEY_CLASSES_ROOT\SchedulePlus.Library\CLSID]
+@="{800DD100-DB43-11CE-914E-00A004000162}"
+[HKEY_CLASSES_ROOT\CLSID\{800DD100-DB43-11CE-914E-00A004000162}]
+@="Microsoft Schedule+ 7.0 Kitaplýðý"
+[HKEY_CLASSES_ROOT\CLSID\{800DD100-DB43-11CE-914E-00A004000162}\InProcHandler32]
+@="OLE32.dll"
+[HKEY_CLASSES_ROOT\CLSID\{800DD100-DB43-11CE-914E-00A004000162}\InProcServer32]
+@="<product path>\\msspc32.dll"
+[HKEY_CLASSES_ROOT\CLSID\{800DD100-DB43-11CE-914E-00A004000162}\ProgID]
+@="SchedulePlus.Library.7"
+[HKEY_CLASSES_ROOT\CLSID\{800DD100-DB43-11CE-914E-00A004000162}\VersionIndependentProgID]
+@="SchedulePlus.Library"
+[HKEY_CLASSES_ROOT\SchedulePlus.Library.7]
+@="Microsoft Schedule+ 7.0 Kitaplýðý"
+[HKEY_CLASSES_ROOT\SchedulePlus.Library.7\CLSID]
+@="{800DD100-DB43-11CE-914E-00A004000162}"

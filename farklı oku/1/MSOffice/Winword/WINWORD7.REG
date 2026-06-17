@@ -1,0 +1,223 @@
+REGEDIT
+
+* This file is used to register Microsoft Word for Windows 95.  It is required
+* to be either in the Windows directory or the WINWORD.EXE directory.
+* It should be in the WINWORD.EXE directory if Word is to be run off the
+* network.
+
+HKEY_CLASSES_ROOT\.DOC = Word.Document.6
+HKEY_CLASSES_ROOT\.RTF = Word.RTF
+HKEY_CLASSES_ROOT\.DOT = Word.Template
+HKEY_CLASSES_ROOT\.WIZ = Word.Wizard
+HKEY_CLASSES_ROOT\.WBK = Word.Backup
+HKEY_CLASSES_ROOT\.WLL = Word.Addin
+
+ENTRIES FOR IDispatch Access
+
+HKEY_CLASSES_ROOT\Word.Basic = Word Basic
+HKEY_CLASSES_ROOT\Word.Basic\CLSID = {000209FE-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046} = Word Basic
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046}\ProgID = word.basic
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046}\VersionIndependentProgID = word.basic
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046}\LocalServer32 = winword.exe /Automation
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046}\InprocHandler32 = Ole32.dll
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046}\InprocHandler = Ole2.dll
+HKEY_CLASSES_ROOT\CLSID\{000209FE-0000-0000-C000-000000000046}\AutoConvertTo
+
+ENTRIES FOR Version Independent Classes
+
+HKEY_CLASSES_ROOT\Word.Document = Microsoft Word Document
+HKEY_CLASSES_ROOT\Word.Document\CLSID = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\Word.Document\CurVer = Word.Document.6
+
+HKEY_CLASSES_ROOT\Word.Picture = Microsoft Word Picture
+HKEY_CLASSES_ROOT\Word.Picture\CLSID = {00020901-0000-0000-C000-000000000046} 
+HKEY_CLASSES_ROOT\Word.Picture\CurVer = Word.Picture.6
+
+ENTRIES FOR Word 2.0 AutoConversion
+
+HKEY_CLASSES_ROOT\CLSID\{00030003-0000-0000-C000-000000000046} = Microsoft Word 2.0 Document
+HKEY_CLASSES_ROOT\CLSID\{00030003-0000-0000-C000-000000000046}\AutoConvertTo = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\CLSID\{00030003-0000-0000-C000-000000000046}\NotInsertable = 
+HKEY_CLASSES_ROOT\CLSID\{00030003-0000-0000-C000-000000000046}\Ole1Class = WordDocument
+HKEY_CLASSES_ROOT\CLSID\{00030003-0000-0000-C000-000000000046}\ProgID = WordDocument
+
+HKEY_CLASSES_ROOT\WordDocument = Microsoft Word 2.0 Document
+HKEY_CLASSES_ROOT\WordDocument\CLSID = {00030003-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\WordDocument\CurVer = Word.Document.6
+HKEY_CLASSES_ROOT\WordDocument\NotInsertable = 
+HKEY_CLASSES_ROOT\WordDocument\protocol\StdFileEditing\server = WINWORD.EXE
+
+ENTRIES FOR Document SERVER
+
+HKEY_CLASSES_ROOT\Word.Document.6 = Microsoft Word Document
+HKEY_CLASSES_ROOT\Word.Document.6\DefaultIcon = winword.exe,1
+HKEY_CLASSES_ROOT\Word.Document.6\protocol\StdFileEditing\server = winword.exe
+HKEY_CLASSES_ROOT\Word.Document.6\protocol\StdFileEditing\SetDataFormats = NotesDocInfo
+HKEY_CLASSES_ROOT\Word.Document.6\protocol\StdFileEditing\Verb\0 = Edit
+HKEY_CLASSES_ROOT\Word.Document.6\Insertable
+HKEY_CLASSES_ROOT\Word.Document.6\DocObject
+HKEY_CLASSES_ROOT\Word.Document.6\CLSID = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\Word.Document.6\shell\print\ddeexec = [FileOpen("%1")][FilePrint()][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.Document.6\shell\print\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Document.6\shell\print\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Document.6\shell\print\ddeexec\ifexec = [FileOpen("%1")][FilePrint .Background = 0][FileExit(2)]
+HKEY_CLASSES_ROOT\Word.Document.6\shell\print\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Document.6\shell =
+HKEY_CLASSES_ROOT\Word.Document.6\shell\open =
+HKEY_CLASSES_ROOT\Word.Document.6\shell\open\ddeexec = [FileOpen("%1")]
+HKEY_CLASSES_ROOT\Word.Document.6\shell\open\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Document.6\shell\open\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Document.6\shell\open\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Document.6\shell\New\ddeexec = [FileNew("%1")]
+HKEY_CLASSES_ROOT\Word.Document.6\shell\New\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Document.6\shell\New\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Document.6\shell\New\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Document.6\shell\PrintTo\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Document.6\shell\PrintTo\ddeexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.Document.6\shell\PrintTo\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Document.6\shell\PrintTo\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Document.6\shell\PrintTo\ddeexec\ifexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][FileExit(2)]
+
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046} = Microsoft Word Document
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\Conversion\Readwritable\Main = MSWordDoc
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\Conversion\Readable\Main = MSWordDoc,WordDocument,1
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\MiscStatus = 0
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\MiscStatus\1 = 1
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\GetSet\3 = Rich Text Format,1,1,3
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\GetSet\2 = 3,1,32,1
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\GetSet\1 = 1,1,1,3
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\GetSet\0 = Embed_Source,1,8,1
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\DefaultFile = MSWordDoc
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\PriorityCacheFormats\0 = Rich Text Format
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DataFormats\DelayRenderFormats\0 = Woozle
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DefaultIcon = winword.exe,1
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\AuxUserType\3 = Microsoft Word 7.0
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\AuxUserType\2 = Document
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\Insertable
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DocObject
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\Verb\0 = &Edit,0,2
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\Verb\1 = &Open,0,2
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\LocalServer32 = winword.exe
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\InprocHandler32 = ole32.dll
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\ProgID = Word.Document.6
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\AutoConvertTo
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\Printable
+HKEY_CLASSES_ROOT\CLSID\{00020900-0000-0000-C000-000000000046}\DefaultExtension = .doc,Word Document (.doc)
+
+ENTRIES FOR Pictures
+
+HKEY_CLASSES_ROOT\Word.Picture.6 = Microsoft Word Picture
+HKEY_CLASSES_ROOT\Word.Picture.6\protocol\StdFileEditing\server = winword.exe
+HKEY_CLASSES_ROOT\Word.Picture.6\protocol\StdFileEditing\Verb\0 = Edit
+HKEY_CLASSES_ROOT\Word.Picture.6\Insertable
+HKEY_CLASSES_ROOT\Word.Picture.6\CLSID = {00020901-0000-0000-C000-000000000046}
+
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046} = Microsoft Word Picture
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\Conversion\Readwritable\Main = MSWordDoc
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\Conversion\Readable\Main = MSWordDoc,MSDraw,1
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\MiscStatus = 0
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\DataFormats\GetSet\3 = Rich Text Format,1,1,3
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\DataFormats\GetSet\2 = 3,1,32,3
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\DataFormats\GetSet\1 = 1,1,1,3
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\DataFormats\GetSet\0 = Embed_Source,1,8,1
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\DataFormats\DefaultFile = MSWordDoc
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\DefaultIcon = winword.exe,1
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\AuxUserType\3 = Microsoft Word 6.0
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\AuxUserType\2 = Picture
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\Insertable
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\verb\0 = &Edit,0,2
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\verb\1 = &Open,0,2
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\LocalServer32 = winword.exe
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\InprocHandler32 = ole32.dll
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\ProgId = Word.Picture.6
+HKEY_CLASSES_ROOT\CLSID\{00020901-0000-0000-C000-000000000046}\AutoConvertTo
+
+ENTRIES FOR Rich Text Format
+
+HKEY_CLASSES_ROOT\Word.RTF = Rich Text Format
+HKEY_CLASSES_ROOT\Word.RTF\DefaultIcon = winword.exe,1
+HKEY_CLASSES_ROOT\Word.RTF\CLSID = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\Word.RTF\shell\print\ddeexec = [FileOpen("%1")][FilePrint()][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.RTF\shell\print\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.RTF\shell\print\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.RTF\shell\print\ddeexec\ifexec = [FileOpen("%1")][FilePrint .Background = 0][FileExit(2)]
+HKEY_CLASSES_ROOT\Word.RTF\shell\print\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.RTF\shell\open\ddeexec = [FileOpen("%1")]
+HKEY_CLASSES_ROOT\Word.RTF\shell\open\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.RTF\shell\open\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.RTF\shell\open\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.RTF\shell\New\ddeexec = [FileNew("%1")]
+HKEY_CLASSES_ROOT\Word.RTF\shell\New\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.RTF\shell\New\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.RTF\shell\New\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.RTF\shell\PrintTo\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.RTF\shell\PrintTo\ddeexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.RTF\shell\PrintTo\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.RTF\shell\PrintTo\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.RTF\shell\PrintTo\ddeexec\ifexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][FileExit(2)]
+
+ENTRIES FOR Templates
+
+HKEY_CLASSES_ROOT\Word.Template = Microsoft Word Template
+HKEY_CLASSES_ROOT\Word.Template\DefaultIcon = winword.exe,3
+HKEY_CLASSES_ROOT\Word.Template\CLSID = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\Word.Template\shell = New
+HKEY_CLASSES_ROOT\Word.Template\shell\print\ddeexec = [FileOpen("%1")][FilePrint()][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.Template\shell\print\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Template\shell\print\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Template\shell\print\ddeexec\ifexec = [FileOpen("%1")][FilePrint .Background = 0][FileExit(2)]
+HKEY_CLASSES_ROOT\Word.Template\shell\print\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Template\shell\open =
+HKEY_CLASSES_ROOT\Word.Template\shell\open\ddeexec = [FileOpen("%1")]
+HKEY_CLASSES_ROOT\Word.Template\shell\open\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Template\shell\open\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Template\shell\open\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Template\shell\New\ddeexec = [FileNew("%1")]
+HKEY_CLASSES_ROOT\Word.Template\shell\New\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Template\shell\New\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Template\shell\New\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Template\shell\PrintTo\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Template\shell\PrintTo\ddeexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.Template\shell\PrintTo\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Template\shell\PrintTo\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Template\shell\PrintTo\ddeexec\ifexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][FileExit(2)]
+
+ENTRIES FOR Wizards
+
+HKEY_CLASSES_ROOT\Word.Wizard = Microsoft Word Wizard
+HKEY_CLASSES_ROOT\Word.Wizard\DefaultIcon = winword.exe,4
+HKEY_CLASSES_ROOT\Word.Wizard\CLSID = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\Word.Wizard\shell = New
+HKEY_CLASSES_ROOT\Word.Wizard\shell\New\ddeexec = [FileNew("%1")]
+HKEY_CLASSES_ROOT\Word.Wizard\shell\New\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Wizard\shell\New\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Wizard\shell\New\command = winword.exe /n
+
+ENTRIES FOR Backups
+
+HKEY_CLASSES_ROOT\Word.Backup = Microsoft Word Backup Document
+HKEY_CLASSES_ROOT\Word.Backup\DefaultIcon = winword.exe,5
+HKEY_CLASSES_ROOT\Word.Backup\CLSID = {00020900-0000-0000-C000-000000000046}
+HKEY_CLASSES_ROOT\Word.Backup\shell\print\ddeexec = [FileOpen("%1")][FilePrint()][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.Backup\shell\print\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Backup\shell\print\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Backup\shell\print\ddeexec\ifexec = [FileOpen("%1")][FilePrint .Background = 0][FileExit(2)]
+HKEY_CLASSES_ROOT\Word.Backup\shell\print\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Backup\shell\open\ddeexec = [FileOpen("%1")]
+HKEY_CLASSES_ROOT\Word.Backup\shell\open\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Backup\shell\open\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Backup\shell\open\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Backup\shell\New\ddeexec = [FileNew("%1")]
+HKEY_CLASSES_ROOT\Word.Backup\shell\New\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Backup\shell\New\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Backup\shell\New\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Backup\shell\PrintTo\command = winword.exe /n
+HKEY_CLASSES_ROOT\Word.Backup\shell\PrintTo\ddeexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][DocClose(2)]
+HKEY_CLASSES_ROOT\Word.Backup\shell\PrintTo\ddeexec\Application = WinWord
+HKEY_CLASSES_ROOT\Word.Backup\shell\PrintTo\ddeexec\Topic = System
+HKEY_CLASSES_ROOT\Word.Backup\shell\PrintTo\ddeexec\ifexec = [REM _DDE_Minimize][FileOpen("%1")][FilePrintSetup .Printer = "%2 on %4", .DoNotSetAsSysDefault = 1][FilePrint .Background = 0][FileExit(2)]
+
+ENTRIES FOR Addins
+HKEY_CLASSES_ROOT\Word.Addin = Microsoft Word Addin
+HKEY_CLASSES_ROOT\Word.Addin\DefaultIcon = winword.exe,6

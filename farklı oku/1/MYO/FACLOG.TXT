@@ -1,0 +1,105 @@
+loading 'C:\WINDOWS\INF\suexpand.dll' returned c870e76
+Geninstall c:\pisetup\predet.INF.[CopyMSDet]
+CL:Windows CABs 
+CacheFile() C:\WINDOWS\OPTIONS\CABS\msdet.inf returns=0
+VcpClose:About to close
+VcpClose:Copy 1
+CAB-No volume name for LDID 8002, local copy - path C:\WINDOWS\OPTIONS\CABS
+[Windows CABs]
+VcpClose:About to End
+VcpClose:About to Terminate
+HWDETECT: Geninst complete
+DetectAll():Starting Detection
+CL:Windows 95 CD-ROM PRECOPY1.CAB
+CL:Windows 95 CD-ROM PRECOPY2.CAB
+CL:Windows 95 CD-ROM win95_02.cab
+CL:Windows 95 CD-ROM win95_03.cab
+CL:Windows 95 CD-ROM win95_04.cab
+CL:Windows 95 CD-ROM win95_05.cab
+CL:Windows 95 CD-ROM win95_06.cab
+CL:Windows 95 CD-ROM win95_07.cab
+CL:Windows 95 CD-ROM win95_08.cab
+CL:Windows 95 CD-ROM win95_09.cab
+CL:Windows 95 CD-ROM win95_10.cab
+CL:Windows 95 CD-ROM win95_11.cab
+CL:Windows 95 CD-ROM win95_12.cab
+CL:Windows 95 CD-ROM win95_13.cab
+CL:Windows 95 CD-ROM win95_14.cab
+CL:Windows 95 CD-ROM win95_15.cab
+CL:Windows 95 CD-ROM win95_16.cab
+CL:Windows 95 CD-ROM win95_17.cab
+CL:Windows 95 CD-ROM win95_18.cab
+CL:Windows 95 CD-ROM win95_19.cab
+CL:Windows 95 CD-ROM win95_20.cab
+CL:Windows 95 CD-ROM win95_21.cab
+CL:Windows 95 CD-ROM win95_22.cab
+CL:Windows 95 CD-ROM win95_23.cab
+CL:Windows 95 CD-ROM win95_24.cab
+CL:Windows 95 CD-ROM win95_25.cab
+CL:Windows 95 CD-ROM win95_26.cab
+DetectAll():Detected 17 devices.
+loading 'C:\WINDOWS\INF\suexpand.dll' returned c870e76
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0000\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0200\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0B00\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0100\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0800\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0C04\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0C01\0000, DF:0, CF=0, Err1:0, Err2:0
+CacheFile() C:\WINDOWS\wininit.ini returns=0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0C00\0000, DF:0, CF=0, Err1:0, Err2:0
+CacheFile() C:\WINDOWS\system.ini returns=0
+NoSetupUI Device Info: Class=System, Device=Enum\Root\*PNP0C05\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=fdc, Device=Enum\Root\*PNP0700\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=Ports, Device=Enum\Root\*PNP0500\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=Ports, Device=Enum\Root\*PNP0500\0001, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=hdc, Device=Enum\Root\*PNP0600\0000, DF:0, CF=0, Err1:0, Err2:0
+NoSetupUI Device Info: Class=Ports, Device=Enum\Root\*PNP0400\0000, DF:0, CF=0, Err1:0, Err2:0
+EnumDev:NoSetupUI skipped: Class=Ports, Device=Enum\Root\*PNP0400\0000
+EnumDev:NoSetupUI skipped: Class=hdc, Device=Enum\Root\*PNP0600\0000
+EnumDev:NoSetupUI skipped: Class=Ports, Device=Enum\Root\*PNP0500\0001
+EnumDev:NoSetupUI skipped: Class=Ports, Device=Enum\Root\*PNP0500\0000
+EnumDev:NoSetupUI skipped: Class=fdc, Device=Enum\Root\*PNP0700\0000
+EnumDev:Installed Driver: Class=Display, Device=Enum\Root\*PNP0913\0000
+Display_InstallDevice: GUI SETUP 640, 480, 4, 96
+SrcLdid:(11)orchid.cpl
+SrcLdid:(11)orchidf.cpl
+CacheFile() C:\WINDOWS\win.ini returns=0
+Display_InstallDevice: Upgrading VGA mode to default (256 color) mode. ret:32771
+EnumDev:Installed Driver: Class=Mouse, Device=Enum\Root\*PNP0F0E\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0C05\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0C00\0000
+EnumDev:Installed Driver: Class=Keyboard, Device=Enum\Root\*PNP0303\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0C01\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0C04\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0800\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0100\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0B00\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0200\0000
+EnumDev:NoSetupUI skipped: Class=System, Device=Enum\Root\*PNP0000\0000
+EnumDev:No compat driver: Class=Monitor, Device=Enum\Monitor\Default_Monitor\0001
+VcpClose:About to close
+VcpClose:Delete 9
+VcpClose:Rename 2
+VcpClose:Copy 14
+[Windows 95 CD-ROM]
+DCE:C:\WINDOWS\OPTIONS\CABS\\WIN95_04.CAB=4
+DCE:remaining=0
+[Windows 95 CD-ROM]
+DCE:C:\WINDOWS\OPTIONS\CABS\\WIN95_06.CAB=4
+DCE:remaining=0
+[Windows 95 CD-ROM]
+DCE:C:\WINDOWS\OPTIONS\CABS\\WIN95_09.CAB=1
+DCE:remaining=0
+[Windows 95 CD-ROM]
+DCE:C:\WINDOWS\OPTIONS\CABS\\WIN95_11.CAB=2
+DCE:remaining=0
+[Windows 95 CD-ROM]
+DCE:C:\WINDOWS\OPTIONS\CABS\\WIN95_12.CAB=2
+DCE:remaining=0
+[Windows 95 CD-ROM]
+DCE:C:\WINDOWS\OPTIONS\CABS\\WIN95_14.CAB=1
+DCE:remaining=0
+VcpClose:About to End
+VcpClose:About to Terminate
+DoDevInstalls():reRet: 0

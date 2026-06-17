@@ -1,0 +1,5 @@
+In earlier versions of WinZip, this file contained an overview of
+WinZip's features.  The overview can now be found in the "Introduction
+to WinZip" topic of the WinZip Help file.  To view this, start WinZip,
+switch to the Classic interface if necessary, and choose Contents from
+the Help menu.

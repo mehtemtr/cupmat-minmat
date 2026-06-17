@@ -1,0 +1,18 @@
+:Base FINDFAST.HLP>REF
+:Title Microsoft Hýzlý Bul
+:Index Microsoft Office Help=FINDFAST.HLP
+1 Yardým Alma
+2 Microsoft Office Benioku=!EF("OFOKU8.TXT","",5):Exit()
+2 Teknik Destek=!EF("PSS8.HLP","",5):Exit()
+1 Hýzlý Bul
+2 Hýzlý Bul Hakkýnda=ofconAllAboutFindFast>Ref
+2 Dizini oluþturan görevlerin günlüðünü görüntüleme=cohowViewALogOfMyIndexingTasks>HowTo
+2 Dizin oluþturma görevlerini iptal etme=cohowCancelortemporarilystopFindFastindexingtasks>HowTo
+2 Dizin oluþturma görevlerini geçici olarak durdurma=ffhowTemporarilyStopIndexingTasks>HowTo
+2 Dizin yaratma=cohowCreateANewFindFastIndex>HowTo
+2 Dizin güncelleþtirme=cohowUpdateAFindFastIndex>HowTo
+2 Dizindeki dosyalarýn türünü veya yerini deðiþtirme=ffhowChangeScopeOfIndex>HowTo
+2 Dizin silme=cohowDeleteAFindFastIndex>HowTo
+2 Dizinler için otomatik güncelleþtirme aralýðýný deðiþtirme=ffhowChangeAutomaticUpdateIntervalForFindFastIndex>HowTo
+2 Dizin bilgilerini gösterme=ffhowShowIndexInformation>HowTo
+:Include EULA8.CNT

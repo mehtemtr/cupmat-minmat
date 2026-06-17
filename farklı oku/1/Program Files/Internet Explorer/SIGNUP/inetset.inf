@@ -1,0 +1,38 @@
+[Version]
+Signature=$CHICAGO$
+SetupClass=Base
+
+[DefaultInstall]
+AddReg=AddRegSection
+RequiredEngine=Setupapi,"missing setupapi.dll"
+
+
+
+
+[AddRegSection]
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Background Color",0,"192,192,192"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Text Color",0,"0,0,0"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Use_DlgBox_Colors",0,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color",0,"0,0,255"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color Visited",0,"96,100,32"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Use Anchor Hover Color",0,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color Hover",0,"255,0,0"
+HKCU,"Software\Microsoft\Internet Explorer\International\1252","IEPropFontName",0,"Times New Roman"
+HKCU,"Software\Microsoft\Internet Explorer\International\1252","IEFixedFontName",0,"Courier New"
+HKLM,"Software\Microsoft\Internet Explorer\International","AcceptLanguage",0,"English"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","EnableAutodial",0x10001,1,0,0,0
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","RedialAttempts",0x10001,5,0,0,0
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","RedialWait",0x10001,5,0,0,0
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","EnableUnattended",0x10001,0,0,0,0
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","EnableAutoDisconnect",0,"01"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","DisconnectIdleTime",0x10001,e,0,0,0
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings","EnableSecurityCheck",0,"01"
+HKLM,"Software\Clients\Calendar","(Default)",0,"Outlook"
+HKLM,"Software\Clients\Contacts","(Default)",0,"Address Book"
+HKLM,"Software\Clients\Internet Call","(Default)",0,"Netmeeting"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Anchor Underline",0,"yes"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","AllowCookies",0x10001,1,0,0,0
+HKCU,"Software\Microsoft\Internet Explorer\Main","Do404Search",0x10001,2,0,0,0
+
+[Strings]
+49100=C:\PROGRA~1\INTERN~1

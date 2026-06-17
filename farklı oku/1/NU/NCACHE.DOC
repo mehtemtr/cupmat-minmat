@@ -1,0 +1,201 @@
+----------------------------------------------------------------
+                  Norton Cache 8.0 Information
+----------------------------------------------------------------
+
+This file contains important information about Norton Cache that
+is not included in the manual.
+
+If you would like to print this file, change to the directory
+where Norton Utilities is installed (e.g., \NU), and at the DOS
+prompt type:
+
+      LP NCACHE.DOC /HI
+
+You can also use the NDOS command "LIST NCACHE.DOC" to display
+the file on your screen.
+
+
+Windows 3.1 compatibility
+================================================================
+
+This release of Norton Cache is fully compatible with Windows
+3.1 in all modes.
+
+We have discovered, and Microsoft has confirmed, that Windows is
+incompatible with ANY disk cache that uses Expanded Memory. With
+a cache in EMS it is possible for the machine to lock up,
+particularly when running DOS programs in a window.  Because of
+this, we have changed NCACHE to always shrink EMS cache buffers
+to 0K when Windows is running. This means that only one number
+(the DOS cache size) should be specified with the /EXP switch.
+We stronly recommend using XMS Extended Memory for the cache if
+you run Windows (e.g. use the /EXT switch).
+
+
+Program Notes
+================================================================
+
+The default write buffer size has been changed to a maximum of
+8K. NCACHE previously used the size of the largest track as the
+size of the write buffer.  On the vast majority of systems there
+is no noticable performance increase from a write buffer larger
+than 8K.  If you want a larger write buffer, you can still use
+the /WRITE switch to set the exact size.
+
+
+Compatibility Notes
+================================================================
+
+We have attempted to make NCACHE one of the most compatible disk
+caching programs available.  NCACHE will work with almost any
+hard disk supported by DOS.  It is important to understand,
+however, that it is impossible to test any cache against all the
+computers and disk drives ever sold.  There is simply too much
+variety in the PC marketplace, and very few machines are exactly
+alike.
+
+NCACHE integrates itself closely with the operating system and
+hardware, and may be effected by compatibility problems that
+would not show up with standard applications programs (e.g. word
+processors and spreadsheets).  If your computer isn't 100%
+compatible, you may be able to run standard programs perfectly,
+but be unable to use NCACHE.
+
+In many cases, using the /MULTI=OFF or /WRITE=0 switches during
+cache installation will solve any compatibility problems.  You
+should try using /MULTI=OFF before using /WRITE=0.  /MULTI=OFF
+can solve many compatibility problems, and results in only a
+small loss in performance. If you have an older computer, you
+may also want to check with the vendor to see if a more recent
+ROM BIOS is available.
+
+NCACHE is fully compatible with the MS-DOS 6.0 DoubleSpace,
+Stacker and SuperStor data compression drivers.  We do not
+recommend using NCACHE with any other data compression products.
+
+If you are using Stacker SSWAP, SuperStor DEVSWAP, or any other
+program that lets you dynamically swap drive letters, you must
+do all such swapping BEFORE loading NCACHE.  Swapping drive
+letters after NCACHE is loaded may result in data being written
+to the wrong disk, possibly overwriting other information.
+
+For full compatibility with all versions of Windows, NCACHE
+emulates Microsoft's SmartDrive disk cache.  If NCACHE is
+loaded, SYSINFO will report that both the NCACHE and SmartDrive
+device drivers are present. This is normal.  Also, if NCACHE is
+loaded and you attempt to load SmartDrive 4.x, SmartDrive will
+believe that it is already resident.
+
+If you are using the combination of NCACHE, Windows Enhanced
+Mode, and the QEMM-386 memory manager, you must obtain QEMM
+version 5.13 or later. If you are using QEMM version 6.00, we
+recommend upgrading to the latest version.
+
+Many SCSI host adapters now use bus mastering techniques to
+increase performance.  When using such an adapter on a 386 or
+486 computer, you must use a device driver that supports the
+Virtual DMA Services (VDS) specification.  VDS is an industry
+standard that allows bus mastering devices to work with 386
+memory managers.  Almost all SCSI adapters now have VDS
+compatible drivers available; contact your vendor for upgrade
+information.
+
+NCACHE only works on "normally connected" floppies.  If the
+floppy drive requires a special interface board or a device
+driver, NCACHE probably won't be able to cache it.  Most
+external drives are not supported by NCACHE.
+
+NCACHE is unable to cache a floppy drive that does not have
+"Change Line" support.  This is a hardware feature on the drive
+that tells the computer when a diskette has been removed. 360K
+drives often do not have a change line, and thus cannot be
+cached.  NCACHE will work fine on most other drives (1.2M, 720K,
+1.44M, etc.).  NCACHE will automatically determine which drives
+can be cached.  If a drive cannot be cached, NCACHE will either
+report "Cannot detect media change for this drive" or simply
+omit the drive from its status display.
+
+If you have an older memory manager, check with your memory
+board manufacturer to see if an upgrade is available.  In most
+cases all you'll need is new memory manager software; no
+hardware changes will be required.
+
+NCACHE will normally ignore EMS memory if you don't have the
+correct memory manager.  If you run NCACHE with no parameters it
+will simply skip over EMS and try to use Extended or
+conventional memory instead. If you provide an explicit /EXP
+switch, you will receive an error message and NCACHE will not
+install itself.
+
+Due to a conflict in Expanded Memory (EMS) usage, Borland's
+Paradox SE database management system is incompatible with
+NCACHE.  However, NCACHE is compatible with the "professional"
+Paradox version 3.5 and above. Using the command line switch
+"-EMK 0" when loading Paradox SE may allow it to work with
+NCACHE.  If this does not work, NCACHE must be unloaded before
+using Paradox SE.
+
+If you are using the RCD.SYS driver with IOMEGA removable disk
+drives, you must use version 7.0 or later, and you must load the
+driver in low memory.  RCD version 7 is compatible with all
+types of IOMEGA disk drives, and both ISA and MicroChannel
+computers.  Please contact IOMEGA for an upgrade if you are
+using an earlier version, or obtain IOMEGA'S new OAD drivers.
+
+Users of IOMEGA's Bernoulli and optical drives who also use
+Stacker should upgrade their RCD drivers to the new OAD drivers.
+NCACHE can miss media changes if you run Stacker with the RCD
+driver.  Contact IOMEGA to acquire the new driver.
+
+Refrain from removing Bernoulli cartridges while loading MS
+Windows. NCACHE and MS Windows may not properly recognize or
+access the new cartridge.  If you decide to override the NCACHE
+default cache size using command line switches, please be aware
+that the Windows cache size must not be larger than the DOS
+cache size.  We recommend the following for optimal cache sizes:
+
+DOS cache size: one half of your available XMS memory Windows
+cache size: one quarter of your available XMS
+
+Only one disk cache program can be loaded on the computer at
+once.  You must remove any other cache (e.g. SMARTDRIVE or
+PC-KWIK) before installing NCACHE.  Multiple disk cache programs
+may conflict with each other and corrupt disk data.
+
+NCACHE is not compatible with Zenith DOS 3.3 Plus when any hard
+disk partitions are larger than 32MB.
+
+If you use a program that automatically reboots your computer,
+there is the potential that data stored in the cache will not be
+written to disk. The BE REBOOT command automatically resets
+NCACHE, but other rebooting programs will not.  We recommend
+either changing to use BE REBOOT, or using an NCACHE RESET
+command right before the command that reboots the system.
+
+On most computers, NCACHE will trap the CTRL-ALT-DEL sequence
+used to reboot the system.  If there is unwritten data stored in
+cache buffers, NCACHE will write it to disk before rebooting.
+Some 386 memory managers and some keyboard enhancement programs
+prevent NCACHE from trapping CTRL-ALT-DEL.  If NCACHE is unable
+to detect CTRL-ALT-DEL on your computer, you should disable the
+delayed writing feature with the /WRITE=0 command line switch
+during NCACHE installation.
+
+If you have a RAM disk or drivers using Extended or Expanded
+memory, you must also ensure that at least 16K is free before
+running Windows. If you will never run Windows, you may use all
+available memory for NCACHE.
+
+Some anti-virus products can corrupt device driver files,
+including NCACHE.  The Norton Anti-Virus DOES NOT have this
+problem, and is fully compatible with NCACHE.  The products that
+have a problem are those that directly modify .EXE files to
+store checksums or other data.  Note that NCACHE is not the only
+driver this may effect.  Any driver file with an EXE extension
+can be corrupted, including the SETVER.EXE driver in MS DOS 5.0.
+
+You can prevent NCACHE from installing by holding down the CTRL
+key as it is loading.
+
+-------------------  END OF NCACHE.DOC FILE  -------------------
+

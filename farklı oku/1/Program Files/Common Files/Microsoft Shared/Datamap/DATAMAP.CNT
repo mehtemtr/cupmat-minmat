@@ -1,0 +1,38 @@
+:Base DATAMAP.HLP
+:Title Veri Haritasý Yardýmý
+1 Giriþ
+2 Bilgisayar haritalarý niçin kullanýlýr?=map_overview
+2 Ek haritalar satýn alma=purchasing_info
+1 Haritalar Nasýl Kullanýlýr?
+2 Haritada görüntülenecek verileri seçme=how_to_select_data
+2 Bir harita yaratma=how_to_create_a_map
+2 Bir harita görünümünüzü deðiþtirme=how_to_move_around
+2 Bir haritayý özelleþtirme=control_panel_tasks
+2 Haritaya ayrýntýlar ekleme
+3 Bir haritaya metin ekleme=how_to_add_text
+3 Haritaya bir özel daðýlým haritasý ekleme=how_to_add_symbols
+3 Bir haritaya pasta ya da sütun grafikleri ekleme=how_to_add_charts
+3 Bir haritaya veri ekleme=how_to_add_data
+2 Haritadan ayrýntýlarý kaldýrma
+3 Harita özelliklerini gizleme=how_to_hide_geographic
+3 Bir haritadan biçimlendirme silme=how_to_delete_thematic
+3 Harita göstergesini ya da baþlýðýný gizleme=how_to_hide_legend
+2 Haritanýn görünüþünü deðiþtirme
+3 Harita özelliklerinin varsayýlan renklerini deðiþtirme=how_to_change_default_colors
+3 Haritanýn renklerini deðiþtirme ya da haritayý biçimlendirme=how_to_change_thematic_colors
+3 Haritanýn biçimini deðiþtirme=how_to_change_thematic_method
+3 Bir haritada görüntülenen veriyi deðiþtirme=how_to_change_data
+3 Bir harita göstergesini özelleþtirme=customize_legend
+1 Sorun Giderme
+2 Harita sorunlarýný giderme=trouble_main
+1 Sözlük
+2 Kategori gölgelendirme biçimi=g_individual_values_map
+2 Sütun grafik biçimi=g_bar_chart_map
+2 Özel etiket=g_symbol
+2 Özel iðne haritasý=g_pinmap
+2 Veri Haritasý Denetimi iletiþim kutusu=control_panel
+2 Nokta yoðunluðu biçimi=g_dot_density_map
+2 Derecelendirilmiþ simgeler biçimi=g_graduated_symbols_map
+2 Gösterge=g_legend
+2 Pasta grafik biçimi=g_pie_chart_map
+2 Deðer gölgelendirme biçimi=g_ranged_map

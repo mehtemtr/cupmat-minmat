@@ -1,0 +1,426 @@
+This document provides general support for possible problems with the
+Rescue Disk program. 
+
+
+Rescue problems generally fall into 2 categories, with sub 
+categories...
+
+Problems creating the rescue zip set (covered in Part I of this 
+document)
+            a) Initializing problems
+            b) File copying problems
+
+Problems booting from the rescue set. (covered in Part II of this 
+document)
+            a) Driver problems
+            b) Missing files problems 
+            c) Crashes during the test boot
+
+
+
+Part I: 
+
+
+Initializing problems
+*********************
+
+Problem: When I run Rescue, it reports that I have no zip drive on my
+system.
+
+Solution: If your zip drive is properly connected, and you are still getting
+this message, then download and install the latest set of Zip Tools from 
+Iomega's website at http://www.iomega.com. Then run rescue again.
+
+
+Problem: My a: drive doesn't show up on the list of drives on the 
+Rescue window.
+
+Solution: You may have a 5.25" drive set as the a: drive. Rescue will
+only work on 3.5" (1.44 Meg) floppy drives set as the a: drive. If you
+have a 5.25" floppy drive as the a: drive and a 3.5" floppy drive configured
+as the b: drive, reassign the drive letter designations so that the floppy
+drive letters are switched. 
+
+Setting up your zip drive as a bootable a: drive is also supported. 
+This eliminates the need for a bootable floppy diskette. (Note: Only 
+some BIOSes support this feature) 
+
+
+Problem: When I run Rescue, it freezes up the computer while Rescue is 
+initializing and I have to reboot to get the computer working again.
+
+Solution: You can have freezing problems, or crashes, with rescue for a 
+few reasons
+
+1. Corrupted rescue files.
+2. Program conflicts.
+3. Registry problems.
+
+
+To resolve problems with corrupted rescue files, do the following:
+
+1. Re-install the program that included Rescue Disk.
+
+
+To resolve problems with program conflicts:
+
+a) Close all programs down before running the program again. To check if 
+you've shut down all programs, press the CTRL-ALT-DEL keys. This should 
+produce a Close Programs box. Inside this box should only be one or two
+applications, namely Explorer and Systray. (Note: On some systems, it may be
+shown as Windows Explorer.)
+b) Click on the windows Start button, click on RUN, and type the following:
+RESCUE32 /RESET
+c) When you click on the OK button, the Rescue Disk window should appear. 
+
+
+To resolve problems with the registry:
+
+a) You'll need to use a utility program, such as the Optimization Wizard
+(a component of Norton Utilities), to keep the registry in proper condition
+so that programs may run correctly.
+
+
+Problem: Rescue says my Zip drive is attached to an unsupported adapter.
+
+Solution: Rescue uses the Registry to store information about the adapters 
+that it supports. You can add entries to the Registry to support any adapter,
+as long as you have the real-mode (also known as DOS mode) drivers for it.
+
+When Rescue detects a Zip drive attached to an adapter for which it has no
+real-mode drivers, it creates a skeleton .REG file that can be used to add
+the necessary registry entries. The file is ZipAdapter?.reg. The ? is a digit
+corresponding to the Zip drive's drive letter. Here is a sample of the
+ZipAdapter?.reg file:
+
+REGEDIT4
+[HKEY_LOCAL_MACHINE\Software\Symantec\Norton Rescue\Zip Adapters\Your 
+Adapter]
+
+"L0"=""
+"F0"=""
+
+The L0 -- Ln entries are used to add lines to the CONFIG.SYS file on the
+Rescue boot floppy. The F0 -- Fn entries specify what files to copy to the
+Rescue boot floppy.
+
+If you have an IDE or ATAPI Zip drive, and you receive this error message,
+you can fix this by specifying the default IDE drivers, which can support
+most IDE controllers. To do this, edit the ZipAdapter?.reg file to look like
+this:
+
+REGEDIT4
+[HKEY_LOCAL_MACHINE\Software\Symantec\Norton Rescue\Zip Adapters\Your 
+Adapter]
+
+"L0"="DEVICEHIGH=ASPIIDE.SYS"
+"L1"="DEVICEHIGH=ASPIATAP.SYS"
+"F0"="ASPIIDE.SYS"
+"F1"="ASPIATAP.SYS"
+
+To merge the .REG file into the Registry, double-click the file.
+
+If you receive this message and you have a SCSI Zip or Jaz drive, contact 
+the adapter manufacturer for the correct real-mode drivers. (They may 
+already be on your system.) You must have the real-mode drivers, not the
+protected-mode drivers, for Rescue to work.
+
+NOTE:
+Add the files to the Rescue Disk folder. Do not specify paths in
+the Fx or Lx lines of the .REG file.
+
+For example, here is a ZipAdapter5.reg file modified for an unsupported SCSI
+adapter:
+
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\Symantec\Norton Rescue\Zip Adapters\fd16_700]
+
+"L0"="DEVICE=MCAM18XX.SYS"
+"L1"="DEVICE=ASPIDISK.SYS /G"
+"F0"="MCAM18XX.SYS"
+"F1"="ASPIDISK.SYS"
+
+NOTE:
+The "your adapter" section in the examples above will be replaced with the
+adapter's name, as in the last example above.
+
+
+Finding drivers for unsupported SCSI controllers
+************************************************
+
+Some SCSI controllers require their own drivers. If those drivers are not
+present, then run the SCSI utility that came with the SCSI controller to 
+find these drivers so you can include them in the ZipAdapter Registry import
+file. Since Windows 95 does not require these real-mode DOS drivers, they
+are often not installed on the computer. Typically, they are found under
+the DOS/Windows 3.x category. When you run the SCSI utility, it will install
+the drivers on the hard drive (usually to a folder called SCSI) and add the
+device lines to the CONFIG.SYS file.
+
+For example, an unsupported Adaptec 1520 SCSI controller requires the
+following drivers and device load lines in order to access SCSI devices
+in DOS mode:
+
+device=C:\SCSI\aspi2dos.sys /d /p340 /q11
+device=C:\SCSI \aspidisk.sys /d
+
+NOTE:
+The /p and /q numbers will vary from system to system.
+
+To access the SCSI Zip drive in DOS and thereby enable Zip Rescue to
+function, create the following Zipadaper?.reg file and copy the necessary
+driver files (the F0 and F1 entries) to the Rescue Disk folder.
+
+REGEDIT4
+[HKEY_LOCAL_MACHINE\Software\Symantec\Norton Rescue\Zip Adapters\
+Adaptec 1520]
+
+"L0"="aspi2dos.sys /d /p340 /q11"
+"L1"="aspidisk.sys /d"
+"F0"="aspi2dos.sys "
+"F1"="aspidisk.sys"
+
+
+File copying problems
+*********************
+
+Problem: When I hit the Create button, rescue reports that "Certain Files
+could not be copied." What do I do?
+
+Solution: On that message, you should see a Details button. If you click on
+this button, another screen should appear with a list of files that could
+not be copied. Click on the plus sign next to each file to find out why the
+file could not be copied to the zip disk.
+
+If the reason is "file not found," do a search for the requested file(s) to
+see whether it exists on the drive. If the file(s) is not on the hard drive,
+proceed with the creation of the rescue set as the file(s) may not be
+necessary. After all the files are copied over to the zip disk, you'll be
+asked to reboot to test the rescue set.
+
+Problem: Rescue reports that PARTINFO.DAT cannot be copied over to the zip
+disk.
+
+Solution: PARTINFO.DAT is the file that stores a copy of the partition data
+on your computer. If you have an IDE or ATAPI zip drive, make sure it is not 
+configured in the BIOS settings as it can cause this error to appear. You can
+look at these settings from a setup program that can run when your computer
+is booting up. Usually, you will see a message on bootup to enter a setup 
+utility by pressing F1 or Del. It is from this program that you can see 
+whether the zip drive is listed among devices attached to the IDE ports on
+your computer. You can set up the port that contains the zip drive to NONE,
+instead of AUTO, to stop the BIOS configuration of the zip drive from
+occuring.
+
+Note: this error is also common if you have security software like Your
+Eyes Only, or if you have NTFS partitions on the hard drive.
+
+
+Problem: When rescue starts to copy files over, I see a Disk Write Error
+message on the screen.
+
+Solution: The zip disk or the floppy diskette may be physically damaged.
+
+Try to full format the floppy. Double-click on My Computer and right-click
+on the a: drive. Choose Format, followed by Full Format on the next screen.
+If the format procedure fails, the disk (or drive) is likely damaged. 
+
+To do a Full (or Long) Format on a zip disk you must have Zip Tools installed. 
+If you don't already have them installed, you can obtain them from Iomega's
+website at http://www.iomega.com. Once you have Zip Tools installed, 
+double-click on My Computer and right-click on the Zip Drive icon, which 
+should be blue and read ZIP100. Choose Format, followed by Full/Long format.
+If the format procedure doesn't complete, the disk (or drive) is probably
+damaged.
+
+
+Part II:
+
+
+Driver problems
+***************
+
+Problem: When I bootup from my Zip Rescue set, I see a message that the Zip
+drivers are not installed and that there is an error in the CONFIG.SYS file. 
+
+Solution: This is most likely a driver, configuration, or controller issue. 
+Rescue in Windows uses a protected-mode driver for the Zip drive. When 
+booting from the Rescue diskette, however, it must use the real-mode DOS 
+drivers. Follow these steps to check whether any of these drivers from the 
+CONFIG.SYS file on the Rescue boot floppy are failing to load:
+
+1. Start the computer with the Rescue floppy and Zip disk inserted.
+2. When the system displays the blue logo screen, press Esc to dismiss the 
+screen.
+3. Watch the messages displayed by the drivers as they load
+
+
+Parallel Zip drives
+*******************
+
+Try connecting the Zip Drive directly to the parallel port. Disconnect any 
+other devices attached to the zip drive, as well, as these conditions can 
+prevent the driver from finding the zip drive.
+
+Parallel Zip drives require a parallel port chipset driver. If you look at 
+the CONFIG.SYS file on the Rescue diskette, you will see a line that reads:
+
+DEVICEHIGH=ASPIPPM1.SYS FILE=SMC.ILM
+
+or something similar. The key is the ILM driver after the second = sign; this
+is the driver that will provide optimum performance from your parallel port 
+chipset. In some cases, the parallel port chipset will not function correctly
+in optimized mode. In this case, change the .ILM driver to the most generic
+type, which should work with almost any chipset. To do this, use one of these
+procedures:
+
+
+If the CONFIG.SYS line is installing ASPIPPM1.SYS, change it to read:
+DEVICEHIGH=ASPIPPM1.SYS FILE=NIBBLE.ILM
+
+If the CONFIG.SYS line is installing ASPIPPM2.SYS, change it to read:
+DEVICEHIGH=ASPIPPM2.SYS FILE=NIBBLE2.ILM
+
+
+NOTE:
+Some BIOSes (like Award) allow you to set various parallel drivers in the
+system setup or CMOS. Changing this setting to "Standard" often corrects
+problems with parallel Zip drives.
+
+
+IDE and ATAPI Zip drives
+************************
+
+IDE drives use some SCSI drivers too. Sometimes the BIOS or system setup 
+detects the drive, which is incorrect; this may prevent the DOS drivers from
+loading properly. Set the drive detection to NONE. You may then need to run 
+SETUP.EXE from the Iomega Tools disk to reconfigure this drive. You may also 
+want to uncheck the INT 13 setting for this drive's properties (right-click
+on the drive letter and choose Properties). 
+
+NOTE:
+Some BIOSes will continue to detect Zip drives even after setting drive 
+detection to NONE. To overcome this issue, select TYPE 1, which is incorrect
+but it will prevent the Zip drive from being detected. On restart, the BIOS 
+will display a drive detection error which you can ignore. Most BIOSes also
+have an error detection setting that you can turn off which will prevent the
+drive error message from appearing. Zip drive detection in BIOS is a problem
+that Iomega and BIOS manufacturers are working on. It seldom affects the Zip
+drive in Windows, but almost always causes problems for Zip drives in DOS. 
+Since Norton Zip Rescue is designed to rescue you from a Windows crash, 
+proper Zip drive functionality in DOS is necessary.
+
+
+SCSI Zip drives
+***************
+
+SCSI drives need an up-to-date SCSI BIOS, and up-to-date SCSI drivers. Iomega 
+supplies Norton Zip Rescue with a number of SCSI adapter files. If Rescue 
+fails to find or load your SCSI Zip drive, contact the manufacturer of the
+adapter card to find the correct DOS drivers. Also see the "Rescue reports
+that my Zip drive is attached to an unsupported adapter" question above for
+more information.
+
+
+USB (Universal Serial Bus) Zip drives
+*************************************
+This version of Rescue Disk does not support creating Zip Rescue disk
+sets on USB Zip drives.
+
+
+Missing Files
+*************
+
+Problem: When I reboot with the rescue set in place, I am left at a blinking
+a: prompt.
+
+Solution: The startup files on the rescue floppy diskette were probably
+not created correctly, and so the rescue program will need to be reset. 
+
+a) Click on the Windows Start button, click on RUN, and type the following:
+Rescue32 /RESET
+b) When you click on the OK button, Rescue Disk window should appear. 
+
+
+Problem: When I bootup with the rescue set, I see the a Non-System Disk
+error on the screen.
+
+Solution: Try creating a new rescue set using a different floppy, if the 
+problem persists, reset the rescue program as follows:
+
+a) Click on the windows Start button, click on RUN, and type the following:
+rescue32 /RESET
+b) When you click on the OK button, Rescue Disk window should appear. 
+
+
+Problem: When I bootup with the rescue set, the floppy drive is accessed for
+a moment and the screen freezes.
+
+Solution: Try the solution listed to the problem above. If the problem
+continues, replace the diskette as the system area on it is probably
+faulty.
+
+
+Problem: When testing the rescue set, the computer accesses the zip drive for
+a minute or so, but ultimately the rescue test fails (from errors, freeze
+ups, etc...)
+
+Solution: Try creating a Safe Mode rescue set. Run rescue again and click on
+the Options button. Then click on the Zip Settings tab and choose Safe Mode.
+Create a new rescue set and test it. 
+
+Safe Mode doesn't load as many drivers as Normal Mode, making it easier
+from which to boot up. However, the functionality of the Rescue Recovery
+Wizard remains the same in both modes. 
+
+
+Problem: When I test the rescue set, the Rescue Recovery Wizard doesn't
+show up.
+
+Solution: The Rescue Recovery Wizard should appear automatically. If it
+does not, double-click on the shortcut for it at the desktop to start it. 
+You can also insert this shortcut, or a copy of it, into the windows StartUp
+folder if you want the Rescue Recovery Wizard to pop up automatically.
+
+
+
+Crashes during the test boot
+****************************
+
+Problem: When booting off the Zip Rescue set, my system crashes and there is
+little or no free space on the Zip disk.
+
+Solution: When Norton Zip Rescue creates the Zip disk, it reserves about 30 MB
+of space on the disk for use by the Windows swap file and for copying 
+additional files during the test boot.
+
+On most systems, the 30 MB free space is sufficient for successful operation. 
+However, there are cases where more space is needed. Examples of this are 
+systems with several large applications installed.
+
+Norton Zip Rescue allows the user to specify how much free space to leave on 
+the Zip disk when creating the Rescue set. The procedure involves creating a 
+registry key that specifies the amount of free space. Here are the details:
+
+1. Using regedit, open up the following registry key:
+ 	HKEY_LOCAL_MACHINE\Software\Symantec\Norton_Rescue\Zip Rescue
+2. Create a 'DWORD' value named 'ZipSlack' and set it to the number of bytes 
+of free space.  The number should be between 1,000,000 and 50,000,000.   
+It is recommended that you try increasing the free space by increments of 
+5,000,000 until your system boots successfully (i.e. start with 35,000,000 
+then 40,000,000 ... etc).
+
+3. Create a new rescue set and test it.  NOTE: Do not use the 'Update' 
+function to update an existing set or specify the /RESET switch when 
+launching rescue. Both of these will cancel the effect of the newly added key. 
+Once the set is created and tested, you may resume using the 'Update' function 
+(but not the /RESET switch).
+
+
+For additional information please see the readme.txt file in the Rescue Disk
+folder.
+
+For additional information and technical support for Norton Zip rescue
+please visit Symantec's Technical Support Site at 
+http://service.symantec.com/nu

@@ -1,0 +1,32 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={EA1F5314-EDFD-11ce-8D13-00AA0051BF96}
+Path=msspc32.dll
+Entry Point=2
+Client Version=4.0
+Misc Flags=ExchangePath;NoUserEdit
+
+[Exchange Client Compatibility]
+Exchange Registry=1
+Exchange Extension Key=Schedule+
+
+; Exchange Context Map is VIEWER.  When running in Outlook, the TASK
+; context is unnecessary.
+Exchange Context Map=01
+
+; Exchange Interface Map is IExchExtCommands.
+Exchange Interface Map=1000000
+
+[Folder]
+Events=InstallCommands
+Commands=SchedPlus
+
+[Command]
+SchedPlus=50004;<SchedPlus>;Toolbar End Separator;:201
+
+[Strings]
+DisplayName=Schedule+
+Description=Schedule+
+SchedPlus=Ajandayý Göster
+

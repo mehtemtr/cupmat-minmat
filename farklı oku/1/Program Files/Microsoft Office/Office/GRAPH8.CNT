@@ -1,0 +1,206 @@
+:Base GRAPH8.HLP>REF
+:Title Microsoft Graph
+:Index Microsoft Graph Yardýmý=GRAPH8.HLP
+:Link GR9701.HLP
+:Link GR9702.HLP
+:Link GR9703.HLP
+:Link GR9704.HLP
+:Link GR9705.HLP
+:Link OF9701.HLP
+:Link OF9702.HLP
+:Link OF9703.HLP
+:Link OF9704.HLP
+:Link OF9705.HLP
+0 Microsoft Graph
+1 Microsoft Graph Yardýmý Alma
+2 Office Yardýmcýsý boyutunu deðiþtirme=ofdccChangeSizeOfOfficeAssistant@graph8.hlp>howto
+2 Farklý Office Yardýmcýsý seçme=ofhowChangeOfficeAssistant@graph8.hlp>howto
+2 Office Yardýmcýsý'ný kullanmadan ileti görüntüleme=rerefDisplayMessagesWithoutOfficeAssistant@graph8.hlp>howto
+2 Office Yardýmcýsý'ný kullanmadan Yardým alma=oftbcGetHelpWithoutShowingOfficeAssistant@graph8.hlp>howto
+2 Office Yardýmcýsý'ný gizleme veya gösterme=IDH_ofdefShowOfficeAssistant@graph8.hlp>howto
+2 Office Yardýmcýsý'ný ve balonunu taþýma=ofhowMoveOfficeAssistant@graph8.hlp>howto
+2 Office Yardýmcýsý kullanma tuþlarý=ofrefKeysForWorkingWithOfficeAssistant@graph8.hlp>ref
+2 Microsoft Excel'de Visual Basic Yardým'ý alma=rehowGetOnlineHelpForVisualBasic@graph8.hlp>howto
+2 Programýnýz ve bilgisayarýnýz hakkýnda bilgi alma=ofhowGetInformationAboutMyComputer@graph8.hlp>howto
+2 Office Yardýmcýsý sesini açma veya kapatma=ofdccTurnOfficeAssistantSoundOnOrOff@graph8.hlp>howto
+2 Office Yardýmcýsý sorunlarý giderme=ofhowTroubleshootOfficeAssistant@graph8.hlp>ref
+1 Grafik Yaratma
+2 Microsoft Graph grafikte veri gösterimi=xllrgHowWorksheetDataIsRepresentedInChart@graph8.hlp>LgCard
+2 Microsoft Graph'ý kullanarak grafik yaratma=grhowCreateChartWithMicrosoftGraph@graph8.hlp>HowTo
+2 Microsoft Excel çalýþma sayfasý veya grafiði alma=grhowImportMicrosoftExcelWorksheetOrChart@graph8.hlp>HowTo
+2 Grafik yaratmak için metin dosyasý veya Lotus 1-2-3 dosyasý alma=grhowImportDataFromAFile@graph8.hlp>HowTo
+2 Grafik yaratmak için baþka bir programdaki verilere baðlanma=grhowLinkToDataInAnotherApplication@graph8.hlp>HowTo
+2 Baþka bir programdaki veriyle baðlantýyý kesme=grhowBreakALink@graph8.hlp>HowTo
+2 Microsoft Graph'ýn alabileceði dosya biçimleri=grrefFileFormatsYouCanImport@graph8.hlp>Ref
+2 Microsoft Graph'ýn Lotus 1-2-3 sayý biçimlerini yorumlama þekli=grrefHowGraphInterpretsLotus123NumberFormats@graph8.hlp>Ref
+2 Microsoft Graph'tan çýkma=grhowQuitMicrosoftGraph@graph8.hlp>HowTo
+1 Grafikte Metin ve Veri  Ekleme ve Deðiþtirme
+2 Veri sayfasý ve grafik arasýnda geçiþ=grhowSwitchBetweenTheDatasheetAndTheChart@GRAPH8.HLP>HowTo
+2 Grafiðe veri ekleme veya kaldýrma=grdecAddOrRemoveDataFromTheChart@GRAPH8.HLP>REF
+2 Veri sayfasýna veri girme=grhowEnterDataInTheDatasheet@GRAPH8.HLP>HowTo
+2 Grafikteki deðerleri deðiþtirme=xlhowChangeDataPointValuesInAWorksheetCell@GRAPH8.HLP>HowTo
+2 Veri imleyicilerini sürükleyerek 2-B grafikte deðerleri deðiþtirme=xlhowChangeDataPointValuesUsingGoalSeeking@GRAPH8.HLP>HowTo
+2 Veri çizim biçimini deðiþtirme=xldecChangeTheWayYourDataIsPlotted@GRAPH8.HLP>REF
+2 Yuvarlak pasta veya çubuk pasta grafikte çizdirilen noktalarý deðiþtirme=xlhowChangePointsPlottedInPieOfPieOrBarOfPieChart@GRAPH8.HLP>HowTo
+2 Grafik etiketlerini, baþlýklarý ve diðer metinleri deðiþtirme=xlhowChangeChartLabelsTitlesOtherText@GRAPH8.HLP>REF
+2 Grafiðe metin kutusu ekleme=cohowAddUnattachedText@GRAPH8.HLP>HowTo
+2 Hatalarý geri alma=grhowUndoMistakes@GRAPH8.HLP>HowTo
+1 Görünümü Deðiþtirme veya Grafiði Görüntüleme
+2 Zaman eksenleri hakkýnda=xlconTipsForUsingTimescaleAxes@GRAPH8.HLP>REF
+2 Grafik etiketleri, veri tablolarý, gösterge, kýlavuz çizgileri ya da eksenler...=xldecChangeDisplayOptionsInChart
+2 Grafikteki veri etiketlerini, baþlýklarý ya da göstergeleri silme=cohowDeleteDataLabelsTitlesLegendsOrGridlines@GRAPH8.HLP>HowTo
+2 Grafik öðeleri hakkýnda bilgi görüntüleme ya da gizleme=xlhowControlDisplayOfChartTips@GRAPH8.HLP>HowTo
+2 Grafiði yakýnlaþtýrma veya uzaklaþtýrma=grhowZoomInOutOfChart@GRAPH8.HLP>HowTo
+1 Veri Ýmlerini, Etiketleri ve Diðer Grafik Öðelerini Biçimlendirme
+2 Grafikleri biçimlendirme hakkýnda=xllrgAboutFormattingItemsInCharts@graph8.hlp>LgCard
+2 Grafik öðeleri seçme yöntemleri=xlhowWaysToSelectFormatChartItems@graph8.hlp>Ref
+2 Grafik öðelerini fare kullanarak taþýma ve yeniden boyutlandýrma=xldecMoveSelectAndSizeChartsAndChartItems@graph8.hlp>HowTo
+2 Grafiklerde renkleri, desenleri, çizgileri, dolgularý ve kenarlýklarý deðiþtirme=xlhowApplyColorsPatternsAndBordersToChartItems@graph8.hlp>HowTo
+2 Çizgi, xy (daðýlým) veya radar grafik imleyicilerinin boyutu, rengi veya þekl...=xlhowChangeSizeOfLineChartMarkers@graph8.hlp>HowTo
+2 Yüzey grafiðinde renk deðiþtirme=cohowFormat3DSurfaceChartLevels@graph8.hlp>HowTo
+2 Ayný veri serisindeki renkleri deðiþtirme=xlhowFormatDataMarkers@graph8.hlp>HowTo
+2 Grafik öðesine resim ekleme=xlhowCreateAndFormatPictureMarkers@graph8.hlp>HowTo
+2 Veri serisinden resim veya dolgu etkisi temizleme=xlhowClearPictureOrFillEffectFromDataSeries@graph8.hlp>HowTo
+2 Grafik öðesinden resim veya dolgu etkisi temizleme=xlhowClearPictureOrFillEffectFromChartItem@graph8.hlp>HowTo
+2 Grafik metni yazý tipini ve boyutunu deðiþtirme=cohowChangeTheFontAndAlignmentOfChartText@graph8.hlp>HowTo
+2 Veri etiketlerinin konumunu otomatik olarak deðiþtirme=xlhowRepositionDataLabelsAutomatically@graph8.hlp>HowTo
+2 Grafik baþlýklarýnda ve metin kutularýnda metin hizalama=xlhowAlignTextInChartTitlesTextBoxes@graph8.hlp>HowTo
+2 Grafik baþlýðýnda veya eksende metin döndürme=xlhowRotateAlignTextInChart@graph8.hlp>HowTo
+2 Microsoft Graph'ýn sayý, tarih ve saat görüntüleme yöntemini deðiþtirme=grdecChangeNumberFormats@GRAPH8.HLP>REF
+2 Çalýþma sayfasýnda kullanýlan sayý biçimleriyle ilgili grafikte kullanýlan sa...=grhowReestablishLinksBetweenNumberFormatsInDatasheetChart@graph8.hlp>HowTo
+2 Özel sayý, tarih ve saat biçim kodlarý=grhowCustomNumberFormats@GRAPH8.HLP>REF
+2 Özel sayý biçimlerini silme=grhowDeleteCustomNumberFormats@GRAPH8.HLP>HowTo
+2 Çubuk veya sütun grafiklerde veri imleyicileri çakýþtýrma veya boþluk verme=xlhowArrangeAndSpaceDataMarkersInBarAndColumnCharts@graph8.hlp>HowTo
+2 Grafiklere yukarý aþaðý çubuklarý ve izdüþüm, seri ve yüksek alçak çizgileri ...=xlhowUseSpecialLinesAndBarsToEmphasizeData@graph8.hlp>HowTo
+2 Deðer ekseni boyutunu deðiþtirme=xlhowChangeTheScaleOfAxes@graph8.hlp>HowTo
+2 Kategori ekseninde kademeler ve etiketlerin aralýðýný deðiþtirme=xlhowChangeTheCategoryOrSeriesAxisScale@graph8.hlp>HowTo
+2 Eksende kademe görünümünü ve etiket yerini deðiþtirme=xldecModifyChartAxes@graph8.hlp>HowTo
+2 Pasta ve halka grafiklerde dilim çýkarma=xlhowFormatPieAndDoughnutSlices@graph8.hlp>HowTo
+2 Halka veya pasta grafikte dilimlerin konumunu döndürme=xlhowChangeTheAngleOfTheFirstDoughnutOrPieSlice@graph8.hlp>HowTo
+2 Yuvarlak pasta veya çubuk pasta çizim alaný boyutunu deðiþtirme=xlhowChangeSizeOfPieOfPieOrBarOfPiePlotArea@graph8.hlp>HowTo
+2 Halka grafikte delik boyutunu deðiþtirme=xlhowChangeTheDoughnutHoleSize@graph8.hlp>HowTo
+2 Çizgi grafiklerin açýlarýný düzleþtirme=xlhowSmoothTheAnglesOfLineCharts@graph8.hlp>HowTo
+2 3-B grafik görünümünü deðiþtirme=codecFormat3DCharts@graph8.hlp>Ref
+2 Hatalarý geri alma=grhowUndoMistakes@GRAPH8.HLP>HowTo
+1 Grafik Türünü Deðiþtirme
+2 Baþka grafik türü seçme=xlnschowChangeTheChartType@GRAPH8.HLP>HowTo
+2 Grafik türü örnekleri=xlconColumnChartExample@GRAPH8.HLP>LgCard
+2 Karýþýk veriyi göstermek için karma grafikler=xllrgCombinationChartsSecondaryAxes@GRAPH8.HLP>LgCard
+2 Varsayýlan grafik türünü deðiþtirme=xlhowChangeTheDefaultChartFormat@GRAPH8.HLP>REF
+2 Özel grafik türleri=xlconExplanationOfCustomChartTypes@GRAPH8.HLP>REF
+2 Kullanýcý tanýmlý özel grafik türünü silme=xlhowDeleteACustomChartAutoFormat@GRAPH8.HLP>HowTo
+2 Diðer grafiklere uygulamak üzere özel grafik türü kaydetme=xlhowAddOrDeleteCustomChartAutoFormats@GRAPH8.HLP>HowTo
+2 Özel grafik türünü diðer kullanýcýlarla paylaþma=xlhowShareCustomChartAutoFormatsWithOtherUsers@GRAPH8.HLP>HowTo
+1 Veri Sayfasýnda Çalýþma
+2 Veri sayfasý ve grafik arasýnda geçiþ=grhowSwitchBetweenTheDatasheetAndTheChart@GRAPH8.HLP>HowTo
+2 Veri sayfasýnda sütun geniþliði deðiþtirme=grhowAdjustColumnWidth@GRAPH8.HLP>HowTo
+2 Veri sayfasý sütunlarýný varsayýlan geniþliðe döndürme=grhowResetcolumnwidthtostandard@GRAPH8.HLP>HowTo
+2 Veri sayfasýnda yazý tipini deðiþtirme=grhowChangeTheFontInTheDatasheet@GRAPH8.HLP>HowTo
+2 Veri sayfasýnda hücre, aralýk, satýr ve sütun seçme=grrefSelectingWithTheMouse@GRAPH8.HLP>REF
+2 Veri sayfasýnda hareket etme veya kaydýrma=grrefMovingWithTheMouse@GRAPH8.HLP>REF
+2 Hücre verisi taþýma veya kopyalama=grdecMoveOrCopyCellData@GRAPH8.HLP>REF
+2 Veri sayfasýnda hücre, satýr veya sütun temizleme veya silme=grdecClearOrDeleteCellsRowsOrColumnsInDatasheet@GRAPH8.HLP>REF
+2 Veri sayfasýna hücre, satýr veya sütun ekleme=grhowInsertBlankRowsOrColumns@GRAPH8.HLP>HowTo
+2 Microsoft Graph'ýn sayý, tarih ve saat görüntüleme yöntemini deðiþtirme=grdecChangeNumberFormats@GRAPH8.HLP>REF
+2 Özel sayý, tarih ve saat biçim kodlarý=grhowCustomNumberFormats@GRAPH8.HLP>REF
+2 Özel sayý biçimlerini silme=grhowDeleteCustomNumberFormats@GRAPH8.HLP>HowTo
+2 Çalýþma sayfasýnda kullanýlan sayý biçimleriyle ilgili grafikte kullanýlan sa...=grhowReestablishLinksBetweenNumberFormatsInDatasheetChart@GRAPH8.HLP>HowTo
+2 Veri sayfasýndaki yazým hatalarýný yazarken düzeltme=grhowCorrectSpellingTypingErrorsAsYouType@GRAPH8.HLP>HowTo
+2 Otomatik Düzelt giriþi içeriðinin adýný deðiþtirme=wohowChangeTheContentsOfAnAutoCorrectEntry@GRAPH8.HLP>HowTo
+2 Otomatik Düzelt giriþini silme=wohowDeleteanAutoCorrectentry@GRAPH8.HLP>HowTo
+2 Belirli kýsaltmalarý veya üst karaktere çevrilmiþ metni otomatik deðiþiklikle...=grhowPreventAutoCorrectFromCorrectingSpecificAbbreviationsOrCapitalizedText@GRAPH8.HLP>HowTo
+2 Otomatik düzeltmeleri önleme=grhownxlscTurnOffAutoCorrect@GRAPH8.HLP>HowTo
+2 Veri sayfasýnda hareket tuþlarý=grrefKeysForMovingAroundInTheDatasheet@GRAPH8.HLP>REF
+2 Hatalarý geri alma=grhowUndoMistakes@GRAPH8.HLP>HowTo
+1 Hata Çubuklarýný ve Eðilim Çizgilerini Kullanma
+2 Veri serilerine eðilim çizgisi ekleme=xlhowAddATrendlineToADataSeries@GRAPH8.HLP>HowTo
+2 Eðilim çizgisi ayarlarýný deðiþtirme=xlhowModifyTrendlineSettings@GRAPH8.HLP>HowTo
+2 Eðilim çizgisini silme=xlhowDeleteATrendline@GRAPH8.HLP>HowTo
+2 Grafiklerdeki eðilim çizgileri=xldecAddModifyAndDeleteTrendlinesInAChart@GRAPH8.HLP>REF
+2 Eðilim çizgilerini hesaplamak için eþitlikler=xlrefEquationsForCalculatingTrendlines@GRAPH8.HLP>REF
+2 Veri serisine hata çubuklarý ekleme=xlhowAddErrorBarsToADataSeries@GRAPH8.HLP>HowTo
+2 Hata çubuðu ayarlarýný deðiþtirme=xlhowModifyErrorBarSettings@GRAPH8.HLP>HowTo
+2 Hata çubuklarýný silme=xlhowDeleteErrorBars@GRAPH8.HLP>HowTo
+2 Grafiklerdeki hata çubuklarý=xlconErrorBarsInCharts@GRAPH8.HLP>REF
+2 Hata sayýsýný hesaplamak için eþitlikler=xlrefEquationsForCalculatingTheErrorAmount@GRAPH8.HLP>REF
+1 Çizim Nesneleriyle Çalýþma
+2 Þekiller, Çizgiler, Serbest Çizimler ve Diðer Çizim Nesnelerini Yaratma
+3 Çizim araç çubuðunu gösterme veya gizleme=xltbcShowOrHideDrawingToolbar>HowTo
+3 Çember, kare veya baþka Otomatik Þekil ekleme=esdccAddAutoShape@graph8.hlp>HowTo
+3 Otomatik Þekil türünü deðiþtirme=esdccChangeOneAutoShapeToAnother@graph8.hlp>HowTo
+3 Çizim nesnesi biçemini varsayýlan olarak kaydetme=pphowSaveAnObjectsStyleAsTheDefault>HowTo
+3 Serbest formlar ve eðriler hakkýnda=ppconCustomShapes@graph8.hlp>Ref
+3 Çizgi ekleme=pphowAddLine@graph8.hlp>HowTo
+3 Eðri ekleme=pphowAddCurve@graph8.hlp>HowTo
+3 Serbest form nesnesi ekleme=pphowAddFreeformObject@graph8.hlp>HowTo
+3 Çizgilere ok ucu ekleme ve kaldýrma=pphowAddOrRemoveArrowheads@graph8.hlp>HowTo
+3 Baðlayýcý çizgi ekleme veya yeniden yönlendirme=ppdecAddOrReshapeConnectorLine@graph8.hlp>Ref
+3 Çizim nesnelerinde sorunlarý giderme=pptbsTroubleshootObjectDrawingAndHandling@graph8.hlp>Ref
+2 Çizim Nesnelerini Biçimlendirme
+3 Çizim nesnesine dolgu ekleme, deðiþtirme veya kaldýrma=pphowAddOrChangeAFill@graph8.hlp>Ref
+3 Çizim nesnesi döndürme veya ters çevirme=ppconRotatingAndFlippingObjects@graph8.hlp>Ref
+3 Çizim nesnesi çevresindeki çizgi veya kenarlýk rengini deðiþtirme=ppdecChangeTheColorOfALineArcOrBorder@graph8.hlp>HowTo
+3 Serbest form veya eðri þeklini deðiþtirme=pphowChangeTheShapeOfACustomShape@graph8.hlp>HowTo
+3 Çizim nesnesi çizgisi veya kenarlýðýnýn biçemini deðiþtirme=pphowChangeThicknessOfLineOrBorder@graph8.hlp>HowTo
+3 Çizim nesnesi çevresine kesik çizgi veya kenarlýk koyma=pphowMakeDashedLineOrBorder@graph8.hlp>HowTo
+3 Çizim nesnesi çevresindeki çizgi veya kenarlýðý kaldýrma=pphowRemoveABorderOrLine@graph8.hlp>HowTo
+3 Çizim nesnesine gölge ekleme, deðiþtirme veya kaldýrma=pphowAddChangeOrRemoveAnObjectShadow@graph8.hlp>Ref
+3 Çizim nesnesine 3-B efekti ekleme, deðiþtirme veya kaldýrma=esdecAdd3DEffectToObject@graph8.hlp>Ref
+3 Çizim nesnelerine kenarlýk, dolgu, gölge ve 3-B efekt eklemede sorun giderme=pptbsTroubleshootAddingBordersFillsAndShadows@graph8.hlp>Ref
+2 Çizim Nesnelerini Gruplandýrma, Hizalama ve Taþýma
+3 Çizim nesnelerini gruplandýrma, grubu çözme ve yeniden gruplandýrma=ppconGroupingObjects@graph8.hlp>Ref
+3 Çizim nesnelerini yýðma=ppconStackingObjects@graph8.hlp>HowTo
+3 Çizim nesnelerini hizalama ve düzenleme=ppdecAlignObjects@graph8.hlp>Ref
+3 Çizim nesnesini veya nesne kümesini taþýma=pphowMoveAnObjectOrSetOfObjects@graph8.hlp>HowTo
+3 Çizim nesnesini küçük artýþlarla taþýma veya "öteleme"=pphowNudgeAnObjectInSmallIncrements@graph8.hlp>HowTo
+3 Nesneyi yeniden boyutlandýrma veya kýrpma=ppdecResizeObjects@graph8.hlp>Ref
+3 Çizim nesnelerini hizalamada ve düzenlemede sorunlarý giderme=pptbsTroubleshootAligningArrangingObjects@graph8.hlp>Ref
+2 Metin veya Özel Metin Efektleri Ekleme
+3 Otomatik Þekil'e metin ekleme=pphowAddTextToACommonShape@graph8.hlp>HowTo
+3 Otomatik Þekil'de veya metin kutusunda metnin görünümünü deðiþtirme=pphowChangeOneOrMoreAttributesOfTextAtTheSameTime@graph8.hlp>HowTo
+3 Metin kutusunu taþýma=pptbsICantMoveATextObject@graph8.hlp>HowTo
+3 Otomatik Þekil'e veya metin kutusuna iliþtirilmiþ metnin kenar boþluklarýný v...=ppdecPositionAlignSpaceTextWithinObjects@graph8.hlp>Ref
+3 Özel metin efekti ekleme veya düzenleme=pphowInsertWordArt@graph8.hlp>Ref
+2 Alýnmýþ Resim ve Küçük Resimlerle Çalýþma
+3 Çalýþma kitabýna resim ve küçük resim ekleme yollarý=ppconInsertingPicturesOnSlides@graph8.hlp>Ref
+3 Resim veya küçük resim ekleme ve düzenleme=pphowInsertPicturesIntoAPresentation@graph8.hlp>Ref
+3 Resim kýrpýðýnýn grubunu çözme ve deðiþtirme=xlhowUngroupClipArtToModifyIt@graph8.hlp>HowTo
+3 Resimlerde ve alýnmýþ grafiklerde sorunlarý giderme=ppconSolvingGraphicsFilterProblems@graph8.hlp>Ref
+1 Araç Çubuklarýný ve Menüleri Özelleþtirme
+2 Araç çubuklarý hakkýnda=ofhowAllAboutCommandBars@graph8.hlp>Ref
+2 Araç çubuðu gösterme veya gizleme=ofhowShowOrHideCommandBar@graph8.hlp>HowTo
+2 Araç çubuðu Ekran Ýpuçlarý'ný gösterme veya gizleme=ofhowItemsYouCanDragOntoCommandBar@graph8.hlp>HowTo
+2 Araç çubuðunu yeniden boyutlandýrma=cohowResizeAToolbar@graph8.hlp>HowTo
+2 Araç çubuðu taþýma=xlhowMoveAndResizeToolbars@graph8.hlp>HowTo
+2 Araç Çubuklarýný Yaratma ve Düðmeler ve Menüler Ekleme
+3 Araç çubuðu yaratma=ofhowCreateCustomCommandBar@graph8.hlp>HowTo
+3 Araç çubuðuna düðme ekleme=cohowAddOrDeleteAToolbarButton@graph8.hlp>HowTo
+3 Araç çubuðuna yerleþik menü ekleme=ofdccAddOrDeleteMenu@graph8.hlp>HowTo
+3 Menüye komut ekleme=ofhowAddCommandToMenu@graph8.hlp>HowTo
+3 Menü çubuðuna veya araç çubuðuna özel menü ekleme=ofdccCreateCustomMenu@graph8.hlp>HowTo
+3 Menüden komut silme=ofhowRemoveCommandFromMenu@graph8.hlp>HowTo
+3 Özel araç çubuðunu silme=cohowDeleteACustomToolbar@graph8.hlp>HowTo
+3 Araç çubuðundan menü silme=ofhowDeleteCommandBarMenu@graph8.hlp>HowTo
+3 Araç çubuðu düðmesini silme=ofhowDeleteCommandBarButton@graph8.hlp>HowTo
+2 Düðmelerin veya Menülerin Görünümünü, Adýný veya Konumunu Deðiþtirme
+3 Araç çubuðu ve menü komutundaki resmi veya metni deðiþtirme=cohowChangeTheImageOnAToolbarButton@graph8.hlp>Ref
+3 Araç çubuðu düðmelerinin boyutunu deðiþtirme=ofhowMakeCommandBarButtonsMenusLarger@graph8.hlp>HowTo
+3 Araç çubuðunda aþaðý açýlýr liste kutusunun geniþliðini deðiþtirme=cohowChangeTheWidthOfADropdownListBoxOnAToolbar@graph8.hlp>HowTo
+3 Araç çubuðunda ilgili düðmeleri ve menüleri gruplandýrma=cohowSpaceOutButtonsOnAToolbar@graph8.hlp>HowTo
+3 Menü taþýma=ofhowMoveMenu@graph8.hlp>Ref
+3 Menü komutu taþýma veya kopyalama=ofhowMoveOrCopyMenuCommand@graph8.hlp>HowTo
+3 Araç çubuðu düðmesi taþýma veya kopyalama=cohowMoveAndCopyToolbarButtons@graph8.hlp>HowTo
+3 Menüyü yeniden adlandýrma=ofdccRenameCustomMenu@graph8.hlp>HowTo
+3 Özel araç çubuðunu yeniden adlandýrma=ofhowRenameCustomCommandBar@graph8.hlp>HowTo
+3 Menü komutu veya araç çubuðunu yeniden adlandýrma=rehowRenameMenuCommandOrToolbarButton@graph8.hlp>HowTo
+2 Araç Çubuðu ve Menü Ayarlarýný Deðiþtirme
+3 Yerleþik araç çubuðu özgün düðmelerini ve menülerini geri yükleme=cohowRestoreABuiltinToolbar@graph8.hlp>HowTo
+3 Yerleþik menü özgün ayarlarýný geri yükleme=ofdccRestoreBuiltinMenu@graph8.hlp>HowTo
+3 Yerleþik araç çubuðu düðmesi veya menü komutu özgün ayarlarýný geri yükleme=wohowRestoreABuiltinToolbar@graph8.hlp>HowTo
+3 Araç çubuklarý komutunu kaldýrdým. Araç çubuklarý ve menüleri nasýl deðiþtire...=oftbsIRemovedViewMenuNowIWantToCustomizeMyToolbars@graph8.hlp>Ref
+1 Microsoft Graph Sorunlarýný Giderme
+2 Microsoft Graph'ta sorunlarý giderme=grtbsGraphTroubleshootingTopics@GRAPH8.HLP>REF
+1 Baþvuru Bilgileri
+2 Microsoft Graph'ta kýsayol tuþlarýný kullanma=xlrefUsingshortcutkeys@graph8.hlp>Ref
+2 Microsoft Office özel bileþenlerini kurma veya kaldýrma=wohowInstallorremoveindividualcomponentsofWord@graph8.hlp>HowTo
+:Include EULA8.CNT

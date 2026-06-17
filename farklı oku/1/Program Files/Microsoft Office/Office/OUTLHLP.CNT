@@ -1,0 +1,771 @@
+:Base OUTLHLP.HLP>REF
+:Title Microsoft Outlook
+:Index Microsoft Outlook Help=OUTLHLP.HLP
+:Index Microsoft Outlook Upgrade Help=OUTLNEW.HLP
+:Link OL9701.HLP
+:Link OL9702.HLP
+:Link OL9703.HLP
+:Link OL9704.HLP
+:Link OL9705.HLP
+:Link OF9701.HLP
+:Link OF9702.HLP
+:Link OF9703.HLP
+:Link OF9704.HLP
+:Link OF9705.HLP
+0 Microsoft Outlook
+1 Key Information
+2 What is Microsoft Outlook?=relrgWhatIsRen>LgCard
+2 If you use Microsoft Exchange Client=redecIHaveUsedMicrosoftExchange@OUTLNEW.HLP>Ref
+2 If you use Microsoft Mail 3.x for Windows=redecIHaveUsedMicrosoftMail3xForWindows@OUTLNEW.HLP>Ref
+2 If you use Microsoft Schedule+=redecIHaveUsedMicrosoftSchedule@OUTLNEW.HLP>Ref
+2 If you use Lotus Notes 4.0=redecForCustomersUsingLotusNotes40@OUTLNEW.HLP>Ref
+2 If you use Lotus cc:Mail=redecForCustomersUsingCcMail@OUTLNEW.HLP>Ref
+2 If you use Lotus Organizer 2.1=redecIfYouAreUsingLotusOrganizer21@OUTLNEW.HLP>Ref
+2 If you use Novell GroupWise 4.1=redecIfYouAreUsingGroupWise41@OUTLNEW.HLP>Ref
+2 If you use NetManage ECCO Pro 3.0, 3.01, or 3.02=redecIfYouAreUsingECCOPro30@OUTLNEW.HLP>Ref
+2 If you use Starfish SideKick 95 Deluxe=redccIfYouAreUsingSidekick95Deluxe@OUTLNEW.HLP>Ref
+2 If you use Symantec ACT! 2.0=redecIfYouAreUsingACT20@OUTLNEW.HLP>Ref
+2 If you are new to this type of program=redecIfYouAreNewToThisTypeOfProgram@OUTLNEW.HLP>Ref
+1 Getting Help
+2 Ways to get assistance while you work=oflrgWaysToGetAssistanceWhileYouWork>LgCard
+2 Connect to Microsoft on the Web from Outlook=ofrefTheMicrosoftCorporationHomePage>HowTo
+2 Connect to Microsoft technical resources=ofdecConnectToMicrosoft>Ref
+2 Get information about your program and computer=ofhowGetInformationAboutMyComputer>HowTo
+2 Get Help for Visual Basic in Microsoft Outlook=rehowGetOnlineHelpForVisualBasic>HowTo
+2 Print a Help topic=ofhowPrintHelpTopic>HowTo
+2 Change the font size in a Help topic=ofhowChangeFontDisplayedInHelp>HowTo
+2 Show the Tip of the Day when Outlook starts=ofhowShowTipOfDayWhenprogramStarts>HowTo
+2 Send product suggestions=ofdccMSWish>HowTo
+2 Outlook Readme=!EF("OLOKU.TXT","",5):Exit()
+2 Technical support=!EF("PSS8.HLP","",5):Exit()
+2 Using the Office Assistant
+3 Get Help, tips, messages, and reminders through the Office Assistant=ofdecGetHelpTipsUsingOfficeAssistant>Ref
+3 Hide or show the Office Assistant=IDH_ofdefShowOfficeAssistant>HowTo
+3 Move the Office Assistant and its balloon=ofhowMoveOfficeAssistant>HowTo
+3 Choose a different Office Assistant=ofhowChangeOfficeAssistant>HowTo
+3 Change the size of the Office Assistant=ofdccChangeSizeOfOfficeAssistant>HowTo
+3 Turn the Office Assistant sound on or off=ofdccTurnOfficeAssistantSoundOnOrOff>HowTo
+3 Troubleshoot the Office Assistant=ofhowTroubleshootOfficeAssistant>Ref
+3 Get Help without the Office Assistant=oftbcGetHelpWithoutShowingOfficeAssistant>HowTo
+3 Turn off reminders=rehowTurnOffReminders>HowTo
+2 Getting Help on Topics in the Getting Results Book
+3 View the online Getting Results book=ofhowViewOnlineGettingResultsBook>HowTo
+3 Microsoft Outlook
+4 Getting Results - File=rnlistindexCreateAProject>Ref
+4 Getting Results - What's New in Outlook=rnlistindexIntroducingMicrosoftOutlook>Ref
+4 Getting Results - Install Outlook=rnlistindexInstallAndStartMicrosoftOutlook>Ref
+4 Getting Results - First Outlook Session=rnlistindexYourFirstOutlookSession>Ref
+4 Getting Results - Assistance=oflistindexGetAssistanceWhileYouWork>Ref
+4 Getting Results - Custom Views=rnlistindexMakeTheMostOfOutlook>Ref
+4 Getting Results - Contacts=rnlistindexManageContacts>Ref
+4 Getting Results - Mail=rnlistindexOrganizeEMail>Ref
+4 Getting Results - Calendar=rnlistindexOrganizeYourCalendar>Ref
+4 Getting Results - Meeting=rnlistindexScheduleAMeeting>Ref
+4 Getting Results - Task List=rnlistindexKeepATaskList>Ref
+4 Getting Results - Outlook Web=rnlistindexUseTheWebWithOutlook>Ref
+4 Getting Results - Share folders=rnlistindexDistributeInformationElectronically>Ref
+3 Microsoft Office
+4 Getting Results - File=rnlistindexCreateAProject>Ref
+4 Getting Results - What's New in Office=ofmscWhatsNewInMicrosoftOffice>Ref
+4 Getting Results - Install Office=oflistindexInstallAndStartMicrosoftOffice>Ref
+4 Getting Results - Assistance=oflistindexGetAssistanceWhileYouWork>Ref
+4 Getting Results - Shortcut=oflistindexTakeAShortcutToWork>Ref
+4 Getting Results - Office Applications Together=ofmscUsingOfficeApplicationsTogether>Ref
+4 Getting Results - Customize Office=oflistindexCustomizeOffice>Ref
+4 Getting Results - About Documents and Databases=redecGettingResultsAboutDocumentsDatabases>Ref
+4 Getting Results - Distribute Documents=redecGettingResultsDistributeDocuments>Ref
+4 Getting Results - Web and Office=redecGettingResultsWebOffice>Ref
+1 Moving Around in Outlook
+2 Basics of Outlook=relrgWhatsInMicrosoftOutlookWindow>LgCard
+2 Move around in Outlook=redecMovingAroundInOutlook>Ref
+2 Go to the next or previous item=rehowLookAtPreviousItem>HowTo
+2 About symbols in Microsoft Outlook=redecAboutSymbolsInproductName>Ref
+2 Use the mouse to move around=redecMovingAroundInOutlookUsingMouse>Ref
+2 Shortcut keys=redecMovingAroundUsingShortcutKeys>Ref
+2 Working With Folders
+3 Show or hide folders=rnhowShowOrHideTheFolderList>HowTo
+3 Open a folder in a separate window=rehowOpenFolderInSeparateWindow>HowTo
+3 Create a folder for items=rnhowCreateAFolder>HowTo
+3 Move a folder=rnhowMoveAFolder>HowTo
+3 Copy a folder=rnhowCopyAFolder>HowTo
+3 Rename an Outlook folder=rnhowRenameAFolder>HowTo
+3 Delete a folder=rnhowDeleteAFolder>HowTo
+2 Using the Outlook Bar
+3 Show or hide the Outlook Bar=rehowShowOrHideShortcuts>HowTo
+3 Create a Shortcut on the Outlook Bar for a folder=rehowCreateFolderShortcut>HowTo
+3 Move a Shortcut on the Outlook Bar=rehowMoveFolderShortcutToDifferentGroup>HowTo
+3 Change the size of Shortcuts on the Outlook Bar=rehowChangeSizeOfShortcutIcons>HowTo
+3 Delete a Shortcut from the Outlook Bar=rehowDeleteFolderShortcut>HowTo
+3 Add a group to the Outlook Bar=rehowAddFolderShortcutGroup>HowTo
+3 Open a group on the Outlook Bar=rehowDisplayShortcutGroup>HowTo
+3 Rename a group on the Outlook Bar=rehowRenameFolderShortcutGroup>HowTo
+3 Remove a group from the Outlook Bar=rehowRemoveFolderShortcutGroup>HowTo
+1 Using Inbox
+2 What is Inbox?=relrgInbox>LgCard
+2 Check for new messages=rehowCheckForNewMail>HowTo
+2 Address a message=rnhowAddressAMessage>Ref
+2 Send messages=rehowSendMail>HowTo
+2 Preview the contents of messages=rnhowShowOrHideThePreviewForMessages>HowTo
+2 Troubleshoot sending and receiving messages=rntbsTroubleshootOrganizingAndViewingMessages>Ref
+2 Creating and Responding to Messages
+3 Create a message=rehowCreateNewMessage>HowTo
+3 Open a message=rehowOpenMessage>HowTo
+3 Create a mail message from a contact=rnHowTurnATaskIntoACalendarItem>HowTo
+3 Reply to a message=rnhowReplyToAMessage>HowTo
+3 Forward messages=rnhowForwardAMessage>HowTo
+3 Resend a message=rehowResendMessage>HowTo
+3 Open a hyperlink in a mail message=rehowOpenHyperlinkInMailMessage>HowTo
+3 Move messages=rnhowMoveAMessage>HowTo
+3 Copy messages=rnhowCopyAMessage>HowTo
+3 Save an unfinished message=rnhowSaveAnIncompleteMessage>HowTo
+3 Close an item without saving changes=rngtpCloseATaskWithoutSavingChanges>HowTo
+3 Delete messages=rnhowDeleteAMessage>HowTo
+2 Customizing the Look of Messages
+3 Change the font for new messages=rnhowChangeTheFontForMessages>HowTo
+3 Include my name with my remarks in a message=rehowInsertingYourNameInBodyOfConversationMessages>HowTo
+3 Change the format of forwarded messages=rnhowChangeHowMessagesAreForwarded>HowTo
+3 Change the format of replied to messages=rnhowChangeHowMessagesAreReplied>HowTo
+3 Show or hide the From Field in a message=rnhowShowOrHideTheFromFieldInMessages>HowTo
+3 Show or hide the Bcc Field in a message=rnhowShowOrHideTheBccFieldInMessages>HowTo
+2 Asking Questions With Voting Buttons
+3 Ask others to vote in a message=rnhowAddVotingButtonsToAMessage>HowTo
+3 View vote responses to a message=rnhowTrackTheResponsesToAVotingMessage>HowTo
+3 Copy the results of voting responses=rehowCopyResultsOfVoting>HowTo
+2 Flagging Messages for Follow Up
+3 About message flags=rerefAllAboutMessageTags>Ref
+3 Flag a message=rndecHighlightAnActionForAMessage>HowTo
+3 Change the due date on a message flag=rnhowChangeTheDueDateForAActionInAMessage>HowTo
+3 Flag a message as completed=rehowCompleteMessageWithRequestOrFollowupTag>HowTo
+3 Clear a message flag=rehowClearMessageTags>HowTo
+2 Keeping Track of Messages
+3 Notify me when new items arrive=rehowNotifyMeWhenNewMailMessagesArrive>HowTo
+3 Track when messages are delivered or read=rehowTrackNotificationOfDeliveredReadMessages>Ref
+3 Receive a notification when messages are delivered=rndccNotifyWhenAMessageIsDelivered>HowTo
+3 Receive a notification when sent messages are read=rndccNotifyWhenAMessageIsRead>HowTo
+3 Recall or replace a message you've already sent=rehowRetrieveSentMessageBeforeItIsRead>HowTo
+3 Save a copy of messages you send=redccSaveCopiesOfAllSentMessages>HowTo
+3 Turn off automatic saving of copies of messages you send=rehowStopSavingSentMessages>HowTo
+3 Have replies to your message sent to another user=rnhowSendRepliesToAMessageToAnotherUser>HowTo
+3 Make a sent message unavailable after a specified date=rnhowSetAnExpirationDateForAMessage>HowTo
+2 Using AutoSignature
+3 Sign messages with AutoSignature=reconAutoSignature>Ref
+3 Change an AutoSignature=rehowChangeAutoSignature>HowTo
+3 Insert an AutoSignature=rehowInsertAutoSignature>HowTo
+3 Turn off AutoSignature=rehowDeleteAutoSignature>HowTo
+2 Using Word as Your E-mail Editor
+3 About Word as your e-mail editor=rerefFeaturesOfWordMail>Ref
+3 Turn on or off Word as your e-mail editor=rnhowUseWordMailAsTheEmailEditor>HowTo
+3 Change the look of your WordMail messages=rehowChangeLookOfYourEmailMessages>HowTo
+3 Troubleshoot Word as an e-mail editor=retbsTroubleshootWordAsEmailEditor>Ref
+2 Managing Your Inbox With Rules
+3 Automatically reply to incoming messages while out of the office=rehowManageIncomingMessagesWhileOutOfOffice>HowTo
+3 Create a rule with Out of Office Assistant or Inbox Assistant=rehowCreateRule>HowTo
+3 Delete a rule with Out of Office Assistant or Inbox Assistant=rehowDeleteRule>HowTo
+3 Change a rule with Out of Office Assistant or Inbox Assistant=rehowEditRule>HowTo
+3 Change the order of rules for Out of Office Assistant or Inbox Assistant=rehowChangeOrderRulesAreDone>HowTo
+3 Turn a rule on or off for Out of Office Assistant or Inbox Assistant=rehowTurnRuleOnOrOff>HowTo
+3 How rules are applied to Out of Office Assistant or Inbox Assistant=rerefHowRulesAreEvaluated>Ref
+3 Troubleshoot Out of Office Assistant and Inbox Assistant rules=retbsTroubleshootRules>Ref
+2 Adding Security to Messages
+3 Security in Microsoft Outlook=rerefSecurityInOutlook>Ref
+3 Set up security for your messages=rehowSetUpSecurityForYourMessages>HowTo
+3 Add security to messages=redecAddSecurityToMessages>Ref
+3 Change the password to seal or digitally sign messages=rehowChangePasswordForAdvancedSecurityFeature>HowTo
+3 Verify a digital signature=rehowVerifySignedMessage>HowTo
+3 Troubleshoot security=retbsTroubleshootSecurity>Ref
+2 Using the Address Book
+3 About the Address Book=rehowAboutAddressBooks>Ref
+3 Address a message=rnhowAddressAMessage>Ref
+3 Check recipient names before sending a message=rehowCheckNamesBeforeSendingMessage>Ref
+3 Find names in the Address Book=rnhowFindNamesInAnAddressBook>HowTo
+3 Get information about a name in the Address Book=rnhowGetInformationAboutAUser>HowTo
+3 Troubleshoot the Address Book=retbsTroubleshootAddressBook>Ref
+3 Setting Up the Address Book
+4 Change the order address books are checked for names=rnhowSetTheDefaultAddressBooks>HowTo
+4 Copy the Global Address List to your computer=rehowDownloadAddressBook>HowTo
+4 Set up a Contacts folder to display in the Address Book dialog box=rehowSetUpContactsFolderToDisplayInAddressBook>HowTo
+4 Remove a Contacts folder displayed in the Address Book dialog box=rehowRemoveContactsFolderFromDisplayInOutlookAddressBook>HowTo
+4 Import a Personal Address Book into a Contacts folder=rehowImportPersonalAddressBookIntoContactsFolder>HowTo
+4 Specify the address book to appear first=rehowSpecifyWhichListToAppearInAddressBookFirst>HowTo
+4 Add an address book to be checked for names=rehowAddAddressListToBeCheckedWhenAddressingMessage>HowTo
+4 Remove an address book to be checked for names=rehowRemoveAddressListToBeCheckedWhenAddressingMessage>HowTo
+4 Turn on or off use of commas to separate e-mail addresses=rehowUseCommasToSeparateEmailAddresses>HowTo
+4 Set messages sent to a recipient to use plain text=rehowSendMessageAsPlainTextToRecipient>HowTo
+4 Set messages sent to a recipient to use Rich Text Format=rehowSetMessagesSentToRecipientToUseRichText>HowTo
+4 Add an Outlook Address Book to a user profile=rehowAddContactAddressBookToUserProfile>HowTo
+4 Add a Personal Address Book to a user profile=rehowAddPersonalAddressBookToProfile>HowTo
+3 Using Personal Distribution Lists
+4 Create a personal distribution list=rnhowCreateAPersonalDistributionList>HowTo
+4 Add a name to a personal distribution list=rnhowEditAPersonalDistributionList>HowTo
+4 Remove a name from a personal distribution list=rehowRemoveNameFromPersonalDistributionList>HowTo
+4 Delete a personal distribution list=rnhowDeleteAPersonalDistributionList>HowTo
+2 Setting Other Options for Messages
+3 Show or hide the message header=rehowShowOrHideMessageHeader>HowTo
+3 Mark a message as private, personal, or confidential=rnhowSendPrivatePersonalOrConfidentialMessages>HowTo
+3 Set the importance level for a message=rnhowMarkAMessageAsALowPriority>HowTo
+3 Mark messages as read or unread=rehowMarkMessagesAsReadOrUnread>HowTo
+3 Delay delivery of a message=rnhowSetADeliveryDateForAMessage>HowTo
+3 Set the action to occur after moving or deleting a message=rnhowChangeMailBehaviorAfterOpeningMessages>HowTo
+3 Use U.S. English for message header fields=rehowUseUSEnglishForMessageHeaders>HowTo
+3 Look up contact information from an item=rehowLookUpContactInformationFromItem>HowTo
+3 Insert a Microsoft Excel chart or workbook into an Outlook message=rehowSendExcelChartOrDataInOutlookMailMessage>Ref
+3 Insert a Word document into an Outlook message=rehowInsertWordTableInOutlookMailMessage>Ref
+3 Insert a shortcut to a favorite World Wide Web page in an Outlook message=rehowSendShortcutToWorldWideWebPage>HowTo
+2 Setting Up E-mail
+3 Set up where and how e-mail is delivered=redecSetUpMicrosoftOutlookEmail>Ref
+3 Compare using Remote Mail and offline folders=rehowCompareUsingRemoteMailOfflineFolders>Ref
+3 Troubleshoot sending and receiving messages=rntbsTroubleshootOrganizingAndViewingMessages>Ref
+3 Setting Up and Using Remote Mail
+4 Set up Remote Mail=rehowSetUpRemoteMessageService>HowTo
+4 Use Remote Mail=rehowUseRemoteMail>HowTo
+3 Setting Up and Using Offline Folders
+4 About offline folders=rerefAboutOfflineFolders>Ref
+4 Set Outlook to start offline=rehowSetMicrosoftOutlookToStartOffline>HowTo
+4 Use offline folders=reconAboutOfflineFolders>HowTo
+4 Synchronize offline folders=rehowSychronizeAllOfflineFolders>HowTo
+4 Check the status of an offline folder=rehowCheckToSeeFolderIsAvailableWhenOffline>HowTo
+4 Make a folder unavailable for offline use=rehowRemoveOfflineFoldersAvailability>HowTo
+4 Disable an offline folder file=rehowDisableOfflineFolder>HowTo
+4 Compact an offline folder file=rehowCompactOfflineFolder>HowTo
+3 Information Services and Profiles
+4 Set up a computer for more than one user=rehowSetUpComputerForMoreThanOneUser>HowTo
+4 Use Outlook on a different computer on a network=rehowUseMicrosoftOutlookOnAnotherComputer>HowTo
+4 About user profiles and information services=reconAboutInformationServicesProfiles>Ref
+4 Determine where e-mail messages are sent from and received=rehowDetermineWhereEmailIsBeingDelivered>HowTo
+4 Set where e-mail messages are sent from and received=rehowSetWhereMessagesAreDelivered>HowTo
+4 Install an information service=rehowInstallInformationService>Ref
+4 Set the information service to check for new e-mail messages=rnhowChooseTheServiceToDeliverMessages>HowTo
+4 Create a user profile=rehowCreateUserProfile>HowTo
+4 Select a user profile to use when Outlook starts=rehowSelectProfile>HowTo
+4 Delete a user profile=rehowDeleteUserProfile>HowTo
+4 Add an information service to a user profile=rehowAddInformationService>HowTo
+4 Add a Microsoft Exchange Server mailbox to a user profile=rehowSetUpMicrosoftExchangeServerMailbox>HowTo
+4 Add an Outlook Address Book to a user profile=rehowAddContactAddressBookToUserProfile>HowTo
+4 Add a Personal Address Book to a user profile=rehowAddPersonalAddressBookToProfile>HowTo
+4 Add a personal folder file to a user profile=rehowAddPersonalFolderServiceToProfile>HowTo
+4 Rename an information service=rehowRenameService>HowTo
+4 Copy an information service to another user profile=rehowCopyInformationService>HowTo
+4 Remove an information service=rehowRemoveInformationService>HowTo
+1 Using Calendar
+2 What is Calendar?=relrgCalendar>LgCard
+2 All about appointments, meetings, and events=rnconOverviewOfAppointments>Ref
+2 What you can type in date and time fields=rerefWordsYouCanTypeInDateField>Ref
+2 Open a Calendar item=rehowOpenCalendarItem>HowTo
+2 Change the free/busy time of a Calendar item=rehowSelectStatusToDisplayInFreeBusyBar>HowTo
+2 Schedule time in Calendar to complete a task=reScheduleTimeToCompleteTask>HowTo
+2 Close an item without saving changes=rngtpCloseATaskWithoutSavingChanges>HowTo
+2 Appointments
+3 Schedule an appointment, meeting, or event=reBlockOutTimeOnMyCalendar>Ref
+3 Create an appointment from a mail message=rnHowTurnAMailMessageIntoAnAppointment>HowTo
+3 Copy an appointment=rnhowCopyAnAppointment>HowTo
+3 Set an appointment reminder=rnhowSetAppointmentReminders>HowTo
+3 Edit an appointment=rnhowEditAnAppointment>HowTo
+3 Move an appointment=rnhowMoveAnAppointment>HowTo
+3 Make an appointment recurring=rehowMakeAppointmentRecurring>HowTo
+3 Edit a recurring appointment=rehowEditRecurringAppointment>HowTo
+3 Delete a Calendar item=rnhowDeleteAnAppointment>HowTo
+3 Troubleshoot appointments=rntbsTroubleshootAppointments>Ref
+2 Meetings
+3 Meeting Planner=rnhowUseTheMeetingPlanner>Ref
+3 Schedule an appointment, meeting, or event=reBlockOutTimeOnMyCalendar>Ref
+3 Create a meeting request from a contact=rehowCreateMeetingFromContact>HowTo
+3 Invite attendees and resources to a meeting=rnhowInviteAttendees>HowTo
+3 Change meeting information after sending the invitation=rnhowChangeMeetingLocations>HowTo
+3 Select a meeting time=rnhowSelectAMeetingTime>HowTo
+3 Remove or add attendees and resources=rnhowAddOrRemoveAttendeesAndResources>HowTo
+3 Turn an appointment into a meeting=rehowTurnAppointmentIntoMeeting>HowTo
+3 Automatically accept meeting requests and process cancellations=rngtpAutomaticallyAcceptMeetingRequests>HowTo
+3 Automatically decline conflicting meeting requests=rngtpAutomaticallyDeclineMeetingRequests>HowTo
+3 Automatically decline recurring meeting requests=rngtpAutomaticallyDeclineRecurringMeetingRequests>HowTo
+3 Respond to a meeting request or notification=rehowRespondToMeetingRequest>HowTo
+3 Cancel a meeting=retbcCancelMeeting>HowTo
+3 Troubleshoot meetings=rntbsTroubleshootMeetings>Ref
+2 Events
+3 Schedule an appointment, meeting, or event=reBlockOutTimeOnMyCalendar>Ref
+3 Edit events=rnhowEditEvents>HowTo
+2 Customizing the Look of Calendar
+3 Turn on or off bold dates in Date Navigator=rehowTurnOnOrOffBoldDatesInDateNavigator>HowTo
+3 Display appointment times as miniature clocks=rnrefCalendarViewSettings>HowTo
+3 Show week numbers in Date Navigator=rngtpShowWeekNumbersInDateNavigator>HowTo
+3 Display Saturday and Sunday together in a monthly calendar=rehowCompressWeekendDays>HowTo
+3 Display appointment end times=rehowDisplayAppointmentEndTimes>HowTo
+2 Setting Up Calendar
+3 Import a Schedule+ file=rehowImportSchedulePlusFile>HowTo
+3 Use Schedule+ 95 as my primary calendar=rehowUseSchedulePlusAsPrimaryCalendar>HowTo
+3 Select the days of your work week=rngtpSelectDaysOfWorkWeek>HowTo
+3 Set the first and last hours of your workday=rngtpSetFirstAndLastHourOfTheDay>HowTo
+3 Set the first day of the week=rngtpSetFirstDayOfTheWeek>HowTo
+3 Set the first week of the year=rngtpSetFirstWeekOfTheYear>HowTo
+3 Set a default reminder time=rngtpSetDefaultReminderTime>HowTo
+3 Holidays=rnconHolidays>Ref
+3 Add holidays for a country to my Calendar=rndccAddHolidaysInAFolderToMyCalendar>HowTo
+3 Remove holidays for a country from my Calendar=rehowRemoveHolidaysFromMyCalendar>HowTo
+3 Time Zones=reconTimeZones>Ref
+3 Add another time zone=retbcAddAdditionalTimeZone>HowTo
+3 Remove a second time zone=retbcRemoveSecondaryTimeZone>HowTo
+3 Change the current time zone=rehowChangePrimaryTimeZone>HowTo
+3 Limit the number of months of free/busy time displayed to others=rngtpSpecifyMonthsOfFreebusyInformationToDisplay>HowTo
+3 Change how often free/busy time is updated=IDH_regtpChangeHowOftenFreebusyTimeIsUpdatedOnServer>HowTo
+1 Using Contacts
+2 What is Contacts?=relrgContacts>LgCard
+2 Troubleshoot contacts=retbsTroubleshootContacts>Ref
+2 Creating and Maintaining a Contact List
+3 Import a contact list or a file from another Office program=rehowImportContactListOrFileFromWordOrExcelIntoOutlook>HowTo
+3 Import a Personal Address Book into a Contacts folder=rehowImportPersonalAddressBookIntoContactsFolder>HowTo
+3 Create contacts=rehowCreateContact>Ref
+3 Open a contact=rehowOpenContact>HowTo
+3 Enter the full name for a contact=rehowEnterFullNameForContact>HowTo
+3 Enter an address for a contact=rehowEnterStreetOrMailingAddressForContact>HowTo
+3 Enter an e-mail address for a contact=rehowEnterEmailAddressForContact>HowTo
+3 Enter personal information about a contact=rehowEnterPersonalInformationAboutContact>HowTo
+3 Enter phone numbers for a contact=rehowEnterPhoneNumbersForContact>HowTo
+3 Change the way a contact is filed in the contact list=rehowFileContactUnderDifferentName>HowTo
+3 Edit fields directly in a card=rehowEditTasksInTableViewType>HowTo
+3 Update information about a contact=rehowUpdateInformationAboutContact>HowTo
+3 Go to the World Wide Web page for a contact=rehowGoToWorldWideWebPageForContact>HowTo
+3 Close an item without saving changes=rngtpCloseATaskWithoutSavingChanges>HowTo
+3 Delete a contact=rehowDeleteContact>HowTo
+2 Customizing the Look of Contacts
+3 Change the card width and field height for a card view type=rehowSetDimensionsMultilineFieldHeightForCardViewType>HowTo
+3 Show or hide empty fields in a card view type=rehowShowOrHideFieldsInCardViewType>HowTo
+3 Add a field to a card=rehowAddRemoveFieldsInCardViewType>HowTo
+3 Remove a field from a card=rehowRemoveFieldInCard>HowTo
+2 Making Phone Calls to Contacts
+3 Have Outlook make your phone calls=rehowDialPhoneNumberFromOutlook>Ref
+3 Create a list of frequently called phone numbers=rehowSetSpeedDialingOptions>HowTo
+3 Use a calling card for automatic phone dialing=rehowSetOptionsForUsingCallingCardWithAutomaticPhoneDialing>HowTo
+3 Automatically add the country code to local phone numbers you enter=rehowAutomaticallyAddCountryCodeToLocalPhoneNumbersYouEnter>HowTo
+3 Specify a different modem for automatic dialing=rehowSpecifyDifferentModemForAutomaticDialing>HowTo
+3 Remove a phone number from the speed dial list=rehowRemoveNumberFromSpeedDialList>HowTo
+3 Troubleshoot automatic phone dialing=retbsTroubleshootAutomaticPhoneDialing>Ref
+1 Using Tasks
+2 What is Tasks?=relrgTasks>LgCard
+2 Troubleshoot tasks=retbsTroubleshootTasks>Ref
+2 Creating and Maintaining a Task List
+3 Create a task=rndccAddARecurringTask>Ref
+3 Create a task from a mail message=rehowCreateTaskFromMailMessage>HowTo
+3 Open a task=rnhowOpenATask>HowTo
+3 Copy a task=rnhowCopyATask>HowTo
+3 Rename a task=rnhowRenameATask>HowTo
+3 Mark a task complete=rehowMarkTaskComplete>HowTo
+3 Change settings for a task=rnhowEditATask>HowTo
+3 Set the start and end dates for a task=rnhowRescheduleATask>HowTo
+3 Set a reminder for a task=rnhowSetAReminderForATask>HowTo
+3 What you can type in date and time fields=rerefWordsYouCanTypeInDateField>Ref
+3 Close an item without saving changes=rngtpCloseATaskWithoutSavingChanges>HowTo
+3 Delete a task=rnhowDeleteATask>HowTo
+2 Customizing the Look of Tasks
+3 Change the color of overdue or completed tasks=IDH_regtpChangeColorOfOverdueOrCompletedTasks>HowTo
+3 Set the hours per day and per week that task work calculations are based on=IDH_regtpSetWorkHoursForTasks>HowTo
+3 Change the order of tasks=redecChangeOrderOfTasks>Ref
+2 Assigning and Responding to Tasks
+3 About task assignments=reconAboutTaskAssignments>Ref
+3 Assign a task to someone else=redecAssignTaskToSomeoneElse>Ref
+3 Respond to a task request=rehowRespondToTaskRequest>Ref
+3 Decline a task after you accept it=rehowDeclineTaskAfterYouAcceptIt>HowTo
+3 Send task information to others=redecReportOnTask>Ref
+3 Track new tasks assigned to others and receive status reports=rehowTrackTaskAssignmentsReceiveStatusReports>HowTo
+3 View the list of people who keep updated copies of an assigned task=rehowViewAssignmentHistoryForAssignedTask>HowTo
+3 View tasks you've assigned to others=rehowViewTasksYouveAssigned>HowTo
+2 Setting Other Options for Tasks
+3 Change a task to a recurring task=rnhowMakeATaskRecur>HowTo
+3 Stop a recurring task=rehowPreventRecurringTaskFromOccurringAgain>HowTo
+3 Skip one occurrence of a recurring task=rehowSkipOneOccurrenceOfRecurringTask>HowTo
+3 Change the due date for a task=rehowMakeExceptionToRecurringTask>HowTo
+3 Change the priority level for a task=rngtpSetATasksPriority>HowTo
+3 Make a task private=rngtpSetATasksConfidentiality>HowTo
+3 Record billing information for a task=rehowRecordBillingInformationForTask>HowTo
+3 Record contact information for a task=rehowRecordContactInformationForTask>HowTo
+3 Record estimated and actual time spent on a task=rehowRecordWorkCompletedForTask>HowTo
+3 Record mileage for a task=rehowRecordMileageForTask>HowTo
+3 Record company information for a task=rehowRecordCompanyInformationForTask>HowTo
+3 Set reminder options for new tasks=rehowSetReminderOptionsForNewTasks>HowTo
+2 Using Outlook Tasks with Microsoft Team Manager
+3 About using Microsoft Team Manager or Outlook for task assignments=reconAboutUsingTeamManagerWithOutlookForTaskAssignments>Ref
+3 Work with Microsoft Team Manager tasks in Outlook=redecWorkWithTeamManagerTasksInOutlook>Ref
+3 How Outlook and Team Manager share information=rerefHowOutlookTeamManagerShareData>Ref
+3 Troubleshoot Team Manager tasks in Outlook=retbsTroubleshootTeamManagerTasksInOutlook>Ref
+1 Using Journal
+2 What is Journal?=relrgJournal>LgCard
+2 Activities that can be automatically recorded in Journal=rerefItemsThatCanBeRecordedInTheJournalAutomaticallyManually>Ref
+2 Troubleshoot Journal=retbsTroubleshootJournal>Ref
+2 Creating and Maintaining a Journal
+3 Record an activity in Journal=redccRecordItemInTheJournalIssueRecordingJournalEntryDoesNotCreateTheLinkedItem>Ref
+3 Turn off automatic recording of journal entries for a contact=rehowTurnOffAutomaticRecordingOfJournalItem>HowTo
+3 Open a journal entry=rehowOpenJournalEntry>HowTo
+3 Modify a journal entry=rehowEditmodifyJournalEntry>HowTo
+3 Move a journal entry in Journal=rehowMoveEntryInJournal>HowTo
+3 Close an item without saving changes=rngtpCloseATaskWithoutSavingChanges>HowTo
+3 Open an item or document that a journal entry refers to=regtpFindItemLinkedToJournalEntrymenuCommandAndShortcutMenu>HowTo
+3 Open the contact that a journal entry refers to=regtpFindContactLinkedToJournalEntryshortcutMenuInSomeViews>HowTo
+3 Look up contact information from an item=rehowLookUpContactInformationFromItem>HowTo
+3 View journal entries for a contact=rehowViewJournalEntriesForContact>HowTo
+3 What you can type in date and time fields=rerefWordsYouCanTypeInDateField>Ref
+3 Delete a journal entry=rehowDeleteJournalEntry>HowTo
+2 Customizing the Look of Journal
+3 Change the length of the item label on a timeline=rehowChangeTheWidthOfTheItemLabelInTheTimeline>HowTo
+3 Change the fields used to display items on a timeline=rehowChangeWhereInTimeItemsAreDisplayedInTimeline>HowTo
+3 Show or hide the item label when viewing by month on a timeline=rehowShowOrHideItemLabelInMonthViewInTimeline>HowTo
+3 Change the amount of time displayed in a timeline=rehowViewItemsByDayInTheTimelinedayByHour>Ref
+3 Show or hide week numbers on a timeline=rehowShowOrHideWeekNumbersOnTimeline>HowTo
+1 Using Notes
+2 What is Notes?=reconAboutNotes>Ref
+2 Create a note=rehowCreateNote>HowTo
+2 Open a note=rehowReadNote>HowTo
+2 Change the color of a note=rehowChangeColorOfNote>HowTo
+2 Resize a note=rehowResizeNote>HowTo
+2 Show or hide the time and date on notes=rehowShowOrHideDateTimeOnNotes>HowTo
+2 Change format options for new notes=rerefDefaultOptionsForNewNotes>HowTo
+2 Delete a note=rehowDeleteNote>HowTo
+1 Organizing and Viewing Items in Outlook
+2 About how to organize information in a table=relrgAboutHowToOrganizeInformationInView>LgCard
+2 Select multiple items=rehowSelectingMultipleItemsUsingMouse>HowTo
+2 Save an item as a file=rnhowSaveAMessageAsAFile>HowTo
+2 Retrieve a deleted item=rnhowRetrieveADeletedTask>HowTo
+2 Turn on or off automatic emptying of the Deleted Items folder=rehowEmptyDeletedItemsFolderWhenExitingOutlook>HowTo
+2 Close an item without saving changes=rngtpCloseATaskWithoutSavingChanges>HowTo
+2 Add a comment to an item=rnhowAddANoteToAnAppointment>HowTo
+2 Assigning Items to Categories
+3 Categories=reconAboutCategories>Ref
+3 Assign items to a category=redecAssignItemsToCategory>Ref
+3 Remove items from a category=rehowRemoveCategoryFromItem>HowTo
+3 Reset the Master Category List=rehowResetMasterCategoryList>HowTo
+3 Categories supplied in Outlook=rerefCategoriesSuppliedInRen>Ref
+3 Delete a category=rehowDeleteCategoryFromCategoryList>HowTo
+3 Troubleshoot categories=retbsTroubleshootCategories>Ref
+2 Changing Views
+3 Views=rerefAboutViewTypes>Ref
+3 Examples of view types=relrgViewTypes>LgCard
+3 Standard views=redecCommonWaysToViewItemsInRen>Ref
+3 Change the view=redecChangeViewOfItems>Ref
+3 Save changes to the current view=rehowSaveChangesToCurrentViewAsAnotherView>HowTo
+3 Create a custom view=rehowDefineCustomView>HowTo
+3 Reset a standard view=rehowChangeDefaultViewBackToOriginalSettings>HowTo
+3 Rename a custom view=rehowRenameCustomView>HowTo
+3 Change where a view can be used=rehowChangeWhereViewCanBeUsed>HowTo
+3 Delete a custom view=rehowDeleteCustomView>HowTo
+3 Troubleshoot views=retbsTroubleshootViews>Ref
+2 Adjusting Columns
+3 Add a column=rndecAddAColumn>HowTo
+3 Change the order of columns=rnhowChangeTheOrderOfColumns>HowTo
+3 Switch on or off editing in a table=rnhowTurnOnOrOffEditingInTheMessageList>HowTo
+3 Remove a column=rnhowRemoveAColumn>HowTo
+3 Adjust column width=rnhowAdjustColumnWidth>HowTo
+3 Change the label of a column heading=rehowChangeLabelOfColumnHeading>HowTo
+3 Align the contents of a column=rnhowAlignTheContentsOfAColumn>HowTo
+3 Automatically size column widths to fit in a table=rehowSwitchOnOrOffAutomaticSizingOfColumnWidths>HowTo
+3 Change the format of icons, dates, and numbers in a table=rnhowChangeTheFormatOfDatesInAColumn>HowTo
+2 Sorting Items
+3 About sorting=rnconDifferentWaysToOrganizeAppointmentsSortingGroupingFiltering>Ref
+3 Sort a list of items=rnhowSortAList>HowTo
+3 Sort grouped items in a table=rehowSortGroups>HowTo
+3 Remove sorting=rnhowClearTheCurrentSortOrder>HowTo
+2 Filtering Items
+3 Filters=reconAboutFilters>Ref
+3 Show or hide items or files with a filter=rnhowFilterItemsInAList>HowTo
+3 Show or hide items or files based on a time or duration=rehowShowOrHideItemsBasedOnTimeOrDuration>HowTo
+3 Filter all items in a category=rehowFilterAllItemsInCategory>HowTo
+3 Remove a filter=rnhowRemoveAFilterFromAList>HowTo
+3 Troubleshoot filters=retbsTroubleshootFilters>Ref
+2 Grouping Items
+3 About groups=reconAboutGroups>Ref
+3 Group items=rnhowGroupItemsByMoreThanOneField>HowTo
+3 Show or hide the Group By Box=rngtpShowOrHideTheGroupbyWell>HowTo
+3 Show or hide grouped items or group headings=rngtpShowOrHideGroupedItemsOrHeaders>Ref
+3 Ungroup items=rngtpClearGroupbySettings>HowTo
+3 Troubleshoot grouping=retbsTroubleshootGrouping>Ref
+2 Creating Items From Other Items With AutoCreate
+3 Put it all together=relrgDetailManagement>LgCard
+3 About creating new items from existing items (AutoCreate)=rnconCoercion>Ref
+3 Create new items from different types of items=retbcConvertItems>Ref
+3 Create a mail message from a contact=rnHowTurnATaskIntoACalendarItem>HowTo
+3 Schedule time in Calendar to complete a task=reScheduleTimeToCompleteTask>HowTo
+3 Create an appointment from a mail message=rnHowTurnAMailMessageIntoAnAppointment>HowTo
+3 Create a meeting request from a contact=rehowCreateMeetingFromContact>HowTo
+3 Create a task from a mail message=rehowCreateTaskFromMailMessage>HowTo
+3 Troubleshoot AutoCreate=retbsTroubleshootAutoconvert>Ref
+2 Adding Web Shortcuts to Items
+3 Insert a shortcut to a favorite World Wide Web page in an Outlook message=rehowSendShortcutToWorldWideWebPage>HowTo
+3 Create a shortcut to the Web History folder=rehowCreateShortcutToWebHistoryFolder>HowTo
+3 Internet protocols you can type to create hyperlinks=rerefInternetShortcutKeywords>Ref
+3 Why does text I type appear blue and underlined?=retbsWhyDoesTextITypeTurnBlueUnderlined>Ref
+2 Inserting Items and Files into Outlook Items
+3 Ways to share information in Outlook=ofrefWaysToShareInformationInMicrosoftOfficeProgram>Ref
+3 The format of information pasted from the Clipboard=ofhowOtherWaysToPasteInformation>Ref
+3 Insert a file into an item=rnhowAddAnAttachmentToATask>HowTo
+3 Insert an item into another item=rehowInsertItemInAnotherItem>HowTo
+3 Insert a Microsoft Excel chart or workbook into an Outlook message=rehowSendExcelChartOrDataInOutlookMailMessage>Ref
+3 Insert a Word document into an Outlook message=rehowInsertWordTableInOutlookMailMessage>Ref
+3 Insert a shortcut to a favorite World Wide Web page in an Outlook message=rehowSendShortcutToWorldWideWebPage>HowTo
+3 Troubleshoot inserting information in Outlook=retbsTroubleshootInsertingObjectsInOutlook>Ref
+1 Working With Files and Folders
+2 Access, view, and share files=relrgStoreRetrieveInformation>LgCard
+2 Troubleshoot files and file folders=retbsTroubleshootFilesFileFolders>Ref
+2 Creating and Sharing Files and Folders
+3 Create a folder for files=rehowLocateFolderOrFileOnMyComputer>HowTo
+3 Start a new Office file from Outlook=rehowCreateNewOfficeDocument>Ref
+3 Create a new document based on an existing document=rehowCreateNewDocumentBasedOnExistingDocument>HowTo
+3 Rename a folder or file on your hard disk=rehowRenameFile>HowTo
+3 Copy a folder or file to a disk=rehowSendFile>HowTo
+3 Share a file folder with another person=rehowShareFolderWithAnotherPerson>HowTo
+3 Create a shortcut to a folder or file=rehowCreateShortcut>HowTo
+3 Connect to a network drive=rehowConnectToOrDisconnectNetworkDrive>HowTo
+3 Disconnect a network drive=rehowOpenFolderUpOneLevelFromCurrentFolder>HowTo
+3 About using Briefcase to keep documents up-to-date=rehowDisplayStatusBar>Ref
+2 Viewing Files and Folders
+3 About viewing files in Microsoft Outlook=rehowViewingFilesInRen>Ref
+3 Show the contents of My Computer=rehowShowContentsOfMyComputer>HowTo
+3 Open a file in My Computer=rehowOpenFile>HowTo
+3 Open folders that contain files in the same window=rehowChangeBehaviorThatOccursWhenOpeningFolder>HowTo
+3 View files or items in a different folder=rehowViewFilesInDifferentFolder>HowTo
+3 View the contents of a file=rehowViewContentsOfYourFile>HowTo
+3 View file properties=rehowViewFileProperties>HowTo
+1 Finding Items and Files
+2 About finding items and files=reconAboutFindingItemsFiles>Ref
+2 Find text in an item=rehowFindingText>HowTo
+2 Search for items and files=rehowSearchForItemsFiles>HowTo
+2 Search for items and files that contain a phrase=rehowSearchForItemsFilesThatContainPhrase>HowTo
+2 Show more search results=rehowShowMoreSearchResults>HowTo
+2 Use complex search criteria to find files=rehowComplexSearchCriteria>Ref
+2 Troubleshoot finding items and files=reconTroubleshootFindingItemsFiles>Ref
+2 Performing Common Searches
+3 Find all items in a category=rehowFindAllItemsInCategory>HowTo
+3 Find all messages in an e-mail conversation=rehowFindAllMessagesInSameConversationAsSelectedMessage>HowTo
+3 Find all messages from a particular person=rehowFindAllMessagesFromParticularPerson>HowTo
+3 Find all messages sent only to me=rehowFindAllMailMessagesSentOnlyToMe>HowTo
+3 Search for messages sent with file attachments=rehowSearchForMailAttachments>HowTo
+3 Find messages from a specific person=IDH_regtpFindMailFromSpecificPerson>HowTo
+3 Find messages sent to an e-mail address=IDH_regtpFindMailThatWasSentToMailAlias>HowTo
+3 Find meetings attended by a specific person=IDH_regtpFindMeetingsAttendedBySpecificPerson>HowTo
+3 Find meetings organized by a specific person=IDH_regtpFindMeetingsOrganizedBySpecificPerson>HowTo
+3 Find appointments and meetings with a specific start time=rehowFindAppointmentsMeetingsWithSpecificStartDate>HowTo
+3 Search for items by fields on a form=rehowFindForms>HowTo
+2 Working with a Search
+3 Save search criteria=retbcSaveSearchCriteria>HowTo
+3 Open a saved search=rehowOpenUseSavedSearch>HowTo
+3 Delete a saved search=rehowDeleteSavedSearch>HowTo
+1 Sharing Folders
+2 Compare Delegate Access, shared private folders, and public folders=reconCompareDelegateAccessSharedPrivateFoldersPublicFolders>Ref
+2 Outlook folder permissions=reconAboutFolderPermissions>Ref
+2 Send a private folder shortcut in a mail message=rehowSendPrivateFolderShortcutInMailMessage>HowTo
+2 Create a shortcut to the Web History folder=rehowCreateShortcutToWebHistoryFolder>HowTo
+2 Public Folders
+3 About public folders=rehowAboutPublicFolders>Ref
+3 Use a public folder as a bulletin board=redecUsePublicFolderAsBulletinBoard>Ref
+3 Share a schedule, contact list, or task list in a public folder=redecShareCalendarContactListOrTaskListWithGroup>Ref
+3 Share files in a public folder=redecShareSetOfDocumentsWithGroup>Ref
+3 Troubleshoot public folders=retbsTroubleshootPublicFolders>Ref
+3 Using Public Folders
+4 Check your public folder permission status=rehowCheckYourPublicFolderAccessPermissions>HowTo
+4 View information in a public folder=redecViewInformationInPublicFolder>Ref
+4 Share Outlook items in a public folder=rehowAddItemToPublicFolder>Ref
+4 Send a public folder shortcut in a mail message=rehowSendShortcutToPublicFolderInMailMessage>HowTo
+4 Create a Shortcut to a public folder you use often=rehowAddPublicFolderToYourFavorites>Ref
+4 Copy information from a public folder to a private folder in Outlook=redccCopyInformationFromPublicFolderToPersonalFolder>Ref
+4 Move an item from a public folder to create a new item in a private folder=rehowMoveItemFromPublicFolderToPrivateFolder>HowTo
+4 Add an e-mail address for a public folder to your Personal Address Book=rehowAddAddressForFolderToYourPersonalAddressBook>HowTo
+4 Delete an item or file from a public folder=rehowDeleteItemFromPublicFolder>HowTo
+3 Managing Public Folders
+4 Set up a public folder=rehowSetUpPublicFolder>HowTo
+4 Create a public folder=rehowCreatePublicFolder>HowTo
+4 Change the default view for a public folder=rehowChangeDefaultViewForPublicFolder>HowTo
+4 Check your public folder permission status=rehowCheckYourPublicFolderAccessPermissions>HowTo
+4 Limit access to a public folder to the owners only=rehowLimitAccessToPublicFolderToOwner>HowTo
+4 Specify the forms that are available for a folder=rehowSpecifyFormsForFolder>HowTo
+4 Set sharing permissions for a public folder=rehowChangeAccessPermissionForPublicFolder>HowTo
+4 Create or modify a rule for a public folder=rehowCreateOrModifyRuleForPublicFolder>HowTo
+4 Change the name in the From field of e-mail copied or moved to a public folder=rehowChangeFormatOfItemsThatAreDraggedToPublicFolder>HowTo
+4 Use Outlook table views with Microsoft Exchange=rehowMakeOutlookTableViewsForFolderAvailableToUsersViewingFolderWithMicrosoftExchangeServer>HowTo
+2 Delegate Access
+3 Delegate Access=reconDelegateAccess>Ref
+3 Delegate Access permissions=rerefTypesOfPermission>Ref
+3 Manage e-mail messages in another person's Inbox=redecManageMailInAnothersInbox>Ref
+3 Manage tasks in another person's task list=redecManageTasksInAnothersFolder>Ref
+3 Manage appointments and meetings in another person's Calendar=redecManageAppointmentsMeetingsInAnothersCalendar>Ref
+3 Open and manage another person's folders=redecSetUpManageOthersFoldersAsDelegate>Ref
+3 Set sharing permissions for a folder=rehowGiveAccessToYourFolder>HowTo
+3 Give permission to others to access my folders=redecGiveMyDelegatesAccessToMyFolders>Ref
+3 Add another person's mailbox to your user profile=rehowAddAnothersMailboxToYourProfile>HowTo
+3 Change sharing permissions for a delegate=rehowEditDelegateAccessPermissions>HowTo
+3 Remove sharing permissions for a delegate=rnhowRemoveDelegateAccessPermissions>HowTo
+3 Remove sharing permissions for a folder=rehowRemoveSharedFolderPermissions>HowTo
+3 Troubleshoot Delegate Access=rntroubleshootTroubleshootDelegateAccess>Ref
+1 Formatting Text and Checking Spelling
+2 Make text bold, underlined, or italic=rehowMakeTextBoldUnderlineOrItalic>HowTo
+2 Change the font for text=rehowChangeFontOfText>HowTo
+2 Change the size of text=rehowChangeSizeOfText>HowTo
+2 Change the color of text=rehowChangeColorOfText>HowTo
+2 Align text=rehowAlignText>HowTo
+2 Put text in a bulleted list=rehowMakeBulletedList>HowTo
+2 Indent text=rehowIndentText>HowTo
+2 Use strikeout marks on text=rehowUseStrikethroughOnText>HowTo
+2 Use the spelling checker=rehowCheckSpelling>HowTo
+2 Select spelling checker options for all new items=rehowSkipTextDuringSpellingCheck>HowTo
+1 Printing
+2 Preview what prints=redccPreviewWhatIsSetToPrint>HowTo
+2 View pages in print preview=rehowViewNextPreviousPagesInPrintPreview>HowTo
+2 Print=rehowPrintItemsInproductName>Ref
+2 Troubleshoot printing=rehowTroubleshootPrinting>Ref
+2 Modifying What Prints
+3 Customize what is printed=rehowChangeWhatIsPrinted>Ref
+3 Set margins for printing=rehowSetMarginsForPrinting>HowTo
+3 Change a header or footer=rehowAddHeaderOrFooter>HowTo
+3 Add a page number to a header or footer=rehowAddPageNumberToHeaderOrFooter>HowTo
+3 Change the number of blank Contacts cards to print=rehowPrintBlankCardsInCardView>HowTo
+3 Change the font to print=rehowChangeFontForPrinting>HowTo
+3 Add or remove shading on a printed page=rehowAddOrRemoveShadingToPrint>HowTo
+3 Change page orientation=rehowChangePageOrientation>HowTo
+2 Printing Special Items and Views
+3 Print attachments with items=rehowPrintAttachments>HowTo
+3 Print more than one copy=rehowPrintMoreThanOneCopy>HowTo
+3 Print a set number of days in Calendar=rehowSetDaysToPrintInCalendarView>HowTo
+3 Print a range of hours in Calendar=rehowSetTimeToPrintInDailyCalendar>HowTo
+3 Print all items assigned to a category=rehowPrintItemsFromSeveralFoldersAtOnce>HowTo
+3 Print a view of a file list=rehowPrintListOfFileProperties>HowTo
+3 Print a booklet=rehowPrintBooklet>Ref
+3 Print a contact address on an envelope or label=rehowPrintContactListOnEnvelopesOrLabels>HowTo
+3 Print to a file=rehowCreatePrintFile>HowTo
+2 Using Print Styles
+3 Default print styles=rerefBuiltinPrintStylesInproductName>Ref
+3 Create a print style=redccCreateNewPrintStyle>HowTo
+3 Modify a print style=rerefSetFormatOfCurrentPrintStyle>HowTo
+3 Reset a print style=rehowResetPrintStyles>HowTo
+3 Delete a print style=rehowDeletePrintStyle>HowTo
+2 Setting Other Options for Printing
+3 Select a printer=rehowSelectPrinterToPrintTo>HowTo
+3 Select paper and page options to print=rehowSelectSizeTypeOfPaper>HowTo
+3 Select a paper source=rehowSetPaperSource>HowTo
+3 Paper and pages=rehowRelationshipOfPaperPages>Ref
+3 Paper and page types that print from Outlook=rerefSupportedPageTypes>Ref
+1 Archiving Items
+2 Archive and AutoArchive=reconAllAboutArchivingAging>Ref
+2 Date used to archive items=rerefCriteriaUsedToAutoArchiveItems>Ref
+2 Turn on AutoArchive=rehowTurnOnOffArchiving>HowTo
+2 Archive or delete old items=redecArchiveOrDeleteOldItems>Ref
+2 Delete expired mail messages when archiving=reactDeleteExpiredMailMessagesWhenArchiving>HowTo
+2 Set AutoArchive properties for a folder=rehowSetAutoArchivePropertiesForFolder>HowTo
+2 Retrieve archived items=rehowRetrieveArchivedInformation>Ref
+2 Turn off AutoArchive=redccTurnOffAutoarchiving>HowTo
+2 Remove an archive file=rehowDeleteArchiveFolder>HowTo
+2 Troubleshoot archiving and AutoArchive=retbsTroubleshootArchivingAutoArchiving>Ref
+1 Customizing Microsoft Outlook
+2 Install or remove individual components=wohowInstallorremoveindividualcomponentsofWord>HowTo
+2 Save space on your computer while you use Outlook=rehowSaveSpaceOnYourComputerWithOutlook>Ref
+2 Automatically start Outlook when you turn on your computer=ofhowMakeprogramStartEveryTimeIStartWindows>HowTo
+2 Specify the folder to open when you start Outlook=rehowSpecifyWhichFolderToOpenWhenStartingOutlook>HowTo
+2 Show or hide the status bar=rehowShowOrHideStatusBar>HowTo
+2 Control what happens when you start Outlook=rehowUseCommandlineOptionsToPerformTasks>Ref
+2 Register Microsoft Office or Outlook=oftbsRegisterMicrosoftOfficeOrprogram>HowTo
+2 Loading and Removing Add-ins
+3 Load, install, or remove an add-in=retbcInstallOrRemoveAddins>HowTo
+3 About add-ins supplied with Outlook=rerefAddinsSuppliedWithOutlook>Ref
+2 Moving Toolbars
+3 Show or hide a toolbar=ofhowShowOrHideCommandBar>HowTo
+3 Move a toolbar=xlhowMoveAndResizeToolbars>HowTo
+3 Resize a toolbar=cohowResizeAToolbar>HowTo
+3 Change the size of toolbar buttons=ofhowMakeCommandBarButtonsMenusLarger>HowTo
+2 Using Templates to Create Items
+3 About Outlook templates=rerefTemplatesThatAreSuppliedWithOutlook>Ref
+3 Save an item as an Outlook template=rerefSaveItemAsOutlookTemplate>HowTo
+3 Create an item based on a different template=rehowCreateNewMessageUsingEmailTemplate>HowTo
+2 Creating and Using Forms
+3 About forms=reconAboutForms>Ref
+3 Sample forms supplied in Outlook=rehowFormsThatShipWithOutlook>Ref
+3 Create a form=rndecCreateAForm>Ref
+3 Open a form=rehowOpenForm>Ref
+3 Update the contents in a form that is read-only=rehowUpdateInformationInForm>HowTo
+3 Change the default form for a public folder=rehowChangeDefaultFormUsedToPostInformationToPublicFolder>HowTo
+3 Edit a form=rehowEditPreviouslyCreatedForm>HowTo
+3 Save and distribute a form=rehowSaveForm>Ref
+3 Troubleshoot forms=rehowTroubleshootForms>Ref
+1 Reference Information
+2 Accessibility for people with disabilities=redecMicrosoftOutlookAccessibility>Ref
+2 Use the mouse to move around=redecMovingAroundInOutlookUsingMouse>Ref
+2 Shortcut keys=redecMovingAroundUsingShortcutKeys>Ref
+2 Shortcut Keys
+3 Keys for moving around, formatting, creating, and revising items=rehowMoveAroundUsingShortcutKeysinAllViews>Ref
+3 Keys for moving around in a card=rehowMoveAroundInContacts>Ref
+3 Keys for moving around in day/week/month view=reKeysForMovingAroundInCalendar>Ref
+3 Keys for moving around in a table=rehowKeyboardShortcutsForMessages>Ref
+3 Keys for moving around on a timeline=rerefUsingKeyboardInTimelineView>Ref
+3 Keys for moving around the Office Assistant=ofrefKeysForWorkingWithOfficeAssistant>Ref
+3 Keys for moving around Date Navigator=rerefKeysForMovingAroundInDateNavigator>Ref
+3 Keys for moving around toolbars=ofrefKeysForMovingAroundInCommandBars>Ref
+2 Fields
+3 About standard fields in Microsoft Outlook=rndecMeaningOfTheAvailableFieldsInproductName>Ref
+3 Examples of standard formats for data types=reconTypesOfFields>Ref
+3 Examples of Formula and Combination fields=rerefExamplesOfCalculatedFields>Ref
+3 Difference between a field and a column=reconDifferenceBetweenFieldColumn>Ref
+3 Create a custom field=rehowCreateField>Ref
+3 Make changes to a custom field in a table=rehowEditCustomField>HowTo
+3 View all standard fields for an item=rehowViewAllFieldsForItem>HowTo
+3 Copy the contents of fields to another item or program=rehowCopyInformationFromViewToAnotherApplication>HowTo
+3 Troubleshoot custom fields=retbsTroubleshootCustomFields>Ref
+2 Functions
+3 Conversion functions=rerefConversionFunctions>LangRef
+3 Date/Time functions=rerefDateTimeFunctions>LangRef
+3 Financial functions=rerefFinancialFunctions>LangRef
+3 General functions=rerefOtherFunctions>LangRef
+3 Math functions=refctMathFunctions>LangRef
+3 Derived math functions=rerefDerivedFunctions>LangRef
+3 Text functions=rerefStringFunctions>LangRef
+3 Returning strings from functions=rerefReturningStringsFromFunctions>LangRef
+2 Operators
+3 Operator precedence=rerefOperatorPrecedence>LangRef
+3 Comparison operators=rerefComparisonOperators>LangRef
+3 Arithmetic operators=rerefArithmeticOperators>LangRef
+3 Concatenation operators=rerefConcatenationOperators>LangRef
+3 Logical operators=rerefLogicalOperators>LangRef
+1 Using Outlook With Other Programs
+2 Start a new Office file from Outlook=rehowCreateNewOfficeDocument>Ref
+2 Importing and Exporting Information
+3 Import information into Outlook=rndecImportInformationFromOtherApplications>Ref
+3 Export items=rndccExportItems>Ref
+3 Create a backup copy of a folder=rehowCreateBackupCopyOfMyFolderBeforeDeletingOldItmes>HowTo
+3 Export information to other Office programs=rehowExportingToOtherOfficePrograms>HowTo
+3 File types you can import to or export from Outlook=rnrefFileFormatsWhichCanBeImportedIntoOutlook>Ref
+3 Import a Schedule+ file=rehowImportSchedulePlusFile>HowTo
+3 Import a Personal Address Book into a Contacts folder=rehowImportPersonalAddressBookIntoContactsFolder>HowTo
+3 Import a contact list or a file from another Office program=rehowImportContactListOrFileFromWordOrExcelIntoOutlook>HowTo
+3 Import a Microsoft Mail file=rehowImportFromMicrosoftMailFile>HowTo
+3 Export a partial list of contacts=rehowExportListOfContacts>HowTo
+3 Add holidays for a country to my Calendar=rndccAddHolidaysInAFolderToMyCalendar>HowTo
+3 Remove holidays for a country from my Calendar=rehowRemoveHolidaysFromMyCalendar>HowTo
+2 Using Outlook Contacts With Microsoft Word
+3 Use Outlook contacts as a mail merge data source in Word=redecUseOutlookContactsAsMailMergeDataSourceInWord>Ref
+3 Create a letter to a contact with Word 97=rehowCreateLetterToContactWithMicrosoftWord97>HowTo
+3 Troubleshoot using Outlook contacts for a mail merge in Word=retbsTroubleshootUsingOutlookContactsForMailMergeInWordx>Ref
+2 Using Outlook Tasks With Microsoft Team Manager
+3 About using Microsoft Team Manager or Outlook for task assignments=reconAboutUsingTeamManagerWithOutlookForTaskAssignments>Ref
+3 Work with Microsoft Team Manager tasks in Outlook=redecWorkWithTeamManagerTasksInOutlook>Ref
+3 How Outlook and Team Manager share information=rerefHowOutlookTeamManagerShareData>Ref
+3 Troubleshoot Team Manager tasks in Outlook=retbsTroubleshootTeamManagerTasksInOutlook>Ref
+2 Using Outlook With The Timex Data Link Watch
+3 The Timex Data Link Watch=rnhowUsingTheTimexWatchWithOutlook>Ref
+3 Copy information from Outlook to The Timex Data Link Watch=rehowCopyInformationFromOutlookToMyTimexWatch>HowTo
+2 Linking and Embedding Information Between Office Programs
+3 Use linked and embedded objects to share information between Office programs=ofdecShareInformationBetweenOfficeApplications>Ref
+3 Edit a linked object or an embedded object=cohowEditAnEmbeddedObject>Ref
+3 Change the way a linked object or embedded object appears=ofdecChangeWayLinkOrEmbeddedObjectIsDisplayed>Ref
+3 Update a linked object=redecUpdateLinkedObject>Ref
+3 Reconnect a linked object when the source file moves or is renamed=ofhowReconnectLinkWhenSourceFileMovesOrIsRenamed>HowTo
+3 Troubleshoot linked and embedded objects=oftbsTroubleshootingLinkingAndEmbeddingProblems>Ref
+1 Common Office and Windows Procedures
+2 Microsoft Office Shortcut Bar=ofhowMicrosoftOfficeShortcutBar>Ref
+2 Manage time, contacts, tasks, and messages from the Office Shortcut Bar=ofhowManageTimeContactsTasksEmailFromOfficeShortcutBar>Ref
+2 Office programs you can use to create an online or printed form=ofdecCreateAFormAndUseItToCollectInformation>Ref
+2 Office programs you can use to make a list of names for a mail merge=ofdecMakeAListOfNamesAndAddressesForAMailMerge>Ref
+2 Office programs you can use to create a table=ofdecMakeATableToShowInformation>Ref
+2 Set up a new printer=ofhowSetUpNewPrinter>HowTo
+2 Set the default printer=ofhowSetDefaultPrinterInWindows>HowTo
+2 View the printing status of the printer and files as they print=ofhowViewPrinterStatusInformationAboutDocumentsPrinting>HowTo
+2 Microsoft Camcorder=ofconMicrosoftGDICap>Ref
+2 Minimize all program windows on the Windows desktop=ofhowClearWindowsDesktop>HowTo
+2 Set screen resolution to show more or less on screen=ofhowViewMoreInformationOnScreen>HowTo
+2 Show all windows on the Windows desktop=ofhowArrangeAllWindowsOnWindowsDesktop>HowTo
+2 Change the program that starts when you open a file=IDH_ofdefAlwaysOpenParticularFilesWithprogram>HowTo
+2 View all file types and file name extensions=ofhowViewAllFilesFileNameExtensions>HowTo
+2 Type ¢, £, ¥, (r), and other characters not on the keyboard=xlhowTypeAndOtherCharactersNotOnTheKeyboard>HowTo
+2 Add a language or keyboard layout=wohowAddLanguageOrKeyboardLayout>HowTo
+2 Install multilanguage support=wohowAddNewFontToYourComputer>HowTo
+:Include EULA8.CNT

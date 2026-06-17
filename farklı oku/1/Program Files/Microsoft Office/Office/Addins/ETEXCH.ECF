@@ -1,0 +1,77 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={EA1F5311-EDFD-11ce-8D13-00AA0051BF96}
+Path=etexch32.dll
+Entry Point=1
+Client Version=4.0
+Service Provider=MSEMS
+Misc Flags=InstallCommandsEarly;VerbIsReply;NoFormsRegistry;NoMenuNeeded
+
+[Exchange Client Compatibility]
+Exchange Registry=1
+Exchange Extension Key=etexch
+
+; Context is READNOTEMESSAGE, SENDNOTEMESSAGE, SENDRESENDMESSAGE,
+; PROPERTYSHEETS
+Exchange Context Map=00000110001100
+
+; Interface is Commands, Message, PropSheets
+Exchange Interface Map=1001010
+
+[Item]
+Contexts=SecurityRead;SecuritySend;NormalRead;NormalSend
+
+[SecurityRead]
+Message Class=IPM.Note.Secure
+Item States=Read
+; Secured messages need to intercept OnRead, but other messages do not.
+Events=OnRead;OnWriteComplete;InstallCommands;OnCommand;OnCommandAfterLoad;OnSubmit;OnSubmitComplete
+Outlook Commands=FileSave;FileSaveAs;FileCopy;ComposeReplyToSender;ComposeReplyToAll;ComposeForward;FileProperties;FileSend;Others
+Commands=OldReadDigiSig;NewReadDigiSig
+
+[SecuritySend]
+Message Class=IPM.Resend;IPM.Note.Secure
+Item States=Compose
+; Secured messages need to intercept OnRead, but other messages do not.
+Events=OnRead;OnWriteComplete;InstallCommands;OnCommand;OnCommandAfterLoad;OnSubmit;OnSubmitComplete
+Outlook Commands=FileSave;FileSaveAs;FileCopy;ComposeReplyToSender;ComposeReplyToAll;ComposeForward;FileProperties;FileSend;Others
+Commands=SecureEncrypt;SecureDigiSig
+
+[NormalRead]
+; NOTE: The security extension does not work for subclasses of IPM.Note.
+Message Class=IPM.Note!
+Item States=Read
+Events=OnRead;OnWriteComplete;InstallCommands;OnCommand;OnCommandAfterLoad;OnSubmit;OnSubmitComplete
+Outlook Commands=FileSave;FileSaveAs;FileCopy;ComposeReplyToSender;ComposeReplyToAll;ComposeForward;FileProperties;FileSend;Others
+Commands=DisabledOldReadDigiSig;DisabledNewReadDigiSig
+
+[NormalSend]
+; NOTE: The security extension does not work for subclasses of IPM.Note.
+Message Class=IPM.Note!
+Item States=Compose
+Events=OnRead;OnWriteComplete;InstallCommands;OnCommand;OnCommandAfterLoad;OnSubmit;OnSubmitComplete
+Outlook Commands=FileSave;FileSaveAs;FileCopy;ComposeReplyToSender;ComposeReplyToAll;ComposeForward;FileProperties;FileSend;Others
+Commands=SecureEncrypt;SecureDigiSig
+
+[Property Sheet]
+Events=AddPropSheetPages
+Property Sheet Dialogs=ToolsOptions;Message
+
+[Command]
+OldReadDigiSig=50000;<Read>;Toolbar End Separator Suppress
+NewReadDigiSig=50000;<Verify>;Toolbar End Separator New NoDesignFormMode;DigitalVerifySignature
+DisabledOldReadDigiSig=50000;<Read>;Toolbar End Separator Suppress Disabled
+DisabledNewReadDigiSig=50000;<Verify>;Toolbar End Separator New NoDesignFormMode Disabled;DigitalVerifySignature
+SecureEncrypt=50001;<Seal>;Toolbar End Separator NoDesignFormMode;DigitalEncrypt
+SecureDigiSig=50002;<Sign>;Toolbar Next NoDesignFormMode;DigitalSign
+
+[Strings]
+DisplayName=Sayýsal Güvenlik
+Description=Sayýsal Ýmza ve Þifreleme
+
+Read=Sayýsal imzayý oku
+Verify=Sayýsal Ýmzayý Onayla
+Seal=Ýletiyi þifre ile koru
+Sign=Ýletiyi sayýsal olarak imzala
+

@@ -1,0 +1,46 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={EA1F5317-EDFD-11ce-8D13-00AA0051BF96}
+Path=minet32.dll
+Entry Point=2
+Client Version=4.0
+Service Provider=IMAIL
+Misc Flags=RemoteAlso
+
+[Exchange Client Compatibility]
+Exchange Registry=1
+Exchange Extension Key=Internet Mail
+
+; Exchange Context Map is *VIEWER, ADDRBOOK, PROPERTYSHEETS, *MESSAGE
+Exchange Context Map=01111111111100
+
+; Exchange Interface Map is IExchExtCommands, IExchExtPropertySheets
+Exchange Interface Map=1000010
+
+[Property Sheet]
+Events=AddPropSheetPages
+
+[Folder]
+Events=InstallCommands;AddPropSheetPages
+Commands=INETHelp
+
+[Item]
+Contexts=Post;Mail
+
+[Post]
+Events=AddPropSheetPages
+
+[Mail]
+Events=InstallCommands;AddPropSheetPages
+Commands=INETHelp
+
+[Command]
+INETHelp=50000;INETHelp;Help After HelpHelp Enabled
+
+[Strings]
+DisplayName=Internet Mail
+Description=Internet Mail
+
+INETHelp=Internet &Mail Yardým Konularý
+

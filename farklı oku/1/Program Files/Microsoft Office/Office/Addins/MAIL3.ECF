@@ -1,0 +1,32 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={EA1F5315-EDFD-11ce-8D13-00AA0051BF96}
+Path=outllib.dll
+Entry Point=ML3EXT_EE_New@0
+Client Version=4.0
+Misc Flags=Mail3;MoreContexts;DelayIdleInstall;NoInstallMainMenu
+
+[Exchange Client Compatibility]
+; Exchange Context Map is SESSION, *VIEWER, ADDRBOOK, *MESSAGE
+Exchange Context Map=11111111111000
+
+; Exchange Interface Map is IExchExtCommands, SessionEvents,
+Exchange Interface Map=1010000
+
+[Session]
+Events=OnDelivery
+
+[Folder]
+Events=InstallCommands;DoVerb;Compose;Install
+Command Bars=Main;File;Edit;View;Insert;Format;Tools;Compose;Help
+
+
+[Item]
+Events=InstallCommands;DoVerb;Compose;Install
+Command Bars=Main;File;Edit;View;Insert;Format;Tools;Compose;Help
+
+[Strings]
+DisplayName=Mail 3.0 Eklentileri
+Description=Mail 3.0 Eklentileri
+

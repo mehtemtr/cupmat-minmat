@@ -1,0 +1,2632 @@
+<HTML>
+<META  http-equiv  =   "Content-Type" 
+       content     =   "text/html; charset=windows-1254">
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1254">
+<TITLE>
+Internet Bağlantı Sihirbazı
+</TITLE>
+
+
+<SCRIPT>
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~ Error supression
+function errortrap(msg,url,line)
+{
+        return true;
+}
+onerror=errortrap;
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+////  
+////  K E Y B O A R D   H A N D E L E R S  
+////
+////
+////
+function handleKeyDown()
+{
+	if ((window.event.srcElement.type != "button") && (window.event.srcElement.type != "reset"))
+	{
+		switch (window.event.keyCode)
+		{
+			case 13:
+			{
+				
+				
+				if ((g_btnNext.disabled != true) && (g_btnNext.style.visibility != "hidden"))
+				{		
+					document.body.focus();
+					g_btnNext.onclick();
+				}
+				break;	
+			}
+			case 9:
+			{
+				if (!event.shiftKey)
+				{
+					switch(g_iCurrentScrn)
+					{
+						case 1:
+						{
+							g_btnNext.focus();	
+							break;
+						}
+						case 2:
+						{	if(option2)
+								g_btnBack.focus();
+							break;
+						}
+						case 3:
+						{
+							if(option2)
+								g_btnBack.focus();
+							else if (g_edtDownloadAreaCode.disabled != true)
+								g_btnBack.focus();
+							else
+								g_btnCancel.focus();
+							break;
+						}
+						case 4:
+						{
+							g_btnCancel.focus();
+							break;
+						}
+						
+						case "ERR":
+						{
+							//if it's the dial err page and the help button
+							if((g_bDialErr) && (event.srcElement == g_btnDialErrorTroubleShoot))
+								g_btnBack.focus();
+							else if (!g_bDialErr)
+								g_btnBack.focus();
+							
+							break;
+						}
+						case "MPN":
+                        {
+                            g_btnBack.focus();
+							break;
+                        }
+                        default:
+							break;
+					}
+				}
+				break;
+			}
+		
+			default:
+			{
+				break;
+			}	
+		}		
+		window.event.cancelBubble = true;
+		window.event.returnValue  = false;
+		return false;
+	}
+	else 
+		return true;
+}
+
+function shiftTab()
+{
+	if((window.event.keyCode == 9) && (window.event.shiftKey))	
+	{
+		switch(g_iCurrentScrn)
+		{
+			case 1:
+			{
+				if (option1)
+					g_rbtnNewOption.focus();
+				else if (option2)
+					g_rbtnExistOption.focus();				
+				else
+					g_rbtnFinOption.focus();
+				break;
+			}
+			case 2:
+			{
+				if (option2)
+				{
+					if (manualOptionLAN)
+					{
+						g_rbtnManualLan.focus();
+	   				}
+					else
+						g_rbtnManualOls.focus();
+				}
+				break;	
+			}
+			case 3:
+			{
+				if(option2)
+					g_btnFinish.focus();
+				else if (g_edtDownloadAreaCode.disabled != true)
+					g_edtDownloadAreaCode.focus();
+				else
+					g_btnCancel.focus();
+				break;
+			}
+			case 4:
+			{
+				g_btnCancel.focus();
+				break;
+			}
+			case "ERR":
+			{
+				//if it's the dial err page get the help button
+				if(g_bDialErr)
+					g_btnDialErrorTroubleShoot.focus();
+				else if (!g_bDialErr)
+					g_btnBack.focus();
+					
+				break;
+			}
+            case "MPN":
+            {
+                g_selPhoneList.focus();
+                break;
+            }
+			default:
+				break;
+		}
+		//kill the event now that we're through
+		window.event.cancelBubble = true;
+		window.event.returnValue  = false;
+		return false;
+	}
+	//we don't want this one let it go
+	return true;
+}
+</SCRIPT>
+</HEAD>
+
+<BODY onload       = "run();"
+      ondragstart  = "DragStart()"
+	  onkeydown    = "handleKeyDown();"
+	  ONERROR      = "errortrap();"
+	  TOPMARGIN    = 0
+      LEFTMARGIN   = 0
+      RIGHTMARGIN  = 0
+      BOTTOMMARGIN = 0
+      SCROLL       = no
+      bgColor      = THREEDFACE
+      color        = WINDOWTEXT
+	  TABINDEX     = -1>
+
+<SCRIPT>
+
+
+
+//////////////////
+// Vars
+
+// A T L - C O M  Objects
+var m_IOleObject              = new Object(); // Ole Container Ref 
+var ICWSystemConfig           = new Object(); // ICWSystemConfigSignup OCX 
+var TapiLocationInfo          = new Object(); // TapiLocationInfoSignup OCX 
+
+var g_iCurrentScrn            = 1;
+var g_cRefCount               = 50;
+var g_bDownloadComplete       = false; //bool to check for a completed download
+var g_bIspSelected            = false; //bool to check for a previously selected isp
+var locChkFail                = false; // a bool to see if we need to grab the area code entered by a user
+var ProductCode               = 0;
+var PromoCode                 = 0;
+var m_iPercentIncrease        = 0; 
+var bLargeFonts               = false; //turn off large fonts by default 
+var fUserModifiedPhoneNumber  = false; // flag to indicate if user as modified  phone number
+var fHadConnectionError       = false; // flag to indicate if there was a dialing or donwload/server error
+var g_bDialErr                = false; // bool to distiguish a dial err form a server err.
+var option1                   = true;
+var option2                   = false;
+var option3                   = false;
+var manualOptionLAN           = true;
+var manualOptionOLS           = false;
+
+//area code length
+var L_AreaCodeLength_Text     = 3;
+
+///////////////////////////////
+//The one and only CWizIntro
+public_description = new CWizIntroObj;
+
+//////////////////////////////
+//  Constructor
+function CWizIntroObj()
+{
+	this.get_reset                    = get_reset;
+    this.put_ProdCode                 = put_ProdCode;
+    this.put_PromoCode                = put_PromoCode;
+    this.get_resetFocus               = get_resetFocus;
+    this.get_bindingFailure           = get_bindingFailure;	   
+    this.put_IsLargeFonts             = put_IsLargeFonts;
+    this.put_fontPrecentage           = put_fontPrecentage;
+    this.get_checkLargeFonts          = get_checkLargeFonts;
+  	//ATL-COM interfaces
+	this.put_setExternIOleContainer   = put_setExternIOleContainer;
+	this.put_setICWSystemConfigOCX    = put_setICWSystemConfigOCX;
+	this.put_setTapiLocationInfoOCX   = put_setTapiLocationInfoOCX;
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~ Interfaces
+//~~~~~~~~
+//~~~~~~~~
+//~~~~~~~~
+//~~~~~~~~
+
+
+function passMDE()
+{
+    window.external.raiseEvent("event_onmousedown" , window.event);
+}
+
+
+
+
+
+
+function DragStart() 
+{
+	 window.event.cancelBubble = true;
+	 window.event.returnValue  = false;
+	 return false;
+}
+
+
+
+////////////////////////////////
+// IsLargeFonts
+//
+// this method will notify this scriptlet that it must resize for Large fonts.
+//
+
+function put_IsLargeFonts(bool)
+{
+	bLargeFonts = bool; 
+}
+
+
+
+////////////////////////////////
+// fontPrecentage
+//
+// this method will notify this scriptlet that it must resize for Large fonts.
+//
+
+function put_fontPrecentage(dPercent)
+{
+	m_iPercentIncrease = dPercent;
+}
+
+
+ 
+	
+
+
+////////////////////////////////
+// ProdCode
+//
+// this method will set the product code "property" of this scriptlet.
+//
+
+
+function put_ProdCode(i)
+{
+    ProductCode = i;
+}
+
+
+////////////////////////////////
+// PromoCode
+//
+// this method will set the promo code "property" of this scriptlet.
+//
+
+
+function put_PromoCode(i)
+{
+    PromoCode = i;
+}
+
+
+////////////////////////////////
+// resetFocus
+//
+// Fix - RAID #153
+// 
+//
+
+
+function get_resetFocus()
+{
+	showGetCon();
+
+	window.setTimeout("g_btnNext.focus();", 1);
+	return true;
+}
+
+
+
+
+
+
+////////////////////////////////
+// bindingFailure
+//
+// Binding has Failed 
+// setup accordingly.
+// 
+//
+
+function get_bindingFailure()
+{
+	g_spnDownload4.innerHTML = "Binding Failed";
+
+    //pop the error screen here
+	showReferralErr();
+    g_iCurrentScrn = "ERR";
+	
+	
+	return true;	
+}
+
+/////////////////////////////////////////
+/////////////////////////////////////////
+//// A T L - C O M    I N T E R F A C E S
+////
+
+
+
+	///////////////////////////////////
+	/// setExternIOleContainer()
+	///
+	/// RETURNS: void
+	/// PURPOSE: Get a ref to the container
+
+
+	function put_setExternIOleContainer(extrnIOleObj)
+	{
+		m_IOleObject =  extrnIOleObj;
+	}
+
+	
+	///////////////////////////////////
+	/// setRefDialOCX()
+	///
+	/// RETURNS: void
+	/// PURPOSE: Get a ref to the RefDial OCX 
+
+	/*
+	function put_setRefDialOCX(OCX)
+	{
+		RefDial =  OCX;
+		RefDial.style.width  = 1;
+		RefDial.style.height = 1;
+	}
+	*/
+
+
+	///////////////////////////////////
+	/// setICWSystemConfigOCX()
+	///
+	/// RETURNS: void
+	/// PURPOSE: Get a ref to the ICWSystemConfig OCX 
+
+	
+	function put_setICWSystemConfigOCX(OCX)
+	{
+		ICWSystemConfig =  OCX;
+	}
+	
+
+	///////////////////////////////////
+	/// setTapiLocationInfoOCX()
+	///
+	/// RETURNS: void
+	/// PURPOSE: Get a ref to the TapiLocationInfo OCX 
+
+	
+	function put_setTapiLocationInfoOCX(OCX)
+	{
+		TapiLocationInfo =  OCX;
+	}
+	
+	
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~ M A I N       M E T H O D S
+//~~~~~~~~
+//~~~~~~~~
+//~~~~~~~~
+//~~~~~~~~
+
+
+////////////////////////////////
+// Run 
+//
+// Init some basic UI and kick off 
+// the wizard 
+//
+
+function run()
+{   
+	window.external.raiseEvent("event_onmousedown", window.event);
+	
+}
+
+
+function init()
+{
+	
+		
+		
+		//////////////////
+		// Graphic
+		show(g_imgSideGraphic);
+
+		//////////////////
+		// Show Common UI
+    
+		show(g_btnNext);
+		show(g_btnCancel);
+		show(g_hrUIBar);   
+
+		/////////////////////
+		// Show Wizard Screen
+		showGetCon();	
+	
+		g_btnNext.special             = "";          //set the specical action flag of the next 
+			                                     //button to null this prop is to identify 
+												 //migration, inetwiz, or flip bit cance
+		
+		return true;
+}
+
+
+
+function get_checkLargeFonts()
+{
+	
+	///////////////
+	//ProgressBar
+
+	g_objProgressBar.style.width      = 360;
+	g_objProgressBar.style.height     = 16;
+	g_objProgressBar.Min              = 0;
+	g_objProgressBar.Max              = 100;
+	g_objProgressBar.Value            = 0;
+	g_objProgressBar.style.posTop     = 214;
+	g_objProgressBar.style.posLeft    = 167;
+
+	
+	
+	if(bLargeFonts)
+	{
+		var DOCLENGTH = document.all.length;
+
+		for(var i = 0; i < DOCLENGTH; i++)
+		{ 
+			
+			if (document.all(i) != null)
+			{
+				//wlak through the doc object model and adjust all the x,y as needed
+			
+				document.all(i).style.posTop*=m_iPercentIncrease;
+				document.all(i).style.posLeft*=m_iPercentIncrease;			
+	
+
+				// here we need the substring to work around 'px' being retuned with the int value.
+				document.all(i).style.width=document.all(i).style.width.substring(0, document.all(i).style.width.length - 2)*m_iPercentIncrease;
+				document.all(i).style.height=document.all(i).style.height.substring(0, document.all(i).style.height.length - 2)*m_iPercentIncrease;
+			}
+		}
+
+
+	}
+	
+	init();
+}
+
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+// WIZARD SCREENS
+//
+//
+//
+
+////////////////////
+////////////////////
+// showGetCon
+//
+function showGetCon()
+{ 
+    m_IOleObject.Loaded;
+    
+    hide(g_btnBack);
+
+	show(g_spnGetCon1);
+    show(g_spnGetCon3);
+    show(g_spnGetCon4);
+    show(g_spnGetCon5);
+    show(g_spnGetCon6);
+	show(MAIN_PATH_UI);
+	
+    //fix for bug #44
+    g_btnNext.disabled = false;
+
+	//Fix - RAID #153
+	window.setTimeout("g_btnNext.focus();", 1);
+	
+	//focus manager 
+	g_btnNext.onkeydown=shiftTab;
+}
+
+////////////////////
+////////////////////
+// showManual
+//
+function showManual()
+{
+   	show(g_btnBack);
+	show(g_spnManualText1);
+	show(MANUAL_PATH_UI);
+	show(g_spnManualLanLbl);
+    show(g_spnManualOlsLbl);
+    show(g_btnCancel);
+	show(g_btnNext);     
+
+    g_btnNext.disabled = false;
+
+	//Fix - RAID #153
+	window.setTimeout("g_btnNext.focus();", 1);
+
+	//focus manager 
+	g_btnBack.onkeydown=shiftTab;
+}
+
+////////////////////
+////////////////////
+// showOls
+//
+function showOls()
+{    
+	hide(g_btnCancel);
+	hide(g_btnNext);             
+	
+	show(g_spnOlsText1);
+    show(g_spnOlsText2);
+	show(g_btnFinish);
+	
+    if(bLargeFonts)
+		g_btnBack.style.posLeft = 374*m_iPercentIncrease;  
+	else
+		g_btnBack.style.posLeft = 374;
+          
+	//Fix - RAID #153
+	window.setTimeout("g_btnFinish.focus();", 1);
+
+	//focus manager 
+	g_btnBack.onkeydown=shiftTab;
+}
+
+////////////////////
+////////////////////
+// showMultiPhoneNum
+//
+function showMultiPhoneNum()
+{		
+	//clean up any stray focus managment
+	g_btnCancel.onkeydown = "";
+	g_btnBack.onkeydown   = "";
+		
+	//hide the progress bar just in case
+	hideProgress();
+	hideDownload();
+	
+    show(g_btnBack);
+	
+    //pre simons
+    g_btnBack.disabled = false;
+    g_btnNext.disabled = false;
+
+    show(g_spnMultiPhoneMsg);
+
+    FillPhoneList();
+    show(g_spnPhoneList);
+    show(g_selPhoneList);
+    
+    g_selPhoneList.selectedIndex = 0;
+	g_bDownloadComplete = false;
+
+	//reset it too
+	g_objProgressBar.Value = 0;
+
+	//focus manager 
+	g_btnBack.onkeydown=shiftTab;
+
+    fHadConnectionError = false;
+                
+	RefDial.DoHangup();
+}
+
+
+function FillPhoneList()
+{
+    var el;
+    var NumPhoneLists;
+        
+    // wipe the list
+    while (g_selPhoneList.options(0) != null)    
+        g_selPhoneList.remove(0);
+        
+    // Fill the list with the current set of installed PhoneLists
+    NumPhoneLists = RefDial.PhoneNumberEnum_NumDevices;
+    RefDial.PhoneNumberEnum_Reset();
+    
+	for (i=0; i < NumPhoneLists; i++) 
+    {
+        el = document.createElement("OPTION");
+        el.text=RefDial.PhoneNumberEnum_Next();
+        el.value="i";
+        g_selPhoneList.add(el);
+    }
+
+    g_selPhoneList.selectedIndex = 0;
+}
+
+////////////////////
+////////////////////
+// showDialErr
+//
+function showDialErr()
+{		
+	//clean up any stray focus managment
+	g_btnCancel.onkeydown = "";
+	g_btnBack.onkeydown   = "";
+		
+	//Since this is a refserver error set the dial err to false
+	g_bDialErr = true;
+	
+	//hide the progress bar just in case
+	hideProgress();
+	hideDownload();
+
+	fHadConnectionError = true;               // flag to indicate if there was a dialing error
+
+	show(g_btnBack);
+
+	//pre simons
+    g_btnBack.disabled = false;
+    g_btnNext.disabled = false;
+
+    //g_spnDialErr
+    g_spnDialErrorMsg.innerHTML = RefDial.DialErrorMsg;
+    show(g_spnDialErrorMsg);
+    
+    // g_spnDialErrorNumber
+    g_edtDialErrorNumber.value = RefDial.DialPhoneNumber;
+    show(g_spnDialErrorNumber);
+    show(g_edtDialErrorNumber);
+
+    // g_spnDialErrorModem
+    FillModemList();
+    show(g_spnDialErrorModem);
+    show(g_listDialErrorModem);
+    
+    // g_spnDialErrorDialProp
+    show(g_spnDialErrorDialProp);
+    show(g_btnDialErrorDialProp);
+
+    // g_spnDialErrorPhoneBook
+    if (RefDial.HavePhoneBook)
+    {
+        show(g_spnDialErrorPhoneBook);
+        show(g_btnDialErrorPhoneBook);
+    }
+    
+    // g_spnDialErrorTroubleShoot
+    show(g_spnDialErrorTroubleShoot);
+    show(g_btnDialErrorTroubleShoot);
+    
+    // Show the Automated support number, if there is one
+    DisplaySupportNumber();
+    
+    //FIX For RAID# 103
+    g_spnDownload4.innerHTML = "";
+
+	g_bDownloadComplete = false;
+
+	//reset it too
+	g_objProgressBar.Value = 0;
+
+	//focus manager 
+	g_btnBack.onkeydown=shiftTab;
+
+	RefDial.DoHangup();
+}
+
+////////////////////
+////////////////////
+// showReferralErr
+//
+function showReferralErr()
+{			
+	//clean up any stray focus managment
+	g_btnCancel.onkeydown = "";
+	g_btnBack.onkeydown   = "";
+
+	//Since this is a refserver error set the dial err to false
+	g_bDialErr = false;
+	
+	//hide the progress bar just in case 
+	hideProgress()	
+	hideDownload();
+
+	fHadConnectionError = true;               // flag to indicate if there was a dialing or server error
+
+    //g_spnReferralErrMsg
+    show(g_spnReferralErrMsg);
+
+    // Show the Automated support number, if there is one
+    DisplaySupportNumber();
+
+	//per simons
+    g_btnBack.disabled = false;
+	g_btnNext.disabled = false;
+
+	g_spnDownload4.innerHTML = "";
+
+	g_bDownloadComplete = false;
+
+	//focus manager 
+	g_btnBack.onkeydown=shiftTab;
+
+	RefDial.DoHangup();
+
+	//reset it too
+	g_objProgressBar.Value = 0;
+}
+
+////////////////////
+////////////////////
+// Download
+//
+function showDownload()
+{
+	//clean up any stray focus managment
+	g_btnCancel.onkeydown = "";
+	g_btnBack.onkeydown   = "";
+
+	show(g_btnBack);
+	show(g_spnDownload1);
+    show(g_spnDownload4);
+
+    if (checkNumberOfTapiLocations())
+    {
+        locChkFail = false;
+       	g_btnCancel.onkeyown=shiftTab;
+    }
+    else
+	{
+		locChkFail = true;
+		show(g_spnDownload5);
+        show(g_spnDownload6);
+        
+        // ensure it is enabled and focused
+        g_edtDownloadAreaCode.maxLength = L_AreaCodeLength_Text;
+		g_edtDownloadAreaCode.disabled  = false;
+		g_edtDownloadAreaCode.focus();
+
+		//focus manager
+		g_btnBack.onkeydown=shiftTab; 
+	}
+	//fix for RAID #189
+	//make sure you can back out 
+	//of download if you need to
+	g_btnBack.disabled = false;
+}
+
+/////////////////////////
+/// Download function
+function checkNumberOfTapiLocations()
+{
+    TapiLocationInfo.GetTapiLocationInfo();
+
+    if (null != TapiLocationInfo)
+    {
+        g_edtDownloadAreaCode.value =  TapiLocationInfo.bstrAreaCode;
+
+        if (null != TapiLocationInfo.bstrAreaCode)
+        {
+
+            if (TapiLocationInfo.wNumberOfLocations != 1)
+                return false;
+            else
+                return true;
+        }
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+
+
+
+// Validate that the content of the phone number field is a legit phone
+// number if the user modified it
+function ValidateDialErrorNumber()
+{
+    if (fUserModifiedPhoneNumber)
+    {
+        if (!RefDial.ValidatePhoneNumber(g_edtDialErrorNumber.value))
+        {
+            // Force focus back onto the edit control
+            g_edtDialErrorNumber.focus();
+        
+            return false;
+        }   
+    }        
+    return true;
+}
+
+// Handle the case where the user edits the phone number in the 
+// dial error dialog
+function DialErrorNumberChange()
+{	
+	// disable the dialing properties button, since we will dial exact
+    g_btnDialErrorDialProp.disabled = true;
+    
+    // Set a flag indicating that the use has modified the number.
+    fUserModifiedPhoneNumber = true;
+    
+}
+
+// Handle the case where the user edits the phone number in the 
+// dial error dialog with the del key
+function SpecialDialErrorNumberChange()
+{
+	switch(window.event.keyCode)
+	{
+		case 46:
+		case 8:
+		{
+			DialErrorNumberChange();	
+			break;
+		}
+		default:
+			break;
+	}
+	return true;	
+}
+
+
+function ShowPhoneBook()
+{
+    if (RefDial.ShowPhoneBook())
+    {
+        // The user selected a number from the phone book, so clear the user
+        // edit flag
+        fUserModifiedPhoneNumber = false;
+        g_btnDialErrorDialProp.disabled = false;
+        
+        g_edtDialErrorNumber.value = RefDial.DialPhoneNumber;
+        DisplaySupportNumber();
+    }
+}
+
+function ShowDialErrorTroubleShooter()
+{
+    m_IOleObject.ShowDialErrorHelp;
+}
+
+function DialProperties()
+{
+    if (RefDial.ShowDialingProperties())
+    {
+        g_edtDialErrorNumber.value = RefDial.DialPhoneNumber;
+        DisplaySupportNumber();
+    }    
+}
+
+function DisplaySupportNumber()
+{
+    if (RefDial.SupportNumber != "")
+    {    
+        show(g_spnErrorAutomatedHelp);
+        show(g_spnErrorAutomatedHelpNumber);
+        g_spnErrorAutomatedHelpNumber.innerHTML = RefDial.SupportNumber;
+    }
+    else
+    {
+        g_spnErrorAutomatedHelpNumber.innerHTML = "";
+        hide(g_spnErrorAutomatedHelp);
+        hide(g_spnErrorAutomatedHelpNumber);
+    }        
+}
+
+function FillModemList()
+{
+    var el;
+    var NumModems;
+        
+    // empth the list
+    while (g_listDialErrorModem.options(0) != null)    
+        g_listDialErrorModem.remove(0);
+        
+    // Fill the list with the current set of installed modems
+    NumModems = RefDial.ModemEnum_NumDevices;
+    RefDial.ModemEnum_Reset();
+    
+	for (i=0; i < NumModems; i++) 
+    {
+        el = document.createElement("OPTION");
+        el.text=RefDial.ModemEnum_Next();
+        el.value="i";
+        g_listDialErrorModem.add(el);
+		
+    }
+
+	if (RefDial.CurrentModem != -1)
+		g_listDialErrorModem.selectedIndex = RefDial.CurrentModem;
+	else
+		g_listDialErrorModem.selectedIndex = 0
+
+}
+
+
+function ConfigureSystem()
+{
+    if (!ICWSystemConfig.ConfigSystem())
+    {
+        if (ICWSystemConfig.NeedsReboot)
+        {
+            m_IOleObject.Reboot;
+            return false;
+        }
+        
+        if (ICWSystemConfig.NeedsRestart)
+        {
+            if (m_IOleObject.Restart())
+            {
+                m_IOleObject.CloseApplication;
+                return false;
+            }                
+            else
+            {
+                if (m_IOleObject.ConfirmCancel())
+                {
+                    m_IOleObject.CloseApplication;
+                    return true;
+                }
+                else
+                {
+                    // If control returns here, then we did not cancel, so
+                    // we need to allow the user to retry
+                    g_iCurrentScrn = 1;
+                    
+                    // Re-enable the back and next buttons
+                    g_btnNext.disabled = false;                
+                    g_btnBack.disabled = true;                
+                    screenSwitch();
+                    return false;
+                }
+            }                
+        }
+        
+        if (ICWSystemConfig.QuitWizard)
+        {
+            // The user has clicked next, so we need to use g_bntNext as the 
+            // srcElement
+            //g_btnNext.special = "quit";
+            
+			m_IOleObject.CloseApplication;
+                
+            
+			return false;
+        }
+        else
+        {
+            //g_btnNext.special = "cancel";
+           
+			if (m_IOleObject.ConfirmCancel())
+			{					
+				m_IOleObject.CloseApplication;
+				return true;
+			}
+		    
+            // If control returns here, then we did not cancel, so
+            // we need to allow the user to retry
+            g_iCurrentScrn = 1;
+                
+            // Re-enable the back and next buttons
+            g_btnNext.disabled = false;                
+            g_btnBack.disabled = true;                
+            screenSwitch();
+            return false;
+        }
+    }
+    
+    // Make sure there is not a policy against password caching
+    if (ICWSystemConfig.CheckPasswordCachingPolicy())
+    {
+        // too bad, no password caching, no ICW
+        m_IOleObject.CloseApplication;
+        return true;
+    }
+    return true;
+}
+
+
+/////////////////////////
+/// Tapi helper function
+
+function SetuptoDialRefSvr()
+{
+    
+    if (ICWSystemConfig.VerifyRasIsRunning() == 0)
+    {
+        showDialErr();
+        g_iCurrentScrn = "ERR";
+
+    }
+    else
+    {
+        // If we do not have the country code yet, then try getting it now
+        if (!TapiLocationInfo.lCountryCode)
+        {
+            TapiLocationInfo.GetTapiLocationInfo();
+        }
+        
+        // Get the Product Code
+        RefDial.ProductCode = ProductCode;
+        RefDial.PromoCode = PromoCode;
+        
+        if (RefDial.SetupForDialing("msicw.isp",
+                                     TapiLocationInfo.lCountryCode,
+                                     TapiLocationInfo.bstrAreaCode) == 0)
+        {
+            if (RefDial.UserPickNumber)
+            {
+                showMultiPhoneNum();
+                g_iCurrentScrn = "MPN";
+                return false;
+            }
+            
+            if (RefDial.QuitWizard)
+            {
+                // The user has clicked next, so we need to use g_bntNext as the 
+                // srcElement
+                //g_btnNext.special = "quit";
+                
+				m_IOleObject.CloseApplication;
+                
+				return false;
+                
+            }
+            else if (RefDial.TryAgain)
+            {
+                g_iCurrentScrn = 2;
+                
+                // Re-enable the back and next buttons
+                g_btnNext.disabled = false;                
+                g_btnBack.disabled = false;                
+                screenSwitch();
+            }
+            else
+            {
+                showDialErr();
+                g_iCurrentScrn = "ERR";
+            }                
+        }
+        else
+        {
+            if (RefDial.FormReferralServerURL())
+            {
+
+                // Set the Phone Number
+                //g_spnDownload3.innerHTML=RefDial.DialPhoneNumber;
+
+                // Clear the Initial dialing status string
+                g_spnDownload4.innerHTML="";
+                return true;
+            }
+            else
+            {
+                showDialErr();
+                g_iCurrentScrn = "ERR";
+            }
+        }
+    }
+    
+    return false;
+}
+
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+// BUTTON EVENT HANDLING
+//
+//
+//
+
+
+
+
+function screenSwitch()
+{
+
+	switch (g_iCurrentScrn)
+	{
+		case 1:
+		{
+			showGetCon();
+			break;
+		}
+		case 2:
+		{
+			if(option2)
+			{
+				showManual();
+			}
+
+			else if (option3)
+			{
+				cancelFlipBit();
+			}
+			else
+			{
+				if (ConfigureSystem())
+				{
+					g_iCurrentScrn++;
+					screenSwitch();
+				}                
+			}
+			break;
+		}
+		
+		case 3:
+		{
+			if(option2)
+			{
+				////We're in the manual path 
+				//launchINETWIZ();
+				if(manualOptionLAN)
+					launchINETWIZ();
+				else if (manualOptionOLS)
+					showOls();
+			}	
+			else
+			{
+				if (!g_bDownloadComplete)
+				{
+					showDownload();
+            
+					// if we had a connection error, or the TAPI location check did not
+					// fail then we need to navigate automatically to the dialing
+					if (fHadConnectionError || !locChkFail)
+					{
+						g_iCurrentScrn++;
+						screenSwitch();
+					}	              
+				}        
+				else
+				{
+					nav();
+					get_reset();
+				}
+			}	         	
+			break;
+		}
+		case 4:
+		{		
+			if (!g_bDownloadComplete)
+			{
+				//reset some of the ui
+				show(g_btnBack);
+				
+				show(g_spnDownload1);
+				show(g_spnDownload4);
+
+				if(locChkFail)
+				{
+					show(g_spnDownload5);
+					show(g_spnDownload6);
+				}
+			
+				//here's where we want to disable next and back
+				g_btnNext.disabled = true;
+				g_btnBack.disabled = true;
+				
+				//get the focus off next
+				document.body.focus();
+				
+				//focus manager 
+				g_btnCancel.onkeydown=shiftTab;
+				g_btnBack.onkeydown="";
+
+				if (locChkFail)
+					TapiLocationInfo.bstrAreaCode = g_edtDownloadAreaCode.value;
+
+				// If we did not have a conneciton error, then we need to setup to 
+				// dial, otherwise we are ready to dail now
+				if (!fHadConnectionError)
+				{
+					if (SetuptoDialRefSvr())
+					{
+						// Set the Phone Number
+				        show(g_spnDownload2);
+					    show(g_spnDownload3);
+            
+						g_spnDownload3.innerHTML=RefDial.DialPhoneNumber;
+        
+						// If we had to confirm the area code, disalble the control
+						// while we are dialing
+					   if (locChkFail)
+							g_edtDownloadAreaCode.disabled = true;
+
+						// Kick off The Dialing
+						RefDial.DoConnect();
+					}            
+				}
+				else            // We are continuing from a dialing error, so just dial
+				{
+                            
+					// If the user modified the phone number, then we need to tell
+					// RefDial what the new one is
+					if (fUserModifiedPhoneNumber)
+						RefDial.DialPhoneNumber=g_edtDialErrorNumber.value
+                    
+					// Set the Phone Number
+					show(g_spnDownload2);
+					show(g_spnDownload3);
+            
+					g_spnDownload3.innerHTML=RefDial.DialPhoneNumber;
+            
+					// If we had to confirm the area code, disalble the control
+					// while we are dialing
+					if (locChkFail)
+						g_edtDownloadAreaCode.disabled = true;
+            
+					RefDial.DoConnect();
+				}                
+			}
+
+			break;
+		}
+
+		default:
+		{
+			nav();	
+			break;
+		}
+	}
+
+}
+
+function preHideScreenSwitch()
+{
+	if (g_iCurrentScrn == "ERR")
+	{
+		//it was a dialing err so...
+		if (g_bDialErr)
+		{	
+			//set the selected modem
+			RefDial.CurrentModem = g_listDialErrorModem.selectedIndex;
+		}
+
+		hideDialErr();
+		hideSvrErr();
+		
+		
+		//reset the bool
+		g_bDialErr = true;
+		
+		return true;		
+	}
+    else if (g_iCurrentScrn == "MPN")
+    {
+        hideMultiPhoneNum();
+    } 
+	else
+	{
+		switch (g_iCurrentScrn)
+		{
+			case 1:
+			{
+				hideGetCon();
+				break;
+			}
+			case 2:
+			{
+
+			
+				if(option2)
+				{
+					hideManual();
+				}
+			
+			
+				break;
+			}
+		
+			case 3:
+			{      
+				if(option2)
+				{	
+					if (manualOptionOLS)
+						hideOls();
+				}
+				else
+					hideDownload();
+
+				break;
+			}
+	
+			case 4:
+			{		
+				
+				if (!g_bDownloadComplete)
+				{
+					
+					hideDownload();
+					
+					               
+				}
+			
+				break;
+			}
+
+		
+			default:
+			{
+					
+				break;
+			}
+		}
+	}
+
+}
+
+
+
+
+
+function nav()
+{
+    passMDE();
+}
+
+function get_reset()
+{
+	//reset the progress bar here to get rid of that 
+	//going empty on complete bug.
+	//now it's totally behind the scenes
+
+	g_objProgressBar.Value = 0;
+    
+	hideProgress();
+	hideDownload();
+
+	g_btnNext.disabled = false;
+    g_btnBack.disabled = false;
+    g_btnBack.visibility = "hidden";
+	g_iCurrentScrn = 1;
+    screenSwitch();
+}
+
+
+function next()
+{
+	// IF YOUR LOOKING AT AN ERROR PAGE, THEN GO TO DOWNLOAD AGAIN
+    if (g_iCurrentScrn == "ERR")
+    {
+        // Validate the phone number.
+        if (!ValidateDialErrorNumber())
+            return false;
+            
+        preHideScreenSwitch();
+		g_iCurrentScrn = 2;
+    }
+    else if (g_iCurrentScrn == "MPN")
+    {
+        if (RefDial.SelectedPhoneNumber(g_selPhoneList.selectedIndex))
+        {
+      
+            preHideScreenSwitch();
+            fHadConnectionError = true;
+            if (RefDial.FormReferralServerURL())
+            {
+                g_iCurrentScrn = 2;
+            }
+            else
+            {
+                showDialErr();
+                g_iCurrentScrn = "ERR";
+            }
+            
+        }
+        else
+            m_IOleObject.CloseApplication;
+    }
+    else
+    {
+	   preHideScreenSwitch();
+	   g_iCurrentScrn++;
+	}
+    screenSwitch();     
+}
+
+function back()
+{
+	preHideScreenSwitch();
+	
+	// IF YOUR LOOKING AT AN ERROR PAGE, THEN GO TO MAIN PATH SELECT
+    if ((g_iCurrentScrn == "ERR") || ((g_iCurrentScrn == 3) && (!option2)) || (g_iCurrentScrn == "MPN"))
+    {
+        g_selPhoneList.selectedIndex = -1;
+        g_iCurrentScrn = 1;
+    }        
+    else
+        g_iCurrentScrn--;
+
+
+    screenSwitch();
+}
+
+function cancel()
+{
+	 if (m_IOleObject.ConfirmCancel())
+     {					
+		RefDial.DoHangup();
+		
+		m_IOleObject.CloseApplication;
+		return true;
+	 }
+	 return true;
+}
+
+
+
+function finish()
+{
+	 //run cleanup and completed code
+	 m_IOleObject.ICWSuccess; 
+	 m_IOleObject.SetICWCompleted;
+	 m_IOleObject.CloseApplication;
+	 return true;
+}
+
+
+
+
+
+function cancelFlipBit()
+{
+    //Cancel ane set the "Don't run again" bit
+
+    //g_btnNext.special = "flipbit";
+    
+	 m_IOleObject.ICWSuccess;
+     m_IOleObject.SetICWCompleted;
+     m_IOleObject.CloseApplication;
+
+	return true;
+}
+
+
+function launchMigrationTool()
+{
+    //close the app, launch migration wizard
+    
+	//g_btnNext.special = "migration";
+    
+	 m_IOleObject.ICWSuccess;
+     m_IOleObject.RunICWMigration;
+
+	return true;
+}
+
+function launchINETWIZ()
+{
+	// Run the manual wizard
+	
+	//g_btnNext.special = "manual";
+    
+	if (m_IOleObject.RunICWMan())
+    {
+		// Successful completion
+		m_IOleObject.ICWSuccess;
+                
+		// Set the ICW competed bit
+		m_IOleObject.SetICWCompleted;
+	}
+	
+	// Quit
+	m_IOleObject.CloseApplication;
+}
+
+
+//////////////////////////////////////////////////
+// HIDE / SHOW UTIL FUNCTIONS
+//
+//
+
+function show(m_objElement)
+{
+    m_objElement.style.visibility = "visible";
+}
+
+function hide(m_objElement)
+{
+    m_objElement.style.visibility = "hidden";
+}
+
+function hideProgress()
+{ 
+    ///////////////
+    //ProgressBar
+    //
+    hide(g_objProgressBar);
+    
+}
+
+function hideGetCon()
+{
+    //////////////////
+    // GetCon Elements
+    //
+    hide(g_spnGetCon1);
+    hide(g_spnGetCon3);
+    hide(g_spnGetCon4);  
+    hide(g_spnGetCon5);
+    hide(g_spnGetCon6);
+	hide(MAIN_PATH_UI);
+
+	//cleanup shift tab
+	g_btnNext.onkeydown="";
+}
+
+function hideOls()
+{
+  	//////////////////
+    // Ols  Elements
+    //
+    hide(g_spnOlsText1);
+    hide(g_spnOlsText2);
+	hide(g_btnFinish);
+
+    if(bLargeFonts)
+		g_btnBack.style.posLeft = 301*m_iPercentIncrease;
+	else
+		g_btnBack.style.posLeft = 301;
+
+	//cleanup shift tab
+	g_btnBack.onkeydown="";
+}     
+
+function hideManual()
+{    
+	//////////////////
+    // Manual Elements
+    //
+	hide(g_spnManualText1);
+    hide(MANUAL_PATH_UI);
+	hide(g_spnManualLanLbl);
+    hide(g_spnManualOlsLbl);
+		
+	//cleanup shift tab
+	g_btnBack.onkeydown=""; 
+}
+
+///////////////
+// hideMultiPhoneNum
+//
+function hideMultiPhoneNum()
+{		
+	//clean up any stray focus managment
+	g_btnCancel.onkeydown = "";
+	g_btnBack.onkeydown   = "";
+		
+	hide(g_spnMultiPhoneMsg);
+    hide(g_spnPhoneList);
+    hide(g_selPhoneList);
+ }
+
+function hideDownload()
+{
+    //////////////////
+    // Download Elements
+    //
+    hide(g_spnDownload1);
+    hide(g_spnDownload2);
+    hide(g_spnDownload3);
+    hide(g_spnDownload4);
+    hide(g_spnDownload5);
+    hide(g_spnDownload6);
+	g_edtDownloadAreaCode.disabled = true;
+
+	//cleanup shift tab
+	g_btnCancel.onkeydown = "";
+	g_btnBack.onkeydown   = "";
+}
+
+function hideDialErr()
+{
+	//////////////////
+    // Error Elements
+    //
+    hide(g_spnDialErrorMsg);
+    hide(g_spnDialErrorNumber);
+    hide(g_edtDialErrorNumber);
+    hide(g_spnDialErrorModem);
+    hide(g_listDialErrorModem);
+    hide(g_spnDialErrorDialProp);
+    hide(g_btnDialErrorDialProp);
+    hide(g_spnDialErrorPhoneBook);
+    hide(g_btnDialErrorPhoneBook);
+    hide(g_spnDialErrorTroubleShoot);
+    hide(g_btnDialErrorTroubleShoot);
+    hide(g_spnErrorAutomatedHelp);
+    hide(g_spnErrorAutomatedHelpNumber);
+
+	//cleanup shift tab
+	g_btnBack.onkeydown="";
+}
+
+function hideSvrErr()
+{
+	hide(g_spnReferralErrMsg);	
+
+	//cleanup shift tab
+	g_btnBack.onkeydown="";
+}
+
+function flipMainPathBool()
+{
+	option1 = false;
+	option2 = false;
+	option3 = false;
+
+	switch(event.srcElement.value)
+	{
+		case "NEW":
+		{
+			option1 = true;
+			break;
+		}
+		
+		case "EXIST":
+		{
+			option2 = true;
+			break;
+		}	
+		
+		case "FIN":
+		{
+			option3 = true;
+			break;
+		}
+		
+		default:
+			break;
+	}
+}
+	   
+function flipManualPathBool()
+{
+	manualOptionLAN = false;
+	manualOptionOLS = false;
+
+	switch(event.srcElement.value)
+	{
+		case "LAN":
+		{
+			manualOptionLAN = true;
+			break;
+		}
+		
+		case "OLS":
+		{
+			manualOptionOLS = true;
+			break;
+		}	
+		
+		default:
+			break;
+	}
+}
+</SCRIPT>
+
+<script LANGUAGE="JavaScript">
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~ DIALING EVENT HANDLERS
+//~~~
+</SCRIPT>
+
+<script LANGUAGE="JavaScript" FOR="RefDial" EVENT="RasDialStatus()">
+
+    g_spnDownload4.innerHTML = RefDial.DialStatusString;
+
+</script>
+
+<script LANGUAGE="JavaScript" FOR="RefDial" EVENT="DownloadComplete(szURL, bSuccess)">
+
+    RefDial.DoHangup();
+	
+	var L_RefDialCompleted_Text = "Complete";
+	var L_RefDialFailed_Text     = "Failed";
+
+
+    if (bSuccess != 0)
+    {
+        g_bDownloadComplete = true;
+        g_spnDownload4.innerHTML = L_RefDialCompleted_Text;
+        //check if see if the url is null if not nav to that url...
+        // so all that support should be in this page.. that way nav is only fired if it's all over.
+        next();
+    }
+    else
+    {
+       g_spnDownload4.innerHTML = L_RefDialFailed_Text;
+
+       //pop the error screen here
+       showReferralErr();
+       g_iCurrentScrn = "ERR";
+    }
+
+</script>
+
+<script LANGUAGE="JavaScript" FOR="RefDial" EVENT="DownloadProgress(x)">
+
+    g_spnDownload4.innerHTML = RefDial.DownloadStatusString;
+    g_objProgressBar.Value = x;
+
+</script>
+
+<script LANGUAGE="JavaScript" FOR="RefDial" EVENT="RasConnectComplete(bSuccess)">
+
+    if (bSuccess)
+    {
+        // Show the progress bar
+        show(g_objProgressBar);
+        RefDial.DoOfferDownload();
+    }
+    else
+    {
+        showDialErr();
+        g_iCurrentScrn = "ERR";
+    }        
+
+</script>
+<!--
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+////          S T A T I C             E L E M E N T S
+////
+////
+////
+////
+-->
+
+<!--
+////////////////////////////////////////////
+//// G R A P H I C S
+////
+-->
+<TABLE ID=g_imgSideGraphic
+       BORDER=1
+       CELLPADDING=0
+       CELLSPACING=0
+       TABINDEX=-1
+	   STYLE="position: absolute;
+              top: 13;
+              left: 10;
+              width: 141;
+			  height: 343;
+			  border-style: 'inset';
+              visibility: hidden;
+              cursor:   default">
+
+<TR><TD CELLPADDING=0 CELLSPACING=0><IMG TABINDEX=-1 SRC="sidebar.gif" STYLE="width: 140; height: 342"></TD></TR>
+
+
+</TABLE>
+
+<!--
+//////////////////////////////////////////
+//////////////////////////////////////////
+//// H E L P E R     H T M L
+////
+////
+////
+////
+////
+-->
+
+
+
+<HR ID=g_hrUIBar
+    STYLE="position: absolute;
+           top: 373;
+           left: 10;
+           width: 516;
+		   height: 2;
+		   visibility: hidden"
+		   TABINDEX=-1>
+
+
+<!--
+//////////////////////////////////////////
+//////////////////////////////////////////
+//// O B J E C T S
+////
+////
+////
+////
+////
+-->
+
+
+<OBJECT ID=RefDial
+        CLASSID="CLSID:1E794A0A-86F4-11D1-ADD8-0000F87734F0"
+        WIDTH="0"
+        HEIGHT="0"
+        VSPACE="0"
+        HSPACE="0"
+        
+        TABINDEX=-1>
+        
+</OBJECT>
+
+
+
+<OBJECT ID=g_objProgressBar
+        CLASSID="clsid:0713E8D2-850A-101B-AFC0-4210102A8DA7"
+		STYLE="position: absolute; visibility: hidden"
+        TABINDEX=-1>
+</OBJECT>
+
+<!--
+//////////////////////////////////////////
+//////////////////////////////////////////
+//// C O M M O N     U I
+////
+////
+////
+////
+////
+-->
+<BUTTON ID=g_btnBack
+         onClick="back();"
+         accessKey="g"
+         STYLE="position: absolute;
+                top: 385;
+                left: 301;
+                visibility: hidden;
+                height: 25;
+                width: 73;
+                font-family: 'MS Sans Serif';
+                font-size: 8pt">
+< <u>G</u>eri
+</BUTTON>
+
+<BUTTON ID=g_btnNext
+        accessKey="İ"
+        onClick="next();"
+        STYLE="position: absolute;
+              top: 385;
+              left: 374;
+              visibility: hidden;
+              height: 25;
+              width: 73;
+              font-family: 'MS Sans Serif';
+              font-size: 8pt">
+İle<u>r</u>i >
+</BUTTON>
+
+<BUTTON ID=g_btnFinish
+        accessKey="a"
+        onClick="finish();"
+        STYLE="position: absolute;
+              top: 385;
+              left: 454;
+              visibility: hidden;
+              height: 25;
+              width: 73;
+              font-family: 'MS Sans Serif';
+              font-size: 8pt">
+<u>S</u>on
+</BUTTON>
+
+<BUTTON ID=g_btnCancel
+	    onClick="cancel();"
+		STYLE="position: absolute;
+              top: 385;
+              left: 454;
+              visibility: hidden;
+              height: 25;
+              width: 73;
+              font-family: 'MS Sans Serif';
+              font-size: 8pt">
+İptal
+</BUTTON>
+
+
+<!--
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//// G E T  C O N  E L E M E N T S
+////
+-->
+
+<SPAN ID=g_spnGetCon1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+	     cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+      Internet Bağlantı sihirbazına hoş geldiniz; Internet'e bağlanmanın kolay yolu. Bu sihirbazı varolan veya yeni bir Internet hesabı kurmak için kullanabilirsiniz.
+
+</SPAN>
+
+<SPAN ID=g_spnGetCon3
+      STYLE="position: absolute;
+         top: 80;
+         left: 167;
+         visibility: hidden;
+         width: 359;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+    İstediğiniz seçeneği seçin ve İleri'yi tıklatın.
+
+</SPAN>
+
+
+<SPAN ID=MAIN_PATH_UI STYLE="visibility: hidden"> 
+
+<INPUT ID=g_rbtnNewOption 
+	   NAME=GOPTION
+	   VALUE="NEW"
+       accessKey="y"
+       STYLE="position: absolute;
+	   top: 108;
+	   left: 162"
+       TYPE=RADIO
+	   CHECKED=TRUE
+	   onfocus="flipMainPathBool();">
+
+<INPUT ID=g_rbtnExistOption
+	   NAME=GOPTION
+	   VALUE="EXIST"
+       accessKey="A"   
+	   STYLE="position: absolute;
+       top: 157;
+	   left: 162"
+       TYPE=RADIO
+	   onfocus="flipMainPathBool();">
+
+<INPUT ID=g_rbtnFinOption
+	   NAME=GOPTION
+	   VALUE="FIN"
+       accessKey="a"
+       STYLE="position: absolute;
+	   top: 207;
+	   left: 162"
+       TYPE=RADIO
+	   onfocus="flipMainPathBool();">
+
+</SPAN>
+
+<!--
+//*************************
+//*** OPTION 1
+//*** 
+//*** Get Conn
+//***
+-->
+
+<SPAN ID=g_spnGetCon4
+      STYLE="position:     absolute;
+              top:          111;
+              left:         186;
+              width:        300;
+               visibility: hidden;
+              cursor:       default;
+              font-family:  'MS Sans Serif';
+              font-size:    8pt">
+
+
+     Bilgisayarımı <u>y</u>eni bir Internet hesabına kaydedip yapılandırmak istiyorum. (Bu seçeneği seçerseniz, telefon hattınızın bilgisayarınıza bağlı olduğundan emin olun.)
+
+
+</SPAN>
+
+
+
+
+
+
+<!--
+//*************************
+//*** OPTION 2
+//*** 
+//*** Manual 
+//***
+-->
+<SPAN ID=g_spnGetCon5
+       STYLE="position: absolute;
+         top: 160;
+         left: 186;
+         width: 300;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+
+       Yerel <u>A</u>ğ (LAN) veya telefon hattım aracılığı ile eriştiğim bir Internet hesabım var. Bilgisayarımı bu Internet hesabına bağlamak için kurmama yardımcı ol.
+
+
+
+</SPAN>
+
+
+
+<!--
+//*************************
+//*** OPTION 3
+//*** 
+//*** Exit 
+//***
+-->
+
+
+<SPAN ID=g_spnGetCon6
+       STYLE="position: absolute;
+         top: 210;
+         left: 186;
+         width: 300;
+		 visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+
+
+       <u>B</u>ilgisayarım zaten Internet için ayarlanmış durumda. Bu sihirbazı yeniden gösterme.
+
+</SPAN>
+
+
+
+
+
+<!--
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//// M A N U A L  E L E M E N T S
+////
+-->
+
+<SPAN ID=g_spnManualText1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+         width: 359">
+
+      Bir seçenek seçip, İleri'yi tıklatın.
+
+</SPAN>
+
+
+
+<SPAN ID=MANUAL_PATH_UI STYLE="visibility: hidden"> 
+
+<INPUT ID=g_rbtnManualLan
+	   NAME=MOPTION
+	   VALUE="LAN"
+       accessKey="t"
+       STYLE="position: absolute;
+	   top: 37;
+	   left: 162"
+       TYPE=RADIO
+	   CHECKED=TRUE
+	   onfocus="flipManualPathBool();">
+
+<INPUT ID=g_rbtnManualOls
+       NAME=MOPTION
+	   VALUE="OLS"
+       accessKey="m"   
+	   STYLE="position: absolute;
+       top: 83;
+	   left: 162"
+       TYPE=RADIO
+	   onfocus="flipManualPathBool();">
+
+</SPAN>
+
+<!--
+//*************************
+//*** OPTION 1
+//*** 
+//*** LAN
+//***
+-->
+
+<SPAN ID=g_spnManualLanLbl
+      STYLE="position:     absolute;
+              top:          40;
+              left:         186;
+              width:        345;
+               visibility: hidden;
+              cursor:       default;
+              font-family:  'MS Sans Serif';
+              font-size:    8pt">
+
+
+     Internet <u>h</u>izmet sağlayıcı veya yerel ağ ile Internet'e bağlanıyorsanız bu seçeneği seçin.
+
+
+</SPAN>
+
+<!--
+//*************************
+//*** OPTION 2
+//*** 
+//*** OLS
+//***
+-->
+<SPAN ID=g_spnManualOlsLbl
+       STYLE="position: absolute;
+         top: 86;
+         left: 186;
+         width: 345;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+
+       The Microsoft Network <u>v</u>eya çevrimiçi hizmetlerden Internet'e erişiyorsanız bu seçeneği seçin.
+
+
+
+</SPAN>
+
+
+
+<!--
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//// O L S      E L E M E N T S
+////
+-->
+
+<SPAN ID=g_spnOlsText1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+         width: 359">
+
+      Masaüstündeki çevrimiçi hizmetler simgesini veya Çevrimiçi Hizmetler klasörünü çift tıklatarak bilgisayarınızı çevrimiçi hizmetler için yapılandırabilirsiniz. Bu simgeyi göremiyorsanız, çevrimiçi hizmet sağlayıcınızın size verdiği yazılımı yeniden yükleyin. 
+
+</SPAN>
+
+
+
+<SPAN ID=g_spnOlsText2
+      STYLE="position: absolute;
+         top: 80;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+         width: 359">
+	
+	Internet Bağlantı sihirbazından çıkmak için Son'u tıklatın.
+
+</SPAN>
+
+
+
+<!--
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//// D O W N L O A D  E L E M E N T S
+////
+-->
+
+<SPAN ID=g_spnDownload1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+         width: 359">
+
+      Internet Bağlantı sihirbazı, bölgenizde kullanılabilir Internet hizmet sağlayıcılarının listesini almak için Microsoft Başvuru Hizmetleri'ne bağlanacak. Hizmet sağlayıcıları, bilgisayarınızı telefon hattınız aracılığı ile Internet'e bağlarlar.
+
+</SPAN>
+
+
+
+
+
+
+<SPAN ID=g_spnDownload2
+      STYLE="position: absolute;
+         top: 138;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+		 width: 359">
+
+      Başvuru hizmeti telefon numarası:
+
+</SPAN>
+
+<SPAN ID=g_spnDownload3
+      STYLE="position: absolute;
+         top: 158;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+		 width: 359">
+	
+</SPAN>
+
+<SPAN ID=g_spnDownload4
+      STYLE="position: absolute;
+         top: 234;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+		 width: 359">
+    Devam etmek için İleri'yi tıklatın.
+
+</SPAN>
+
+<SPAN ID=g_spnDownload5
+      STYLE="position: absolute;
+         top: 80;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt;
+		 width: 359">
+
+    Alan kodunuzu doğrulayın:
+
+</SPAN>
+
+
+<SPAN ID=g_spnDownload6
+      STYLE="position: absolute;
+             top: 100;
+             left: 167;
+			 height: 23;
+			 width: 150;	
+             visibility: hidden">
+
+<LABEL FOR="g_edtDownloadAreaCode"
+       STYLE="cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+             <u>A</u>lan kodu
+</LABEL>
+&nbsp
+
+    <INPUT ID=g_edtDownloadAreaCode
+           STYLE="width: 50; height: 23"
+		   ACCESSKEY="a"
+           TYPE=EDIT>
+
+</SPAN>
+
+
+
+<!--
+/////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////  D I A L    E R R O R    S C R E E N
+////
+-->
+
+<SPAN ID=g_spnDialErrorMsg
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+</SPAN>
+
+<SPAN ID=g_spnDialErrorNumber
+      STYLE="position: absolute;
+             top: 100;
+             left: 167;
+			 width: 150;
+             visibility: hidden">
+
+<LABEL FOR="g_edtDialErrorNumber"
+       STYLE="cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+             Ç<u>e</u>vrilecek numara:
+</LABEL>
+</SPAN>
+
+<INPUT ID=g_edtDialErrorNumber
+           onkeypress = "DialErrorNumberChange();"
+           onkeyup    = "SpecialDialErrorNumberChange();"
+		   STYLE="position: absolute;
+           top: 100;
+           left: 350;
+           width: 178;
+		   height: 23;
+           visibility: hidden"
+           ACCESSKEY="e"
+           TYPE=EDIT
+           MAXLENGTH=35>
+</INPUT>
+
+<SPAN ID=g_spnDialErrorModem
+      STYLE="position: absolute;
+             top: 130;
+             left: 167;
+			 width: 150;
+             visibility: hidden">
+
+<LABEL FOR="g_listDialErrorModem"
+       STYLE="cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+             Geçerli <u>m</u>odem:
+</LABEL>
+</SPAN>
+
+<SELECT ID=g_listDialErrorModem
+           STYLE="position: absolute;
+           top: 130;
+           left: 350;
+           width: 178;
+		   height: 23;
+           visibility: hidden"
+           ACCESSKEY="b"
+           SIZE=1>
+</SELECT>           
+
+<SPAN ID=g_spnDialErrorDialProp
+      STYLE="position: absolute;
+             top: 160;
+             left: 167;
+			 width: 200;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    Numaranın çevrilme yöntemini değiştir:
+</SPAN>
+
+<BUTTON ID=g_btnDialErrorDialProp
+        onClick="DialProperties();"
+        accessKey="Ç"
+        STYLE="position: absolute;
+        top: 160;
+        left: 428;
+        visibility: hidden;
+        height: 25;
+        width: 100;
+        font-family: 'MS Sans Serif';
+        font-size: 8pt">
+
+<u>Ç</u>evirme Özellikleri
+
+</BUTTON>
+
+<SPAN ID=g_spnDialErrorPhoneBook
+      STYLE="position: absolute;
+             top: 190;
+             left: 167;
+			 width: 200;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    Yeni bir telefon numarası seçin:
+</SPAN>
+
+<BUTTON ID=g_btnDialErrorPhoneBook
+        onClick="ShowPhoneBook();"
+        accessKey="T"
+        STYLE="position: absolute;
+        top: 190;
+        left: 428;
+        visibility: hidden;
+        height: 25;
+        width: 100;
+        font-family: 'MS Sans Serif';
+        font-size: 8pt">
+
+<u>T</u>elefon Defteri
+
+</BUTTON>
+
+<SPAN ID=g_spnDialErrorTroubleShoot
+      STYLE="position: absolute;
+             top: 220;
+             left: 167;
+			 width: 200;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    Sorun giderme hakkında yardım için:
+</SPAN>
+
+
+
+<BUTTON ID=g_btnDialErrorTroubleShoot
+        onClick="ShowDialErrorTroubleShooter();"
+        accessKey="Y"
+        STYLE="position: absolute;
+        top: 220;
+        left: 428;
+        visibility: hidden;
+        height: 25;
+        width: 100;
+        font-family: 'MS Sans Serif';
+        font-size: 8pt">
+
+<u>Y</u>ardım
+
+</BUTTON>
+
+<SPAN ID=g_spnErrorAutomatedHelp
+      STYLE="position: absolute;
+             top: 300;
+             left: 165;
+             width: 359;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    
+</SPAN>
+
+<SPAN ID=g_spnErrorAutomatedHelpNumber
+      STYLE="position: absolute;
+             top: 320;
+             left: 167;
+             width: 359;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+</SPAN>
+
+<!--
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+////  R E F E R R A L    E R R O R    S C R E E N
+////
+-->
+
+<SPAN ID=g_spnReferralErrMsg
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+      Internet Bağlantı sihirbazı, Microsoft Başvuru Hizmetine bağlanamıyor. Lütfen daha sonra yeniden deneyin veya şimdi yeniden denemek için İleri'yi tıklatın.
+
+</SPAN>
+
+<!--
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+////  Multiple Phone Numbers
+////
+-->
+
+<SPAN ID=g_spnMultiPhoneMsg
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+
+      The Internet Connection wizard has found several sign-up phone numbers available in your area. Select the number you would like to use and click Next.
+
+</SPAN>
+
+
+<SPAN ID=g_spnPhoneList
+      STYLE="position: absolute;
+             top: 98;
+             left: 167;
+			 width: 150;
+             visibility: hidden;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+    <u>T</u>elefon numaraları:
+</SPAN>
+
+<SELECT ID=g_selPhoneList
+           STYLE="position: absolute;
+           top: 118;
+           left: 167;
+           width: 280;
+           height: 200;
+		   visibility: hidden"
+           ACCESSKEY="p"
+           SIZE=10>
+</SELECT>           
+
+<!--
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//// E N D   O F   E L E M E N T S///////////
+/////////////////////////////////////////////
+-->
+
+
+
+</BODY>
+</HTML>

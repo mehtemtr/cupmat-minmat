@@ -1147,7 +1147,7 @@
         <div id="playerInputStatus" style="font-size: 11px; font-weight: 700; margin-top: -10px; margin-bottom: 12px; text-align: center; min-height: 16px; display: none;"></div>
       </div>
       <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
-      <button class="menuHomeBtn" onclick="window.location.href='/'" id="btnHome">🏠 Ana Sayfaya Dön</button>
+      <button class="menuHomeBtn" onclick="if (window.self !== window.top) { window.top.location.href = '/'; } else { window.location.href = '/'; }" id="btnHome">🏠 Ana Sayfaya Dön</button>
     </div>
   </div>
 
@@ -1639,7 +1639,11 @@
     };
 
     function goToCupmat() {
-      window.location.href = "/cupmat";
+      if (window.self !== window.top) {
+        window.top.location.href = "/cupmat";
+      } else {
+        window.location.href = "/cupmat";
+      }
     }
 
     function t(key) {
@@ -2149,7 +2153,8 @@
     function redirectToLogin() {
       const params = new URLSearchParams();
       params.set("fresh", "1");
-      params.set("redirect_url", window.location.pathname);
+      const redirectUrl = (window.self !== window.top) ? "/minmat" : window.location.pathname;
+      params.set("redirect_url", redirectUrl);
       if (window.self !== window.top) {
         window.top.location.href = `/sign-in?${params.toString()}`;
       } else {
@@ -2159,7 +2164,7 @@
 
     function redirectToSignOut() {
       console.log("kullanıcı çıkış yaptı");
-      const currentPath = window.location.pathname + window.location.search;
+      const currentPath = (window.self !== window.top) ? "/minmat" : (window.location.pathname + window.location.search);
       if (window.self !== window.top) {
         window.top.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
       } else {

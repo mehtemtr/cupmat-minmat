@@ -1,0 +1,80 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={9B243160-3745-11cf-8582-00AA00C01797}
+Path=awfext32.dll
+Entry Point=10
+Client Version=4.0
+Service Provider=AWFAX
+Misc Flags=MoreContexts
+
+[Exchange Client Compatibility]
+Exchange Registry=1
+Exchange Extension Key=MicrosoftFax
+
+; Exchange Context Map is *VIEWER, ADDRBOOK, *MESSAGE
+; The Exchange/Clients registry doesn't specify this.
+Exchange Context Map=011111111110000
+
+; Exchange Interface Map is IExchExtCommands, MessageEvents
+; The Exchange/Clients register doesn't specify this.
+Exchange Interface Map=1001000
+
+[Folder]
+Events=InstallCommands
+Contexts=ExplorerMail;ExplorerOther
+
+[ExplorerMail]
+Folder Class=IPF.Note
+Command Bars=50003
+Commands=NewFax;NewFaxContact;FaxTools;FaxHelp
+
+[ExplorerOther]
+Commands=SuppressNewFax;NewFaxContact;SuppressFaxTools;FaxHelp
+
+
+[Item]
+Events=InstallCommands
+Contexts=SENDNOTE;SENDRESEND;MESSAGE;FAX
+
+[FAX]
+Message Class=IPM.Microsoft.Fax.Encrypted!;SIMPLE.POLL.MESSAGE!
+Events=OnRead
+
+[SENDNOTE]
+Message Class=IPM.Note;IPM.Contact
+Item States=Compose
+Command Bars=50003
+Commands=SendOptions;FaxWizard;NewFax;NewFaxContact;SuppressFaxTools;FaxHelp
+
+[SENDRESEND]
+Message Class=IPM.Resend
+Item States=Compose
+Command Bars=50003
+Commands=SendOptions;SuppressFaxTools;FaxHelp
+
+[MESSAGE]
+Message Class=IPM.Note;IPM.Post;IPM.Resend;REPORT;IPM.Contact
+Command Bars=50003
+Commands=NewFax;NewFaxContact;SuppressFaxTools;FaxHelp
+
+[Command]
+NewFax=50000;<NewFax>;Compose After ComposeNewMessage Enabled
+SuppressNewFax=50000;<NewFax>;Compose After ComposeNewMessage Suppress Enabled
+NewFaxContact=50000;<NewFax>;Contact After ContactNewContact New Enabled
+SendOptions=50001;<SendOptions>;File After FileProperties Enabled
+FaxWizard=50002;<FaxAddressingWizard>;Tools After ToolsAddressBook Enabled
+FaxTools=50003;<MicrosoftFaxTools>;Tools Before ToolsServices Submenu Enabled
+SuppressFaxTools=50003;<MicrosoftFaxTools>;Tools Before ToolsServices Suppress Submenu Enabled
+FaxHelp=50004;<MicrosoftFaxHelpTopics>;Help After HelpHelp Enabled
+
+[Strings]
+DisplayName=Microsoft Fax
+Description=Microsoft Fax
+
+NewFax=Yeni &Fax
+MicrosoftFaxTools=Microsoft Fa&x Araçlarý
+SendOptions=Gö&nderme Seçenekleri
+FaxAddressingWizard=&Faks Adres Sihirbazý...
+MicrosoftFaxHelpTopics=Microsoft Fa&x Yardým Konularý
+

@@ -1,0 +1,810 @@
+:Base WINWORD.HLP>REF
+:Title Microsoft Word
+:Index Microsoft Word Yardýmý=WINWORD.HLP
+:Index WordBasic Yardýmý=WRDBASIC.HLP
+0 Word
+1 Yenilikler
+2 Ýpucu Sihirbazý=!EF("WDVISEX.EXE"," /N:12948/F:WINWORD.HLP")
+2 Daha kolay belge alma ve yönetme=!EF("WDVISEX.EXE"," /N:1665 /F:WINWORD.HLP")
+2 Daha fazla IntelliSense=!EF("WDVISEX.EXE"," /N:12949/F:WINWORD.HLP")
+2 Yeni Word þablonlarý=!EF("WDVISEX.EXE"," /N:12573 /F:WINWORD.HLP")
+2 Word'ü elektronik posta düzenleyicisi olarak kullanma=!EF("WDVISEX.EXE"," /N:12008/F:WINWORD.HLP")
+2 Otomatik kenarlýklar=!EF("WDVISEX.EXE"," /N:12948/F:WINWORD.HLP")
+2 Otomatik metin düzeltmesi=!EF("WDVISEX.EXE"," /N:12947 /F:WINWORD.HLP")
+2 Otomatik baþlýklar=!EF("WDVISEX.EXE"," /N:12948/F:WINWORD.HLP")
+2 Otomatik numaralý veya madde imli listeler=!EF("WDVISEX.EXE"," /N:12948 /F:WINWORD.HLP")
+2 Otomatik sýra sayýlarý ve kesirli sayýlar=!EF("WDVISEX.EXE"," /N:12948/F:WINWORD.HLP")
+1 Yardým Alma
+2 Ýpucu Sihirbazý'ný gösterme ya da gizleme=cohowDisplayOrHideTheTipWizard@WINWORD.HLP>PRO
+2 Ýpucu Sihirbazý'ný sýfýrlama=cohowResetTheTipWizard@WINWORD.HLP>PRO
+2 Word Benioku dosyasý=!EF("WBENIOKU.TXT","",5):Exit()
+2 Að Yüklemesi Benioku dosyasý=!EF("AG.TXT","",5):Exit()
+2 Teknik destek=!EF("PSS.HLP","",5):Exit()
+2 Microsoft teknik kaynaklara baðlanma=codecGetTechnicalSupportFromMicrosoftForMyOfficeApplications@WINWORD.HLP>REF
+2 Microsoft Knowledge Base'de bilgi bulma=cohowQueryForInformationInTheMicrosoftKnowledgeBase@WINWORD.HLP>REF
+2 Bilgisayarým hakkýnda bilgi alma=!fDoTheISAction(hwndApp, 9100)
+2 Microsoft Network iletiþim kutusundaki kýsayollarý ekleme ya da silme=cohowAddAForumToTheMicrosoftNetworkDialogBox@WINWORD.HLP>PRO
+2 Ortak sorulara yanýtlar=coconAnswerstocommonquestions@WINWORD.HLP>REF
+1 Belge Yaratma, Açma ve Kaydetme
+2 Belge Yaratma ve Açma
+3 Belge açma=cohowOpenADocument@WINWORD.HLP>PRO
+3 Yeni belge yaratma=wohowCreateANewDocument@WINWORD.HLP>PRO
+3 Microsoft Word ile sunulan dosya biçimi dönüþtürücüleri=womscFileFormatsSuppliedWithMicrosoftWord@WINWORD.HLP>REF
+3 Açýk bir belgeye ikinci bir belge ekleme=wocmdnscInsertASecondDocumentIntoAnOpenDocument@WINWORD.HLP>REF
+3 Kullanýcý adýný, adýn ilk harflerini ve posta adreslerini belirleme ya da deðiþtirme=!fDoTheISAction(hwndApp, 12532)
+3 Son kullanýlan belgelerin listesini Dosya menüsünde gösterme veya gizleme=cohowDisplayOrHideRecentlyUsedDocumentsOnTheFileMenu@WINWORD.HLP>PRO
+3 Sýk Kullanýlanlar klasörü ve Belgelerim klasörü=coconTheFavoritesFolderAndMyDocumentsFolder@WINWORD.HLP>REF
+3 Aç iletiþim kutusundaki komutlar ve ayarlar=corefItemsOnTheCommandsAndSettingsButton@WINWORD.HLP>REF
+3 Dosya açma sorunlarýný giderme=wotbsTroubleshootProblemsOpeningDocuments@WINWORD.HLP>REF
+2 Belge Kaydetme ve Kapatma
+3 Belge kaydetme=codecSaveADocument@WINWORD.HLP>REF
+3 Belge kapatma=cohowCloseADocument@WINWORD.HLP
+3 Belgeleri adlandýrma=coconNamingDocuments@WINWORD.HLP>REF
+3 Hýzlý kaydetme ile tam kaydetme arasýndaki fark=woconTheDifferenceBetweenAFastSaveAndAFullSave@WINWORD.HLP>REF
+3 Normal þablonuna yapýlan deðiþiklikleri kaydetme=!fDoTheISAction(hwndApp, 10822)
+3 Belgeleri açarken ve kaydederken kullanmak için çalýþma klasörü ayarlama=wohowSetAWorkingFolderToUseWhenIOpenOrSaveDocuments@WINWORD.HLP>PRO
+3 Belgelerimi kaydetmeyi hýzlandýrma=wohowSpeedUpSavingMyDocuments@WINWORD.HLP>PRO
+3 Diðer kullanýcýlarýn, belgeyi, belge yaratýrken kullandýðým yazýtipleri ile görmelerini saðlama=!fDoTheISAction(hwndApp, 10824)
+3 Ýlk kez kaydederken belge bilgilerini doldurma=!fDoTheISAction(hwndApp, 10821)
+3 Çalýþmanýzý kaybetmeyi önleme ve kayýp belgeleri kurtarma=wohowPreventLosingWorkAndRecoverLostDocuments@WINWORD.HLP>REF
+3 Kurtarýlmýþ belgeler için bir konum belirleme=wohowSpecifyALocationForRecoveredDocuments@WINWORD.HLP>PRO
+3 Microsoft Word ile sunulan dosya biçimi dönüþtürücüleri=womscFileFormatsSuppliedWithMicrosoftWord@WINWORD.HLP>REF
+3 Farklý Kaydet iletiþim kutusundaki Komutlar ve Ayarlar düðmesi=corefItemsOnTheCommandsAndSettingsButtonSaveAs@WINWORD.HLP>REF
+3 Belgeleri kaydetme ve kapatma ile ilgili sorunlarý giderme=wotbsTroubleshootProblemsWithSavingSavingAndClosingDocuments@WINWORD.HLP>REF
+2 Dosya Bulma
+3 Belgeleri bulma, açma ve yönetme=!EF("WDVISEX.EXE","/N:1665 /F:WINWORD.HLP")
+3 Dosya arama=cohowSearchForDocuments@WINWORD.HLP>PRO
+3 Arama ölçütü yaratmak için, dosya özelliðini kullanma=cohowSearchForDocumentsByUsingProperties@WINWORD.HLP>PRO
+3 Dosya listesini sýralama=cohowSortAListOfFilesFound@WINWORD.HLP>PRO
+3 Arama ölçütü kaydetme=cohowSaveSearchCriteria@WINWORD.HLP>PRO
+3 Kaydedilen arama ölçütünü deðiþtirme=cohowChangeSavedSearchCriteria>PRO
+3 Kaydedilen aramayý silme=cohowDeleteASavedSearch@WINWORD.HLP>PRO
+3 Dosya aramalarýný hýzlandýrma=coconSpeedingUpFileSearches@WINWORD.HLP>REF
+3 Dosya bulma sorunlarýný giderme=cotbsTroubleshootingProblemsFindingDocuments@WINWORD.HLP>REF
+2 Hýzlý Bul'u kullanma
+3 Yeni Hýzlý Bul dizini yaratma=cohowCreateANewFindFastIndex@WINWORD.HLP>PRO
+3 Hýzlý Bul dizinini güncelleþtirme=cohowUpdateAFindFastIndex@WINWORD.HLP>PRO
+3 Hýzlý Bul dizinini silme=cohowDeleteAFindFastIndex@WINWORD.HLP>PRO
+3 Hýzlý Bul dizini oluþturma günlüðünü görüntüleme=cohowViewALogOfMyIndexingTasks@WINWORD.HLP>PRO
+3 Hýzlý Bul dizin oluþturma görevlerini iptal etme veya bir süre durdurma=cohowCancelOrTemporarilyStopFindFastIndexingTasks@WINWORD.HLP>PRO
+2 Belgeleri ve Özelliklerini Önizleme
+3 Dosya içeriklerini ve özelliklerini önizleme=cohowViewFileContentsAndOtherFileInformation@WINWORD.HLP>PRO
+3 Dosya özellikleri kurma=codecViewAndEditDocumentProperties@WINWORD.HLP>REF
+3 Yazar adýný deðiþtirme=cohowChangeTheUserNameThatAppearsInTheAuthorBox@WINWORD.HLP>PRO
+3 Özel dosya özellikleri yarat=ofhowCreatecustomdocumentproperties@WINWORD.HLP>PRO
+3 Özellikleri kullanan dosyalarý arama=ofconUsingDocumentProperties@WINWORD.HLP>REF
+3 Bir etkin dosya içeriðine özel özellikler baðlama=ofhowLinkpropertiestoaspecificplaceinmydocument@WINWORD.HLP>PRO
+3 Dosyalarý özelliklerine göre görüntülemek için Microsoft Exchange'i, kullanma=ofhowCreateviewsofdocumentsbasedonproperties@WINWORD.HLP>PRO
+1 Yazma, Seçme ve Düzenleme
+2 Yazma
+3 Varolan metnin üstüne yazma=!fDoTheISAction(hwndApp, 5166)
+3 Simgeler ya da özel karakterler ekleme=wodecInsertSymbolsOrSpecialCharacters@WINWORD.HLP>REF
+3 Yazarken seçili metni deðiþtirme=!fDoTheISAction(hwndApp, 5162)
+3 Belgeye tarih ve saat ekleme=!fDoTheISAction(hwndApp, 5158)
+3 Yazma ve düzenleme seçeneklerini deðiþtirme=!fDoTheISAction(hwndApp, 5161)
+3 Yazma ve seçme sorunlarýný giderme=wohowTroubleshootTypingAndSelectingProblems@WINWORD.HLP>REF
+3 Dipnotlar ve Sonnotlar
+4 Dipnotlar ve sonnotlar=!EF("WDVISEX.EXE","/N:1672 /F:WINWORD.HLP")
+4 Dipnotlarý ya da sonnotlarý ekleme=!fDoTheISAction(hwndApp, 1427)
+4 Dipnotlarý ve sonnotlarý taþýma, kopyalama ya da silme=wodecMoveCopyAndDeleteFootnotesAndEndnotes@WINWORD.HLP>REF
+4 Not ayýrýcýlarýný deðiþtirme ve devam uyarýlarý ekleme=wodecChangingNoteSeparatorsAndAddingContinuationNotices@WINWORD.HLP>REF
+4 Not baþvuru imlerinin sayý biçimini deðiþtirme=wohowChangethenumberformatofnotereferencemarks@WINWORD.HLP>PRO
+4 Not numaralarýna her sayfada ya da her bölümde yeniden 1'den baþlama=wohowRestartnotenumbersfrom1oneachpageorineachsection@WINWORD.HLP>PRO
+4 Dipnotlarýn ve sonnotlarýn yerleþimini deðiþtirme=wohowChangetheplacementoffootnotesandendnotes@WINWORD.HLP>PRO
+4 Dipnotlarý sonnotlara dönüþtürme ya da tersini yapma=wodecConvertFootnotesToEndnotesAndViceVersa@WINWORD.HLP>REF
+4 Notlarý birden çok belge arasýnda ardýþýk numaralama=wohowChangethestartingnumberforfootnotesorendnotes@WINWORD.HLP>PRO
+4 Ayný dipnot ya da sonnota birden fazla baþvurma=wohowRefertothesamefootnoteorendnotemorethanonce@WINWORD.HLP>PRO
+4 Dipnotlarý ve sonnotlarý kullanma sorunlarýný giderme=wotbsTroubleshootusingfootnotesandendnotes@WINWORD.HLP>REF
+3 Çapraz Baþvurular, Resim Yazýlarý ve Yer Ýmleri
+4 Çapraz baþvurular, resim yazýlarý ve yer imleri=!EF("WDVISEX.EXE","/N:339 /F:WINWORD.HLP")
+4 Çapraz baþvurular yaratma
+5 Çapraz baþvuru yaratma=woHowCreateacrossreference@WINWORD.HLP>PRO
+5 Çapraz baþvurunun baþvurduðu nesneyi deðiþtirme=woHowModifyacrossreference@WINWORD.HLP>PRO
+5 Her sayfada bölüm numarasý ve baþlýk bulundurma=woHowUseacrossreferencetokeepaheaderorfooteruptodate@WINWORD.HLP>PRO
+5 Çapraz baþvuru sorunlarýný giderme=wotbsTroubleshootCrossreferences@WINWORD.HLP>REF
+4 Yer Ýmleri Yaratma ve Kullanma
+5 Yer imi ekleme=!fDoTheISAction(hwndApp, 301)
+5 Belgedeki yer imlerini gösterme=!fDoTheISAction(hwndApp, 302)
+5 Yer imini silme=woHowDeleteabookmark@WINWORD.HLP>PRO
+5 Yer imi sorunlarýný giderme=wotbsTroubleshootBookmarks@WINWORD.HLP>REF
+4 Resim Yazýlarý Yaratma
+5 Tablo, þekil, denklem ya da baþka bir öðeye resim yazýsý ekleme=woHowAddacaptiontoatableillustrationequationorotheritem@WINWORD.HLP>REF
+5 Resim yazýsý etiketinin adýný yeni bir etiketle deðiþtirme=wohowRenameACaptionLabelWithANewLabel@WINWORD.HLP>REF
+5 Resim yazýsýnda bölüm numarasý içerme=woHowIncludeachapternumberincaptionnumbers@WINWORD.HLP>PRO
+5 Resim yazýlarý sayý biçimini deðiþtirme=woHowChangetheformattingandnumberingforcaptions@WINWORD.HLP>PRO
+5 Resim yazýsý sorunlarýný giderme=woTblHowTroubleshootforcaptionscrossreferencesandbookmarksproblems@WINWORD.HLP>REF
+2 Seçme
+3 Metin ve grafikleri fare ile seçme=worefSelectTextAndGraphicsWithTheMouse@WINWORD.HLP>REF
+3 Belgenin tamamýný seçme=wonschowSelectAllTextAndGraphics@WINWORD.HLP>PRO
+3 Sözcüklerin tamamýný otomatik olarak seçme=!fDoTheISAction(hwndApp, 5164)
+2 Düzenleme
+3 Yazma ve düzenleme seçeneklerini deðiþtirme=!fDoTheISAction(hwndApp, 5161)
+3 Son iþlemi yineleme=wonschowRepeatMyLastAction@WINWORD.HLP>PRO
+3 Silinen veya eklenen metnin etrafýndaki boþluklarý otomatik olarak ayarlama=!fDoTheISAction(hwndApp, 5160)
+3 Sürükle ve býrak düzenlemesini açma ve kapatma=!fDoTheISAction(hwndApp, 5163)
+3 Belgedeki sözcükleri ve satýrlarý sayma=!fDoTheISAction(hwndApp, 1374)
+3 Heceleme=woconControllingtheraggednessoftherightedgeoftext@WINWORD.HLP>REF
+3 Düzeltme ve Silme
+4 Word'ün otomatik olarak yapabileceði deðiþiklik türleri=wodecChangesWordMakesAutomatically@WINWORD.HLP>REF
+4 Metni, yazýlýrken otomatik olarak düzeltme ve deðiþtirme=!EF("WDVISEX.EXE","/N:12947 /F:WINWORD.HLP")
+4 Hatalarý geri alma=wohowUndomistakes@WINWORD.HLP>PRO
+4 Yazma hatalarýný otomatik olarak düzeltme=wohowCorrectTypingandSpellingErrorsAutomatically@WINWORD.HLP>PRO
+4 Büyük harfe çevirme hatalarýný otomatik düzeltme=wohowCorrectCapitalizationErrorsAutomatically@WINWORD.HLP>PRO
+4 Yazým denetimi sýrasýnda Otomatik Düzelt girdisi ekleme=wohowAddanAutoCorrectentryduringaspellingcheck@WINWORD.HLP>PRO
+4 Otomatik Düzelt giriþinin içeriðini deðiþtirme=wohowChangeTheContentsOfAnAutoCorrectEntry@WINWORD.HLP>PRO
+4 Otomatik Düzelt adýný deðiþtirme=wohowChangeanAutoCorrectnameorentry@WINWORD.HLP>PRO
+4 Otomatik Düzelt giriþini silme=wohowDeleteanAutoCorrectentry@WINWORD.HLP>PRO
+4 Metni kestiðim zaman metin biçimlendirmesi neden deðiþiyor?=woconBecarefulaboutdeletingaparagraphmark@WINWORD.HLP>REF
+4 Otomatik deðiþiklikleri açma ve kapatma=wodecTurnOnOrOffAutomaticChanges@WINWORD.HLP>REF
+4 Kýsaltmalarý ve büyük harfe çevrilmiþ öðeleri otomatik düzeltme dýþýnda býrakma=wohowExcludeItemsFromAutomaticCorrection@WINWORD.HLP>PRO
+3 Metin ve Grafikleri Taþýma ve Kopyalama
+4 Metin ve grafikleri bir pencere içinde kýsa bir mesafeye taþýma ya da kopyalama=wohowCopyTextAndGraphics@WINWORD.HLP>PRO
+4 Metin ve grafikleri uzun mesafeye ya da baþka belgelere taþýma ya da kopyalama=wohowMoveOrCopyTextAndGraphicsLongDistancesOrToAnotherDocument@WINWORD.HLP>PRO
+4 Belgeler arasýnda kopyalama yapýlýrken ne biçimlendirmesi uygulanýr?=woconWhencopyingbetweendocumentswhatformattingisapplied@WINWORD.HLP>REF
+3 Yazým Denetimi
+4 Yazýmý düzeltme=wodecCorrectSpellingAndCapitalization@WINWORD.HLP>REF
+4 Yazým denetimi sýrasýnda metin atlama=wohowSkiptextduringaspellingcheck@WINWORD.HLP>PRO
+4 Baþka dilde yazýlmýþ metnin yazým denetimi=wohowProoftextwritteninanotherlanguage@WINWORD.HLP>PRO
+4 Metnin yazýmýný denetlerken vurgulu büyük harflere izin verme=!fDoTheISAction(hwndApp, 5165)
+4 Yazým denetiminde kullanýlan varsayýlan dil sözlüðünü deðiþtirme=wohowChangethedefaultlanguageusedtoproofdocuments@WINWORD.HLP>PRO
+4 Word'ün yazým kýlavuzu denetimi þeklini özelleþtirme=wodecCustomizeTheWayWordChecksSpelling@WINWORD.HLP>REF
+4 Özel sözlükler ve özel amaçlý sözlükler=woconCustomdictionaries@WINWORD.HLP>REF
+4 Özel sözlük ekleme=wohowAddacustomdictionary@WINWORD.HLP>PRO
+4 Yazým denetimi sýrasýnda özel bir sözlüðe bir sözcük ekleme=wohowAddawordtoacustomdictionaryduringaspellingcheck@WINWORD.HLP>PRO
+4 Özel bir sözlüðü açma ve kullanma=wohowOpenanduseacustomdictionary@WINWORD.HLP>PRO
+4 Özel bir sözlüðü Word belgesi olarak düzenleme=wohowEditacustomdictionaryasaWorddocument@WINWORD.HLP>PRO
+4 Özel bir sözlüðü kaldýrma=wohowRemoveacustomdictionary@WINWORD.HLP>PRO
+4 Yazým denetimi sorunlarýný giderme=wotbsTroubleshootspellingandgrammar@WINWORD.HLP>REF
+3 Yeniden Kullanmak Üzere Metin ve Grafik Saklama
+4 Yeniden kullanmak için metin ve grafik saklama=!EF("WDVISEX.EXE","/N:1666 /F:WINWORD.HLP")
+4 Sýk kullanýlan metin ve grafikleri eklemek için kýsayollarý kullanma=wodecUseShortcutsToInsertCommonlyUsedTextOrGraphics@WINWORD.HLP>REF
+4 Farklý konumlardan öðeleri toplama ve bir grup olarak ekleme=woconCollectingTextAndGraphicsFromVariousLocationsAndInsertingThemAsAGroup@WINWORD.HLP>REF
+4 Otomatik Metin giriþi ekleme=wohowInsertanAutoTextentry@WINWORD.HLP>PRO
+4 Otomatik Metin giriþi düzenleme=wohowEditanAutoTextentry@WINWORD.HLP>PRO
+4 Otomatik Metin giriþi silme=wohowDeleteanAutoTextentry@WINWORD.HLP>PRO
+4 Biçemleri, Otomatik Metin giriþlerini, makrolarý ve araç çubuklarýný yeniden adlandýrma=wohowRenamestylesAutoTextentriesmacrosandtoolbars@WINWORD.HLP>PRO
+4 Metin ve grafikleri depolama ve yeniden kullanma sorunlarýný giderme=wotbsTroubleshootingAutoText@WINWORD.HLP>REF
+3 Metin ve Biçimlendirme Bulma ve Deðiþtirme
+4 Yeni IntelliSense özellikleri ile daha akýllý çalýþma=!EF("WDVISEX.EXE","/N:12949 /F:WINWORD.HLP")
+4 Bilgi bulma ve deðiþtirme=!EF("WDVISEX.EXE","/N:145 /F:WINWORD.HLP")
+4 Metin ve biçimlendirme bulma=!fDoTheISAction(hwndApp, 147)
+4 Metin ve biçimlendirme deðiþtirme=!fDoTheISAction(hwndApp, 158)
+4 Grafik, alan ve ek açýklamalarý bulma ve deðiþtirme=wohowFindandreplacegraphicsfieldsannotationsandotherspecialcharacters@WINWORD.HLP>PRO
+4 Bulup deðiþtirebileceðim özel karakterler=woconSpecialcharactersIcanfindandreplace@WINWORD.HLP>REF
+4 Karmaþýk ölçüt kullanarak metin bulma ve deðiþtirme=wohowFindandreplacetextbyusingadvancedsearchcriteria@WINWORD.HLP>PRO
+4 Karmaþýk arama ölçütü kullanma=woconAdvancedsearchcriteria@WINWORD.HLP>REF
+4 Karmaþýk arama ölçütü=wohowComplexSearchCriteria@WINWORD.HLP>REF
+3 Liste veya Tabloda Öðeleri Sýralama
+4 Liste sýralama=wohowSortalist@WINWORD.HLP>PRO
+4 Tabloda tek bir sütun sýralama=wohowSorttextinatable@WINWORD.HLP>PRO
+4 Word'ün kullandýðý sýralama düzeni kurallarý=woconThesortingorderWorduses@WINWORD.HLP>REF
+2 Belirli Bir Sayfaya veya Konuma Gitme
+3 Belgede gezinmek için fareyi kullanma=wohowScrollThroughADocument@WINWORD.HLP>REF
+3 Sayfa, yer imi, dipnot, tablo, ek açýklama, grafik ya da baþka bir konuma gitme=wohowGoToAPageBookmarkFootnoteTableAnnotationGraphicOrOtherLocation@WINWORD.HLP>PRO
+3 Belgede önceki düzenleme konumuna geri dönme=wohowReturnToAPreviousLocationInADocument@WINWORD.HLP>PRO
+1 Belgeyi Anahatlar Görünümünde Düzenleme
+2 Belgeyi anahatlar görünümünde düzenleme=!EF("WDVISEX.EXE","/N:213 /F:WINWORD.HLP")
+2 Belgenin anahatlarýný belirleme=wodecCreateanumberedoutline@WINWORD.HLP>REF
+2 Belgenin düzenlemesini görüntülemek için baþlýklarý görüntüleme=wodecHidedetailstoviewadocumentsorganization@WINWORD.HLP>REF
+2 Anahatlar görünümünde biçimlendirme=woconDifferencesinformattinginoutlineview@WINWORD.HLP>REF
+2 Anahatlar görünümünde metin seçme=wohowSelecttextinoutlineview@WINWORD.HLP>REF
+2 Anahatlar görünümünde belgeyi yeniden düzenleme=wodecReorganizetextinoutlineview@WINWORD.HLP>REF
+2 Anahatlar görünümünü yazdýrma=wohowPrintanoutline@WINWORD.HLP>PRO
+2 Anahatlar görünümü sorunlarýný giderme=wotbsTroubleshootforworkinginoutlineview@WINWORD.HLP>REF
+1 Biçimlendirme
+2 Hýzlý biçimlendirme teknikleri=!EF("WDVISEX.EXE","/N:1664 /F:WINWORD.HLP")
+2 Belgeleri, yazarken otomatik biçimlendirme=!EF("WDVISEX.EXE","/N:12948 /F:WINWORD.HLP")
+2 Karakter ve paragraf biçimlerini kopyalama=wohowCopyCharacterAndParagraphFormats@WINWORD.HLP>PRO
+2 Karakter Biçimlendirme
+3 Karakter biçimlendirme=!EF("WDVISEX.EXE","/N:1671 /F:WINWORD.HLP")
+3 Yazýtipi biçemini deðiþtirme=!fDoTheISAction(hwndApp, 5981)
+3 Metin ve sayýlarý kalýn olarak deðiþtirme=!fDoTheISAction(hwndApp, 1840)
+3 Metin ve sayýlarý italik olarak deðiþtirme=!fDoTheISAction(hwndApp, 1841)
+3 Metin ve sayýlarýn altýný çizme=!fDoTheISAction(hwndApp, 1842)
+3 Metin ve sayýlarýn boyutunu deðiþtirme=!fDoTheISAction(hwndApp, 1839)
+3 Metin ve sayýlarýn yazýtipini deðiþtirme=!fDoTheISAction(hwndApp, 1838)
+3 Metin ve sayýlarýn rengini deðiþtirme=!fDoTheISAction(hwndApp, 13952)
+3 Metin ve sayý üstsimgeleri=!fDoTheISAction(hwndApp, 13947)
+3 Metin ve sayý altsimgeleri=!fDoTheISAction(hwndApp, 13946)
+3 Metin ve sayýlarda üstü çizili biçimini kullanma=!fDoTheISAction(hwndApp, 13940)
+3 Noktalý, çift veya diðer özel alt çizgileri uygulama=!fDoTheISAction(hwndApp, 5883)
+3 Karakterler arasýndaki boþluðu ayarlama=!fDoTheISAction(hwndApp, 5992)
+3 Karakterler arasýndaki yakýnlýðý ayarlama=!fDoTheISAction(hwndApp, 5994)
+3 Metni büyük harfe çevirme=!fDoTheISAction(hwndApp, 5991)
+3 Metni küçük büyük harflere çevirme=!fDoTheISAction(hwndApp, 5990)
+3 Metni, taban çizgisinden yukarý veya aþaðý yerleþtirme=!fDoTheISAction(hwndApp, 5993)
+3 Metin gizleme=!fDoTheISAction(hwndApp, 5989)
+3 Büyük baþlangýç harfleri, geniþ harfler yaratma=!fDoTheISAction(hwndApp, 5974)
+3 Büyük baþlangýç harflerini, geniþ harfleri kaldýrma=!fDoTheISAction(hwndApp, 5928)
+3 Yazýtipi sorunlarýný giderme=woconFonts@WINWORD.HLP>REF
+2 Paragraflarý Biçimlendirme
+3 Paragraf biçimlendirme=!EF("WDVISEX.EXE","/N:1676 /F:WINWORD.HLP")
+3 Biçim ayarlarýný görüntüleme=woconWherearetheformattingcodes@WINWORD.HLP>REF
+3 Düzeltme imlerini ve basýlmayan karakterleri görüntüleme=!fDoTheISAction(hwndApp, 7973)
+3 Cetvel ya da biçimlendirme ayarlarý neden bazen soluk ya da boþ görünüyor.=woconWhyrulersettingsanddialogboxoptionssometimeslookdimmed@WINWORD.HLP>REF
+3 Artýk satýr denetimine izin verme=!fDoTheISAction(hwndApp, 6487)
+3 Paragraf biçimlendirme sorunlarýný giderme=wotbsTroubleshootingforparagraphformatting@WINWORD.HLP>REF
+3 Girintiler ve Hizalama
+4 Paragraf girintilendirme türleri=wohowIndentingTextWithinAParagraph@WINWORD.HLP>REF
+4 Paragraflarý girintilendirme=worefIndentingparagraphs@WINWORD.HLP>PRO
+4 Sol kenar boþluðu girintisini arttýrma=!fDoTheISAction(hwndApp, 5918)
+4 Sol kenar boþluðu girintisini azaltma=!fDoTheISAction(hwndApp, 5919)
+4 Paragrafý sol kenar boþluðu ile hizalama=!fDoTheISAction(hwndApp, 5921)
+4 Paragrafý sað kenar boþluðu ile hizalama=!fDoTheISAction(hwndApp, 5923)
+4 Metni ortalama=!fDoTheISAction(hwndApp, 5922)
+4 Metni yaslama=!fDoTheISAction(hwndApp, 9102)
+4 Asýlý girinti yaratma=wohowCreateAHangingIndent@WINWORD.HLP>PRO
+4 Paragraf satýrlarýný sayfada birlikte tutma!fDoTheISAction(hwndApp, 6488)
+4 Paragraflarý sayfada veya sütunda birlikte tutma=!fDoTheISAction(hwndApp, 6489)
+4 Paragraf girintilendirmeye karþý sayfa kenar boþluklarý=woconDifferencesbetweenindentingparagraphsandsettingmargins@WINWORD.HLP>REF
+4 Belirli bir paragrafý sayfanýn üstünde yazdýrma=!fDoTheISAction(hwndApp, 6490)
+3 Sekme Duraklarý
+4 Paragraf biçimlendirmede sekme duraklarý kullanma=wodecSet.clearorchangetabstops@WINWORD.HLP>REF
+4 Varsayýlan sekme duraklarý arasýndaki boþluklarý deðiþtirme=!fDoTheISAction(hwndApp, 5925)
+4 Sekme duraklarýna öncü karakterler belirleme=!fDoTheISAction(hwndApp, 5926)
+3 Aralama
+4 Satýr aralýðý=wohowHowdoesWordmeasurelinespacing@WINWORD.HLP>REF
+4 Paragraf aralýðýný ayarlama=!fDoTheISAction(hwndApp, 5917)
+4 Satýr aralýðýný deðiþtirme=!fDoTheISAction(hwndApp, 5920)
+3 Çizgiler ve Gölgeleme
+4 Kenarlýklar=!EF("WDVISEX.EXE","/N:5795 /F:WINWORD.HLP")
+4 Paragraflara kenarlýklar ve gölgeleme ekleme=wohowAddBordersAndShadingToParagraphs@WINWORD.HLP>REF
+2 Biçemlerle Biçimlendirme
+3 Biçem yaratma=wohowCreatingastylebyusingtheStylecommand@WINWORD.HLP>PRO
+3 Biçem uygulama=wohowApplyingastyletoasinglecharacteroraparagraphbyusingtheStylecommand@WINWORD.HLP>PRO
+3 Araç çubuðunu kullanarak biçem uygulama=!fDoTheISAction(hwndApp, 5807)
+3 Biçem deðiþtirme=wohowChangingtheformatsofastylebyusingexampletext@WINWORD.HLP>PRO
+3 Diðer belgeye biçem kopyalama=woconWhathappenswhenIcopystylestoanotherdocument@WINWORD.HLP>PRO
+3 Biçem silme=wohowDeletingastyle@WINWORD.HLP>PRO
+3 Belge penceresinde biçem adlarýný görüntüleme=!fDoTheISAction(hwndApp, 5877)
+3 Sonraki paragraf için biçem belirleme=wohowSpecifyingastyleforthefollowingparagraph@WINWORD.HLP>PRO
+3 Biçem kutusunda otomatik görünebilecek biçemler=woStylesThatAreAppliedAutomaticallyasYouUseWord@WINWORD.HLP>REF
+3 Farklý bir þablondan biçemler kullanma=!fDoTheISAction(hwndApp, 5810)
+3 Belgeyi otomatik olarak biçimlendirme=!fDoTheISAction(hwndApp, 5808)
+3 Biçem sorunlarýný giderme=wotbsTroubleshootingforstyles@WINWORD.HLP>REF
+2 Otomatik Biçim ile Biçimlendirme
+3 Metni, yazarken otomatik olarak biçimlendirme=!fDoTheISAction(hwndApp, 5809)
+3 Otomatik deðiþiklikleri açma ve kapatma=wodecTurnOnOrOffAutomaticChanges@WINWORD.HLP>REF
+3 Otomatik biçimlendirme seçeneklerini deðiþtirme=!fDoTheISAction(hwndApp, 5811)
+3 Otomatik Biçim kullanýrken gözden geçirme ya da deðiþiklikler yapma=wocmdReviewAutoFormatChangesdialogbox@WINWORD.HLP>PRO
+3 Word'ün otomatik olarak yapabileceði deðiþiklik türleri=wodecChangesWordMakesAutomatically@WINWORD.HLP>REF
+2 Numaralý ve Madde Ýmli Listeler
+3 Numaralý ve madde imli listeler=!EF("WDVISEX.EXE","/N:1670 /F:WINWORD.HLP")
+3 Listeleri ve baþlýklarý numaralandýrma=wodecNumberListsAndHeadings@WINWORD.HLP>REF
+3 Listeye madde imleri ekleme=!fDoTheISAction(hwndApp, 6002)
+3 Listeye sayýlar ekleme=!fDoTheISAction(hwndApp, 6003)
+3 Madde imlerini sayýlara dönüþtürme ya da tersi=wohowConvertbulletsandnumbers@WINWORD.HLP>PRO
+3 Madde imi ya da numara biçimini deðiþtirme=wohowModifybulletornumberformats@WINWORD.HLP>PRO
+3 Baþlýk numaralandýrma biçimlerini deðiþtirme=wohowModifyheadingnumberingformats@WINWORD.HLP>PRO
+3 Madde imlerini ya da numaralandýrmayý kaldýrma=wohowRemoveBulletsOrNumbering@WINWORD.HLP>PRO
+3 Baþlýk numaralarýný kaldýrma=wohowRemoveheadingnumbering@WINWORD.HLP>PRO
+3 Madde imli ya da numaralandýrýlmýþ bir listeyi sona erdirme ya da kesme=wohowInterruptalist@WINWORD.HLP>PRO
+3 Madde imli ve numaralandýrýlmýþ listeler için biçemler=woconStylesForBulletedAndNumberedLists@WINWORD.HLP>REF
+3 Madde imli ve numaralandýrýlmýþ liste sorunlarýný giderme=wotbsTroubleshootbulletedandnumberedlists@WINWORD.HLP>REF
+2 Varsayýlan Biçimlendirmeyi Þablonlarla Belirleme
+3 Þablon yaratma=wohowCreateAMicrosoftWordTemplate@WINWORD.HLP>PRO
+3 Þablon deðiþtirme=wohowModifyATemplate@WINWORD.HLP>PRO
+3 Þablonlar nerede saklanýr=woconWhereToStoreTemplates@WINWORD.HLP>REF
+3 Þablona biçemler, Otomatik Metin giriþleri, araç çubuklarý ya da makrolar kopyalama=wohowCopyStylesAutoTextEntriesToolbarsOrMacrosToAnotherTemplate@WINWORD.HLP>PRO
+3 Farklý þablonlar, makrolar, Otomatik Metin giriþleri ve diðer ayarlar kullanma=wodecUseMacrosAutoTextEntriesToolbarsAndOtherCommandSettingsStoredInADifferentTemplate@WINWORD.HLP>REF
+3 Word'ün benim için yaratabileceði belgeler=worefDocumentsWordCanAutomaticallyCreateForMe@WINWORD.HLP>REF
+3 Normal þablon=woconTheNormalTemplate@WINWORD.HLP>REF
+3 Word þablonlarý=!EF("WDVISEX.EXE","/N:10839 /F:WINWORD.HLP")
+3 Genel þablonlar=woconGlobalTemplates@WINWORD.HLP>REF
+3 Þablonda saklanan ayarlar=woconFormatsTextAndOtherItemsICanStoreInAMicrosoftWordTemplate@WINWORD.HLP>REF
+3 Birden çok biçem, Otomatik Metin giriþi, araç çubuðu ya da makroyu silme=wohowDeleteMultipleStylesAutoTextEntriesToolbarsOrMacros@WINWORD.HLP>PRO
+3 Þablon sorunlarýný giderme=wotbsTroubleshootTemplatesAndWizards@WINWORD.HLP>REF
+2 WordArt ile Grafik Etkileri Yaratma
+3 WordArt, Denklem Düzenleyicisi ve Graph=coConWordArtEquationEditorandGraph@WINWORD.HLP>REF
+3 WordArt, Denklem Düzenleyici ve Graph sorunlarýný giderme=coHowTroubleshootWordArtEquationEditorandGraphproblems@WINWORD.HLP>REF
+1 Sayfanýzýn Görünümünü Deðiþtirme
+2 Sayfanýzýn görünümünü deðiþtirme=!EF("WDVISEX.EXE","/N:1673 /F:WINWORD.HLP")
+2 Word'ün metni sayfada dikey olarak nasýl görüntüleyeceðini deðiþtirme=!fDoTheISAction(hwndApp, 5234)
+2 Bölüm kesmesini deðiþtirme=!fDoTheISAction(hwndApp, 5240)
+2 Kenar Boþluklarý, Sayfa Boyutu ve Sayfa Yönlendirmesi
+3 Kenar boþluklarýný deðiþtirme=!EF("WDVISEX.EXE","/N:1674 /F:WINWORD.HLP")
+3 Kenar boþluklarýný ayarlama ve diðer kenar boþluðu seçeneklerini deðiþtirme=wohowSetMargins@WINWORD.HLP>PRO
+3 Kaðýt boyutunu seçme=!fDoTheISAction(hwndApp, 5251)
+3 Sayfa yönlendirmesini seçme=!fDoTheISAction(hwndApp, 5252)
+3 Kenar boþluklarý ve sayfa yönlendirme sorunlarýný giderme=wotbsTroubleshootMarginsPageSizeAndPageOrientation@WINWORD.HLP>REF
+2 Sayfa Numaralarý ve Satýr Numaralarý
+3 Word sayfa numaralarýný nasýl ekler=woconTheDifferenceBetweenThePageNumberCommandAndThePageField@WINWORD.HLP>REF
+3 Sayfa numaralarý ekleme=wodecAddPageNumbers@WINWORD.HLP>REF
+3 Sayfa numaralarýný kaldýrma=wohowRemovePageNumbers@WINWORD.HLP>PRO
+3 Üstbilgi veya altbilgide sayfa numarasý, baþlýk ve diðer bilgileri bulundurma=wohowPrintTheTitleAuthorsNameAndOtherInformationInAHeaderOrFooter@WINWORD.HLP>PRO
+3 Sayfa numaralandýrmaya istediðiniz yerden baþlama=wohowStartPageNumberingOnAPageOtherThanTheFirstPage@WINWORD.HLP>PRO
+3 Belgenin veya bölümün ilk sayfasýndaki sayfa numarasýný gösterme veya gizleme=!fDoTheISAction(hwndApp, 5221)
+3 Sayfa numarasý biçimini deðiþtirme=wohowChangeThePageNumberFormat@WINWORD.HLP>PRO
+3 Sayfa numarasýnda bölüm numarasý içerme=wohowIncludeAChapterNumberInAPageNumber@WINWORD.HLP>PRO
+3 Çalýþýrken otomatik olarak belge sayfalarýnýn ayarlanmasý=!fDoTheISAction(hwndApp, 5205)
+3 Satýr numaralarý=woconLineNumbers@WINWORD.HLP>REF
+3 Satýr numaralarý ekleme=wohowAddLineNumbers@WINWORD.HLP>PRO
+3 Satýr numaralarýný kaldýrma=wohowRemoveLineNumbers@WINWORD.HLP>PRO
+3 Seçili paragraflarýn satýr numaralarýný gizleme=!fDoTheISAction(hwndApp, 6491)
+3 Sayfa numaralarý ve satýr numaralarý sorunlarýný giderme=wotbsTroubleshootPageNumbersAndLineNumbers@WINWORD.HLP>REF
+2 Sayfa Sonlarý ve Sayfa Sonlarý
+3 El ile sayfa sonu ekleme=!fDoTheISAction(hwndApp, 7410)
+3 Bölüm sonu ekleme=!fDoTheISAction(hwndApp, 5285)
+3 Bölüm sonu silme=wohowDeleteASectionBreak@WINWORD.HLP>PRO
+3 Bölüm sonu türleri=wohowControlSectionBreaks@WINWORD.HLP>REF
+3 Sayfa sonu ve bölüm sonu sorunlarýný giderme=wotbsTroubleshootPageBreaksAndSectionBreaks@WINWORD.HLP>REF
+2 Üstbilgiler ve Altbilgiler
+3 Üstbilgiler ve altbilgilerle çalýþma=!EF("WDVISEX.EXE","/N:1675 /F:WINWORD.HLP")
+3 Üstbilgiler ve altbilgiler yaratma=wodecVaryHeadersAndFootersWithinADocument@WINWORD.HLP>REF
+3 Üstbilgi ya da altbilgide sayfa numarasý, baþlýk ve baþka bilgiler içerme=wohowPrintTheTitleAuthorsNameAndOtherInformationInAHeaderOrFooter@WINWORD.HLP>PRO
+3 Üstbilgi veya altbilgi görüntüleme, düzenleme veya biçimlendirme=wonschowViewEditOrFormatAHeaderOrFooter@WINWORD.HLP>PRO
+3 Üstbilgileri ya da altbilgileri konumlandýrma=wodecPositionHeadersOrFooters@WINWORD.HLP>REF
+3 Üstbilgi ya da altbilgiyi önceki üstbilgi ya da altbilgiyle özdeþleþtirme=wohowMakeAHeaderOrFooterIdenticalWithThePrecedingHeaderOrFooter@WINWORD.HLP>PRO
+3 Üstbilgi ya da altbilgi silme=wohowDeleteAHeaderOrFooter@WINWORD.HLP>PRO
+3 Üstbilgi ve altbilgi sorunlarýný giderme=wotbsTroubleshootHeadersAndFooters@WINWORD.HLP>REF
+2 Gazete Tipi Sütunlar
+3 Sütunlar=!EF("WDVISEX.EXE","/N:1667 /F:WINWORD.HLP")
+3 Gazete tipi sütunlar=!EF("WDVISEX.EXE","/N:1668 /F:WINWORD.HLP")
+3 Gazete tipi sütunlar yaratma=wohowCreatecolumnsofunequalwidth@WINWORD.HLP>PRO
+3 Gazete tipi sütuna son ekleme=!fDoTheISAction(hwndApp, 1873)
+3 Gazete tipi sütunlara yayýlan bir baþlýk yaratma=wohowCenteraheadingovercolumns@WINWORD.HLP>PRO
+3 Gazete tipi sütunlarýn sayýsýný deðiþtirme=wohowChangeTheNumberOfNewspaperColumns@WINWORD.HLP>PRO
+3 Gazete tipi sütunlarýn geniþliðini deðiþtirme=wohowChangethewidthofcolumns@WINWORD.HLP>PRO
+3 Gazete tipi sütunlarýn arasýna dikey çizgi ekleme=!fDoTheISAction(hwndApp, 1876)
+3 Gazete tipi sütunlarýn sütun uzunluðunu dengeleme=wohowDividetextevenlyamongcolumns@WINWORD.HLP>PRO
+3 Gazete tipi sütunlarý kaldýrma=wohowRemoveNewspaperColumns@WINWORD.HLP>PRO
+3 Gazete tipi sütunlarda sorun giderme=wotbsTroubleshootnewspaperstylecolumns@WINWORD.HLP>REF
+1 Grafik Yaratma ve Alma
+2 Kenarlýklar=!EF("WDVISEX.EXE","/N:5795 /F:WINWORD.HLP")
+2 Grafik ve çizim nesneleri yaratma=!EF("WDVISEX.EXE","/N:1680 /F:WINWORD.HLP")
+2 Grafik Yaratma
+3 Çizim nesneleri ile çalýþma=woconDrawingShapes@WINWORD.HLP>REF
+3 Çizgi, dikdörtgen, oval, yay ya da diðer bir þekil çizme=wohowDrawlinesrectanglescirclesandothershapes@WINWORD.HLP>PRO
+3 Yay açýsý deðiþtirme=wohowChangeTheAngleOfAnArc@WINWORD.HLP>PRO
+3 Serbest form çizim nesnesi ekleme=wohowAddAFreeform@WINWORD.HLP>PRO
+3 Serbest form çizim nesnesinin þeklini deðiþtirme=wohowReshapeafreeformshape@WINWORD.HLP>PRO
+3 Çizgi ya da serbest form üzerine ok uçlarý ekleme ya da kaldýrma=wohowAddOrRemoveArrowheadsOnALineOrAFreeform@WINWORD.HLP>PRO
+3 Çizgi biçemi ya da kenarlýk seçme=wohowSpecifythelinestyleforadrawingobject@WINWORD.HLP>PRO
+3 Çizginin, yayýn ya da kenarlýðýn rengini deðiþtirme=wohowChangeTheColorOfALineArcOrBorder@WINWORD.HLP>PRO
+3 Doldurma rengi ya da deseni ekleme, deðiþtirme ya da kaldýrma=wohowAddChangeOrRemoveAFillColorOrPattern@WINWORD.HLP>REF
+3 Gölge ekleme ya da kaldýrma=wohowAddOrRemoveAShadow@WINWORD.HLP>PRO
+3 Çizme, yeniden boyutlandýrma ve yeniden þekillendirme sorunlarýný giderme=wotbsTroubleshootingDrawingResizingAndReshaping@WINWORD.HLP>REF
+2 Grafik Alma
+3 Clipart ile çalýþma=woconWorkingWithClipArt@WINWORD.HLP>REF
+3 Grafik ekleme=wohowImportagraphicsfile@WINWORD.HLP>PRO
+3 Grafiðin istenmeyen bölümlerini kesme (kýrpma)=wohowCutoffcropunwantedpartsofanimportedgraphic@WINWORD.HLP>PRO
+3 Alýnmýþ grafikleri düzenleme=wohowEditingImportedGraphics@WINWORD.HLP>REF
+3 Word'ün kullanabildiði grafik dosya türleri=worefListFilesOfTypeInsertmenuPicture@WINWORD.HLP>REF
+3 Grafik alma ile ilgili sorun giderme=wotbsTroubleshootImportingGraphics@WINWORD.HLP>REF
+2 Metin ve Grafikleri Konumlandýrma
+3 Çizim nesnelerini hassas taþýma=woconMovingDrawingObjectsPrecisely@WINWORD.HLP>REF
+3 Çizim nesnelerinin ve alýnmýþ grafiklerin yýðýlým ya da düzey sýrasýný deðiþtirme=wohowChangethelayeringorderofdrawingobjects@WINWORD.HLP>REF
+3 Belirtmenin, resim yazýsýnýn ya da etiketin hareketini denetleme=wodecControlTheMovementOfACalloutCaptionOrLabel@WINWORD.HLP>REF
+3 Grafiðe metin ekleme=wohowCreateATextBoxOrACallout@WINWORD.HLP>REF
+3 Grafikleri, ilgili metin ile konumlandýrma=wohowMakeAGraphicStayInPlaceWhenRelatedTextMovesInMyDocument@WINWORD.HLP>REF
+3 Grafiði her sayfada yineleme=wohowRepeatatextandgraphicsoneverypage@WINWORD.HLP>PRO
+3 Sayfa etrafýna kenarlýk koyma=wohowPrintaborderaroundthepage@WINWORD.HLP>PRO
+3 Çizim nesnesini döndürme=wohowRotateadrawingobject@WINWORD.HLP>PRO
+3 Çizim nesnesinin öbür yüzünü çevirme=wohowFlipadrawingobject@WINWORD.HLP>PRO
+3 Çizim nesneleri gruplama=woconWorkingWithGroupedObjects@WINWORD.HLP>REF
+3 Çizim nesneleri gruplama=wohowGroupandungroupdrawingobjects@WINWORD.HLP>PRO
+3 Çizim nesnelerinin grubunu çözme=wohowUngroupDrawingObjects@WINWORD.HLP>PRO
+3 Çerçeveleri Kullanma
+4 Metin ve grafiklerini çerçevelerle konumlandýrma=!EF("WDVISEX.EXE","/N:1682 /F:WINWORD.HLP")
+4 Grafikler ve çizim nesneleri yaratma=!EF("WDVISEX.EXE","/N:1680 /F:WINWORD.HLP")
+4 Çerçeve ile metin kutusu arasýndaki farklýlýk=woconThedifferencebetweenaframeandatextbox@WINWORD.HLP>REF
+4 Seçilmiþ öðeler etrafýna çerçeve ekleme=wohowInsertAFrameAroundSelectedItems@WINWORD.HLP>PRO
+4 Çerçeveyi kaldýrma=wotbsRemoveAFrame@WINWORD.HLP>PRO
+4 Çerçeve seçme=wohowSelectAFrame@WINWORD.HLP>PRO
+4 Çerçeveyi yeniden boyutlandýrma=wohowResizeAFrame@WINWORD.HLP>PRO
+4 Çerçeve konumlandýrma=wohowPositionAFrame@WINWORD.HLP>REF
+4 Çerçeveli bir nesnenin etrafýndaki metnin akýþýný denetleme=wohowControlTheFlowOfTextAroundAFramedObject@WINWORD.HLP>PRO
+4 Çerçeveler ile ilgili Sorunlarý Giderme=wotbsTroubleshootFrames@WINWORD.HLP>REF
+3 Kýlavuzlarý ve Rehberleri Hizalama ve Kullanma
+4 Çizim nesnelerini hizalama yöntemleri=woconWaysToLineThingsUp@WINWORD.HLP>REF
+4 Çizim nesneleri hizalama=wohowAligndrawingobjects@WINWORD.HLP>PRO
+4 Kýlavuza Uydur açma ya da kapama=wohowSwitchthesnaptogrideffectonoroff@WINWORD.HLP>PRO
+4 Çizim kýlavuzunu deðiþtirme=woconModifyingthedrawinggrid@WINWORD.HLP>REF
+2 Grafiklerle Çalýþma
+3 Grafikleri gizleyerek kaydýrmanýn hýzýný arttýrma=wohowUsePicturePlaceholders@WINWORD.HLP>PRO
+3 Grafiðin boyutunu deðiþtirme=wohowChangeTheSizeOfAnImportedGraphic@WINWORD.HLP>REF
+3 Etiketimin ya da resim yazýmýn etrafýndaki kutunun görünüþünü deðiþtirme=wohowChangetheappearanceofatextbox@WINWORD.HLP>REF
+3 Belirtmenin görünüþünü deðiþtirme=wohowChangetheappearanceofacallout@WINWORD.HLP>PRO
+3 Çizim nesnelerini alýnmýþ grafiklerle birleþtirme=wohowAdddrawingstoanimportedgraphic@WINWORD.HLP>REF
+3 Grafik eklemek yerine baðlayarak dosyamýn boyutunu küçültme=wohowCreatealinktoagraphicsfilewithoutincludingthepicture@WINWORD.HLP>PRO
+3 Alýnmýþ grafikler ve çizim nesneleri ile çalýþma sorunlarýný giderme=wotbsTroubleshootgraphics@WINWORD.HLP>REF
+1 Tablolarla Çalýþma
+2 Tablolar=!EF("WDVISEX.EXE","/N:1905 /F:WINWORD.HLP")
+2 Tabloda yazma ve gezinme=worefTypeandmovearoundinatable@WINWORD.HLP>REF
+2 Tabloda öðeler seçme=worefSelectitemsinatable@WINWORD.HLP>REF
+2 Tabloda basýlamaz karakterler=woconNonprintingcharactersinatable@WINWORD.HLP>REF
+2 Tablo sorunlarýný giderme=wotbsTroubleshootintables@WINWORD.HLP>REF
+2 Yaratma ve Silme
+3 Tablo yaratmak için hangi Office uygulamasýnýn kullanýlacaðýna karar verme=ofdecMakeATableToShowInformation@WINWORD.HLP>REF
+3 Tablo yaratma=wodecCreateatable@WINWORD.HLP>REF
+3 Tabloyu metne dönüþtürme=wohowConvertatabletotextparagraphs@WINWORD.HLP>PRO
+3 Tabloda öðeleri taþýma ya da kopyalama=wohowMoveorcopyitemsinatable@WINWORD.HLP>PRO
+3 Tabloyu ya da bir tablodan öðeleri silme=wodecDeleteItemsAndTextFromATable@WINWORD.HLP>REF
+2 Deðiþtirme
+3 Tabloya hücreler ekleme=wohowAddcellstoatable@WINWORD.HLP>PRO
+3 Tabloya satýrlar ya da sütunlar ekleme=wohowAddrowsorcolumnstoatable@WINWORD.HLP>PRO
+3 Tablo bölme ya da tablodan önce metin ekleme=wohowInserttextbeforeatableorbetweenrows@WINWORD.HLP>PRO
+2 Biçimlendirme
+3 Tabloya kenarlýklar ya da gölgelendirme ekleme=wohowFormatatable@WINWORD.HLP>REF
+3 Tablodan kenarlýklarý ve gölgelemeyi kaldýrma=wohowRemoveBordersAndShadingFromATable@WINWORD.HLP>PRO
+3 Tabloda sütunlarýn geniþliðini deðiþtirme=wohowChangethewidthofacolumn@WINWORD.HLP>PRO
+3 Tabloda satýr yüksekliðini deðiþtirme=wohowChangerowheightinatable@WINWORD.HLP>PRO
+3 Tabloda sütunlar arasýndaki aralýðý deðiþtirme=wohowChangethespacebetweencolumns@WINWORD.HLP>PRO
+3 Sayfada tablo ya da tablo satýrlarýný hizalama=wohowAlignatableonapage@WINWORD.HLP>PRO
+3 Tablodaki kýlavuz çizgilerini gösterme veya gizleme=wonschowDisplayOrHideGridlinesInATable@WINWORD.HLP>PRO
+3 Tablo hücresine sekme ekleme=wohowIncludetabstopsinatable@WINWORD.HLP>PRO
+3 Ayný satýrdaki hücreleri bir tabloda tek bir hücrede birleþtirme=wohowCombinecellsintoonecell@WINWORD.HLP>PRO
+3 Hücreyi bir tabloda birden çok hücreye bölme=wohowDivideacellintomultiplecells@WINWORD.HLP>PRO
+3 Tablo baþlýðýný sonraki sayfalarda tekrarlama=wohowRepeattableheadingsacrossapagebreak@WINWORD.HLP>PRO
+3 Tabloyu sayfalar arasýnda kesme=wohowBreakATableAcrossAPage@WINWORD.HLP>PRO
+3 Tablo satýrýnýn sayfalar arasýnda kesilmesini önleme=wotbsTableRowBreaksAcrossPagesHowCanIStopIt@WINWORD.HLP>PRO
+2 Geliþmiþ Görevler
+3 Veri formu kullanarak tabloda liste düzenleme=wohowFillatableusingaform@WINWORD.HLP>PRO
+3 Büyük bir tabloda belirli bir kayda gitme=wohowFindDataRecordsWhichContainSpecificInformation@WINWORD.HLP>PRO
+3 Tablodan grafik yaratma=wohowCreateachartfrominformationinatable@WINWORD.HLP>PRO
+3 Tabloda hücreleri numaralandýrma=wohowNumbercellsinatable@WINWORD.HLP>PRO
+3 Sayý satýrýný ya da sütununu toplama=wohowSumaroworcolumnofnumbers@WINWORD.HLP>PRO
+3 Tabloda hesaplamalar yapma=wohowPerformcalculationsinatable@WINWORD.HLP>PRO
+3 Tabloda hücrelere baþvurma=worefFormulasinatable@WINWORD.HLP>REF
+3 Son bilgileri görüntülemek için alanlarý güncelleþtirme=wohowUpdateFieldsToDisplayTheLatestInformation@WINWORD.HLP>PRO
+1 Uzun Belgelerle Çalýþma
+2 Asýl Belgeler Kullanma
+3 Asýl belgelerle çalýþma=!EF("WDVISEX.EXE","/N:1255 /F:WINWORD.HLP")
+3 Asýl belgeler ve alt belgelerle çalýþma=wodecWorkingWithMasterDocumentsAndSubdocuments@WINWORD.HLP>REF
+3 Asýl belge sorunlarýný giderme=wotbsTroubleshootmasterdocuments@WINWORD.HLP>REF
+3 Yaratma
+4 Asýl belgeler ve alt belgeler yaratma=wodecCreatingMasterDocumentsAndSubdocuments@WINWORD.HLP>REF
+4 Asýl belge içinden alt belge açma=wohowOpenasubdocumentfromwithinamasterdocument@WINWORD.HLP>PRO
+4 Varolan Word belgesini asýl belgeye ekleme=wohowInsertanexistingWorddocumentintoamasterdocument@WINWORD.HLP>PRO
+4 Alt belgeyi asýl belgenin bir parçasýna dönüþtürme=wohowConvertASubdocumentIntoPartOfTheMasterDocument@WINWORD.HLP>PRO
+4 Asýl belge içinde alt belgeleri yeniden düzenleme=wohowRearrangesubdocumentswithinamasterdocument@WINWORD.HLP>PRO
+4 Alt belge adý deðiþtirme=wohowRenameormoveasubdocument@WINWORD.HLP>PRO
+4 Alt belgeleri birleþtirme=wohowMergesubdocuments@WINWORD.HLP>PRO
+4 Alt belgeyi iki alt belgeye bölme=wohowSplitasubdocumentintotwosubdocuments@WINWORD.HLP>PRO
+4 Asýl belgeden alt belge çýkarma=wohowRemoveasubdocumentfromamasterdocument@WINWORD.HLP>PRO
+4 Asýl belgede içindekiler, dizin ya da çapraz baþvurular yaratma=wodecCreatingATableOfContentsIndexOrCrossreferenceInAMasterDocument@WINWORD.HLP>REF
+4 Bölüm sonlarý ve asýl belgeler=woconSectionBreaksAndMasterDocuments@WINWORD.HLP>REF
+4 Alt belge dosya adlarý=woconSubdocumentfilenames@WINWORD.HLP>REF
+3 Paylaþma
+4 Asýl belgeyi diðer kullanýcýlarla paylaþma=woconSharingamasterdocumentwithotherusers@WINWORD.HLP>REF
+4 Asýl belge ya da alt belge deðiþimine eriþimi sýnýrlama=wohowReservereadwriteprivilegesforamasterdocumentorasubdocument@WINWORD.HLP>PRO
+4 Asýl belge ya da alt belge kilitleme ya da kilidini açma=wohowLockorunlockamasterdocumentorasubdocument@WINWORD.HLP>PRO
+2 Dizinler, Ýçindekiler Tablosu ve Diðer Listeleri Yaratma
+3 Dizinler
+4 Dizinler=woconIndexesTablesofContentsandOtherTables@WINWORD.HLP>REF
+4 Dizin yaratma=wodecIndexes@WINWORD.HLP>REF
+4 Sayfa aralýðý içeren dizin girdisi yaratma=wohowIndicatearangeofpagesinanindexentry@WINWORD.HLP>PRO
+4 Dizin girdilerine karakter biçimlendirmesi uygulama=woconAdditionalFormattingOptionsforIndexes@WINWORD.HLP>PRO
+4 Dizin girdisi deðiþtirme ya da silme=wohowEditanIndexentry@WINWORD.HLP>PRO
+4 Dizin, içindekiler, ya da baþka bir tablo için özel tasarým yaratma=wohowCompileanindexbyusingtheCustomStyleformat@WINWORD.HLP>PRO
+4 Dizin girdileri olarak simgeler kullanma=wohowUseSymbolsAsIndexEntries@WINWORD.HLP>PRO
+4 Dizin, içindekiler veya diðer tablolar için alan kodlarýný kullanma=woconWhatcanIdowithindexes@WINWORD.HLP>REF
+4 Deðiþiklik yaptýktan sonra dizinleri ve tablolarý güncelleþtirme=wohowUpdatetablesindexesandfieldsafterImakechanges@WINWORD.HLP>PRO
+4 Dizin, içindekiler veya diðer tablolarý silme=wohowDeleteAnIndexTableOfContentsOrOtherTable@WINWORD.HLP>PRO
+4 Dizin, içindekiler ve diðer tablolarda sorunlarý giderme=wohowTroubleshootingforindexestablesofcontentsetc@WINWORD.HLP>REF
+3 Ýçindekiler
+4 Ýçindekiler=woconTableOfContents@WINWORD.HLP>REF
+4 Ýçindekiler yaratma=wodecTableOfContents@WINWORD.HLP>REF
+4 Dizin, içindekiler veya diðer tablolar için alan kodlarýný kullanma=woconWhatcanIdowithindexes@WINWORD.HLP>REF
+4 Deðiþiklik yaptýktan sonra dizinleri ve tablolarý güncelleþtirme=wohowUpdatetablesindexesandfieldsafterImakechanges@WINWORD.HLP>PRO
+4 Dizin, içindekiler veya diðer tablolarý silme=wohowDeleteAnIndexTableOfContentsOrOtherTable@WINWORD.HLP>PRO
+4 Dizin, içindekiler ve diðer tablolarda sorunlarý giderme=wohowTroubleshootingforindexestablesofcontentsetc@WINWORD.HLP>REF
+3 Þekiller Tablosu
+4 Þekiller Tablosu=woconTableOfFigures@WINWORD.HLP>REF
+4 Þekiller tablosu yaratma=wodecTableOfFigures@WINWORD.HLP>REF
+4 Dizin, içindekiler veya diðer tablolar için alan kodlarýný kullanma=woconWhatcanIdowithindexes@WINWORD.HLP>REF
+4 Deðiþiklik yaptýktan sonra dizinleri ve tablolarý güncelleþtirme=wohowUpdatetablesindexesandfieldsafterImakechanges@WINWORD.HLP>PRO
+4 Dizin, içindekiler veya diðer tablolarý silme=wohowDeleteAnIndexTableOfContentsOrOtherTable@WINWORD.HLP>PRO
+4 Dizin, içindekiler ve diðer tablolarda sorunlarý giderme=wohowTroubleshootingforindexestablesofcontentsetc@WINWORD.HLP>REF
+1 Diðer Kullanýcýlar ve Uygulamalar ile Veri Paylaþma
+2 Belgeleri Koruma
+3 Belge koruma=wodecProtectADocument@WINWORD.HLP>REF
+3 Parola deðiþtirme ya da silme=wohowChangeOrDeleteAPassword@WINWORD.HLP>PRO
+3 Belge koruma sorunlarýný giderme=wotbsTroubleshootProblemsProtectingADocument@WINWORD.HLP>REF
+2 Belgeleri Bilgisayarda Düzeltme, Postalama ve Dolaþtýrma
+3 Belgeleri Düzeltme
+4 Belgeleri ekranda düzeltme=!EF("WDVISEX.EXE","/N:2070 /F:WINWORD.HLP")
+4 Baþkasýnýn belgesini gözden geçirme=wodecReviewAnothersDocument@WINWORD.HLP>REF
+4 Önemli metni imle (vurgula)=wohowMarkHighlightImportantText@WINWORD.HLP>PRO
+4 Vurgulu metin bulma=wohowFindHighlightedText@WINWORD.HLP>PRO
+4 Vurgulu metni gösterme, yazdýrma ve gizleme=wohowShowPrintAndHideHighlightedText@WINWORD.HLP>PRO
+4 Vurgulamayý kaldýrma=wohowRemoveHighlighting@WINWORD.HLP>PRO
+4 Gözden geçirmek için belge hazýrlama=wohowPrepareADocumentForReview@WINWORD.HLP>PRO
+4 Word'ün düzeltmeleri imlemek için kullandýðý biçimlendirmeyi deðiþtirme=!fDoTheISAction(hwndApp, 2093)
+4 Ek açýklamalar imlerindeki baþ harflerinizi deðiþtirme=wohowChangeYourInitialsInAnnotationMarks@WINWORD.HLP>PRO
+4 Gözden geçirenlerin açýklamalarýný birleþtirme=wodecIncorporateReviewersComments@WINWORD.HLP>REF
+4 Ek açýklamalar görüntüleme=wohowViewAnnotations@WINWORD.HLP>PRO
+4 Düzeltme imleri sorunlarýný giderme=wotbsTroubleshootRevisionMarksProblems@WINWORD.HLP>REF
+4 Ek açýklama sorunlarýný giderme=wotbsTroubleshootAnnotationProblems@WINWORD.HLP>REF
+3 Belgeleri Postalama ve Dolaþtýrma
+4 Diðer kullanýcýlarla bilgi paylaþma=!EF("WDVISEX.EXE","/N:5796 /F:WINWORD.HLP")
+4 Schedule+ ve Microsoft Exchange ad ve adreslerini kullanma=woconWhereIsMyPersonalAddressBookKept@WINWORD.HLP>REF
+4 Word'ü elektronik posta düzenleyicisi olarak kullanma=!EF("WDVISEX.EXE","/N:12008 /F:WINWORD.HLP")
+4 Word'ü elektronik posta düzenleyicisi olarak yükleme=ofhowInstallwordasmyemaileditior@WINWORD.HLP>PRO
+4 Kiþisel adres defterimden adres ekleme=wohowLookUpNamesInTheAddressBook@WINWORD.HLP>PRO
+4 Microsoft Exchange elektronik posta düzenleyicisine geri dönme=ofhowRemovewordasmyemaileditor@WINWORD.HLP>PRO
+4 Elektronik posta iletilerimin görünüþlerini deðiþtirme=ofhowusedifferenttemplatewithwordasemaileditor@WINWORD.HLP>PRO
+4 Elektronik posta iletileri için otomatik imza yaratma=ofhowCreateanautomaticsignature@WINWORD.HLP>PRO
+4 Belgeleri gözden geçirilmeleri için elektronik posta ile dolaþtýrma=codecSendDocumentsToReviewInElectronicMail@WINWORD.HLP>REF
+4 Dolaþtýrma notu yaratma=cohowCreateARoutingSlip@WINWORD.HLP>PRO
+4 Dolaþtýrýlmýþ belgeyi açma=cohowOpenARoutedDocument@WINWORD.HLP>PRO
+4 Dolaþtýrýlmýþ bir belgenin dolaþtýrma notunu düzenleme=cohowEditTheRoutingSlipOfARoutedDocument@WINWORD.HLP>PRO
+4 Elektronik posta düzenleyicisi olarak Word sorunlarýný giderme=oftbsTroubleshootingwordasemaileditor@WINWORD.HLP>REF
+4 Elektronik posta içinde belgeleri baþkalarýna gönderme sorunlarýný giderme=wotbsTroubleshootProblemsSendingDocumentsToOthersInElectronicMail@WINWORD.HLP>REF
+2 Veri ve Grafikleri Paylaþma
+3 Uygulamalar arasýnda veri sürükleme ve býrakma=coconDraggingAndDroppingBetweenApplications@WINWORD.HLP>REF
+3 Word anahattýndan PowerPoint sunusu yaratma=ofhowCreateAPowerPointPresentationFromAWordOutline@WINWORD.HLP>REF
+3 Veritabanýndan veri kullanma=woconUsingdatafromadatabase@WINWORD.HLP>REF
+3 Word'den Microsoft Access'e metin dosyasý alma=ofhowImportATextFileFromWordIntoMicrosoftAccess@WINWORD.HLP>PRO
+3 Word tablosu olarak Microsoft Access tablosu ya da sorgusu ekleme=ofhowInsertAMicrosoftAccessTableOrQueryAsAWordTable@WINWORD.HLP>PRO
+3 Veri kaynaðýndan veriyi tablo olarak ekleme=wohowInsertdatafromadatasourceasatable@WINWORD.HLP>PRO
+3 Panodan yapýþtýrýlan bilgi biçimi=ofhowOtherWaysToPasteInformation@WINWORD.HLP>REF
+2 Baðlama ve Katýþtýrma
+3 Diðer uygulamalarla bilgi alýþ veriþi=!EF("WDVISEX.EXE","/N:341 /F:WINWORD.HLP")
+3 Office uygulamalarý arasýnda bilgi paylaþma=ofdecShareInformationBetweenOfficeApplications@WINWORD.HLP>REF
+3 Katýþtýrýlmýþ nesne düzenleme=cohowEditAnEmbeddedObject@WINWORD.HLP>REF
+3 Baðlantý güncelleþtirme ve baðlantýlarýn nasýl güncelleþtirileceklerini denetleme=cohowUpdateALinkAndControlWhenItGetsUpdated@WINWORD.HLP>REF
+3 Word'de baðlantý kesme=wohowBreakaLink@WINWORD.HLP>PRO
+3 Kaynak dosya taþýndýðýnda veya adý deðiþtiðinde Word'de baðlantýyý yeniden kurma=wohowReconnectALinkInWordWhenTheSourceFileMovesOrIsRenamed@WINWORD.HLP>PRO
+3 Baðlanmýþ veya katýþtýrýlmýþ nesneler içeren belgelerin boyutunu azaltma=wodecReduceTheFileSizeOfADocumentThatContainsLinkedObjects@WINWORD.HLP>REF
+3 Baðlama ve katýþtýrma sorunlarýný giderme=oftbsTroubleshootingLinkingAndEmbeddingProblems@WINWORD.HLP>REF
+3 PowerPoint'te baðlantýlý ya da katýþtýrýlmýþ Word nesneleri sorunlarýný giderme=cohowTroubleshootProblemsInPowerPointWithLinkedOrEmbeddedWordObjects@WINWORD.HLP>REF
+4 Word'de baðlantýlý ya da katýþtýrýlmýþ nesne sorunlarýný giderme=oftbsTroubleshootingProblemsWithEmbeddedWordObjects@WINWORD.HLP>REF
+4 Word'de, baðlantýlý ya da katýþtýrýlmýþ Microsoft Excel nesneleri sorunlarýný giderme=oftbsInWordMyMicrosoftExcelWorksheetUsesR1C1RatherThanA1NotationReferences@WINWORD.HLP>REF
+2 Formlarý Kullanma
+3 Ekran ve yazýlý formlarda sorun giderme=worefTroubleshootingforonlineforms@WINWORD.HLP>REF
+3 Yaratma ve Yazdýrma
+4 Ekran ve yazýlý formlar=woconOnlineforms@WINWORD.HLP>REF
+4 Ekran ya da yazýlý form yaratmak için hangi uygulamanýn kullanýlacaðýna karar verme=ofdecCreateAFormAndUseItToCollectInformation@WINWORD.HLP>REF
+4 Form yaratma=wohowCreateAForm@WINWORD.HLP>REF
+4 Form tasarlama=woconLayingoutaprintedform@WINWORD.HLP>REF
+4 Ekran formu doldurma=wohowFillinanonlineform@WINWORD.HLP>PRO
+4 Ekran formu deðiþtirme=wohowModifyaformfield@WINWORD.HLP>PRO
+4 Ekran formdan korumayý kaldýrma=wohowRemoveprotectionfromaform@WINWORD.HLP>PRO
+4 Ekran formundaki verileri, veritabanýnda kullanmak üzere kaydetme=!fDoTheISAction(hwndApp, 584)
+4 Ekran formundan veri yazdýrma=!fDoTheISAction(hwndApp, 585)
+4 Kullanýcýlarýn formu deðiþtirmelerini önleme=wohowProtectaformfromchanges@WINWORD.HLP>PRO
+3 Özelleþtirme
+4 Metin form alanlarýnýn boyutunu ayarlama ya da deðiþtirme=wotbsHowDoIMakeMyFormFieldsLarger@WINWORD.HLP>REF
+4 Ekran formundaki açýlan listeye öðeler ekleme=wohowAdditemstoadropdownlistinaform@WINWORD.HLP>PRO
+4 Ekran formundaki açýlan listeden öðeleri kaldýrma=wohowRemoveitemsfromadropdownlistinaform@WINWORD.HLP>PRO
+4 Ekran formundaki açýlýr liste öðelerinin sýrasýný deðiþtirme=wohowChangetheorderofitemsinadropdownlistinaform@WINWORD.HLP>PRO
+4 Ekran formundaki form alanlarýna makrolar ekleme=wohowAssignamacrotoaformfield@WINWORD.HLP>PRO
+4 Ekran formunda görüntülenecek Yardým metni ekleme=wohowAddmessagetexttoanonlineform@WINWORD.HLP>PRO
+4 Form alanýnda gölgelemeyi görüntüleme ya da kaldýrma=wohowFormFieldShadingbuttonFormsToolbar@WINWORD.HLP>PRO
+4 Ekran formuna yazýlan metni biçimlendirme=wohowFormattexttypedintoanonlineform@WINWORD.HLP>PRO
+4 Metin form alaný seçenekleri=worgnTextFormFieldTypeOptions@WINWORD.HLP>REF
+2 Dosya Biçimlerini Dönüþtürme
+3 Microsoft Word'ün önceki sürümlerinde yaratýlmýþ dosyalarý açma=woconUsingFilesCreatedInPreviousVersionsOfMicrosoftWord@WINWORD.HLP>REF
+3 Birden fazla belgeyi bir seferde dönüþtürme=wohowConvertSeveralDocumentsAtOnce@WINWORD.HLP>PRO
+3 Windows ile Macintosh arasýnda dosya taþýma=cohowMoveFilesBetweenWindowsAndTheMacintosh@WINWORD.HLP>PRO
+3 Baþka Office uygulamasýnda dosya alma veya dönüþtürme=ofconImportingInformationFromAnotherOfficeApplication@WINWORD.HLP>REF
+3 Dönüþtürülmüþ belgelerle çalýþmak için Word'ü özelleþtirme=wohowCustomizeWordToWorkWithConvertedDocuments@WINWORD.HLP>PRO
+3 Dosyalarý dönüþtürürken kullanýlacak yazýtiplerini belirleme=wohowSpecifyFontsToUseWhenConvertingFiles@WINWORD.HLP>PRO
+3 Dosya biçimlerini dönüþtürme sorunlarýný giderme=wodecTroubleshootConvertingFileFormats@WINWORD.HLP>REF
+3 Microsoft Word ile saðlanan dosya biçimi dönüþtürücüleri=womscFileFormatsSuppliedWithMicrosoftWord@WINWORD.HLP>REF
+3 Ek dosya dönüþtürücüleri elde etme=woconconvObtainingAdditionalFileConverters@WINWORD.HLP>REF
+2 Word'ü Lotus Notes ile Kullanma
+3 Word belgesi katýþtýrma ya da Word metnini Lotus Notes'ta kullanma=wodecUseFieldsInWordInLotusNotes@WINWORD.HLP>REF
+3 Word belgesi özellikleri Lotus Notes alanlarý ile nasýl karþýlaþtýrýlýr=worefUsingWordsSummaryFieldsInLotusNotes@WINWORD.HLP>REF
+3 Word belgesini Lotus Notes'a alma=wohowImportAWordDocumentIntoLotusNotes@WINWORD.HLP>PRO
+3 Lotus Notes metnini Word zengin metin biçiminde gönderme=wohowExportLotusNotesTextInMicrosoftWordRTF@WINWORD.HLP>PRO
+3 Lotus Notes alanlarýný güncelleþtirme=wohowUpdateLotusNotesFields@WINWORD.HLP>REF
+1 Belgeleri Adres Mektup Birleþtirme ile Biraraya Getirme
+2 Mektup formlarý, zarflar ve posta etiketleri=!EF("WDVISEX.EXE","/N:1681 /F:WINWORD.HLP")
+2 Mektup formu yaratma=woproCreateAFormLetter@WINWORD.HLP>PRO
+2 Katalog, üyelik dizini, parça listesi ya da benzer bir belge yaratma=woproCreateACatalogPartsListOrSimilarDocument@WINWORD.HLP>PRO
+2 Adres listesi birleþtirerek zarf yazdýrma=woproPrintAListOfAddressesOnEnvelopes@WINWORD.HLP>PRO
+2 Adres listesi birleþtirerek posta etiketleri yazdýrma=woproPrintAListOfAddressesOnMailingLabels@WINWORD.HLP>PRO
+2 Adres mektup birleþtirme kullanýmý sorunlarýný giderme=wotbsTroubleshootUsingMailMerge@WINWORD.HLP>REF
+2 Asýl Belgeyi Düzenleme
+3 Birleþtirilmiþ bilgi biçimlendirme=woproFormatMergedInformation@WINWORD.HLP>PRO
+3 WordPerfect asýl dosyasýný adres mektup birleþtirme asýl belgesi olarak kullanma=woproUseAWordPerfectPrimaryFileAsAMainDocument@WINWORD.HLP>REF
+2 Asýl Belge ile Veri Kaynaðýný Birleþtirme
+3 Asýl belgeyi veri kaynaðý ile birleþtirme=woproMergeTheMainDocumentWithTheDataSource@WINWORD.HLP>PRO
+3 Yazdýrmadan önce birleþtirilmiþ belgeleri görüntüleme=wodecViewTheResultingMergedDocumentsBeforePrinting@WINWORD.HLP>REF
+3 Mektup formlarýný elektronik posta ya da faks adreslerine daðýtma=woproDistributeFormLettersToElectronicMailOrFaxAddresses@WINWORD.HLP>PRO
+2 Veri Kaynaklarýyla Çalýþma
+3 Adres mektup birleþtirme veri kaynaklarý için gerekenler=woconDataSources@WINWORD.HLP>REF
+3 Adres mektup birleþtirme için ad ve adres listesi yapma=ofdecMakeAListOfNamesAndAddressesForAMailMerge@WINWORD.HLP>REF
+3 Veri kaynaðýndan veri kayýtlarý seçme=woproSelectDataRecordsFromADataSource@WINWORD.HLP>PRO
+3 Adres mektup birleþtirme için veri kayýtlarý seçme kurallarý=woconRecordselectionRules@WINWORD.HLP>REF
+3 Veri kayýtlarý sýralama=woproSortDataRecords@WINWORD.HLP>PRO
+3 Üstbilgi kaynaðý ne zaman kullanýlýr=woconWhenToUseAHeaderSource@WINWORD.HLP>REF
+3 Veri kaynaðýnda bilgi görüntüleme=wodecViewAndEditADataSourceOrOtherListOfData@WINWORD.HLP>REF
+3 Word veri kaynaðýna bilgi ekleme=wodecAddNewInformationToADataSource@WINWORD.HLP>REF
+3 Veri kaynaðýnda alanlarý yeniden adlandýrma=woproRenameFieldsInADataSource@WINWORD.HLP>PRO
+3 Word veri kaynaðýndan bilgi silme=wodecDeleteInformationFromADataSource@WINWORD.HLP>REF
+2 Adres Mektup Birleþtirmeyi, Word Alanlarýyla Özelleþtirme
+3 Word alanlarýný asýl belgeye ekleme=woproInsertWordFieldsInAMainDocument@WINWORD.HLP>PRO
+3 Adres mektup birleþtirme ile yaratýlmýþ belgeleri özelleþtirme=woconCustomizingDocumentsCreatedWithMailMerge@WINWORD.HLP>REF
+3 Birleþtirilmiþ belgelerde boþ satýrlarý önleme=woconPreventingBlankLinesInMergedDocuments@WINWORD.HLP>REF
+1 Yazdýrma
+2 Yazdýrmadan Önce Belgeyi Ýzleme
+3 Yazýlý belge ekranda görünenle nasýl eþleþtirilir=woconWYSIWYGInWord@WINWORD.HLP>REF
+3 Yazdýrmadan önce belgeyi izleme=!fDoTheISAction(hwndApp, 2661)
+3 Baský önizlemede metin düzenleme=wohowEditTextInPrintPreview@WINWORD.HLP>PRO
+3 Baský önizlemede kenar boþluklarýný ayarlama=wohowAdjustMarginsInPrintPreview@WINWORD.HLP>PRO
+3 Yazdýrmadan önce, alanlarý otomatik olarak güncelleþtirme=!fDoTheISAction(hwndApp, 2703)
+3 Yazdýrmadan önce, baðlanmýþ bilgileri otomatik olarak güncelleþtirme=!fDoTheISAction(hwndApp, 2704)
+3 Belgenin ek basýlý sayfaya geçmesini önleme=wohowPreventADocumentFromFlowingOntoAnAdditionalPrintedPage@WINWORD.HLP>PRO
+2 Çalýþmanýzý Yazdýrma
+3 Belge yazdýrma=!fDoTheISAction(hwndApp, 2727)
+3 Ayný anda birden fazla kopyayý yazdýrma=cohowPrintMoreThanOneCopyAtATime@WINWORD.HLP>PRO
+3 Ayný anda birden çok dosya yazdýrma=cohowPrintMoreThanOneFileInOpen@WINWORD.HLP>PRO
+3 Asýl belge yazdýrma=wohowPrintamasterdocument@WINWORD.HLP>PRO
+3 Geriden baþa doðru yazdýrma=!fDoTheISAction(hwndApp, 2717)
+3 Yalnýzca tek ya da çift numaralý sayfalarý yazdýrma=wohowPrintOddOrEvenPages@WINWORD.HLP>PRO
+3 Özet bilgi ya da diðer belge bilgilerini yazdýrma=wodecPrintSummaryInformation@WINWORD.HLP>REF
+3 Belge taslaðýný yazdýrma=!fDoTheISAction(hwndApp, 2720)
+3 Artalanda yazdýrmayý açma ve kapatma=!fDoTheISAction(hwndApp, 2722)
+3 Belgenin bir bölümü için farklý kaðýt kullanma=wohowSpecifyAPaperSourceWhenPrintingADocument@WINWORD.HLP>PRO
+3 Belgenin ilk ya da sonraki sayfalarý için farklý kaðýt kullanma=wohowSpecifyThePaperTrayForTheFirstPageAndSubsequentPagesOfADocument@WINWORD.HLP>PRO
+3 Baský dosyasý yarat=wohowPrintToAFile@WINWORD.HLP>PRO
+3 Yazdýrmayý iptal etme=wohowCancelPrinting@WINWORD.HLP>PRO
+3 Yazdýrma sorunlarýný giderme=wotbsTroubleshootPrinting@WINWORD.HLP>REF
+3 Zarflar ve Etiketler Yaratma ve Yazdýrma
+3 Zarflar için dönüþ adresi yaratma=wodecCreateAReturnAddressForEnvelopes@WINWORD.HLP>REF
+3 Zarfa adres yazdýrma=wodecPrintAddressesOnEnvelopes@WINWORD.HLP>REF
+3 Posta etiketine adres yazdýrma=wodecPrintAddressesOnMailingLabels@WINWORD.HLP>REF
+3 Posta etiketinin boyutunu deðiþtirme=wocmdChangeTheSizeOfAMailingLabel@WINWORD.HLP>PRO
+3 Zarfýn boyutunu deðiþtirme=wocmdChangeTheSizeOfAnEnvelope@WINWORD.HLP>PRO
+3 Zarf adresi metin biçimlendirmesini deðiþtirme=wohowChangeTextFormattingOnAnEnvelope@WINWORD.HLP>PRO
+3 Schedule+ ve Microsoft Exchange'den adlar ve adresler kullanma=woconWhereIsMyPersonalAddressBookKept@WINWORD.HLP>REF
+1 Microsoft Word'ü Özelleþtirme
+2 Microsoft Office'in bileþenlerini tek tek yükleme ya da kaldýrma=wohowInstallorremoveindividualcomponentsofWord@WINWORD.HLP>PRO
+2 Microsoft Word'ü baþlattýðýnýzda neler olduðunu denetleme=wohowControllingWhatHappensWhenYouStartWord@WINWORD.HLP>PRO
+2 Microsoft Word eriþilebilirliði=woconWordAccessibility@WINWORD.HLP>REF
+2 Belge Görünümleri
+3 Word belgesini görüntülemenin farklý yollarý=!EF("WDVISEX.EXE","/N:1677 /F:WINWORD.HLP")
+3 Word'de görüntü ayarlarýný deðiþtirme=wohowChangeTheDisplaySettingsInWord@WINWORD.HLP>PRO
+3 Belgemi görüntüleme þeklini deðiþtirme=wohowViewMoreOfTheDocumentByHidingScreenElements@WINWORD.HLP>REF
+3 Basýlmayan karakterleri gösterme veya gizleme=!fDoTheISAction(hwndApp, 2372)
+3 Ekranýn tamamýný görüntüleme=cohowDisplayTheFullScreen@QWINWORD.HLP
+3 Mavi pencere artalaný görüntüleme=!fDoTheISAction(hwndApp, 2373)
+3 Kaydýrmayý hýzlandýrmak için, grafikleri gizleme=!fDoTheISAction(hwndApp, 2336)
+3 Varsayýlan ölçü birimini deðiþtirme=!fDoTheISAction(hwndApp, 2374)
+2 Araç çubuklarý
+3 Araç çubuklarýný gösterme veya gizleme=!fDoTheISAction(hwndApp, 2412)
+3 Araç çubuðunu taþýma=xlhowMoveAndResizeToolbars@WINWORD.HLP>PRO
+3 Araç çubuðunu yeniden boyutlandýrma=cohowResizeAToolbar@WINWORD.HLP>PRO
+3 Yerleþik araç çubuðunu önceki boyutuna getirme=cohowRestoreABuiltinToolbar@WINWORD.HLP>PRO
+3 Özel araç çubuðu yaratma=wohowCreateOrDeleteACustomToolbar@WINWORD.HLP>PRO
+3 Biçemleri, Otomatik Metin giriþlerini, makrolarý ve araç çubuklarýný yeniden adlandýrma=wohowRenamestylesAutoTextentriesmacrosandtoolbars@WINWORD.HLP>PRO
+3 Özel araç çubuðunu silme=cohowDeleteACustomToolbar@WINWORD.HLP>PRO
+3 Araç çubuðunda açýlýr liste kutusunun geniþliðini deðiþtirme=cohowChangeTheWidthOfADropdownListBoxOnAToolbar@WINWORD.HLP>PRO
+3 Bir araç çubuðu düðmesi ekleme veya silme=cohowAddOrDeleteAToolbarButton@WINWORD.HLP>PRO
+3 Araç çubuðu düðmesinde resmi deðiþtirme=cohowChangeTheImageOnAToolbarButton@WINWORD.HLP>REF
+3 Araç çubuðu düðmeleri aralýðýný deðiþtirme=cohowSpaceOutButtonsOnAToolbar@WINWORD.HLP>PRO
+3 Araç çubuðu düðmelerini büyütme=!fDoTheISAction(hwndApp, 2437)
+3 Bir araç çubuðu düðmesini taþýma veya kopyalama=cohowMoveAndCopyToolbarButtons@WINWORD.HLP>PRO
+3 Yerleþik araç çubuðu düðmesini önceki özgün resim boyutuna getirme=wohowRestoreABuiltinToolbar@WINWORD.HLP>PRO
+3 Araç Ýpuçlarý'nda araç çubuðu düðme adlarýný gösterme veya gizleme=!fDoTheISAction(hwndApp, 2438)
+3 Komut ya da diðer öðe için düðme yaratma=wohowAssignACommandOrOtherItemWithoutABuiltinButtonToAToolbarButton@WINWORD.HLP>PRO
+2 Menüler
+3 Menü ekleme=wohowAddANewMenu@WINWORD.HLP>PRO
+3 Menü adý deðiþtirme=wohowRenameAMenu@WINWORD.HLP>PRO
+3 Menü silme=wohowDeleteAMenu@WINWORD.HLP>PRO
+3 Menüye komut ya da bir öðe atama=wohowAssignACommandOrOtherItemToAMenu@WINWORD.HLP>PRO
+3 Menüden komut ya da bir öðe kaldýrma=wohowRemoveACommandOrOtherItemFromAMenu@WINWORD.HLP>PRO
+3 Tüm Word menülerini özgün ayarlarýna getirme=wohowRestoreMenusToOriginalSettings@WINWORD.HLP>PRO
+2 Kýsayol Tuþlarý
+3 Komut ya da baþka bir öðeye kýsayol tuþu atama=wohowAssignAShortcutKeyToACommandOrOtherItem@WINWORD.HLP>PRO
+3 Komut ya da baþka bir öðeden kýsayol tuþunu kaldýrma=wohowRemoveAShortcutKeyFromACommandOrOtherItem@WINWORD.HLP>PRO
+3 Kýsayol tuþ atamalarýný özgün ayarlarý boyutuna getirme=wohowRestoreShortcutKeyAssignmentsToTheOriginalWordSettings@WINWORD.HLP>PRO
+2 Ýçine-ekle Özellikleri
+3 Ýçine-ekleler=coconWhatAreAddinPrograms@WINWORD.HLP>REF
+3 Word'e genel þablon ya da içine-ekle yükleme=wohowLoadAnAddinProgram@WINWORD.HLP>PRO
+3 Word'den genel þablon ya da içine-ekle çýkartma=wohowInstallOrRemoveAnAddinProgram@WINWORD.HLP>PRO
+2 Alanlar
+3 Alanlar nasýl kullanýlýr=!EF("WDVISEX.EXE","/N:3046 /F:WINWORD.HLP")
+3 Alanlarý kullanma yollarý=wodecWaysToUseFields@WINWORD.HLP>REF
+3 Alanlarý kullanarak otomatik bilgi ekleme=wohowInsertAField@WINWORD.HLP>PRO
+3 En son bilgiyi görüntülemek için alanlarý güncelleþtirme=wohowUpdateFieldsToDisplayTheLatestInformation@WINWORD.HLP>PRO
+3 Alan sonuçlarýný deðiþtirmek için alan kodlarýný düzenleme=wohowEditFieldCodesToChangeAFieldResult@WINWORD.HLP>PRO
+3 Alan kodlarýný göster ya da gizle=wohowShowOrHideFieldCodes@WINWORD.HLP>PRO
+3 Alanlarý gölgeli artalanla gösterme=!fDoTheISAction(hwndApp, 3051)
+3 Alan tarafýndan eklenen bilgileri biçimlendirme=woconFormattingInformationInsertedByAField@WINWORD.HLP>REF
+3 Alan tarafýndan eklenen bilgilerin deðiþmesini önleme=wodecPreventFieldsFromBeingUpdated@WINWORD.HLP>REF
+3 Word alanlarýný kullanma sorunlarýný giderme=wotbsTroubleshootUsingWordFields@WINWORD.HLP>REF
+2 Makrolar
+3 Görevleri otomatikleþtirmek için makrolar kullanma=woconUsingMacrosToAutomateTasks@WINWORD.HLP>REF
+3 Makrolarý kaydetme, çalýþtýrma ve düzenleme=woconRecordRunAndEditMacros@WINWORD.HLP>REF
+3 Makro kaydýný askýya alma ve devam ettirme=wohowSuspendAndResumeRecordingAMacro@WINWORD.HLP>PRO
+3 Biçemleri, Otomatik Metin giriþlerini, makrolarý ve araç çubuklarýný yeniden adlandýrma=wohowRenamestylesAutoTextentriesmacrosandtoolbars@WINWORD.HLP>PRO
+3 Word ile saðlanan bir makroyu kullanma=wohowUseAMacroSuppliedWithWord@WINWORD.HLP>PRO
+3 Makro silme=wohowDeleteAMacro@WINWORD.HLP>PRO
+3 Saðlanan makrolar=worefSuppliedMacros@WINWORD.HLP>REF
+3 Makrolarý kaydetme ve çalýþtýrma ile ilgili sorunlarý giderme=wotbsTroubleshootRecordingAndPlayingMacros@WINWORD.HLP>REF
+1 Baþvuru Bilgileri
+2 Windows 95 için Word özellikleri=wodecWordForWindows95Specifications@WINWORD.HLP>REF
+2 Alan Türleri ve Anahtarlar
+3 Genel Anahtarlar=worefGeneralSwitches@WINWORD.HLP>REF
+3 Biçim (\*) alaný anahtarý=worefFormat@WINWORD.HLP>REF
+3 Tarih-Saat Görüntüsü (\@) alaný anahtarý=worefDateTimePicture@WINWORD.HLP>REF
+3 Sonucu Kilitle (\!) alaný anahtarý=worefLockResult@WINWORD.HLP>REF
+3 Sayýsal Görüntü (\#) alaný anahtarý=worefNumericPicture@WINWORD.HLP>REF
+3 Alan kodlarý: \=(Formül) alaný=worefFormula@WINWORD.HLP>REF
+3 Alan kodlarý: Geliþmiþ alaný=worefADVANCE@WINWORD.HLP>REF
+3 Alan kodlarý: Sor alaný=worefASK@WINWORD.HLP>REF
+3 Alan kodlarý: Yazar alaný=worefAUTHOR@WINWORD.HLP>REF
+3 Alan kodlarý: OtoNum alaný=worefAUTONUM@WINWORD.HLP>REF
+3 Alan kodlarý:OtoNumYasal alaný=worefAUTONUMLGL@WINWORD.HLP>REF
+3 Alan kodlarý: OtoNumAnahat alaný=worefAUTONUMOUT@WINWORD.HLP>REF
+3 Alan kodlarý: OtomatikMetin alaný=worefAUTOTEXT@WINWORD.HLP>REF
+3 Alan kodlarý: Yerimi ve Baþv alanlarý=worefBOOKMARK@WINWORD.HLP>REF
+3 Alan kodlarý: Açýklamalar alaný=worefCOMMENTS@WINWORD.HLP>REF
+3 Alan kodlarý: Karþýlaþtýr alaný=worefCOMPARE@WINWORD.HLP>REF
+3 Alan kodlarý: YaratmaTarihi alaný=worefCREATEDATE@WINWORD.HLP>REF
+3 Alan kodlarý: Veri alaný=worefDATA@WINWORD.HLP>REF
+3 Alan kodlarý: Veritabaný alaný=worefDATABASE@WINWORD.HLP>REF
+3 Alan kodlarý: Tarih alaný=worefDATE@WINWORD.HLP>REF
+3 Alan Kodlarý: DDE ve DDEAuto alanlarý=worefDDE@WINWORD.HLP>REF
+3 Alan kodlarý: BelgeÖzelliði alaný=worefDOCPROPERTY@WINWORD.HLP>REF
+3 Alan kodlarý: DüzenSüre alaný=worefEDITTIME@WINWORD.HLP>REF
+3 Alan kodlarý: Katýþtýr alaný=worefEMBED@WINWORD.HLP>REF
+3 Alan kodlarý: Denklem alaný=worefEQEquation@WINWORD.HLP>REF
+3 Alan kodlarý: DosyaAdý alaný=worefFILENAME@WINWORD.HLP>REF
+3 Alan kodlarý: DosyaBoyutu alaný=worefFILESIZE@WINWORD.HLP>REF
+3 Alan kodlarý: Doldur alaný=worefFILLIN@WINWORD.HLP>REF
+3 Alan kodlarý: FormOnayKutusu alaný=worefFORMCHECKBOX@WINWORD.HLP>REF
+3 Alan kodlarý: FormAçýlýr alaný=worefFORMCHECKBOX@WINWORD.HLP>REF
+3 Alan kodlarý: FormMetin alaný=worefFORMCHECKBOX@WINWORD.HLP>REF
+3 Alan kodlarý: GitDüðmesi alaný=worefGOTOBUTTON@WINWORD.HLP>REF
+3 Alan kodlarý: Eðer alaný=worefIF@WINWORD.HLP>REF
+3 Alan kodlarý: EkleResim alaný=worefINCLUDEPICTURE@WINWORD.HLP>REF
+3 Alan kodlarý: EkleMetin alaný=worefINCLUDETEXT
+3 Alan kodlarý: Dizin alaný=worefINDEX@WINWORD.HLP>REF
+3 Alan kodlarý: Bilgi alaný=worefINFO@WINWORD.HLP>REF
+3 Alan kodlarý: AnahtarSözcük alaný=worefKEYWORDS@WINWORD.HLP>REF
+3 Alan kodlarý: SonKaydeden alaný=worefLASTSAVEDBY@WINWORD.HLP>REF
+3 Alan kodlarý: Baðlantý alaný=worefLINK@WINWORD.HLP>REF
+3 Alan kodlarý: MakroDüðmesi alaný=worefMACROBUTTON@WINWORD.HLP>REF
+3 Alan kodlarý: BirleþtirAlan alaný=worefMERGEFIELD@WINWORD.HLP>REF
+3 Alan kodlarý: BirleþtirKayýt alaný=worefMERGEREC@WINWORD.HLP>REF
+3 Alan kodlarý: BirleþtirSýra alaný=worefMERGESEQ@WINWORD.HLP>REF
+3 Alan kodlarý: Sonraki alaný=worefNEXT@WINWORD.HLP>REF
+3 Alan kodlarý: SonraEðer alaný=worefNEXTIF@WINWORD.HLP>REF
+3 Alan kodlarý: NotRef alaný=worefNOTEREF@WINWORD.HLP>REF
+3 Alan kodlarý: KarSayýsý alaný=worefNUMCHARS@WINWORD.HLP>REF
+3 Alan kodlarý: SayfaSayýsý alaný=worefNUMPAGES@WINWORD.HLP>REF
+3 Alan kodlarý: SözcükSayýsý alaný=worefNUMWORDS@WINWORD.HLP>REF
+3 Alan kodlarý: Sayfa alaný=worefPAGE@WINWORD.HLP>REF
+3 Alan kodlarý: SayfaRef alaný=worefPAGEREF@WINWORD.HLP>REF
+3 Alan kodlarý: Yazdýr alaný=worefPRINT@WINWORD.HLP>REF
+3 Alan kodlarý: YazdýrmaTarihi alaný=worefPRINTDATE@WINWORD.HLP>REF
+3 Alan kodlarý: Özel alaný=worefPRIVATE@WINWORD.HLP>REF
+3 Alan kodlarý: Göster alaný=worefQUOTE@WINWORD.HLP>REF
+3 Alan kodlarý: RB (Baþvurulan Belge) alaný=worefRDReferencedDocument@WINWORD.HLP>REF
+3 Alan kodlarý: DeðSayýsý alaný=worefREVNUM@WINWORD.HLP>REF
+3 Alan kodlarý: KayýtTarihi alaný=worefSAVEDATE@WINWORD.HLP>REF
+3 Alan kodlarý: Bölüm alaný=worefSECTION@WINWORD.HLP>REF
+3 Alan kodlarý: BölümSayfalarý alaný=worefSECTIONPAGES@WINWORD.HLP>REF
+3 Alan kodlarý: Sýrala alaný=worefSEQSequence@WINWORD.HLP>REF
+3 Alan kodlarý: Belirle alaný=worefSET@WINWORD.HLP>REF
+3 Alan kodlarý: AtlaEðer alaný=worefSKIPIF@WINWORD.HLP>REF
+3 Alan kodlarý: BiçemRef alaný=worefSTYLEREF@WINWORD.HLP>REF
+3 Alan kodlarý: Konu alaný=worefSUBJECT@WINWORD.HLP>REF
+3 Alan kodlarý: Simge alaný=worefSYMBOL@WINWORD.HLP>REF
+3 Alan kodlarý: ÝÖ (Ýçindekiler Öðesi) alaný=worefTCTableOfContentsEntry@WINWORD.HLP>REF
+3 Alan kodlarý: Þablon alaný=worefTEMPLATE@WINWORD.HLP>REF
+3 Alan kodlarý: Saat alaný=worefTIME@WINWORD.HLP>REF
+3 Alan kodlarý: Baþlýk alaný=worefTITLE@WINWORD.HLP>REF
+3 Alan kodlarý: ÝT (Ýçindekiler) alaný=worefTOCTableOfContents@WINWORD.HLP>REF
+3 Alan kodlarý: KulAdresi alaný=worefUSERADDRESS@WINWORD.HLP>REF
+3 Alan kodlarý: KulHarfleri alaný=worefUSERINITIALS@WINWORD.HLP>REF
+3 Alan kodlarý: KulAdý alaný=worefUSERNAME@WINWORD.HLP>REF
+3 Alan kodlarý: DÖ (Dizin Öðesi) alaný=worefXEIndexEntry@WINWORD.HLP>REF
+2 Klavye Rehberi
+3 Ýþlev tuþu kýsayollarý=wokbdFunctionKeyShortcuts@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak menülerle çalýþma=corefWorkwithmenususingshortcutkeys@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak biçimlendirme uygulama=worefApplyFormattingUsingShortcutKeys@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak metin düzenleme ve taþýma=worefEditandmovetextusingshortcutkeys@WINWORD.HLP>REF
+3 Pencerelerde ve iletiþim kutularýnda çalýþma=corerefWorkInWindowsAndDialogBoxes@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak anahat üstünde çalýþma=worefWorkonanoutlineusingshortcutkeys@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak, alanlarla çalýþma=worefWorkwithfieldsusingshortcutkeys@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak belgeleri birleþtirme=worefMergedocumentsusingshortcutkeys@WINWORD.HLP>REF
+3 Kýsayol tuþlarýný kullanarak belge yazdýrma ve önizleme=corefPrintandpreviewadocumentusingshortcutkeys@WINWORD.HLP>REF
+3 WordPerfect klavye eþdeðerleri=wokbdWordPerfectkeyboardequivalents@WINWORD.HLP>REF
+:Include WRDBASIC.CNT
+:Include EULA.CNT

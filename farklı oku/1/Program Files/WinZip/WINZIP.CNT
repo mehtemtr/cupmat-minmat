@@ -1,0 +1,88 @@
+:Base winzip.hlp
+:Title WinZip® Help File
+1 Introduction to WinZip
+2 Overview=Overview.3
+2 Awards and Magazine Quotes=Important_News_about_WinZip
+2 The WinZip Quick Start Guide=HELP_QUICKSTART_GUIDE
+1 Quick Start and Tutorials
+2 Quick Start Information=HELP_QSTART
+2 About ZIPs And Other Archives=AboutZIPsAndOtherArchives.4
+2 Brief Tutorial=HELP_TUTORIAL
+2 The WinZip Tutor=IDH_CONTENTS@wztutor.hlp
+2 Downloading and Processing Files with WinZip=Downloading_and_Processing_Files_with_WinZip
+2 WinZip Wizard=H_WELCOME@wzwizard.hlp
+2 UUencoded, XXencoded, BinHex, and MIME files=UUencoded_XXencoded_BinHex_and_MIME_files
+1 Basics
+2 System Requirements, Installation, and Uninstallation
+3 System Requirements=SystemRequirements.29
+3 WinZip Installation=HELP_WZINSTALL
+3 WinZip Uninstallation=WinZipUninstallation.33
+3 Installing Optional External Programs
+4 Installing Optional External Programs=InstallingOptionalExternalPrograms.7
+4 Installing LHA=InstallingLHA.8
+4 Installing ARJ=InstallingARJ.9
+2 License
+3 WinZip Standard License=HELP_LICENSE
+3 WinZip Evaluation License=HELP_SHAREWARE_LICENSE
+2 Ordering Information
+3 General Information/Immediate Online Delivery=HELP_ORDER
+3 Order Form (ordering by check)=ORDER_FORM
+3 Credit Card Ordering (phone and fax orders)=CreditCardOrdering.15
+3 Purchase Orders=PurchaseOrders.16
+3 Ordering Options Outside the USA and Canada=OrderingOptionsOutsidetheUSAandCanada.18
+2 Support and Questions
+3 Support and Questions=SupportandQuestions.21
+2 Acknowledgments
+3 Acknowledgments=HELP_ACKNOWLEDGMENTS
+1 Commands and Procedures
+2 Drag and Drop Interface
+3 Introduction=DragandDropInterface.34
+3 Opening an Archive with the Drag and Drop Interface=OpeninganArchivewiththeDragandDropInterface.35
+3 Adding a File to an Archive with the Drag and Drop Interface=AddingaFiletoanArchivewiththeDragandDropInterface.36
+3 Extracting Files from an Archive with the Drag and Drop Interface=ExtractingFilesfromanArchivewiththeDragandDropInterface.37
+3 Dropping an Archive on Another Application=DroppinganArchiveonAnotherApplication.38
+3 Add Dialog Box=HELP_DROPDLG
+2 Explorer Interface
+3 Explorer Interface=ExplorerInterface.48
+3 Explorer Configuration Dialog Box=HELP_EXPLORERCONFIG
+3 Explorer Add Dialog Box=ExplorerAddDialogBox.50
+2 Menu Commands
+3 Menu Tree=MenuTree.51
+3 The File Menu=HELP_FILEMENU
+3 Creating a New Archive=HELP_NEW
+3 Opening an Existing Archive=HELP_OPEN
+3 Archive Management=HELP_ARCMGMT
+3 Printing a List of the Files in an Archive=HELP_PRINT
+3 Adding Files to an Archive=HELP_ADD
+3 Deleting Files from an Archive=HELP_DELETE
+3 Extracting Files from an Archive=HELP_EXTRACT
+3 Viewing Files in an Archive=HELP_VIEW
+3 Select All and Invert Selection=HELP_SELECTDESELECT
+3 Virus Scan=HELP_SCAN
+3 Creating a Self-Extracting Archive=HELP_ZIP2EXE
+3 Uuencoding an Archive=HELP_UUENCODE
+3 Testing an Archive=HELP_TEST
+3 Zip Comments=HELP_COMMENT
+3 CheckOut Feature=HELP_CHECKOUT
+2 Configuration Options
+3 Options=HELP_OPTIONS
+3 Configuration Dialog Box=HELP_CONFIG
+3 Password Security=HELP_PASSWORD
+3 Virus Scanner Configuration=VirusScannerConfiguration.73
+2 WinZip Self-Extractor Personal Edition
+3 WinZip Self-Extractor Personal Edition - Overview=HELP_WZIPSEPE
+3 WinZip Self-Extractor Personal Edition - Operation=HELP_SEOPERATION
+3 WinZip Self-Extractor 2.2=HELP_WINZIPSE
+1 Details
+2 Double Clicking=DoubleClicking.75
+2 Windows Associations=HELP_ASSOCIATION
+2 Multiple Disk Spanning=HELP_SPAN
+2 Using WinZip to E-Mail Archives=HELP_EMAIL
+2 Keyboard Usage=KeyboardUsage.81
+2 Version History=HELP_WHATSNEW
+1 Hints and Tips
+2 Hints and Tips=HELP_HINTS
+2 More Hints and Tips=MoreHintsandTips.84
+2 Hints for Working With Downloaded Files=Hints_for_Working_With_Downloaded_Files
+2 Windows Shell Integration Examples=Windows95QuickExamples.27
+2 Frequently Asked Questions (FAQs)=HELP_FAQ

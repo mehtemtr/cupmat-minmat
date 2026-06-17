@@ -1,0 +1,309 @@
+***  Installation Started 07/14/98 12:11  ***
+Title: XingMPEG Player Installation
+Source: D:\UTIL\XING\V320\XMP320.EXE
+Made Dir: C:\Program Files\Xing
+Made Dir: C:\Program Files\Xing\XingMPEG Player
+File Copy: C:\Program Files\Xing\XingMPEG Player\XMPLAYER.EXE
+File Copy: C:\Program Files\Xing\XingMPEG Player\XMPLAYER.HLP
+File Copy: C:\Program Files\Xing\XingMPEG Player\NOTES95.TXT
+File Copy: C:\Program Files\Xing\XingMPEG Player\TEST.MPG
+File Copy: C:\Program Files\Xing\XingMPEG Player\XMRES.DLL
+RegDB Key: .mpeg
+RegDB Val: XingMpeg
+RegDB Key: .mpg
+RegDB Val: XingMpeg
+RegDB Key: .mpe
+RegDB Val: XingMpeg
+RegDB Key: .mpv
+RegDB Val: XingMpeg
+RegDB Key: .vbs
+RegDB Val: XingMpeg
+RegDB Key: .m1v
+RegDB Val: XingMpeg
+RegDB Key: .dat
+RegDB Val: XingMpeg
+RegDB Key: .mpa
+RegDB Val: XingMpeg
+RegDB Key: .mp2
+RegDB Val: XingMpeg
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.mpeg
+RegDB Name: .mpeg
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.mpg
+RegDB Name: .mpg
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.mpe
+RegDB Name: .mpe
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.mpv
+RegDB Name: .mpv
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.m1v
+RegDB Name: .m1v
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.dat
+RegDB Name: .dat
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.vbs
+RegDB Name: .vbs
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.mpa
+RegDB Name: .mpa
+RegDB Root: 2
+RegDB Key: SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe ^.mp2
+RegDB Name: .mp2
+RegDB Root: 2
+RegDB Key: SOFTWARE\Xing\XingMPEG Player\XMPResource
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmres.dll
+RegDB Key: SOFTWARE\Xing Technology Corp.\XingMPEG Player\XMPDir
+RegDB Val: C:\Program Files\Xing\XingMPEG Player
+RegDB Root: 2
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: bAlwaysOpenAt100
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: bAudioOn
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: bAutoRepeat
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 0
+RegDB Name: bBarTop
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: bFirstOpen
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: bMicMuted
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: bPosMethodTime
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 0
+RegDB Name: bWarningOn
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: Exit
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 
+RegDB Name: ExportPrevDir
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 50
+RegDB Name: LipSynch
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 9
+RegDB Name: nAudioLevel
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 0
+RegDB Name: nAudioLRStereo
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 9
+RegDB Name: nMicLevel
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: nViewType
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: nZoomSize
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: nZoomType
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 
+RegDB Name: OpenPrevDir
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: PrevFilterType
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 
+RegDB Name: PrevVideoCDDir
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 1
+RegDB Name: SnapMPEG
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 000 100 360 267
+RegDB Name: WinPosMPEG
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player
+RegDB Val: 000 000 000
+RegDB Name: WinPosPanel
+RegDB Root: 1
+RegDB Key: XingMpeg
+RegDB Val: 
+RegDB Key: XingMpeg\shell\play\command
+RegDB Val: "C:\Program Files\Xing\XingMPEG Player\XMPLAYER.EXE" %1
+RegDB Key: XingMpeg\shell\open\command
+RegDB Val: "C:\Program Files\Xing\XingMPEG Player\xmplayer.exe" %1
+RegDB Key: XingMpeg\DefaultIcon
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmplayer.exe
+File Copy: C:\Program Files\Xing\XingMPEG Player\Visit Xing on the Web!.URL
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 0
+RegDB Name: AttemptSurface
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 1
+RegDB Name: ClosedOK
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 1
+RegDB Name: DIBQuality
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 0
+RegDB Name: HighRes
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 1
+RegDB Name: HWAccell
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 1
+RegDB Name: Rate
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 1
+RegDB Name: SampRate
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 1
+RegDB Name: Stereo
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 0
+RegDB Name: UseMMX
+RegDB Root: 1
+RegDB Key: Software\Xing Technology Corp.\XingMPEG Player\XMPSettings
+RegDB Val: 0
+RegDB Name: VideoDebug
+RegDB Root: 1
+File Copy: C:\Program Files\Xing\XingMPEG Player\Xmsound.dll
+File Copy: C:\Program Files\Xing\XingMPEG Player\Xmvideo.dll
+File Overwrite: C:\Program Files\Xing\XingMPEG Player\NOTES95.TXT
+File Overwrite: C:\Program Files\Xing\XingMPEG Player\XMPLAYER.HLP
+File Copy: C:\Program Files\Xing\XingMPEG Player\XMPLAYER.cnt
+File Overwrite: C:\Program Files\Xing\XingMPEG Player\xmres.dll
+RegDB Key: SOFTWARE\Xing Technology Corp.\XingMPEG Player\XMPDir
+RegDB Val: C:\Program Files\Xing\XingMPEG Player
+RegDB Root: 2
+RegDB Old: C:\Program Files\Xing\XingMPEG Player
+RegDB Key: SOFTWARE\Xing\XingMPEG Player\XMPSound32
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmsound.dll
+RegDB Key: SOFTWARE\Xing\XingMPEG Player\XMPVideo
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmvideo.dll
+RegDB Key: SOFTWARE\Xing\XingMPEG Player\XMPDriver
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmdriver.dll
+RegDB Key: SOFTWARE\Xing\XingMPEG Player\XMPResource
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmres.dll
+RegDB Old: C:\Program Files\Xing\XingMPEG Player\xmres.dll
+RegDB Key: SOFTWARE\Microsoft\Multimedia\ActiveMovie
+RegDB Val: 
+RegDB Name: CheckExtensions
+RegDB Type: 4
+RegDB Root: 2
+RegDB Old: 01000000
+File Copy: C:\Program Files\Xing\XingMPEG Player\Xmdriver.dll
+File Copy: C:\Program Files\Xing\XingMPEG Player\Xmdrv95.dll
+RegDB Key: SOFTWARE\Xing\XingMPEG Player\XMPDrv95
+RegDB Val: C:\Program Files\Xing\XingMPEG Player\xmdrv95.dll
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: dat
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: vbs
+INI Val: MpegVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: mpg
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: mpv
+INI Val: MpegVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: mpa
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: mp2
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: mpeg
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: m1v
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\win.ini
+INI Sect: MCI Extensions
+INI Item: mpe
+INI Val: MpegVideo
+INI Old: MPEGVideo
+INI File: C:\WINDOWS\system.ini
+INI Sect: mci
+INI Item: MpegVideo
+INI Val: C:\PROGRA~1\XING\XINGMP~1\xmdrv95.dll
+INI File: C:\WINDOWS\system.ini
+INI Sect: mci
+INI Item: ReelMagic
+INI Val: C:\PROGRA~1\XING\XINGMP~1\xmdrv95.dll
+File Overwrite: C:\Program Files\Xing\XingMPEG Player\Visit Xing on the Web!.URL
+File Copy: C:\Program Files\Xing\XingMPEG Player\UNINST.EXE
+Remove Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\XingMPEG Player
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\XingMPEG Player
+RegDB Val: XingMPEG Player
+RegDB Name: DisplayName
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\XingMPEG Player
+RegDB Val: C:\PROGRA~1\XING\XINGMP~1\UNINST.EXE C:\PROGRA~1\XING\XINGMP~1\INSTALL.LOG
+RegDB Name: UninstallString
+RegDB Root: 2
+Made Dir: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player
+Shell Link: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\XingMPEG Player Uninstall.lnk
+File Copy: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\Visit Xing on the Web!.URL
+Shell Link: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\XingMPEG Player.lnk
+Shell Link: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\XingMPEG Player Help.lnk
+Shell Link: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\XingMPEG Player ReadMe.lnk
+Shell Link: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\XingMPEG Player Help.lnk
+Shell Link: C:\WINDOWS\Start Menu\Programlar\XingMPEG Player\XingMPEG Player ReadMe.lnk

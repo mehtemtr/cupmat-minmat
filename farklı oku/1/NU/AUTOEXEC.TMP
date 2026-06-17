@@ -1,0 +1,9 @@
+@ECHO OFF
+PATH C:\NU;%PATH%
+SET SYMANTEC=C:\SYMANTEC
+SET NU=C:\NU
+mode con codepage prepare=((857) C:\WINDOWS\COMMAND\ega2.cpi)
+mode con codepage select=857
+keyb tr,,C:\WINDOWS\COMMAND\keybrd2.sys /id:179
+C:\NU\NDD C:/Q
+C:\NU\IMAGE C:

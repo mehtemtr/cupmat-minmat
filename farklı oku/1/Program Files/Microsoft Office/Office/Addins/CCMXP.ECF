@@ -1,0 +1,52 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={EA1F5316-EDFD-11ce-8D13-00AA0051BF96}
+Path=ccmxp32.dll
+Entry Point=1
+Client Version=4.0
+Service Provider=CCMSVC
+Misc Flags=RemoteAlso
+
+[Exchange Client Compatibility]
+Exchange Registry=1
+Exchange Extension Key=cc:Mail Menu Extension
+
+; Exchange Context Map is VIEWER, SEARCHVIEWER, ADDRBOOK.  Extension
+; also handles READNOTE, SENDNOTE, READREPORT, SENDRESEND, but Outlook does
+; not desire them.
+Exchange Context Map=01011000000000
+
+; Exchange Interface Map is IExchExtCommands, IExchExtUserEvents
+Exchange Interface Map=11
+
+[Folder]
+Events=InstallCommands
+Folder Class=IPF.Note
+Command Bars=50001
+Commands=CCMailHelpHelp;CCMailHelpAbout;CCMailTools;UpdateBBs;ImportBBs;ImportFolders;UpdateLocal;ImportPAB
+
+[Command]
+CCMailHelpHelp=50000;CCMailHelpHelp;Help After HelpHelp Enabled
+CCMailHelpAbout=50002;CCMailHelpAbout;Help After HelpAbout Suppress
+CCMailTools=50001;CCMailServiceTools;Tools End Enabled Submenu
+UpdateBBs=50011;UpdateBBs;50001
+ImportBBs=50012;ImportBBs;50001
+ImportFolders=50013;ImportFolders;50001
+UpdateLocal=50014;UpdateLocal;50001 End Separator
+ImportPAB=50015;ImportPAB;50001
+
+[Strings]
+DisplayName=cc:Mail Menu Extension
+Description=cc:Mail Menu Extension
+
+CCMailHelpHelp=cc:Mail Service Help Topics
+CCMailHelpAbout=About cc:Mail Service
+CCMailServiceTools=cc:Mail Service Tools
+UpdateBBs=Update cc:Mail Bulletin Boards...
+ImportBBs=Import cc:Mail Bulletin Boards...
+ImportFolders=Import cc:Mail Folders...
+UpdateLocal=Update Local copy of cc:Mail Address Book...
+ImportPAB=Import cc:Mail Private lists to Personal Address Book...
+
+

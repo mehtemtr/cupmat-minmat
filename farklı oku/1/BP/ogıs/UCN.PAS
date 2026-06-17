@@ -1,0 +1,614 @@
+Unit UCN;
+Interface
+uses Crt, GenUtil, StrIn, NSR, UOG, BLUNGR, UPrt, DFile, Exist, UIndex;
+Const Bes = 20*18;
+type
+   TBasarisiz = Record
+       Adres:Integer;
+       Dn   : Byte;
+       Ind  : Byte;
+   end;
+   PBasArr = ^TBasArr;
+   TBasArr = Array[1..Bes+1] of TBasarisiz;
+   PBasarisizOgr = ^TBasarisizOgr;
+   TBasarisizOgr = Record
+       OgrAdr : Integer;
+       BasSay : Byte;
+       BasPtr : PBasArr;
+   end;
+   PBasOgrArr = ^TBasOgrArr;
+   TBasOgrArr = Array[1..MaxOgr] of PBasarisizOgr;
+   TOgr  = object(Index)
+	  Is       : Array[0..OgrKeyL-1] of Char;
+	  Ad       : AdStr;
+	  Cins     : Char;
+	  DogumYer : DogumYerStr;
+	  DogumGun : Byte;
+	  DogumAy  : Byte;
+	  DogumYil : Word;
+	  YKK      : Word;
+          HazNot   : Word;
+	  HazBasYil: Word;
+          Kac      : KacType;
+          YYKay    : YYKayType;
+          Ders     : DersType;
+	  YYCount  : Word;
+	  Donem    : YYArr;
+	  AnaKay   : AnaKayType;
+          CurDon  : record end;
+          Constructor Init;
+	  Procedure   GirisYap;
+	  Procedure   Open;
+          Procedure   ReadNdx;
+          Procedure   WriteNdx;
+     end;
+Var
+       BesDWorkDir : String;
+       Ed       : Word;
+       EditRow  : Byte;
+       Say5     : Word;
+       BasOgr   : PBasOgrArr;
+       XY       : Array[1..3, 1..MaxYYDrs] of Boolean;
+       Procedure   Init(S : String);
+       Procedure   Done;
+       Procedure   ShowLine;
+       Procedure   EditNotBes;
+       Procedure   PrintOgr;
+       Procedure   PrintBesNot;
+       Procedure   Dosyala;
+       procedure   YYDrsSil;
+Procedure GetDrsInfo(Var SI, SA : String; Q : TBasArr; K : Byte);
+Procedure FindBasarisiz(Var Q : TBasArr; Var S : Integer);
+Procedure InitProg;
+
+Procedure QuitProg;
+procedure WriteUniv;
+
+Procedure ReadUniv;
+
+Implementation
+procedure WriteUniv;
+Var T : TextFile;
+begin
+   With T do begin
+     OpenToWrite('UNIVFAK.DAT');
+     WriteText(Univ);
+     WriteText(Fakulte);
+     CloseFile;
+   end;
+end;
+Procedure ReadUniv;
+Var T : TextFile;
+begin
+   If not Exists('UNIVFAK.DAT') then WriteUniv;
+   With T do begin
+     OpenToRead('UNIVFAK.DAT');
+     Univ:=ReadText;
+     Fakulte:=ReadText;
+     CloseFile;
+   end;
+end;
+Procedure InitProg;
+begin
+  Univ:='€UKUROVA šN˜VERS˜TES˜';
+  Fakulte:='';
+  Bolum.init;
+  Grad.iNIT;
+  Yariyil.Init;
+  Ogr^.Open;
+  Drs^.Open;
+  YYDrs^.Open;
+  ReadUniv;
+  ShowBolYil;
+  Say5:=0;
+end;
+
+Procedure QuitProg;
+begin
+  While EDSP<>0 do CloseEdit;
+  Done;
+  Drs^.DFile.CloseFile;
+  Ogr^.DFile.CloseFile;
+  YYDrs^.DFile.CloseFile;
+  Uye^.DFile.CloseFile;
+  Drs^.done;
+  Ogr^.done;
+  YYdrs^.Done;
+  Uye^.Done;
+  Yariyil.done;
+  clrscr;
+  Halt;
+end;
+Procedure GetDrsInfo(Var SI, SA : String; Q : TBasArr; K : Byte);
+begin
+   With Drs^ do begin
+     DFile.GetRec(Q[K].Adres, Is);
+     SI:=GetIs; SA:=GetAd;
+     SA:=SA+Spaces(MaxAdLen); SA:=Copy(Sa,1, MaxAdLen);
+   end;
+end;
+Function SonradanGecti(A : integer):Boolean;
+ Var K, L, V : Integer; U : AnaRecType;
+ begin
+        SonradanGecti:=True;
+ with Ogr^ do begin
+        for K:=1 to YYCount do
+         For L:=1 to Donem[K].CNT do begin
+               if (A = AnaKay[K,L].DrsPtr) and (GRAD.Grade[AnaKay[K,L].Grd].Basari) then exit;
+        end;
+ end;
+        SonradanGecti:=false;
+ end;
+Procedure FindBasarisiz(Var Q : TBasArr; Var S : Integer);
+ Var
+     I, J, A, B : Integer;
+ Function Ara:integer;
+ Var K : Integer;
+ begin
+     Q[S+1].Adres:=A;
+     K:=1;
+     While Q[K].Adres<>A do Inc(K);
+     Ara:=K
+ end;
+
+ begin
+     FillChar(Q, SizeOf(TBasArr), #0);
+     S:=0;
+     with Ogr^ do begin
+       for I:=1 to YYCount do
+         For J:=1 to Donem[I].CNT do begin
+               A:=AnaKay[I,J].DrsPtr;
+               If (not GRAD.Grade[AnaKay[I,J].Grd].Basari) and (not SonradanGecti(A))
+                then begin
+                  B:=Ara;
+		  IF B > S THEN begin
+                     Inc(S);
+                     B:=S
+                  end;
+                  with Q[B] do begin
+                       Dn:=I; Ind:=J; Adres:=A
+                  end;
+               end;
+         end;
+     end;
+ end;
+Function Ortala(M:Byte; S : String):String;
+Var L :byte;
+begin
+   STRIP(S);
+   L:=(M - Length(S)) div 2;
+   Ortala:=Spaces(L)+S;
+end;
+Procedure EraseExtra(Var S : String);
+Var Extra:Word;
+begin
+   For Extra:=1 to Length(S) do
+      If S[Extra] in ['+','-','*','='] then S[Extra]:=' ';
+end;
+Procedure PrintBesNot;
+Const
+       TIT ='    NO         ADI VE SOYADI        ';
+       AR  =' -------- ------------------------- ';
+       MaxBas = 52;
+Var
+
+    I, M, J, N :Word;
+    Basilan     : Word;
+    Sayfa       : Byte;
+    SIs, SAd, DIs, DAd : String;
+    SayfaBasi   : Boolean;
+
+Procedure PrintHader(Sayfa:Byte);
+Var UyeInfo, DrsInfo, M, S : String;
+    Mev                    : Word;
+begin
+   LPT.WriteLnPrt('\E\C'+Ortala(60,UNIV));
+   LPT.WriteLnPrt('\E\C'+Ortala(60,Fakulte+' '+Bolum.KodAd(ActBol)) );
+   LPT.WriteLnPrt('\E\C'+ Ortala(60,' 5 VEYA DAHA AZ DERS˜ KALAN ™¦RENC˜LER'));
+   STR(Sayfa:2,S);
+   LPT.WriteLnPrt( 'S60SAYFA : '+S);
+   LPT.WriteLnPrt(' ');
+   LPT.WriteLnPrt('\C    NO         ADI VE SOYADI        DERS˜N KODU         DERS˜N ADI        ');
+   LPT.WriteLnPrt('\C -------- ------------------------- ----------- ------------------------- ');
+end;
+Procedure FormFeed;
+Var L : Word;
+begin
+   Basilan:=0;
+   LPT.WriteLnPrt('\F ');
+   Inc(sayfa);
+   SayfaBasi:=False;
+end;
+begin
+   Basilan:=0; Sayfa:=1;
+   PrintHader(Sayfa);
+   For I:=1 to Say5 do begin
+       N:=BasOgr^[I]^.BasSay;
+       M:=Basilan+N+1;
+       IF M > MaxBas THEN begin
+          FormFeed;
+          PrintHader(Sayfa);
+       end;
+       Basilan:=Basilan+N+1;
+       SayfaBasi:=True;
+       With Ogr^ do begin
+          Dfile.GetRec(BasOgr^[I]^.OgrAdr,Is);
+          SIs:=GetIs; SAd:=GetAd;
+       end;
+       GetDrsInfo(DIs, DAd, BasOgr^[I]^.BasPtr^, 1);
+       LPT.WriteLnPrt(' '+SIs+' '+SAd+'   '+DIs+'    '+DAd);
+       SIs:=Spaces(Length(SIs)); SAd:=Spaces(Length(SAd));
+       For J:=2 to BasOgr^[I]^.BasSay do begin
+           If Basilan=MaxBas then FormFeed;
+           If Basilan=0 then PrintHader(Sayfa);
+           GetDrsInfo(DIs, DAd, BasOgr^[I]^.BasPtr^, J);
+           LPT.WriteLnPrt(' '+Spaces(OgrKeyL)+' '+Spaces(MaxAdLen)+'   '+DIs+'    '+DAd);
+       end;
+       LPT.WriteLnPrt(' ');
+   end;
+   if SayfaBasi then FormFeed;
+end;
+procedure Init(S : String);
+Var I , M, N : Integer;
+    Q : TBasArr;
+    A : String;
+begin
+
+       Say5     :=0;
+       N:=0;
+       BasOgr:=Nil;
+       GetMem(BasOgr, SizeOf(TBasOgrArr));
+       FillChar(BasOgr^, SizeOf(TBasOgrArr), #0);
+       With Ogr^ do begin
+          For I:=1 to Say do begin
+             M:=GetAdr(I);
+             DFile.GetRec(M, Is);
+             A:=GetIs;
+	     IF Copy(A, 1, Length(S)) <= S THEN begin
+                 FindBasarisiz(Q, N);
+		 IF (N>0) and (N <= 3) THEN begin
+                    Inc(Say5);
+                    GetMem(BasOgr^[Say5], SizeOf(TBasarisizOgr));
+                    With BasOgr^[Say5]^ do begin
+                      OgrAdr:=M;
+                      BasSay:=N;
+                      GetMem(BasPtr,N*SizeOf(TBasarisiz));
+                      Move(Q,BasPtr^,N*SizeOf(TBasarisiz));
+                    end;
+                 end;
+             end;
+          end;
+       end;
+end;
+Procedure   ShowLine;
+Var S : String; C : Char;
+begin
+     With Ogr^ do begin
+       DFile.GetRec(BasOgr^[Ed]^.OgrAdr, Is);
+       S:=GetIs+' '+GetAd;
+     end;
+     If (Ogr^.YKK and $FF00)=$FF00 then
+       WriteStr(Form.FieldKol[1],EditRow,S, CmdColor)
+     ELSE
+       WriteStr(Form.FieldKol[1],EditRow,S, NormalAttr);
+end;
+
+Procedure EditNotBes;
+Var TC  : Char;
+
+Procedure GoDown;
+begin
+    IF (Ed >= Say5) THEN begin
+      beep;
+      exit
+    end;
+    IF (EditRow = WinLastRow) THEN
+      ScrollupWin
+    ELSE
+       Inc(EditRow);
+    Inc(Ed);
+end;
+Procedure GoUp;
+begin
+    IF Ed <= 1 THEN begin
+       beep;
+       exit
+    end;
+    if (EditRow=1) then ScrollDownWin;
+    If EditRow > 1 then Dec(EditRow);
+    Dec(Ed);
+end;
+Var J, Row : Integer;
+   DIs, DAd, SIs, SAd, S : String;
+begin
+    OpenEditWindow('MEZUN˜YET ˜€˜N 5 DERS˜ KALAN ™¦RENC˜LER',
+	'8@™GR. NO@25@™GRENC˜N˜N ADI, SOYADI',
+	'F9:DERSLER˜ G™STER@CR : ™GRENC˜ SE€@ESC:VAZGE€',
+         [F10,ESC, F9,CR, UPKEY, DOWNKEY],
+         [],3, Say5);
+   PrintOgr;
+   HideCursor;
+   repeat
+     ShowLine;
+     WriteChar(1,EditRow, 1, Chr(26), CmdColor);
+     TC:=GetKeyCmd;
+     WriteStr(1, EditRow, ' ' , NormalAttr);
+     Case TC of
+         ESC    : begin CloseEdit; ShowCursor; exit end;
+F9: begin
+                    With Ogr^ do begin
+                       Dfile.GetRec(BasOgr^[Ed]^.OgrAdr,Is);
+                       SIs:=GetIs; SAd:=GetAd;
+                    end;
+                       OpenEditWindow(SIs+' '+SAd+' DERSLER',
+			 '6@DERS˜N KODU@25@DERS˜N ADI@13@D™NEM',
+			 'ESC:TAMAM',[ESC],[],10, BasOgr^[Ed]^.BasSay);
+                       Row:=1;
+                    For J:=1 to BasOgr^[Ed]^.BasSay do begin
+                       GetDrsInfo(DIs, DAd, BasOgr^[Ed]^.BasPtr^, J);
+                       With Ogr^.Donem[BasOgr^[Ed]^.BasPtr^[J].Dn] do
+                           S:=YilStr(YL,YY);
+                       S:=DIs+'    '+DAd+' '+S;
+                       WriteStr(Form.FieldKol[1],Row,S,NormalAttr);
+                       Inc(Row);
+                    end;
+		    repeat
+                        TC:=GetKeyCmd;
+                    until TC=ESC;
+                    CloseEdit;
+                  end;
+
+         Upkey  : GoUp;
+         DownKey: GoDown;
+CR: begin
+                       With Ogr^ do begin
+                       Dfile.GetRec(BasOgr^[Ed]^.OgrAdr,Is);
+                       if (Ogr^.YKK and $FF00)=$FF00 then
+                          Ogr^.YKK:=(Ogr^.YKK and $00FF)
+		       ELSE
+                          Ogr^.YKK:=(Ogr^.YKK or $FF00);
+                       Dfile.PutRec(BasOgr^[Ed]^.OgrAdr,Is);
+                    end;
+                    ShowLine;
+                    GoDown;
+                  end;
+     else DoEvent(EventKey);
+     end;
+   until False;
+end;
+
+procedure PrintOgr;
+Var BasEd, Say5Ed, I, L, M, Basla, Bitir : Word;
+begin
+    ClrScr;
+    Ed:=1; EditRow:=1;
+    While (EditRow<=WinLastRow) do begin
+        if Ed<=Say5 then ShowLine;
+        Inc(EditRow);
+	Inc (Ed)
+    end;
+    Ed:=1; EditRow:=1;
+end;
+procedure Done;
+Var I : Integer;
+begin
+   IF BasOgr <> nil THEN begin
+      For I:=1 to Say5 do begin
+           FreeMem(BasOgr^[I]^.BasPtr, BasOgr^[I]^.BasSay*SizeOf(TBasarisiz));
+           FreeMem(BasOgr^[I],SizeOf(TBasarisizOgr));
+      end;
+      FreeMem(BasOgr, SizeOf(TBasOgrArr));
+   end;
+end;
+
+Procedure Dosyala;
+Var
+    I,  J :Word;
+    S : String;
+
+    POgr:^TOgr;
+    Yer, Adr,FileAdr,  A : Word;
+procedure EraseY;
+Var K, L, M, N  : integer;
+begin
+    FillChar(POgr^.Kac, SizeOf(POgr^.Kac),#0);
+    FillChar(POgr^.YYKay, SizeOf(POgr^.YYKay),#0);
+    FillChar(POgr^.Ders, SizeOf(POgr^.Ders),#0);
+    for K:=1 to 3 do begin
+          M:=0;
+          For L:=1 to Ogr^.Kac[K] do begin
+              A:=Ogr^.Ders[K,L].DrsPtr;
+              If (not GRAD.Grade[Ogr^.Ders[K,L].Grd].Basari) and (not SonradanGecti(A)) then begin
+                 Inc(M);
+                 N:=Ogr^.YYKay[K,L];
+                 POgr^.Ders[K,M]:=Ogr^.Ders[K,L];
+                 POgr^.YYKay[K,M]:=N;
+                 XY[K,N]:=True;
+               end;
+          end;
+          POgr^.Kac[K]:=M;
+    end;
+end;
+begin
+   New(POgr,init);
+   POgr^.Open;
+   For I:=1 to Say5 do begin
+      Ogr^.Dfile.GetRec(BasOgr^[I]^.OgrAdr, Ogr^.Is);
+      Move(Ogr^.Is, POgr^.Is, Ogr^.DFile.RecLen);
+      S:=POgr^.GetIs;
+      If ((Ogr^.YKK and $FF00)=$FF00) and not POgr^.Search(S, Yer, Adr) then begin
+            EraseY;
+            POgr^.DFile.AddRec(FileAdr, POgr^.Is);
+            If FileAdr <>0 then begin
+                   POgr^.InsIndex(Yer);
+                   POgr^.SetKeyAdr(S, Yer, FileAdr);
+            end  else begin
+               Writeln(POgr^.Ad);
+               complain('DAHA FAZLA GIRIS YAPAMAM');
+               halt;
+            end;
+      end;
+   end;
+   POgr^.WriteNdx;
+   POgr^.DFile.CloseFile;
+   Dispose(POgr,Done);
+
+end;
+Procedure TOgr.GirisYap;
+Var B : Boolean;
+    S : String;
+Begin
+   ClrScr;
+   S:=GetIs;
+   If Not Search(S, NdxAdr, FileAdr) then begin
+      DFile.AddRec(FileAdr, Is);
+      If FileAdr <>0 then begin
+         InsIndex(NdxAdr);
+         SetKeyAdr(S, NdxAdr, FileAdr);
+         IndexChange:= True;
+      end  else  complain('DAHA FAZLA GIRIS YAPAMAM');
+   end;
+end;
+Constructor TOgr.Init;
+Var X : word;
+begin
+    Index.Init(MaxOgr, OgrKeyL, Ofs(CurDon)-Ofs(Is));
+    SetRecNil;
+    Cins:='E';
+    NdxAdr:=1;
+    FileAdr:=1;
+    HazBasYil:=0;
+    HazNot:=106;
+    DogumYer :=Spaces(SizeOf(DogumYerStr));
+    DogumGun := 01;
+    DogumAy  := 01;
+    DogumYil := 1900;
+end;
+Procedure   TOgr.Open;
+Var S : String;
+    B : Boolean;
+begin
+  if Bolum.NuKod<>0 then begin
+         S:=BesDWorkDir+Bolum.Kod(ActBol)+'OGR.DAT';
+         B:=Exists(S);
+         if B then EraseFile(S);
+         DFile.OpenFile(S);
+  end;
+end;
+Procedure TOgr.ReadNdx;
+begin
+   If Bolum.NuKod<>0 then
+      If Not ReadIndex(BesDWorkDir+Bolum.Kod(ActBol)+'OGR.NDX') then
+         complain('™¦RENC˜ ˜NDEKS DOSYASI OKUNAMADI');
+end;
+
+Procedure TOgr.WriteNdx;
+Var S : String;
+    B : Boolean;
+begin
+  if Bolum.NuKod<>0 then begin
+         S:=BesDWorkDir+Bolum.Kod(ActBol)+'OGR.NDX';
+         B:=Exists(S);
+         if B then EraseFile(S);
+         If Not WriteIndex(BesDWorkDir+Bolum.Kod(ActBol)+'OGR.NDX') then
+            complain('™¦RENC˜ ˜NDEKS DOSYASI YAZILAMADI');
+  end;
+end;
+Function WriteSupportFiles:Boolean;
+Var  B : Boolean;
+     F : File;
+     S : String;
+     I, K, L : integer;
+function  SnStr(Y :Word):String;
+   Var S : String;
+   begin
+      Str(Y,S);
+      S:=Copy(S,3,2);
+      If S[1]=' ' then S[1]:='0';
+      SnStr:=S;
+   end;
+begin
+    Drs^.DFile.CloseFile;
+    Uye^.DFile.CloseFile;
+    YYDrs^.DFile.CloseFile;
+    Bekleyiniz('DESTEK DOSYALARINI '+BesDWorkDir+' YE KOPYALIYORUM');
+    CopyFile('DRS.DAT',BesDWorkDir+ 'DRS.DAT');
+    CopyFile('DRS.NDX',BesDWorkDir+ 'DRS.NDX');
+    CopyFile('BOLUM.DAT',BesDWorkDir+'BOLUM.DAT');
+    CopyFile('UNV.DAT',BesDWorkDir+'UNV.DAT');
+    CopyFile('UYE.DAT',BesDWorkDir+'UYE.DAT');
+    CopyFile('UYE.NDX',BesDWorkDir+'UYE.NDX');
+    CopyFile('GRADE.DAT',BesDWorkDir+'GRADE.DAT');
+    CopyFile('GRDSTAT.DAT',BesDWorkDir+'GRDSTAT.DAT');
+    CopyFile('UNIVFAK.DAT',BesDWorkDir+'UNIVFAK.DAT');
+    CopyFile('YIL.DAT',BesDWorkDir+'YIL.DAT');
+    CopyFile('IMZALAR.DAT',BesDWorkDir+'IMZALAR.DAT');
+    CopyFile('DIP.DAT',BesDWorkDir+'DIP.DAT');
+    for I:=1 to 3 do begin
+      K:=YariYil.Yil[I].Sene;
+      L:=YariYil.Yil[I].YarYil;
+      S:=GUZBAH[L]+'DRS'+SnStr(K)+'.DAT';
+      CopyFile(S,BesDWorkDir+S);
+      S:=GUZBAH[L]+'DRS'+SnStr(K)+'.NDX';
+      CopyFile(S,BesDWorkDir+S);
+    end;
+    Drs^.Open;
+    Uye^.Open;
+    YYDrs^.Open;
+    CloseWindow;
+end;
+
+Procedure YilDegis(YY:Byte);
+Var K, L : Integer; S : String;
+begin
+   With YYDrs^ do begin
+      DFile.CloseFile;
+      FillChar(KodPtr^,(KeyL+2)*(MaxKay+1),#0);
+      Say:=0;
+      With Yariyil.Yil[YY] do begin
+          L:=YarYil;
+          K:=Sene;
+      end;
+     DFile.OpenFile(BesDWorkDir+GUZBAH[L]+'DRS'+SnStr(K)+'.DAT');
+     ReadIndex(BesDWorkDir+GUZBAH[L]+'DRS'+SnStr(K)+'.NDX');
+   end;
+
+end;
+
+procedure YYDrsSil;
+Var
+    Adr:Word;
+    Bol, YY : Byte;
+    I,J,N : integer;
+    S:String;
+begin
+    Bekleyiniz('GEREKS˜Z DERSLER˜ S˜L˜YORUM');
+    for YY:=1 to 3 do begin
+        YilDegis(YY);
+        For I:=1 to YYDrs^.Say do begin
+            Adr:=YYDrs^.GetAdr(I);
+            YYDrs^.DFile.GetRec(Adr, YYDrs^.Is);
+            if not XY[YY,Adr] then
+               YYDrs^.DFile.ReleaseRec(Adr)
+            else begin
+               YYDrs^.ZeroKay;
+               YYDrs^.DFile.PutRec(Adr, YYDrs^.Is);
+            end;
+        end;
+        YYDrs^.IndexDuz;
+        S:=BesDWorkDir;
+        S:=S+GUZBAH[Yariyil.Yil[YY].YarYil]+'DRS';
+        S:=S+SnStr(Yariyil.Yil[YY].Sene)+'.NDX';
+        YYDrs^.WriteIndex(S);
+    end;
+    YYDrs^.DFile.CloseFile;
+    YYDrs^.Open;
+    YYDrs^.ReadNdx;
+    CloseWindow;
+end;
+begin
+    GetDir(0,BesDWorkDir);
+    FillChar(XY, SizeOf(XY),#0);
+    BesDWorkDir :=BesDWorkDir+'\3\';
+    WriteSupportFiles;
+end.

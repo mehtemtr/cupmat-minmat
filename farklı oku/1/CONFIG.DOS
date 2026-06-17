@@ -1,0 +1,4 @@
+REM [Header] 
+DOS=HIGH,UMB
+device=C:\WINDOWS\COMMAND\display.sys con=(ega,,1)
+Country=090,857,C:\WINDOWS\COMMAND\country.sys

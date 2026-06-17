@@ -1,0 +1,38 @@
+:Base C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+:Title Norton AntiVirus Help
+1 Norton AntiVirus
+2 Introducing Norton AntiVirus=NAVW_INFO_ABOUT_NAV@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+2 Top Norton AntiVirus tasks
+3 To scan for viruses on your computer=NAVW_PROC_FIND_VIRUSES_ON_YOUR_COMPUTER@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 To remove viruses=NAVW_INFO_REMOVING_VIRUSES@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+3 To update virus definitions=NAVW_PROC_UPDATE_THE_VIRUS_LIST@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 To quarantine an item=NAVW_PROC_QUARANTINE_AN_ITEM@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+2 How to...
+3 Use Norton AntiVirus=NAVW_PROC_USE_NAV@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Scan drives for viruses=NAVW_PROC_SCAN_DRIVES@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Scan files for viruses=NAVW_PROC_CHOOSE_A_FILE@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Schedule scans=NAVW_PROC_SCHEDULE_SCANS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Repair an infected file or boot record=NAVW_PROC_REPAIR_AN_INFECTED_FILE_OR_BOOT_RECORD@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Change how Norton AntiVirus works=NAVW_PROC_CHANGE_HOW_NAV_WORKS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Remove a Microsoft Word macro virus=IDH_To_remove_a_Microsoft_Word_macro_virus@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Set general scanning options=NAVW_PROC_SET_GENERAL_SCANNING_OPTIONS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Change scan options=NAVW_PROC_CHANGE_SCAN_OPTIONS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Set up maximum protection=NAVW_PROC_SET_UP_MAXIMUM_PROTECTION@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Select what your options are when a virus is found=NAVW_PROC_SELECT_PROC_RESPOND@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Delete an infected file=NAVW_PROC_DELETE_AN_INFECTED_FILE@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Display information about a virus=NAVW_PROC_DISPLAY_INFORMATION_ABOUT_A_VIRUS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Exclude files from being checked for some virus symptoms=NAVW_PROC_EXCLUDE_FILES@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Install new virus definitions files=NAVW_PROC_INSTALL_NEW_VIRUS_DEFS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Print to a file=NAVW_PROC_PRINT_TO_FILE@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Print to a printer=NAVW_PROC_PRINT_TO_PRINTER@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Select which files to scan=NAVW_PROC_SELECT_WHICH_FILES_TO_SCAN@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Schedule LiveUpdates=NAVW_HOWTO_SCHEDULE_LIVEUPDATES@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 Use help=NAVW_PROC_USE_HELP@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+3 View an online tutorial=IDH_View_an_online_tutorial@C:\Program Files\Norton AntiVirus\NAVW32.HLP>task
+2 Details
+3 How Norton AntiVirus works=NAVW_INFO_HOW_NAV_WORKS@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+3 About Updating Virus Definitions with LiveUpdate=NAVW_INFO_UPDATING_THE_VIRUS_LIST@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+3 What viruses do and don't do=NAVW_INFO_WHAT_VIRUSES_DO_AND_DON'T_DO@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+3 The Virus List=NAVW_INFO_ABOUT_THE_VIRUS_LIST@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+3 The Activity Log=NAVW_INFO_ABOUT_THE_ACTIVITY_LOG@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+3 About Quarantine=NAVW_ABOUT_NAV_QUARANTINE@C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo

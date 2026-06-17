@@ -1,0 +1,29 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={92CCB510-34C5-11cf-8580-00AA00C01797}
+Path=dlgsetp.dll
+Entry Point=1
+Client Version=4.0
+Service Provider=MSEMS
+
+[Exchange Client Compatibility]
+
+; Exchange Context Map is PROPERTYSHEETS
+Exchange Context Map=000000000001
+
+; Exchange Interface Map is IExchExtPropertySheets.
+Exchange Interface Map=0000010
+
+[Property Sheet]
+Events=AddPropSheetPages
+Property Sheet Dialogs=ToolsOptions
+Property Sheet Exclusion=Options:<ExchangeServerPageName>=<ManageFormsPageName>
+
+[Strings]
+DisplayName=Temsilci Eriþimi
+Description=Temsilci Eriþimi Kurma iletiþim kutusu
+
+ExchangeServerPageName=Exchange Server
+ManageFormsPageName=Form Yönetimi
+

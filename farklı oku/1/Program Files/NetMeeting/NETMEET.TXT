@@ -1,0 +1,792 @@
+      ------------------------------------------------------------
+                Microsoft NetMeeting 2.1 için BENÝOKU
+                              Kasým 1997
+      ------------------------------------------------------------
+
+             (c) Telif Hakký Microsoft Corporation, 1997
+
+
+Bu belge, varolan belgeleri tamamlamak üzere tümleyici veya en son gelen bilgileri 
+saðlar.
+
+
+------------------------
+BU BELGEYÝ NASIL KULLANACAKSINIZ
+------------------------
+
+Netmeet.txt'yi ekranda, Not Defteri'nde görüntülemek için, Not Defteri penceresini 
+en büyük hale getirin.
+
+Netmeet.txt'i yazdýrmak için, Not Defteri'nde veya bir baþka sözcük iþlemcide açýn
+ve ardýndan Dosya menüsünden Yazdýr komutunu kullanýn.
+
+
+ÝÇÝNDEKÝLER
+===========
+
+SÝSTEM GEREKSÝNÝMLERÝ VE KURMA
+MICROSOFT NETMEETING'Ý KULLANMA
+ÇAÐRI YAPMA
+ÇAÐRI ALMA
+UYGULAMA PAYLAÞIMI
+BEYAZ TAHTA
+SOHBET
+DOSYA AKTARIMI
+SES ÝLETÝÞÝMÝ
+KAPATMA
+VÝDEO
+GENEL OLARAK BÝLÝNEN SORUNLAR
+WINDOWS NT SORUNLARI
+
+
+SÝSTEM GEREKSÝNÝMLERÝ VE KURMA
+==============================
+
+Microsoft(R) NetMeeting'i(TM) Internet üzerinde gerçek-zaman ses, görüntü ve veri
+iletiþimini etkinleþtirir. 
+
+Microsoft NetMeeting'i kullanmak için, aþaðýdaki yapý bilgilerine sahip olmanýz 
+gerekir:
+
+- Microsoft Windows(R) 95 veya Windows(R) 98
+- En az 8 megabayt RAM'e sahip bir 486/66 iþlemci 
+  (12 MB RAM'e sahip Pentium önerilir)
+
+	--veya--
+
+- Microsoft Windows NT(R) sürüm 4.0
+- En az 16 megabayt RAM'e sahip bir 486/66 iþlemci 
+- Windows NT üzerindeki uygulamalarý paylaþmayý etkinleþtirmek için 
+  Microsoft Windows NT 4.0 Service Pack 3 gerekir
+
+
+ÖNEMLÝ NOTLAR:
+
+  * NetMeeting Windows sürüm 3.1 veya Beta 3’den daha eski olan Windows 98 beta 
+    sürümlerinde çalýþmaz. 
+
+  * NetMeeting 2.1'i yüklemeden önce Microsoft NetMeeting'in daha önceki beta 
+    sürümlerini yüklemeniz özellikle önerilir.
+
+- Kurulum sýrasýnda NetMeeting için yükleme konumunu yazarken "\\" gibi özel 
+  karakterler veya çift baytlýk karakterler kullanýrsanýz, NetMeeting düzgün 
+  olarak yüklenemeyebilir.
+
+- NetMeeting IPX veya PSTN üzerinden çaðrý yapýlmasýný artýk desteklemez.
+
+- NetMeeting en iyi, hýzlý bir Internet baðlantýsý (28.8 k-baud veya 
+ daha hýzlý bir modem veya yerel iletiþim aðý) ile çalýþýr.
+
+- NetMeeting'in ses özelliklerini kullanmak için, ses kartýna, 
+  hoparlörlere ve bir mikrofona gereksiniminiz vardýr.
+
+- NetMeeting ile görüntü göndermek için, ya bir görüntü alma
+  kartýna ve kameraya ya da bilgisayarýnýzýn paralel (yazýcý) baðlantý noktasýna 
+  baðlanan bir video kameraya gereksiniminiz vardýr. Pentium'dan yavaþ bir iþlemciye 
+  sahip olan bazý bilgisayarlara görüntü gönderemezsiniz.
+
+  Ýki yönlü (ECP veya EPP) paralel baðlantý noktasýna sahip bilgisayarlar, 
+  paralel baðlantý noktasý video kameralarýyla, tek yönlü baðlantý noktasýna  
+  sahip olan bilgisayarlarla olduðundan belirgin bir biçimde daha iyi çalýþýr.
+
+  Video-yakalama kartýna baðlanan kameralar, bilgisayarýnýzýn baðlantý noktasý  
+  aracýlýðýyla baðlanan kameralara göre bilgisayarýnýzýn iþlemcisinin daha azýný  
+  kullanacaktýr. Bilgisayarýnýz en azýndan Pentium 133 olmadýkça renkli 
+  paralel baðlantý noktalý kamera kullanmamanýz önerilir.
+
+- Uygulama-paylaþýmý özelliði siz ses ve görüntüyü kullanýrken ve yavaþ baðlantý  
+  üzerinden baðlanmýþsanýz pek iyi çalýþmayabilir. Buna ek olarak, 
+  görüntüyü kullanýrken "dalgalý" sesle karþýlaþabilirsiniz.
+
+  28.8-baud modem baðlantýsýnda görüntü için varsayýlan ayar orta
+  kalitededir. Bu ayarý deðiþtirmek için, önce Araçlar menüsünü, sonra Seçenekler'i, daha 
+  sonra Video sekmesini týklatýn, sonra da Görüntü Kalitesi seçeneðini deðiþtirin.
+
+- Windows NT kullanýcýlarý, eðer yüklenmiþ Windows NT 4.0 için Service Pack 3'e sahiplerse  
+  uygulamalarý paylaþabilirler. 
+
+NetMeeting Resource Kit dahil, NetMeeting hakkýnda daha fazla bilgi için 
+http://www.microsoft.com/netmeeting/ adresine bakýn.
+
+NetMeeting Software Development Kit (SDK) için  
+http://www.microsoft.com/netmeeting/sdk adresine bakýn.
+
+Ürün desteði hakkýnda bilgi için, Windows veya NetMeeting program dizininizdeki Support.txt
+dosyasýna bakýn.
+
+Microsoft NetMeeting'i kaldýrma
+---------------------------------
+1. Denetim Masasý'nda, Program Ekle/Kaldýr simgesini çift týklatýn.
+
+2. Yükle/Kaldýr sekmesinde, önce Microsoft NetMeeting'i, sonra
+   Program Ekle/Kaldýr'ý týklatýn.
+
+3. Bilgisayarýnýzý yeniden baþlatmak isteyip istemediðinizi soran bir iletiþim 
+   kutusu görüntülenirse, Evet'i týklatýn.
+	
+	-veya-
+
+1. Denetim Masasý’nda Program Ekle/Kaldýr simgesini çift týklatýn.
+
+2. Windows Kur sekmesinden önce Ýletiþim'i, sonra Ayrýntýlar'ý týklatýn.
+
+3. Microsoft NetMeeting onay kutusunun onayýný kaldýrýn.
+
+
+Uyarýlar ve Bilinen Hatalar
+-----------------------
+- NetMeeting 2.1'i yükledikten sonra Windows NT Service Pack 3'ün 
+  yüklemesini kaldýrýrsanýz, bilgisayarýnýzý yeniden baþlattýðýnýzda bir  
+  hata iletisi alacaksýnýz. Bunu önlemek için, aþaðýdaki adýmlarý yerine getirin:
+
+  1. Hata iletisi penceresini kapatýn.
+
+  2. Display properties iletiþim kutusundan Cancel’ý týklatýn.
+
+  3. Control Panel’de Devices simgesini týklatýn.
+
+  4. Önce mnmdd'yi, sonra Startup düðmesini týklatýn.
+
+  5. Startup Type’ý System’den Disabled’a dönüþtürün ve OK düðmesini týklatýn.
+
+  6. Bilgisayarýnýzý yeniden baþlatarak, deðiþikliði etkinleþtirin.
+
+- Uyumsuz bir görüntü sürücüsü kullanýlmasý, Netmeeting' in NT sürümü üzerinde uygulama 
+  paylaþýmýný etkinleþtirdikten sonra sorunlarla karþýlaþmanýza neden olursa, 
+  aþaðýdakilerden birini uygulamanýz gerekir:
+
+  - Netmeeting' i kaldýrýn ve tekrar yükleyin ve uygulama paylaþýmýný etkinleþtirmeyin
+  - Sürücüyü güncelleþtirin
+  - Genel bir görüntü sürücüsünü kullanýn
+  - Farklý bir görüntü baðdaþtýrýcýsý kullanýn
+  - NT Service Pack' in geçerli sürümünü yükleyin.  
+	
+MICROSOFT NETMEETING'Ý KULLANMA
+==========================
+
+- Microsoft NetMeeting H.323, ses ve görüntülü konferans standardý için 
+  destek içeriyor. NetMeeting, Intel Internet Video Phone da dahil 
+  H.323'e uyumlu ürünlere çaðrý yapma ve bu ürünlerden çaðrý almada
+  kullanýlabilir. Geliþtirilmekte olan uygun donatý
+  ve hizmetlerle, NetMeeting H.323 að geçidi kullanarak bir telefona 
+  çaðrý yapabilir.
+
+- Microsoft, Internet üzerinde aþaðýdaki User Location Server’larý (Kullanýcý 
+  Konumlandýrýcý Sunucusu) bulundurur:
+
+  ils.microsoft.com
+  ils1.microsoft.com
+  ils2.microsoft.com
+  ils3.microsoft.com
+  ils4.microsoft.com
+  ils5.microsoft.com
+
+  Bunlardan birini, sihirbazdaki sunucu listesinde olmasa bile kullanabilirsiniz.
+
+  Microsoft tarafýndan bakýmý yapýlmayan aþaðýdaki dizin sunucularýný da kullanabilirsiniz:
+
+  ils.four11.com
+  ils.business.four11.com
+  ils.family.four11.com
+
+  NOT
+  * Internet'e, Remote WinSock'u desteklemeyen bir yetkili
+      sunucu aracýlýðýyla baðlanýyorsanýz, bu sunucularý
+      insanlarý Internet'te konumlandýrmak için 
+      kullanamayacaksýnýz. 
+
+- Ses ve görüntü yalnýzca TCP/IP üzerinde ve bir kerede bir baþka kiþiyle çalýþýr. 
+
+- NetMeeting'in bu sürümünü NetMeeting 2.0'ý kullanan birini çaðýrmak için 
+  kullanýyorsanýz, çaðrý yönünü deðiþtirme özelliði düzgün çalýþmayabilir.
+  
+- NetMeeting'in bu sürümü, en çok 32 kiþinin ayný uygulamayý
+  paylaþmasýna olanak tanýr. Ancak, bir NetMeeting 2.0 makinesi toplantýdaysa ve 
+  üçten fazla kiþi tarafýndan paylaþýlýyorsa, o NetMeeting 2.0 bir uygulamayý 
+  yönetemeyecektir. 
+  Ek olarak, ses ve görüntü açýsýndan her defasýnda yalnýzca bir kiþiye baðlanabilirsiniz.
+  
+  Toplantýnýza baþarýyla katýlabilecek toplam kiþi sayýsý kullanýlabilir 
+  að band geniþliðine ve katýlýmcýlarýn bilgisayarlarýnýn hýzýna 
+  baðlý olarak deðiþecektir.
+
+- Bazý etkinlikler toplantýnýzdaki bilgisayarlar arasýnda büyük miktarlarda veri 
+  gönderilmesini gerektirebilir (örneðin, büyük bir dosyayý aktarýrken birden çok 
+  uygulamayý paylaþmak ve konuþmak). Olaðanüstü durumlarda bu, toplantýdaki bilgisayarlarýn 
+  çok yavaþ hale gelmesine neden olabilir. Bunu düzeltmek için, toplantý etkinliklerinden 
+  bir veya daha fazlasýný durdurun.
+
+- Yerel aðýnýzda veya bir yetkili sunucu aracýlýðýyla bir TCP/IP çaðrýsý yapmaya 
+  çalýþýyorsanýz ve MSN veya Çevirmeli Að bir baðlantý iletiþim kutusu görüntülüyorsa,
+  bunu devre dýþý býrakmak için Denetim Masasý'ndan Internet simgesini týklatýp,
+  Otomatik Çevirme'nin seçili olmadýðýndan emin olmalýsýnýz.
+
+- DirectX, OpenGL, MS-DOS(R)'un ve grafik-yoðun oyunlarýn ve AVI'lerin
+  paylaþýmý iyi çalýþmýyor ve desteklenmiyor. 
+
+- Bir toplantý sýrasýnda farklý bilgisayarlar farklý ekran çözünürlüklerine sahipse,
+  paylaþýlan pencereler en yüksek çözünürlüðe sahip masaüstünün izin verdiði kadar büyük
+  olabilir. Daha düþük çözünürlüklü masaüstülere sahip kullanýcýlar kendi pencerelerine 
+  sýðmayan pencereleri kaydýrmak zorundadýrlar.
+
+- NetMeeting'i TCP/IP ile kullanmak için 32-bit'lik TCP/IP yýðýnýna ve Windows 
+  yuva arabirimine sahip olmanýz gerekir. NetMeeting, Windows 95 ve Windows NT sürüm 4.0 
+  içine yerleþtirilmiþ 32-bit'lik TCP/IP ve Windows yuvalarýyla sýnanmýþtýr.
+
+- Uygulama paylaþýmý, Beyaz Tahta ve Sohbet farklý dil ayarlarýna ve klavye düzenlerine 
+  sahip bilgisayarlar arasýnda düzgün çalýþmayabilir.
+
+- Microsoft NetMeeting, ortak bir ortamda varsayýlan yapý bilgilerini ayarlamak için
+  Windows 95 ve Windows NT sürüm 4.0 sistem politikalarýný kullanmayý destekler. 
+
+  Microsoft NetMeeting sistem politikalarý belgelendirilmiþtir, NetMeeting Resource Kit
+  bir sistem politikasý dosyasý içerir. NetMeeting Resource Kit hakkýnda 
+  daha fazla bilgi için
+  http://www.microsoft.com/netmeeting/reskit adresine bakýnýz.
+
+- NetMeeting baþlatýldýðýnda kapanýyorsa veya sorunlar varsa, yazý tipleri klasörünüzde 
+  zarar görmüþ bir yazý tipi olup olmadýðýný veya Franklin Gothic Book gibi uyumsuz 
+  bir yazý tipinin yüklü olup olmadýðýný veya HP Fonts for Family tarafýndan yüklenmiþ 
+  yazý tiplerinin olup olmadýðýný denetleyin. 
+
+- Çevrimdýþý kipte Internet Explorer 4.0 kullanýyor ve
+  NetMeeting'i baþlatmaya çalýþýyorsanýz, NetMeeting 
+  otomatik olarak Internet'e baðlanmaz. Bu sorunu çözmek için, Windows NT bilgisayarlarý 
+  için RAS'ý veya Windows 95 bilgisayarlarý için Çevirmeli Að'ý kullanarak arama yapýn. 
+  Ayrýca, onay imini silmek için Internet Explorer'da önce Dosya menüsünü sonra 
+  Çevrimdýþý Çalýþ'ý týklatabilirsiniz.
+
+- NetMeeting SLIRP baðlantýlarýnda veya diðer benzeri SLIP/PPP 
+  baðlantýlarýnda uygun bir biçimde iþlev görmez.
+
+
+ÇAÐRI YAPMA
+==============
+
+Microsoft NetMeeting çaðrýlarýný çok sayýda kullanýcýya yapabilirsiniz. Toplantýdaki 
+herhangi biri diðer kiþilere NetMeeting çaðrýsý yapabilir. Buna ek olarak, diðer insanlar 
+da diðer katýlýmcýlarý arayarak sürmekte olan bir NetMeeting çaðrýsýna katýlabilirler.
+
+Uyarýlar ve Bilinen Hatalar
+-----------------------
+- Herhangi birine bilgisayar adýný kullanarak baðlanamýyorsanýz, IP adresini 
+  kullanmayý deneyin.
+
+- Herhangi birinin adýný Web dizininde týklatýrsanýz ve dosyayý açmak mý yoksa 
+  kaydetmek mi istediðinizi soran bir ileti alýrsanýz, dosyayý açmayý seçin.
+
+- Herhangi birinin adýný Web dizininde týklatýrsanýz ve dosya türünün tanýnmadýðýný
+  söyleyen bir ileti alýrsanýz, ILS dizin dosyalarýný Microsoft NetMeeting ile  
+  iliþkilendirmek için görüntüleyicinizi yapýlandýrmanýz gerekir. 
+
+  Bunun nasýl yapýlacaðýna iliþkin yönergeler için, görüntüleyici belgelerinize baþvurun. 
+  Aþaðýdaki bilgilere gereksiniminiz olacaktýr:
+
+  MIME dosya türü: "text/iuls"
+  Komut satýrý: "rundll32.exe msconf.dll,NewMediaPhone %l"
+
+  MIME dosya türü: "text/h323"
+  Komut satýrý: "rundll32.exe msconf.dll,NewMediaPhone %l"
+
+- Bazý ISDN aygýtlarý otomatik olarak aða baðlanmaya göre yapýlandýrýlmýþtýr. 
+  Bu, ISDN aygýtýnýn NetMeeting sürerken aða baðlanmaya çalýþmasýna 
+  neden olabilir. Bunun meydana gelmesini engellemek için, ISDN aygýtý üzerindeki 
+  Otomatik Çevirme'yi kapatýn.
+
+- Eðer adýnýzý dizinde görmüyorsanýz, oturum açmamýþ olabilirsiniz
+  veya farklý bir dizin sunucusunda oturum açmýþ olabilirsiniz. Oturum açtýðýnýz
+  dizin sunucusunu deðiþtirmek için, önce Araçlar menüsünü, sonra Seçenekler'i, daha sonra
+  Çaðrý Yapma'yý týklatýn ve Sunucu Adý'ný deðiþtirin. 
+
+  Dizin sunucusunda oturum açmak için, önce Çaðrý Yap menüsünü, daha sonra da
+  Oturum Aç'ý [dizin sunucunuza] týklatýn.
+
+- Bir að kartý kullanan etkin bir að baðlantýsýna ve 
+  ikinci bir að kartý kullanan ikinci bir etkin baðlantýya sahipseniz, 
+  dizine baðlanamayabilirsiniz.
+
+- Kukla modem baðlantýsýný kullanarak ararken baðlantý sorunlarý ile karþýlaþýyorsanýz 
+  modeminiz için baud hýzýný düþürmeyi deneyin.
+
+- Bazý konferans köprüleri (Multipoint Conferencing 
+  Units veya MCUs olarak da bilinirler) büyük ve küçük harf duyarlýdýr, bu nedenle bir 
+  çaðrý yapmak için konferans adýný yazdýðýnýzda, köprüde gösterilenle ayný 
+  büyük/küçük harf kullanýmýný kullanmanýz gerekebilir.
+
+- Kukla modem kablosu üzerinden çaðrý almak için, önce Araçlar menüsünü, sonra 
+  Seçenekler'i, daha sonra da Ýletiþim Kurallarý'ný týklatýn. 
+  Kukla Modem iletiþim kuralýný seçin ve Özellikler'i týklatýn. 
+  Kukla modem kablosunun baðlandýðý COM baðlantý noktasýný seçin.
+
+- NetMeeting bir kukla modem kablosunun baðlý olduðu bir COM baðlantý noktasýna 
+  gelen çaðrýlarý algýlamaz. Çaðrýlarý bir kukla modem kablosu üzerinden almak için, 
+  COM baðlantý noktasý üzerinde bir çaðrý yapmanýz gerekir.
+
+- NetMeeting'de COM baðlantý noktasý özelliklerine yapýlan deðiþiklikler yalnýzca
+  NetMeeting'de uygulanýr. Bir NetMeeting çaðrýsý yaparken veya paylaþýrken  
+  COM baðlantý noktasý ayarlarýný deðiþtirmemeniz önerilir.
+
+- NetMeeting'de COM baðlantý noktasý özelliklerine yapýlan deðiþiklikler yalnýzca
+  NetMeeting'de uygulanýr. Bir NetMeeting çaðrýsý yaparken veya paylaþýrken  
+  COM baðlantý noktasý ayarlarýný deðiþtirmemeniz önerilir.
+
+- Kukla modem çaðrýlarýný yapmak ve almak için NetMeeting yalnýzca COM1 ve COM2'yi 
+  kullanabilir.
+
+- Kukla Modem çaðrýlarý yüksek baud hýzlarýnda çalýþmayabilir.
+
+- Herhangi birine bir yetkili sunucu aracýlýðýyla baðlanýyorsanýz, çaðrýya katýldýktan 
+  sonra ses ve video baðlantýsýný el ile yapabilirsiniz.
+
+
+ÇAÐRI ALMA
+================
+
+Microsoft NetMeeting'i çalýþtýrýp Çaðrý menüsünden Rahatsýz Etme'yi seçmediyseniz, 
+gelen çaðrýlarý almaya hazýrsýnýz demektir.
+
+Uyarýlar ve Bilinen Hatalar
+---------------------------
+- Çaðrýlarý alamýyorsanýz, bunun nedeni IP adresinizin dizin hizmetinde
+  yanlýþ kaydedilmesi olabilir. Bu sorunu, Internet'e baðlanmadan önce
+  LAN IP adresini yayýmlayarak önleyebilirsiniz. IP adresini yayýmlamak için 
+  aþaðýdakileri yapýn:
+
+  Windows 95'de          Önce Baþlat menüsünü, sonra Çalýþtýr'ý týklatýn, daha sonra da 
+			 Winipcfg.exe
+ yazýn
+
+  Windows NT'de          Önce Baþlat menüsünü, sonra Çalýþtýr'ý týklatýn, daha sonra da
+			 Ipconfig /release yazýn
+
+
+UYGULAMA PAYLAÞMA
+==================
+ 
+Toplantýdaki herhangi bir kiþi bir uygulamayý diðer katýlýmcýlarla paylaþabilir. 
+Uygulamayý paylaþtýðýnýzda, diðer insanlar da uygulamayý görebilirler. Birlikte 
+çalýþtýðýnýzda, diðer insanlar uygulamayý hem görebilir hem de kullanabilirler.
+
+Uyarýlar ve Bilinen Hatalar
+---------------------------
+- Windows NT kullanýcýlarý, eðer yüklenmiþ Windows NT 4.0 için Service Pack 3'e sahiplerse  
+  uygulamalarý paylaþabileceklerdir. 
+
+- NetMeeting geniþletilmiþ karakterler içeren yolu olan bir dizinde 
+  yüklenmiþse, uygulama paylaþýmý çalýþmayabilir.
+
+- Herhangi bir Windows Gezgini penceresini paylaþarak hepsini paylaþýrsýnýz. Windows 
+  Gezgini'ni paylaþýrken bir programý çalýþtýrýrsanýz, program da paylaþýlacaktýr. 
+  
+  Windows Gezgini pencerelerinin örnekleri arasýnda Denetim Masasý, Evrak Çantasý,
+  Alýnan Dosyalar klasörü veya herhangi bir Windows Gezgini klasörü sayýlabilir.
+
+- Internet Explorer 4.0 kullanýcýlarý: Etkin ortak çalýþma içeren bir Windows Explorer 
+  penceresini paylaþýyorsanýz ve paylaþtýðýnýz kiþi pencereyi kapatýrsa bundan sonra 
+  açtýðýnýz tüm uygulamalar ve pencereler paylaþýlacaktýr.
+
+  Bu durumda paylaþýmý geri almak için Windows Gezgini penceresini yeniden açýn ve 
+  paylaþýmý kaldýrýn. 
+
+- Uygulamayý paylaþtýðýnýzda ve birlikte çalýþtýðýnýzda, uzak kullanýcýlar, 
+  bilgisayarýnýzdaki veya aðýnýzdaki dosyalara eriþim saðlamak veya bu dosyalarý silmek için 
+  uygulamanýzdaki Dosya Aç ve Dosya Kaydet iletiþim kutularýný kullanabilirler. 
+
+  Siz imleç denetimine sahip deðilken herhangi birinin paylaþýlan programýnýzý kullanmasýný
+  engellemek için ESC tuþuna basýn. 
+  
+  Siz imleç denetimine sahipken herhangi birinin paylaþýlan programýnýzý kullanmasýný
+  engellemek için, Birlikte Çalýþmayý Durdur düðmesini týklatýn.
+  
+  Uygulamayý paylaþýrken ve birlikte çalýþýrken bilgisayarýnýzýn baþýndan ayrýlmamanýz 
+  önerilir.
+
+- Paylaþtýðýnýz uygulamanýn içinden baþka bir uygulama baþlattýðýnýzda 
+  (örneðin Microsoft Word içinden Microsoft Excel elektronik tablosu baþlatma), yeni 
+  baþlatýlan uygulamanýn düzgün bir biçimde paylaþýlamama olasýlýðý vardýr. 
+
+- Herhangi bir nesneyi paylaþýlan uygulamaya sürükleyemezsiniz veya 
+  nesneyi paylaþýlan uygulamadan masaüstüne sürükleyemezsiniz.
+
+- Uygulamayý Girdi Yöntemi Düzenleyicisi (IME) ile paylaþtýðýnýzda, IME durum çubuðunu
+  göstermeniz gerekir böylece diðer insanlar IME'yi etkinleþtirmek için fareyi
+  kullanabilirler.
+
+ IME, durum çubuðunu göstermeyi desteklemiyorsa veya diðer kiþiler
+  IME'yi etkinleþtirmede sorunlarla karþýlaþýyorsa, IME'yi onlar için etkinleþtirmeniz ve 
+  etkinliðini kaldýrmanýz gerekir.
+
+- IME penceresi toplantý sýrasýnda yeniden çizemiyorsa, masaüstünde herhangi bir yeri 
+  týklatarak yeniden çizmesini saðlayabilirsiniz.
+
+- Uygulama paylaþýmýna veya uzak denetim özelliklerine sahip bir ürünü olan bilgisayarda
+  uygulamalarýný paylaþmak mümkün olmayabilir.
+  
+
+BEYAZ TAHTA
+===========
+
+Beyaz Tahta, diðer insanlarla ayný anda çizim yapmanýza olanak saðlar. Toplantýdaki
+herkes Beyaz Tahta'da çizilenleri görebilir. Toplantýdaki herhangi biri Beyaz Tahta'yý 
+çalýþtýrdýðýnda, Beyaz Tahta herkesin ekranýnda belirir.
+
+Uyarýlar ve Bilinen Hatalar
+---------------------------
+- Windows NT çalýþtýran bir bilgisayarda, NetMeeting'in yüklenmiþ olduðu dizinin 
+  adý boþluklar içeriyorsa, Beyaz Tahta'yý veya Sohbet'i
+  çalýþtýramazsýnýz.
+
+- Beyaz Tahta 1152'ye 864'lük veya daha büyük bir görüntüye
+  büyütmez.
+  
+
+SOHBET
+======
+
+Sohbet diðer kullanýcýlarýn görmesi için ileti yazmanýza olanak saðlar. Toplantýdaki 
+herhangi biri Sohbet'i çalýþtýrdýðýnda, Sohbet herkesin ekranýnda belirir.
+
+Sohbet dosyalarý .txt dosya uzantýsýyla depolanýrlar. Eðer Microsoft Not Defteri 
+veya .txt biçimli dosyalarý okuyabilen bir baþka program bilgisayarýnýza 
+yüklenmiþse, Sohbet dosyalarýný açmak için kullanýlabilir. 
+
+Uyarýlar ve Bilinen Hatalar
+---------------------------
+- Windows NT çalýþtýran bir bilgisayarda, NetMeeting'in yüklenmiþ olduðu 
+  dizinin adý boþluklar içeriyorsa, Beyaz Tahta'yý veya Sohbet'i
+  çalýþtýramazsýnýz.
+
+
+DOSYA AKTARIMI
+==============
+
+- Geçerli Çaðrý sekmesindeki kiþilerin listesine sürüklenen dosyalar toplantýdaki
+  bütün kiþilere gönderilirler. 
+
+- Belirli bir kiþiye dosya göndermek için, toplantýdaki kiþiler listesinde 
+  bu kiþinin adýný sað týklatýn ve sonra Dosya Gönder'i týklatýn. 
+
+- Dosyayý toplantýdaki herkese göndermek için, önce Araçlar menüsünü, sonra Dosya 
+  Aktarýmý'ný daha sonra da Dosya Gönder'i týklatýn. 
+
+Uyarýlar ve Bilinen Hatalar
+---------------------------
+- Herhangi bir dosyaya kýsayol göndermeye çalýþýyorsanýz, bunun yerine geçerli dosya 
+  gönderilecektir.
+
+- Intel ProShare 2.0 ile dosya deðiþ tokuþ etmek her zaman uygun biçimde çalýþmaz.
+
+
+SES ÝLETÝÞÝMÝ
+=============
+
+- Ses yalnýzca TCP/IP üzerinde ve bir tek kiþiyle ise desteklenir.
+
+- Ses kalitesi, ses kartýnýza ve mikrofonunuza baðlý olarak belirgin bir biçimde
+  deðiþebilir. 
+
+- Çift yönlü ses kullanýmý, yarý çift yönlü ses kullanýmýna göre daha fazla bant  
+  geniþliði ve daha fazla CPU gerektirir ve bu nedenle düþük ses kalitesine yol açabilir.
+
+- Ses kartý aygýtýnýzý çift yönlü sürücüye yükseltmek gibi, herhangi bir þekilde 
+  deðiþtirirseniz, NetMeeting'in düzgün çalýþmasý için, yeniden Ses Ayarlama 
+  Sihirbazý'ný çalýþtýrmanýz gerekir.
+
+Uyarýlar ve Bilinen Hatalar
+---------------------------
+
+- Bir Videum (Winnov) görüntü alma kartý kullanýyorsanýz ve yeni
+  2.0 sürücünüz varsa, Videum Yapýlandýrma programýný (Winnov 
+  Videum program grubunun altýnda) açýp, NetMeeting'le kullanýlmakta olan video 
+  girdisi için istenilen ses girdisini seçerek, karta iliþkin ses girdisini 
+  deðiþtirebilirsiniz. Varsayýldýðý üzere, MXC video baðlantýsý için Kamera 
+  mikrofonu, diðer tüm görüntü baðlantýlarý için Hat Girdisi kullanýlýr. Bu 
+  yapýldýktan sonra, NetMeeting'i baþlatýrken doðru ses girdisi seçilecektir.
+
+- Winnov kamerasý kullanýcýlarý için ses girdisi, görüntünün her kullanýlýþýnda 
+  otomatik olarak açýlacaktýr. Eðer görüntünüz MXC baðlantýsýný kullanarak baðlanmýþsa, 
+  ses için kamera girdisi kullanýlacaktýr. Görüntünüz Karma veya S-Video baðlantýsý 
+  kullanarak baðlanmýþsa ses için Hat Girdisi kullanýlacaktýr. Yeni 2.0 sürücülerine 
+  yükseltmek ve Videum Yapýlandýrmasý uygulamasýný kullanmak yoluyla bu sorunu 
+  çözebilirsiniz.
+
+- Microsoft NetMeeting ve Intel Internet Görüntü Telefonu kullanýcýlarý, ancak ve ancak 
+  her iki kullanýcýn da Pentium iþlemciye sahip birer bilgisayarý varsa birbirleriyle 
+  konuþabilirler.
+
+- Çift yönlü sese izin verilen SoundBlaster ses kartýnýz varsa ve NetMeeting’i kullanýrken 
+  bilgisayarýnýzda kilitlenme sorunlarý oluþuyorsa Sound-Blaster sürücülerinizi 
+  güncelleþtirmeniz gerekir.
+
+ - Ses Ayarlama Sihirbazý'nda ses kartýnýzýn desteklenmediðini açýklayan 
+  bir ileti alabilirsiniz. Ses kartý NetMeeting'in desteklenmesini 
+  istediði bazý özellikleri desteklemiyorsa bu durum ortaya çýkar. 
+  NetMeeting'teki ses özellikleri bu iletiyi aldýðýnýzda bile çalýþabilir ama
+  düþük ses kalitesiyle karþýlaþabilirsiniz. 
+
+  Eðer ses kartýnýz desteklenmiyorsa, daha yeni ses kartý sürücülerinin olup olmadýðýný 
+  öðrenmek için üreticiyle iliþki kurmak isteyebilirsiniz.
+
+- Eðer "dalgalý" çift yönlü ses kalitesiyle karþýlaþýrsanýz, NetMeeting'i yarým çift yönlü
+  ses kalitesine geçirmeye çalýþýn. Bunu yapmak için, aþaðýdaki adýmlarý yerine
+  getirin:
+
+  1. Bir NetMeeting çaðrýsýnda olmadýðýnýzdan emin olun.
+
+  2. Araçlar menüsünden, Seçenekler'i týklatýn.
+
+  3. Ses sekmesinde, Çift Yönlü Sesi Etkinleþtir onay kutusunu temizleyin.
+
+  Sesli bir toplantý sýrasýnda çift yönlü ve yarým çift yönlü arasýnda geçiþ 
+  yapmamanýz önerilir.
+
+- Arama sýrasýnda, çift yönlü ses kartýnýz ve sürücüleriniz olmasýna raðmen, tek 
+  yönlü ses alýrsanýz, bu problem, ses kartýnýzýn çift yönlü DirectSound sürücülerini 
+  desteklememesinden veya hatalý çift yönlü DirectSound sürücülerinin bulunmasýndan 
+  kaynaklanabilir. Hatanýn çözümü için, güncelleþtirilmiþ DirectSound sürücüleri için 
+  ses kartý üreticisi ile temas kurun veya Netmeeting' de DirectSound özelliðini iptal 
+  edin.
+
+  Netmeeting' de DirectSound' u iptal etmek için aþaðýdaki Kayýt anahtarýný aþaðýdaki 
+  gibi düzenleyin:
+  HKEY LOCAL MACHINE\SOFTWARE\Microsoft\Internet Audio\NacObject\DisableDirectSound
+  ' u "01 00 00 00" deðerine eþitleyin.
+
+- Bir ses / video aramasý sýresýnda, diðer kiþinin sesinin hýzlandýðýný veya yavaþladýðýný 
+  duyabilirsiniz. Bu, Katýlýmcýlardan birinin veya her ikisinin de eski veya uyumsuz ses 
+  sürücülerine sahip olmalarýndan kaynaklanabilir. Güncelleþtirilmiþ sürücüler için ses 
+  kartý üreticisiyle temas kurun.
+
+- NetMeeting'i kullanýrken ses kalitesiyle veya ses kartýyla ilgili sorunlarla
+  karþýlaþýrsanýz, sorunlar donaným yapýlandýrmanýzla veya sürücü yüklemenizle 
+  ilintili olabilir. En son destek bilgilerini görmek için, önce Yardým menüsünü
+  daha sonra da Çevrimiçi Destek'i týklatýn.
+
+- Eðer bilgisayarýnýz birden fazla ses aygýtýna sahipse, Ses Ayarlama Sihirbazý'nda
+  seçili olan ses aygýtlarýnýn Denetim Masasý'ndaki Çoklu Ortam özelliklerindeki 
+  seçimlerle eþleþtiðinden emin olmanýz gerekir.
+
+- Bilgisayarýnýzýn iþlemcisini yükseltirseniz, ses ayarlama sihirbazýný yeniden 
+  çalýþtýrmanýz gerekir.
+
+- Çift yönlü ses Media Vision Pro Audio Spectrum 16 ses kartlarýyla
+  çalýþmayabilir.
+
+- 486 iþlemciye sahip bilgisayarlar Çevirmeli Að (modem) baðlantýsý üzerinde 
+  H.323 sesli konferans standardýna dayanan diðer yazýlýmla birlikte 
+  ses kullanamayacaktýr. Çevirmeli Að (modem) baðlantýsý üzerindeki
+  diðer NetMeeting kullanýcýlarý ile veya bir yerel að (LAN) üzerindeki diðer 
+  H.323-temelli sesli konferans ürünleri ile birlikte kullanabileceklerdir.
+
+- NetMeeting kullanan bir sesli konferanstayken, Microsoft PowerPoint gibi ses
+  kaydetme yeteneðine sahip bir uygulama sesi bildirildiði gibi 
+  kaydetmek üzere belirecektir. Fakat NetMeeting zaten ses kartýný 
+  kullanmakta olduðu için, diðer uygulama fiili olarak kaydetmez.
+
+- Bir Tecra 740'a sahipseniz, Denetim Masasý'nda Çoklu Ortam özelliklerindeki 
+  mikrofon ses düzeyini el ile ayarlamanýz gerekebilir.
+
+- Düþük ses kalitesiyle karþýlaþýrsanýz, Mikrofon onay kutusunu temizlemeyi ve 
+ yeniden seçmeyi deneyin.
+
+- Gravis Ultrasound ses kartý kullanýyor ve dalgalý ses kalitesi elde ediyorsanýz, 
+  aþaðýdakileri deneyin:
+
+  1. NetMeeting çaðrýsýnda olmadýðýnýzdan emin olun.
+
+  2. Araçlar menüsünden Seçenekler'i týklatýn.
+
+  3. Að bant geniþliði bölümündeki Genel sekmesinden,geçerli bölümden daha yavaþ olan 
+     bir bant geniþliði ayarý seçin.
+
+KAPATMA
+=======
+
+Kapattýðýnýzda, sizin çaðrý yaptýðýnýz veya size çaðrý yapan herhangi birisiyle olan 
+baðlantýnýz kesilir. Eðer baðlantýsý kesilen kullanýcýlar diðer kullanýcýlarý toplantýya
+davet etmiþ veya kabul etmiþ iseler o kullanýcýlarýn baðlantýsý da kesilir. Ýnsanlar 
+arasýndaki ses baðlantýlarý kesilmeyebilir.
+
+Uyarýlar ve Bilinen Hatlar
+--------------------------
+
+- Ýki veya daha fazla kiþinin katýldýðý bir NetMeeting çaðrýsýnda, 56kps modem kullanýyorsanýz,
+  kapatma iþlevi düzgün çalýþmayabilir.
+  Çaðrý sýrasýnda ses ve görüntüye geçiþ yapmak bir veya daha fazla katýlýmcýnýn baðlantýsýný 
+  kaybetmesine neden olabilir.
+
+
+VÝDEO
+=======
+
+- NetMeeting'in görüntü özelliklerini kullanmak için, ya bir görüntü-yakalama kartýna 
+  ve kameraya ya da bilgisayarýnýzýn paralel (yazýcý) baðlantý noktasý aracýlýðýyla 
+  through your computer's parallel (printer) port. Sending video 
+  baðlanan bir video kameraya gereksiniminiz vardýr. Görüntü yollama Pentium'dan yavaþ 
+  iþlemciye sahip bazý bilgisayarlarda çalýþmaz.
+
+- Görüntü yalnýzca TCP/IP üzerinde ve ayný anda yalnýzca bir tek kiþiyle olduðunda 
+  desteklenir.
+
+- Çok kullanýcýlý bir toplantýda görüntüyü çalýþtýrma toplantýya katýlan bütün
+  bilgisayarlardaki baþarýmý olumsuz yönde etkileyebilir. Örneðin, bir uygulamayý 
+  paylaþýrken bir görüntü penceresi açmak diðerlerinin uygulamayý denetlemesini 
+  güçleþtirebilir.
+
+- Yüklenmiþ birden fazla görüntü aygýtýna sahipseniz veya daha önce yüklenmiþ 
+  olan bir görüntü aygýtýný uygun bir biçimde kaldýrmamýþsanýz, 
+  videoyu kullanamayabilirsiniz.
+
+- Görüntü aygýtýnýz uygun bir biçimde yüklemeden çýkarýlmamýþsa ve NetMeeting'de
+  görüntüyü etkinleþtirmiþseniz, kalan kamera yazýlýmý kamerayý bulamadýðýný bildirerek 
+  sürekli olarak sizi uyarabilir.
+
+- Bilgisayarýnýz Pentium’dan daha yavaþ bir iþlemcisine sahipse, görüntü 
+  göndereme zayýf ses ve görüntü kalitesine neden olabilir.
+
+- Ýki yönlü (ECP veya EPP) paralel baðlantý noktasýna sahip bilgisayarlar,
+  paralel video kameralarýyla, tek yönlü paralel baðlantý noktasýna sahip bilgisayarlara 
+  göre, belirgin bir biçimde daha iyi çalýþacaklardýr.
+
+- Görüntü-yakalama kartýna baðlanan kameralar, bilgisayarýnýzýn paralel baðlantý noktasý 
+  aracýlýðýyla baðlanan kameralara göre bilgisayarýnýzýn iþlemcisinin daha azýný 
+  kullanacaktýr. Bilgisayarýnýz en azýndan Pentium 133 olmadýðý sürece renkli paralel 
+  baðlantý noktasý kamerasý kullanmamanýz önerilir.
+
+- NetMeeting'de görüntü özelliklerini kullanýrken kameranýzýn baðlantýsýný kestiyseniz, 
+  kameranýzýn yazýlýmý kameranýn size yanýt vermediðini söyleyen iletiler
+  görüntüleyebilir. Bu iletileri devre dýþý býrakmak için, önce Araçlar menüsünü, sonra 
+  Seçenekler'i, daha sonra da Görüntü'yü týklatýn ve sonra da Her Çaðrýnýn Baþlangýcýnda
+  Otomatik Olarak Görüntü Gönder onay kutusunu temizleyin.
+
+- NetMeeting'i çalýþtýrýrken görüntü kullanan bir baþka programý çalýþtýrmamanýz 
+  önerilir.
+
+- Görüntü pencerenizin bazý alanlarý yanlýþ renkler içeriyorsa, kameranýz yetersiz 
+  ýþýk alan bir alana yönlendirilmiþ olabilir. Bazý görüntü sürücüleri düþük ýþýk 
+  süzgeci seçeneði saðlayabilirler.
+
+- Görüntü özelliklerini karanlýk bir alanda kullanýyorsanýz, bazý kameralar 
+  bilgisayarýnýzýn son derece yavaþ ve tepkisiz hale gelmesine neden olacaklardýr.
+
+- Siyah-Beyaz Connectix Kamera kullanýrsanýz, görüntü sürücülerinin sürüm 2.1 
+  güncelleþtirmesini (veya daha yenisini) kullanmanýz önerilir. Sürücüleri 
+  http://www.connectix.com adresinden yükleyebilirsiniz. 
+
+- Winnov kamera kullanýcýlarý için video ne zaman kullanýlýrsa ses girdisi otomatik olarak 
+  açýlacaktýr. Görüntünüz MXC baðlantýsý kullanarak baðlanmýþsa, kamera girdisi ses için 
+  kullanýlacaktýr. Görüntünüz Karma veya S-Video baðlantýsý kullanarak baðlanmýþsa ses 
+  için Hat Girdisi kullanýlacaktýr.
+
+- Bazý kameralarla, Kaynak ve Biçim iletiþim kutularýndaki ayarlarý video sürücüsü 
+  yazýlýmýnýn otomatik olarak yapmasý yerine el ile ayarlarak CPU kullanýmýný 
+  azaltabilirsiniz.
+
+
+GENEL OLARAK BÝLÝNEN SORUNLAR
+=============================
+
+- NetShow Player sürüm 2.0' ýn beta sürümünü kullanýyorsanýz, bilgisayarýnýzda 
+  sorunlar yaþayabilirsiniz. Bunu düzeltmek için, VDK31118.ACM dosyasýný 
+  \windows\system klasöründen silerek/silmeyerek,
+  NetShow Player' ýn en son sürümüne güncelleþtirin. 
+  
+- Microsoft NetMeeting'in yüklendiði bilgisayarlarda ReachOut 5.0'ý
+  çalýþtýramazsýnýz.
+
+- NetMeeting'in sizin NetBIOS adýnýz olarak kullandýðý adý bulmak için, 
+  aþaðýdaki adýmlarý yerine getirin:
+
+1. Denetim Masasý'nda, önce Að simgesini, sonra Kimlik sekmesini
+    týklatýn.
+
+2. Bilgisayar Adý metin kutusunu seçin.
+
+- Windows tercihlerini bir að üzerindeki bütün bilgisayarlarda korumak için 
+  Kullanýcý Profilleri'ni birden fazla kullanýcý için kullanýyorsanýz, 
+  bilgisayarlarda geçiþ yaptýðýnýzda Ses Ayarlama Sihirbazý'ný yeniden çalýþtýrmak 
+  zorunda kalabilirsiniz. 
+
+- Hem Microsoft FrontPage hem de Microsoft NetMeeting geçerli olarak ayný 
+  dosya türünü (.cnf) kullanýrlar. NetMeeting bu dosya tipini 
+  Hýzlý Çevir’ler için kullanýr. 
+
+- Bir toplantýdayken, Pano'nuz toplantýda bulunan diðer herkes tarafýndan 
+  paylaþýlýr. Bu size, diðer insanlarýn Pano'dan kestikleri veya Pano'ya kopyaladýklarý 
+  nesneleri kendi yerel programlarýnýza yapýþtýrma olanaðý saðlar. Pano paylaþýmýný 
+  devre dýþý býrakan bir sistem politikasý ayarlayabilirsiniz.
+
+- Windows 95 Sürüm 4.00.950 B'yi çalýþtýrýyorsanýz ve NetMeeting'i baþlattýðýnýzda beliren 
+  Çevirmeli Að iletiþim kutusunu iptal ettiyseniz, NetMeeting cevap vermeyi 
+  býrakmýþ görünebilir; ama yaklaþýk iki dakika sonra NetMeeting düzgün bir biçimde
+  çalýþacaktýr. Bununla birlikte, Internet hizmeti saðlayýcýnýza el ile baðlanýncaya ve 
+  Çaðrý Yap menüsünden [dizin sunucunuz] Oturumunu Aç’ý seçinceye kadar dizin 
+  sunucusunda oturumunuz açýlmayacaktýr .
+
+- Hýzlý Çevir kýsayolu yarattýysanýz, Posta Alýcýsýna Gönder'i týklatmak ancak 
+  elektronik posta programýnýz MAPI-destekliyor ise (örneðin, Microsoft Outlook 
+  Express) çalýþacaktýr.
+
+- Çaðrýlarý Geçmiþ sekmesini kullanarak ancak size çaðrý yapan kiþi NetMeeting 2.0 
+  veya NetMeeting 2.1 kullanýyorsa geri döndürebilirsiniz.
+
+- NetMeeting'i 28.8kbps baðlantýsý üzerinde kullanýyorsanýz, Araçlar menüsünden 
+  Seçenekler'i týklatýp Að Band Geniþliði bölümünde
+  ISDN veya Yerel Að’ý seçerek 
+  daha yüksek ses ve görüntü kalitesi elde edebilirsiniz. 
+
+
+WINDOWS NT SORUNLARI
+=================
+
+- Windows NT kullanýyorsanýz yüklenmiþ Windows NT 4.0 için Service Pack 3'e sahipseniz 
+  uygulamalarý paylaþabilirsiniz. 
+
+- Windows NT'de Application Sharing'i etkinleþtirmek, görüntü sürücünüzün 
+  baþarýmýný düþürebilir. Bu, ekran üzerinden bilgi alma hýzýný 
+  etkileyecektir.
+
+- Creative Labs'ýn bazý SoundBlaster sürücüleri (15 Ocak 1997 tarihinde Web bölgelerine
+  postalanmýþtýr) NetMeeting ile uyumlu deðildir Ayný zamanda tam çift yönlü ses destekleyen
+  son gönderilen sürücüler gibi, Windows NT 4.0 ile birlikte sunulan özgün SoundBlaster
+  sürücüleri NetMeeting ile çalýþýrlar
+
+- Windows NT kullanýyorsanýz ve 32-bit'lik bir uygulamayý paylaþýp paket 
+  olan bir nesneyi ekliyorsanýz sorunlarla karþýlaþýrsýnýz. Bu, otomatik olarak 
+  paylaþýlan Nesne Paketleyicisi'ni açar ve sonuçta hata oluþmasýna neden olur. Bu hata 
+  paylaþýlan özgün uygulamanýn veya NetMeeting'in hata yapmasýna yol açmaz,
+  yalnýzca Nesne Paketleyicisinin hatasýna sebep olur. 
+
+- Bozuk Intel Pentium kýrmýðý olan bir bilgisayara Windows NT yüklenmesi sýrasýnda
+  kayan noktayý etkinleþtirdiyseniz, NetMeeting ses kalitesi düþük olacak
+  veya sesi hiç çýkmayacaktýr.
+
+- 16-bit'lik bir uygulama paylaþtýðýnýz zaman, bilgisayarýnýzda çalýþan
+   bütün 16-bit uygulamalar otomatik olarak paylaþýlacaktýr. 
+
+- Windows NT üzerinden NetMeeting kullanýyorsanýz,
+  ve çaðrý alamýyorsanýz, bilgisayarýnýzý yeniden baþlatýn 
+ve tekrar deneyin. 
+
+- Ses kartýna sahip deðilseniz, baðlantýnýzýn bant geniþliðini el ile belirlemeniz
+  gerekecektir. Bunu yapmak için, önce Araçlar menüsünü, sonra Seçenekler'i 
+  sonra da Að Band Geniþliði'ni týklatýn.
+
+- Bir yetkili sunucusu aracýlýðýyla Dizin Sunucusu'nda oturum açmak için Çevirmeli Að 
+  yüklemesini devreden çýkarmanýz gerekebilir.
+
+- Bir çaðrý yaptýktan sonra NetMeeting’in 1 dakikadan fazla süredir diðer kiþiden
+  bir yanýt beklediðini belirten bir ileti alýyorsanýz, NetMeeting'den çýkýn ve bu kiþiyle 
+  yeniden baðlantý kurmayý deneyin.
+
+- NetMeeting'de bir görüntü resmini göremiyorsanýz, DirectDraw 3.0'a veya daha yenisine
+  yükseltmeniz önerilir.
+
+- Bilgisayarýnýzý askýya alýyorsanýz veya otomatik olarak askýya alýnmaya ayarlanmýþsa 
+  tamamen çýkýþ yapmanýz ve sürdürdükten sonra NetMeeting'i yeniden baþlatmanýz gerekir.
+
+- Eðer bir elektronik posta iletisinde Hýzlý Çevir alýrsanýz, posta programýnýz onu bir metin 
+  (.txt) dosyasýna çevirebilir. Adý .cnf uzantýsýyla bitecek þekilde yeniden 
+  adlandýrýrsanýz onu Hýzlý Çevir olarak kullanabilirsiniz.
+
+

@@ -1,0 +1,57 @@
+[General]
+Display Name=<DisplayName>
+Description=<Description>
+GUID={EA1F5312-EDFD-11ce-8D13-00AA0051BF96}
+Path=msfs32.dll
+Entry Point=1
+Client Version=4.0
+Service Provider=MSFS
+Misc Flags=RemoteAlso;DelayIdleInstall
+
+[Exchange Client Compatibility]
+Exchange Registry=1
+Exchange Extension Key=MSFS Menu Extensions
+
+; Exchange Context Map is *VIEWER, ADDRBOOK, *MESSAGE
+Exchange Context Map=01111111111
+
+; Exchange Interface Map is IExchExtCommands.
+Exchange Interface Map=1
+
+[Folder]
+Events=InstallCommands
+Contexts=ExplorerMail;ExplorerOther
+
+[ExplorerMail]
+Folder Class=IPF.Note
+Command Bars=50001
+Commands=MSMailHelpTopics;MSMailTools;ChangePassword;DownloadAddressLists;ScheduleRemoteMailDelivery;ViewSessionLog
+
+[ExplorerOther]
+Commands=MSMailHelpTopics;SuppressMSMailTools
+
+[Item]
+Message Class=IPM.Note;IPM.Post;IPM.Resend;REPORT
+Events=InstallCommands
+Commands=MSMailHelpTopics
+
+[Command]
+MSMailHelpTopics=50000;<MSMailHelpTopics>;Help After HelpHelp Enabled
+MSMailTools=50001;<MSMailTools>;Tools Before ToolsServices Submenu
+SuppressMSMailTools=50001;<MSMailTools>;Tools Before ToolsServices Submenu Suppress
+ChangePassword=50011;<ChangePassword>;50001
+DownloadAddressLists=50012;<DownloadAddressLists>;50001
+ScheduleRemoteMailDelivery=50013;<ScheduleRemoteMailDelivery>;50001
+ViewSessionLog=50014;<ViewSessionLog>;50001
+
+[Strings]
+DisplayName=MSFS Menü Eklentileri
+Description=MSMail 3.x Menü Eklentileri
+
+MSMailHelpTopics=Microsoft &Mail Yardým Konularý
+MSMailTools=Microsof&t Mail Araçlarý
+ChangePassword=Posta Kutusu Parolasýný &Deðiþtir...
+DownloadAddressLists=&Adres Listelerini Yükle
+ScheduleRemoteMailDelivery=Posta &Teslim Zamanýný Ayarla...
+ViewSessionLog=&Oturum Günlüðünü Görüntüle
+

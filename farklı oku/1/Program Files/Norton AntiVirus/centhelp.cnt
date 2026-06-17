@@ -1,0 +1,18 @@
+; CENTHELP.CNT for Norton AntiVirus
+:Base C:\Program Files\Norton AntiVirus\NAVW32.HLP>maintwo
+:Title Norton AntiVirus
+
+; Norton AntiVirus
+:Index Norton AntiVirus=C:\Program Files\Norton AntiVirus\NAVW32.HLP
+:Link C:\Program Files\Norton AntiVirus\NAVW32.HLP
+:include NAVW32.CNT
+
+; Norton Rescue
+:Index Rescue Disk=RESCUE32.HLP
+:Link RESCUE32.HLP
+:include RESCUE32.cnt
+
+; Support
+:Index Service and Support=C:\Program Files\Norton AntiVirus\support.hlp
+:Link C:\Program Files\Norton AntiVirus\support.hlp
+:include SUPPORT.cnt

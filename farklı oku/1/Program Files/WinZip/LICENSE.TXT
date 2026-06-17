@@ -1,0 +1,196 @@
+WinZip(R) Version 8.0 (3105)
+Copyright (C) 1991-2000 WinZip Computing, Inc.
+All Rights Reserved
+
+For ordering information, see the file ORDER.TXT.
+
+*** WINZIP STANDARD LICENSE ***
+
+This license applies to the standard-licensed version of WinZip.
+If you have an evaluation version of WinZip, see the section
+below titled WinZip Evaluation License.
+
+WINZIP LICENSE
+WINZIP COMPUTING, INC.
+
+You should carefully read the following terms and conditions
+before using this software.  Unless you have a different license
+agreement signed by WinZip Computing, Inc.  ("WCI") your use,
+distribution, or installation of this copy of WinZip indicates
+your acceptance of this License.
+
+If you do not agree to any of the terms of this License, then do
+not install, distribute or use this copy of WinZip.  If you paid
+WCI or an authorized WCI distributor for this copy individually,
+you may return it unused, within thirty (30) days after purchase,
+for a full refund of your payment.
+
+This copy of WinZip may either be used by a single person who
+uses the software personally on one or more computers, or
+installed on a single workstation used nonsimultaneously by
+multiple people, but not both.  This is not a concurrent use
+license.
+
+You may access this copy through a network, provided that you
+have obtained an individual WinZip license for each workstation
+that will access WinZip through the network.  For instance, if 8
+different workstations will access WinZip on the network, each
+workstation must have its own WinZip license, regardless of
+whether they use WinZip at different times or concurrently.
+
+This copy includes WinZip Self-Extractor Personal Edition, which
+may be used to create an unlimited number of freely
+distributable, royalty-free self-extracting Zip files.  These
+self-extracting Zip files contain, among other things, a portion
+of WinZip Self-Extractor Personal Edition, including copyrighted
+software, proprietary notices, and identifying information (the
+"Extraction Software").  You may not alter or modify the
+Extraction Software, nor give anyone permission to do so.
+
+THIS SOFTWARE, AND ALL ACCOMPANYING FILES, DATA AND MATERIALS,
+ARE DISTRIBUTED "AS IS" AND WITH NO WARRANTIES OF ANY KIND,
+WHETHER EXPRESS OR IMPLIED.  In particular, there is no warranty
+for the optional virus scanning feature.  (WinZip does not scan
+for viruses, it simply runs external programs that claim to
+perform this function.)  Good data processing procedure dictates
+that any program be thoroughly tested with non-critical data
+before relying on it. The user must assume the entire risk of
+using the program.  THIS DISCLAIMER OF WARRANTY CONSTITUTES AN
+ESSENTIAL PART OF THE AGREEMENT.
+
+ANY LIABILITY OF WCI WILL BE LIMITED EXCLUSIVELY TO REFUND OF
+PURCHASE PRICE.  IN ADDITION, IN NO EVENT SHALL WCI, OR ITS
+PRINCIPALS, SHAREHOLDERS, OFFICERS, EMPLOYEES, AFFILIATES,
+CONTRACTORS, SUBSIDIARIES, OR PARENT ORGANIZATIONS, BE LIABLE FOR
+ANY INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES WHATSOEVER
+RELATING TO THE USE OF WINZIP, OR YOUR RELATIONSHIP WITH WCI.
+
+IN ADDITION, IN NO EVENT DOES WCI AUTHORIZE YOU TO USE WINZIP IN
+APPLICATIONS OR SYSTEMS WHERE WINZIP'S FAILURE TO PERFORM CAN
+REASONABLY BE EXPECTED TO RESULT IN A SIGNIFICANT PHYSICAL
+INJURY, OR IN LOSS OF LIFE.  ANY SUCH USE BY YOU IS ENTIRELY AT
+YOUR OWN RISK, AND YOU AGREE TO HOLD WCI HARMLESS FROM ANY CLAIMS
+OR LOSSES RELATING TO SUCH UNAUTHORIZED USE.
+
+This Agreement is the complete statement of the Agreement between
+the parties on the subject matter, and merges and supersedes all
+other or prior understandings, purchase orders, agreements and
+arrangements.  This Agreement shall be governed by the laws of
+the State of Connecticut.  Exclusive jurisdiction and venue for
+all matters relating to this Agreement shall be in courts and
+fora located in the State of Connecticut, and you consent to such
+jurisdiction and venue.
+
+All rights of any kind in WinZip which are not expressly granted
+in this License are entirely and exclusively reserved to and by
+WCI. You may not rent, lease, modify, translate, reverse
+engineer, decompile, disassemble or create derivative works based
+on WinZip. You may not make access to WinZip available to others
+in connection with a service bureau, application service
+provider, or similar business, or use WinZip in a business to
+provide file compression, decompression, or conversion services
+to others.  There are no third party beneficiaries of any
+promises, obligations or representations made by WCI herein.
+
+*** WINZIP EVALUATION LICENSE ***
+
+This license applies to the evaluation version of WinZip.  If you
+do not have an evaluation version of WinZip, see the section
+above titled WinZip Standard License.
+
+WINZIP LICENSE
+EVALUATION VERSION
+WINZIP COMPUTING, INC.
+
+By using, copying, transmitting, distributing or installing
+WinZip, you agree to all of the terms of this License.  If you do
+not agree to any of the terms of this License, then do not use,
+copy, transmit, distribute, or install WinZip.
+
+This is not free software.  Subject to the terms below, you are
+hereby licensed by WinZip Computing, Inc.  ("WCI") to use this
+software for evaluation purposes without charge for a period of
+21 days.  If you use this software after the 21 day evaluation
+period a registration fee of $29 is required.  Payments must be
+in US dollars drawn on a US bank, and should be sent to WinZip
+Computing, Inc., P.O. Box 540, Mansfield, CT 06268, USA.  See
+the WinZip web site at www.winzip.com for information about
+online ordering and quantity discounts.
+
+Unregistered use of WinZip or WinZip Self-Extractor Personal
+Edition after the 21-day evaluation period is in violation of
+U.S. and international copyright laws.
+
+You may, without making any payment to WCI:
+
+    a)  give exact copies of this evaluation version of WinZip
+        personally to anyone, except for the purpose of extending
+        their 21 day evaluation period;
+    b)  distribute exact copies of this evaluation version of
+        WinZip, if done exclusively through electronic channels;
+        and
+    c)  make as many exact copies of this evaluation version of
+        WinZip as you wish, for purposes of distribution as
+        described in (a) and (b) above.
+
+YOU ARE SPECIFICALLY PROHIBITED FROM CHARGING, OR REQUESTING
+DONATIONS, FOR ANY COPIES, HOWEVER MADE, AND FROM DISTRIBUTING
+SUCH COPIES WITH OTHER PRODUCTS OF ANY KIND, COMMERCIAL OR
+OTHERWISE, WITHOUT PRIOR WRITTEN PERMISSION FROM WCI. WCI
+RESERVES THE RIGHT TO REVOKE THE ABOVE DISTRIBUTION RIGHTS AT ANY
+TIME, FOR ANY OR NO REASON.
+
+Self-extracting Zip files created by WinZip Self-Extractor
+Personal Edition (distributed as part of the WinZip evaluation
+package) contain, among other things, a portion of WinZip
+Self-Extractor, including copyrighted software, proprietary
+notices, and identifying information (the "Extraction Software").
+You may not alter or modify the Extraction Software, nor give
+anyone permission to do so. UNDER NO CIRCUMSTANCES ARE YOU
+LICENSED TO DISTRIBUTE SELF-EXTRACTING ZIP FILES CREATED BY THE
+EVALUATION VERSION OF WINZIP SELF-EXTRACTOR PERSONAL EDITION.
+
+THIS SOFTWARE, AND ALL ACCOMPANYING FILES, DATA AND MATERIALS,
+ARE DISTRIBUTED "AS IS" AND WITH NO WARRANTIES OF ANY KIND,
+WHETHER EXPRESS OR IMPLIED.  In particular, there is no warranty
+for the optional virus scanning feature.  (WinZip does not scan
+for viruses, it simply runs external programs that claim to
+perform this function.)  Good data processing procedure dictates
+that any program be thoroughly tested with non-critical data
+before relying on it. The user must assume the entire risk of
+using the program.  THIS DISCLAIMER OF WARRANTY CONSTITUTES AN
+ESSENTIAL PART OF THE AGREEMENT.  IN NO EVENT SHALL WCI, OR ITS
+PRINCIPALS, SHAREHOLDERS, OFFICERS, EMPLOYEES, AFFILIATES,
+CONTRACTORS, SUBSIDIARIES, OR PARENT ORGANIZATIONS, BE LIABLE FOR
+ANY INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES WHATSOEVER
+RELATING TO THE USE OF WINZIP, OR YOUR RELATIONSHIP WITH WCI.
+
+IN ADDITION, IN NO EVENT DOES WCI AUTHORIZE YOU TO USE WINZIP IN
+APPLICATIONS OR SYSTEMS WHERE WINZIP'S FAILURE TO PERFORM CAN
+REASONABLY BE EXPECTED TO RESULT IN A SIGNIFICANT PHYSICAL
+INJURY, OR IN LOSS OF LIFE.  ANY SUCH USE BY YOU IS ENTIRELY AT
+YOUR OWN RISK, AND YOU AGREE TO HOLD WCI HARMLESS FROM ANY
+CLAIMS OR LOSSES RELATING TO SUCH UNAUTHORIZED USE.
+
+This Agreement is the complete statement of the Agreement between
+the parties on the subject matter, and merges and supersedes all
+other or prior understandings, purchase orders, agreements and
+arrangements. This Agreement shall be governed by the laws of the
+State of Connecticut.  Exclusive jurisdiction and venue for all
+matters relating to this Agreement shall be in courts and fora
+located in the State of Connecticut, and you consent to such
+jurisdiction and venue.
+
+All rights of any kind in WinZip which are not expressly granted
+in this License are entirely and exclusively reserved to and by
+WCI. You may not rent, lease, modify, translate, reverse
+engineer, decompile, disassemble or create derivative works based
+on WinZip. You may not make access to WinZip available to others
+in connection with a service bureau, application service
+provider, or similar business, or use WinZip in a business to
+provide file compression, decompression, or conversion services
+to others.  There are no third party beneficiaries of any
+promises, obligations or representations made by WCI herein.
+
+###
+

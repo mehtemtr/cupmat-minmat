@@ -1,0 +1,32 @@
+[Initialize]
+AskWinRestart=No
+AskReplaceMidimap=No
+RunDrvConfig=No
+MakeAppDir=Yes
+DrvName=opl3sa.drv
+DefaultDir=c:\opl3sa
+MakeAppDir=Yes
+FDNum=1
+GrpNum=1
+GrpName1=YAMAHA
+GrpAppNum1=2
+YAMAHAApp1=YAMAHA STATION
+YAMAHAPath1=ystation\ystation.exe
+YAMAHAApp2=README
+YAMAHAPath2=ystation\readme.wri
+
+[Message]
+First=Do you want to install the YAMAHA Applications?
+Last=Last Message Test
+Caption=YAMAHA Application Installation
+
+[CopyAppDir1]		;FD 1
+VolLabel=SAINSTAL
+Number=3			;section 
+
+dir1=ystation
+file1=ystation.exe
+file2=muscroll.dll
+file3=readme.wri
+
+

@@ -1,0 +1,193 @@
+WinZip(R) version 8.0
+Copyright (C) 2000 WinZip Computing, Inc.
+All Rights Reserved
+
+
+Major changes in Version 8.0
+
+WinZip 8.0 includes significant enhancements for all WinZip
+users, whether novice or advanced.  The new Zip and E-Mail
+feature zips documents and folders and attaches the Zip file to
+an e-mail message without leaving Explorer.  The greatly enhanced
+Wizard can now create and update Zip files, as well as extract
+and install from MIME and similar encoded files (great for e-mail
+attachments). Improvements to the WinZip Classic interface make
+it more Windows-like than ever; for example, an optional
+Explorer-style toolbar is available, and, when creating or updating
+an archive, WinZip automatically stores the same subfolders and
+folder information that Windows Explorer would use for a similar
+copy operation.  And installing those very popular desktop themes
+and screen savers from Internet downloads has always been a
+difficult and cumbersome process, but WinZip's new automatic
+theme and screen saver installer makes it easy.
+
+Details on these and many other enhancements follow.
+
+
+Enhanced WinZip Wizard
+
+- WinZip Wizard functionality has been extended to allow you to
+  create and update Zip files from the Wizard.  After the initial
+  Welcome panel, the Wizard displays a new Select Activity panel;
+  from here, you specify whether you want to unzip/install,
+  update an existing archive, or create a new archive.  Like the
+  existing Unzip/Install Wizard, the new Add Wizard is designed
+  to make the most common operations easy and convenient.
+
+- The Wizard can now extract and install from MIME and other
+  encoded files.  This makes processing of e-mail attachments
+  from online service such as AOL and CompuServe easier for
+  Wizard users.
+
+- The Wizard now supports automatic installation of desktop
+  themes and screen savers (see below for more information).
+
+
+More Windows-like interface
+
+- When you click the right mouse button on a file in the
+  archive contents list, the context menu now displays any
+  associated actions for the type of file selected.  For example,
+  right-clicking on a .DOC file (Microsoft Word document) might
+  display "Open", "Print", and "New".  As in Explorer, hold down
+  the Shift key while clicking the right mouse button to add an
+  "Open With ..." choice to the menu.  This menu item allows you
+  to choose the application you wish to use to open the selected
+  file.
+
+- Inclusion of subfolders when adding, updating, etc., is now
+  automatic and mirrors Explorer's treatment of subfolders.  You
+  no longer have to check the "Include subfolders" checkbox;
+  instead, WinZip determines when to include subfolders using the
+  same logic that Explorer does.  Specifically:
+
+   1) When individual files are added, WinZip does not look in
+      subfolders for files with the same name.
+
+   2) When a folder is added, WinZip always adds the contents of
+      all its subfolders, just as Explorer always copies all
+      subfolders when you copy a folder.
+
+  The "Include subfolders" option in the Add dialog box is still
+  available if wildcards (* or ?) are used in the filename field.
+  This allows you to, for example, zip all *.DOC files in a
+  folder tree with a single operation.
+
+  WinZip automatically stores the same path information that is
+  copied when using drag and drop or copy and paste in the
+  Windows Explorer.
+
+- Optional new "Explorer-style" toolbar buttons are available.
+  These Internet Explorer-like buttons are simpler in style than
+  the traditional WinZip toolbar buttons and optionally appear
+  in gray, changing to full color when the mouse pointer is on
+  them.
+
+- WinZip now displays a tooltip when a Zip file is selected in
+  Windows Explorer.  The tooltip shows how many files are in the
+  archive and displays the archive comment, if there is one.  If
+  "View as Web Page" is enabled in Explorer, the information will
+  instead appear in the description area of the web page.  The
+  Windows Desktop Update (Active Desktop) must be installed and
+  WinZip shell extensions enabled in order to use this feature.
+
+- When you click the right mouse button on a file in the archive
+  contents list, the pop-up menu now displays only file-related
+  actions such as Extract.  This is more consistent with general
+  Windows conventions.  Use the Actions or File menu for
+  archive-related actions like Virus Scan.
+
+- Under Windows 98 and Windows 2000, WinZip menus now display small
+  icons corresponding to the menu items' toolbar buttons.
+
+
+Desktop theme and screen saver support
+
+- WinZip can install desktop themes and screen savers contained
+  in Zip files.  To use this feature, simply open a Zip file
+  containing a theme or screen saver and click the Install
+  button.  WinZip will extract all necessary files to the
+  appropriate folder(s) and then run the required system theme or
+  screen saver support application to complete installation.
+  Theme/screen saver installation is also supported by the WinZip
+  Wizard.  See online help ("Install Feature" topic) for complete
+  information.
+
+
+Other changes
+
+- Zip and E-Mail adds a new feature to the Windows Explorer
+  context menu. To use the feature, simply select files or
+  folders in Explorer and choose Zip and E-Mail from the pop-up
+  menu. WinZip creates a Zip file containing the selected items
+  and attaches it to a new e-mail message. The Zip file is
+  automatically deleted when your e-mail program no longer needs
+  it.  This feature requires that a supported e-mail application
+  such as Outlook be installed.
+
+- WinZip can automatically display the Zip comment when opening
+  a Zip file that contains a comment.
+
+- When the open Zip contains a comment, WinZip displays a
+  new icon on the Classic interface status line.  You can
+  click the icon to view and edit the comment.
+
+- Most of WinZip's major dialogs now have "What's This?" help.
+  Click on the question mark in the dialog's title bar, then
+  click on a control for quick information about how it's used.
+
+- WinZip now displays an animated progress dialog during lengthy
+  archive operations and can be minimized during such operations.
+
+- The Miscellaneous tab of the Configuration dialog has several
+  new options, allowing you to:
+
+    - set the number of recently used files listed in the
+      File menu,
+    - enable or disable the theme/screen saver installer,
+    - automatically show comments when opening Zip files,
+    - enable or disable the animated status dialog used
+      during long Zip operations, and
+    - restore all warning messages that you have previously
+      turned off.
+
+- A new option in the System tab of the Configuration dialog
+  allows you to control whether dialogs are shown when you drag
+  and drop files from Explorer onto an archive or a WinZip
+  window.
+
+- The list of recently used files in the Classic mode File menu
+  has been enhanced:
+
+    - The case and capitalization of files in the list adhere to
+      the preferences you have selected for files in the main
+      WinZip window.
+
+    - WinZip no longer places in the list files that were
+      automatically opened from the Windows temporary folder.
+      This means that, for example, temporary Zip files created
+      by opening e-mail attachments won't clutter the file list.
+
+- A new button for Close Archive is available and can be added to
+  the toolbar from the toolbar configuration dialog.
+
+- If you click the View button and multiple files are selected,
+  WinZip will perform the specified action on all selected files;
+  previously, WinZip only performed the action on the first
+  selected file.  For example, if you click View when two .DOC
+  files are selected, both documents will be opened.
+
+- The WinZip Self-Extractor Personal Edition is now a 32-bit
+  program exclusively and no longer supports creation of 16-bit
+  extractors.
+
+- Winzip's Windows extensions are now 32-bit Explorer Shell
+  extensions only.  The File Manager extension is no longer
+  supported.
+
+- The System tab of the Configuration dialog has an option to
+  change WinZip's associated file types.
+
+- Miscellaneous improvements to online help.
+
+###

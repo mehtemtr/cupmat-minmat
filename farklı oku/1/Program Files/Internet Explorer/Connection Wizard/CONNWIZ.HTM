@@ -1,0 +1,4243 @@
+<!--
+[VersionInfo]
+version=111
+-->
+<HTML>
+<META
+	   http-equiv  =   "Content-Type"
+       content     =   "text/html; charset=windows-1254">
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1254">
+<TITLE>
+Internet Bağlantı Sihirbazı
+</TITLE>
+
+<SCRIPT>
+function errortrap(msg,url,line)
+{
+    return true;
+}
+onerror=errortrap;
+function handleSubmit()
+{
+    event.returnValue  = false;
+    return false;
+}
+function handleKeyDown()
+{
+	if ((window.event.srcElement.type != "button") && (window.event.srcElement.type != "reset"))
+	{		
+		switch (window.event.keyCode)
+		{
+			case 13:
+			{
+				if ((g_btnNext.disabled != true) && (g_btnNext.style.visibility != "hidden") && (!g_bSelActive))
+				{
+					document.body.focus();
+					g_btnNext.onclick();
+				}
+				break;	
+			}
+			case 40:
+			{
+				if ((window.event.srcElement == g_selPayMethod) && (event.altKey))
+				{
+					g_bSelActive = true;
+				}
+			}
+			case 9:
+			{
+				if (!event.shiftKey)
+				{
+					switch(g_iCurrentScrn)
+					{
+						case 0:
+						{
+							break;
+						}
+						case 1:
+						{
+							if(isClickAndSurf() == -1)
+							{
+								g_btnCancel.focus();
+							}
+							else if (window.event.srcElement == g_editPhone)
+								g_btnBack.focus();
+							
+							break;
+						}
+						case "ERR":
+						{
+							if((g_bDialErr) && (event.srcElement == g_btnDialErrorTroubleShoot))
+								g_btnBack.focus();
+							else if (!g_bDialErr)
+								g_btnBack.focus();
+							
+							break;
+						}
+							
+						default:
+							break;
+					}
+				}
+				break;
+			}
+		
+			default:
+			{
+				break;
+			}	
+		}		
+		window.event.cancelBubble = true;
+		window.event.returnValue  = false;
+		return false;
+	}
+	else 
+		return true;
+}
+
+function shiftTab()
+{
+	if((window.event.keyCode == 9) && (window.event.shiftKey))	
+	{
+		switch(g_iCurrentScrn)
+		{
+			case "ERR":
+			{
+				if(g_bDialErr)
+					g_btnDialErrorTroubleShoot.focus();
+				else if (!g_bDialErr)
+					g_btnBack.focus();
+					
+				break;
+			}
+			default:
+				break;
+		}
+		window.event.cancelBubble = true;
+		window.event.returnValue  = false;
+		return false;
+	}
+	return true;
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY onload       = "run();"
+      ondragstart  = "DragStart()"
+	  onerror      = "errortrap();"
+	  onkeydown    = "handleKeyDown();"
+	  TOPMARGIN    = 0
+      LEFTMARGIN   = 0
+      RIGHTMARGIN  = 0
+      BOTTOMMARGIN = 0
+	  SCROLL       = no
+	  bgColor      = THREEDFACE
+      color        = WINDOWTEXT
+	  STYLE        ="font-family: 'MS Sans Serif';
+                     font-size: 8pt">
+
+
+
+
+<SCRIPT>
+var m_IOleObject              = new Object();
+var ICWSystemConfigSignup     = new Object();
+var TapiLocationInfoSignup    = new Object();
+var RegisteredUserInfo        = new Object();
+var lBrandingFlags            = 0;           
+var DSO_UPPERBOUND            = 0;           
+var g_nCurPayIndex            = 0;           
+var g_iCurrentScrn            = 0;           
+var m_iPercentIncrease        = 0;           
+var curO                      = 1;           
+var lastO                     = 1;           
+var g_cRefCount               = 100;         
+var g_bDownloadComplete       = false;
+var bLargeFonts               = false;       
+var bFE_InternationalZone     = false;       
+var g_bFinishPage             = false;
+var g_bFinish                 = false;
+var g_bISPNext                = false;
+var g_bISPBack                = false;
+var g_bSignupForm             = false;
+var bLoadtdcIspInfo           = false;
+var b_inFocus                 = false;       
+var m_bCns                    = false;       
+var acceptTOS                 = false;
+var declineTOS                = false;
+var g_bDialErr                = false;		 
+var g_bNoOffers               = false;		 
+var g_bSelActive              = false;       
+var fUserModifiedPhoneNumber  = false;       
+var sQueryString              = "";
+var billingQuery              = "";
+var customQuery               = "";
+var g_docArrayT               = new Array();
+var g_docArrayP               = new Array();
+var m_oUserInfo               = null;        
+var m_oPayment                = null;        
+var selButton                 = null;
+var lcid                      = 0;
+var DEBUGMODE                 = false;
+var sSignupSvr                = "";
+var DoDialup                  = false;
+var ISPFRAMEEX_STYLE          = "";
+L_btnBack_Accelerator					= "g"; 
+L_btnNext_Accelerator					= "r"; 
+L_btnFinish_Accelerator					= "a"; 
+L_ispListControlFocalNode_Accelerator   = "I"; 
+L_editUserFEName_Accelerator			= "İ"; 
+L_editFName_Accelerator					= "a"; 
+L_editLName_Accelerator					= "s"; 
+L_editAddress_Accelerator				= "a"; 
+L_editExAddress_Accelerator				= "k"; 
+L_editCity_Accelerator					= "ş"; 
+L_editState_Accelerator					= "ü"; 
+L_editZip_Accelerator				    = "p"; 
+L_editPhone_Accelerator				    = "t"; 
+L_selPayMethod_Accelerator				= "s"; 
+L_edtCardNumber_Accelerator				= "ş"; 
+L_selCardExMonth_Accelerator			= "a"; 
+L_selCardExYear_Accelerator				= "y"; 
+L_editCName_Accelerator					= "z"; 
+L_editCAddress_Accelerator				= "a"; 
+L_editCZip_Accelerator					= "p"; 
+L_editIAddress_Accelerator				= "a"; 
+L_editIExAddress_Accelerator			= "k"; 
+L_editICity_Accelerator					= "ş"; 
+L_editIState_Accelerator				= "ü"; 
+L_editIZip_Accelerator					= "p"; 
+L_editPName_Accelerator                 = "t"; 
+L_editPAccountNum_Accelerator           = "a"; 
+L_edtDialErrorNumber_Accelerator        = "e"; 
+L_listDialErrorModem_Accelerator        = "a"; 
+L_btnDialErrorDialProp_Accelerator      = "k"; 
+L_btnDialErrorPhoneBook_Accelerator     = "t"; 
+L_btnDialErrorTroubleShoot_Accelerator  = "T"; 
+L_rbtnAccept_Accelerator                = "a"; 
+L_rbtnDecline_Accelerator               = "k"; 
+public_description = new connwizObj;
+function connwizObj()
+{
+	this.get_resetFocus                   = get_resetFocus;
+	this.get_checkBindSuccess             = get_checkBindSuccess;
+	this.get_finish                       = get_finish;
+	this.get_closeSocket                  = get_closeSocket;
+	this.get_checkLargeFonts              = get_checkLargeFonts;
+	this.put_setExternIOleContainer       = put_setExternIOleContainer;
+	this.put_setICWSystemConfigSignupOCX  = put_setICWSystemConfigSignupOCX;
+	this.put_setTapiLocationInfoSignupOCX = put_setTapiLocationInfoSignupOCX;
+	this.put_setRegisteredUserInfoOCX     = put_setRegisteredUserInfoOCX;
+	this.put_IsLargeFonts                 = put_IsLargeFonts;
+	this.put_fontPrecentage               = put_fontPrecentage;
+	this.put_setDebug                     = put_setDebug;
+	this.put_setSignupSvr                 = put_setSignupSvr;
+	this.put_setDoDialup                  = put_setDoDialup;
+}
+function get_resetFocus()
+{
+	if(!g_bNoOffers)
+		window.setTimeout("g_btnNext.focus();", 1);
+	else
+		window.setTimeout("g_btnFinish.focus();", 1);			
+	return true;
+}
+function get_checkBindSuccess()
+{
+	return bLoadtdcIspInfo;
+}
+function get_finish()
+{
+	return g_bFinish;
+}
+function get_closeSocket()
+{
+	RefDialSignup.DoHangup();
+	Webgate.KillIdleTimer();
+	return true;
+}
+function get_checkLargeFonts()
+{
+	var docObj;
+	var DOCLENGTH = document.all.length;
+	if(bLargeFonts)
+	{
+		for(var i = 0; i < DOCLENGTH; i++)
+		{	
+			docObj = document.all(i);
+			if (docObj != null)
+			{
+				docObj.style.posTop  *= m_iPercentIncrease;
+				docObj.style.posLeft *= m_iPercentIncrease;
+				docObj.style.width=docObj.style.width.substring(0, docObj.style.width.length - 2)*m_iPercentIncrease;
+				docObj.style.height=docObj.style.height.substring(0, docObj.style.height.length - 2)*m_iPercentIncrease;
+			}
+		}
+		ISPFRAMEEX_STYLE  = "STYLE='position: absolute; top:" +  13*m_iPercentIncrease + "; left:" + 167*m_iPercentIncrease + "; width:" + 359*m_iPercentIncrease + "; height:" + 346*m_iPercentIncrease + "; visibility: hidden'";
+		g_divIspListControl.style.borderWidth = 2*m_iPercentIncrease; 
+	}
+	else
+	{
+		ISPFRAMEEX_STYLE  = "STYLE='position: absolute; top: 13; left: 167; width: 359; height: 346; visibility: hidden'";
+	}
+	init();
+}
+function put_setExternIOleContainer(extrnIOleObj)
+{
+	m_IOleObject =  extrnIOleObj;
+}
+function put_setICWSystemConfigSignupOCX(OCX)
+{
+	ICWSystemConfigSignup =  OCX;
+}
+function put_setTapiLocationInfoSignupOCX(OCX)
+{
+	TapiLocationInfoSignup =  OCX;
+}
+function put_setRegisteredUserInfoOCX(OCX)
+{
+	RegisteredUserInfo =  OCX;
+}
+function put_IsLargeFonts(bool)
+{
+	bLargeFonts = bool;
+}
+function put_fontPrecentage(dPercent)
+{
+	m_iPercentIncrease = dPercent;
+}
+function put_setDebug(bool)
+{
+	DEBUGMODE = bool;
+}
+function put_setSignupSvr(str)
+{
+	sSignupSvr = str;
+}
+function put_setDoDialup(bool)
+{
+	DoDialup = bool;
+}
+function passMDE()
+{
+    window.external.raiseEvent("event_onmousedown" , window.event);
+}
+function DragStart()
+{
+    window.event.cancelBubble = true;
+    window.event.returnValue  = false;
+    return false;
+}
+function run()
+{
+	asyncLoad();
+}
+function init()
+{
+	activateCommonUI();
+	checkForNoOffers();
+	if (!g_bNoOffers)
+	{
+		checkInternationalZone();
+		DSO_UPPERBOUND  = tdcIspInfo.recordset.recordcount;  
+		if (DSO_UPPERBOUND > 17)
+		{
+			if(bLargeFonts)
+				g_tblIspList.style.width=198*m_iPercentIncrease;
+			else
+				g_tblIspList.style.width=198;
+		}
+		checkForCNS();
+		populateUserInfo();
+		showIspListPage();
+		setInitalFocusForIspSelect();
+	}
+	else
+		showNoOffers();
+	return true;
+}
+function checkForNoOffers()
+{
+	if(g_CNS.value == "0")
+		g_bNoOffers = true;
+	else
+		g_bNoOffers = false;	
+	return true;
+} 
+function checkForCNS()
+{
+	tdcIspInfo.recordset.moveFirst();
+	while(!tdcIspInfo.recordset.EOF)
+	{
+		if (g_CNS.value == "TRUE")
+		{
+			m_bCns = true;
+			break;
+		}
+		tdcIspInfo.recordset.moveNext();
+	}
+	return true;
+}
+function checkInternationalZone()
+{
+	if (RegisteredUserInfo.CollectRegisteredUserInfo() != 0)
+	{
+	    lcid = RegisteredUserInfo.Lcid;
+		bFE_InternationalZone = false;
+		switch (lcid)
+		{
+			case 1028:
+			case 1041:
+			case 1042:
+			case 2066:
+			case 2052:
+			{
+				bFE_InternationalZone = true;
+				break;
+			}
+			default:
+				break;
+		}
+		return true;
+	}
+	return false;
+}
+function asyncLoad()
+{
+	if(bLoadtdcIspInfo == true)
+	{
+	    window.external.raiseEvent("event_onmousedown" , window.event);
+		return true;
+	}
+	else
+	{
+		if (g_cRefCount <= 0)
+		{
+			g_cRefCount = 100;
+			window.external.raiseEvent("event_onmousedown" , window.event);
+			return false;
+		}
+		{
+			g_cRefCount--;
+			window.setTimeout("asyncLoad();", 1000);
+		}
+	}
+}
+function setIspLoad()
+{
+	bLoadtdcIspInfo = true;
+}
+function showIspListPage()
+{
+	activateIspListUI();
+	window.setTimeout("g_btnNext.focus();", 1);
+}
+function showNoOffers()
+{
+	activateNoOffersUI();
+	g_btnFinish.onclick=nooffersFinish;
+}
+function nooffersFinish()
+{
+	m_IOleObject.CloseApplication;
+}
+function showOls()
+{
+	activateOlsUI();
+	g_btnFinish.onclick=olsFinish;
+	return true;
+}
+function olsFinish()
+{
+    m_IOleObject.CreateDesktopShortcut(g_divOls.olsLink);
+    for(var i = 0; i < g_divOls.NumRegEntries; i++)
+    {
+        m_IOleObject.SetHKLMRegValue(g_divOls.RegEntryKey(i), 
+                                     g_divOls.RegEntryName(i),
+                                     g_divOls.RegEntryValue(i));
+    }                                       
+    m_IOleObject.ICWSuccess;
+    m_IOleObject.SetICWCompleted;
+    m_IOleObject.CloseApplication;
+    return true;
+}
+function showUserInfo()
+{
+	activateUserInfoUI();
+	g_btnNext.onclick=fireRequiredInfoDlgUserInfo;
+	if(!validateUserInfo())
+	{
+		m_oUserInfo.focus();
+	}
+}
+function fireRequiredInfoDlgUserInfo()
+{
+	if(!validateUserInfo())
+	{
+		if(m_IOleObject.PromptForRequiredInfo())
+		{
+			m_oUserInfo.focus();
+			killEvent();
+			return false;
+		}
+	}
+	else
+	{
+		m_oUserInfo = null;
+		next();
+		return true;
+	}
+}
+function validateUserInfo()
+{
+	if (bFE_InternationalZone)
+	{
+		if (g_editUserFEName.value == "")
+		{
+			m_oUserInfo = g_editUserFEName;
+			return false;
+		}
+	}
+	else
+	{
+		if (g_editFName.value == "")
+		{
+			m_oUserInfo = g_editFName;
+			return false;
+		}
+		else if (g_editLName.value == "")
+		{
+			m_oUserInfo = g_editLName;
+			return false;
+		}
+	}
+	if (g_editAddress.value == "")
+	{
+		m_oUserInfo = g_editAddress;
+		return false;
+	}
+	else if (g_editCity.value == "")
+	{
+		m_oUserInfo = g_editCity;
+		return false;
+	}
+	else if (g_editZip.value == "")
+	{
+		m_oUserInfo = g_editZip;
+		return false;
+	}
+	else if (g_editPhone.value == "")
+	{
+		m_oUserInfo = g_editPhone;
+		return false;
+	}
+	else
+	{
+		m_oUserInfo = null;
+		return true;
+	}
+}
+function populateUserInfo()
+{
+ 	if (bFE_InternationalZone)
+		g_editUserFEName.value = RegisteredUserInfo.FirstName;
+	else
+	{
+		g_editFName.value = RegisteredUserInfo.FirstName;
+		g_editLName.value = RegisteredUserInfo.LastName;
+	}
+    g_editAddress.value   = RegisteredUserInfo.Address1;
+	g_editExAddress.value = RegisteredUserInfo.Address2;
+	g_editCity.value      = RegisteredUserInfo.City;
+	g_editState.value     = RegisteredUserInfo.State;
+	g_editZip.value       = RegisteredUserInfo.ZIPCode;
+	g_editPhone.value     = RegisteredUserInfo.PhoneNumber;
+}
+function showBilling()
+{
+	activateBillingUI();
+	window.setTimeout("g_btnNext.focus();", 1);
+}
+function showPayment()
+{
+	populateUserInfoForPayment();
+    g_selPayMethod.selectedIndex = 0;
+	activatePaymentUI();
+	reflectPayMeth();
+	g_btnNext.onclick=fireRequiredInfoDlgPay;
+}
+function doPrompt()
+{
+	if(m_IOleObject.PromptForRequiredInfo())
+	{
+		m_oPayment.focus();
+		killEvent();
+		return false;
+	}
+	return true;
+}
+function doValid()
+{
+	m_oPayment = null;
+	next();
+	return true;
+}
+function fireRequiredInfoDlgPay()
+{
+	switch (g_nCurPayIndex)
+	{
+		case '1':
+		{
+			if(!validatePayElement())
+			{
+				doPrompt();
+			}
+			else
+				doValid();
+			break;
+		}
+		case '2':
+		{
+			if(!validatePayElement())
+			{
+				doPrompt();
+			}
+			else
+				doValid();
+			break;
+		}
+		case '3':
+		{
+			if(!validatePayElement())
+			{
+				doPrompt();
+			}
+			else
+				doValid();
+			break;
+		}
+        case '4':
+            doValid();
+		default:
+			break;
+	}
+}
+function validatePayElement()
+{
+	var ret = false;
+	switch (g_nCurPayIndex)
+	{
+		case '1':
+		{
+			ret = validatePayInfoCredit();
+			break;
+		}
+		case '2':
+		{
+			ret = validatePayInfoInvoice();
+			break;
+		}
+		case '3':
+		{
+			ret = validatePayInfoPhone();
+			break;
+		}
+		default:
+			break;
+	}
+	return ret;
+}
+function validatePayInfoCredit()
+{
+	if (g_edtCardNumber.value == "")
+	{
+		m_oPayment = g_edtCardNumber;
+		return false;
+	}
+	else if(isLUHN())
+	{
+		if(!m_IOleObject.CheckCreditCRC(g_edtCardNumber.value)) // run the LUHN
+		{
+			m_oPayment = g_edtCardNumber;
+			return false;
+		}
+	}
+	if (g_editCName.value == "")
+	{
+		m_oPayment = g_editCName;
+		return false;
+	}
+	else if (g_editCAddress.value == "")
+	{
+		m_oPayment = g_editCAddress;
+		return false;
+	}
+	else if (g_editCZip.value == "")
+	{
+		m_oPayment = g_editCZip;
+		return false;
+	}
+	else
+	{
+		m_oPayment = null;
+		return true;
+	}
+
+}
+function isLUHN()
+{
+	if (g_selPayMethod.item(g_selPayMethod.selectedIndex).LUHN == 1)
+		return true;
+	return false;
+}
+function validatePayInfoInvoice()
+{
+	if (g_editIAddress.value == "")
+	{
+		m_oPayment = g_editIAddress;
+		return false;
+	}
+	else if (g_editICity.value == "")
+	{
+		m_oPayment = g_editICity;
+		return false;
+	}
+	else if (g_editIZip.value == "")
+	{
+		m_oPayment = g_editCZip;
+		return false;
+	}
+	else
+	{
+		m_oPayment = null;
+		return true;
+	}
+}
+function validatePayInfoPhone()
+{
+	if (g_editPName.value == "")
+	{
+		m_oPayment = g_editPName;
+		return false;
+	}
+	else if (g_editPAccountNum.value == "")
+	{
+		m_oPayment = g_editPAccountNum;
+		return false;
+	}
+	else
+	{
+		m_oPayment = null;
+		return true;
+	}
+}
+function wipeSelect()
+{
+	var MAX = g_selPayMethod.length;
+	for (var i = 0; i < MAX; i++)
+	{
+		g_selPayMethod.options.remove(0);
+	}
+	return true
+}
+function populatePayMethodCombo()
+{
+	var m_nOrd = 0; 
+	tdcPayMethod.recordset.moveFirst();
+	while(!tdcPayMethod.recordset.EOF)
+	{
+		var m_Obj   = document.createElement("OPTION");
+		m_Obj.text  = tdcPay_DisName.value;            
+		m_Obj.value = tdcPay_VType.value;              
+		m_Obj.sUrl  = tdcPay_CustURL.value;		
+		m_Obj.LUHN  = tdcPay_LUHN.value;               
+		document.all.g_selPayMethod.add(m_Obj, m_nOrd);
+		tdcPayMethod.recordset.MoveNext();
+		m_nOrd++;
+	}
+}
+function populateUserInfoForPayment()
+{
+	if (bFE_InternationalZone)
+		g_editCName.value   = g_editUserFEName.value;
+	else
+		g_editCName.value   = g_editFName.value + " " + g_editLName.value;
+	g_editCAddress.value    = g_editAddress.value;
+	g_editCZip.value        = g_editZip.value;
+	g_editIAddress.value    = g_editAddress.value;
+	g_editIExAddress.value  = g_editExAddress.value;
+	g_editICity.value       = g_editCity.value;
+	g_editIState.value      = g_editState.value;
+	g_editIZip.value        = g_editZip.value;
+	if (bFE_InternationalZone)
+		g_editPName.value   = g_editUserFEName.value;
+	else
+		g_editPName.value   = g_editFName.value + " " + g_editLName.value;
+	g_editPAccountNum.value = g_editPhone.value;
+
+}
+function reflectPayMeth()
+{
+	cleanLastSelection(g_nCurPayIndex);
+	g_nCurPayIndex = g_selPayMethod.item(g_selPayMethod.selectedIndex).value;
+	switch (g_nCurPayIndex)
+	{
+		case '1':
+		{
+			activatePayment_CreditCardUI();
+			if(!validatePayElement())
+				m_oPayment.focus();
+			break;
+		}
+		case '2':
+		{
+			activatePayment_InvoiceUI();
+			if(!validatePayElement())
+				m_oPayment.focus();
+			break;
+		}
+		case '3':
+		{
+			activatePayment_PhoneUI();
+			if(!validatePayElement())
+				m_oPayment.focus();
+			break;
+		}
+		case '4':
+		{
+			activatePayment_CustomUI(g_selPayMethod.item(g_selPayMethod.selectedIndex).sUrl);
+			break;
+		}
+		default:
+			break;
+	}
+	g_bSelActive = false;
+}
+function cleanLastSelection()
+{
+	switch (g_nCurPayIndex)
+	{
+		case '1':
+		{
+			deactivatePayment_CreditCardUI();
+			break;
+		}
+		case '2':
+		{
+			deactivatePayment_InvoiceUI();
+			break;
+		}
+		case '3':
+		{
+			deactivatePayment_PhoneUI();
+			break;
+		}
+		case '4':
+		{
+			deactivatePayment_CustomUI();
+			break;
+		}
+		default:
+			break;
+	}
+}
+function showIspCon()
+{
+	activateIspConnectUI();
+	if (DEBUGMODE)
+	{
+		FORMACTION.value = sSignupSvr;
+        if (DoDialup)
+		    dailSignUpSvr();
+        else
+        	submitSignUpForm();
+	}
+	else
+	{
+		dailSignUpSvr();
+	}
+}
+function dailSignUpSvr()
+{
+    TapiLocationInfoSignup.GetTapiLocationInfo();
+	ISPFORM.AREACODE.value    = TapiLocationInfoSignup.bstrAreaCode;
+	ISPFORM.COUNTRYCODE.value = TapiLocationInfoSignup.lCountryCode;
+	ICWSystemConfigSignup.ConfigSystem();
+    if (ICWSystemConfigSignup.VerifyRasIsRunning() == 0)
+    {
+        showDialErr();
+        g_iCurrentScrn = "ERR";
+    }
+    else
+    {
+		if (RefDialSignup.SetupForDialing(ispFileName.value,
+                                          TapiLocationInfoSignup.lCountryCode,
+                                          TapiLocationInfoSignup.bstrAreaCode) == 0)
+        {
+            showDialErr();
+            g_iCurrentScrn = "ERR";
+        }
+        else
+        {
+			if (fUserModifiedPhoneNumber)
+				RefDialSignup.DialPhoneNumber=g_edtDialErrorNumber.value;
+             g_spnIspCon4.innerHTML=RefDialSignup.DialPhoneNumber;
+			 FORMACTION.value=RefDialSignup.SignupURL;
+			 lBrandingFlags = RefDialSignup.BrandingFlags;
+             RefDialSignup.DoConnect();
+        }
+    }
+}
+function submitSignUpForm()
+{
+	if(bFE_InternationalZone)
+		ISPFORM.USER_FE_NAME.value = g_editUserFEName.value;
+	else
+	{
+		ISPFORM.USER_FIRSTNAME.value =  g_editFName.value;
+		ISPFORM.USER_LASTNAME.value  =  g_editLName.value;
+	}
+	ISPFORM.USER_ADDRESS.value     = g_editAddress.value;
+    ISPFORM.USER_MOREADDRESS.value = g_editExAddress.value;
+    ISPFORM.USER_CITY.value        = g_editCity.value;
+    ISPFORM.USER_STATE.value       = g_editState.value;
+    ISPFORM.USER_ZIP.value         = g_editZip.value;
+    ISPFORM.USER_PHONE.value       = g_editPhone.value;
+	if (!(isClickAndSurf()))
+    {
+		billingQuery = getQueryStringAppend(g_iframeBillingDoc.document.forms(0));
+        ISPFORM.PAYMENT_TYPE.value        = g_selPayMethod.item(g_selPayMethod.selectedIndex).value;
+        ISPFORM.PAYMENT_DISPLAYNAME.value = g_selPayMethod.item(g_selPayMethod.selectedIndex).text;
+		
+		if (g_selPayMethod.item(g_selPayMethod.selectedIndex).value == 1)
+        {
+                ISPFORM.PAYMENT_CARDNUMBER.value  = g_edtCardNumber.value;
+                ISPFORM.PAYMENT_EXMONTH.value     = g_selCardExMonth.value;
+                ISPFORM.PAYMENT_EXYEAR.value      = g_selCardExYear.value;
+                ISPFORM.PAYMENT_CARDHOLDER.value  = g_editCName.value;
+                ISPFORM.PAYMENT_BILLADDRESS.value = g_editCAddress.value;
+                ISPFORM.PAYMENT_BILLZIP.value     = g_editCZip.value;
+        }
+		else if (g_selPayMethod.item(g_selPayMethod.selectedIndex).value == 2)
+        {
+                ISPFORM.PAYMENT_BILLADDRESS.value    = g_editIAddress.value;
+                ISPFORM.PAYMENT_BILLEXADDRESS.value  = g_editIExAddress.value;
+                ISPFORM.PAYMENT_BILLCITY.value       = g_editICity.value;
+                ISPFORM.PAYMENT_BILLSTATE.value      = g_editIState.value;
+                ISPFORM.PAYMENT_BILLZIP.value        = g_editIZip.value;
+        }
+        else if (g_selPayMethod.item(g_selPayMethod.selectedIndex).value == 3)
+        {
+                ISPFORM.PAYMENT_BILLNAME.value       =  g_editPName.value;
+                ISPFORM.PAYMENT_BILLPHONE.value      =  g_editPAccountNum.value;
+        }
+        else
+        {
+                if (null !=  g_iframePayCustomDoc.document.forms(0))
+                    customQuery = getQueryStringAppend(g_iframePayCustomDoc.document.forms(0));
+        }
+    }
+    if (RefDialSignup.ProcessSignedPID())
+        ISPFORM.SIGNED_PID.value = RefDialSignup.SignedPID;
+    else
+        ISPFORM.SIGNED_PID.value = "";
+    ISPFORM.GUID.value     = g_GUID.value;
+	ISPFORM.OFFERID.value  = g_OfferId.value;
+	setQueryString(getQueryString(ISPFORM) +  billingQuery +  customQuery);
+    g_bSignupForm = true;
+    submitPage();
+}
+function showIspPage()
+{
+	activateIspPageUI(getIspPageType());
+}
+function getIspPageType()
+{
+	var i = 0;
+	if (g_iframeIspPage.innerHTML != "")
+	{
+		switch (PAGETYPE.action)
+		{
+			case "TERMS":
+			{
+				i = 1;
+				break;
+			}
+			case "CUSTOMFINISH":
+			{
+				i = 2;
+				break;
+			}
+			case "FINISH":
+			{
+				i = 3;
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	return i;
+}
+function showDialErr()
+{
+	g_bDialErr = true;
+ 	deactivateIspConnectUI();
+    activateDialErrUI();
+    fHadConnectionError = true;             
+	g_spnDialErrorMsg.innerHTML = RefDialSignup.DialErrorMsg;
+    g_edtDialErrorNumber.value  = RefDialSignup.DialPhoneNumber;
+	FillModemList();
+	DisplaySupportNumber();
+    g_bDownloadComplete = false;
+	RefDialSignup.DoHangup();
+	Webgate.KillIdleTimer();
+}
+function ValidateDialErrorNumber()
+{
+    if (fUserModifiedPhoneNumber)
+    {
+        if (!RefDialSignup.ValidatePhoneNumber(g_edtDialErrorNumber.value))
+            return false;
+    }
+    return true;
+}
+function DialErrorNumberChange()
+{
+    g_btnDialErrorDialProp.disabled = true;
+    fUserModifiedPhoneNumber        = true;
+}
+function SpecialDialErrorNumberChange()
+{
+	switch(window.event.keyCode)
+	{
+		case 46:
+		case 8:
+		{
+			DialErrorNumberChange();	
+			break;
+		}
+		default:
+			break;
+	}
+	return true;	
+}
+function ShowPhoneBook()
+{
+    if (RefDialSignup.ShowPhoneBook())
+    {
+        fUserModifiedPhoneNumber        = false;
+        g_btnDialErrorDialProp.disabled = false;
+        g_edtDialErrorNumber.value = RefDialSignup.DialPhoneNumber;
+        DisplaySupportNumber();
+    }
+}
+function ShowDialErrorTroubleShooter()
+{
+	m_IOleObject.ShowDialErrorHelp;
+}
+function DialProperties()
+{
+    if (RefDialSignup.ShowDialingProperties())
+    {
+        g_edtDialErrorNumber.value = RefDialSignup.DialPhoneNumber;
+        DisplaySupportNumber();
+    }
+}
+function DisplaySupportNumber()
+{
+    if (RefDialSignup.ISPSupportPhoneNumber != "")
+    {
+        show(g_spnErrorAutomatedHelp);
+        show(g_spnErrorAutomatedHelpNumber);
+        g_spnErrorAutomatedHelpNumber.innerHTML = RefDialSignup.ISPSupportPhoneNumber;
+    }
+    else
+    {
+        g_spnErrorAutomatedHelpNumber.innerHTML = "";
+        hide(g_spnErrorAutomatedHelp);
+        hide(g_spnErrorAutomatedHelpNumber);
+    }
+}
+function FillModemList()
+{
+    var el;
+    var NumModems;
+    while (g_listDialErrorModem.options(0) != null)
+        g_listDialErrorModem.remove(0);
+    NumModems = RefDialSignup.ModemEnum_NumDevices;
+    RefDialSignup.ModemEnum_Reset();
+    for (i=0; i < NumModems; i++)
+    {
+        el = document.createElement("OPTION");
+        el.text=RefDialSignup.ModemEnum_Next();
+        el.value="i";
+        g_listDialErrorModem.add(el);
+    }
+	if (RefDialSignup.CurrentModem != -1)
+		g_listDialErrorModem.selectedIndex = RefDialSignup.CurrentModem;
+	else
+		g_listDialErrorModem.selectedIndex = 0;
+}
+function showSignupErr()
+{
+	g_bDialErr = false;
+ 	deactivateIspConnectUI();
+	deactivateIspPageUI(getIspPageType());
+	g_iCurrentScrn = "ERR";
+	activateSignupErrUI();
+    RefDialSignup.DoHangup();
+	Webgate.KillIdleTimer();
+}
+function signupPageFormatError()
+{
+	if (-1 == g_iframeIspPage.innerHTML.indexOf("PAGETYPE"))
+		return true;
+	else
+		return false;
+}
+function screenSwitch()
+{
+	g_btnNext.disabled = false;
+    g_btnBack.disabled = false;
+	switch (g_iCurrentScrn)
+	{
+		case -1:
+		{
+			nav();
+			break;
+		}
+		case 0:
+		{
+			if (!g_bNoOffers)
+				showIspListPage();
+			else 
+				showNoOffers();
+			break;
+		}
+		case 1:
+		{
+			if(isClickAndSurf() == -1)
+			{
+				showOls();
+			}
+			else
+			{
+				if (!isClickAndSurf())
+				{
+					g_iframeBillingDoc.document.body.bgColor = ColorMap.backPage;
+					g_iframeBillingDoc.document.body.style.fontFamily = "Ms Sans Serif";
+					g_iframeBillingDoc.document.body.style.fontSize = "8pt";
+					g_iframeBillingDoc.document.body.style.fontColor = ColorMap.page;		
+				}
+				showUserInfo();
+				if ((g_hidPayCSVSRC.value != "") && (g_hidPayCSVSRC.value != null))
+				{
+					tdcPayMethodContainer.innerHTML = "<OBJECT ID=tdcPayMethod TABINDEX=-1 CLASSID='clsid:333C7BC4-460F-11D0-BC04-0080C7055A83' STYLE='cursor:   default'><PARAM NAME='UseHeader' VALUE='True'></OBJECT>";
+					tdcPayMethod.dataUrl = g_hidPayCSVSRC.value;
+					tdcPayMethod.textQualifier = "'";
+				}
+  			}
+			break;
+		}
+		case 2:
+		{
+			if (isClickAndSurf())
+			{
+				g_iCurrentScrn = 4;
+				screenSwitch();
+			}
+			else
+			{
+				showBilling();
+				wipeSelect();
+				populatePayMethodCombo();
+			}
+			break;
+		}
+		case 3:
+		{
+			showPayment();
+			break;
+		}
+		case 4:
+		{
+			showIspCon();
+			break;
+		}
+		case 5:
+		{
+			showIspPage();
+			break;
+		}
+		default:
+			break;
+	}
+}
+function preScreenSwitchHide()
+{
+	if (g_iCurrentScrn == "ERR")
+	{
+		if (g_bDialErr)
+		{
+			RefDialSignup.CurrentModem = g_listDialErrorModem.selectedIndex;
+		}
+		deactivateDialErrUI();
+		deactivateSignupErrUI();
+		g_bDialErr = true;
+		return true;
+	}
+	else
+	{
+		switch (g_iCurrentScrn)
+		{
+			case 0:
+			{
+				destructPaymentMethod();
+				deactivateIspListUI();
+				break;
+			}
+			case 1:
+			{
+				if(isClickAndSurf() == -1)
+					deactivateOlsUI();
+				else
+				{
+					deactivateUserInfoUI()
+					g_btnNext.onclick=next;
+				}
+				break;
+			}
+			case 2:
+			{
+				deactivateBillingUI();
+				break;
+			}
+			case 3:
+			{
+				deactivatePaymentUI();
+				cleanLastSelection(g_nCurPayIndex);
+				g_btnNext.onclick=next;
+				break;
+			}
+			case 4:
+			{
+				destructBillingFrame();
+				deactivateIspConnectUI();
+				break;
+			}
+			case 5:
+			default:
+				break;
+		}
+	}
+	return true;
+}
+function isClickAndSurf()
+{
+    if (g_CNS.value == "TRUE")
+        return true;
+    else if (g_CNS.value == "-1")
+		return -1;
+	else
+        return false;
+}
+function formMagic()
+{
+    var m_iTemp;
+    var m_bPrev = false;
+    for (m_iTemp = 0; m_iTemp < g_docArrayT.length; m_iTemp++)
+    {
+	    if (g_docArrayT[m_iTemp] == PAGEID.action)
+        {
+            g_docArrayT[m_iTemp] = PAGEID.action;
+            g_docArrayP[m_iTemp] = NEXT.innerHTML;
+            m_bPrev = true;
+        }
+    }
+    if (!m_bPrev)
+    {
+        g_docArrayT[g_docArrayT.length] = PAGEID.action;
+        g_docArrayP[g_docArrayP.length] = NEXT.innerHTML;
+    }
+}
+function persistMagic()
+{
+    var m_iTemp;
+    for (m_iTemp = 0; m_iTemp < g_docArrayT.length; m_iTemp++)
+    {
+        if (g_docArrayT[m_iTemp] == PAGEID.action)
+        {
+            NEXT.innerHTML = g_docArrayP[m_iTemp];
+        }
+    }
+}
+function IsQueryString(s)
+{
+    if (-1 != s.indexOf("?", 0))
+        return true;
+    else
+        return false;
+}
+function submitPage()
+{
+    var sRealQuery;
+    if (IsQueryString(FORMACTION.value))
+	    sRealQuery = "&" + sQueryString.substring(1, sQueryString.length);
+    else
+        sRealQuery = sQueryString;    
+    Webgate.Path   = FORMACTION.value + sRealQuery;
+    clrQueryString();
+    showprogress();
+    Webgate.FetchPage(0,0);
+}
+function getPage()
+{
+    Webgate.Path = FORMACTION.value;
+    showprogress();
+    Webgate.FetchPage(0,0);
+}
+function next()
+{
+	if (g_iCurrentScrn != 5)
+	{
+		if (g_iCurrentScrn == "ERR")
+		{
+			if (!ValidateDialErrorNumber())
+				return false;		
+			preScreenSwitchHide();
+			g_iCurrentScrn = 4;
+		}
+		else
+		{
+			preScreenSwitchHide();
+			g_iCurrentScrn++;
+		}
+		screenSwitch();
+	}
+	else
+	{
+		preScreenSwitchHide();
+		if (declineTOS)
+		{
+			if (m_IOleObject.DeclineTOS()) 
+			{
+				selButton.checked  = false;
+				g_btnNext.disabled = true;
+			}
+			else						
+			{
+				RefDialSignup.DoHangup();
+				Webgate.KillIdleTimer();
+				m_IOleObject.CloseApplication;
+			}
+		}
+		else
+			relIspNext();
+	}
+}
+function relIspNext()
+{
+	g_btnNext.disabled = true;
+	g_btnBack.disabled = true;
+	FORMACTION.value = NEXT.action;
+	setQueryString(getQueryString(NEXT));
+	g_bISPNext = true;
+	g_ISPBack  = false;
+	submitPage();
+}
+function tosConfirm()
+{
+	acceptTOS  = false;
+	declineTOS = false
+	switch(event.srcElement.value)
+	{
+		case "ACCEPT":
+		{
+			acceptTOS = true;
+			break;
+		}
+		case "DECLINE":
+		{
+			declineTOS = true;
+			break;
+		}
+		default:
+			break;
+	}
+	selButton = event.srcElement;
+	g_btnNext.disabled = false;
+	show(g_btnNext);
+}
+function back()
+{
+	preScreenSwitchHide();
+	if (g_iCurrentScrn != 5)
+	{
+		RefDialSignup.DoHangup();
+		Webgate.KillIdleTimer();
+		if (g_iCurrentScrn == "ERR")
+		{
+			if (isClickAndSurf())
+				g_iCurrentScrn = 1;
+			else
+				g_iCurrentScrn = 3;
+			screenSwitch();
+		}
+		else
+		{
+			if ((isClickAndSurf()) && (g_iCurrentScrn == 4))
+			{
+				g_iCurrentScrn = 1;
+				screenSwitch();
+			}
+			else
+			{
+				RefDialSignup.DoHangup();
+				Webgate.KillIdleTimer();
+				g_iCurrentScrn--;
+				if (g_iCurrentScrn < -1)
+					g_iCurrentScrn = -1;
+				screenSwitch();
+			}
+		}
+	}
+	else
+	{
+		acceptTOS  = false;
+		declineTOS = false;
+		if(BACK.action == "")
+		{
+			deactivateIspPageUI(getIspPageType());
+			RefDialSignup.DoHangup();
+			Webgate.KillIdleTimer();
+			if (isClickAndSurf())
+			{
+				g_iCurrentScrn = 1;
+				screenSwitch();
+			}
+			else
+			{
+				g_iCurrentScrn = 3;
+				screenSwitch();
+			}
+		}
+		else
+			relIspBack();
+	}
+}
+function relIspBack()
+{
+	g_btnNext.disabled = true;
+	g_btnBack.disabled = true;
+	formMagic();
+	FORMACTION.value = BACK.action;
+	g_bISPNext = false;
+	g_bISPBack = true;
+	getPage();
+}
+function nav()
+{
+	passMDE();
+	g_iCurrentScrn = 0
+	screenSwitch();
+}
+function finish()
+{
+	if(waitCursor())
+	{
+		if (PAGETYPE.QUICKFINISH == "TRUE")
+		{
+			RefDialSignup.DoHangup();
+			Webgate.KillIdleTimer();
+			m_IOleObject.CloseApplication;
+		}
+		else
+		{
+			setQueryString(getQueryString(NEXT));
+			Webgate.Path   = NEXT.action + sQueryString; 
+			clrQueryString(); 
+			showprogress();
+			g_bFinishPage = true;
+			Webgate.FetchPage(1,0);
+		}
+	}
+}
+function waitCursor()
+{
+	g_btnFinish.disabled = true;
+	g_btnCancel.disabled = true;
+	CURSOR_BLOCK.style.cursor = "wait";
+	CURSOR_BLOCK.style.width= 544;
+	CURSOR_BLOCK.style.height= 440;
+	show(CURSOR_BLOCK);
+	return true;
+}
+function cancel()
+{
+	if (m_IOleObject.ConfirmCancel())
+	{
+		RefDialSignup.DoHangup();
+		Webgate.KillIdleTimer();
+		m_IOleObject.CloseApplication;
+	}
+}
+function setQueryString(str)
+{
+	sQueryString = str;
+}
+function clrQueryString()
+{
+	sQueryString = "";
+}
+function getQueryStringAppend(objForm)
+{
+	var sQuery = "&";
+	var LENGTH = objForm.elements.length;
+	for (var eIndex = 0; eIndex < LENGTH; eIndex++)
+	{
+		if ((objForm.elements(eIndex).type == "radio") || (objForm.elements(eIndex).type == "checkbox"))
+		{
+			if(objForm.elements(eIndex).checked == true)
+			{
+				sQuery += objForm.elements(eIndex).name + "=" + icwescape(objForm.elements(eIndex).value) + "&";
+			}
+		}
+		else
+		{
+			sQuery += objForm.elements(eIndex).name + "=" + icwescape(objForm.elements(eIndex).value) + "&";
+		}
+	}
+	sQuery = sQuery.substring(0, sQuery.length - 1);
+	return sQuery;
+}
+function getQueryString(objForm)
+{
+	var sQuery = "?";
+	var eIndex;
+	for (eIndex = 0; eIndex < objForm.elements.length; eIndex++)
+	{
+		if ((objForm.elements(eIndex).type == "radio") || (objForm.elements(eIndex).type == "checkbox"))
+		{
+			if(objForm.elements(eIndex).checked == true)
+			{
+				sQuery += objForm.elements(eIndex).name + "=" + icwescape(objForm.elements(eIndex).value) + "&";
+			}
+		}
+		else
+		{
+			sQuery += objForm.elements(eIndex).name + "=" + icwescape(objForm.elements(eIndex).value) + "&";
+		}
+	}
+	sQuery = sQuery.substring(0, sQuery.length - 1);
+	return sQuery;
+}
+
+function icwescape(s)
+{
+	var temp = "";
+
+	var len = s.length;
+	for (var i = 0; i < len; i++)
+	{
+		var c = s.charAt(i);
+
+		switch (c)
+		{
+			case ' ':
+				temp += "+";
+				break;
+			case '#':
+				temp += "%23";
+				break;
+			case '&':
+				temp += "%26";
+				break;
+			case '%':
+				temp += "%25";
+				break;
+			case '=':
+				temp += "%3D";
+				break;
+			case '<':
+				temp += "%3C";
+				break;
+			case '+':
+				temp += "%2B";
+				break;
+			default:
+				temp += c;
+				break;
+		}
+	}
+	return temp;
+}
+
+function show(m_objElement)
+{
+    m_objElement.style.visibility = "visible";
+}
+function hide(m_objElement)
+{
+    m_objElement.style.visibility = "hidden";
+}
+function doTab(m_objElement)
+{
+    m_objElement.tabIndex = 0;
+}
+function removeTab(m_objElement)
+{
+    m_objElement.tabIndex = -1;
+}
+function unaccess(m_objElement)
+{
+    m_objElement.accessKey = "";
+}
+function activateCommonUI()
+{
+	showCommonUI();
+	accessCommonUI();
+	insertTabCommonUI();
+}
+function showCommonUI()
+{
+	showMainGraphic();
+	show(g_hrUIBar);
+	show(g_btnBack);
+	show(g_btnNext);
+	show(g_btnCancel);
+	return true;
+}
+function showMainGraphic()
+{
+	show(g_tblSideGraphic);
+	show(g_imgSideGraphic);
+	return true;
+}
+function accessCommonUI()
+{
+	g_btnBack.accessKey = L_btnBack_Accelerator;
+	g_btnNext.accessKey = L_btnNext_Accelerator	;
+	return true;
+}
+function insertTabCommonUI()
+{
+	doTab(g_btnBack);
+	doTab(g_btnNext);
+	doTab(g_btnCancel);
+	return true;
+}
+function deactivateCommonUI()
+{
+	hideCommonUI();
+	unaccessCommonUI();
+	removeTabCommonUI();
+}
+function hideCommonUI()
+{
+	hideMainGraphic();
+	hide(g_hrUIBar);
+	hide(g_btnBack);
+	hide(g_btnNext);
+	hide(g_btnCancel);
+	return true;
+}
+function hideMainGraphic()
+{
+	hide(g_tblSideGraphic);
+	hide(g_imgSideGraphic);
+	return true;
+}
+function unaccessCommonUI()
+{
+	g_btnBack.accessKey = "";
+	g_btnNext.accessKey = "";
+	return true;
+}
+function removeTabCommonUI()
+{
+	removeTab(g_btnBack);
+	removeTab(g_btnNext);
+	removeTab(g_btnCancel);
+	return true;
+}
+function activateIspListUI()
+{
+	showIspListUI();
+	accessIspListUI();
+	insertTabIspListUI();
+	return true;
+}
+function showIspListUI()
+{
+	hideMainGraphic();
+	g_btnBack.disabled = false;
+	g_btnNext.disabled = false;
+	if(tdcIspInfo.recordset.recordcount > 1)
+		show(g_spnIsp1);
+	else
+		show(g_spnIsp1B);
+	if (m_bCns)
+		show(g_spnIsp2);
+	show(CNSGIF);
+	show(g_spnIspListControlLbl);
+	show(g_divIspListControl);
+	show(g_tblIspList);
+	show(g_ifrmIspFrameLbl);
+	show(g_ifrmIspFrame);
+	constructIspMarketFrame();
+	return true;
+}
+function accessIspListUI()
+{
+	g_ispListControlFocalNode.accessKey  =  L_ispListControlFocalNode_Accelerator;
+	return true;
+}
+function insertTabIspListUI()
+{
+	doTab(g_ispListControlFocalNode);
+	return true;
+}
+function constructIspMarketFrame()
+{
+	window.setTimeout("tweakIspMarketIFrame();", 1);
+	return true;
+}
+function marketFoc()
+{
+	if ((__IspFrame.event.keyCode == 9) && (!__IspFrame.event.shiftKey))
+		g_btnBack.focus();	
+}
+function ispDrag()
+{
+	__IspFrame.event.cancelBubble = true;
+	__IspFrame.event.returnValue  = false;
+	return false;
+}
+function tweakIspMarketIFrame()
+{
+	__IspFrame.document.body.onkeydown=marketFoc;
+	__IspFrame.document.body.ondragstart=ispDrag;
+	__IspFrame.document.body.style.cursor="default";
+}
+function deactivateIspListUI()
+{
+	hideIspListUI();
+	unaccessIspListUI();
+	removeTabIspListUI();
+}
+function hideIspListUI()
+{
+	showMainGraphic();
+	hide(g_spnIsp1);
+	hide(g_spnIsp1B);
+	hide(g_spnIsp2);
+	hide(CNSGIF);
+	hide(g_spnIspListControlLbl);
+	hide(g_divIspListControl);
+	hide(g_tblIspList);
+	hide(g_ifrmIspFrameLbl);
+	hide(g_ifrmIspFrame);
+	destructIspMarketFrame();
+	return true;
+}
+function unaccessIspListUI()
+{
+	g_ispListControlFocalNode.accessKey  =  "";
+	return true;
+}
+function removeTabIspListUI()
+{
+	removeTab(g_ispListControlFocalNode);
+	return true;
+}
+function destructIspMarketFrame()
+{
+	__IspFrame.document.body.onkeydown="";
+	return true;
+}
+function activateNoOffersUI()
+{
+	showNoOffersUI();
+	accessNoOffersUI();
+	insertTabNoOffersUI();
+}
+function showNoOffersUI()
+{
+	constructNoOffersPage();
+	hide(g_btnNext);
+	show(g_btnFinish);
+	show(g_divNoOffers);	
+	return true;
+}
+function accessNoOffersUI()
+{
+	g_btnNext.accessKey   = "";
+	g_btnFinish.accessKey = L_btnFinish_Accelerator;
+	return true;
+}
+function insertTabNoOffersUI()
+{
+	removeTab(g_btnNext);
+	doTab(g_btnFinish);	
+	return true;
+}
+function constructNoOffersPage()
+{
+	g_divNoOffers.outerHTML="<OBJECT type='text/x-scriptlet' DATA='" + g_ispPage.value + "'ID=g_divNoOffers " + ISPFRAMEEX_STYLE + "></OBJECT>";			
+	return true;
+}
+function deactivateNoOffersUI()
+{
+	hideNoOffersUI();
+	unaccessNoOffersUI();
+	removeTabNoOffersUI();
+}
+function hideNoOffersUI()
+{
+	show(g_btnNext);
+	hide(g_btnFinish);
+	hide(g_divNoOffers);
+	return true;
+}
+function unaccessNoOffersUI()
+{
+	g_btnNext.accessKey   = L_btnNext_Accelerator;
+	g_btnFinish.accessKey = "";
+	return true;
+}
+function removeTabNoOffersUI()
+{
+	doTab(g_btnNext);
+	removeTab(g_btnFinish);
+	return true;
+}
+function activateOlsUI()
+{	
+	constructOlsPage(); 
+	showOlsUI();
+	accessOlsUI();
+	insertTabOlsUI();
+}
+function showOlsUI()
+{
+	hide(g_btnNext);
+	show(g_btnFinish);
+	show(g_divOls);
+	g_btnCancel.onkeydown=olsSp;
+	window.setTimeout("g_btnFinish.focus();", 1);
+	return true;
+}
+function olsSp()
+{
+	if((window.event.keyCode == 9) && (!event.shiftKey))
+	{
+		g_btnBack.focus();
+	}
+}
+function accessOlsUI()
+{
+	g_btnNext.accessKey   = "";
+	g_btnFinish.accessKey = L_btnFinish_Accelerator;
+	return true;
+}
+function insertTabOlsUI()
+{
+	removeTab(g_btnNext);
+	doTab(g_btnFinish);
+	return true;
+}
+function constructOlsPage()
+{
+	g_divOls.outerHTML = "<OBJECT type='text/x-scriptlet' DATA='" + g_billingForm.value + "'ID=g_divOls " + ISPFRAMEEX_STYLE + "></OBJECT>";
+	return true;
+}
+function deactivateOlsUI()
+{
+	hideOlsUI();
+	unaccessOlsUI();
+	removeTabOlsUI();
+}
+function hideOlsUI()
+{
+	show(g_btnNext);
+	hide(g_btnFinish);
+	hide(g_divOls);
+	g_btnCancel.onkeydown="";
+	return true;
+}
+function unaccessOlsUI()
+{
+	g_btnNext.accessKey   = L_btnNext_Accelerator;
+	g_btnFinish.accessKey = "";
+	return true;
+}
+function removeTabOlsUI()
+{
+	doTab(g_btnNext);
+	removeTab(g_btnFinish);
+	return true;
+}
+function activateUserInfoUI()
+{
+	showUserInfoUI();
+	accessUserInfoUI();
+	insertTabUserInfoUI();
+	__IspFrame.document.body.onkeydown="";		
+}
+function showUserInfoUI()
+{
+	show(g_spnUserInfo1);
+	show(g_spnUserInfo2);
+	if (bFE_InternationalZone)
+	{
+		show(g_spnUserFEName);
+		show(g_editUserFEName);
+		if (!bLargeFonts)
+		{
+			if (lcid == 1041)
+			{
+				g_spnUserInfoExAddress.style.posTop = 148; 
+				g_spnUserInfoState.style.posTop     = 188; 
+				g_spnUserInfoState.style.posLeft    = 167;
+				g_spnUserInfoCity.style.posTop      = 188;
+				g_spnUserInfoCity.style.posLeft     = 355;
+				g_spnUserInfoAddress.style.posTop   = 228;
+			}
+			else
+			{
+				g_spnUserInfoState.style.posTop     = 148;
+				g_spnUserInfoState.style.posLeft    = 167;
+				g_spnUserInfoCity.style.posTop      = 148;
+				g_spnUserInfoCity.style.posLeft     = 355;
+				g_spnUserInfoAddress.style.posTop   = 188;
+				g_spnUserInfoExAddress.style.posTop = 228;
+			}
+		}
+		else
+		{
+			if (lcid == 1041)
+			{
+				g_spnUserInfoExAddress.style.posTop = 148*m_iPercentIncrease; 
+				g_spnUserInfoState.style.posTop     = 188*m_iPercentIncrease; 
+				g_spnUserInfoState.style.posLeft    = 167*m_iPercentIncrease;
+				g_spnUserInfoCity.style.posTop      = 188*m_iPercentIncrease;
+				g_spnUserInfoCity.style.posLeft     = 355*m_iPercentIncrease;
+				g_spnUserInfoAddress.style.posTop   = 228*m_iPercentIncrease;
+				
+			}
+			else
+			{
+				g_spnUserInfoState.style.posTop     = 148*m_iPercentIncrease;
+				g_spnUserInfoState.style.posLeft    = 167*m_iPercentIncrease;
+				g_spnUserInfoCity.style.posTop      = 148*m_iPercentIncrease;
+				g_spnUserInfoCity.style.posLeft     = 355*m_iPercentIncrease;
+				g_spnUserInfoAddress.style.posTop   = 188*m_iPercentIncrease;
+				g_spnUserInfoExAddress.style.posTop = 228*m_iPercentIncrease;
+			}
+		}
+	}
+	else
+	{
+		show(g_spnUserInfoFName);
+		show(g_editFName);
+		show(g_spnUserInfoLName);
+		show(g_editLName);
+	}
+	show(g_spnUserInfoAddress);
+	show(g_editAddress);
+	show(g_spnUserInfoExAddress);
+	show(g_editExAddress);
+	show(g_spnUserInfoCity);
+	show(g_editCity);
+    show(g_spnUserInfoState);
+	show(g_editState);
+	show(g_spnUserInfoZip);
+	show(g_editZip);
+	show(g_spnUserInfoPhone);
+	show(g_editPhone);
+	return true;
+}
+function accessUserInfoUI()
+{
+	if (bFE_InternationalZone)
+		g_editUserFEName.accessKey  = L_editUserFEName_Accelerator;
+	else
+	{
+		g_editFName.accessKey       = L_editFName_Accelerator;
+		g_editLName.accessKey       = L_editLName_Accelerator;
+	}
+	g_editAddress.accessKey    = L_editAddress_Accelerator;
+	g_editExAddress.accessKey  = L_editExAddress_Accelerator;
+	g_editCity.accessKey       = L_editCity_Accelerator;
+	g_editState.accessKey      = L_editState_Accelerator;
+	g_editZip.accessKey        = L_editZip_Accelerator;
+	g_editPhone.accessKey      = L_editPhone_Accelerator;
+
+	return true;
+}
+function insertTabUserInfoUI()
+{
+	if (bFE_InternationalZone)
+		doTab(g_editUserFEName);
+	else
+	{
+		doTab(g_editFName);
+		doTab(g_editLName);
+	}
+	doTab(g_editAddress);
+	doTab(g_editExAddress);
+	doTab(g_editCity);
+	doTab(g_editState);
+	doTab(g_editZip);
+	doTab(g_editPhone);
+	return true;
+}
+function deactivateUserInfoUI()
+{
+	hideUserInfoUI();
+	unaccessUserInfoUI();
+	removeTabUserInfoUI();
+}
+function hideUserInfoUI()
+{	hide(g_spnUserInfo1);
+	hide(g_spnUserInfo2);
+	if (bFE_InternationalZone)
+	{
+		hide(g_spnUserFEName);
+		hide(g_editUserFEName);
+	}
+	else
+	{
+		hide(g_spnUserInfoFName);
+		hide(g_editFName);
+		hide(g_spnUserInfoLName);
+		hide(g_editLName);
+	}
+	hide(g_spnUserInfoAddress);
+	hide(g_editAddress);
+	hide(g_spnUserInfoExAddress);
+	hide(g_editExAddress);
+	hide(g_spnUserInfoCity);
+	hide(g_editCity);
+    hide(g_spnUserInfoState);
+	hide(g_editState);
+	hide(g_spnUserInfoZip);
+	hide(g_editZip);
+	hide(g_spnUserInfoPhone);
+	hide(g_editPhone);
+	g_editPhone.onblur="";
+	g_btnBack.onkeydown="";
+	return true;
+}
+
+function unaccessUserInfoUI()
+{
+	if (bFE_InternationalZone)
+		g_editUserFEName.accessKey = "";
+	else
+	{
+		g_editFName.accessKey = "";
+		g_editLName.accessKey = "";
+	}
+	g_editAddress.accessKey   = "";
+	g_editExAddress.accessKey = "";
+	g_editCity.accessKey      = "";
+	g_editState.accessKey     = "";
+	g_editZip.accessKey       = "";
+	g_editPhone.accessKey     = "";
+	return true;
+}
+
+function removeTabUserInfoUI()
+{
+	if (bFE_InternationalZone)
+		removeTab(g_editUserFEName);
+	else
+	{
+		removeTab(g_editFName);
+		removeTab(g_editLName);
+	}
+	removeTab(g_editAddress);
+	removeTab(g_editExAddress);
+	removeTab(g_editCity);
+	removeTab(g_editState);
+	removeTab(g_editZip);
+	removeTab(g_editPhone);
+	return true;
+}
+function activateBillingUI()
+{
+	showBillingUI();
+	accessBillingUI();
+	insertTabBillingUI();
+	constructBillingFrame();		
+}
+function showBillingUI()
+{
+	show(g_spnBilling1);
+	show(g_spnBilling2);
+	show(g_legBilling);
+	return true;
+}
+function accessBillingUI()
+{
+	return true;
+}
+function insertTabBillingUI()
+{
+	return true;
+}
+function constructBillingFrame()
+{	
+	g_iframeBillingDoc.document.body.style.cursor="default";
+	
+	var blen = g_iframeBillingDoc.document.forms(0).elements.length;
+	for (var i = 0; i < blen; i++)
+	{
+		if (g_iframeBillingDoc.document.forms(0).elements(i).type != "hidden")
+		{
+			g_iframeBillingDoc.document.forms(0).elements(i).onkeydown=billFoc;  //g_btnBack.focus;
+		}
+	}
+	show(g_iframeBilling); 
+}
+function billFoc()
+{
+	if ((g_iframeBillingDoc.event.keyCode == 9) && (!g_iframeBillingDoc.event.shiftKey))
+		g_btnBack.focus();
+}
+function deactivateBillingUI()
+{
+	hideBillingUI();
+	unaccessBillingUI();
+	removeTabBillingUI();
+}
+function hideBillingUI()
+{
+	hide(g_spnBilling1);
+	hide(g_spnBilling2);
+	hide(g_legBilling);
+	hide(g_iframeBilling);
+	return true;
+}
+function unaccessBillingUI()
+{
+	return true;
+}
+function removeTabBillingUI()
+{
+	return true;
+}
+function destructBillingFrame()
+{
+	hide(g_iframeBilling);
+}
+function activatePaymentUI()
+{
+	showPaymentUI();
+	accessPaymentUI();
+	insertTabPaymentUI();
+}
+function activatePayment_CreditCardUI()
+{
+	showPayment_CreditCardUI();
+	accessPayment_CreditCardUI();
+	insertTabPayment_CreditCardUI();
+}
+function activatePayment_InvoiceUI()
+{
+	showPayment_InvoiceUI();
+	accessPayment_InvoiceUI();
+	insertTabPayment_InvoiceUI();
+}
+function activatePayment_PhoneUI()
+{
+	showPayment_PhoneUI();
+	accessPayment_PhoneUI();
+	insertTabPayment_PhoneUI();
+}
+function activatePayment_CustomUI(url)
+{
+  	showPayment_CustomUI(url);
+}
+function showPaymentUI()
+{
+	show(g_spnPayMethod);
+	show(g_selPayMethod);
+	show(g_spnPay1);
+	showPayment_SecureUI();
+	return true;
+}
+function showPayment_CreditCardUI()
+{
+	show(g_spnPayCard1);
+	show(g_legPayCard);
+	show(g_spnPayCard2);
+	show(g_edtCardNumber);
+	show(g_spnPayCard3);
+	show(g_selCardExMonth);
+	show(g_spnPayCard4);
+	show(g_selCardExYear);
+	show(g_spnPayCard5);
+	show(g_editCName);
+	show(g_spnPayCard6);
+	show(g_editCAddress);
+	show(g_spnPayCard7);
+	show(g_editCZip);
+}
+function showPayment_InvoiceUI()
+{
+	show(g_spnPayInvoice1);
+	show(g_legPayInvoice);
+	show(g_spnPayInvoice2);
+	show(g_editIAddress);
+	show(g_spnPayInvoice3);
+	if (bFE_InternationalZone)
+	{
+		if (lcid != 1041)
+			show(g_editIExAddress);
+	}
+	else
+		show(g_editIExAddress);
+	show(g_spnPayInvoice4);
+	show(g_editICity);
+	show(g_spnPayInvoice5);
+	show(g_editIState);
+	show(g_spnPayInvoice6);
+	show(g_editIZip);
+}
+function showPayment_PhoneUI()
+{
+	show(g_spnPayPhone1);
+	show(g_legPayPhone);
+	show(g_spnPayPhone2);
+	show(g_editPName);
+	show(g_spnPayPhone3);
+	show(g_editPAccountNum);
+}
+function showPayment_CustomUI(sURL)
+{
+	show(g_spnPayCustom1);
+	show(g_lblPayCustom1);
+	constructCustomFrame(sURL);
+}
+function showPayment_SecureUI()
+{
+	if (tdcPay_SecureTrans.value == "TRUE")
+		show(g_spnPayTranactionSecure);
+	else
+		show(g_spnPayTranactionUnSecure);
+}
+function accessPaymentUI()
+{
+	g_selPayMethod.accessKey = L_selPayMethod_Accelerator;
+	return true;
+}
+function accessPayment_CreditCardUI()
+{
+	g_edtCardNumber.accessKey  = L_edtCardNumber_Accelerator;
+	g_selCardExMonth.accessKey = L_selCardExMonth_Accelerator;
+	g_selCardExYear.accessKey  = L_selCardExYear_Accelerator;
+	g_editCName.accessKey      = L_editCName_Accelerator;
+	g_editCAddress.accessKey   = L_editCAddress_Accelerator;
+	g_editCZip.accessKey       = L_editCZip_Accelerator;
+	return true;
+}
+function accessPayment_InvoiceUI()
+{
+	g_editIAddress.accessKey   = L_editIAddress_Accelerator;
+	g_editIExAddress.accessKey = L_editIExAddress_Accelerator;
+	g_editICity.accessKey      = L_editICity_Accelerator;
+	g_editIState.accessKey     = L_editIState_Accelerator;
+	g_editIZip.accessKey       = L_editIZip_Accelerator;
+	return true;
+}
+function accessPayment_PhoneUI()
+{
+	g_editPName.accessKey       = L_editPName_Accelerator;
+	g_editPAccountNum.accessKey = L_editPAccountNum_Accelerator;
+	return true;
+}
+function insertTabPaymentUI()
+{
+	doTab(g_selPayMethod);
+	return true;
+}
+function insertTabPayment_CreditCardUI()
+{
+	doTab(g_edtCardNumber);
+	doTab(g_selCardExMonth);
+	doTab(g_selCardExYear);
+	doTab(g_editCName);
+	doTab(g_editCAddress);
+	doTab(g_editCZip);
+	return true;
+}
+function insertTabPayment_InvoiceUI()
+{
+	doTab(g_editIAddress);
+	doTab(g_editIExAddress);
+	doTab(g_editICity);
+	doTab(g_editIState);
+	doTab(g_editIZip);
+	return true;
+}
+function insertTabPayment_PhoneUI()
+{
+	doTab(g_editPName);
+	doTab(g_editPAccountNum);
+	return true;
+}
+function constructCustomFrame(url)
+{
+	g_iframePayCustomDoc.location = g_selPayMethod.item(g_selPayMethod.selectedIndex).sUrl;
+	g_lblPayCustom1.innerHTML     = g_selPayMethod.item(g_selPayMethod.selectedIndex).text;
+    show(g_iframePayCustom);
+    g_iframePayCustomDoc.document.body.bgColor = ColorMap.backPage;
+	g_iframePayCustomDoc.document.body.style.fontFamily = "Ms Sans Serif";
+	g_iframePayCustomDoc.document.body.style.fontSize = "8pt";
+	g_iframePayCustomDoc.document.body.style.fontColor = ColorMap.page;
+	return true;
+}
+function deactivatePaymentUI()
+{
+	hidePaymentUI();
+	unaccessPaymentUI();
+	removeTabPaymentUI();
+}
+function deactivatePayment_CreditCardUI()
+{
+	hidePayment_CreditCardUI();
+	unaccessPayment_CreditCardUI();
+	removeTabPayment_CreditCardUI();
+}
+function deactivatePayment_InvoiceUI()
+{
+	hidePayment_InvoiceUI();
+	unaccessPayment_InvoiceUI();
+	removeTabPayment_InvoiceUI();
+}
+function deactivatePayment_PhoneUI()
+{
+	hidePayment_PhoneUI();
+	unaccessPayment_PhoneUI();
+	removeTabPayment_PhoneUI();
+}
+function deactivatePayment_CustomUI()
+{
+  	hidePayment_CustomUI();
+}
+function hidePaymentUI()
+{
+	hide(g_spnPayMethod);
+	hide(g_selPayMethod);
+	hide(g_spnPay1);
+	hidePayment_SecureUI();
+	return true;
+}
+function hidePayment_CreditCardUI()
+{
+	hide(g_spnPayCard1);
+	hide(g_legPayCard);
+	hide(g_spnPayCard2);
+	hide(g_edtCardNumber);
+	hide(g_spnPayCard3);
+	hide(g_selCardExMonth);
+	hide(g_spnPayCard4);
+	hide(g_selCardExYear);
+	hide(g_spnPayCard5);
+	hide(g_editCName);
+	hide(g_spnPayCard6);
+	hide(g_editCAddress);
+	hide(g_spnPayCard7);
+	hide(g_editCZip);
+}
+function hidePayment_InvoiceUI()
+{
+	hide(g_spnPayInvoice1);
+	hide(g_legPayInvoice);
+	hide(g_spnPayInvoice2);
+	hide(g_editIAddress);
+	hide(g_spnPayInvoice3);
+	hide(g_editIExAddress);
+	hide(g_spnPayInvoice4);
+	hide(g_editICity);
+	hide(g_spnPayInvoice5);
+	hide(g_editIState);
+	hide(g_spnPayInvoice6);
+	hide(g_editIZip);
+}
+function hidePayment_PhoneUI()
+{
+	hide(g_spnPayPhone1);
+	hide(g_legPayPhone);
+	hide(g_spnPayPhone2);
+	hide(g_editPName);
+	hide(g_spnPayPhone3);
+	hide(g_editPAccountNum);
+}
+function hidePayment_CustomUI()
+{
+	hide(g_spnPayCustom1);
+	hide(g_lblPayCustom1);
+	destructCustomFrame();
+}
+function hidePayment_SecureUI()
+{
+	if (tdcPay_SecureTrans.value == "TRUE")
+		hide(g_spnPayTranactionSecure);
+	else
+		hide(g_spnPayTranactionUnSecure);
+}
+function unaccessPaymentUI()
+{
+	g_selPayMethod.accessKey  = "";
+	return true;
+}
+function unaccessPayment_CreditCardUI()
+{
+	g_edtCardNumber.accessKey  = "";
+	g_selCardExMonth.accessKey = "";
+	g_selCardExYear.accessKey  = "";
+	g_editCName.accessKey      = "";
+	g_editCAddress.accessKey   = "";
+	g_editCZip.accessKey       = "";
+}
+function unaccessPayment_InvoiceUI()
+{
+	g_editIAddress.accessKey    =  "";
+	g_editIExAddress.accessKey  =  "";
+	g_editICity.accessKey       =  "";
+	g_editIState.accessKey      =  "";
+	g_editIZip.accessKey        =  "";
+	return true;
+}
+function unaccessPayment_PhoneUI()
+{
+	g_editPName.accessKey         =  "";
+	g_editPAccountNum.accessKey   =  "";
+	return true;
+}
+function removeTabPaymentUI()
+{
+	removeTab(g_selPayMethod);
+	return true;
+}
+function removeTabPayment_CreditCardUI()
+{
+	removeTab(g_edtCardNumber);
+	removeTab(g_selCardExMonth);
+	removeTab(g_selCardExYear);
+	removeTab(g_editCName);
+	removeTab(g_editCAddress);
+	removeTab(g_editCZip);
+	return true;
+}
+function removeTabPayment_InvoiceUI()
+{
+	removeTab(g_editIAddress);
+	removeTab(g_editIExAddress);
+	removeTab(g_editICity);
+	removeTab(g_editIState);
+	removeTab(g_editIZip);
+
+	return true;
+}
+function removeTabPayment_PhoneUI()
+{
+	removeTab(g_editPName);
+	removeTab(g_editPAccountNum);
+	return true;
+}
+function destructPaymentMethod()
+{
+	tdcPayMethodContainer.innerHTML = "";
+	return true;
+}
+function destructCustomFrame()
+{
+	hide(g_iframePayCustom);
+	return true;
+}
+function activateIspConnectUI()
+{
+	showIspConnectUI();
+	accessIspConnectUI();
+	insertTabIspConnectUI();
+}
+function showIspConnectUI()
+{
+	g_btnBack.disabled = true;
+	g_btnNext.disabled = true;
+	show(g_spnIspCon1);
+	show(g_spnIspConTargetName);
+	show(g_spnIspCon2);
+	show(g_spnIspCon3);
+	show(g_spnIspCon4);
+	show(g_spnIspCon5a);
+	return true;
+}
+function accessIspConnectUI()
+{
+	g_btnBack.accessKey = "";
+	g_btnNext.accessKey = "";
+	return true;
+}
+function insertTabIspConnectUI()
+{
+	removeTab(g_btnBack);
+	removeTab(g_btnNext);
+	return true;
+}
+function showprogress()
+{
+	show(g_imgProgressIndicator);
+}
+function deactivateIspConnectUI()
+{
+	hideIspConnectUI();
+	unaccessIspConnectUI();
+	removeTabIspConnectUI();
+}
+function hideIspConnectUI()
+{
+	g_btnBack.disabled = false;
+	g_btnNext.disabled = false;
+	hide(g_spnIspCon1);
+	hide(g_spnIspConTargetName);
+	hide(g_spnIspCon2);
+	hide(g_spnIspCon3);
+	hide(g_spnIspCon4);
+	hide(g_spnIspCon5a);
+	hide(g_spnIspCon5b);
+	hideprogress();
+	return true;
+}
+function unaccessIspConnectUI()
+{
+	g_btnBack.accessKey = L_btnBack_Accelerator;
+	g_btnNext.accessKey = L_btnNext_Accelerator;
+	return true;
+}
+function removeTabIspConnectUI()
+{
+	doTab(g_btnBack);
+	doTab(g_btnNext);
+	return true;
+}
+function hideprogress()
+{
+	hide(g_imgProgressIndicator);
+}
+function activateIspConnectUI()
+{
+	showIspConnectUI();
+	accessIspConnectUI();
+	insertTabIspConnectUI();
+}
+function showIspConnectUI()
+{
+	g_btnBack.disabled = true;
+	g_btnNext.disabled = true;
+	show(g_spnIspCon1);
+	show(g_spnIspConTargetName);
+	show(g_spnIspCon2);
+	show(g_spnIspCon3);
+	show(g_spnIspCon4);
+	show(g_spnIspCon5a);
+	return true;
+}
+function accessIspConnectUI()
+{
+	g_btnBack.accessKey = "";
+	g_btnNext.accessKey = "";
+	return true;
+}
+function insertTabIspConnectUI()
+{
+	removeTab(g_btnBack);
+	removeTab(g_btnNext);
+	return true;
+}
+function showprogress()
+{
+	show(g_imgProgressIndicator);
+}
+function deactivateIspConnectUI()
+{
+	hideIspConnectUI();
+	unaccessIspConnectUI();
+	removeTabIspConnectUI();
+}
+function hideIspConnectUI()
+{
+	g_btnBack.disabled = false;
+	g_btnNext.disabled = false;
+	hide(g_spnIspCon1);
+	hide(g_spnIspConTargetName);
+	hide(g_spnIspCon2);
+	hide(g_spnIspCon3);
+	hide(g_spnIspCon4);
+	hide(g_spnIspCon5a);
+	hide(g_spnIspCon5b);
+	hideprogress();
+	return true;
+}
+function unaccessIspConnectUI()
+{
+	g_btnBack.accessKey = L_btnBack_Accelerator;
+	g_btnNext.accessKey = L_btnNext_Accelerator;
+	return true;
+}
+function removeTabIspConnectUI()
+{
+	doTab(g_btnBack);
+	doTab(g_btnNext);
+	return true;
+}
+function hideprogress()
+{
+	hide(g_imgProgressIndicator);
+}
+function activateIspPageUI(i)
+{
+	g_btnNext.disabled = false;
+	g_btnBack.disabled = false;
+    NEXT.onsubmit = handleSubmit;
+	switch(i)
+	{
+		case 1:
+		{
+			activateIspPage_TosUI();
+			break;
+		}
+		case 2:
+		{
+			g_spnEnd1.innerHTML = PAGETYPE.TEXT;
+		}
+		case 3:
+		{
+			activateIspPage_FinishUI();
+			break;
+		}
+
+		default:
+		{
+			activateIspPage_NormalUI();
+			break;
+		}
+	}
+}
+function activateIspPage_NormalUI()
+{
+	showIspPage_NormalUI();
+	accessIspPage_NormalUI();
+	insertTabIspPage_NormalUI();
+}
+function activateIspPage_TosUI()
+{
+	rbtnAccept.checked  = false;
+	rbtnDecline.checked = false;
+	showIspPage_TosUI();
+	accessIspPage_TosUI();
+	insertTabIspPage_TosUI();
+}
+function activateIspPage_FinishUI()
+{
+	showIspPage_FinishUI();
+	accessIspPage_FinishUI();
+	insertTabIspPage_FinishUI();
+}
+function showIspPage_NormalUI()
+{
+	show(g_iframeIspPage);
+	g_btnNext.disabled = false;
+	window.setTimeout("g_btnNext.focus();", 1);
+	return true;
+}
+function showIspPage_TosUI()
+{
+	hide(g_iframeIspPage);
+	constructTosFrame();
+	show(TOS_UI);
+	g_btnNext.disabled =true;
+	return true;
+}
+function showIspPage_FinishUI()
+{
+	hide(g_btnBack);
+	hide(g_btnNext);
+	show(g_iframeIspPage);
+	show(g_btnFinish);
+	show(g_spnEnd1);
+	window.setTimeout("g_btnFinish.focus();", 1);
+}
+function accessIspPage_NormalUI()
+{
+	return true;
+}
+function accessIspPage_TosUI()
+{	
+	rbtnAccept.accessKey  = L_rbtnAccept_Accelerator;
+	rbtnDecline.accessKey = L_rbtnDecline_Accelerator;	
+	return true;
+}
+function accessIspPage_FinishUI()
+{
+	g_btnBack.accessKey = "";
+	g_btnNext.accessKey = "";
+	g_btnFinish.accessKey = L_btnFinish_Accelerator;
+	return true;
+}
+function insertTabIspPage_NormalUI()
+{
+	return true;
+}
+function insertTabIspPage_TosUI()
+{
+	doTab(rbtnAccept);
+	doTab(rbtnDecline);
+	return true;
+}
+function insertTabIspPage_FinishUI()
+{
+	removeTab(g_btnBack);
+	removeTab(g_btnNext);
+	doTab(g_btnFinish);
+	return true;
+}
+function constructTosFrame()
+{
+	g_iframeIspTermsPageDoc.document.body.innerHTML = g_iframeIspPage.innerHTML;
+	g_iframeIspTermsPageDoc.document.body.bgColor = ColorMap.backPage;
+	g_iframeIspTermsPageDoc.document.body.style.fontFamily = "Ms Sans Serif";
+	g_iframeIspTermsPageDoc.document.body.style.fontSize = "8pt";
+	g_iframeIspTermsPageDoc.document.body.style.fontColor = ColorMap.page;
+	show(g_iframeIspTermsPage);
+	window.setTimeout("g_iframeIspTermsPageDoc.document.body.focus();", 1);
+	return true;
+}
+function deactivateIspPageUI(i)
+{
+	hideprogress();
+	switch(i)
+	{
+		case 1:
+		{
+			deactivateIspPage_TosUI();
+			break;
+		}
+		case 2:
+		case 3:
+		{
+			deactivateIspPage_FinishUI();
+			break;
+		}
+		default:
+		{
+			deactivateIspPage_NormalUI();
+			break;
+		}
+	}
+}
+function deactivateIspPage_NormalUI()
+{
+	hideIspPage_NormalUI();
+	unaccessIspPage_NormalUI();
+	removeTabIspPage_NormalUI();
+}
+function deactivateIspPage_TosUI()
+{
+	hideIspPage_TosUI();
+	unaccessIspPage_TosUI();
+	removeTabIspPage_TosUI();
+}
+function deactivateIspPage_FinishUI()
+{
+	hideIspPage_FinishUI();
+	unaccessIspPage_FinishUI();
+	removeTabIspPage_FinishUI();
+}
+function hideIspPage_NormalUI()
+{
+	hide(g_iframeIspPage);
+	return true;
+}
+function hideIspPage_TosUI()
+{
+	acceptTOS  = false;
+	declineTOS = false;	
+	hide(g_iframeIspTermsPage);
+	hide(TOS_UI);
+	return true;
+}
+function hideIspPage_FinishUI()
+{
+	hide(g_iframeIspPage);
+	hide(g_btnFinish);
+	hide(g_spnEnd1);
+}
+function unaccessIspPage_NormalUI()
+{
+	return true;
+}
+function unaccessIspPage_TosUI()
+{
+	rbtnAccept.accessKey  ="";
+	rbtnDecline.accessKey ="";
+	return true;
+}
+function unaccessIspPage_FinishUI()
+{
+	g_btnFinish.accessKey = "";
+	return true;
+}
+function removeTabIspPage_NormalUI()
+{
+	return true;
+}
+function removeTabIspPage_TosUI()
+{
+	removeTab(rbtnAccept);
+	removeTab(rbtnDecline);
+	return true;
+}
+function removeTabIspPage_FinishUI()
+{
+	removeTab(g_btnFinish);
+	return true;
+}
+function destructTosFrame()
+{
+	g_iframeIspTermsPage.innerHTML =  "";
+	show(g_iframeIspTermsPage);
+	return true;
+}
+function activateDialErrUI()
+{
+	showDialErrUI();
+	accessDialErrUI();
+	insertTabDialErrUI();
+}
+
+function showDialErrUI()
+{
+    g_btnBack.disabled = false;
+	g_btnNext.disabled = false;
+	show(g_spnDialErrorMsg);
+	show(g_spnDialErrorNumber);
+	show(g_edtDialErrorNumber);
+	show(g_spnDialErrorModem);
+	show(g_listDialErrorModem);
+    show(g_spnDialErrorDialProp);
+	show(g_btnDialErrorDialProp);
+	show(g_spnDialErrorTroubleShoot);
+	show(g_btnDialErrorTroubleShoot);
+	show(g_spnErrorAutomatedHelp);
+	show(g_spnErrorAutomatedHelpNumber);
+	if (RefDialSignup.HavePhoneBook)
+    {
+        show(g_spnDialErrorPhoneBook);
+        show(g_btnDialErrorPhoneBook);
+    }
+	return true;
+}
+function accessDialErrUI()
+{
+	g_edtDialErrorNumber.accessKey        = L_edtDialErrorNumber_Accelerator;
+	g_listDialErrorModem.accessKey        = L_listDialErrorModem_Accelerator;
+	g_btnDialErrorDialProp.accessKey      = L_btnDialErrorDialProp_Accelerator;
+	g_btnDialErrorPhoneBook.accessKey     = L_btnDialErrorPhoneBook_Accelerator;
+	g_btnDialErrorTroubleShoot.accessKey  = L_btnDialErrorTroubleShoot_Accelerator;
+	return true;
+}
+function insertTabDialErrUI()
+{
+	doTab(g_edtDialErrorNumber);
+	doTab(g_listDialErrorModem);
+	doTab(g_btnDialErrorDialProp);
+	doTab(g_btnDialErrorPhoneBook);
+	doTab(g_btnDialErrorTroubleShoot);
+	return true;
+}
+function deactivateDialErrUI()
+{
+	hideDialErrUI();
+	unaccessDialErrUI();
+	removeTabDialErrUI();
+}
+function hideDialErrUI()
+{
+	g_btnBack.disabled = false;
+    g_btnNext.disabled = false;
+	hide(g_spnDialErrorMsg);
+	hide(g_spnDialErrorNumber);
+	hide(g_edtDialErrorNumber);
+	hide(g_spnDialErrorModem);
+	hide(g_listDialErrorModem);
+    hide(g_spnDialErrorDialProp);
+	hide(g_btnDialErrorDialProp);
+	hide(g_spnDialErrorPhoneBook);
+	hide(g_btnDialErrorPhoneBook);
+	hide(g_spnDialErrorTroubleShoot);
+	hide(g_btnDialErrorTroubleShoot);
+	hide(g_spnErrorAutomatedHelp);
+	hide(g_spnErrorAutomatedHelpNumber);
+	return true;
+}
+function unaccessDialErrUI()
+{
+	g_edtDialErrorNumber.accessKey       = "";
+	g_listDialErrorModem.accessKey       = "";
+	g_btnDialErrorDialProp.accessKey     = "";
+	g_btnDialErrorPhoneBook.accessKey    = "";
+	g_btnDialErrorTroubleShoot.accessKey = "";
+	return true;
+}
+function removeTabDialErrUI()
+{
+	removeTab(g_edtDialErrorNumber);
+	removeTab(g_listDialErrorModem);
+	removeTab(g_btnDialErrorDialProp);
+	removeTab(g_btnDialErrorPhoneBook);
+	removeTab(g_btnDialErrorTroubleShoot);
+	return true;
+}
+function activateSignupErrUI()
+{
+	showSignupErrUI();
+	accessSignupErrUI();
+	insertTabSignupErrUI();
+}
+function showSignupErrUI()
+{
+	g_btnBack.disabled   = false;
+    g_btnNext.disabled   = false;
+	g_btnCancel.disabled = false;
+	if (g_bFinishPage)
+	{
+		g_bFinishPage = false;
+		g_iframeIspPage.innerHTML = "";
+		CURSOR_BLOCK.style.cursor = "default";
+		CURSOR_BLOCK.style.width  = 0;
+		CURSOR_BLOCK.style.height = 0;
+		hide(CURSOR_BLOCK);
+	}
+	show(g_btnBack);   
+    show(g_btnNext);  
+	show(g_btnCancel); 
+	show(g_spnSignupErrMsg);
+	return true;
+}
+function accessSignupErrUI()
+{
+	return true;
+}
+function insertTabSignupErrUI()
+{
+	return true;
+}
+function deactivateSignupErrUI()
+{
+	hideSignupErrUI();
+	unaccessSignupErrUI();
+	removeTabSignupErrUI();
+}
+function hideSignupErrUI()
+{
+	g_btnBack.disabled = false;
+    g_btnNext.disabled = false;
+	hide(g_spnSignupErrMsg);
+	return true;
+}
+function unaccessSignupErrUI()
+{
+	return true;
+}
+function removeTabSignupErrUI()
+{
+	return true;
+}
+function killMouseDown()
+{
+	window.event.cancelBubble = true;
+	window.event.returnValue  = false;
+	return false;
+}
+function setInitalFocusForIspSelect()
+{
+	changeIspFocus(1);
+	doChangeBoundIsp();
+	if (!b_inFocus)
+	{
+		notifyOfLoseOfFocus();
+	}
+}
+function changeIspFocus(i)
+{
+	g_tblIspList.rows(lastO - 1).bgColor     = COLOUR_SCHEME.DocBgColor;
+	g_tblIspList.rows(lastO - 1).style.color = COLOUR_SCHEME.DocText;
+	g_tblIspList.rows(i - 1).bgColor         = COLOUR_SCHEME.HighBgColor;
+	g_tblIspList.rows(i - 1).style.color     = COLOUR_SCHEME.HighColor;
+	lastO = curO;
+}
+function doChangeBoundIsp()
+{
+	tdcIspInfo.recordset.absoluteposition = curO;
+	constructIspMarketFrame();
+}
+function handleIspControlKeyUp()
+{
+	switch(event.keyCode)
+	{
+		case 38:
+		{
+			doChangeBoundIsp();
+			break;
+		}
+		case 40:
+		{
+			doChangeBoundIsp();
+			break;
+		}
+		default:
+			break;
+	}
+	return true;
+}
+function handleIspControlKeyDown()
+{
+	switch(event.keyCode)
+	{
+		case 38:
+		{
+			if (lastO != 1)  
+			{
+				curO = lastO - 1;     
+				changeIspFocus(curO); 
+			}
+			break;
+		}
+		case 40:
+		{
+			if (lastO  != DSO_UPPERBOUND) 
+			{
+				curO = lastO + 1;         
+				changeIspFocus(curO);     
+			}
+			break;
+		}
+		default:
+			break;
+	}
+	return true;
+}
+function killEvent()
+{
+	event.cancelBubble = true;
+	event.returnValue  = false;
+	return false;
+}
+function notifyOfFocus()
+{
+	b_inFocus = true;
+	g_tblIspList.rows(curO - 1).bgColor     = COLOUR_SCHEME.HighBgColor;
+	g_tblIspList.rows(curO - 1).style.color = COLOUR_SCHEME.HighColor;
+	return true;
+}
+function notifyOfLoseOfFocus()
+{
+	b_inFocus = false;
+	g_tblIspList.rows(curO - 1).bgColor     = COLOUR_SCHEME.WinBgColor;
+	g_tblIspList.rows(curO - 1).style.color = COLOUR_SCHEME.DocText;
+	return true;
+}
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" FOR="RefDialSignup" EVENT="RasConnectComplete(bSuccess)" >
+if(bSuccess)
+{
+	hide(g_spnIspCon5a);
+	show(g_spnIspCon5b);
+	submitSignUpForm();
+}
+else
+{
+    showDialErr();
+    g_iCurrentScrn = "ERR";
+}
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" FOR="RefDialSignup" EVENT="RasDialStatus()">
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" FOR="INSHandler" EVENT="KillConnection()">
+RefDialSignup.DoHangup();
+Webgate.KillIdleTimer();
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" FOR="Webgate" EVENT="WebGateDownloadComplete(ulSuccess)">
+if (ulSuccess)
+{
+	if (!g_bFinishPage)
+	{	
+		deactivateIspPageUI(getIspPageType());	
+		g_iframeIspPage.innerHTML = Webgate.Buffer;
+		hideprogress();
+		if (signupPageFormatError())
+		{
+			if ((g_iCurrentScrn == 4) || (g_iCurrentScrn == 5))
+			{
+				g_iframeIspPage.innerHTML = "";
+				showSignupErr();
+				g_iCurrentScrn = "ERR";
+				return false;
+			}
+		}
+		if (g_bSignupForm)
+			 next();
+		else
+		{
+			persistMagic();
+			if (g_bISPNext)
+				formMagic();
+			screenSwitch();
+		}
+	}
+	else
+	{
+        var INSFileName = Webgate.DownloadFname;
+		INSHandler.BrandingFlags = lBrandingFlags;
+		INSHandler.ProcessINS(INSFileName);
+		g_bFinish       = true;
+		window.external.raiseEvent("event_onmousedown", null);
+	}
+	g_bFinishPage   = false;
+	g_bISPNext      = false;
+	g_bISPBack      = false;
+	g_bSignupForm   = false;
+}
+else
+{
+   if ((g_iCurrentScrn == 4) || (g_iCurrentScrn == 5))
+   {
+		showSignupErr();
+		g_iCurrentScrn = "ERR";
+   }
+   return false;
+}
+</SCRIPT>
+<OBJECT ID=tdcIspInfo
+ 	ondatasetcomplete="setIspLoad();"
+	CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83"
+	TABINDEX=-1
+	STYLE='cursor:   default'>
+    <PARAM NAME="DataURL" VALUE="download\ispinfo.csv">
+    <PARAM NAME="UseHeader"     VALUE="True">
+    <PARAM NAME="TextQualifier" VALUE="'">
+</OBJECT>
+<INPUT ID=COLOUR_SCHEME
+	   TYPE=HIDDEN
+	   DocBgColor  = "WINDOW"
+	   DocText     = "WINDOWTEXT"
+	   HighBgColor = "HIGHLIGHT"
+	   HighColor   = "HIGHLIGHTTEXT"
+	   WinBgColor  = "THREEDFACE"
+	  TABINDEX=-1>
+<SCRIPT FOR=ispRow EVENT=onclick>
+curO = this.recordNumber;
+changeIspFocus(curO);
+doChangeBoundIsp();
+</SCRIPT>
+<TABLE ID=g_tblSideGraphic
+       BORDER=1
+       CELLPADDING=0
+       CELLSPACING=0
+	   STYLE="position: absolute;
+              top: 13;
+              left: 10;
+              width: 141;
+			  height: 343;
+			  border-style: 'inset';
+              visibility: hidden;
+              cursor:   default">
+<TR><TD CELLPADDING=0 CELLSPACING=0><IMG ID=g_imgSideGraphic SRC="sidebar.gif" STYLE="width: 140; height: 342; visibility: hidden;"></TD></TR>
+</TABLE>
+<img src="progress.gif"
+     ID=g_imgProgressIndicator
+     STYLE="position:absolute;
+           visibility: hidden;
+           top: 385;
+           left: 10;
+           height: 25;
+           width: 141"
+		   TABINDEX=-1>
+</img>
+<HR ID=g_hrUIBar
+    STYLE="position: absolute;
+           top: 373;
+           left: 10;
+           width: 516;
+		   height: 2;
+           visibility: hidden">
+<SPAN ID=tdcPayMethodContainer TABINDEX=-1 STYLE="position: absolute; top: 0; left: 0; width:1; height: 1; cursor: default"></SPAN>
+<OBJECT ID=RefDialSignup
+        CLASSID="CLSID:1E794A0A-86F4-11D1-ADD8-0000F87734F0"
+		STYLE="width: 1; height: 1;cursor:   default"
+		TABINDEX=-1>
+</OBJECT>
+<OBJECT ID=Webgate
+        CLASSID="clsid:3724B9A1-9503-11D1-B86A-00A0C90DC849"
+		TABINDEX=-1
+		STYLE="cursor:   default">
+</OBJECT>
+<OBJECT ID=INSHandler
+		CLASSID="clsid:6342E1B6-94DB-11D1-ADE2-0000F87734F0"
+		TABINDEX=-1>
+</OBJECT>
+<INPUT ID=g_ispPage
+       TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+	   DATAFLD=LocalHtm
+	   TABINDEX=-1>
+<INPUT ID=g_billingForm
+       TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+	   DATAFLD=BillingForm
+	   TABINDEX=-1>
+<INPUT ID=g_CNS
+       TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+	   DATAFLD=CNS
+	   TABINDEX=-1>
+<INPUT ID=g_hidPayCSVSRC
+       TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+	   DATAFLD=PayCSV
+	   TABINDEX=-1>
+<INPUT ID=tdcPay_DisName
+	   TYPE=HIDDEN
+	   DATASRC=#tdcPayMethod
+       DATAFLD=DisplayName
+	   TABINDEX=-1>
+<INPUT ID=tdcPay_LUHN
+	   TYPE=HIDDEN
+	   DATASRC=#tdcPayMethod
+       DATAFLD=LUHN
+	   TABINDEX=-1>
+<INPUT ID=tdcPay_VType
+	   TYPE=HIDDEN
+       DATASRC=#tdcPayMethod
+       DATAFLD=Type
+	   TABINDEX=-1>
+<INPUT ID=tdcPay_CustURL
+	   TYPE=HIDDEN
+	   DATASRC=#tdcPayMethod
+       DATAFLD=CustURL
+	   TABINDEX=-1>
+<INPUT ID=tdcPay_SecureTrans
+	   TYPE=HIDDEN
+       DATASRC=#tdcIspInfo
+       DATAFLD=Secure
+	   TABINDEX=-1>
+<INPUT ID=ispFileName
+	   TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+       DATAFLD=ISPFile
+	   TABINDEX=-1>
+<INPUT ID=ColorMap
+       TYPE=HIDDEN
+       bgColor=HIGHLIGHT
+       color=HIGHLIGHTTEXT
+	   backPage=THREEDFACE
+	   page=WINDOWTEXT
+	   TABINDEX=-1>
+<BUTTON ID       =  g_btnBack
+        onClick  =  "back();"
+        TABINDEX =  -1
+		STYLE    =  "position:   absolute;
+                     top:        385;
+                     left:       301;
+                     height:     25;
+                     font-family:'MS Sans Serif';
+                     font-size:  8pt;
+					 width:      73;
+			         visibility: hidden">
+< <u>G</u>eri
+</BUTTON>
+<BUTTON ID       =  g_btnNext
+        TABINDEX =  -1
+		onClick  =  "next();"
+        STYLE    =  "position:   absolute;
+                     top:        385;
+                     left:       374;
+					 height:     25;
+					 width:      73;
+                     font-family:'MS Sans Serif';
+                     font-size:  8pt;
+                     visibility: hidden">
+İle<u>r</u>i >
+</BUTTON>
+<BUTTON ID       =  g_btnFinish
+        TABINDEX =  -1
+		onClick  =  "finish();"
+        STYLE    =  "position:   absolute;
+                     top:        385;
+                     left:       374;
+					 height:     25;
+					 width:      73;
+                     font-family:'MS Sans Serif';
+                     font-size:  8pt;
+					 visibility: hidden">
+<u>S</u>on
+</BUTTON>
+<BUTTON ID       =  g_btnCancel
+        TABINDEX =  -1
+		onClick  =  "cancel();"
+        STYLE    =  "position:   absolute;
+                     top:        385;
+                     left:       454;
+                     height:     25;
+                     width:      73;
+                     font-family:'MS Sans Serif';
+                     font-size:  8pt;
+			         visibility: hidden">
+İptal
+</BUTTON>
+<SPAN ID=g_spnIsp1
+      STYLE="position: absolute;
+         top: 5;
+         left: 10;
+         visibility: hidden;
+         cursor:   default;
+         width: 516">
+      <SPAN DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23; visibility: hidden"></SPAN>&nbspInternet hizmet sağlayıcınız olarak kullanmak için İleri'yi tıklatın. Başka bir hizmet sağlayıcı kullanmak istiyorsanız, aşağıdaki listeden seçip İleri'yi tıklatın.
+</SPAN>
+<SPAN ID=g_spnIsp1B
+      STYLE="position: absolute;
+         top: 13;
+         left: 10;
+         visibility: hidden;
+         cursor:   default;
+         width: 516">
+     <SPAN DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23; visibility: hidden"></SPAN>&nbspInternet hizmet sağlayıcınız olarak kullanmak için İleri'yi tıklatın.
+</SPAN>
+<SPAN ID=g_spnIsp2
+      STYLE="position: absolute;
+         top: 45;
+         left: 10;
+         visibility: hidden;
+         cursor:   default;
+         width: 516">
+     <IMG TABINDEX=-1 ID=CNSGIF SRC="cns.gif" STYLE="width: 12; height: 11; visibility: hidden"> simgesi ile imlenmiş hizmet sağlayıcıları, kredi kartı ve başka bir fatura numarası istemeden ÜCRETİZ deneme süresi sunarlar.
+</SPAN>
+<SPAN ID=g_spnIspListControlLbl
+	  STYLE="position: absolute;
+             top: 75;
+             left: 10;
+             cursor:   default;
+			 visibility: hidden;
+			 width: 150">
+<u>I</u>nternet hizmet sağlayıcılar:
+</SPAN>
+<DIV ID=g_divIspListControl
+ STYLE="position: absolute;
+              top: 90;
+              left: 10;
+              border:'2  inset THREEDLIGHTSHADOW';
+              visibility: hidden;
+			  background: WINDOW;
+			  width: 218;
+			  height: 280;
+			  overflow: auto">
+<A  ID=g_ispListControlFocalNode
+	TABINDEX=-1
+	HREF=""
+    STYLE="width: 218; height: 280"
+    onfocus="notifyOfFocus();"
+	onblur="notifyOfLoseOfFocus();"
+	onclick="killEvent();"
+	onkeydown="handleIspControlKeyDown();"
+	onkeyup="handleIspControlKeyUp();"
+	onselectstart="killEvent();">
+<TABLE ID=g_tblIspList
+	   DATASRC=#tdcIspInfo
+       BORDER=0
+       CELLPADDING=0
+       CELLSPACING=0
+       bgColor=WINDOW
+	   STYLE="visibility: hidden;
+			  font-family: 'MS Sans Serif';
+              font-size: 8pt;
+			  width: 214">
+    	<THEAD>
+    </THEAD>
+	<TBODY >
+	<TR ID=ispRow>
+	<TD style="cursor:hand"  onfocus="notifyOfFocus();" onblur="notifyOfLoseOfFocus();">
+		<IMG  DATAFLD=Icon ALIGN=left STYLE="width: 16; height: 16"><IMG  DATAFLD=CNSIcon ALIGN=right STYLE="width: 12; height: 11"><SPAN ID=ispName  DATAFLD=Name STYLE="height; 23">&nbsp<SPAN  DATAFLD=MSN STYLE="height; 23"></SPAN>
+	</TD>
+	</TR>
+	</TBODY>
+</TABLE>
+</DIV>
+</A>
+<SPAN ID=g_ifrmIspFrameLbl
+      STYLE="position: absolute;
+             top: 75;
+             left: 230;
+             visibility: hidden;
+			 cursor:   default;
+			 width: 200">
+Hiz<u>m</u>et sağlayıcı bilgisi:
+</SPAN>
+<SPAN  ID=g_ifrmIspFrame
+	   STYLE="position: absolute;
+			  top: 90;
+              left: 230;
+			  width: 294;
+			  height: 280;
+			  visibility: hidden">
+	<IFRAME ID=__IspFrame
+			ACCESSKEY="m"
+			STYLE="width: 294;
+			       height: 280"
+			SCROLLING=AUTO
+			DATASRC=#tdcIspInfo
+			DATAFLD=LocalHtm
+			DISABLED>
+			</IFRAME>
+</SPAN>
+<SPAN ID=g_spnUserInfo1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+             width: 359">
+     <SPAN DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23"></SPAN>&nbspsağlayıcısına Internet Hizmet Sağlayıcınız olarak kaydolmayı seçtiniz.
+</SPAN>
+<SPAN ID=g_spnUserInfo2
+      STYLE="position: absolute;
+         top: 48;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+    Internet'e bağlanmak için, <SPAN DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23"></SPAN>&nbspaşağıdaki bilgileri sağlamalısınız.
+</SPAN>
+<SPAN ID=g_spnUserInfoFName
+      STYLE="position: absolute;
+             top: 108;
+             left: 167;
+             visibility: hidden;
+			 cursor:   default;
+			 width: 173">
+             <u>A</u>dı<br>
+    <INPUT ID=g_editFName
+		   TYPE=TEXT
+           STYLE="width:173; height: 23;  visibility: hidden"
+		   MAXLENGTH=28
+			valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoLName
+      STYLE="position: absolute;
+             top: 108;
+             left: 355;
+             visibility: hidden;
+			 cursor:   default;
+			 width: 173">
+             <u>S</u>oyadı<br>
+    <INPUT ID=g_editLName
+		   TYPE=TEXT
+           STYLE="width:173; height: 23;  visibility: hidden"
+		   MAXLENGTH=28
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserFEName
+      STYLE="position: absolute;
+             top: 108;
+             left: 167;
+             visibility: hidden;
+			 cursor:   default;
+			 width: 359">
+             <u>A</u>dı<br>
+    <INPUT ID=g_editUserFEName
+		   TYPE=TEXT
+           STYLE="width:359; height: 23;  visibility: hidden"
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoAddress
+      STYLE="position: absolute;
+             top: 148;
+             left: 167;
+             visibility: hidden;
+			 cursor:   default;
+             width: 361">
+             <u>A</u>dres<br>
+    <INPUT ID=g_editAddress
+           TYPE=TEXT
+		   STYLE="width:361; height: 23; visibility: hidden"
+		   MAXLENGTH=60
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoExAddress
+      STYLE="position: absolute;
+             top: 188;
+             left: 167;
+             visibility: hidden;
+			 cursor:   default;
+           	 width: 361">
+             E<u>k</u>adres bilgisi (isteğe bağlı)<br>
+    <INPUT ID=g_editExAddress
+		   TYPE=TEXT
+           STYLE="width:361; height: 23; visibility: hidden"
+		   MAXLENGTH=60
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoCity
+      STYLE="position: absolute;
+             top: 228;
+             left: 167;
+             visibility: hidden;
+			 cursor:   default;
+             width: 173">
+             <u>Ş</u>ehir<br>
+    <INPUT ID=g_editCity
+		   TYPE=TEXT
+           STYLE="width:173; height: 23; visibility: hidden"
+		   MAXLENGTH=26
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoState
+      STYLE="position: absolute;
+             top: 228;
+             left: 355;
+             visibility: hidden;
+			 cursor:   default;
+             width: 173">
+             <u>Ü</u>lke veya eyalet<br>
+    <INPUT ID=g_editState
+		   TYPE=EDIT
+           STYLE="width:173; height: 23; visibility: hidden"
+		   MAXLENGTH=25
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoZip
+      STYLE="position: absolute;
+             top: 268;
+             left: 167;
+             visibility: hidden;
+			 cursor:   default;
+             width: 173">
+             <u>P</u>osta kodu<br>
+    <INPUT ID=g_editZip
+           TYPE=TEXT
+		   STYLE="width:173; height: 23; visibility: hidden"
+		   MAXLENGTH=10
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnUserInfoPhone
+      STYLE="position: absolute;
+             top: 268;
+             left: 355;
+             visibility: hidden;
+			 cursor:   default;
+			 width: 173">
+             <u>T</u>elefon numarası<br>
+    <INPUT ID=g_editPhone
+           TYPE=TEXT
+		   STYLE="width:173; height: 23; visibility: hidden"
+		   MAXLENGTH=18
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnBilling1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+    <SPAN  DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23"></SPAN>&nbspaşağıdaki fatura bilgisini içeriyor. Bir fatura seçeneği seçin ve İleri'yi tıklatın.
+</SPAN>
+<FIELDSET ID=g_spnBilling2
+      STYLE="position: absolute;
+         top: 58;
+         left: 167;
+         height: 250;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+<LEGEND ID=g_legBilling STYLE="width: 65; height: 23; visibility: hidden">
+    Faturalam<u>a</u> Seçeneği
+</LEGEND>
+</FIELDSET>
+<SPAN ID=g_iframeBilling
+      STYLE="position: absolute;
+             top: 88;
+             left: 181;
+			 width: 330;
+			 height: 200;
+             visibility: hidden">
+	<IFRAME ID=g_iframeBillingDoc
+            ACCESSKEY="a"
+			TABINDEX=-1
+			DATASRC=#tdcIspInfo
+			DATAFLD=BillingForm
+			STYLE="width: 330;
+			       height: 200">
+    </IFRAME>
+</SPAN>
+<SPAN ID=g_spnPayMethod
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         width: 360;
+		 visibility: hidden;
+         cursor:   default">
+    Bir<u>Ö</u>deme yöntemi seçin:
+<BR><BR>
+    <SELECT ID=g_selPayMethod
+			onchange="reflectPayMeth();"
+			STYLE="width: 359;
+                   height: 20;
+				   visibility: hidden">
+
+    <OPTION>
+    </SELECT>
+</SPAN>
+<SPAN ID=g_spnPay1
+      STYLE="position: absolute;
+         top: 65;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+    Aşağıdaki bilgileri tamamlayıp devam etmek için İleri'yi tıklatın.
+</SPAN>
+<FIELDSET ID=g_spnPayCard1
+      STYLE="position: absolute;
+         top: 90;
+         left: 167;
+         height: 225;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+<LEGEND ID=g_legPayCard STYLE="width: 110; height: 23; visibility: hidden">
+    Kredi Kartı Bilgisi
+</LEGEND>
+</FIELDSET>
+<SPAN ID=g_spnPayCard2
+      STYLE="position: absolute;
+         top: 115;
+         left: 181;
+		 width: 332;
+         visibility: hidden;
+         cursor:   default">
+	<u>K</u>redi kartı numarası:
+<br>
+    <INPUT ID=g_edtCardNumber
+	TYPE=TEXT
+	STYLE="width: 332; height: 23; visibility: hidden"
+	MAXLENGTH=22
+	valid=false>
+</SPAN>
+<SPAN ID=g_spnPayCard3
+      STYLE="position: absolute;
+         top: 165;
+         left: 181;
+		 width: 125;
+         visibility: hidden;
+         cursor:   default">
+    Sona Erme Tarihi <u>a</u>y:
+    <SELECT ID=g_selCardExMonth
+	        STYLE="width: 200; height: 23;  visibility: hidden">
+    <OPTION VALUE="01" SELECTED>Ocak
+    <OPTION VALUE="02">Şubat
+    <OPTION VALUE="03">Mart
+    <OPTION VALUE="04">Nisan
+    <OPTION VALUE="05">Mayıs
+    <OPTION VALUE="06">Haziran
+    <OPTION VALUE="07">Temmuz
+    <OPTION VALUE="08">Ağustos
+    <OPTION VALUE="09">Eylül
+    <OPTION VALUE="10">Ekim
+    <OPTION VALUE="11">Kasım
+    <OPTION VALUE="12">Aralık
+    </SELECT>
+</SPAN>
+<SPAN ID=g_spnPayCard4
+      STYLE="position: absolute;
+         top: 165;
+         left: 414;
+		 width: 65;
+         visibility: hidden;
+         cursor:   default;
+         vertical-align: super">
+	<u>Y</u>ıl:
+	<SELECT ID=g_selCardExYear
+			STYLE="width: 100; height: 23; visibility: hidden">
+    <OPTION VALUE="98" SELECTED>1998
+    <OPTION VALUE="99">1999
+    <OPTION VALUE="00">2000
+    <OPTION VALUE="01">2001
+    <OPTION VALUE="02">2002
+    <OPTION VALUE="03">2003
+    <OPTION VALUE="04">2004
+    <OPTION VALUE="05">2005
+    <OPTION VALUE="06">2006
+    <OPTION VALUE="07">2007
+    <OPTION VALUE="08">2008
+    <OPTION VALUE="09">2009
+    <OPTION VALUE="10">2010
+	<OPTION VALUE="11">2011
+    <OPTION VALUE="12">2012
+	<OPTION VALUE="13">2013
+	<OPTION VALUE="14">2014
+	<OPTION VALUE="15">2015
+	<OPTION VALUE="16">2016
+	<OPTION VALUE="17">2017
+	<OPTION VALUE="18">2018
+	<OPTION VALUE="19">2019
+	<OPTION VALUE="20">2020
+	<OPTION VALUE="21">2021
+	<OPTION VALUE="22">2022
+	<OPTION VALUE="23">2023
+	<OPTION VALUE="24">2024
+	<OPTION VALUE="25">2025
+	</SELECT>
+</SPAN>
+<SPAN ID=g_spnPayCard5
+      STYLE="position: absolute;
+         top:  215;
+         left: 181;
+		 width: 332;
+         visibility: hidden;
+         cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+    Kartta ya<u>z</u> ılı olan ad:<br>
+    <INPUT ID=g_editCName
+           TYPE=TEXT
+           STYLE="width: 332; height: 23;  visibility: hidden"
+		   MAXLENGTH=50
+		   valid=false>
+</SPAN>
+<SPAN ID=g_spnPayCard6
+      STYLE="position: absolute;
+         top: 265;
+         left: 181;
+		 width: 235;
+         visibility: hidden;
+         cursor:   default">
+	Kartın Fatura <u>A</u>dresi:
+<br>
+	<INPUT  ID=g_editCAddress
+			STYLE="width: 235; height: 23;  visibility: hidden"
+			TYPE=TEXT
+			MAXLENGTH=40
+			valid=false>
+</SPAN>
+<SPAN ID=g_spnPayCard7
+      STYLE="position: absolute;
+         top: 265;
+         left: 420;
+		 width: 100;
+         visibility: hidden;
+         cursor:   default">
+    <u>P</u>osta kodu:
+<br>
+    <INPUT ID=g_editCZip
+           STYLE="height: 23; width: 92; visibility: hidden"
+		   TYPE=EDIT
+           MAXLENGTH=10>
+</SPAN>
+<FIELDSET ID=g_spnPayInvoice1
+      STYLE="position: absolute;
+         top: 90;
+         left: 167;
+         height: 225;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+<LEGEND ID=g_legPayInvoice STYLE="width:123; height: 23; visibility: hidden">
+    Fatura adresi bilgisi
+</LEGEND>
+</FIELDSET>
+<SPAN ID=g_spnPayInvoice2
+      STYLE="position: absolute;
+         top: 115;
+         left: 181;
+		 width: 332;
+         visibility: hidden;
+         cursor:   default">
+   <u>A</u>dres
+<BR>
+    <INPUT ID=g_editIAddress
+		   STYLE="height: 23; width:332; visibility: hidden"
+		   TYPE=TEXT
+		   MAXLENGTH=60>
+</SPAN>
+<SPAN ID=g_spnPayInvoice3
+      STYLE="position: absolute;
+         top: 165;
+         left: 181;
+		 width: 332;
+         visibility: hidden;
+         cursor:   default">
+	E<u>k</u>adres bilgisi (isteğe bağlı):
+<br>
+	<INPUT ID=g_editIExAddress
+           STYLE="height: 23; width: 332; visibility: hidden"
+		   TYPE=TEXT
+		   MAXLENGTH=60>
+</SPAN>
+<SPAN ID=g_spnPayInvoice4
+      STYLE="position: absolute;
+         top: 215;
+         left: 181;
+		 width: 332;
+         visibility: hidden;
+         cursor:   default">
+	<u>Ş</u>ehir
+<br>
+    <INPUT ID=g_editICity
+           STYLE="height: 23; width: 332; visibility: hidden"
+		   TYPE=TEXT
+		   MAXLENGTH=26>
+</SPAN>
+<SPAN ID=g_spnPayInvoice5
+      STYLE="position: absolute;
+         top: 265;
+         left: 181;
+		 width: 235;
+         visibility: hidden;
+         cursor:   default">
+	<u>Ü</u>lke veya Eyalet
+<br>
+	<INPUT ID=g_editIState
+           STYLE="width: 235; height: 23; visibility: hidden"
+		   TYPE=TEXT
+           MAXLENGTH=25>
+</SPAN>
+<SPAN ID=g_spnPayInvoice6
+      STYLE="position: absolute;
+         top: 265;
+         left: 420;
+		 width: 100;
+         visibility: hidden;
+         cursor:   default">
+    <u>P</u>osta kodu:
+<br>
+    <INPUT ID=g_editIZip
+           STYLE="height: 23; width: 92; visibility: hidden"
+		   TYPE=EDIT
+           MAXLENGTH=10>
+</SPAN>
+<FIELDSET ID=g_spnPayPhone1
+      STYLE="position: absolute;
+         top: 90;
+         left: 167;
+         height: 225;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+<LEGEND ID=g_legPayPhone STYLE="width: 130; height: 23; visibility: hidden">Telefon Hesabı Bilgisi</LEGEND>
+</FIELDSET>
+<SPAN ID=g_spnPayPhone2
+      STYLE="position: absolute;
+         top: 115;
+         left: 181;
+		 width: 250;
+         visibility: hidden;
+         cursor:   default">
+    Telefon <u>f</u>aturasındaki ad:
+<BR>
+    <INPUT ID=g_editPName
+           STYLE="height: 23; width: 331; visibility: hidden"
+		   TYPE=TEXT
+		   MAXLENGTH=50>
+</SPAN>
+<SPAN ID=g_spnPayPhone3
+      STYLE="position: absolute;
+         top: 165;
+         left: 181;
+         width: 250;
+		 visibility: hidden;
+         cursor:   default">
+    Telefon <u>h</u>esap numarası:
+<br>
+    <INPUT ID=g_editPAccountNum
+			STYLE="height: 23; width: 331; visibility: hidden"
+		   TYPE=EDIT
+           MAXLENGTH=30>
+</SPAN>
+<FIELDSET ID=g_spnPayCustom1
+      STYLE="position: absolute;
+         top: 90;
+         left: 167;
+         height: 225;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+<LEGEND STYLE="width: 130; height: 23" ID=g_lblPayCustom1>
+</LEGEND>
+</FIELDSET>
+<SPAN ID=g_iframePayCustom
+      STYLE="position: absolute;
+             top: 115;
+             left: 181;
+             visibility: hidden;
+			 width: 330;
+			 height: 200">
+    <IFRAME ID=g_iframePayCustomDoc
+            TABINDEX=-1
+			STYLE="width: 330;
+			       height: 200">
+    </IFRAME>
+</SPAN>
+<SPAN ID=g_spnPayTranactionSecure
+       STYLE="position: absolute;
+         top: 319;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+Verdiğiniz bilgiler güvenli bir bağlantı ile Internet hizmet sağlayıcısına gönderilecektir.
+</SPAN>
+<SPAN ID=g_spnPayTranactionUnSecure
+       STYLE="position: absolute;
+         top: 319;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+Verdiğiniz bilgiler internet aracılığı ile Hizmet Sağlayıcısı'na gönderilecektir. Başkalarının gönderdiğiniz verileri görmesi olasıdır.
+</SPAN>
+<SPAN ID=g_spnIspCon1
+      STYLE="position: absolute;
+         top: 13;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+    Internet bağlantı sihirbazı şimdi buraya bağlanacak: <SPAN ID=g_spnIspConTargetName DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23; visibility: hidden"></SPAN>.
+</SPAN>
+<SPAN ID=g_spnIspCon2
+      STYLE="position: absolute;
+         top: 50;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+         width: 359">
+    Bağlandıktan sonra, hizmet sağlayıcısından bir kullanıcı kimliği ve parola alacaksınız. Hizmet sağlayıcı, bilgisayarınızı Internet erişimi için yapılandıracaktır.
+</SPAN>
+<SPAN ID=g_spnIspCon3
+      STYLE="position: absolute;
+         top: 138;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+			 width: 150">
+      Telefon numarası:
+</SPAN>
+<SPAN ID=g_spnIspCon4
+      STYLE="position: absolute;
+         top: 158;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+			 width: 209">
+</SPAN>
+<SPAN ID=g_spnIspCon5a
+      STYLE="position: absolute;
+         top: 188;
+         left: 167;
+		 width: 359;
+         visibility: hidden;
+         cursor:   default">
+      Aranıyor <SPAN DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23; visibility: hidden"></SPAN>...
+</SPAN>
+<SPAN ID=g_spnIspCon5b
+      STYLE="position: absolute;
+         top: 188;
+         left: 167;
+		 width: 359;
+         visibility: hidden;
+         cursor:   default">
+      Bağlanılan konum: <SPAN DATASRC=#tdcIspInfo DATAFLD=Name STYLE="height; 23; visibility: hidden"></SPAN>...
+</SPAN>
+<SPAN ID=g_iframeIspPage
+	  onscroll="killEvent();"
+	  STYLE="position: absolute;
+             top: 13;
+             left: 167;
+             visibility: hidden;
+             width: 360;
+             height: 325;
+			 overflow: hidden">
+</SPAN>
+<SPAN ID=g_iframeIspTermsPage
+      STYLE="position: absolute;
+             top: 13;
+             left: 167;
+             visibility: hidden;
+			 width: 360;
+			 height: 290">
+	<IFRAME ID=g_iframeIspTermsPageDoc
+			TABINDEX=-1
+			STYLE="width: 360; height: 290"
+			DISABLED>
+    </IFRAME>
+</SPAN>
+<DIV ID=TOS_UI STYLE="visibility: hidden">
+<SPAN STYLE="position: absolute; top: 318; left: 181; width: 359">
+<INPUT NAME=TOSRADIOBUTTON ID=rbtnAccept VALUE="ACCEPT" TYPE=RADIO ACCESSKEY="a" onclick="tosConfirm();">
+<LABEL FOR="rbtnAccept" STYLE="cursor:  default; height: 23">
+ <u>A</u>nlaşmayı kabul ediyorum.
+</LABEL>
+</SPAN>
+<SPAN STYLE="position: absolute;top:338;left: 181;width: 359">
+<INPUT NAME=TOSRADIOBUTTON ID=rbtnDecline VALUE="DECLINE" TYPE=RADIO ACCESSKEY="k" onclick="tosConfirm()">
+<LABEL FOR="rbtnDecline" STYLE="cursor:   default; height: 23">
+ <u>K</u>abul etmiyorum.
+</LABEL>
+</SPAN>
+</DIV>
+<SPAN ID=g_spnEnd1
+      STYLE="position: absolute;
+         top: 248;
+         left: 167;
+         visibility: hidden;
+         cursor:   default;
+		 width: 359">
+	Sihirbazı tamamlamak için, Son'u tıklatın. Internet'te gezinmeye başlamak için masaüstündeki Internet simgesini çift tıklatın.
+</SPAN>
+<DIV ID=CURSOR_BLOCK
+	 onClick=""
+	 STYLE="position: absolute;
+			top:  0;
+			left: 0;
+			background: transparent;
+			visibility: hidden;
+			cursor:   default;
+			width:0;
+			height:0"
+			TABINDEX=-1>
+</DIV>
+<FORM NAME=ISPFORM TABINDEX=-1 STYLE="position: absolute; top: 0; left: 0; visibility: hidden; width: 1; height: 1">
+<INPUT TYPE=HIDDEN NAME=USER_FIRSTNAME TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_LASTNAME TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_ADDRESS TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_MOREADDRESS TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_CITY TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_STATE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_ZIP TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_PHONE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=AREACODE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=COUNTRYCODE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=USER_FE_NAME TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_TYPE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLNAME TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLADDRESS TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLEXADDRESS TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLCITY TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLSTATE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLZIP TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_BILLPHONE TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_DISPLAYNAME TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_CARDNUMBER TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_EXMONTH TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_EXYEAR TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=PAYMENT_CARDHOLDER TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=SIGNED_PID TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=GUID TABINDEX=-1>
+<INPUT TYPE=HIDDEN NAME=OFFERID TABINDEX=-1>
+</FORM>
+<INPUT TYPE=HIDDEN ID=FORMACTION>
+<SPAN ID=g_spnDialErrorMsg
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default;
+         font-family: 'MS Sans Serif';
+         font-size: 8pt">
+</SPAN>
+<SPAN ID=g_spnDialErrorNumber
+      STYLE="position: absolute;
+             top: 100;
+             left: 167;
+			 width: 150;
+             visibility: hidden">
+<LABEL FOR="g_edtDialErrorNumber"
+       STYLE="cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+             Ç<u>e</u>vrilecek numara:
+</LABEL>
+</SPAN>
+<INPUT ID=g_edtDialErrorNumber
+           onkeypress = "DialErrorNumberChange();"
+           onkeyup    = "SpecialDialErrorNumberChange();"
+		   STYLE="position: absolute;
+           top: 100;
+           left: 350;
+           width: 188;
+		   height: 23;
+           visibility: hidden"
+           TYPE=EDIT
+           MAXLENGTH=35>
+</INPUT>
+<SPAN ID=g_spnDialErrorModem
+      STYLE="position: absolute;
+             top: 130;
+             left: 167;
+			 width: 150;
+             visibility: hidden">
+<LABEL FOR="g_listDialErrorModem"
+       STYLE="cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt">
+             Geçerli <u>m</u>odem:
+</LABEL>
+</SPAN>
+<SELECT ID=g_listDialErrorModem
+           STYLE="position: absolute;
+           top: 130;
+           left: 350;
+           width: 188;
+		   height: 23;
+           visibility: hidden"
+           SIZE=1>
+</SELECT>
+<SPAN ID=g_spnDialErrorDialProp
+      STYLE="position: absolute;
+             top: 160;
+             left: 167;
+			 width: 200;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    Numaranın çevrilme yöntemini değiştir:
+</SPAN>
+<BUTTON ID=g_btnDialErrorDialProp
+        onClick="DialProperties();"
+        STYLE="position: absolute;
+        top: 160;
+        left: 428;
+        visibility: hidden;
+        height: 25;
+        width: 140;
+        font-family: 'MS Sans Serif';
+        font-size: 8pt">
+<u>Ç</u>evirme Özellikleri
+</BUTTON>
+<SPAN ID=g_spnDialErrorPhoneBook
+      STYLE="position: absolute;
+             top: 190;
+             left: 167;
+			 width: 200;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    Yeni bir telefon numarası seçin:
+</SPAN>
+<BUTTON ID=g_btnDialErrorPhoneBook
+        onClick="ShowPhoneBook();"
+        STYLE="position: absolute;
+        top: 190;
+        left: 428;
+        visibility: hidden;
+        height: 25;
+        width: 140;
+        font-family: 'MS Sans Serif';
+        font-size: 8pt">
+<u>T</u>elefon Defteri
+</BUTTON>
+<SPAN ID=g_spnDialErrorTroubleShoot
+      STYLE="position: absolute;
+             top: 220;
+             left: 167;
+			 width: 200;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    Sorun giderme hakkında yardım için:
+</SPAN>
+<BUTTON ID=g_btnDialErrorTroubleShoot
+        onClick="ShowDialErrorTroubleShooter();"
+        STYLE="position: absolute;
+        top: 220;
+        left: 428;
+        visibility: hidden;
+        height: 25;
+        width: 140;
+        font-family: 'MS Sans Serif';
+        font-size: 8pt">
+<u>T</u>eknik
+</BUTTON>
+<SPAN ID=g_spnErrorAutomatedHelp
+      STYLE="position: absolute;
+             top: 300;
+             left: 165;
+             width: 359;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+    destek için bu numarayı arayın:
+</SPAN>
+<SPAN ID=g_spnErrorAutomatedHelpNumber
+      STYLE="position: absolute;
+             top: 320;
+             left: 167;
+             width: 359;
+             cursor:   default;
+             font-family: 'MS Sans Serif';
+             font-size: 8pt;
+             visibility: hidden">
+</SPAN>
+<SPAN ID=g_spnSignupErrMsg
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+      Internet Bağlantı sihirbazı, kaydolma sunucusu ile iletişim kurarken kesildi. Lütfen daha sonra yeniden deneyin veya şimdi yeniden denemek için İleri'yi tıklatın.
+</SPAN>
+<DIV ID=g_divNoOffers
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+</DIV>
+<DIV ID=g_divOls
+      STYLE="position: absolute;
+         top: 18;
+         left: 167;
+         width: 359;
+         visibility: hidden;
+         cursor:   default">
+</DIV>
+<INPUT ID=g_GUID
+	   TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+	   DATAFLD=GUID
+	   NAME=GUID
+	   TABINDEX=-1>
+<INPUT ID=g_OfferId
+	   TYPE=HIDDEN
+	   DATASRC=#tdcIspInfo
+	   DATAFLD=OfferId
+	   NAME=OFFERID
+	   TABINDEX=-1>
+</BODY>
+</HTML>

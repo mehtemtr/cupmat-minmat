@@ -1,0 +1,281 @@
+*************************************************************************
+                          XingMPEG Player 
+                           Version 3.20
+                     Xing Technology Corporation
+                          810 Fiero Lane
+                      San Luis Obispo, CA 93401
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.20   ***********
+*************************************************************************
+
+Installation
+- Eliminated potential problems with ActiveMovie warning.
+- DirectDraw DLLs no longer provided with the XingMPEG Player install.
+- Added a warning if DirectDraw drivers are not found.
+
+XingMPEG Driver
+- Added ability to configure the driver without opening a file through 
+  Windows 95 Control Panel.
+- In the event of abnormal termination, the user will be prompted about
+  turning DirectDraw off.
+- Added support for DirectDraw primary.
+- High resolution VideoCD 2.0 stills now supported.
+- Fixed Matrox offscreen YUV Bug.
+- Moved xmvideo.ini settings into registry.
+- Added double buffering support to offscreen surfaces.
+- Eliminated potential problems with overlay surfaces.
+- DirectDraw is disabled automatically if terminated incorrectly.
+- Fixed potential audio problems with end user titles.
+- Fixed VideoCD read problems.
+- Uses MMIO for VideoCD reads.
+- Correctly connects to offscreen surface if overlay fails.
+- Fixed sub 1x (resolution) color problems in color modes that are 
+  greater than 8bbp.
+
+XingMPEG Player (XMPLAYER.EXE)
+- Added a splash screen at startup.
+- Added a welcome screen that provides a warning about DirectDraw when 
+  running the player for the first time.
+- Added ability to select MPEG audio and video streams.
+- Replaced karaoke settings menu with audio settings menu.
+- Added a popup karaoke mixer.
+- Added ability to set the XingMPEG Driver as the current MPEGVideo 
+  driver from within the XingMPEG Player.
+- Added ability to have different sets of preferences for multiple users.
+- Added number of streams to the File Information Box. 
+- Added ability to configure the driver from playback settings without
+  opening a file.
+- Player correctly defaults to 22kHz Stereo.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.12   ***********
+*************************************************************************
+XingMPEG Driver
+- Eliminated potential problems with 3rd party software using the "mci
+  status media present" command.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.11   ***********
+*************************************************************************
+XingMPEG Driver
+- Eliminated potential problems with Overlay surfaces that do not
+  support double buffering.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.10   ***********
+*************************************************************************
+Installation
+- Added support for Windows NT.
+
+XingMPEG Driver
+- Added NT 4.0 support plus Direct Draw.
+- Added MMX support.
+- Added double buffering support to Overlay surfaces.
+- Eliminated potential problems with MCI command "put source" in 
+  certain display modes.
+- Added support for MCI command "status audio source".
+
+XingMPEG Player (XMPLAYER.EXE)
+- Added the ability to choose any MPEG file for the video diagnostic.
+- Added the ability to set rate control on or off for the video 
+  diagnostic.
+- Eliminated potential problems with VideoCD 2.0 keyboard commands. 
+- Moved settings from xmplayer.ini to the registry.
+- Eliminated potential problems with Rate Control warning message 
+  being displayed in VideoCD 2.0.
+- Added the ability to eject CDs.
+- Eliminated potential problems with Open VideoCD when the drive is
+  empty or open.
+- Eliminated potential problems that could occur when the end of a
+  VideoCD 2.0's play list is reached.
+- Added Karaoke setting for Mono.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.02   ***********
+*************************************************************************
+Installation
+- XMSND95.DLL has been removed.
+- Eliminated potential problems with uninstall not removing itself
+  from the Add/Remove Programs menu.
+- Updated DirectDraw drivers to DirectX 2.
+
+XingMPEG Driver
+- Added 32bit audio support.
+- Added MPEG Layer I audio support.
+- Improved colorkey compatibility. 
+- Eliminated potential problems with MCI command "Seek to End" when
+  destination was a section of a window.
+- Eliminated potential problems with MCI command "Put Destination"
+
+XingMPEG Player (XMPLAYER.EXE)
+- Added hotspot functionality for VideoCD 2.0 titles.
+- Improved compatibility with VideoCD 2.0 titles containing numeric
+  selections. 
+- Eliminated potential problems with paused VideoCD 2.0 titles.
+- Maximizing the MPEG window and restoring no longer causes problems 
+  with the Windows 95 Task Bar.
+- Eliminated potential problems with MPEG window coming up without a
+  window boarder.
+- Eliminated potential problems with MPEG window not opening at 100%
+  during multi-file playback.
+- Title of loaded MPEG now appears in the XingMPEG Player's title bar.
+- Eliminated potential problems with the performance diagnostic being
+  run on a slow machine. 
+- Eliminated potential problems when trying to restore the player in 
+  bar mode from the Windows 95 Task Bar.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.01   ***********
+*************************************************************************
+XingMPEG Driver
+- Eliminated potential audio dropouts when playing VideoCDs.
+- Eliminated potential audio dropouts when playing .DAT files
+  from CD titles.
+- Step controls are now fully functional.
+- Eliminated potential video playback slowdown when
+  audio is muted and unmuted.
+- Audio settings are now maintained during repeat playback,
+  file navigation, and multi-file playback.
+- Resizing video window during playback no longer causes
+  temporary appearance of bad video data.
+
+XingMPEG Player (XMPLAYER.EXE)
+- Improved compatibility with VideoCD 2.0 titles.
+- Eliminated flashing of Windows95 Task Bar that occurs
+  when the XingMPEG Player is in Bar mode and the Task Bar is set 
+  to "auto hide".
+- Eliminated potential problems when the current display driver's
+  resolution is changed on-the-fly.
+- The color of the XingMPEG Player's controls is now determined by 
+  the current Windows95 color scheme.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 3.0   ************
+*************************************************************************
+Installation
+- You can now de-install the XingMPEG Player by running the uninstall
+  program located in the XingMPEG Player directory.
+ 
+XingMPEG Driver
+- Now support Direct Draw Off-Screen surfaces.
+- Now supports audio-only MPEG files.
+- Video/Audio Synchronization is now insured.
+- Now automatically identifies preferred audio device.
+- Eliminated potential problems on systems with non-Intel Pentium
+  processors.
+
+XingMPEG Player (XMPLAYER.EXE)
+- Added support for VideoCD 2.0 titles.
+- Mute button now disabled when audio-only file is open.
+- Step buttons now disabled during playback.
+- Default scale now "Time".
+- Installation diagnostic now displays pathname of MPEGVideo driver.
+- XingMPEG Player window now remains in background during full-screen
+  multi-file Playback.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 2.04  ************
+*************************************************************************
+XingMPEG Driver
+- Eliminated potentially fatal error on systems with non-Intel
+  processors.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 2.03  ************
+*************************************************************************
+XingMPEG Driver
+- Eliminated fatal error when the MCI command "Set Colorkey" is
+  received in a display environment that does not support Direct Draw.
+- Eliminated fatal error that occurs when a file is opened in a
+  display environment that does not support Direct Draw, and the
+  XingMPEG Driver attempted to access primary surface DCI through
+  dciman32.dll.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 2.02  ************
+*************************************************************************
+XingMPEG Driver
+- Now supports Direct Draw overlay on display systems that do not
+  support colorkeying.
+
+***********************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 2.01  ************
+*************************************************************************
+
+XingMPEG Driver
+- When the Driver is accessing Direct Draw, pausing playback
+  no longer causes loss of the Direct Draw surface.
+- Eliminated potential memory loss during multi-file playback.
+- The XingMPEG Driver's Configuration dialog can not be accessed
+  through the MultiMedia Control Panel.
+
+XingMPEG Player (XMPLAYER.EXE)
+- Added support of Windows95 Plus Pack
+- The Playback Settings dialog has a new option "Always Open at 100%".
+- The Video Performance Diagnostic tool’s ability to accurately report
+  overall frame rate on PC’s that achieve greater than approximately
+  35 frames per second has been improved. On fast PCs where the actual
+  achieved frame rate may be up to 70fps, the diagnostic tool now reports
+  an accurate frame rate. Inaccuracies may be experienced on very fast
+  PC’s that achieve frame rates greater than approximately 70 frames
+  per second.
+- If the XingMPEG Driver’s "Use Video Acceleration" option is
+  disabled, a warning of this condition is now properly displayed
+  when the Video Performance test is run.
+- Eliminated possible problem when closing the program using the
+  "Alt-F4" keyboard command.
+- During Multi-file playback the Video Window is now destroyed
+  and recreated between files.
+- The Playback Options dialog’s MPEG Driver Setup button is disabled
+  when no MPEG file is open.
+
+*************************************************************************
+***********   RELEASE NOTES TO XingMPEG Player VERSION 2.0   ************
+*************************************************************************
+Installation
+- No Deinstall program is currently available.
+
+XingMPEG Driver
+- When accessing primary surface DCI on some display systems,
+  fatal errors may occur when resizing the video playback
+  window during playback.
+- During MPEG file playback, accessing dialog boxes within the application
+  that is controlling playback (e.g., the XingMPEG Player program or Media
+  Player) may be subject to delays.
+
+XingMPEG Player (XMPLAYER.EXE)
+- When the XingMPEG Player is accessing Direct Draw video acceleration,
+  clicking on the Track Bar during playback may cause a bright green
+  border to appear around the Track Bar.
+- The Video Performance Diagnostic tool improperly reports the
+  overall frame rate on PC's that achieve greater than approximately
+  35 frames per second. On fast PCs where the actual achieved frame
+  rate may be 60fps or greater, the diagnostic tool will never report
+  a frame rate higher than approximately 35 frames per second. In such
+  situations, the following error usually appears: There is a problem
+  with Subsystems Performance Values".
+- If the XingMPEG Driver's "Use Video Acceleration" option is disabled,
+  no warning of this condition is displayed when the Video Performance
+  test is run. Before running this test, make sure the XingMPEG Driver's
+  "Use Video Acceleration" option is enabled.
+- The XingMPEG Player's Mute button does not reflect or affect the
+  current state of the Windows95 Audio Mute control. If you do not
+  hear audio when playing MPEG files, check the Windows95 Audio Mute
+  and Volume controls and make sure the XingMPEG Driver's Rate Control
+  feature is enabled.
+
+*************************************************************************
+*************************   XingMPEG Support   **************************
+*************************************************************************
+
+Product updates and general support information
+are available electronically via:
+
+CompuServe: GO XINGSUPPORT
+Internet:   http://www.xingtech.com/
+XingBBS:    (805) 783-4911 (modem speed=14.4, 8N1)
+
+If you need further information, please contact your
+dealer or the manufacturer of the product with which
+the XingMPEG Player came bundled.

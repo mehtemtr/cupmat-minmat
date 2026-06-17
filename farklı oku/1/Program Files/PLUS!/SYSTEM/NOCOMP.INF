@@ -1,0 +1,121 @@
+;===============================================================================
+; Microsoft Startup Disk Wizard -- Information File
+;===============================================================================
+;
+; The Microsoft Startup Disk Wizard, Nocomp.exe, creates a special startup
+; floppy disk that you can use to start your computer without loading DriveSpace.
+; This frees conventional memory for running MS-DOS-based programs.
+;
+; This file contains settings that control how the Startup Disk Wizard runs.  
+; It contains three sections: 
+;
+;     [Options]   contains settings that modify certain aspects of the
+;                 Startup Disk Wizard's behavior.
+;
+;     [Multipart] specifies how the wizard should handle drivers with multiple
+;                 file dependencies. 
+;
+;     [Ignore]    lists files the wizard should ignore when processing
+;                 your startup files.
+;
+; The settings in each section are explained below.
+;
+;-------------------------------------------------------------------------------
+; [Options] Section
+;-------------------------------------------------------------------------------
+; This section contains the Autoexec and Config settings, which specify the 
+; startup files on which to base your Startup Disk.
+;                      
+; By default, the Startup Disk Wizard uses your current Autoexec.bat and 
+; Config.sys files. If you have removed real-mode drivers from your current 
+; Autoexec.bat and Config.sys files, use the Autoexec and Config settings 
+; to specify that the wizard should use your Autoexec.dos and Config.dos 
+; files instead. For example:
+; 
+;     autoexec=C:\autoexec.dos
+;     config=C:\config.dos
+; 
+
+[Options]
+autoexec=c:\autoexec.bat
+config=c:\config.sys
+
+;-------------------------------------------------------------------------------
+; [Multipart] Section
+;-------------------------------------------------------------------------------
+;
+; This section lists any programs that require other files in order
+; to load properly. The wizard will then copy the specified files to 
+; the destination directory.
+;
+; Each program is listed on a separate line using the following syntax:
+;
+;   programname=file1,file2,file3...
+;
+; where
+;
+;   programname   Specifies the filename of the program that requires
+;                 other files (for example, Driver.sys).
+; 
+;   file          Specifies the location of each file required by 
+;                 programname. If there is more than one file, 
+;                 separate the files with commas.
+;
+; For example, if Driver.sys required the Driver.inf and Driver.ini files,  
+; you would add the following line:
+;
+;       driver.sys=driver.inf,driver.ini
+;
+; If a program requires more files than fit on one line, you can add
+; additional lines by repeating the program name with a .1 suffix,
+; a .2 suffix, and so on. For example, if Myprog.exe requires many files,
+; you might add the following lines:
+;
+;       myprog.exe=driver.inf,driver.ini,driver.bat,prog.dll
+;       myprog.exe.1=file.dll,more.dll,whatever.vxd,whatsit.bat
+;       myprog.exe.2=prog.bin
+;
+; If a program requires that one of its components be in a subdirectory 
+; relative to the main program file, include the .\ characters and the
+; relative path for each file. For example, if C:\video\viddrv.sys
+; requires the Display.inf file to load, and it looks for this file in 
+; the directory C:\video\system, you would add the following line:
+;
+;       viddrv.sys=.\system\display.inf
+
+[multipart]
+dmdrvr.bin=xbios.ovl
+sbconfig.exe=drv\auxdrv.drv,drv\ct-voice.drv,drv\ctvdsk.drv
+sbconfig.exe.1=drv\ctwdsk.drv,drv\ctwmem.drv,drv\organ.drv
+
+;-------------------------------------------------------------------------------
+; [Ignore] Section
+;-------------------------------------------------------------------------------
+;    A programs should be listed in the [Ignore] section when it
+;    is not useful or usable when your computer is started using this
+;    startup disk, either because you don't need the program or 
+;    because it requires too many support files to fit onto a floppy disk.
+;
+;    IMPORTANT: Do not remove the first five entries that already exist here.
+;
+;    For each program that you want Startup Disk Wizard to ignore, use the
+;    following syntax:
+;
+;       programname=1
+;
+
+[ignore]
+drvspace.sys=1
+config.sys=1
+autoexec.bat=1
+drvspace.exe=1
+win.com=1
+net.exe=1
+deltree.exe=1
+xcopy.exe=1
+move.exe=1
+vlm.com=1
+lsl.com=1
+ipxodi.com=1
+ban.com=1
+arswait.com=1
