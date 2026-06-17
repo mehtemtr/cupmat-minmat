@@ -22,16 +22,22 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function run() {
   try {
-    const { count: rosterCount, error: rosterErr } = await supabase
+    const { data: dbPlayers, error } = await supabase
       .from('team_rosters')
-      .select('*', { count: 'exact', head: true });
-    
-    const { count: statsCount, error: statsErr } = await supabase
-      .from('player_stage_stats')
-      .select('*', { count: 'exact', head: true });
+      .select('*')
+      .eq('team_id', 'kor');
 
-    console.log(`Total rows in team_rosters:       ${rosterCount}`);
-    console.log(`Total rows in player_stage_stats: ${statsCount}`);
+    if (error) {
+      console.error("Error fetching roster:", error);
+      return;
+    }
+
+    console.log("Roster for South Korea (kor) in database:");
+    console.log("-----------------------------------------");
+    dbPlayers.forEach((p, idx) => {
+      console.log(`${idx + 1}. ID: ${p.id} | Name: ${p.player_name} | Pos: ${p.player_position}`);
+    });
+    console.log("-----------------------------------------");
   } catch (err) {
     console.error("Failed running script:", err);
   }

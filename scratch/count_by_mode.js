@@ -22,16 +22,36 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function run() {
   try {
-    const { count: rosterCount, error: rosterErr } = await supabase
-      .from('team_rosters')
-      .select('*', { count: 'exact', head: true });
-    
-    const { count: statsCount, error: statsErr } = await supabase
-      .from('player_stage_stats')
-      .select('*', { count: 'exact', head: true });
+    const { data: scores, error } = await supabase
+      .from('minmat_leaderboard')
+      .select('mode, name, score');
 
-    console.log(`Total rows in team_rosters:       ${rosterCount}`);
-    console.log(`Total rows in player_stage_stats: ${statsCount}`);
+    if (error) {
+      console.error("Error fetching data:", error);
+      return;
+    }
+
+    const counts = {};
+    const samplePlayers = {};
+    
+    scores.forEach(item => {
+      const mode = item.mode || 'unknown';
+      counts[mode] = (counts[mode] || 0) + 1;
+      
+      if (!samplePlayers[mode]) {
+        samplePlayers[mode] = [];
+      }
+      if (samplePlayers[mode].length < 3) {
+        samplePlayers[mode].push(`${item.name} (${item.score})`);
+      }
+    });
+
+    console.log("Category breakdown in minmat_leaderboard:");
+    console.log("-------------------------------------------");
+    for (const [mode, count] of Object.entries(counts)) {
+      console.log(`Mode: ${mode.padEnd(12, ' ')} | Count: ${String(count).padStart(3, ' ')} | Samples: ${samplePlayers[mode].join(', ')}`);
+    }
+    console.log("-------------------------------------------");
   } catch (err) {
     console.error("Failed running script:", err);
   }

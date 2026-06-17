@@ -289,6 +289,8 @@
     "saveSuccess": "Kadro başarıyla kaydedildi!",
     "saveError": "Kadro kaydedilirken hata oluştu.",
     "saveBtn": "Kadroyu Kaydet 💾",
+    "autoPickBtn": "Otomatik Seç 🪄",
+    "autoPickSuccess": "Kadro otomatik olarak oluşturuldu! Kadronuzu kontrol edip Kaydet butonu ile kaydedebilirsiniz.",
     "stageLockedAlert": "Bu aşama başladığı için kadro güncellemeleri kilitlenmiştir.",
     "liveRewardPromo": "Maçları canlı takip edene MinMat'ta kullanılabilecek sürpriz hediyeler var! 🎁",
     "liveRewardEarned": "MinMat Bonusu Kazandın!",

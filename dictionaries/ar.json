@@ -292,6 +292,8 @@
     "saveSuccess": "Roster saved successfully!",
     "saveError": "Error saving roster.",
     "saveBtn": "Save Roster 💾",
+    "autoPickBtn": "اختيار تلقائي 🪄",
+    "autoPickSuccess": "تم ملء التشكيلة تلقائيًا! يمكنك مراجعة وحفظ تشكيلتك باستخدام زر الحفظ.",
     "stageLockedAlert": "تم قفل تحديثات التشكيلة لأن هذه المرحلة قد بدأت بالفعل.",
     "liveRewardPromo": "هدايا مفاجئة بانتظار من يتابع المباريات مباشرة هنا في MinMat! 🎁",
     "liveRewardEarned": "لقد ربحت مكافأة MinMat!",

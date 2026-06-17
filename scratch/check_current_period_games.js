@@ -22,16 +22,27 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function run() {
   try {
-    const { count: rosterCount, error: rosterErr } = await supabase
-      .from('team_rosters')
-      .select('*', { count: 'exact', head: true });
-    
-    const { count: statsCount, error: statsErr } = await supabase
-      .from('player_stage_stats')
-      .select('*', { count: 'exact', head: true });
+    const periodStartTimestamp = Date.now() - 72 * 60 * 60 * 1000;
+    console.log(`Scores recorded in the last 72 hours (since ${new Date(periodStartTimestamp).toLocaleString('tr-TR')}):`);
 
-    console.log(`Total rows in team_rosters:       ${rosterCount}`);
-    console.log(`Total rows in player_stage_stats: ${statsCount}`);
+    const { data: scores, error } = await supabase
+      .from('minmat_leaderboard')
+      .select('*')
+      .gte('timestamp', periodStartTimestamp)
+      .order('score', { ascending: false });
+
+    if (error) {
+      console.error("Error fetching scores:", error);
+      return;
+    }
+
+    console.log(`\nFound ${scores.length} scores:`);
+    console.log("--------------------------------------------------");
+    scores.forEach((s, index) => {
+      console.log(`${index + 1}. ${s.name} (${s.email}) | Score: ${s.score} | Lvl: ${s.level} | Mode: ${s.mode} | Date: ${s.date}`);
+    });
+    console.log("--------------------------------------------------");
+
   } catch (err) {
     console.error("Failed running script:", err);
   }

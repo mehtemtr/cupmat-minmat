@@ -289,6 +289,8 @@
     "saveSuccess": "Roster saved successfully!",
     "saveError": "Error saving roster.",
     "saveBtn": "Save Roster 💾",
+    "autoPickBtn": "Auto Pick 🪄",
+    "autoPickSuccess": "Squad auto-filled! You can review and save your squad using the Save button.",
     "stageLockedAlert": "Roster updates are locked because this stage has already started.",
     "liveRewardPromo": "Surprise gifts are waiting in MinMat for those who follow the matches live here! 🎁",
     "liveRewardEarned": "You Earned a MinMat Bonus!",

@@ -292,6 +292,8 @@
     "saveSuccess": "Roster saved successfully!",
     "saveError": "Error saving roster.",
     "saveBtn": "Save Roster 💾",
+    "autoPickBtn": "Scelta rapida 🪄",
+    "autoPickSuccess": "Rosa completata automaticamente! Puoi rivedere e salvare la tua rosa usando il pulsante Salva.",
     "stageLockedAlert": "Gli aggiornamenti della rosa sono bloccati perché questa fase è già iniziata.",
     "liveRewardPromo": "Regali a sorpresa ti aspettano su MinMat se segui le partite in diretta qui! 🎁",
     "liveRewardEarned": "Hai guadagnato un bonus MinMat!",

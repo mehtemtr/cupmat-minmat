@@ -179,16 +179,40 @@ async function run() {
     // Process simulation events to extract stats
     activeEvents.forEach(ev => {
       if (ev.type === "goal") {
-        // Find player by name in both teams
-        const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
-                           ev.textEn.split("Goal by ")[1]?.replace("!", "")?.trim() || "";
-        
-        const scorer = homePlayers.find(p => p.player_name.includes(scorerName)) || 
-                       awayPlayers.find(p => p.player_name.includes(scorerName));
+        const isOwnGoal = ev.textTr.includes("kendi kalesine") || ev.textEn.includes("own goal");
+        if (isOwnGoal) {
+          const ogPlayerName = ev.textTr.split("kendi kalesine gol atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
+                               ev.textEn.split("own goal by ")[1]?.replace("!", "")?.trim() || "";
+          const ogPlayer = homePlayers.find(p => p.player_name.includes(ogPlayerName)) || 
+                           awayPlayers.find(p => p.player_name.includes(ogPlayerName));
+          if (ogPlayer && statsMap[ogPlayer.id]) {
+            statsMap[ogPlayer.id].own_goals++;
+            console.log(`    Own Goal: ${ogPlayer.player_name}`);
+          }
+        } else {
+          // Find player by name in both teams
+          const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.split(",")[0]?.replace("!", "")?.trim() || 
+                             ev.textEn.split("Goal by ")[1]?.split(",")[0]?.replace("!", "")?.trim() || "";
+          
+          const scorer = homePlayers.find(p => p.player_name.includes(scorerName)) || 
+                         awayPlayers.find(p => p.player_name.includes(scorerName));
 
-        if (scorer && statsMap[scorer.id]) {
-          statsMap[scorer.id].goals++;
-          console.log(`    Goal Scorer: ${scorer.player_name}`);
+          if (scorer && statsMap[scorer.id]) {
+            statsMap[scorer.id].goals++;
+            console.log(`    Goal Scorer: ${scorer.player_name}`);
+          }
+
+          // Parse assist
+          const assistName = ev.textTr.split("Asisti yapan oyuncu: ")[1]?.replace("!", "")?.trim() || 
+                             ev.textEn.split("Assist by ")[1]?.replace("!", "")?.trim() || "";
+          if (assistName) {
+            const assister = homePlayers.find(p => p.player_name.includes(assistName)) || 
+                             awayPlayers.find(p => p.player_name.includes(assistName));
+            if (assister && statsMap[assister.id]) {
+              statsMap[assister.id].assists++;
+              console.log(`    Assist: ${assister.player_name}`);
+            }
+          }
         }
       } else if (ev.type === "card") {
         const isRed = ev.textTr.includes("Kırmızı Kart") || ev.textEn.includes("Red Card") || ev.isRedCard;

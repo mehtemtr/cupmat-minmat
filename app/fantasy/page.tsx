@@ -80,6 +80,7 @@ export default function FantasyPage() {
   const [hasRoster, setHasRoster] = useState<boolean | null>(null);
   const [isStageActive, setIsStageActive] = useState<boolean>(false);
   const [minmatGamesToday, setMinmatGamesToday] = useState<number>(0);
+  const [establishedNames, setEstablishedNames] = useState<Record<number, string>>({});
 
   // Compute transfers count in real time
   const newTransfersCount = useMemo(() => {
@@ -246,10 +247,20 @@ export default function FantasyPage() {
         if (dataRosters.stage) {
           resolvedStage = dataRosters.stage;
         }
+        if (dataRosters.establishedNames) {
+          setEstablishedNames(dataRosters.establishedNames);
+        } else {
+          setEstablishedNames({});
+        }
+
         if (dataRosters.rosters) {
           const activeRoster = dataRosters.rosters.find((r: any) => r.team_index === teamIndex);
           if (activeRoster) {
-            setOriginalRoster(activeRoster);
+            if (activeRoster.is_template) {
+              setOriginalRoster(null);
+            } else {
+              setOriginalRoster(activeRoster);
+            }
             setTeamName(activeRoster.team_name || "");
             setFormation(activeRoster.formation || "4-4-2");
             setSelectedManager(activeRoster.manager_id || null);
@@ -269,8 +280,9 @@ export default function FantasyPage() {
             setBench(newBench);
           } else {
             setOriginalRoster(null);
-            // Clear
-            setTeamName("");
+            // Clear but keep/force established name if exists
+            const estName = dataRosters.establishedNames?.[teamIndex] || "";
+            setTeamName(estName);
             setStarters(Array(11).fill(null));
             setBench(Array(activeBenchSlots).fill(null));
             setSelectedManager(null);
@@ -551,6 +563,111 @@ export default function FantasyPage() {
     } catch (e: any) {
       setSaveStatus({ type: "error", msg: t("fantasy.networkError").replace("{msg}", e.message) });
     }
+  };
+
+  const autoFillRoster = () => {
+    const unlockedTeamsList = TEAMS.filter(t => !lockedTeams.includes(t.id.toLowerCase()));
+    const unlockedTeamIds = new Set(unlockedTeamsList.map(t => t.id.toLowerCase()));
+    const availablePlayers = allPlayersList.filter(p => unlockedTeamIds.has(p.teamId.toLowerCase()));
+
+    if (availablePlayers.length === 0) {
+      alert(locale === "tr" ? "Kilitlenmemiş takımda oyuncu kalmadı!" : "No players available in unlocked teams!");
+      return;
+    }
+
+    let countryLimit = 3;
+    const stg = stage?.toLowerCase() || "";
+    if (stg.includes("quarter")) countryLimit = 5;
+    else if (stg.includes("semi") || stg.includes("final")) countryLimit = 7;
+    else if (stg.includes("round")) countryLimit = 4;
+
+    const shuffleArray = <T,>(arr: T[]): T[] => {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    };
+
+    const gks = shuffleArray(availablePlayers.filter(p => getGeneralPosition(p.position) === "GK"));
+    const defs = shuffleArray(availablePlayers.filter(p => getGeneralPosition(p.position) === "DEF"));
+    const mids = shuffleArray(availablePlayers.filter(p => getGeneralPosition(p.position) === "MID"));
+    const fwds = shuffleArray(availablePlayers.filter(p => getGeneralPosition(p.position) === "FWD"));
+
+    const positionPools = {
+      GK: gks,
+      DEF: defs,
+      MID: mids,
+      FWD: fwds
+    };
+
+    const selectedIds = new Set<string>();
+    const countryCounts: Record<string, number> = {};
+    const groupCounts: Record<string, number> = {};
+
+    const tryPickPlayer = (pos: "GK" | "DEF" | "MID" | "FWD", forceRelax = false): string | null => {
+      const pool = positionPools[pos];
+      for (const p of pool) {
+        if (selectedIds.has(p.id)) continue;
+        
+        const country = p.teamId.toLowerCase();
+        const grp = teamToGroup[country];
+
+        if (!forceRelax) {
+          if ((countryCounts[country] || 0) >= countryLimit) continue;
+          if (grp && (groupCounts[grp] || 0) >= 5) continue;
+        }
+
+        selectedIds.add(p.id);
+        countryCounts[country] = (countryCounts[country] || 0) + 1;
+        if (grp) groupCounts[grp] = (groupCounts[grp] || 0) + 1;
+        return p.id;
+      }
+
+      if (!forceRelax) {
+        return tryPickPlayer(pos, true);
+      }
+
+      return null;
+    };
+
+    const newStarters: (string | null)[] = Array(11).fill(null);
+    for (let i = 0; i < 11; i++) {
+      const pos = starterPositions[i];
+      const pId = tryPickPlayer(pos);
+      if (pId) {
+        newStarters[i] = pId;
+      }
+    }
+
+    const newBench: (string | null)[] = Array(allowedBenchSlots).fill(null);
+    for (let i = 0; i < allowedBenchSlots; i++) {
+      const pos = getBenchDefaultPosition(i, allowedBenchSlots);
+      const pId = tryPickPlayer(pos);
+      if (pId) {
+        newBench[i] = pId;
+      }
+    }
+
+    const unlockedManagers = TEAMS.filter(t => !lockedTeams.includes(t.id.toLowerCase()));
+    if (unlockedManagers.length > 0) {
+      const randomManager = unlockedManagers[Math.floor(Math.random() * unlockedManagers.length)];
+      setSelectedManager(randomManager.id);
+    }
+
+    if (!teamName.trim()) {
+      const randNum = Math.floor(Math.random() * 900) + 100;
+      setTeamName(locale === "tr" ? `Hayal Takımı ${randNum}` : `Dream Team ${randNum}`);
+    }
+
+    setStarters(newStarters);
+    setBench(newBench);
+
+    setSaveStatus({
+      type: "success",
+      msg: t("fantasy.autoPickSuccess")
+    });
   };
 
   // Render Teaser / Pre-teaser Page initially (for all users, whether logged in or not)
@@ -924,12 +1041,12 @@ export default function FantasyPage() {
             {/* Team details name input */}
             <div className="mb-6">
               <input
-                disabled={isStageLocked}
+                disabled={isStageLocked || !!establishedNames[teamIndex]}
                 type="text"
                 placeholder={t("fantasy.teamNamePlaceholder")}
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
-                className={`bg-slate-950 text-white font-extrabold text-lg px-4 py-3 rounded-2xl border focus:outline-none focus:border-emerald-500 w-full ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
+                className={`bg-slate-950 text-white font-extrabold text-lg px-4 py-3 rounded-2xl border focus:outline-none focus:border-emerald-500 w-full ${(isStageLocked || !!establishedNames[teamIndex]) ? "border-slate-800/60 opacity-80 cursor-not-allowed bg-slate-950/80" : "border-slate-800 bg-slate-950"}`}
               />
             </div>
 
@@ -1177,6 +1294,14 @@ export default function FantasyPage() {
                 </div>
               )}
               <div className="w-full md:w-auto flex gap-3 ml-auto">
+                {!isStageLocked && (
+                  <button
+                    onClick={autoFillRoster}
+                    className="w-full md:w-auto px-6 py-3.5 font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 bg-blue-600 text-white hover:bg-blue-500 border border-blue-500/20"
+                  >
+                    {t("fantasy.autoPickBtn")}
+                  </button>
+                )}
                 <button
                   disabled={isStageLocked}
                   onClick={saveRoster}

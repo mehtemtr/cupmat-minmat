@@ -292,6 +292,8 @@
     "saveSuccess": "Roster saved successfully!",
     "saveError": "Error saving roster.",
     "saveBtn": "Save Roster 💾",
+    "autoPickBtn": "Remplissage auto 🪄",
+    "autoPickSuccess": "Effectif rempli automatiquement ! Vous pouvez réviser et enregistrer votre effectif via le bouton Enregistrer.",
     "stageLockedAlert": "Les mises à jour des équipes sont verrouillées car cette phase a déjà commencé.",
     "liveRewardPromo": "Des cadeaux surprises attendent dans MinMat ceux qui suivent les matchs en direct ici ! 🎁",
     "liveRewardEarned": "Vous avez gagné un bonus MinMat !",

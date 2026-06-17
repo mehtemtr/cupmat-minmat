@@ -33,22 +33,65 @@ export async function GET(request: Request) {
     // Ensure bots are registered lazily as time progresses
     await ensureTimeSpacedBots(stage, false);
 
-    const { data: rosters, error } = await supabaseAdmin
+    const { data: allUserRosters, error } = await supabaseAdmin
       .from("fantasy_rosters")
       .select("*")
-      .eq("user_id", userId)
-      .eq("stage", stage)
-      .order("team_index", { ascending: true });
+      .eq("user_id", userId);
 
     if (error) {
       throw error;
+    }
+
+    const stages = ["matchday_1", "matchday_2", "matchday_3", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
+    const currentIdx = stages.indexOf(stage.toLowerCase());
+
+    const establishedNames: Record<number, string> = {};
+    (allUserRosters || []).forEach((r) => {
+      if (r.team_name && r.team_index) {
+        establishedNames[r.team_index] = r.team_name;
+      }
+    });
+
+    const rostersForStage = (allUserRosters || []).filter(
+      (r) => r.stage?.toLowerCase() === stage.toLowerCase()
+    );
+
+    const findPreviousRoster = (teamIdx: number) => {
+      if (currentIdx <= 0) return null;
+      for (let i = currentIdx - 1; i >= 0; i--) {
+        const prevStage = stages[i];
+        const found = (allUserRosters || []).find(
+          (r) => r.stage?.toLowerCase() === prevStage && r.team_index === teamIdx
+        );
+        if (found) return found;
+      }
+      return null;
+    };
+
+    const finalRosters: any[] = [];
+    const maxTeamsCount = 4;
+    for (let tIdx = 1; tIdx <= maxTeamsCount; tIdx++) {
+      const activeRoster = rostersForStage.find((r) => r.team_index === tIdx);
+      if (activeRoster) {
+        finalRosters.push(activeRoster);
+      } else {
+        const prevRoster = findPreviousRoster(tIdx);
+        if (prevRoster) {
+          finalRosters.push({
+            ...prevRoster,
+            id: undefined, // Clear ID so client knows it is unsaved for this stage
+            stage: stage,
+            is_template: true,
+          });
+        }
+      }
     }
 
     const mapping = await getPlayerMapping();
 
     // Join player details for each roster
     const rostersWithDetails = await Promise.all(
-      (rosters || []).map(async (roster) => {
+      (finalRosters || []).map(async (roster) => {
         const playerIds = [...(roster.starters || []), ...(roster.bench || [])];
         let playersMap: Record<string, any> = {};
 
@@ -105,8 +148,6 @@ export async function GET(request: Request) {
     const now = getAdjustedDate();
     const lockedTeams = getLockedTeamsForStage(stage, now);
 
-    const stages = ["matchday_1", "matchday_2", "matchday_3", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
-    const currentIdx = stages.indexOf(stage.toLowerCase());
     let isLocked = false;
     
     if (currentIdx !== -1) {
@@ -126,7 +167,7 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked, stage, lockedTeams });
+    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked, stage, lockedTeams, establishedNames });
   } catch (error: any) {
     console.error("GET rosters error:", error);
     return NextResponse.json(
@@ -518,9 +559,23 @@ export async function POST(request: Request) {
     // 8. Save or Update Roster
     const finalTransfersCount = prevTransfersMade + (isStageActive ? newTransfers : 0);
 
+    // Enforce established team name across stages
+    const { data: allUserRostersForName } = await supabaseAdmin
+      .from("fantasy_rosters")
+      .select("team_name, team_index")
+      .eq("user_id", userId);
+
+    let finalTeamName = teamName;
+    const establishedRosterForIndex = (allUserRostersForName || []).find(
+      (r) => r.team_index === teamIndex && r.team_name
+    );
+    if (establishedRosterForIndex) {
+      finalTeamName = establishedRosterForIndex.team_name;
+    }
+
     const rosterPayload = {
       user_id: userId,
-      team_name: teamName,
+      team_name: finalTeamName,
       stage,
       formation,
       starters,
