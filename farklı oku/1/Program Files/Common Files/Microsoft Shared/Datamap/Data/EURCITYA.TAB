@@ -1,9 +1,0 @@
-!table
-!version 300
-!charset WindowsTurkish
-
-Definition Table
-  Description "Avrupa Büyük Þehirleri"
-  Type NATIVE Charset "WindowsTurkish"
-  Fields 1
-    City Char (25) ;

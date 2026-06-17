@@ -1,9 +1,0 @@
-!table
-!version 300
-!charset WindowsTurkish
-
-Definition Table
-  Description "Dünya Baþkentleri"
-  Type NATIVE Charset "WindowsTurkish"
-  Fields 1
-    Capital Char (25) ;

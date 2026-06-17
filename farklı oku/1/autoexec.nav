@@ -1,7 +1,0 @@
-C:\PROGRA~1\TRENDP~1\PCSCAN.EXE C:\ C:\WINDOWS\COMMAND\ /NS /WIN95
-REM Add directory containing HP DeskJet printer software to path
-PATH C:\WINDOWS;C:\WINDOWS\COMMAND;C:\DESKJET
-@ECHO OFF
-mode con codepage prepare=((857) C:\WINDOWS\COMMAND\ega2.cpi)
-mode con codepage select=857
-keyb tr,,C:\WINDOWS\COMMAND\keybrd2.sys /id:179

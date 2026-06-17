@@ -1,5 +1,0 @@
-REGEDIT4
-
-[HKEY_LOCAL_MACHINE\Software\Symantec\Norton AntiVirus\Auto-Protect\InternalSettings]
-"FastCacheResetTimeout"=dword:00000000
-

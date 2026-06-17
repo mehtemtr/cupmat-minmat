@@ -1,6 +1,0 @@
-Sevgili Exper Kullanýcýsý,
-
-Sisteminize Internet Explorer 4.01 versiyonunun kurulum dosyalarý
-"C:\IE401" dizinine kopyalanmýþtýr. Dilerseniz 
-buradan kurabilirsiniz. Ancak sisteme görsel özellikler ilave eden
-bu program sistem performansýný olumsuz yönde etkileyecektir.

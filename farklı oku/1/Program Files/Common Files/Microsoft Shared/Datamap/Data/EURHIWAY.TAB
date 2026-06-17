@@ -1,9 +1,0 @@
-!table
-!version 300
-!charset WindowsTurkish
-
-Definition Table
-  Description "Avrupa Otoyollarý"
-  Type NATIVE Charset "WindowsTurkish"
-  Fields 1
-    Highway Char (15) ;
