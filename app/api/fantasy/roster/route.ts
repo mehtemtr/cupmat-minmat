@@ -52,30 +52,39 @@ export async function GET(request: Request) {
       }
     });
 
-    const rostersForStage = (allUserRosters || []).filter(
-      (r) => r.stage?.toLowerCase() === stage.toLowerCase()
-    );
+    const mapping = await getPlayerMapping();
 
-    const findPreviousRoster = (teamIdx: number) => {
+    const isRosterValid = (roster: any) => {
+      if (!roster) return false;
+      const playerIds = [...(roster.starters || []), ...(roster.bench || [])];
+      if (playerIds.length === 0) return false;
+      return playerIds.some((id) => id in mapping.uuidToStatic);
+    };
+
+    const findPreviousValidRoster = (teamIdx: number) => {
       if (currentIdx <= 0) return null;
       for (let i = currentIdx - 1; i >= 0; i--) {
         const prevStage = stages[i];
         const found = (allUserRosters || []).find(
           (r) => r.stage?.toLowerCase() === prevStage && r.team_index === teamIdx
         );
-        if (found) return found;
+        if (found && isRosterValid(found)) return found;
       }
       return null;
     };
+
+    const rostersForStage = (allUserRosters || []).filter(
+      (r) => r.stage?.toLowerCase() === stage.toLowerCase()
+    );
 
     const finalRosters: any[] = [];
     const maxTeamsCount = 4;
     for (let tIdx = 1; tIdx <= maxTeamsCount; tIdx++) {
       const activeRoster = rostersForStage.find((r) => r.team_index === tIdx);
-      if (activeRoster) {
+      if (activeRoster && isRosterValid(activeRoster)) {
         finalRosters.push(activeRoster);
       } else {
-        const prevRoster = findPreviousRoster(tIdx);
+        const prevRoster = findPreviousValidRoster(tIdx);
         if (prevRoster) {
           finalRosters.push({
             ...prevRoster,
@@ -83,11 +92,11 @@ export async function GET(request: Request) {
             stage: stage,
             is_template: true,
           });
+        } else if (activeRoster) {
+          finalRosters.push(activeRoster);
         }
       }
     }
-
-    const mapping = await getPlayerMapping();
 
     // Join player details for each roster
     const rostersWithDetails = await Promise.all(
