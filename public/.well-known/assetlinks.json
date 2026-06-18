@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.statmatik.app",
+      "sha256_cert_fingerprints": [
+        "DF:CD:7E:BD:7A:4D:57:AA:C6:F0:80:74:59:05:1D:5A:B9:FC:2F:7A:EB:17:BA:96:11:6A:CB:73:AA:00:49:BA"
+      ]
+    }
+  }
+]

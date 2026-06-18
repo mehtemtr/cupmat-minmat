@@ -12,5 +12,16 @@
       "path": "/api/cron/sync-api-football",
       "schedule": "0 3 * * *"
     }
+  ],
+  "headers": [
+    {
+      "source": "/.well-known/assetlinks.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    }
   ]
 }
