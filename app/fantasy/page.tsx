@@ -53,6 +53,72 @@ for (const [group, teams] of Object.entries(OFFICIAL_GROUP_DRAW)) {
 const TEASER_TIME = new Date("2026-06-08T19:03:00+03:00");
 const UNLOCK_TIME = new Date("2026-06-08T19:23:00+03:00");
 
+const shareTranslations: Record<string, { shareBtn: string; successMsg: string; alreadyClaimed: string; errorMsg: string; shareText: string }> = {
+  tr: {
+    shareBtn: "🔗 Kadroyu Paylaş (+5 Puan)",
+    successMsg: "🎉 Kadronuzu paylaştığınız için +5 bonus puan başarıyla eklendi!",
+    alreadyClaimed: "⚠️ Bu maç günü için paylaşım ödülünüzü zaten aldınız.",
+    errorMsg: "❌ Ödül alınamadı: Önce kadronuzu kurup kaydetmelisiniz.",
+    shareText: "StatMatik CupMat Fantasy Soccer'da rüya kadromu kurdum! Sen de katıl, ödülleri kazan! 🏆⚽",
+  },
+  en: {
+    shareBtn: "🔗 Share Roster (+5 Points)",
+    successMsg: "🎉 +5 bonus points successfully added for sharing your roster!",
+    alreadyClaimed: "⚠️ You have already claimed your sharing reward for this matchday.",
+    errorMsg: "❌ Failed to claim reward: You must build and save your roster first.",
+    shareText: "I built my dream roster in StatMatik CupMat Fantasy Soccer! Join now and win prizes! 🏆⚽",
+  },
+  de: {
+    shareBtn: "🔗 Roster teilen (+5 Pkt.)",
+    successMsg: "🎉 +5 Bonuspunkte wurden erfolgreich für das Teilen deines Rosters hinzugefügt!",
+    alreadyClaimed: "⚠️ Du hast deine Teilungsbelohnung für diesen Spieltag bereits erhalten.",
+    errorMsg: "❌ Belohnung fehlgeschlagen: Du musst zuerst dein Roster erstellen und speichern.",
+    shareText: "Ich habe mein Traum-Roster bei StatMatik CupMat Fantasy Soccer zusammengestellt! Mach mit und gewinne Preise! 🏆⚽",
+  },
+  fr: {
+    shareBtn: "🔗 Partager l'équipe (+5 pts)",
+    successMsg: "🎉 +5 points bonus ajoutés avec succès pour avoir partagé votre équipe !",
+    alreadyClaimed: "⚠️ Vous avez déjà réclamé votre récompense de partage pour cette journée.",
+    errorMsg: "❌ Échec de la récompense : vous devez d'abord créer et enregistrer votre équipe.",
+    shareText: "J'ai créé mon équipe de rêve dans StatMatik CupMat Fantasy Soccer ! Rejoins-nous et gagne des prix ! 🏆⚽",
+  },
+  es: {
+    shareBtn: "🔗 Compartir plantilla (+5 pts)",
+    successMsg: "🎉 ¡Se agregaron con éxito +5 puntos de bonificación por compartir tu plantilla!",
+    alreadyClaimed: "⚠️ Ya has reclamado tu recompensa por compartir para esta jornada.",
+    errorMsg: "❌ Error al reclamar la recompensa: primero debes crear y guardar tu plantilla.",
+    shareText: "¡Armé mi plantilla de ensueño en StatMatik CupMat Fantasy Soccer! ¡Únete ahora y gana premios! 🏆⚽",
+  },
+  pt: {
+    shareBtn: "🔗 Compartilhar escalação (+5 pts)",
+    successMsg: "🎉 +5 pontos de bônus adicionados com sucesso por compartilhar sua escalação!",
+    alreadyClaimed: "⚠️ Você já resgatou sua recompensa de compartilhamento para esta rodada.",
+    errorMsg: "❌ Falha ao resgatar recompensa: você deve montar e salvar sua escalação primeiro.",
+    shareText: "Montei minha escalação dos sonhos no StatMatik CupMat Fantasy Soccer! Participe e ganhe prêmios! 🏆⚽",
+  },
+  it: {
+    shareBtn: "🔗 Condividi rosa (+5 punti)",
+    successMsg: "🎉 +5 punti bonus aggiunti con successo per aver condiviso la tua rosa!",
+    alreadyClaimed: "⚠️ Hai già riscattato il tuo premio di condivisione per questa giornata.",
+    errorMsg: "❌ Impossibile riscattare il premio: devi prima creare e salvare la tua rosa.",
+    shareText: "Ho creato la mia rosa dei sogni su StatMatik CupMat Fantasy Soccer! Partecipa anche tu e vinci premi! 🏆⚽",
+  },
+  ko: {
+    shareBtn: "🔗 스쿼드 공유하기 (+5점)",
+    successMsg: "🎉 스쿼드를 공유하여 +5 보너스 점수가 성공적으로 추가되었습니다!",
+    alreadyClaimed: "⚠️ 이번 라운드의 공유 보상을 이미 받으셨습니다.",
+    errorMsg: "❌ 보상 받기 실패: 스쿼드를 먼저 생성하고 저장해야 합니다.",
+    shareText: "StatMatik CupMat 판타지 사커에서 드림 스쿼드를 구축했습니다! 지금 가입하고 다양한 상품을 받아보세요! 🏆⚽",
+  },
+  ar: {
+    shareBtn: "🔗 مشاركة التشكيلة (+5 نقاط)",
+    successMsg: "🎉 تم إضافة +5 نقاط مكافأة بنجاح لمشاركتك التشكيلة!",
+    alreadyClaimed: "⚠️ لقد حصلت بالفعل على مكافأة المشاركة لهذا اليوم الرياضي.",
+    errorMsg: "❌ فشل الحصول على المكافأة: يجب عليك إنشاء التشكيلة وحفظها أولاً.",
+    shareText: "لقد أنشأت تشكيلتي المثالية في StatMatik CupMat Fantasy Soccer! انضم الآن واربح الجوائز! 🏆⚽",
+  },
+};
+
 export default function FantasyPage() {
   const { user: clerkUser, isSignedIn: clerkIsSignedIn } = useUser();
   const { locale } = useLocale();
@@ -562,6 +628,62 @@ export default function FantasyPage() {
       }
     } catch (e: any) {
       setSaveStatus({ type: "error", msg: t("fantasy.networkError").replace("{msg}", e.message) });
+    }
+  };
+
+  const shareRoster = async () => {
+    const lang = (locale || "tr").toLowerCase();
+    const tShare = shareTranslations[lang as keyof typeof shareTranslations] || shareTranslations.en;
+    const shareUrl = `${window.location.origin}/fantasy`;
+    const text = tShare.shareText;
+
+    const claimReward = async () => {
+      try {
+        const res = await fetch("/api/fantasy/share-reward", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            stage,
+            teamIndex,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(tShare.successMsg);
+          loadStatusAndData(); // Reload roster points
+        } else {
+          if (data.alreadyClaimed) {
+            alert(tShare.alreadyClaimed);
+          } else {
+            alert(data.error || tShare.errorMsg);
+          }
+        }
+      } catch (err: any) {
+        console.error("Failed to claim share reward:", err);
+      }
+    };
+
+    if (navigator.share) {
+      navigator.share({
+        title: "StatMatik CupMat Roster",
+        text: text,
+        url: shareUrl,
+      })
+      .then(() => {
+        claimReward();
+      })
+      .catch((err) => {
+        console.log("Share failed or cancelled:", err);
+      });
+    } else {
+      // Clipboard fallback
+      try {
+        await navigator.clipboard.writeText(`${text} ${shareUrl}`);
+        alert(lang === "tr" ? "Paylaşım bağlantısı panoya kopyalandı! Ödülünüz yükleniyor..." : "Sharing link copied to clipboard! Processing reward...");
+        await claimReward();
+      } catch (clipErr) {
+        console.error("Clipboard copy failed:", clipErr);
+      }
     }
   };
 
@@ -1293,7 +1415,15 @@ export default function FantasyPage() {
                   {saveStatus.msg}
                 </div>
               )}
-              <div className="w-full md:w-auto flex gap-3 ml-auto">
+              <div className="w-full md:w-auto flex flex-wrap gap-3 ml-auto">
+                {hasRoster && (
+                  <button
+                    onClick={shareRoster}
+                    className="w-full md:w-auto px-6 py-3.5 font-black rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 border border-indigo-500/20"
+                  >
+                    {shareTranslations[locale.toLowerCase() as keyof typeof shareTranslations]?.shareBtn || shareTranslations.en.shareBtn}
+                  </button>
+                )}
                 {!isStageLocked && (
                   <button
                     onClick={autoFillRoster}

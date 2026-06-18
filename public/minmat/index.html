@@ -309,6 +309,33 @@
       filter: brightness(1.1);
     }
 
+    .shareScoreBtn {
+      width: 100%;
+      max-width: 480px;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .shareScoreBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+      filter: brightness(1.1);
+    }
+
     #playerInput {
       margin-bottom: 18px;
       background: #0f172a;
@@ -1245,6 +1272,7 @@
     <div id="rewardBoard" style="display:none; width:100%; max-width:480px; margin: 0 auto;"></div>
 
     <button class="retryBtn" onclick="startGame()" id="btnRetry">🔄 Bir Daha</button>
+    <button class="shareScoreBtn" onclick="shareScore()" id="btnShareScore">🔗 <span id="btnShareScoreText">Skoru Paylaş (+%20 Bonus)</span></button>
 
     <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
       <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText2">Menü</span></button>
@@ -1324,6 +1352,7 @@
 
     const translations = {
       tr: {
+        shareScore: "🔗 Skoru Paylaş (+%20 Bonus)", shareBonusActive: "⚡ %20 Paylaşım Bonusu Aktif!",
         placeholder: "İsmini yaz...", start: "Başla", home: "🏠 Ana Sayfaya Dön", puanTablosu: "🏆 Puan Tablosu",
         gameOver: "Oyun Bitti", score: "Puan", again: "🔄 Bir Daha", leaderAll: "🏆 En İyi Puanlar",
         leaderAdd: "🏆 Topla Puanları", leaderSub: "🏆 Çıkar Puanları", leaderMul: "🏆 Çarp Puanları",
@@ -1361,6 +1390,7 @@
         helpLevelLocks: "<strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!"
       },
       en: {
+        shareScore: "🔗 Share Score (+20% Bonus)", shareBonusActive: "⚡ 20% Share Bonus Active!",
         placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
         gameOver: "Game Over", score: "Score", again: "🔄 Play Again", leaderAll: "🏆 Best Scores",
         leaderAdd: "🏆 Addition Scores", leaderSub: "🏆 Subtraction Scores", leaderMul: "🏆 Multiplication Scores",
@@ -1398,6 +1428,7 @@
         helpLevelLocks: "<strong>Level Locks:</strong> Reaching Level 4 in Addition mode unlocks Subtraction mode!"
       },
       de: {
+        shareScore: "🔗 Ergebnis teilen (+20% Bonus)", shareBonusActive: "⚡ 20% Teilungsbonus aktiv!",
         placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
         gameOver: "Spiel Vorbei", score: "Punkte", again: "🔄 Nochmal", leaderAll: "🏆 Beste Punkte",
         leaderAdd: "🏆 Addition Punkte", leaderSub: "🏆 Subtraktion Punkte", leaderMul: "🏆 Multiplikation Punkte",
@@ -1435,6 +1466,7 @@
         helpLevelLocks: "<strong>Level-Sperren:</strong> Das Erreichen von Level 4 im Additionsmodus schaltet den Subtraktionsmodus frei!"
       },
       fr: {
+        shareScore: "🔗 Partager le score (+20% bonus)", shareBonusActive: "⚡ Bonus de partage de 20% actif !",
         placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
         gameOver: "Jeu Terminé", score: "Score", again: "🔄 Rejouer", leaderAll: "🏆 Meilleurs Scores",
         leaderAdd: "🏆 Scores Addition", leaderSub: "🏆 Scores Soustraction", leaderMul: "🏆 Scores Multiplication",
@@ -1472,6 +1504,7 @@
         helpLevelLocks: "<strong>Verrouillage de niveau :</strong> Atteindre le niveau 4 en mode Addition déverrouille le mode Soustraction !"
       },
       es: {
+        shareScore: "🔗 Compartir puntuación (+20% bono)", shareBonusActive: "⚡ ¡Bono de compartir de 20% activo!",
         placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
         gameOver: "Juego Terminado", score: "Puntuación", again: "🔄 Jugar de Nuevo", leaderAll: "🏆 Mejores Puntuaciones",
         leaderAdd: "🏆 Puntos Suma", leaderSub: "🏆 Puntos Resta", leaderMul: "🏆 Puntos Multiplikación",
@@ -1509,6 +1542,7 @@
         helpLevelLocks: "<strong>Bloqueos de nivel:</strong> ¡Alcanzar el nivel 4 en el modo Suma desbloquea el modo Resta!"
       },
       pt: {
+        shareScore: "🔗 Compartilhar pontuação (+20% bônus)", shareBonusActive: "⚡ Bônus de compartilhamento de 20% ativo!",
         placeholder: "Digite seu nome...", start: "Iniciar", home: "🏠 Voltar ao Início", puanTablosu: "🏆 Classificação",
         gameOver: "Fim de Jogo", score: "Pontos", again: "🔄 Jogar Novamente", leaderAll: "🏆 Melhores Pontuações",
         leaderAdd: "🏆 Pontos de Soma", leaderSub: "🏆 Pontos de Subtração", leaderMul: "🏆 Pontos de Multiplicação",
@@ -1546,6 +1580,7 @@
         helpLevelLocks: "<strong>Bloqueios de Nível:</strong> Alcançar o Nível 4 no modo Adição desbloqueia o modo Subtração!"
       },
       ar: {
+        shareScore: "🔗 مشاركة النتيجة (مكافأة +20%)", shareBonusActive: "⚡ مكافأة المشاركة 20% نشطة!",
         placeholder: "أدخل اسمك...", start: "ابدأ", home: "🏠 العودة للرئيسية", puanTablosu: "🏆 جدول الترتيب",
         gameOver: "انتهت اللعبة", score: "النقاط", again: "🔄 العب مجدداً", leaderAll: "🏆 أفضل النقاط",
         leaderAdd: "🏆 نقاط الجمع", leaderSub: "🏆 نقاط الطرح", leaderMul: "🏆 نقاط الضرب",
@@ -1583,6 +1618,7 @@
         helpLevelLocks: "<strong>قفل المستويات:</strong> الوصول إلى المستوى 4 في وضع الجمع يفتح وضع الطرح!"
       },
       ko: {
+        shareScore: "🔗 점수 공유하기 (+20% 보너스)", shareBonusActive: "⚡ 20% 공유 보너스 활성화!",
         placeholder: "이름을 입력하세요...", start: "시작", home: "🏠 홈으로 돌아가기", puanTablosu: "🏆 순위표",
         gameOver: "게임 오버", score: "점수", again: "🔄 다시 하기", leaderAll: "🏆 최고 점수",
         leaderAdd: "🏆 덧셈 점수", leaderSub: "🏆 뺄셈 점수", leaderMul: "🏆 곱셈 점수",
@@ -1620,6 +1656,7 @@
         helpLevelLocks: "<strong>레벨 잠금:</strong> 덧셈 모드에서 4레벨에 도달하면 뺄셈 모드가 잠금 해제됩니다!"
       },
       it: {
+        shareScore: "🔗 Condividi punteggio (+20% bonus)", shareBonusActive: "⚡ Bonus di condivisione del 20% attivo!",
         placeholder: "Inserisci il tuo nome...", start: "Inizia", home: "🏠 Torna alla Home", puanTablosu: "🏆 Classifica",
         gameOver: "Gioco Terminato", score: "Punteggio", again: "🔄 Gioca Ancora", leaderAll: "🏆 Migliori Punteggi",
         leaderAdd: "🏆 Punteggi Addizione", leaderSub: "🏆 Punteggi Sottrazione", leaderMul: "🏆 Punteggi Moltiplicazione",
@@ -1675,6 +1712,8 @@
       if (go) go.innerText = t("gameOver");
       let ra = document.getElementById("btnRetry");
       if (ra) ra.innerText = t("again");
+      let bss = document.getElementById("btnShareScoreText");
+      if (bss) bss.innerText = t("shareScore");
 
       let sit = document.getElementById("sysInfoTitle");
       if (sit) sit.innerText = t("sysInfoTitle");
@@ -2189,6 +2228,32 @@
         } else if (event.data && event.data.type === "LOCALE_CHANGED") {
           console.log("[IFRAME] Received LOCALE_CHANGED from parent:", event.data.locale);
           setLang(event.data.locale);
+        } else if (event.data && event.data.type === "SHARE_SUCCESS") {
+          console.log("[IFRAME] Received SHARE_SUCCESS from parent.");
+          localStorage.setItem("minmat_share_boost", "active");
+          let activeMsg = "";
+          if (currentLang === "tr") {
+            activeMsg = "🎉 Harika! Skor paylaşıldı. İlk oyununda geçerli olmak üzere %20 Ekstra Skor Bonusu aktif edildi!";
+          } else if (currentLang === "en") {
+            activeMsg = "🎉 Awesome! Score shared. 20% Extra Score Bonus has been activated for your next game!";
+          } else if (currentLang === "de") {
+            activeMsg = "🎉 Super! Ergebnis geteilt. 20% Extra-Punkte-Bonus wurde für dein nächstes Spiel aktiviert!";
+          } else if (currentLang === "fr") {
+            activeMsg = "🎉 Super ! Score partagé. Un bonus de score supplémentaire de 20 % a été activé pour votre prochaine partie !";
+          } else if (currentLang === "es") {
+            activeMsg = "🎉 ¡Genial! Puntuación compartida. ¡Se ha activado un bono de puntuación adicional del 20 % para tu próximo juego!";
+          } else if (currentLang === "pt") {
+            activeMsg = "🎉 Incrível! Pontuação compartilhada. Um bônus de pontuação extra de 20% foi ativado para o seu próximo jogo!";
+          } else if (currentLang === "it") {
+            activeMsg = "🎉 Fantastico! Punteggio condiviso. Un bonus del 20% sul punteggio extra è stato attivato per la tua prossima partita!";
+          } else if (currentLang === "ko") {
+            activeMsg = "🎉 멋집니다! 점수가 공유되었습니다. 다음 게임에 적용될 20% 추가 점수 보너스가 활성화되었습니다!";
+          } else if (currentLang === "ar") {
+            activeMsg = "🎉 رائع! تم مشاركة النتيجة. تم تفعيل مكافأة النقاط الإضافية بنسبة 20% للعبتك القادمة!";
+          } else {
+            activeMsg = "🎉 Score shared! 20% Extra Score Bonus activated for your next game!";
+          }
+          alert(activeMsg);
         }
       });
 
@@ -2316,6 +2381,17 @@
       let btn = document.getElementById("pauseBtn");
       if (btn) btn.innerText = "⏸️";
       show("menuScreen");
+    }
+
+    function shareScore() {
+      let userName = playerName || t("guest");
+      window.parent.postMessage({
+        type: "SHARE_SCORE",
+        score: score,
+        mode: gameMode,
+        name: userName,
+        lang: currentLang
+      }, "*");
     }
 
     function toggleDropdown(id) {
@@ -2656,6 +2732,7 @@
     let periodPointsPerLevel = 0;
     let badgeExtraTimeSeconds = 0;
     let badgeScoreMultiplier = 1.00;
+    let hasShareBoost = false;
     let activeTab = "scores";
 
     function getOverallMaxLevel() {
@@ -2818,6 +2895,14 @@
       isGameOver = false;
       isGameOverSaved = false;
       isPaused = false;
+
+      // Consume share boost if active
+      if (localStorage.getItem("minmat_share_boost") === "active") {
+        hasShareBoost = true;
+        localStorage.removeItem("minmat_share_boost");
+      } else {
+        hasShareBoost = false;
+      }
       let overlay = document.getElementById("pauseOverlay");
       if (overlay) overlay.style.display = "none";
       let pauseBtn = document.getElementById("pauseBtn");
@@ -2956,6 +3041,21 @@
           label = currentLang === "tr" ? "⭐ +250 Başlangıç Puanı Aktif!" : "⭐ +250 Starting Score Active!";
         }
         
+        let badgeEl = document.getElementById("extraTimeBadge");
+        let rowEl = document.getElementById("extraTimeRow");
+        if (badgeEl) {
+          if (badgeEl.style.display === "inline-flex" && badgeEl.innerText) {
+            badgeEl.innerText = badgeEl.innerText + " | " + label;
+          } else {
+            badgeEl.innerText = label;
+            badgeEl.style.display = "inline-flex";
+            if (rowEl) rowEl.style.display = "flex";
+          }
+        }
+      }
+
+      if (hasShareBoost) {
+        let label = t("shareBonusActive");
         let badgeEl = document.getElementById("extraTimeBadge");
         let rowEl = document.getElementById("extraTimeRow");
         if (badgeEl) {
@@ -3259,7 +3359,17 @@
       let scoreRow = document.getElementById("finalScoreRow");
       if (scoreRow) scoreRow.style.display = "block";
 
-      document.getElementById("finalScore").innerText = score;
+      if (hasShareBoost) {
+        let originalScore = score;
+        score = Math.round(score * 1.20);
+        if (currentLang === "tr") {
+          document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + %20 Paylaşım Bonusu!)</span>`;
+        } else {
+          document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + 20% Share Bonus!)</span>`;
+        }
+      } else {
+        document.getElementById("finalScore").innerText = score;
+      }
       
       // Update Game Over badge display
       const goBadgeContainer = document.getElementById("gameOverBadgeContainer");
