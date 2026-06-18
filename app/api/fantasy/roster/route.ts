@@ -231,13 +231,40 @@ export async function POST(request: Request) {
       .eq("team_index", teamIndex)
       .maybeSingle();
 
+    let isFirstTimeCreation = !prevRoster;
+    let lockCheckBaselineRoster = prevRoster;
+
+    if (!prevRoster) {
+      // Find the closest previous stage roster for this user and teamIndex to act as baseline
+      const { data: allUserRostersForFallback } = await supabaseAdmin
+        .from("fantasy_rosters")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("team_index", teamIndex);
+
+      const stagesList = ["matchday_1", "matchday_2", "matchday_3", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
+      const currentIdx = stagesList.indexOf(stage.toLowerCase());
+      if (currentIdx > 0) {
+        for (let i = currentIdx - 1; i >= 0; i--) {
+          const prevStageName = stagesList[i];
+          const found = (allUserRostersForFallback || []).find(
+            (r) => r.stage?.toLowerCase() === prevStageName
+          );
+          if (found) {
+            lockCheckBaselineRoster = found;
+            break;
+          }
+        }
+      }
+    }
+
     // Player-level kickoff lock validation
     const now = getAdjustedDate();
     const lockedTeams = getLockedTeamsForStage(stage, now);
 
     const allPlayerIdsForLockCheck = Array.from(new Set([
-      ...(prevRoster?.starters || []),
-      ...(prevRoster?.bench || []),
+      ...(lockCheckBaselineRoster?.starters || []),
+      ...(lockCheckBaselineRoster?.bench || []),
       ...starters,
       ...bench
     ]));
@@ -254,8 +281,8 @@ export async function POST(request: Request) {
       }
     }
 
-    if (!prevRoster) {
-      // First-time roster creation
+    if (isFirstTimeCreation && !lockCheckBaselineRoster) {
+      // Brand-new roster creation (no previous stage baseline exists)
       for (const pid of [...starters, ...bench]) {
         const teamId = playerTeamMap.get(pid);
         if (teamId && lockedTeams.includes(teamId)) {
@@ -272,8 +299,10 @@ export async function POST(request: Request) {
         );
       }
     } else {
-      // Roster update validation
-      const oldPlayers = new Set([...(prevRoster.starters || []), ...(prevRoster.bench || [])]);
+      // Roster update validation OR carry-over template first-time save validation
+      const baselineStarters = lockCheckBaselineRoster?.starters || [];
+      const baselineBench = lockCheckBaselineRoster?.bench || [];
+      const oldPlayers = new Set([...baselineStarters, ...baselineBench]);
       const newPlayers = new Set([...starters, ...bench]);
 
       // Check 1: No locked player can be removed
@@ -303,8 +332,8 @@ export async function POST(request: Request) {
       }
 
       // Check 3: No locked player can be moved between starters and bench
-      const oldStartersSet = new Set(prevRoster.starters || []);
-      const oldBenchSet = new Set(prevRoster.bench || []);
+      const oldStartersSet = new Set(baselineStarters);
+      const oldBenchSet = new Set(baselineBench);
       for (const pid of newPlayers) {
         const teamId = playerTeamMap.get(pid);
         if (teamId && lockedTeams.includes(teamId)) {
@@ -324,8 +353,8 @@ export async function POST(request: Request) {
       }
 
       // Check 4: Manager change
-      if (prevRoster.manager_id !== managerId) {
-        const oldManagerTeam = prevRoster.manager_id?.toLowerCase();
+      if (lockCheckBaselineRoster.manager_id !== managerId) {
+        const oldManagerTeam = lockCheckBaselineRoster.manager_id?.toLowerCase();
         const newManagerTeam = managerId?.toLowerCase();
         if (oldManagerTeam && lockedTeams.includes(oldManagerTeam)) {
           return NextResponse.json(
