@@ -40,7 +40,7 @@ const localDict = {
     redCards: "Kırmızı Kart",
     ownGoals: "Kendi Kalesine Gol",
     cleanSheets: "Gol Yememe Maçı",
-    fantasyPoints: "Fantezi Puanı",
+    fantasyPoints: "Taktik Puanı",
     loading: "İstatistikler Yükleniyor..."
   },
   en: {
@@ -71,7 +71,7 @@ const localDict = {
     redCards: "Red Cards",
     ownGoals: "Own Goals",
     cleanSheets: "Clean Sheets",
-    fantasyPoints: "Fantasy Points",
+    fantasyPoints: "Tactics Points",
     loading: "Loading stats..."
   },
   es: {
@@ -102,7 +102,7 @@ const localDict = {
     redCards: "Tarjetas Rojas",
     ownGoals: "Goles en Contra",
     cleanSheets: "Portería a Cero",
-    fantasyPoints: "Puntos Fantasy",
+    fantasyPoints: "Puntos Tácticos",
     loading: "Cargando..."
   },
   fr: {
@@ -133,7 +133,7 @@ const localDict = {
     redCards: "Cartons Rouges",
     ownGoals: "Buts contre son camp",
     cleanSheets: "Matchs sans encaisser",
-    fantasyPoints: "Points Fantasy",
+    fantasyPoints: "Points Tactiques",
     loading: "Chargement..."
   },
   de: {
@@ -164,7 +164,7 @@ const localDict = {
     redCards: "Rote Karten",
     ownGoals: "Eigentore",
     cleanSheets: "Weiße Weste",
-    fantasyPoints: "Fantasy-Punkte",
+    fantasyPoints: "Taktik-Punkte",
     loading: "Laden..."
   }
 };
