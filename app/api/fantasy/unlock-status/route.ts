@@ -56,12 +56,12 @@ export async function GET(request: Request) {
           unlocked: true,
         };
       });
-    } else if (isStageActive) {
-      // Latecomer: must have Level >= 7 in any category
+    } else {
+      // Any category with Level >= 5 is sufficient to unlock
       categoryStatus = categories.map((cat) => {
         const level = maxLevels[cat] || 1;
         const gamesPlayed = gamesCount[cat] || 0;
-        const unlocked = level >= 7;
+        const unlocked = level >= 5;
         return {
           category: cat,
           level,
@@ -70,20 +70,6 @@ export async function GET(request: Request) {
         };
       });
       isUnlocked = categoryStatus.some((status) => status.unlocked);
-    } else {
-      // Normal: must have Level >= 3 and Games >= 5 in ALL categories
-      categoryStatus = categories.map((cat) => {
-        const level = maxLevels[cat] || 1;
-        const gamesPlayed = gamesCount[cat] || 0;
-        const unlocked = level >= 3 && gamesPlayed >= 5;
-        return {
-          category: cat,
-          level,
-          gamesPlayed,
-          unlocked,
-        };
-      });
-      isUnlocked = categoryStatus.every((status) => status.unlocked);
     }
 
     // Calculate total games played across all categories

@@ -988,8 +988,7 @@ export default function FantasyPage() {
             </p>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {unlockProgress.categoryStatus.map((c: any) => {
-                const reqLvl = isStageActive ? 7 : 3;
-                const isLvlPassed = c.level >= reqLvl;
+                const isLvlPassed = c.level >= 5;
                 
                 // Translate category name
                 let categoryName = c.category;
@@ -1006,13 +1005,8 @@ export default function FantasyPage() {
                     </p>
                     <div className="flex flex-col gap-0.5">
                       <span className={`text-[10px] ${isLvlPassed ? "text-emerald-400" : "text-rose-400"}`}>
-                        {t("fantasy.levelLabel").replace("{lvl}", c.level.toString()).replace("{req}", reqLvl.toString()).replace("{check}", isLvlPassed ? "✓" : "")}
+                        {t("fantasy.levelLabel").replace("{lvl}", c.level.toString()).replace("{req}", "5").replace("{check}", isLvlPassed ? "✓" : "")}
                       </span>
-                      {!isStageActive && (
-                        <span className={`text-[10px] ${c.gamesPlayed >= 5 ? "text-emerald-400" : "text-rose-400"}`}>
-                          {t("fantasy.gameLabel").replace("{played}", c.gamesPlayed.toString()).replace("{check}", c.gamesPlayed >= 5 ? "✓" : "")}
-                        </span>
-                      )}
                     </div>
                   </div>
                 );
