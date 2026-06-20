@@ -1,19 +1,58 @@
 "use client";
 
+import { useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { TournamentGate } from "@/components/TournamentGate";
 import { AllGroupTables } from "@/components/groups/GroupTable";
 import { GroupMatchEditor } from "@/components/groups/GroupMatchEditor";
-import { useTranslation } from "@/contexts/LocaleContext";
+import { GeneralStandingsTable } from "@/components/groups/GeneralStandingsTable";
+import { useTranslation, useLocale } from "@/contexts/LocaleContext";
 
 export default function GroupsPage() {
   const { t } = useTranslation();
+  const { locale } = useLocale();
+  const [activeTab, setActiveTab] = useState<"groups" | "general">("groups");
 
   return (
     <PageShell title={t("groups.title")} subtitle={t("groups.subtitle")}>
       <TournamentGate>
-        <AllGroupTables />
-        <GroupMatchEditor />
+        
+        {/* Navigation Tabs */}
+        <div className="flex border-b border-white/10 mb-8 gap-6">
+          <button
+            type="button"
+            onClick={() => setActiveTab("groups")}
+            className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+              activeTab === "groups"
+                ? "border-emerald-500 text-emerald-400 font-extrabold"
+                : "border-transparent text-zinc-400 hover:text-white"
+            }`}
+          >
+            {locale === "tr" ? "Grup Tabloları" : "Group Tables"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("general")}
+            className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+              activeTab === "general"
+                ? "border-emerald-500 text-emerald-400 font-extrabold"
+                : "border-transparent text-zinc-400 hover:text-white"
+            }`}
+          >
+            {locale === "tr" ? "Genel Puan Durumu" : "General Standings"}
+          </button>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === "groups" ? (
+          <div className="space-y-8">
+            <AllGroupTables />
+            <GroupMatchEditor />
+          </div>
+        ) : (
+          <GeneralStandingsTable />
+        )}
+
       </TournamentGate>
     </PageShell>
   );
