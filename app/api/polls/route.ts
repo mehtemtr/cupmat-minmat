@@ -112,6 +112,7 @@ export async function GET() {
 
     if (opinionPolls.length > 0) {
       let opinionSeed = dateStr;
+      let pinnedPollId = null;
       
       // Keep today's poll (from June 13, 2026) active for a few days (June 13 to June 17, 2026)
       const parsedDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
@@ -120,10 +121,17 @@ export async function GET() {
       const year = parsedDate.getFullYear();
       if (year === 2026 && month === 6 && day >= 13 && day <= 17) {
         opinionSeed = "6/13/2026";
+      } else if (year === 2026 && month === 6 && day >= 20 && day <= 27) {
+        // Keep the custom squad selection poll active for 1 week (June 20 to June 27, 2026)
+        pinnedPollId = "e5015e12-32b0-466d-9fc0-c5c4975fd96d";
       }
 
-      const shufOpinions = seededShuffle(opinionPolls, opinionSeed);
-      dailyOpinionPoll = shufOpinions[0];
+      if (pinnedPollId) {
+        dailyOpinionPoll = opinionPolls.find((p) => p.id === pinnedPollId) || opinionPolls[0];
+      } else {
+        const shufOpinions = seededShuffle(opinionPolls, opinionSeed);
+        dailyOpinionPoll = shufOpinions[0];
+      }
 
       // Fetch all submissions for this daily opinion poll to calculate percentage stats
       const { data: opSubs, error: opSubsError } = await supabaseAdmin

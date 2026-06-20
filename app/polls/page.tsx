@@ -15,7 +15,8 @@ import {
   Trophy,
   BarChart2,
   MessageSquare,
-  ArrowLeft
+  ArrowLeft,
+  Share2
 } from "lucide-react";
 
 interface PollOption {
@@ -279,6 +280,43 @@ export default function PollsPage() {
     }
   };
 
+  const shareOpinionPoll = async () => {
+    if (!dailyOpinionPoll) return;
+
+    const question = getTranslatedQuestion(dailyOpinionPoll);
+    const optionsText = dailyOpinionPoll.options
+      .map((opt, idx) => `${idx + 1}️⃣ ${getTranslatedOption(opt)}`)
+      .join("\n");
+      
+    const url = `${window.location.origin}/polls`;
+    
+    let text = "";
+    if (locale === "tr") {
+      text = `${question}\n\nSeçenekler:\n${optionsText}\n\nOyunu ver, fikrini paylaş! 🏆⚽`;
+    } else {
+      text = `${question}\n\nOptions:\n${optionsText}\n\nCast your vote and share your opinion! 🏆⚽`;
+    }
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({
+          title: "StatMatik",
+          text: text,
+          url: url,
+        });
+      } catch (err) {
+        console.log("Share failed or cancelled:", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(`${text}\n\n${url}`);
+        alert(locale === "tr" ? "Paylaşım metni panoya kopyalandı! 🔗" : "Share text copied to clipboard! 🔗");
+      } catch (err) {
+        console.error("Failed to copy share text:", err);
+      }
+    }
+  };
+
   const getTranslatedQuestion = (poll: Poll) => {
     const localizedKey = `question_${locale}`;
     return poll[localizedKey] || poll.question_tr || poll.question_en;
@@ -520,14 +558,24 @@ export default function PollsPage() {
         dailyOpinionPoll && (
           <div className="max-w-2xl mx-auto rounded-3xl border border-zinc-800 bg-zinc-950/40 backdrop-blur-md shadow-2xl p-8 space-y-6 animate-in fade-in duration-300">
             
-            {/* Header back button */}
-            <button
-              onClick={() => setActiveView("dashboard")}
-              className="inline-flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {uiTexts.btnBackHub}
-            </button>
+            {/* Header back & share button container */}
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => setActiveView("dashboard")}
+                className="inline-flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-white transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                {uiTexts.btnBackHub}
+              </button>
+              
+              <button
+                onClick={shareOpinionPoll}
+                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 text-xs font-bold text-blue-400 hover:bg-blue-500/20 transition-all active:scale-95"
+              >
+                <Share2 className="h-3.5 w-3.5" />
+                {locale === "tr" ? "Paylaş" : "Share"}
+              </button>
+            </div>
 
             <div className="space-y-1">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-2.5 py-1 text-xs font-bold text-blue-400 border border-blue-500/20">
@@ -628,12 +676,21 @@ export default function PollsPage() {
                   </span>
                 </div>
 
-                <button
-                  onClick={() => setActiveView("dashboard")}
-                  className="w-full flex items-center justify-center gap-2 rounded-2xl bg-zinc-900 border border-zinc-800 py-3.5 font-bold text-white hover:bg-zinc-800 hover:border-zinc-700 active:scale-[0.98] transition-all text-sm"
-                >
-                  {uiTexts.btnBackHub}
-                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={shareOpinionPoll}
+                    className="flex-grow flex items-center justify-center gap-2 rounded-2xl bg-blue-500/10 border border-blue-500/20 py-3.5 font-bold text-blue-400 hover:bg-blue-500/20 active:scale-[0.98] transition-all text-sm"
+                  >
+                    <Share2 className="h-4 w-4" />
+                    {locale === "tr" ? "Paylaş" : "Share"}
+                  </button>
+                  <button
+                    onClick={() => setActiveView("dashboard")}
+                    className="flex-grow flex items-center justify-center gap-2 rounded-2xl bg-zinc-900 border border-zinc-800 py-3.5 font-bold text-white hover:bg-zinc-800 hover:border-zinc-700 active:scale-[0.98] transition-all text-sm"
+                  >
+                    {uiTexts.btnBackHub}
+                  </button>
+                </div>
               </div>
             )}
 
