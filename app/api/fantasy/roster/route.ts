@@ -382,28 +382,14 @@ export async function POST(request: Request) {
     const gamesCount = profile.minmatGamesPlayedCount || { add: 0, sub: 0, mul: 0, div: 0, mix: 0 };
 
     if (!prevRoster) {
-      // First-time roster creation
-      if (isStageActive) {
-        // Latecomer mode: Level >= 5 in any category
-        const hasLevel5 = categories.some((cat) => (maxLevels[cat] || 1) >= 5);
-        if (!hasLevel5) {
-          const currentMaxLevel = Math.max(...categories.map((cat) => maxLevels[cat] || 1));
-          return NextResponse.json(
-            { error: `Kadro kurabilmek için herhangi bir MinMat kategorisinde en az Seviye 5'e ulaşmış olmalısınız. Mevcut en yüksek seviyeniz: Seviye ${currentMaxLevel}.` },
-            { status: 403 }
-          );
-        }
-      } else {
-        // Normal mode (pre-kickoff): Level >= 3 and Games >= 5 in all categories
-        const isBaseUnlocked = categories.every(
-          (cat) => (maxLevels[cat] || 1) >= 3 && (gamesCount[cat] || 0) >= 5
+      // First-time roster creation: Level >= 5 in any category (both modes)
+      const hasLevel5 = categories.some((cat) => (maxLevels[cat] || 1) >= 5);
+      if (!hasLevel5) {
+        const currentMaxLevel = Math.max(...categories.map((cat) => maxLevels[cat] || 1));
+        return NextResponse.json(
+          { error: `Kadro kurabilmek için herhangi bir MinMat kategorisinde en az Seviye 5'e ulaşmış olmalısınız. Mevcut en yüksek seviyeniz: Seviye ${currentMaxLevel}.` },
+          { status: 403 }
         );
-        if (!isBaseUnlocked) {
-          return NextResponse.json(
-            { error: "Kadro kurabilmek için tüm MinMat kategorilerinde en az Seviye 3'e ulaşıp 5'er oyun oynamış olmalısınız." },
-            { status: 403 }
-          );
-        }
       }
     }
 
