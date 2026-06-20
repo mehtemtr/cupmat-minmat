@@ -385,10 +385,33 @@ export default function EntryPage() {
             <div className="animate-marquee flex whitespace-nowrap gap-12">
               {[1, 2, 3, 4].map((i) => (
                 <h1 key={i} className="text-2xl font-black tracking-tight text-white uppercase sm:text-4xl">
-                  {t("hero.slogan").split("statmatik.com")[0]}
-                  <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-                    statmatik.com {t("hero.slogan").split("statmatik.com")[1]}
-                  </span>
+                  {locale === "tr" ? (
+                    <>
+                      <span>Lobilerin rengi değil, </span>
+                      <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                        performansın liyakati.
+                      </span>
+                      <span> Dünya Kupası'nın matematiksel adaleti: </span>
+                      <span className="bg-gradient-to-r from-red-500 via-red-400 to-white bg-clip-text text-transparent">
+                        Statmatik.com
+                      </span>
+                    </>
+                  ) : (
+                    (() => {
+                      const parts = t("hero.slogan").split(/(statmatik\.com)/i);
+                      return (
+                        <>
+                          {parts[0]}
+                          {parts[1] && (
+                            <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
+                              {parts[1]}
+                            </span>
+                          )}
+                          {parts[2]}
+                        </>
+                      );
+                    })()
+                  )}
                 </h1>
               ))}
             </div>
