@@ -29,7 +29,8 @@ export interface UserActivity {
   hakkindaTiklandi: boolean;       // Daily about clicked check
   mevcutPeriyotPuani: number;      // Current 3-day period score
   genelTahminHakkiKullanildi: boolean; // 1-time free initial predictions used
-  minmatOyunSayisiBugun: number;   // Number of Minmat games played today
+  minmatOyunSayisiBugun: number;
+  minmatHighestLevelToday: number; // Highest MinMat level reached today   // Number of Minmat games played today
   lastClerkLoginAt: string | null;  // Last Clerk email login timestamp
   activeSecondsInPeriod: number;    // Seconds tracked in the current period
   /** Önceki periyot CupMat ilk3 → bu periyot MinMat: tur başına ek saniye */
@@ -70,6 +71,7 @@ function normalizeUserActivity(raw: Partial<UserActivity> & { userId: string }):
     mevcutPeriyotPuani: raw.mevcutPeriyotPuani ?? 0,
     genelTahminHakkiKullanildi: raw.genelTahminHakkiKullanildi ?? false,
     minmatOyunSayisiBugun: raw.minmatOyunSayisiBugun ?? 0,
+    minmatHighestLevelToday: raw.minmatHighestLevelToday ?? 0,
     lastClerkLoginAt: raw.lastClerkLoginAt ?? null,
     activeSecondsInPeriod: raw.activeSecondsInPeriod ?? 0,
     periyotOdulMinmatSaniyeSeviye: raw.periyotOdulMinmatSaniyeSeviye ?? 0,

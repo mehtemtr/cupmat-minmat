@@ -384,12 +384,12 @@ export async function POST(request: Request) {
     if (!prevRoster) {
       // First-time roster creation
       if (isStageActive) {
-        // Latecomer mode: Level >= 7 in any category
-        const hasLevel7 = categories.some((cat) => (maxLevels[cat] || 1) >= 7);
-        if (!hasLevel7) {
+        // Latecomer mode: Level >= 5 in any category
+        const hasLevel5 = categories.some((cat) => (maxLevels[cat] || 1) >= 5);
+        if (!hasLevel5) {
           const currentMaxLevel = Math.max(...categories.map((cat) => maxLevels[cat] || 1));
           return NextResponse.json(
-            { error: `Kadro kurabilmek için herhangi bir MinMat kategorisinde en az Seviye 7'ye ulaşmış olmalısınız. Mevcut en yüksek seviyeniz: Seviye ${currentMaxLevel}.` },
+            { error: `Kadro kurabilmek için herhangi bir MinMat kategorisinde en az Seviye 5'e ulaşmış olmalısınız. Mevcut en yüksek seviyeniz: Seviye ${currentMaxLevel}.` },
             { status: 403 }
           );
         }
@@ -582,13 +582,10 @@ export async function POST(request: Request) {
     }
 
     if (isStageActive && newTransfers > 0) {
-      const minmatGamesToday = profile.minmatOyunSayisiBugun || 0;
-      const requiredGamesToday = newTransfers * 3;
-      if (minmatGamesToday < requiredGamesToday) {
+      const highestLevelToday = profile.minmatHighestLevelToday || 0;
+      if (highestLevelToday < 3) {
         return NextResponse.json(
-          {
-            error: `Kadro güncellemesi kilitli! Aşama devam ederken yapılan her transfer için bugün en az 3 MinMat oyunu oynamış olmalısınız. Yapılan transfer sayısı: ${newTransfers}. Bugün oynadığınız oyun sayısı: ${minmatGamesToday}. Gereken oyun sayısı: ${requiredGamesToday}.`,
-          },
+          { error: `Kadro güncellemesi kilitli! Gün içinde en az bir MinMat oyununda Seviye 3'e ulaşmanız gerekiyor.` },
           { status: 403 }
         );
       }
