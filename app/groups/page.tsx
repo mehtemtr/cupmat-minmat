@@ -5,13 +5,16 @@ import { PageShell } from "@/components/PageShell";
 import { TournamentGate } from "@/components/TournamentGate";
 import { AllGroupTables } from "@/components/groups/GroupTable";
 import { GroupMatchEditor } from "@/components/groups/GroupMatchEditor";
-import { GeneralStandingsTable } from "@/components/groups/GeneralStandingsTable";
+import { GeneralStandingsTable, standingsTranslations } from "@/components/groups/GeneralStandingsTable";
 import { useTranslation, useLocale } from "@/contexts/LocaleContext";
 
 export default function GroupsPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const [activeTab, setActiveTab] = useState<"groups" | "general">("groups");
+
+  const currentLang = (locale in standingsTranslations ? locale : "en") as keyof typeof standingsTranslations;
+  const labels = standingsTranslations[currentLang];
 
   return (
     <PageShell title={t("groups.title")} subtitle={t("groups.subtitle")}>
@@ -28,7 +31,7 @@ export default function GroupsPage() {
                 : "border-transparent text-zinc-400 hover:text-white"
             }`}
           >
-            {locale === "tr" ? "Grup Tabloları" : "Group Tables"}
+            {labels.groupTables}
           </button>
           <button
             type="button"
@@ -39,7 +42,7 @@ export default function GroupsPage() {
                 : "border-transparent text-zinc-400 hover:text-white"
             }`}
           >
-            {locale === "tr" ? "Genel Puan Durumu" : "General Standings"}
+            {labels.title}
           </button>
         </div>
 

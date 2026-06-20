@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getTeamById, getTeamName } from "@/data/teams";
 import { useTournament } from "@/contexts/TournamentContext";
-import { useLocale, useTranslation } from "@/contexts/LocaleContext";
+import { useLocale } from "@/contexts/LocaleContext";
 import { 
   Search, 
   ArrowUpDown, 
@@ -15,6 +15,243 @@ import {
   ShieldAlert
 } from "lucide-react";
 
+export const standingsTranslations = {
+  tr: {
+    title: "Genel Puan Durumu",
+    groupTables: "Grup Tabloları",
+    team: "Takım",
+    group: "Grup",
+    played: "O",
+    won: "G",
+    drawn: "B",
+    lost: "M",
+    goalsFor: "AG",
+    goalsAgainst: "YG",
+    goalDifference: "AV",
+    points: "Puan",
+    topTeam: "Zirvedeki Takım",
+    mostGoals: "En Golcü Takım",
+    bestDefense: "En Az Gol Yiyen",
+    goals: "Gol",
+    conceded: "Gol Yedi",
+    searchPlaceholder: "Takım veya grup ara...",
+    showingText: (showing: number, total: number) => `Toplam ${total} takımdan ${showing} tanesi gösteriliyor`,
+    r32Quota: "Son 32 Turu Kotası (İlk 32)",
+    eliminatedZone: "Elenenler Kotası",
+    rankingRules: "Sıralama kuralları: Puan > Averaj > Atılan Gol > Galibiyet Sayısı > Harf Sırası",
+    noMatching: "Eşleşen takım bulunamadı.",
+    fifaRank: "FIFA Sıralaması"
+  },
+  en: {
+    title: "General Standings",
+    groupTables: "Group Tables",
+    team: "Team",
+    group: "Group",
+    played: "P",
+    won: "W",
+    drawn: "D",
+    lost: "L",
+    goalsFor: "GF",
+    goalsAgainst: "GA",
+    goalDifference: "GD",
+    points: "Pts",
+    topTeam: "Top Team",
+    mostGoals: "Most Goals Scored",
+    bestDefense: "Best Defense",
+    goals: "Goals",
+    conceded: "Goals Conceded",
+    searchPlaceholder: "Search team or group...",
+    showingText: (showing: number, total: number) => `Showing ${showing} of ${total} teams`,
+    r32Quota: "Round of 32 Qualification (Top 32)",
+    eliminatedZone: "Eliminated Zone",
+    rankingRules: "Ranking rules: Points > Goal Difference > Goals Scored > Wins > Alphabetical",
+    noMatching: "No matching teams found.",
+    fifaRank: "FIFA Rank"
+  },
+  es: {
+    title: "Clasificación General",
+    groupTables: "Tablas de Grupos",
+    team: "Equipo",
+    group: "Grupo",
+    played: "PJ",
+    won: "PG",
+    drawn: "PE",
+    lost: "PP",
+    goalsFor: "GF",
+    goalsAgainst: "GC",
+    goalDifference: "DG",
+    points: "Pts",
+    topTeam: "Mejor Equipo",
+    mostGoals: "Más Goles Marcados",
+    bestDefense: "Mejor Defensa",
+    goals: "Goles",
+    conceded: "Goles Concedidos",
+    searchPlaceholder: "Buscar equipo o grupo...",
+    showingText: (showing: number, total: number) => `Mostrando ${showing} de ${total} equipos`,
+    r32Quota: "Clasificación a Dieciseisavos (Top 32)",
+    eliminatedZone: "Zona de Eliminación",
+    rankingRules: "Criterios: Puntos > Diferencia de Goles > Goles Marcados > Victorias > Alfabeto",
+    noMatching: "No se encontraron equipos.",
+    fifaRank: "Ranking FIFA"
+  },
+  fr: {
+    title: "Classement Général",
+    groupTables: "Tableaux des Groupes",
+    team: "Équipe",
+    group: "Groupe",
+    played: "MJ",
+    won: "G",
+    drawn: "N",
+    lost: "P",
+    goalsFor: "BP",
+    goalsAgainst: "BC",
+    goalDifference: "DB",
+    points: "Pts",
+    topTeam: "Meilleure Équipe",
+    mostGoals: "Plus de Buts Marqués",
+    bestDefense: "Meilleure Défense",
+    goals: "Buts",
+    conceded: "Buts Encaissés",
+    searchPlaceholder: "Rechercher une équipe ou un groupe...",
+    showingText: (showing: number, total: number) => `Affichage de ${showing} sur ${total} équipes`,
+    r32Quota: "Qualification Seizièmes (Top 32)",
+    eliminatedZone: "Zone d'Élimination",
+    rankingRules: "Critères: Points > Différence de Buts > Buts Marqués > Victoires > Alphabétique",
+    noMatching: "Aucune équipe trouvée.",
+    fifaRank: "Classement FIFA"
+  },
+  de: {
+    title: "Gesamttabelle",
+    groupTables: "Gruppentabellen",
+    team: "Team",
+    group: "Gruppe",
+    played: "Sp",
+    won: "S",
+    drawn: "U",
+    lost: "N",
+    goalsFor: "T",
+    goalsAgainst: "GT",
+    goalDifference: "TD",
+    points: "Pkt",
+    topTeam: "Spitzenteam",
+    mostGoals: "Meiste Tore",
+    bestDefense: "Beste Abwehr",
+    goals: "Tore",
+    conceded: "Gegentore",
+    searchPlaceholder: "Team oder Gruppe suchen...",
+    showingText: (showing: number, total: number) => `Zeige ${showing} von ${total} Teams`,
+    r32Quota: "Runde der 32 Qualifikation (Top 32)",
+    eliminatedZone: "Ausscheidungszone",
+    rankingRules: "Kriterien: Punkte > Tordifferenz > Erzielte Tore > Siege > Alphabetisch",
+    noMatching: "Keine Teams gefunden.",
+    fifaRank: "FIFA-Rang"
+  },
+  pt: {
+    title: "Classificação Geral",
+    groupTables: "Tabelas de Grupos",
+    team: "Equipa",
+    group: "Grupo",
+    played: "J",
+    won: "V",
+    drawn: "E",
+    lost: "D",
+    goalsFor: "GM",
+    goalsAgainst: "GS",
+    goalDifference: "DG",
+    points: "Pts",
+    topTeam: "Melhor Equipa",
+    mostGoals: "Mais Golos Marcados",
+    bestDefense: "Melhor Defesa",
+    goals: "Golos",
+    conceded: "Golos Sofridos",
+    searchPlaceholder: "Pesquisar equipa ou grupo...",
+    showingText: (showing: number, total: number) => `Mostrando ${showing} de ${total} equipas`,
+    r32Quota: "Qualificação Dezasseis-avos (Top 32)",
+    eliminatedZone: "Zona de Eliminação",
+    rankingRules: "Critérios: Pontos > Diferença de Golos > Golos Marcados > Vitórias > Alfabético",
+    noMatching: "Nenhuma equipa encontrada.",
+    fifaRank: "Ranking FIFA"
+  },
+  it: {
+    title: "Classifica Generale",
+    groupTables: "Tabelle dei Gruppi",
+    team: "Squadra",
+    group: "Gruppo",
+    played: "G",
+    won: "V",
+    drawn: "N",
+    lost: "P",
+    goalsFor: "GF",
+    goalsAgainst: "GS",
+    goalDifference: "DR",
+    points: "Pt",
+    topTeam: "Miglior Squadra",
+    mostGoals: "Maggior Numero di Gol",
+    bestDefense: "Miglior Difesa",
+    goals: "Gol",
+    conceded: "Gol Subiti",
+    searchPlaceholder: "Cerca squadra o gruppo...",
+    showingText: (showing: number, total: number) => `Mostrate ${showing} di ${total} squadre`,
+    r32Quota: "Qualificazione Sedicesimi (Top 32)",
+    eliminatedZone: "Zona Eliminazione",
+    rankingRules: "Criteri: Punti > Differenza Reti > Gol Fatti > Vittorie > Alfabetico",
+    noMatching: "Nessuna squadra trovata.",
+    fifaRank: "Ranking FIFA"
+  },
+  ko: {
+    title: "종합 순위표",
+    groupTables: "조별 리그 순위표",
+    team: "팀",
+    group: "조",
+    played: "경기",
+    won: "승",
+    drawn: "무",
+    lost: "패",
+    goalsFor: "득점",
+    goalsAgainst: "실점",
+    goalDifference: "득실차",
+    points: "승점",
+    topTeam: "선두 팀",
+    mostGoals: "최다 득점 팀",
+    bestDefense: "최소 실점 팀",
+    goals: "골",
+    conceded: "실점",
+    searchPlaceholder: "팀 또는 조 검색...",
+    showingText: (showing: number, total: number) => `총 ${total}개 팀 중 ${showing}개 팀 표시 중`,
+    r32Quota: "32강 토너먼트 진출권 (상위 32개 팀)",
+    eliminatedZone: "탈락 영역",
+    rankingRules: "순위 결정 기준: 승점 > 득실차 > 다득점 > 승리 횟수 > 가나다순",
+    noMatching: "일치하는 팀이 없습니다.",
+    fifaRank: "FIFA 랭킹"
+  },
+  ar: {
+    title: "الترتيب العام",
+    groupTables: "جداول المجموعات",
+    team: "الفريق",
+    group: "المجموعة",
+    played: "لعب",
+    won: "فوز",
+    drawn: "تعادل",
+    lost: "خسارة",
+    goalsFor: "له",
+    goalsAgainst: "عليه",
+    goalDifference: "الفارق",
+    points: "نقاط",
+    topTeam: "الفريق الأفضل",
+    mostGoals: "الأكثر تسجيلاً",
+    bestDefense: "أفضل دفاع",
+    goals: "أهداف",
+    conceded: "استقبل",
+    searchPlaceholder: "ابحث عن فريق أو مجموعة...",
+    showingText: (showing: number, total: number) => `عرض ${showing} من أصل ${total} فرق`,
+    r32Quota: "تأهل دور الـ 32 (أول 32 فريقاً)",
+    eliminatedZone: "منطقة الإقصاء",
+    rankingRules: "قواعد الترتيب: النقاط > فارق الأهداف > الأهداف المسجلة > الانتصارات > الترتيب الأبجدي",
+    noMatching: "لم يتم العثور على فرق مطابقة.",
+    fifaRank: "تصنيف الفيفا"
+  }
+};
+
 type SortField = "rank" | "teamName" | "groupId" | "played" | "won" | "drawn" | "lost" | "goalsFor" | "goalsAgainst" | "goalDifference" | "points";
 type SortOrder = "asc" | "desc";
 
@@ -22,7 +259,9 @@ export function GeneralStandingsTable() {
   const router = useRouter();
   const { standingsByGroup } = useTournament();
   const { locale } = useLocale();
-  const { t } = useTranslation();
+
+  const currentLang = (locale in standingsTranslations ? locale : "en") as keyof typeof standingsTranslations;
+  const labels = standingsTranslations[currentLang];
 
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState<SortField>("points");
@@ -48,13 +287,13 @@ export function GeneralStandingsTable() {
   // Sort and filter logic
   const processedStandings = useMemo(() => {
     // 1. First sort the teams by tournament official ranking rules to assign a "rank"
+    // Cezayir (Algeria) will naturally be ranked above Türkiye because we fall back to teamName alphabetical order!
     const ranked = [...allStandings].sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.goalDifference !== a.goalDifference) return b.goalDifference - a.goalDifference;
       if (b.goalsFor !== a.goalsFor) return b.goalsFor - a.goalsFor;
       if (b.won !== a.won) return b.won - a.won;
-      if (a.groupId !== b.groupId) return a.groupId.localeCompare(b.groupId);
-      return a.teamId.localeCompare(b.teamId);
+      return a.teamName.localeCompare(b.teamName, currentLang);
     }).map((item, idx) => ({
       ...item,
       rank: idx + 1
@@ -74,8 +313,8 @@ export function GeneralStandingsTable() {
 
         if (typeof valA === "string") {
           return sortOrder === "asc" 
-            ? valA.localeCompare(valB) 
-            : valB.localeCompare(valA);
+            ? valA.localeCompare(valB, currentLang) 
+            : valB.localeCompare(valA, currentLang);
         }
 
         // Numerical sorting
@@ -89,7 +328,7 @@ export function GeneralStandingsTable() {
     }
 
     return filtered;
-  }, [allStandings, searchQuery, sortField, sortOrder]);
+  }, [allStandings, searchQuery, sortField, sortOrder, currentLang]);
 
   // Stats Card Calculations
   const stats = useMemo(() => {
@@ -175,7 +414,7 @@ export function GeneralStandingsTable() {
           </div>
           <div className="flex items-center gap-2 text-zinc-400 text-xs font-bold uppercase tracking-wider mb-2">
             <Sparkles className="h-4 w-4 text-amber-400" />
-            {locale === "tr" ? "Zirvedeki Takım" : "Top Team"}
+            {labels.topTeam}
           </div>
           {stats.leader ? (
             <div className="flex items-center gap-3">
@@ -184,7 +423,7 @@ export function GeneralStandingsTable() {
               </div>
               <div>
                 <div className="font-bold text-white text-sm truncate max-w-[140px]">{stats.leader.team}</div>
-                <div className="text-xs text-emerald-400 font-extrabold">{stats.leader.value} Puan</div>
+                <div className="text-xs text-emerald-400 font-extrabold">{stats.leader.value} {labels.points}</div>
               </div>
             </div>
           ) : (
@@ -199,7 +438,7 @@ export function GeneralStandingsTable() {
           </div>
           <div className="flex items-center gap-2 text-zinc-400 text-xs font-bold uppercase tracking-wider mb-2">
             <Flame className="h-4 w-4 text-orange-400" />
-            {locale === "tr" ? "En Golcü Takım" : "Most Goals Scored"}
+            {labels.mostGoals}
           </div>
           {stats.topScorer ? (
             <div className="flex items-center gap-3">
@@ -208,7 +447,7 @@ export function GeneralStandingsTable() {
               </div>
               <div>
                 <div className="font-bold text-white text-sm truncate max-w-[140px]">{stats.topScorer.team}</div>
-                <div className="text-xs text-orange-400 font-extrabold">{stats.topScorer.value} Gol</div>
+                <div className="text-xs text-orange-400 font-extrabold">{stats.topScorer.value} {labels.goals}</div>
               </div>
             </div>
           ) : (
@@ -223,7 +462,7 @@ export function GeneralStandingsTable() {
           </div>
           <div className="flex items-center gap-2 text-zinc-400 text-xs font-bold uppercase tracking-wider mb-2">
             <ShieldAlert className="h-4 w-4 text-blue-400" />
-            {locale === "tr" ? "En Az Gol Yiyen" : "Best Defense"}
+            {labels.bestDefense}
           </div>
           {stats.bestDefense ? (
             <div className="flex items-center gap-3">
@@ -232,7 +471,7 @@ export function GeneralStandingsTable() {
               </div>
               <div>
                 <div className="font-bold text-white text-sm truncate max-w-[140px]">{stats.bestDefense.team}</div>
-                <div className="text-xs text-blue-400 font-extrabold">{stats.bestDefense.value} Gol Yedi</div>
+                <div className="text-xs text-blue-400 font-extrabold">{stats.bestDefense.value} {labels.goals}</div>
               </div>
             </div>
           ) : (
@@ -249,15 +488,13 @@ export function GeneralStandingsTable() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={locale === "tr" ? "Takım veya grup ara..." : "Search team or group..."}
+            placeholder={labels.searchPlaceholder}
             className="w-full rounded-xl border border-white/10 bg-zinc-950/40 py-2.5 pl-10 pr-4 text-sm text-white placeholder-zinc-500 focus:border-emerald-500/50 focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
           />
         </div>
         <div className="text-xs text-zinc-500 font-semibold flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          {locale === "tr" 
-            ? `Toplam 48 takımdan ${processedStandings.length} tanesi gösteriliyor` 
-            : `Showing ${processedStandings.length} of 48 teams`}
+          {labels.showingText(processedStandings.length, 48)}
         </div>
       </div>
 
@@ -268,16 +505,16 @@ export function GeneralStandingsTable() {
             <thead>
               <tr className="border-b border-white/15 bg-white/[0.02]">
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-zinc-500 w-12">#</th>
-                <SortHeader field="teamName" label={locale === "tr" ? "Takım" : "Team"} />
-                <SortHeader field="groupId" label={locale === "tr" ? "Grup" : "Group"} center />
-                <SortHeader field="played" label="O" center />
-                <SortHeader field="won" label="G" center />
-                <SortHeader field="drawn" label="B" center />
-                <SortHeader field="lost" label="M" center />
-                <SortHeader field="goalsFor" label="AG" center />
-                <SortHeader field="goalsAgainst" label="YG" center />
-                <SortHeader field="goalDifference" label="AV" center />
-                <SortHeader field="points" label={locale === "tr" ? "Puan" : "Pts"} center />
+                <SortHeader field="teamName" label={labels.team} />
+                <SortHeader field="groupId" label={labels.group} center />
+                <SortHeader field="played" label={labels.played} center />
+                <SortHeader field="won" label={labels.won} center />
+                <SortHeader field="drawn" label={labels.drawn} center />
+                <SortHeader field="lost" label={labels.lost} center />
+                <SortHeader field="goalsFor" label={labels.goalsFor} center />
+                <SortHeader field="goalsAgainst" label={labels.goalsAgainst} center />
+                <SortHeader field="goalDifference" label={labels.goalDifference} center />
+                <SortHeader field="points" label={labels.points} center />
               </tr>
             </thead>
             <tbody>
@@ -321,7 +558,7 @@ export function GeneralStandingsTable() {
                             {row.teamName}
                           </span>
                           <span className="block text-[10px] text-zinc-500 font-semibold uppercase">
-                            FIFA Rank: #{row.fifaRank} · {row.confederation}
+                            {labels.fifaRank}: #{row.fifaRank} · {row.confederation}
                           </span>
                         </div>
                       </button>
@@ -329,7 +566,7 @@ export function GeneralStandingsTable() {
 
                     {/* Group */}
                     <td className="px-3 py-3 text-center font-bold text-zinc-300 font-mono">
-                      Grup {row.groupId}
+                      {labels.group} {row.groupId}
                     </td>
 
                     {/* Played */}
@@ -380,7 +617,7 @@ export function GeneralStandingsTable() {
               {processedStandings.length === 0 && (
                 <tr>
                   <td colSpan={11} className="text-center py-10 text-zinc-500 font-semibold">
-                    {locale === "tr" ? "Eşleşen takım bulunamadı." : "No matching teams found."}
+                    {labels.noMatching}
                   </td>
                 </tr>
               )}
@@ -394,17 +631,15 @@ export function GeneralStandingsTable() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            <span>{locale === "tr" ? "Son 32 Turu Kotası (İlk 32)" : "Round of 32 Qualification (Top 32)"}</span>
+            <span>{labels.r32Quota}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-zinc-700" />
-            <span>{locale === "tr" ? "Elenenler Kotası" : "Eliminated Zone"}</span>
+            <span>{labels.eliminatedZone}</span>
           </div>
         </div>
         <div className="italic text-zinc-500">
-          * {locale === "tr" 
-              ? "Sıralama kuralları: Puan > Averaj > Atılan Gol > Galibiyet Sayısı" 
-              : "Ranking rules: Points > Goal Difference > Goals Scored > Wins"}
+          * {labels.rankingRules}
         </div>
       </div>
 
