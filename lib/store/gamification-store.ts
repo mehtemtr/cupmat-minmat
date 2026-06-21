@@ -172,6 +172,7 @@ const defaultStore: GamificationStore = {
       minmatBoostLifeCharges: 0,
       minmatBoostScoreCharges: 0,
       minmatBoostExpiresAt: "",
+      minmatHighestLevelToday: 0,
     },
     {
       userId: "demo-2",
@@ -202,6 +203,7 @@ const defaultStore: GamificationStore = {
       minmatBoostLifeCharges: 0,
       minmatBoostScoreCharges: 0,
       minmatBoostExpiresAt: "",
+      minmatHighestLevelToday: 0,
     }
   ],
   gecmisSampiyonlar: [

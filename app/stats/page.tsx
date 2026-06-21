@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
 import { useTournament } from "@/contexts/TournamentContext";
 import { TEAMS, getTeamById } from "@/data/teams";
+import { HISTORICAL_STANDINGS } from "@/data/historical-standings";
 import { generateGroupFixtures } from "@/lib/fixtures";
 import { getAdjustedTime } from "@/lib/tournament/time-helper";
 import {
@@ -66,6 +67,8 @@ export default function StatisticsPage() {
   const [activeTab, setActiveTab] = useState<"squad" | "live" | "history">("squad");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [historySearch, setHistorySearch] = useState("");
+  const [showAllHistory, setShowAllHistory] = useState(false);
 
   const {
     matches,
@@ -127,7 +130,15 @@ export default function StatisticsPage() {
     const todayStr = localDate.toISOString().split("T")[0]; // e.g. "2026-06-12"
 
     const activeMatches = matches.filter(m => m.date <= todayStr);
-    return activeMatches.map(m => {
+    
+    // Sort chronologically by date and time
+    const sortedMatches = [...activeMatches].sort((a, b) => {
+      const dateTimeA = `${a.date}T${a.time || "00:00"}:00Z`;
+      const dateTimeB = `${b.date}T${b.time || "00:00"}:00Z`;
+      return new Date(dateTimeA).getTime() - new Date(dateTimeB).getTime();
+    });
+
+    return sortedMatches.map(m => {
       // 1. If manually simulating
       if (simMatchId && m.id === simMatchId) {
         return {
@@ -360,13 +371,112 @@ export default function StatisticsPage() {
   ];
 
   const historicalScorers = [
+    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 16, matches: 27, code: "ar" },
     { name: "Miroslav Klose", countryTr: "Almanya", countryEn: "Germany", goals: 16, matches: 24, code: "de" },
     { name: "Ronaldo", countryTr: "Brezilya", countryEn: "Brazil", goals: 15, matches: 19, code: "br" },
     { name: "Gerd Müller", countryTr: "Almanya", countryEn: "Germany", goals: 14, matches: 13, code: "de" },
+    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 14, matches: 15, code: "fr" },
     { name: "Just Fontaine", countryTr: "Fransa", countryEn: "France", goals: 13, matches: 6, code: "fr" },
-    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 13, matches: 26, code: "ar" },
     { name: "Pelé", countryTr: "Brezilya", countryEn: "Brazil", goals: 12, matches: 14, code: "br" },
   ];
+
+  // Merge current tournament results with historical standings
+  const mergedHistoricalStandings = useMemo(() => {
+    const currentStats: Record<string, {
+      played: number;
+      won: number;
+      drawn: number;
+      lost: number;
+      goalsFor: number;
+      goalsAgainst: number;
+      points: number;
+    }> = {};
+
+    matches.forEach(m => {
+      if (m.played && m.homeScore !== null && m.awayScore !== null) {
+        const homeId = m.homeTeamId;
+        const awayId = m.awayTeamId;
+
+        if (!currentStats[homeId]) {
+          currentStats[homeId] = { played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
+        }
+        if (!currentStats[awayId]) {
+          currentStats[awayId] = { played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
+        }
+
+        currentStats[homeId].played += 1;
+        currentStats[awayId].played += 1;
+        currentStats[homeId].goalsFor += m.homeScore;
+        currentStats[homeId].goalsAgainst += m.awayScore;
+        currentStats[awayId].goalsFor += m.awayScore;
+        currentStats[awayId].goalsAgainst += m.homeScore;
+
+        if (m.homeScore > m.awayScore) {
+          currentStats[homeId].won += 1;
+          currentStats[homeId].points += 3;
+          currentStats[awayId].lost += 1;
+        } else if (m.homeScore < m.awayScore) {
+          currentStats[awayId].won += 1;
+          currentStats[awayId].points += 3;
+          currentStats[homeId].lost += 1;
+        } else {
+          currentStats[homeId].drawn += 1;
+          currentStats[homeId].points += 1;
+          currentStats[awayId].drawn += 1;
+          currentStats[awayId].points += 1;
+        }
+      }
+    });
+
+    const merged = HISTORICAL_STANDINGS.map(standing => {
+      const current = currentStats[standing.id];
+      if (current && current.played > 0) {
+        return {
+          ...standing,
+          played: standing.played + current.played,
+          won: standing.won + current.won,
+          drawn: standing.drawn + current.drawn,
+          lost: standing.lost + current.lost,
+          goalsFor: standing.goalsFor + current.goalsFor,
+          goalsAgainst: standing.goalsAgainst + current.goalsAgainst,
+          points: standing.points + current.points
+        };
+      }
+      return standing;
+    });
+
+    const sorted = [...merged].sort((a, b) => {
+      if (b.points !== a.points) {
+        return b.points - a.points;
+      }
+      const gdA = a.goalsFor - a.goalsAgainst;
+      const gdB = b.goalsFor - b.goalsAgainst;
+      if (gdB !== gdA) {
+        return gdB - gdA;
+      }
+      return b.goalsFor - a.goalsFor;
+    });
+
+    return sorted.map((item, index) => ({
+      ...item,
+      rank: index + 1
+    }));
+  }, [matches]);
+
+  const filteredHistoricalStandings = useMemo(() => {
+    if (!historySearch.trim()) return mergedHistoricalStandings;
+    const query = historySearch.toLowerCase();
+    return mergedHistoricalStandings.filter(
+      (s) =>
+        s.nameEn.toLowerCase().includes(query) ||
+        s.nameTr.toLowerCase().includes(query) ||
+        s.id.toLowerCase().includes(query)
+    );
+  }, [mergedHistoricalStandings, historySearch]);
+
+  const displayedHistoricalStandings = showAllHistory
+    ? filteredHistoricalStandings
+    : filteredHistoricalStandings.slice(0, 15);
 
   return (
     <PageShell
@@ -1055,8 +1165,8 @@ export default function StatisticsPage() {
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-600/10 to-transparent p-6 text-center">
                   <h4 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Tarihin En Golcüsü</h4>
-                  <div className="mt-2 text-3xl font-extrabold text-white">M. Klose 🇩🇪</div>
-                  <p className="mt-2 text-xs text-zinc-400">24 maçta 16 gol</p>
+                  <div className="mt-2 text-2xl font-extrabold text-white">Messi 🇦🇷 & Klose 🇩🇪</div>
+                  <p className="mt-2 text-xs text-zinc-400">{locale === "tr" ? "16'şar gol" : "16 goals each"}</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/10 to-transparent p-6 text-center">
                   <h4 className="text-sm font-semibold text-indigo-400 uppercase tracking-wider">En Çok Final Oynayan</h4>
@@ -1064,6 +1174,122 @@ export default function StatisticsPage() {
                   <p className="mt-2 text-xs text-zinc-400">8 kez final mücadelesi</p>
                 </div>
               </div>
+
+              {/* All-time Standings Table */}
+              <section className="rounded-2xl border border-white/10 bg-[#0b1329]/30 p-6 backdrop-blur">
+                <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                      <Layers className="h-5 w-5 text-emerald-400" />
+                      {locale === "tr" ? "Tüm Zamanlar Dünya Kupası Puan Durumu" : "All-Time World Cup Standings"}
+                    </h2>
+                    <p className="text-xs text-zinc-400 mt-1">
+                      {locale === "tr"
+                        ? "Dünya Kupası tarihindeki tüm maç sonuçlarına göre puan durumu. Güncel turnuvadaki maçlar ve puanlar anlık olarak eklenmektedir."
+                        : "Overall standings based on all matches in World Cup history. Matches and points from the current tournament are merged dynamically."}
+                    </p>
+                  </div>
+
+                  {/* Search box */}
+                  <div className="relative w-full max-w-xs">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                    <input
+                      type="text"
+                      placeholder={locale === "tr" ? "Ülke ara..." : "Search country..."}
+                      value={historySearch}
+                      onChange={(e) => setHistorySearch(e.target.value)}
+                      className="w-full rounded-xl border border-white/10 bg-black/40 py-2 pl-9 pr-4 text-sm text-white placeholder-zinc-500 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto rounded-xl border border-white/5 bg-black/20">
+                  <table className="w-full text-left text-sm text-zinc-300">
+                    <thead className="bg-white/5 text-xs font-semibold uppercase text-zinc-400 border-b border-white/10">
+                      <tr>
+                        <th className="px-4 py-4 text-center w-12">{locale === "tr" ? "Sıra" : "Rank"}</th>
+                        <th className="px-4 py-4">{locale === "tr" ? "Takım" : "Team"}</th>
+                        <th className="px-4 py-4 text-center w-20">{locale === "tr" ? "Katılım" : "Part."}</th>
+                        <th className="px-4 py-4 text-center w-16">O</th>
+                        <th className="px-4 py-4 text-center w-16">G</th>
+                        <th className="px-4 py-4 text-center w-16">B</th>
+                        <th className="px-4 py-4 text-center w-16">M</th>
+                        <th className="px-4 py-4 text-center w-16">A</th>
+                        <th className="px-4 py-4 text-center w-16">Y</th>
+                        <th className="px-4 py-4 text-center w-16">Av.</th>
+                        <th className="px-4 py-4 text-center w-20 font-bold text-emerald-400">P</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {displayedHistoricalStandings.map((s) => {
+                        const is2026Participant = s.isParticipating;
+                        const flagUrl = `https://flagcdn.com/w40/${s.code.toLowerCase()}.png`;
+
+                        return (
+                          <tr
+                            key={s.id}
+                            className={`transition-colors hover:bg-white/5 ${
+                              is2026Participant ? "bg-emerald-500/[0.03] border-l-2 border-l-emerald-500" : ""
+                            }`}
+                          >
+                            <td className="px-4 py-3.5 text-center font-mono font-bold text-zinc-400">
+                              {s.rank}
+                            </td>
+                            <td className="px-4 py-3.5 font-semibold text-white flex items-center gap-3">
+                              <img
+                                src={flagUrl}
+                                alt={s.nameTr}
+                                className="h-5 w-7 object-cover rounded shadow-sm border border-white/10 shrink-0"
+                              />
+                              <span className={is2026Participant ? "text-emerald-400 font-extrabold" : ""}>
+                                {locale === "tr" ? s.nameTr : s.nameEn}
+                              </span>
+                              {is2026Participant && (
+                                <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-black text-emerald-400 border border-emerald-500/20 uppercase tracking-wider shrink-0 select-none">
+                                  2026
+                                </span>
+                              )}
+                            </td>
+                            <td className="px-4 py-3.5 text-center text-zinc-300 font-semibold">{s.participations}</td>
+                            <td className="px-4 py-3.5 text-center text-zinc-300">{s.played}</td>
+                            <td className="px-4 py-3.5 text-center text-emerald-500/90 font-medium">{s.won}</td>
+                            <td className="px-4 py-3.5 text-center text-zinc-400">{s.drawn}</td>
+                            <td className="px-4 py-3.5 text-center text-red-500/80">{s.lost}</td>
+                            <td className="px-4 py-3.5 text-center text-zinc-300">{s.goalsFor}</td>
+                            <td className="px-4 py-3.5 text-center text-zinc-300">{s.goalsAgainst}</td>
+                            <td className="px-4 py-3.5 text-center font-mono text-zinc-400">
+                              {(s.goalsFor - s.goalsAgainst) > 0 ? `+${s.goalsFor - s.goalsAgainst}` : s.goalsFor - s.goalsAgainst}
+                            </td>
+                            <td className="px-4 py-3.5 text-center font-mono font-black text-emerald-400 bg-emerald-500/[0.01]">
+                              {s.points}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {displayedHistoricalStandings.length === 0 && (
+                        <tr>
+                          <td colSpan={11} className="px-6 py-8 text-center text-zinc-500">
+                            {locale === "tr" ? "Aranan takım bulunamadı." : "No matching team found."}
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                {filteredHistoricalStandings.length > 15 && (
+                  <div className="mt-4 flex justify-center">
+                    <button
+                      onClick={() => setShowAllHistory(!showAllHistory)}
+                      className="rounded-xl bg-white/5 border border-white/10 px-6 py-2.5 text-xs font-bold text-white hover:bg-white/10 hover:border-emerald-500/30 transition-all uppercase tracking-wider"
+                    >
+                      {showAllHistory
+                        ? (locale === "tr" ? "Daha Az Göster" : "Show Less")
+                        : (locale === "tr" ? `Daha Fazla Göster (+${filteredHistoricalStandings.length - 15} takım)` : `Show More (+${filteredHistoricalStandings.length - 15} teams)`)}
+                    </button>
+                  </div>
+                )}
+              </section>
 
               {/* Detail Lists Grid */}
               <div className="grid gap-8 md:grid-cols-2">
