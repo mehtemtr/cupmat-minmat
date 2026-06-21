@@ -46,7 +46,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
     "goalsFor": 241,
     "goalsAgainst": 132,
     "points": 231,
-    "isParticipating": true
+    "isParticipating": false
   },
   {
     "rank": 3,
@@ -210,7 +210,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 13,
-    "id": "russia",
+    "id": "rus",
     "code": "ru",
     "nameEn": "Russia",
     "nameTr": "Rusya",
@@ -226,7 +226,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 14,
-    "id": "serbia",
+    "id": "srb",
     "code": "rs",
     "nameEn": "Serbia",
     "nameTr": "Sırbistan",
@@ -274,10 +274,10 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 17,
-    "id": "-160-switzerland",
-    "code": "un",
-    "nameEn": "&#160;Switzerland",
-    "nameTr": "&#160;Switzerland",
+    "id": "sui",
+    "code": "ch",
+    "nameEn": "Switzerland",
+    "nameTr": "İsviçre",
     "participations": 13,
     "played": 43,
     "won": 15,
@@ -286,7 +286,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
     "goalsFor": 60,
     "goalsAgainst": 75,
     "points": 54,
-    "isParticipating": false
+    "isParticipating": true
   },
   {
     "rank": 18,
@@ -338,7 +338,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 21,
-    "id": "slovakia",
+    "id": "svk",
     "code": "sk",
     "nameEn": "Slovakia",
     "nameTr": "Slovakya",
@@ -354,9 +354,9 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 22,
-    "id": "cze",
+    "id": "cze-hist",
     "code": "cz",
-    "nameEn": "Czechia",
+    "nameEn": "Czech Republic",
     "nameTr": "Çekya",
     "participations": 10,
     "played": 35,
@@ -366,7 +366,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
     "goalsFor": 49,
     "goalsAgainst": 52,
     "points": 42,
-    "isParticipating": true
+    "isParticipating": false
   },
   {
     "rank": 23,
@@ -686,7 +686,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
     "goalsFor": 20,
     "goalsAgainst": 20,
     "points": 16,
-    "isParticipating": false
+    "isParticipating": true
   },
   {
     "rank": 43,
@@ -834,7 +834,7 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 52,
-    "id": "east-germany",
+    "id": "ddr",
     "code": "de",
     "nameEn": "East Germany",
     "nameTr": "Doğu Almanya",
@@ -1170,10 +1170,10 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 73,
-    "id": "dr-congo",
+    "id": "dr-congo-91-note-5-93-",
     "code": "un",
     "nameEn": "DR Congo",
-    "nameTr": "DR Congo",
+    "nameTr": "Kongo DC",
     "participations": 2,
     "played": 4,
     "won": 0,
@@ -1266,10 +1266,10 @@ export const HISTORICAL_STANDINGS: HistoricalStanding[] = [
   },
   {
     "rank": 79,
-    "id": "indonesia",
+    "id": "indonesia-91-note-6-93-",
     "code": "un",
     "nameEn": "Indonesia",
-    "nameTr": "Indonesia",
+    "nameTr": "Endonezya",
     "participations": 1,
     "played": 1,
     "won": 0,

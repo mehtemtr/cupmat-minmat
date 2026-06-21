@@ -380,72 +380,10 @@ export default function StatisticsPage() {
     { name: "Pelé", countryTr: "Brezilya", countryEn: "Brazil", goals: 12, matches: 14, code: "br" },
   ];
 
-  // Merge current tournament results with historical standings
+  // Historical standings already include all-time data (2026 dahil)
+  // Just sort by points, then goal difference, then goals scored
   const mergedHistoricalStandings = useMemo(() => {
-    const currentStats: Record<string, {
-      played: number;
-      won: number;
-      drawn: number;
-      lost: number;
-      goalsFor: number;
-      goalsAgainst: number;
-      points: number;
-    }> = {};
-
-    matches.forEach(m => {
-      if (m.played && m.homeScore !== null && m.awayScore !== null) {
-        const homeId = m.homeTeamId;
-        const awayId = m.awayTeamId;
-
-        if (!currentStats[homeId]) {
-          currentStats[homeId] = { played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
-        }
-        if (!currentStats[awayId]) {
-          currentStats[awayId] = { played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
-        }
-
-        currentStats[homeId].played += 1;
-        currentStats[awayId].played += 1;
-        currentStats[homeId].goalsFor += m.homeScore;
-        currentStats[homeId].goalsAgainst += m.awayScore;
-        currentStats[awayId].goalsFor += m.awayScore;
-        currentStats[awayId].goalsAgainst += m.homeScore;
-
-        if (m.homeScore > m.awayScore) {
-          currentStats[homeId].won += 1;
-          currentStats[homeId].points += 3;
-          currentStats[awayId].lost += 1;
-        } else if (m.homeScore < m.awayScore) {
-          currentStats[awayId].won += 1;
-          currentStats[awayId].points += 3;
-          currentStats[homeId].lost += 1;
-        } else {
-          currentStats[homeId].drawn += 1;
-          currentStats[homeId].points += 1;
-          currentStats[awayId].drawn += 1;
-          currentStats[awayId].points += 1;
-        }
-      }
-    });
-
-    const merged = HISTORICAL_STANDINGS.map(standing => {
-      const current = currentStats[standing.id];
-      if (current && current.played > 0) {
-        return {
-          ...standing,
-          played: standing.played + current.played,
-          won: standing.won + current.won,
-          drawn: standing.drawn + current.drawn,
-          lost: standing.lost + current.lost,
-          goalsFor: standing.goalsFor + current.goalsFor,
-          goalsAgainst: standing.goalsAgainst + current.goalsAgainst,
-          points: standing.points + current.points
-        };
-      }
-      return standing;
-    });
-
-    const sorted = [...merged].sort((a, b) => {
+    const sorted = [...HISTORICAL_STANDINGS].sort((a, b) => {
       if (b.points !== a.points) {
         return b.points - a.points;
       }
@@ -461,7 +399,7 @@ export default function StatisticsPage() {
       ...item,
       rank: index + 1
     }));
-  }, [matches]);
+  }, []);
 
   const filteredHistoricalStandings = useMemo(() => {
     if (!historySearch.trim()) return mergedHistoricalStandings;
