@@ -289,13 +289,9 @@ export default function PollsPage() {
       .join("\n");
       
     const url = `${window.location.origin}/polls`;
-    
-    let text = "";
-    if (locale === "tr") {
-      text = `${question}\n\nSeçenekler:\n${optionsText}\n\nOyunu ver, fikrini paylaş! 🏆⚽`;
-    } else {
-      text = `${question}\n\nOptions:\n${optionsText}\n\nCast your vote and share your opinion! 🏆⚽`;
-    }
+    const optionsLabel = t("polls.shareOptionsText");
+    const slogan = t("polls.shareSlogan");
+    const text = `${question}\n\n${optionsLabel}\n${optionsText}\n\n${slogan}`;
 
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
@@ -310,7 +306,7 @@ export default function PollsPage() {
     } else {
       try {
         await navigator.clipboard.writeText(`${text}\n\n${url}`);
-        alert(locale === "tr" ? "Paylaşım metni panoya kopyalandı! 🔗" : "Share text copied to clipboard! 🔗");
+        alert(t("polls.clipboardCopied"));
       } catch (err) {
         console.error("Failed to copy share text:", err);
       }
@@ -327,9 +323,9 @@ export default function PollsPage() {
   };
 
   const getCategoryLabel = (cat: string) => {
-    if (cat === "site") return locale === "tr" ? "CupMat & MinMat Rehberi" : "CupMat & MinMat Guide";
-    if (cat === "current_wc") return locale === "tr" ? "2026 Dünya Kupası" : "2026 World Cup";
-    return locale === "tr" ? "Tarih & Genel Kültür" : "History & Trivia";
+    if (cat === "site") return t("polls.categorysite");
+    if (cat === "current_wc") return t("polls.categorycurrent_wc");
+    return t("polls.categorypast_wc");
   };
 
   // Game state helpers
@@ -342,53 +338,53 @@ export default function PollsPage() {
   const totalPointsEarned = Object.values(submissions).reduce((acc, sub) => acc + sub.points_awarded, 0);
   const correctCount = Object.values(submissions).filter((sub) => sub.is_correct).length;
 
-  // Localized texts
+  // Localized texts — all resolved through t() for full multi-language support
   const uiTexts = {
-    dailyTitle: locale === "tr" ? "Günün Aktiviteleri" : "Daily Activities",
-    dailySubtitle: locale === "tr" ? "Bilgi yarışmasına katılın ve günün anketinde fikrinizi belirtin!" : "Join the trivia challenge and share your thoughts in the daily poll!",
-    loginPrompt: locale === "tr" ? "Puan kazanmak ve aktivitelere katılmak için giriş yapın." : "Sign in to earn points and participate in daily activities.",
-    loginBtn: locale === "tr" ? "Şimdi Giriş Yap" : "Sign In Now",
-    loading: locale === "tr" ? "Yükleniyor..." : "Loading...",
+    dailyTitle: t("polls.dailyTitle"),
+    dailySubtitle: t("polls.dailySubtitle"),
+    loginPrompt: t("polls.loginPrompt"),
+    loginBtn: t("polls.loginBtn"),
+    loading: t("polls.loading"),
     
     // Trivia challenge dashboard text
-    triviaCardTitle: locale === "tr" ? "🏆 Günün Bilgi Yarışması" : "🏆 Daily Trivia Challenge",
-    triviaCardDesc: locale === "tr" ? "Günün 4 sorusunu süreyle cevaplayın. Her doğru cevap katlanan puan kazandırır!" : "Answer today's 4 questions under time pressure. Correct answers multiply rewards!",
-    triviaNotStarted: locale === "tr" ? "Hazır! 4 Soru Bekliyor" : "Ready! 4 Questions Waiting",
-    triviaInProgress: locale === "tr" ? "Devam Ediyor: {progress} Tamamlandı" : "In Progress: {progress} Completed",
-    triviaCompleted: locale === "tr" ? "Tamamlandı: {correct}/4 Doğru | +{pts} Puan" : "Completed: {correct}/4 Correct | +{pts} Pts",
-    btnStartTrivia: locale === "tr" ? "Yarışmaya Başla" : "Start Trivia",
-    btnContinueTrivia: locale === "tr" ? "Yarışmaya Devam Et" : "Continue Trivia",
-    btnReviewTrivia: locale === "tr" ? "Sonuçları İncele" : "Review Results",
+    triviaCardTitle: t("polls.triviaCardTitle"),
+    triviaCardDesc: t("polls.triviaCardDesc"),
+    triviaNotStarted: t("polls.triviaNotStarted"),
+    triviaInProgress: t("polls.triviaInProgress"),
+    triviaCompleted: t("polls.triviaCompleted"),
+    btnStartTrivia: t("polls.btnStartTrivia"),
+    btnContinueTrivia: t("polls.btnContinueTrivia"),
+    btnReviewTrivia: t("polls.btnReviewTrivia"),
 
     // Opinion poll dashboard text
-    opinionCardTitle: locale === "tr" ? "💬 Günün Anketi" : "💬 Daily Opinion Poll",
-    opinionCardDesc: locale === "tr" ? "Günün futbol sorusunda oyunuzu kullanın ve diğer taraftarların oylarını görün!" : "Vote on today's football question and see what other fans think!",
-    opinionVoted: locale === "tr" ? "Katıldınız! Sonuçlar yayında." : "Voted! Results are live.",
-    opinionNotVoted: locale === "tr" ? "Katılım: +10 Puan Kazandırır" : "Participation: Earns +10 Points",
-    btnJoinOpinion: locale === "tr" ? "Ankete Katıl" : "Join Poll",
-    btnViewOpinionResults: locale === "tr" ? "Sonuçları Gör" : "View Results",
-    noActiveOpinion: locale === "tr" ? "Bugün için aktif bir anket bulunmuyor." : "No active opinion poll today.",
-    voteSubmit: locale === "tr" ? "Oyumu Gönder" : "Submit Vote",
+    opinionCardTitle: t("polls.opinionCardTitle"),
+    opinionCardDesc: t("polls.opinionCardDesc"),
+    opinionVoted: t("polls.opinionVoted"),
+    opinionNotVoted: t("polls.opinionNotVoted"),
+    btnJoinOpinion: t("polls.btnJoinOpinion"),
+    btnViewOpinionResults: t("polls.btnViewOpinionResults"),
+    noActiveOpinion: t("polls.noActiveOpinion"),
+    voteSubmit: t("polls.voteSubmit"),
     
     // Trivia execution text
-    questionProgress: locale === "tr" ? "Soru {index} / {total}" : "Question {index} / {total}",
-    btnSubmit: locale === "tr" ? "Cevapla" : "Answer",
-    btnNext: locale === "tr" ? "Sıradaki Soru" : "Next Question",
-    btnResults: locale === "tr" ? "Sonuçları Gör" : "View Results",
-    feedbackCorrect: locale === "tr" ? "Tebrikler, doğru cevap!" : "Congratulations, correct answer!",
-    feedbackIncorrect: locale === "tr" ? "Maalesef yanlış cevap!" : "Incorrect answer!",
-    summaryTitle: locale === "tr" ? "🏆 Günün Yarışmasını Tamamladınız!" : "🏆 Daily Trivia Completed!",
-    summarySubtitle: locale === "tr" ? "Tebrikler! Bugünün tüm sorularını yanıtladınız." : "Congratulations! You answered all of today's questions.",
-    pointsEarned: locale === "tr" ? "Kazanılan Toplam Puan:" : "Total Points Earned:",
-    correctsVal: locale === "tr" ? "Doğru Sayısı:" : "Correct Answers:",
-    nextDayNotice: locale === "tr" ? "📅 Yarın yeni sorular ve anketler için tekrar gelin!" : "📅 Come back tomorrow for new questions and polls!",
-    siteGuide: locale === "tr" ? "Sorular rastgele sıralanmıştır. Tekrar düzeltme veya değiştirme şansı yoktur." : "Questions are randomized. Answers cannot be modified once submitted.",
-    yourAnswer: locale === "tr" ? "Senin Cevabın:" : "Your Answer:",
-    correctAnswerLabel: locale === "tr" ? "Doğru Cevap:" : "Correct Answer:",
+    questionProgress: t("polls.questionProgress"),
+    btnSubmit: t("polls.btnSubmit"),
+    btnNext: t("polls.btnNext"),
+    btnResults: t("polls.btnResults"),
+    feedbackCorrect: t("polls.feedbackCorrect"),
+    feedbackIncorrect: t("polls.feedbackIncorrect"),
+    summaryTitle: t("polls.summaryTitle"),
+    summarySubtitle: t("polls.summarySubtitle"),
+    pointsEarned: t("polls.pointsEarnedLabel"),
+    correctsVal: t("polls.correctsVal"),
+    nextDayNotice: t("polls.nextDayNotice"),
+    siteGuide: t("polls.siteGuide"),
+    yourAnswer: t("polls.yourAnswer"),
+    correctAnswerLabel: t("polls.correctAnswerLabel"),
 
-    btnBackHub: locale === "tr" ? "Aktivite Panosuna Dön" : "Back to Activities Hub",
-    opinionResultsTitle: locale === "tr" ? "Anket Sonuçları" : "Poll Results",
-    totalVotes: locale === "tr" ? "Toplam Oy:" : "Total Votes:",
+    btnBackHub: t("polls.btnBackHub"),
+    opinionResultsTitle: t("polls.opinionResultsTitle"),
+    totalVotes: t("polls.totalVotes"),
   };
 
   return (
@@ -446,8 +442,8 @@ export default function PollsPage() {
                 <p className="text-sm text-zinc-400 mt-2 leading-relaxed">{uiTexts.triviaCardDesc}</p>
               </div>
               <div className="bg-zinc-900/40 p-4 rounded-2xl border border-zinc-850 text-xs text-zinc-400 space-y-1.5 leading-relaxed">
-                <p>⏱️ <b>20s Süre:</b> Cevaplanmayan soru boş sayılır.</p>
-                <p>🏆 <b>Katlanan Puan:</b> 20, 50, 100 ve 200 Puan!</p>
+                <p>⏱️ <b>{t("polls.triviaTimerNote")}</b> {t("polls.triviaTimerDesc")}</p>
+                <p>🏆 <b>{t("polls.triviaPointsNote")}</b> {t("polls.triviaPointsDesc")}</p>
               </div>
             </div>
 
@@ -475,7 +471,7 @@ export default function PollsPage() {
                 ) : (
                   <SignInButton mode="modal">
                     <button className="w-full flex items-center justify-center gap-2 rounded-2xl bg-zinc-800 py-3.5 font-bold text-zinc-400 transition-all hover:bg-zinc-750 active:scale-[0.98]">
-                      {locale === "tr" ? "Giriş Yap ve Yarış!" : "Sign In to Play"}
+                      {t("polls.signInPlay")}
                       <ChevronRight className="h-4 w-4" />
                     </button>
                   </SignInButton>
@@ -510,8 +506,8 @@ export default function PollsPage() {
                 )}
               </div>
               <div className="bg-zinc-900/40 p-4 rounded-2xl border border-zinc-850 text-xs text-zinc-400 space-y-1.5 leading-relaxed">
-                <p>💬 <b>Fikir Paylaşımı:</b> Haftalık futbol gündemi anketleri.</p>
-                <p>⚡ <b>Katılım Ödülü:</b> Katılan herkese +10 Puan hediye!</p>
+                <p>💬 <b>{t("polls.opinionShareNote")}</b> {t("polls.opinionShareDesc")}</p>
+                <p>⚡ <b>{t("polls.opinionRewardNote")}</b> {t("polls.opinionRewardDesc")}</p>
               </div>
             </div>
 
@@ -543,7 +539,7 @@ export default function PollsPage() {
                 ) : (
                   <SignInButton mode="modal">
                     <button className="w-full flex items-center justify-center gap-2 rounded-2xl bg-zinc-800 py-3.5 font-bold text-zinc-400 transition-all hover:bg-zinc-750 active:scale-[0.98]">
-                      {locale === "tr" ? "Giriş Yap ve Katıl!" : "Sign In to Vote"}
+                      {t("polls.signInVote")}
                       <ChevronRight className="h-4 w-4" />
                     </button>
                   </SignInButton>
@@ -573,7 +569,7 @@ export default function PollsPage() {
                 className="inline-flex items-center gap-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 text-xs font-bold text-blue-400 hover:bg-blue-500/20 transition-all active:scale-95"
               >
                 <Share2 className="h-3.5 w-3.5" />
-                {locale === "tr" ? "Paylaş" : "Share"}
+                {t("polls.share")}
               </button>
             </div>
 
@@ -655,12 +651,12 @@ export default function PollsPage() {
                               {getTranslatedOption(option)}
                               {isUserChoice && (
                                 <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">
-                                  {locale === "tr" ? "Senin Seçimin" : "Your Choice"}
+                                {t("polls.yourChoice")}
                                 </span>
                               )}
                             </span>
                             <span className="text-xs font-black text-zinc-300">
-                              {percent}% ({count} {locale === "tr" ? "Oy" : "Votes"})
+                            {percent}% ({count} {t("polls.votesUnit")})
                             </span>
                           </div>
                         </div>
@@ -682,7 +678,7 @@ export default function PollsPage() {
                     className="flex-grow flex items-center justify-center gap-2 rounded-2xl bg-blue-500/10 border border-blue-500/20 py-3.5 font-bold text-blue-400 hover:bg-blue-500/20 active:scale-[0.98] transition-all text-sm"
                   >
                     <Share2 className="h-4 w-4" />
-                    {locale === "tr" ? "Paylaş" : "Share"}
+                    {t("polls.share")}
                   </button>
                   <button
                     onClick={() => setActiveView("dashboard")}
@@ -726,14 +722,14 @@ export default function PollsPage() {
               </div>
               <div className="bg-zinc-900/50 p-4 rounded-2xl border border-zinc-800 text-center space-y-1">
                 <p className="text-xs text-zinc-400 uppercase tracking-wider">{uiTexts.pointsEarned}</p>
-                <p className="text-2xl font-black text-yellow-400">+{totalPointsEarned} Puan</p>
+                <p className="text-2xl font-black text-yellow-400">+{totalPointsEarned} {t("polls.ptsUnit")}</p>
               </div>
             </div>
 
             {/* Review of daily questions */}
             <div className="space-y-4 pt-2">
               <p className="text-xs text-zinc-500 font-bold uppercase tracking-wider">
-                {locale === "tr" ? "Bugünkü Sorular ve Cevapların:" : "Today's Questions & Answers:"}
+                {t("polls.todayQA")}
               </p>
               <div className="space-y-3">
                 {polls.map((poll, idx) => {
@@ -771,7 +767,7 @@ export default function PollsPage() {
                         <p>
                           <strong>{uiTexts.yourAnswer} </strong> 
                           <span className={isCorrect ? "text-emerald-400 font-semibold" : "text-red-400 font-semibold"}>
-                            {chosenOption ? getTranslatedOption(chosenOption) : (locale === "tr" ? "Süre Doldu (Yanıt Yok)" : "Time Expired (No Answer)")}
+                            {chosenOption ? getTranslatedOption(chosenOption) : t("polls.timeExpired")}
                           </span>
                         </p>
                         {!isCorrect && poll.correct_option_index >= 0 && (
@@ -931,19 +927,19 @@ export default function PollsPage() {
                   <div>
                     <h4 className="font-black text-sm">
                       {selectedAnswer === -1 
-                        ? (locale === "tr" ? "Süre doldu!" : "Time is up!") 
+                        ? t("polls.timeUp")
                         : feedback.isCorrect 
                           ? uiTexts.feedbackCorrect 
                           : uiTexts.feedbackIncorrect}
                     </h4>
                     <p className="text-xs text-zinc-400 mt-1">
                       {selectedAnswer === -1 
-                        ? (locale === "tr" ? "Zamanında cevap veremediğiniz için bu soruyu boş geçtiniz." : "You skipped this question because you did not answer in time.")
+                        ? t("polls.timeUpDesc")
                         : feedback.isCorrect 
-                          ? `+${feedback.pointsAwarded} Taraftar Puanı kazandınız.` 
+                          ? t("polls.correctFeedbackDesc").replace("{points}", feedback.pointsAwarded.toString())
                           : activePoll.correct_option_index >= 0 
-                            ? `Doğru cevap: ${getTranslatedOption(activePoll.options[feedback.correctOptionIndex])}`
-                            : `Cevabınız kaydedildi. +${feedback.pointsAwarded} Taraftar Puanı kazandınız.`
+                            ? t("polls.incorrectFeedbackDesc").replace("{answer}", getTranslatedOption(activePoll.options[feedback.correctOptionIndex]))
+                            : t("polls.opinionFeedbackDesc").replace("{points}", feedback.pointsAwarded.toString())
                       }
                     </p>
                   </div>
