@@ -375,11 +375,96 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
     return x - Math.floor(x);
   };
 
-  const getDeterministicPlayer = (isHome: boolean, s: number) => {
+  const getDeterministicPlayer = (isHome: boolean, s: number, type: "goal" | "assist" | "card" = "goal") => {
     const list = isHome ? homePlayers : awayPlayers;
     if (!list || list.length === 0) return isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu";
-    const idx = Math.floor(rand(s) * list.length);
-    const p = list[idx];
+
+    const getGeneralPositionLocal = (pos: string): "GK" | "DEF" | "MID" | "FWD" => {
+      const p = pos?.toLowerCase() || "";
+      if (p.includes("kaleci") || p.includes("gk")) return "GK";
+      if (p.includes("defans") || p.includes("bek") || p.includes("stoper") || p.includes("df")) return "DEF";
+      if (p.includes("orta saha") || p.includes("libero") || p.includes("midfielder") || p.includes("mf") || p.includes("açık")) return "MID";
+      if (p.includes("forvet") || p.includes("fw")) return "FWD";
+      return "FWD";
+    };
+
+    const playersWithWeights = list.map((p) => {
+      const pos = getGeneralPositionLocal(p.player_position || p.position || "MID");
+      let weight = 1;
+      const name = (p.player_name || p.name || "").toLowerCase();
+
+      if (type === "goal") {
+        if (pos === "GK") weight = 0.001;
+        else if (pos === "DEF") weight = 1;
+        else if (pos === "MID") weight = 4;
+        else if (pos === "FWD") weight = 15;
+
+        // Boost world-class goalscoring superstars
+        if (
+          name.includes("messi") ||
+          name.includes("mbappe") ||
+          name.includes("haaland") ||
+          name.includes("kane") ||
+          name.includes("ronaldo") ||
+          name.includes("vinicius") ||
+          name.includes("yamal") ||
+          name.includes("lewandowski") ||
+          name.includes("salah") ||
+          name.includes("griezmann") ||
+          name.includes("bellingham") ||
+          name.includes("alvarez") ||
+          name.includes("martinez")
+        ) {
+          weight *= 4;
+        }
+      } else if (type === "assist") {
+        if (pos === "GK") weight = 0.01;
+        else if (pos === "DEF") weight = 2;
+        else if (pos === "MID") weight = 10;
+        else if (pos === "FWD") weight = 6;
+
+        // Boost world-class playmaking superstars
+        if (
+          name.includes("messi") ||
+          name.includes("mbappe") ||
+          name.includes("de bruyne") ||
+          name.includes("neymar") ||
+          name.includes("wirtz") ||
+          name.includes("musiala") ||
+          name.includes("bellingham") ||
+          name.includes("kroos") ||
+          name.includes("pedri") ||
+          name.includes("yamal") ||
+          name.includes("fernandes") ||
+          name.includes("saka") ||
+          name.includes("foden")
+        ) {
+          weight *= 4;
+        }
+      } else if (type === "card") {
+        if (pos === "GK") weight = 0.5;
+        else if (pos === "DEF") weight = 5;
+        else if (pos === "MID") weight = 4;
+        else if (pos === "FWD") weight = 2;
+      }
+      return { player: p, weight };
+    });
+
+    const totalWeight = playersWithWeights.reduce((sum, item) => sum + item.weight, 0);
+    if (totalWeight === 0) {
+      const idx = Math.floor(rand(s) * list.length);
+      const p = list[idx];
+      return p.player_name || p.name || (isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu");
+    }
+
+    let r = rand(s) * totalWeight;
+    for (const item of playersWithWeights) {
+      r -= item.weight;
+      if (r <= 0) {
+        return item.player.player_name || item.player.name || (isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu");
+      }
+    }
+    const p = list[list.length - 1];
     return p.player_name || p.name || (isHome ? "Ev Sahibi Oyuncu" : "Deplasman Oyuncu");
   };
 
@@ -391,24 +476,68 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
 
   for (let i = 0; i < targetHomeGoals; i++) {
     const min = Math.floor(rand(seed + 100 + i) * 80) + 5;
-    const scorer = getDeterministicPlayer(true, seed + 110 + i);
+    const scorer = getDeterministicPlayer(true, seed + 110 + i, "goal");
+    const hasAssist = rand(seed + 115 + i) > 0.3;
+    let assister = "";
+    if (hasAssist) {
+      let tries = 0;
+      while (tries < 5) {
+        const potential = getDeterministicPlayer(true, seed + 120 + i + tries, "assist");
+        if (potential !== scorer) {
+          assister = potential;
+          break;
+        }
+        tries++;
+      }
+    }
+
+    const textTr = assister
+      ? `⚽ GOL! Ev sahibi ekip golü buluyor! Golü atan oyuncu: ${scorer}, Asisti yapan oyuncu: ${assister}!`
+      : `⚽ GOL! Ev sahibi ekip golü buluyor! Golü atan oyuncu: ${scorer}!`;
+
+    const textEn = assister
+      ? `⚽ GOAL! The home side scores! Goal by ${scorer}, Assist by ${assister}!`
+      : `⚽ GOAL! The home side scores! Goal by ${scorer}!`;
+
     gameEvents.push({
       minute: min === 45 ? 44 : min,
       type: "goal",
-      textTr: `⚽ GOL! Ev sahibi ekip golü buluyor! Golü atan oyuncu: ${scorer}!`,
-      textEn: `⚽ GOAL! The home side scores! Goal by ${scorer}!`,
+      textTr,
+      textEn,
       isHomeGoal: true
     } as any);
   }
 
   for (let i = 0; i < targetAwayGoals; i++) {
     const min = Math.floor(rand(seed + 200 + i) * 80) + 5;
-    const scorer = getDeterministicPlayer(false, seed + 220 + i);
+    const scorer = getDeterministicPlayer(false, seed + 220 + i, "goal");
+    const hasAssist = rand(seed + 225 + i) > 0.3;
+    let assister = "";
+    if (hasAssist) {
+      let tries = 0;
+      while (tries < 5) {
+        const potential = getDeterministicPlayer(false, seed + 230 + i + tries, "assist");
+        if (potential !== scorer) {
+          assister = potential;
+          break;
+        }
+        tries++;
+      }
+    }
+
+    const textTr = assister
+      ? `⚽ GOL! Deplasman ekibi golü buluyor! Golü atan oyuncu: ${scorer}, Asisti yapan oyuncu: ${assister}!`
+      : `⚽ GOL! Deplasman ekibi golü buluyor! Golü atan oyuncu: ${scorer}!`;
+
+    const textEn = assister
+      ? `⚽ GOAL! The away side scores! Goal by ${scorer}, Assist by ${assister}!`
+      : `⚽ GOAL! The away side scores! Goal by ${scorer}!`;
+
     gameEvents.push({
       minute: min === 45 ? 44 : min,
       type: "goal",
-      textTr: `⚽ GOL! Deplasman ekibi golü buluyor! Golü atan oyuncu: ${scorer}!`,
-      textEn: `⚽ GOAL! The away side scores! Goal by ${scorer}!`,
+      textTr,
+      textEn,
       isHomeGoal: false
     } as any);
   }
@@ -417,7 +546,7 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
   for (let i = 0; i < cardCount; i++) {
     const min = Math.floor(rand(seed + 310 + i) * 80) + 5;
     const isHomeCard = rand(seed + 320 + i) > 0.5;
-    const playerCard = getDeterministicPlayer(isHomeCard, seed + 330 + i);
+    const playerCard = getDeterministicPlayer(isHomeCard, seed + 330 + i, "card");
     gameEvents.push({
       minute: min === 45 ? 44 : min,
       type: "card",
@@ -428,8 +557,8 @@ export function generateSimulation(match: any, homePlayers: any[], awayPlayers: 
 
   const subMin = Math.floor(rand(seed + 400) * 20) + 55;
   const subHome = rand(seed + 410) > 0.5;
-  const subOut = getDeterministicPlayer(subHome, seed + 420);
-  const subIn = getDeterministicPlayer(subHome, seed + 430);
+  const subOut = getDeterministicPlayer(subHome, seed + 420, "card");
+  const subIn = getDeterministicPlayer(subHome, seed + 430, "card");
   if (subOut !== subIn) {
     gameEvents.push({
       minute: subMin,
