@@ -373,32 +373,68 @@ export default function StatisticsPage() {
   ];
 
   const historicalScorers = [
-    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 18, matches: 27, code: "ar" },
-    { name: "Miroslav Klose", countryTr: "Almanya", countryEn: "Germany", goals: 16, matches: 24, code: "de" },
-    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 16, matches: 15, code: "fr" },
-    { name: "Ronaldo", countryTr: "Brezilya", countryEn: "Brazil", goals: 15, matches: 19, code: "br" },
-    { name: "Gerd Müller", countryTr: "Almanya", countryEn: "Germany", goals: 14, matches: 13, code: "de" },
-    { name: "Just Fontaine", countryTr: "Fransa", countryEn: "France", goals: 13, matches: 6, code: "fr" },
-    { name: "Pelé", countryTr: "Brezilya", countryEn: "Brazil", goals: 12, matches: 14, code: "br" },
-    { name: "Jürgen Klinsmann", countryTr: "Almanya", countryEn: "Germany", goals: 11, matches: 17, code: "de" },
-    { name: "Sándor Kocsis", countryTr: "Macaristan", countryEn: "Hungary", goals: 11, matches: 5, code: "hu" },
-    { name: "Grzegorz Lato", countryTr: "Polonya", countryEn: "Poland", goals: 10, matches: 20, code: "pl" },
-    { name: "Thomas Müller", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 19, code: "de" },
-    { name: "Harry Kane", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 11, code: "gb-eng" },
-    { name: "Cristiano Ronaldo", countryTr: "Portekiz", countryEn: "Portugal", goals: 10, matches: 22, code: "pt" },
-    { name: "Helmut Rahn", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 10, code: "de" },
-    { name: "Teófilo Cubillas", countryTr: "Peru", countryEn: "Peru", goals: 10, matches: 13, code: "pe" },
-    { name: "Gabriel Batistuta", countryTr: "Arjantin", countryEn: "Argentina", goals: 10, matches: 12, code: "ar" },
-    { name: "Gary Lineker", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 12, code: "gb-eng" },
-    { name: "Uwe Seeler", countryTr: "Almanya", countryEn: "Germany", goals: 9, matches: 21, code: "de" },
-    { name: "Paolo Rossi", countryTr: "İtalya", countryEn: "Italy", goals: 9, matches: 14, code: "it" },
-    { name: "Jairzinho", countryTr: "Brezilya", countryEn: "Brazil", goals: 9, matches: 16, code: "br" },
-    { name: "Roberto Baggio", countryTr: "İtalya", countryEn: "Italy", goals: 9, matches: 16, code: "it" },
-    { name: "Vavá", countryTr: "Brezilya", countryEn: "Brazil", goals: 9, matches: 10, code: "br" },
-    { name: "Eusébio", countryTr: "Portekiz", countryEn: "Portugal", goals: 9, matches: 6, code: "pt" },
-    { name: "David Villa", countryTr: "İspanya", countryEn: "Spain", goals: 9, matches: 12, code: "es" },
-    { name: "Karl-Heinz Rummenigge", countryTr: "Almanya", countryEn: "Germany", goals: 9, matches: 19, code: "de" },
+    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 18, matches: 27, code: "ar", emoji: "🇦🇷" },
+    { name: "Miroslav Klose", countryTr: "Almanya", countryEn: "Germany", goals: 16, matches: 24, code: "de", emoji: "🇩🇪" },
+    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 16, matches: 15, code: "fr", emoji: "🇫🇷" },
+    { name: "Ronaldo", countryTr: "Brezilya", countryEn: "Brazil", goals: 15, matches: 19, code: "br", emoji: "🇧🇷" },
+    { name: "Gerd Müller", countryTr: "Almanya", countryEn: "Germany", goals: 14, matches: 13, code: "de", emoji: "🇩🇪" },
+    { name: "Just Fontaine", countryTr: "Fransa", countryEn: "France", goals: 13, matches: 6, code: "fr", emoji: "🇫🇷" },
+    { name: "Pelé", countryTr: "Brezilya", countryEn: "Brazil", goals: 12, matches: 14, code: "br", emoji: "🇧🇷" },
+    { name: "Jürgen Klinsmann", countryTr: "Almanya", countryEn: "Germany", goals: 11, matches: 17, code: "de", emoji: "🇩🇪" },
+    { name: "Sándor Kocsis", countryTr: "Macaristan", countryEn: "Hungary", goals: 11, matches: 5, code: "hu", emoji: "🇭🇺" },
+    { name: "Grzegorz Lato", countryTr: "Polonya", countryEn: "Poland", goals: 10, matches: 20, code: "pl", emoji: "🇵🇱" },
+    { name: "Thomas Müller", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 19, code: "de", emoji: "🇩🇪" },
+    { name: "Harry Kane", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 11, code: "gb-eng", emoji: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+    { name: "Cristiano Ronaldo", countryTr: "Portekiz", countryEn: "Portugal", goals: 10, matches: 22, code: "pt", emoji: "🇵🇹" },
+    { name: "Helmut Rahn", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 10, code: "de", emoji: "🇩🇪" },
+    { name: "Teófilo Cubillas", countryTr: "Peru", countryEn: "Peru", goals: 10, matches: 13, code: "pe", emoji: "🇵🇪" },
+    { name: "Gabriel Batistuta", countryTr: "Arjantin", countryEn: "Argentina", goals: 10, matches: 12, code: "ar", emoji: "🇦🇷" },
+    { name: "Gary Lineker", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 12, code: "gb-eng", emoji: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+    { name: "Uwe Seeler", countryTr: "Almanya", countryEn: "Germany", goals: 9, matches: 21, code: "de", emoji: "🇩🇪" },
+    { name: "Paolo Rossi", countryTr: "İtalya", countryEn: "Italy", goals: 9, matches: 14, code: "it", emoji: "🇮🇹" },
+    { name: "Jairzinho", countryTr: "Brezilya", countryEn: "Brazil", goals: 9, matches: 16, code: "br", emoji: "🇧🇷" },
+    { name: "Roberto Baggio", countryTr: "İtalya", countryEn: "Italy", goals: 9, matches: 16, code: "it", emoji: "🇮🇹" },
+    { name: "Vavá", countryTr: "Brezilya", countryEn: "Brazil", goals: 9, matches: 10, code: "br", emoji: "🇧🇷" },
+    { name: "Eusébio", countryTr: "Portekiz", countryEn: "Portugal", goals: 9, matches: 6, code: "pt", emoji: "🇵🇹" },
+    { name: "David Villa", countryTr: "İspanya", countryEn: "Spain", goals: 9, matches: 12, code: "es", emoji: "🇪🇸" },
+    { name: "Karl-Heinz Rummenigge", countryTr: "Almanya", countryEn: "Germany", goals: 9, matches: 19, code: "de", emoji: "🇩🇪" },
   ];
+
+  // Dynamic integration of current tournament goals into all-time stats
+  const updatedHistoricalScorers = useMemo(() => {
+    return historicalScorers.map(s => {
+      // Find matches in dbLeaders.scorers by player name and team code
+      const currentScorer = dbLeaders.scorers.find(cs => {
+        const dbNameClean = cs.player.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "").trim();
+        const histNameClean = s.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "").trim();
+        
+        // Exact or contains name match
+        const nameMatch = dbNameClean === histNameClean || dbNameClean.includes(histNameClean) || histNameClean.includes(dbNameClean);
+        
+        // Match team code to prevent matching different players with similar names
+        const teamInfo = getTeamById(cs.team.id);
+        const teamMatch = teamInfo && teamInfo.code.toLowerCase() === s.code.toLowerCase();
+        
+        return nameMatch && teamMatch;
+      });
+
+      const extraGoals = currentScorer ? currentScorer.goals : 0;
+      return {
+        ...s,
+        goals: s.goals + extraGoals
+      };
+    }).sort((a, b) => b.goals - a.goals);
+  }, [dbLeaders.scorers]);
+
+  const { topScorersText, maxGoals } = useMemo(() => {
+    if (updatedHistoricalScorers.length === 0) {
+      return { topScorersText: "Messi 🇦🇷", maxGoals: 18 };
+    }
+    const highest = updatedHistoricalScorers[0].goals;
+    const leaders = updatedHistoricalScorers.filter(s => s.goals === highest);
+    const text = leaders.map(s => `${s.name} ${s.emoji}`).join(" & ");
+    return { topScorersText: text, maxGoals: highest };
+  }, [updatedHistoricalScorers]);
 
   // Historical standings already include all-time data (2026 dahil)
   // Just sort by points, then goal difference, then goals scored
@@ -1124,8 +1160,10 @@ export default function StatisticsPage() {
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-600/10 to-transparent p-6 text-center">
                   <h4 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Tarihin En Golcüsü</h4>
-                  <div className="mt-2 text-2xl font-extrabold text-white">Messi 🇦🇷 & Klose 🇩🇪</div>
-                  <p className="mt-2 text-xs text-zinc-400">{locale === "tr" ? "16'şar gol" : "16 goals each"}</p>
+                  <div className="mt-2 text-2xl font-extrabold text-white">{topScorersText}</div>
+                  <p className="mt-2 text-xs text-zinc-400">
+                    {locale === "tr" ? `${maxGoals} gol` : `${maxGoals} goals`}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/10 to-transparent p-6 text-center">
                   <h4 className="text-sm font-semibold text-indigo-400 uppercase tracking-wider">En Çok Final Oynayan</h4>
@@ -1290,8 +1328,8 @@ export default function StatisticsPage() {
                     {t("statsPage.historyScorers") || "Dünya Kupası Tarihinin En Golcüleri"}
                   </h3>
                   <div className="space-y-4 border border-white/5 rounded-xl bg-black/20 divide-y divide-white/5 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar">
-                    {historicalScorers.map((s, idx) => {
-                      const rank = historicalScorers.findIndex(x => x.goals === s.goals) + 1;
+                    {updatedHistoricalScorers.map((s, idx) => {
+                      const rank = updatedHistoricalScorers.findIndex(x => x.goals === s.goals) + 1;
                       return (
                         <div key={s.name} className="flex items-center justify-between p-3.5">
                           <div className="flex items-center gap-3">
