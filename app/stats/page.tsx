@@ -205,6 +205,8 @@ export default function StatisticsPage() {
 
   const [dbLeaders, setDbLeaders] = useState<{ scorers: any[]; cards: any[] }>({ scorers: [], cards: [] });
   const [dbLeadersLoading, setDbLeadersLoading] = useState(true);
+  // Total goals from all scorers
+  const totalGoals = dbLeaders.scorers.reduce((sum: number, s) => sum + (s.goals ?? 0), 0);
 
   useEffect(() => {
     let active = true;
@@ -371,13 +373,31 @@ export default function StatisticsPage() {
   ];
 
   const historicalScorers = [
-    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 16, matches: 27, code: "ar" },
+    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 18, matches: 27, code: "ar" },
     { name: "Miroslav Klose", countryTr: "Almanya", countryEn: "Germany", goals: 16, matches: 24, code: "de" },
+    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 16, matches: 15, code: "fr" },
     { name: "Ronaldo", countryTr: "Brezilya", countryEn: "Brazil", goals: 15, matches: 19, code: "br" },
     { name: "Gerd Müller", countryTr: "Almanya", countryEn: "Germany", goals: 14, matches: 13, code: "de" },
-    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 14, matches: 15, code: "fr" },
     { name: "Just Fontaine", countryTr: "Fransa", countryEn: "France", goals: 13, matches: 6, code: "fr" },
     { name: "Pelé", countryTr: "Brezilya", countryEn: "Brazil", goals: 12, matches: 14, code: "br" },
+    { name: "Jürgen Klinsmann", countryTr: "Almanya", countryEn: "Germany", goals: 11, matches: 17, code: "de" },
+    { name: "Sándor Kocsis", countryTr: "Macaristan", countryEn: "Hungary", goals: 11, matches: 5, code: "hu" },
+    { name: "Grzegorz Lato", countryTr: "Polonya", countryEn: "Poland", goals: 10, matches: 20, code: "pl" },
+    { name: "Thomas Müller", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 19, code: "de" },
+    { name: "Harry Kane", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 11, code: "gb-eng" },
+    { name: "Cristiano Ronaldo", countryTr: "Portekiz", countryEn: "Portugal", goals: 10, matches: 22, code: "pt" },
+    { name: "Helmut Rahn", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 10, code: "de" },
+    { name: "Teófilo Cubillas", countryTr: "Peru", countryEn: "Peru", goals: 10, matches: 13, code: "pe" },
+    { name: "Gabriel Batistuta", countryTr: "Arjantin", countryEn: "Argentina", goals: 10, matches: 12, code: "ar" },
+    { name: "Gary Lineker", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 12, code: "gb-eng" },
+    { name: "Uwe Seeler", countryTr: "Almanya", countryEn: "Germany", goals: 9, matches: 21, code: "de" },
+    { name: "Paolo Rossi", countryTr: "İtalya", countryEn: "Italy", goals: 9, matches: 14, code: "it" },
+    { name: "Jairzinho", countryTr: "Brezilya", countryEn: "Brazil", goals: 9, matches: 16, code: "br" },
+    { name: "Roberto Baggio", countryTr: "İtalya", countryEn: "Italy", goals: 9, matches: 16, code: "it" },
+    { name: "Vavá", countryTr: "Brezilya", countryEn: "Brazil", goals: 9, matches: 10, code: "br" },
+    { name: "Eusébio", countryTr: "Portekiz", countryEn: "Portugal", goals: 9, matches: 6, code: "pt" },
+    { name: "David Villa", countryTr: "İspanya", countryEn: "Spain", goals: 9, matches: 12, code: "es" },
+    { name: "Karl-Heinz Rummenigge", countryTr: "Almanya", countryEn: "Germany", goals: 9, matches: 19, code: "de" },
   ];
 
   // Historical standings already include all-time data (2026 dahil)
@@ -1060,6 +1080,7 @@ export default function StatisticsPage() {
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
                     <span>⚽ {t("statsPage.liveScorers") || "Turnuva Gol Krallığı"}</span>
                     <span className="text-xs text-emerald-400 font-bold uppercase tracking-wider">{locale === "tr" ? "Aktif" : "Active"}</span>
+                    <span className="text-sm text-zinc-400 ml-2">Toplam Gol: {totalGoals}</span>
                   </h3>
                   {dbLeaders.scorers.length === 0 ? (
                     <div className="rounded-xl border border-white/5 bg-black/40 p-8 text-center text-zinc-500 text-sm">
@@ -1268,27 +1289,30 @@ export default function StatisticsPage() {
                     <BookOpen className="h-5 w-5 text-emerald-400" />
                     {t("statsPage.historyScorers") || "Dünya Kupası Tarihinin En Golcüleri"}
                   </h3>
-                  <div className="space-y-4 border border-white/5 rounded-xl bg-black/20 divide-y divide-white/5">
-                    {historicalScorers.map((s, idx) => (
-                      <div key={s.name} className="flex items-center justify-between p-3.5">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs text-zinc-500 font-bold">#{idx + 1}</span>
-                          <img 
-                            src={`https://flagcdn.com/w40/${s.code}.png`} 
-                            alt="" 
-                            className="h-4.5 w-7 object-cover rounded shadow-sm border border-white/10" 
-                          />
-                          <div>
-                            <div className="font-bold text-white">{s.name}</div>
-                            <div className="text-[10px] text-zinc-500">{locale === "tr" ? s.countryTr : s.countryEn} — {s.matches} Maç</div>
+                  <div className="space-y-4 border border-white/5 rounded-xl bg-black/20 divide-y divide-white/5 max-h-[480px] overflow-y-auto pr-2 custom-scrollbar">
+                    {historicalScorers.map((s, idx) => {
+                      const rank = historicalScorers.findIndex(x => x.goals === s.goals) + 1;
+                      return (
+                        <div key={s.name} className="flex items-center justify-between p-3.5">
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs text-zinc-500 font-bold w-5">#{rank}</span>
+                            <img 
+                              src={`https://flagcdn.com/w40/${s.code}.png`} 
+                              alt="" 
+                              className="h-4.5 w-7 object-cover rounded shadow-sm border border-white/10" 
+                            />
+                            <div>
+                              <div className="font-bold text-white">{s.name}</div>
+                              <div className="text-[10px] text-zinc-500">{locale === "tr" ? s.countryTr : s.countryEn} — {s.matches} Maç</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-lg font-extrabold text-amber-400">{s.goals}</span>
+                            <span className="text-xs text-zinc-500">Gol</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-lg font-extrabold text-amber-400">{s.goals}</span>
-                          <span className="text-xs text-zinc-500">Gol</span>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </section>
 
