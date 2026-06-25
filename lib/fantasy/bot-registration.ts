@@ -13,11 +13,12 @@ export const STAGE_START_DATES: Record<string, string> = {
   matchday_1: "2026-06-08T19:23:00+03:00",
   matchday_2: "2026-06-13T19:00:00+03:00",
   matchday_3: "2026-06-18T19:00:00+03:00",
-  round_of_32: "2026-06-23T19:00:00+03:00",
-  round_of_16: "2026-06-27T19:00:00+03:00",
-  quarter_finals: "2026-07-01T19:00:00+03:00",
-  semi_finals: "2026-07-05T19:00:00+03:00",
-  finals: "2026-07-09T19:00:00+03:00",
+  matchday_4: "2026-06-23T19:00:00+03:00",
+  round_of_32: "2026-06-28T19:00:00+03:00",
+  round_of_16: "2026-07-04T19:00:00+03:00",
+  quarter_finals: "2026-07-09T19:00:00+03:00",
+  semi_finals: "2026-07-14T19:00:00+03:00",
+  finals: "2026-07-19T19:00:00+03:00",
 };
 
 export const BOT_POOL: BotProfile[] = [

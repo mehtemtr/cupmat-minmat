@@ -304,16 +304,18 @@ function getMatchesForStage(stage: string, allMatches: any[]): any[] {
       return dateStr >= "2026-06-13" && dateStr <= "2026-06-17";
     } else if (stg === "matchday_3") {
       return dateStr >= "2026-06-18" && dateStr <= "2026-06-22";
+    } else if (stg === "matchday_4") {
+      return dateStr >= "2026-06-23" && dateStr <= "2026-06-27";
     } else if (stg === "round_of_32") {
-      return dateStr >= "2026-06-23" && dateStr <= "2026-06-26";
+      return dateStr >= "2026-06-28" && dateStr <= "2026-07-03";
     } else if (stg === "round_of_16") {
-      return dateStr >= "2026-06-27" && dateStr <= "2026-06-30";
+      return dateStr >= "2026-07-04" && dateStr <= "2026-07-08";
     } else if (stg === "quarter_finals") {
-      return dateStr >= "2026-07-01" && dateStr <= "2026-07-04";
+      return dateStr >= "2026-07-09" && dateStr <= "2026-07-12";
     } else if (stg === "semi_finals") {
-      return dateStr >= "2026-07-05" && dateStr <= "2026-07-08";
+      return dateStr >= "2026-07-13" && dateStr <= "2026-07-16";
     } else if (stg === "finals") {
-      return dateStr >= "2026-07-09";
+      return dateStr >= "2026-07-17";
     }
     return false;
   });

@@ -1064,6 +1064,7 @@ export default function FantasyPage() {
                   <option value="matchday_1">{t("fantasy.stages.matchday_1")}</option>
                   <option value="matchday_2">{t("fantasy.stages.matchday_2")}</option>
                   <option value="matchday_3">{t("fantasy.stages.matchday_3")}</option>
+                  <option value="matchday_4">{t("fantasy.stages.matchday_4")}</option>
                   <option value="round_of_32">{t("fantasy.stages.round_of_32")}</option>
                   <option value="round_of_16">{t("fantasy.stages.round_of_16")}</option>
                   <option value="quarter_finals">{t("fantasy.stages.quarter_finals")}</option>

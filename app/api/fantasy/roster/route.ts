@@ -42,7 +42,7 @@ export async function GET(request: Request) {
       throw error;
     }
 
-    const stages = ["matchday_1", "matchday_2", "matchday_3", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
+    const stages = ["matchday_1", "matchday_2", "matchday_3", "matchday_4", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
     const currentIdx = stages.indexOf(stage.toLowerCase());
 
     const establishedNames: Record<number, string> = {};
@@ -242,7 +242,7 @@ export async function POST(request: Request) {
         .eq("user_id", userId)
         .eq("team_index", teamIndex);
 
-      const stagesList = ["matchday_1", "matchday_2", "matchday_3", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
+      const stagesList = ["matchday_1", "matchday_2", "matchday_3", "matchday_4", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
       const currentIdx = stagesList.indexOf(stage.toLowerCase());
       if (currentIdx > 0) {
         for (let i = currentIdx - 1; i >= 0; i--) {
