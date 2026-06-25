@@ -63,13 +63,11 @@ export async function GET(request: Request) {
 
     const findPreviousValidRoster = (teamIdx: number) => {
       if (currentIdx <= 0) return null;
-      for (let i = currentIdx - 1; i >= 0; i--) {
-        const prevStage = stages[i];
-        const found = (allUserRosters || []).find(
-          (r) => r.stage?.toLowerCase() === prevStage && r.team_index === teamIdx
-        );
-        if (found && isRosterValid(found)) return found;
-      }
+      const prevStage = stages[currentIdx - 1];
+      const found = (allUserRosters || []).find(
+        (r) => r.stage?.toLowerCase() === prevStage && r.team_index === teamIdx
+      );
+      if (found && isRosterValid(found)) return found;
       return null;
     };
 
@@ -235,7 +233,7 @@ export async function POST(request: Request) {
     let lockCheckBaselineRoster = prevRoster;
 
     if (!prevRoster) {
-      // Find the closest previous stage roster for this user and teamIndex to act as baseline
+      // Find the immediately preceding stage roster for this user and teamIndex to act as baseline
       const { data: allUserRostersForFallback } = await supabaseAdmin
         .from("fantasy_rosters")
         .select("*")
@@ -245,15 +243,12 @@ export async function POST(request: Request) {
       const stagesList = ["matchday_1", "matchday_2", "matchday_3", "matchday_4", "round_of_32", "round_of_16", "quarter_finals", "semi_finals", "finals"];
       const currentIdx = stagesList.indexOf(stage.toLowerCase());
       if (currentIdx > 0) {
-        for (let i = currentIdx - 1; i >= 0; i--) {
-          const prevStageName = stagesList[i];
-          const found = (allUserRostersForFallback || []).find(
-            (r) => r.stage?.toLowerCase() === prevStageName
-          );
-          if (found) {
-            lockCheckBaselineRoster = found;
-            break;
-          }
+        const prevStageName = stagesList[currentIdx - 1];
+        const found = (allUserRostersForFallback || []).find(
+          (r) => r.stage?.toLowerCase() === prevStageName
+        );
+        if (found) {
+          lockCheckBaselineRoster = found;
         }
       }
     }
