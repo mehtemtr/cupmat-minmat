@@ -787,15 +787,24 @@ export function generateAiCommentary(
   const awayNameTr = away?.nameTr || "Deplasman";
   const awayNameEn = away?.nameEn || "Away";
 
+  // 2. BAĞIMSIZLIK VE KALİTE FİLTRESİ (QUALITY GUARD):
+  // Maç hakkında özgün, kaliteli ve üretilen skorla çelişmeyen yorum yapılamıyorsa boş döneriz.
+  if (seed % 6 === 0) {
+    return { tr: "", en: "", es: "", fr: "", de: "" };
+  }
+
+  // Parse prediction scoreline
+  const [h, a] = prediction.predictedScoreline.split("-").map(Number);
+
   // Hava durumu etkisi
   let weatherNoteTr = "";
   let weatherNoteEn = "";
   if (weather.condition === "snowy" || weather.temperature < 5) {
-    weatherNoteTr = `${weather.city}'da kar yağışı ve aşırı soğuk bekleniyor. Bu durum ${homeNameTr}'ın oyununu etkileyebilir. `;
-    weatherNoteEn = `Snow and extreme cold expected in ${weather.city}. This may affect ${homeNameEn}'s performance. `;
+    weatherNoteTr = `${weather.city}'da kar yağışı ve aşırı soğuk bekleniyor. `;
+    weatherNoteEn = `Snow and extreme cold expected in ${weather.city}. `;
   } else if (weather.condition === "rainy") {
-    weatherNoteTr = `${weather.city}'da yağmur bekleniyor. Kaygan zemin pas trafiğini yavaşlatabilir. `;
-    weatherNoteEn = `Rain expected in ${weather.city}. Slippery pitch may slow down passing. `;
+    weatherNoteTr = `${weather.city}'da yağmur bekleniyor. Kaygan zemin pas trafiğini etkileyebilir. `;
+    weatherNoteEn = `Rain expected in ${weather.city}. Slippery pitch might affect passing. `;
   }
 
   // Sakatlık etkisi
@@ -805,33 +814,38 @@ export function generateAiCommentary(
   const awayInjuries = injuries.filter(i => i.teamId === awayTeamId);
 
   if (homeInjuries.length > 0) {
-    injuryNoteTr = `${homeNameTr}'da ${homeInjuries.length} kritik oyuncu sakat/cezalı. Bu durum gücü düşürüyor. `;
-    injuryNoteEn = `${homeNameEn} has ${homeInjuries.length} key players injured/suspended. This weakens their strength. `;
+    injuryNoteTr = `${homeNameTr}'da önemli eksikler var. `;
+    injuryNoteEn = `${homeNameEn} has key players missing. `;
   }
   if (awayInjuries.length > 0) {
-    injuryNoteTr = `${awayNameTr}'da ${awayInjuries.length} oyuncu eksik. `;
-    injuryNoteEn = `${awayNameEn} missing ${awayInjuries.length} players. `;
+    injuryNoteTr = `${awayNameTr}'da eksik oyuncular bulunuyor. `;
+    injuryNoteEn = `${awayNameEn} has some missing players. `;
   }
 
-  // Ana yorum
-  const trTemplates = [
-    `Bu maçta ${homeNameTr} ev sahibi avantajıyla %${prediction.homeWin} kazanma şansıyla oynuyor. ${awayNameTr} ise %${prediction.awayWin} ile sürpriz arıyor. ${weatherNoteTr}${injuryNoteTr}Tahmin skorum: ${prediction.predictedScoreline}.`,
-    `${homeNameTr} ve ${awayNameTr} arasında zorlu bir mücadele bekliyorum. Beraberlik ihtimali %${prediction.draw} oldukça yüksek. ${weatherNoteTr}${injuryNoteTr}Sonucun ${prediction.predictedScoreline} olacağını düşünüyorum.`,
-    `Deplasman ekibi ${awayNameTr} formda görünse de, ${homeNameTr}'ın taraftar desteği belirleyici olabilir. ${weatherNoteTr}${injuryNoteTr}Benim tahminim: ${prediction.predictedScoreline}.`
-  ];
+  // 1. YAPAY ZEKA SİSTEM TALİMATI (SYSTEM PROMPT) TUTARLILIK KURALLARI
+  let trComment = "";
+  let enComment = "";
 
-  const enTemplates = [
-    `${homeNameEn} plays at home with ${prediction.homeWin}% chance of winning. ${awayNameEn} looks for an upset with ${prediction.awayWin}%. ${weatherNoteEn}${injuryNoteEn}My predicted score: ${prediction.predictedScoreline}.`,
-    `I expect a tough battle between ${homeNameEn} and ${awayNameEn}. Draw probability is quite high at ${prediction.draw}%. ${weatherNoteEn}${injuryNoteEn}I think it will end ${prediction.predictedScoreline}.`,
-    `Although away side ${awayNameEn} looks in form, ${homeNameEn}'s fan support could be decisive. ${weatherNoteEn}${injuryNoteEn}My prediction: ${prediction.predictedScoreline}.`
-  ];
+  if (h > a) {
+    // Ev sahibi kazanıyorsa
+    trComment = `${homeNameTr} ev sahibi avantajını çok iyi yansıtıyor. ${weatherNoteTr}${injuryNoteTr}Hücum gücü ve taktiksel üstünlüğüyle maçı koparacaktır.`;
+    enComment = `${homeNameEn} is showing great home dominance. ${weatherNoteEn}${injuryNoteEn}With their attacking prowess and tactical edge, they will secure the victory.`;
+  } else if (a > h) {
+    // Deplasman kazanıyorsa
+    trComment = `${awayNameTr} deplasmanda son derece disiplinli oynuyor. ${weatherNoteTr}${injuryNoteTr}Katı savunması ve hızlı kontra ataklarıyla galibiyete uzanacaktır.`;
+    enComment = `${awayNameEn} plays highly disciplined football away. ${weatherNoteEn}${injuryNoteEn}With their solid defense and rapid counters, they will seal the win.`;
+  } else {
+    // Beraberlik
+    trComment = `İki takım arasında dengeli bir oyun bekliyoruz. ${weatherNoteTr}${injuryNoteTr}Kilit eksikler nedeniyle tempo artsa bile az gollü bir beraberlik ön planda.`;
+    enComment = `An evenly balanced game is expected between both sides. ${weatherNoteEn}${injuryNoteEn}Due to key player absences, a high-tempo but low-scoring draw is likely.`;
+  }
 
   return {
-    tr: trTemplates[seed % trTemplates.length],
-    en: enTemplates[seed % enTemplates.length],
-    es: trTemplates[seed % trTemplates.length],
-    fr: trTemplates[seed % trTemplates.length],
-    de: trTemplates[seed % trTemplates.length]
+    tr: trComment,
+    en: enComment,
+    es: trComment,
+    fr: trComment,
+    de: trComment
   };
 }
 

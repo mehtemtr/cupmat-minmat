@@ -326,7 +326,7 @@ export function GamificationManager() {
 
       {/* Floating Keşif Sayacı (Discovery Timer) Widget */}
       {showWidget && secondsLeft !== null && (
-        <div className="fixed bottom-6 right-6 z-[9999] rounded-3xl border border-zinc-800 bg-[#060b14]/90 p-4 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center text-center w-36 select-none animate-fadeIn border-t-emerald-500/20">
+        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[9999] rounded-3xl border border-zinc-800 bg-[#060b14]/90 p-4 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center text-center w-36 select-none animate-fadeIn border-t-emerald-500/20">
           <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider block mb-2.5">
             ⏱️ {dict.timerTitle}
           </span>

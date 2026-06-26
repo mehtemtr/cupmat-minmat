@@ -181,13 +181,54 @@ export default function PredictionCenterPage() {
   const [aiLoading, setAiLoading] = useState<Record<string, boolean>>({});
   const [aiError, setAiError] = useState<Record<string, string>>({});
 
-  // Generate the first round matches of all groups (A-L) - 24 matches total
+  // Tüm grup aşaması maçlarını kronolojik olarak listele
   const upcomingMatches = useMemo(() => {
-    const raw = matches.filter(
-      (m) => m.id.endsWith("-1") || m.id.endsWith("-6")
-    );
-    return sortMatchesChronologically(raw);
+    return sortMatchesChronologically(matches);
   }, [matches]);
+
+  // Bugünün tarihine en yakın oynanmamış maçı bul (Initial Scroll Odak Noktası)
+  const closestMatch = useMemo(() => {
+    const unplayed = upcomingMatches.filter((m) => !m.played && m.homeScore === null);
+    if (unplayed.length === 0) return null;
+
+    const now = Date.now();
+    let minDiff = Infinity;
+    let closest = unplayed[0];
+
+    unplayed.forEach((m) => {
+      const [tsiHourStr, tsiMinStr] = (m.time || "12:00").split(":");
+      const tsiHour = parseInt(tsiHourStr, 10);
+      const tsiMin = parseInt(tsiMinStr, 10);
+      const [yearStr, monthStr, dayStr] = m.date.split("-");
+      const year = parseInt(yearStr, 10);
+      const month = parseInt(monthStr, 10) - 1;
+      const day = parseInt(dayStr, 10);
+
+      const tsiDate = new Date(Date.UTC(year, month, day, tsiHour, tsiMin, 0));
+      const matchUtcTime = tsiDate.getTime() - 3 * 60 * 60 * 1000;
+
+      const diff = Math.abs(matchUtcTime - now);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = m;
+      }
+    });
+
+    return closest;
+  }, [upcomingMatches]);
+
+  // Sayfa yüklendiğinde bugünün en yakın oynanmamış maçına odaklan (Auto-scroll)
+  useEffect(() => {
+    if (!loading && closestMatch) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById(`match-card-${closestMatch.id}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, closestMatch]);
 
   // Fetch prediction and profile details
   const fetchData = async () => {
@@ -574,6 +615,7 @@ export default function PredictionCenterPage() {
             return (
               <div
                 key={match.id}
+                id={`match-card-${match.id}`}
                 className="group relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/40 p-5 hover:bg-zinc-900/30 hover:border-zinc-700 transition-all duration-300 shadow-2xl flex flex-col justify-between"
               >
                 {/* Visual background glow */}
@@ -768,14 +810,25 @@ export default function PredictionCenterPage() {
                   </div>
 
                   {aiAnalyses[match.id] && (
-                    <div className="p-3 rounded-xl bg-indigo-950/15 border border-indigo-900/35 text-[11px] leading-relaxed text-zinc-300 animate-fadeIn shadow-inner flex flex-col gap-1.5 text-left">
-                      <div className="flex items-center gap-1.5">
-                        <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wider">
-                          AI Tahmini: {aiAnalyses[match.id].skor}
-                        </span>
-                      </div>
-                      <p className="text-zinc-400 font-medium">{aiAnalyses[match.id].analiz}</p>
-                    </div>
+                    <>
+                      {/* UI Guard: Eğer yorum boş veya null ise o yoruma ait metin kutusunu/kartını tamamen gizle, sadece skor tahminini temiz göster */}
+                      {(!aiAnalyses[match.id].analiz || aiAnalyses[match.id].analiz.trim() === "") ? (
+                        <div className="flex justify-center items-center py-2 animate-fadeIn">
+                          <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-3 py-1 rounded-xl text-xs font-black uppercase tracking-wider">
+                            AI Tahmini: {aiAnalyses[match.id].skor}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="p-3 rounded-xl bg-indigo-950/15 border border-indigo-900/35 text-[11px] leading-relaxed text-zinc-300 animate-fadeIn shadow-inner flex flex-col gap-1.5 text-left">
+                          <div className="flex items-center gap-1.5">
+                            <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wider">
+                              AI Tahmini: {aiAnalyses[match.id].skor}
+                            </span>
+                          </div>
+                          <p className="text-zinc-400 font-medium">{aiAnalyses[match.id].analiz}</p>
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {aiError[match.id] && (

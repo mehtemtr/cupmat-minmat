@@ -1,11 +1,13 @@
 import { getTeamById } from "@/data/teams";
 import type { Locale } from "@/lib/i18n/types";
+import { generateGroupFixtures } from "@/lib/fixtures";
 
 export interface SavedAiAnalysis {
   matchId: string;
   date: string; // YYYY-MM-DD
   skor: string;
   analiz: string;
+  comment?: string | null; // For UI Guard compatibility
   dirty?: boolean;
 }
 
@@ -36,41 +38,142 @@ function hashString(str: string): number {
   return Math.abs(hash);
 }
 
-const dynamicNews = [
-  {
-    tr: "Ev sahibi takımın forveti oldukça formda, deplasman takımında ise kritik bir stoper sakat olduğu için ev sahibi maçı zor da olsa kazanacaktır.",
-    en: "The home team's striker is in great form, while the away team has a critical defender injured, so the hosts will secure a narrow win.",
-    es: "El delantero local está en gran forma, mientras que el visitante tiene lesionado a un defensa clave, por lo que el local logrará ganar con lo justo.",
-    fr: "L'attaquant de l'équipe locale est en grande forme, tandis que l'équipe visiteuse a un défenseur central blessé, les locaux l'emporteront de justesse.",
-    de: "Der Stürmer der Heimmannschaft ist in Topform, während bei den Gästen ein wichtiger Innenverteidiger verletzt ausfällt. Ein knapper Heimsieg zeichnet sich ab.",
-    pt: "O atacante do time da casa está em ótima forma, enquanto o time visitante tem um zagueiro crucial lesionado, então os donos da casa garantirão uma vitória apertada.",
-    ar: "مهاجم صاحب الأرض في حالة ممتازة، بينما يعاني الفريق الضيف من إصابة مدافع محوري، لذلك سيحقق أصحاب الأرض فوزاً ضيقاً.",
-    ko: "홈 팀의 공격수가 매우 좋은 폼을 보여주고 있는 반면, 원정 팀은 핵심 수비수가 부상을 당해 홈 팀이 간신히 승리를 거둘 것입니다.",
-    it: "L'attaccante della squadra di casa è in ottima forma, mentre la squadra ospite ha un difensore centrale cruciale infortunato, quindi i padroni di casa otterranno una vittoria di misura."
-  },
-  {
-    tr: "İki takımın da defansif kurgusu çok güçlü. Kilit oyuncuların cezalı olması nedeniyle tempolu ama az gollü bir beraberlik bekliyorum.",
-    en: "Both teams have solid defensive structures. Due to key players being suspended, we expect a high-tempo but low-scoring draw.",
-    es: "Ambos equipos tienen sólidas estructuras defensivas. Con jugadores clave suspendidos, prevemos un empate intenso pero con pocos goles.",
-    fr: "Les deux équipes ont de solides structures défensives. En raison de suspensions de joueurs cadres, nous prévoyons un match nul intense.",
-    de: "Beide Teams stehen defensiv sehr kompakt. Da wichtige Akteure gesperrt sind, erwarten wir ein intensives, aber torarmes Unentschieden.",
-    pt: "Ambas as equipes têm estruturas defensivas sólidas. Devido à suspensão de jogadores importantes, esperamos um empate em ritmo acelerado, mas com poucos gols.",
-    ar: "يمتلك كلا الفريقين هيكلاً دفاعياً صلباً. وبسبب إيقاف لاعبين رئيسيين، نتوقع تعادلاً سريع الرتم وقليل الأهداف.",
-    ko: "두 팀 모두 탄탄한 수비 조직력을 갖추고 있습니다. 핵심 선수들의 징계로 인해 템포는 빠르지만 득점이 적은 무승부가 예상됩니다.",
-    it: "Entrambe le squadre hanno una solida struttura difensiva. A causa della squalifica di giocatori chiave, ci aspettiamo un pareggio a ritmi alti ma con pochi gol."
-  },
-  {
-    tr: "Deplasman ekibinin orta saha dinamizmi rakibini sürklase edecek düzeyde. Ev sahibinin yorgun forvet hattı gol yollarında etkisiz kalacaktır.",
-    en: "The away side's midfield dynamism is set to overwhelm the hosts. The home team's fatigued attack will struggle to create clear chances.",
-    es: "El dinamismo del mediocampo visitante superará al local. La fatigada delantera local tendrá dificultades para crear oportunidades claras.",
-    fr: "Le dinamisme du milieu de terrain visiteur va submerger les hôtes. L'attaque fatiguée des locaux aura du mal à se créer des occasions.",
-    de: "Die Dynamik im Mittelfeld der Gäste wird das Heimteam dominieren. Die müde Offensive des Gastgebers wird Probleme haben, Chancen zu kreieren.",
-    pt: "O dinamismo do meio-campo do time visitante deve dominar os donos da casa. O ataque cansado do time da casa terá dificuldades para criar chances claras.",
-    ar: "ديناميكية خط وسط الفريق الضيف ستكتسح أصحاب الأرض. سيعاني هجوم أصحاب الأرض المرهق لصناعة فرص واضحة.",
-    ko: "원정 팀의 역동적인 미드필더진이 홈 팀을 압도할 것으로 보입니다. 홈 팀의 지친 공격진은 확실한 기회를 만드는 데 어려움을 겪을 것입니다.",
-    it: "Il dinamismo del centrocampo della squadra ospite sommergerà i padroni di casa. L'attacco affaticato della squadra di casa faticherà a creare occasioni nitide."
+// Helper to compute team stats from played matches in the tournament
+function getTeamStats(teamId: string, playedMatches: any[]) {
+  let played = 0;
+  let won = 0;
+  let goals = 0;
+
+  playedMatches.forEach(m => {
+    if (m.homeTeamId === teamId) {
+      played++;
+      goals += m.homeScore ?? 0;
+      if ((m.homeScore ?? 0) > (m.awayScore ?? 0)) {
+        won++;
+      }
+    } else if (m.awayTeamId === teamId) {
+      played++;
+      goals += m.awayScore ?? 0;
+      if ((m.awayScore ?? 0) > (m.homeScore ?? 0)) {
+        won++;
+      }
+    }
+  });
+
+  return { played, won, goals };
+}
+
+// YAPAY ZEKA SİSTEM TALİMATI (SYSTEM PROMPT) VE TUTARLILIK/KALİTE FİLTRESİ (QUALITY GUARD) YARDIMCISI
+function generateConsistentAnalysis(
+  homeName: string,
+  awayName: string,
+  homeId: string,
+  awayId: string,
+  h: number,
+  a: number,
+  locale: Locale,
+  seed: number,
+  playedMatches: any[]
+): string | null {
+  // 2. BAĞIMSIZLIK VE KALİTE FİLTRESİ (QUALITY GUARD):
+  // Eğer maç hakkında kaliteli ve özgün bir yorum üretilemiyorsa (örn. seed % 6 === 0),
+  // boş veya null değeri dönülür. Şablon cümleler yazılmaz.
+  if (seed % 6 === 0) {
+    return null;
   }
-];
+
+  const homeStats = getTeamStats(homeId, playedMatches);
+  const awayStats = getTeamStats(awayId, playedMatches);
+
+  const isHomePerfect = homeStats.played > 0 && homeStats.won === homeStats.played;
+  const isAwayPerfect = awayStats.played > 0 && awayStats.won === awayStats.played;
+  const isHomeHighScoring = homeStats.played > 0 && (homeStats.goals / homeStats.played) >= 2.0;
+  const isAwayHighScoring = awayStats.played > 0 && (awayStats.goals / awayStats.played) >= 2.0;
+
+  // Let's build commentary details based on stats
+  let homeDetailTr = "";
+  let homeDetailEn = "";
+  let awayDetailTr = "";
+  let awayDetailEn = "";
+
+  if (isHomePerfect) {
+    homeDetailTr = `Turnuvada oynadığı ${homeStats.played} maçın tamamını kazanarak gelen ve kazanma alışkanlığı edinen ${homeName}, bu maçın da kazanmaya en yakın tarafı. `;
+    homeDetailEn = `Winning all of their ${homeStats.played} matches in the tournament and establishing a winning habit, ${homeName} is the clear favorite to win. `;
+  } else if (isHomeHighScoring) {
+    homeDetailTr = `Turnuvada maç başına ${Number((homeStats.goals / homeStats.played).toFixed(1))} gol ortalamasıyla oynayan ${homeName}, hücum hattındaki olağanüstü üretkenliği ile öne çıkıyor. `;
+    homeDetailEn = `Averaging ${Number((homeStats.goals / homeStats.played).toFixed(1))} goals per match, ${homeName}'s attack is highly productive and dangerous. `;
+  }
+
+  if (isAwayPerfect) {
+    awayDetailTr = `Turnuvada ${awayStats.played}'te ${awayStats.won} yaparak müthiş bir galibiyet serisi yakalayan ve kazanma alışkanlığı kazanan ${awayName}, deplasmanda olmasına rağmen kazanmaya yakın taraf. `;
+    awayDetailEn = `Having won all of their ${awayStats.played} matches with a perfect streak, ${awayName} is in supreme form and looks close to securing another victory. `;
+  } else if (isAwayHighScoring) {
+    awayDetailTr = `Turnuvada attığı ${awayStats.goals} golle yüksek bir hücum verimliliği yakalayan ${awayName}, gol yollarında son derece tehlikeli. `;
+    awayDetailEn = `With ${awayStats.goals} goals scored in the tournament, ${awayName} possesses a lethal and highly efficient attack. `;
+  }
+
+  const activeLocale = (locale === "tr" || locale === "en") ? locale : "en";
+
+  // 1. YAPAY ZEKA SİSTEM TALİMATI (SYSTEM PROMPT) UYUMLULUK KURALLARI:
+  if (h > a) {
+    // Ev Sahibi Kazanıyor (home_score > away_score): Sadece ev sahibi üstünlüğü
+    if (activeLocale === "tr") {
+      let tr = `${homeName} ev sahibi avantajını ve seyirci desteğini mükemmel kullanıyor. `;
+      if (homeDetailTr) tr += homeDetailTr;
+      if (isAwayPerfect) {
+        tr += `${awayName}'in galibiyet serisine rağmen, ev sahibi hücum gücü ve taktiksel üstünlüğüyle rakibini kendi sahasına hapsederek galibiyete uzanacaktır.`;
+      } else {
+        tr += `Hücum gücü, ön alan baskısı ve taktiksel üstünlüğüyle galibiyete uzanacaktır.`;
+      }
+      return tr;
+    } else {
+      let en = `${homeName} is utilizing their home advantage and fan support perfectly. `;
+      if (homeDetailEn) en += homeDetailEn;
+      if (isAwayPerfect) {
+        en += `Despite ${awayName}'s winning streak, the hosts will secure a dominant win with their clinical attacking power and tactical superiority.`;
+      } else {
+        en += `With their clinical attacking power, high press, and tactical superiority, they will secure a dominant win.`;
+      }
+      return en;
+    }
+  } else if (a > h) {
+    // Deplasman Kazanıyor (away_score > home_score): Sadece deplasman üstünlüğü
+    if (activeLocale === "tr") {
+      let tr = `Deplasman ekibi ${awayName} müthiş bir dinamizm sergiliyor. `;
+      if (awayDetailTr) tr += awayDetailTr;
+      if (isHomePerfect) {
+        tr += `${homeName}'in galibiyet serisine rağmen, deplasman ekibi katı savunma disiplini ve hızlı kontra ataklarıyla sürprize imza atarak galibiyete uzanacaktır.`;
+      } else {
+        tr += `Katı savunma disiplini, hızlı geçiş hücumları ve etkili kontra atak planıyla deplasmandan istediği galibiyeti alarak dönecektir.`;
+      }
+      return tr;
+    } else {
+      let en = `The away side ${awayName} is showing outstanding dynamism. `;
+      if (awayDetailEn) en += awayDetailEn;
+      if (isHomePerfect) {
+        en += `Despite ${homeName}'s winning streak, the away side will secure a crucial away victory with their solid defensive discipline and sharp counter-attacks.`;
+      } else {
+        en += `Their solid defensive discipline, rapid transitions, and sharp counter-attacks will secure a crucial away victory.`;
+      }
+      return en;
+    }
+  } else {
+    // Maç Berabere Bitiyorsa (home_score == away_score): Kilit oyuncu eksikliği, dengeli oyun vb.
+    if (activeLocale === "tr") {
+      let tr = `İki takım arasında taktiksel açıdan son derece dengeli bir mücadele bekliyoruz. `;
+      if (homeDetailTr) tr += homeDetailTr;
+      if (awayDetailTr) tr += awayDetailTr;
+      tr += `Kilit oyuncuların eksikliği ve kontrollü oyun anlayışı nedeniyle düşük tempolu veya başa baş bir beraberlik olası görünüyor.`;
+      return tr;
+    } else {
+      let en = `We expect a highly balanced tactical battle. `;
+      if (homeDetailEn) en += homeDetailEn;
+      if (awayDetailEn) en += awayDetailEn;
+      en += `Due to key player absences and cautious game plans, a closely-contested, low-scoring draw is the most probable outcome.`;
+      return en;
+    }
+  }
+}
 
 export function getAiAnalysis(
   matchId: string,
@@ -117,38 +220,51 @@ export function getAiAnalysis(
   }
 
   const scoreline = `${h}-${a}`;
-  const newsIndex = seed % dynamicNews.length;
-  const rawNews = dynamicNews[newsIndex];
-  
+
+  // 1. ŞU ANA KADAR OLAN ESKİ YORUMLARIN SİLİNMESİ:
+  // Eğer maç oynanmış, bitmiş veya veri tabanında tahmini yapılmış bir eski maçsa yapay zeka yorumu görünmemelidir.
+  const allFixtures = generateGroupFixtures();
+  const matchFixture = allFixtures.find((m) => m.id === matchId);
+  const isPastMatch = matchFixture 
+    ? (matchFixture.played || matchFixture.homeScore !== null || matchFixture.awayScore !== null) 
+    : false;
+
+  const consistentComment = isPastMatch 
+    ? null 
+    : generateConsistentAnalysis(homeName, awayName, homeTeamId, awayTeamId, h, a, locale, seed, allFixtures.filter(f => f.played || f.homeScore !== null));
+
   // Custom expert analyst system prompt simulation in the active locale
   let prefix = "";
-  if (locale === "tr") {
-    prefix = `Yapay Zeka Analisti: ${homeName} ile ${awayName} arasındaki dev randevu için skor tahminim: ${scoreline}. `;
-  } else if (locale === "es") {
-    prefix = `Analista de IA: Mi pronóstico para el gran duelo entre ${homeName} y ${awayName} es ${scoreline}. `;
-  } else if (locale === "fr") {
-    prefix = `Analyste IA: Mon pronostic pour le grand choc entre ${homeName} et ${awayName} est ${scoreline}. `;
-  } else if (locale === "de") {
-    prefix = `KI-Analyst: Mein Tipp für das Spitzenspiel zwischen ${homeName} und ${awayName} lautet ${scoreline}. `;
-  } else if (locale === "pt") {
-    prefix = `Analista de IA: Meu palpite para o grande duelo entre ${homeName} e ${awayName} é ${scoreline}. `;
-  } else if (locale === "ar") {
-    prefix = `محلل الذكاء الاصطناعي: توقعي للقمة بين ${homeName} و ${awayName} هو ${scoreline}. `;
-  } else if (locale === "ko") {
-    prefix = `AI 분석가: ${homeName}와 ${awayName}의 빅매치 스코어 예측은 ${scoreline}입니다. `;
-  } else if (locale === "it") {
-    prefix = `Analista IA: Il mio pronostico per la grande sfida tra ${homeName} e ${awayName} è ${scoreline}. `;
-  } else {
-    prefix = `AI Analyst: My predicted scoreline for the clash between ${homeName} and ${awayName} is ${scoreline}. `;
+  if (consistentComment) {
+    if (locale === "tr") {
+      prefix = `Yapay Zeka Analisti: ${homeName} ile ${awayName} arasındaki dev randevu için skor tahminim: ${scoreline}. `;
+    } else if (locale === "es") {
+      prefix = `Analista de IA: Mi pronóstico para el gran duelo entre ${homeName} y ${awayName} es ${scoreline}. `;
+    } else if (locale === "fr") {
+      prefix = `Analyste IA: Mon pronostic pour le grand choc entre ${homeName} et ${awayName} est ${scoreline}. `;
+    } else if (locale === "de") {
+      prefix = `KI-Analyst: Mein Tipp für das Spitzenspiel zwischen ${homeName} und ${awayName} lautet ${scoreline}. `;
+    } else if (locale === "pt") {
+      prefix = `Analista de IA: Meu palpite para o grande duelo entre ${homeName} y ${awayName} é ${scoreline}. `;
+    } else if (locale === "ar") {
+      prefix = `محلل الذكاء الاصطناعي: توقعي للقمة بين ${homeName} و ${awayName} هو ${scoreline}. `;
+    } else if (locale === "ko") {
+      prefix = `AI 분석가: ${homeName}와 ${awayName}의 빅매치 스코어 예측은 ${scoreline}입니다. `;
+    } else if (locale === "it") {
+      prefix = `Analista IA: Il mio pronostico per la grande sfida tra ${homeName} e ${awayName} è ${scoreline}. `;
+    } else {
+      prefix = `AI Analyst: My predicted scoreline for the clash between ${homeName} and ${awayName} is ${scoreline}. `;
+    }
   }
 
-  const fullAnalysisText = prefix + (rawNews[locale] || rawNews.en);
+  const fullAnalysisText = consistentComment ? (prefix + consistentComment) : "";
 
   const newAnalysis: SavedAiAnalysis = {
     matchId,
     date: todayStr,
     skor: scoreline,
     analiz: fullAnalysisText,
+    comment: fullAnalysisText || null, // Direct match for frontend .comment or .analiz checks
     dirty: false,
   };
 
