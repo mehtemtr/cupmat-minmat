@@ -563,7 +563,7 @@ export default function PredictionCenterPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
           {upcomingMatches.map((match) => {
             const home = getTeamById(match.homeTeamId);
             const away = getTeamById(match.awayTeamId);
@@ -616,16 +616,16 @@ export default function PredictionCenterPage() {
               <div
                 key={match.id}
                 id={`match-card-${match.id}`}
-                className="group relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/40 p-5 hover:bg-zinc-900/30 hover:border-zinc-700 transition-all duration-300 shadow-2xl flex flex-col justify-between"
+                className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4 sm:p-4.5 hover:bg-zinc-900/30 hover:border-zinc-700 transition-all duration-300 shadow-2xl flex flex-col justify-between"
               >
                 {/* Visual background glow */}
                 <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/10 via-transparent to-transparent pointer-events-none" />
 
                 {/* Card content structure */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                   
                   {/* Kickoff top bar */}
-                  <div className="flex items-center justify-between text-[11px] text-zinc-500 border-b border-zinc-900 pb-2.5 mb-2">
+                  <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-zinc-500 border-b border-zinc-900 pb-1.5 mb-1.5">
                     <span className="font-extrabold text-emerald-400 bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 uppercase tracking-widest text-[9px]">
                       {dict.matchDay} {match.group}
                     </span>
@@ -638,38 +638,38 @@ export default function PredictionCenterPage() {
                   </div>
 
                   {/* ROW 1: Team Info (VS Row) */}
-                  <div className="flex items-center justify-between gap-4 py-2">
+                  <div className="flex items-center justify-between gap-3 sm:gap-4 py-1">
                     {/* Home Team */}
                     <Link 
                       href={`/ulkeler/${home.id}`}
-                      className="flex items-center gap-3 flex-1 hover:text-emerald-400 cursor-pointer transition-colors group"
+                      className="flex items-center gap-2.5 sm:gap-3 flex-1 hover:text-emerald-400 cursor-pointer transition-colors group overflow-hidden"
                     >
-                      <div className="relative w-8 h-6 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
+                      <div className="relative w-9 h-6 sm:w-10 sm:h-6.5 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all flex-shrink-0">
                         <img
                           src={home.flagUrl}
                           alt=""
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <span className="text-zinc-100 font-extrabold text-sm truncate group-hover:text-emerald-400 transition-colors">
+                      <span className="text-zinc-100 font-black text-sm sm:text-base truncate group-hover:text-emerald-400 transition-colors">
                         {locale === "tr" ? home.nameTr : home.nameEn}
                       </span>
                     </Link>
 
                     {/* VS Indicator */}
-                    <span className="text-zinc-600 font-black text-xs px-2 py-1 bg-zinc-900 border border-zinc-800 rounded-lg">
+                    <span className="text-zinc-500 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 bg-zinc-900 border border-zinc-800 rounded-lg flex-shrink-0">
                       VS
                     </span>
 
                     {/* Away Team */}
                     <Link 
                       href={`/ulkeler/${away.id}`}
-                      className="flex items-center gap-3 flex-1 justify-end text-right hover:text-emerald-400 cursor-pointer transition-colors group"
+                      className="flex items-center gap-2.5 sm:gap-3 flex-1 justify-end text-right hover:text-emerald-400 cursor-pointer transition-colors group overflow-hidden"
                     >
-                      <span className="text-zinc-100 font-extrabold text-sm truncate group-hover:text-emerald-400 transition-colors">
+                      <span className="text-zinc-100 font-black text-sm sm:text-base truncate group-hover:text-emerald-400 transition-colors">
                         {locale === "tr" ? away.nameTr : away.nameEn}
                       </span>
-                      <div className="relative w-8 h-6 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all">
+                      <div className="relative w-9 h-6 sm:w-10 sm:h-6.5 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all flex-shrink-0">
                         <img
                           src={away.flagUrl}
                           alt=""
@@ -680,7 +680,7 @@ export default function PredictionCenterPage() {
                   </div>
 
                   {/* ROW 2: Real Result */}
-                  <div className="text-center py-1 bg-zinc-900/40 border border-zinc-900 rounded-xl text-xs font-bold text-zinc-500">
+                  <div className="text-center py-1.5 bg-zinc-900/40 border border-zinc-900 rounded-xl text-xs sm:text-sm font-extrabold text-zinc-400">
                     {match.played || match.homeScore !== null ? (
                       <span className="text-emerald-400">
                         {dict.realScore}: {match.homeScore} - {match.awayScore}
@@ -691,7 +691,7 @@ export default function PredictionCenterPage() {
                   </div>
 
                   {/* ROW 3: User Prediction inputs and Card Submit */}
-                  <div className="bg-zinc-950/60 border border-zinc-900 rounded-2xl p-4 flex flex-col items-center gap-3 shadow-inner">
+                  <div className="bg-zinc-950/60 border border-zinc-900 rounded-xl p-3 sm:p-3.5 flex flex-col items-center gap-2.5 shadow-inner">
                     <div className="flex items-center gap-3 justify-center">
                       <input
                         type="number"
@@ -731,7 +731,7 @@ export default function PredictionCenterPage() {
                           <button
                             onClick={() => handleSingleSave(match.id)}
                             disabled={actionLoading !== null}
-                            className="w-full py-1.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-[#060b14] text-[11px] font-extrabold transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
+                            className="w-full py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-[#060b14] text-xs sm:text-sm font-black transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
                           >
                             {actionLoading === match.id ? (
                               <div className="w-3.5 h-3.5 border-2 border-[#060b14] border-t-transparent rounded-full animate-spin" />
@@ -743,7 +743,7 @@ export default function PredictionCenterPage() {
                           <button
                             onClick={() => setEditingMatches((prev) => ({ ...prev, [match.id]: true }))}
                             disabled={!profile || profile.tahminGuncellemeHakki <= 0}
-                            className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-[11px] font-bold text-indigo-400 hover:text-white hover:bg-indigo-500 hover:border-indigo-500 disabled:opacity-30 disabled:hover:bg-zinc-900 disabled:hover:border-zinc-800 disabled:hover:text-indigo-400 transition-all active:scale-95 shadow"
+                            className="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs sm:text-sm font-black text-indigo-400 hover:text-white hover:bg-indigo-500 hover:border-indigo-500 disabled:opacity-30 disabled:hover:bg-zinc-900 disabled:hover:border-zinc-800 disabled:hover:text-indigo-400 transition-all active:scale-95 shadow"
                           >
                             {dict.unlockToEdit}
                           </button>
@@ -762,14 +762,14 @@ export default function PredictionCenterPage() {
                                   },
                                 }));
                               }}
-                              className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-[11px] font-bold text-zinc-400 hover:text-white transition-all"
+                              className="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs sm:text-sm font-black text-zinc-400 hover:text-white transition-all"
                             >
                               {dict.cancelEdit}
                             </button>
                             <button
                               onClick={() => handleSingleSave(match.id)}
                               disabled={actionLoading !== null}
-                              className="flex-grow py-1.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-[#060b14] text-[11px] font-extrabold transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
+                              className="flex-grow py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-[#060b14] text-xs sm:text-sm font-black transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
                             >
                               {actionLoading === match.id ? (
                                 <div className="w-3.5 h-3.5 border-2 border-[#060b14] border-t-transparent rounded-full animate-spin" />
@@ -788,14 +788,14 @@ export default function PredictionCenterPage() {
                 <div className="mt-4 pt-3 border-t border-zinc-900 flex flex-col gap-2">
                   <div className="flex justify-end">
                     {aiAnalyses[match.id] ? (
-                      <span className="text-[10px] font-extrabold text-indigo-400 bg-indigo-950/40 border border-indigo-900/50 rounded-xl px-3 py-1.5 flex items-center gap-1.5 shadow select-none">
+                      <span className="text-[10px] sm:text-xs font-extrabold text-indigo-400 bg-indigo-950/40 border border-indigo-900/50 rounded-xl px-3 py-2 flex items-center gap-1.5 shadow select-none">
                         🧠 {dict.aiButton || "AI Analizini Gör"} ✅
                       </span>
                     ) : (
                       <button
                         onClick={() => handleViewAiPrediction(match.id, match.homeTeamId, match.awayTeamId)}
                         disabled={aiLoading[match.id]}
-                        className="text-[10px] font-black text-zinc-300 hover:text-white bg-indigo-600/10 hover:bg-indigo-600/25 border border-indigo-500/25 hover:border-indigo-500/40 rounded-xl px-3 py-1.5 flex items-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
+                        className="text-[10px] sm:text-xs font-black text-zinc-300 hover:text-white bg-indigo-600/10 hover:bg-indigo-600/25 border border-indigo-500/25 hover:border-indigo-500/40 rounded-xl px-3 py-2 flex items-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
                       >
                         🧠 {aiLoading[match.id] ? (
                           <div className="w-3.5 h-3.5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
