@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
     appleWebApp: {
       capable: true,
       statusBarStyle: "black-translucent",
-      title: "MahTEM",
+      title: "StatMatik",
     },
     icons: {
       icon: "/icon.png",

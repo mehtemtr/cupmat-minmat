@@ -416,12 +416,12 @@ export function Header() {
           >
             <div className="flex items-center gap-3.5 border-b border-white/10 pb-4 mb-5">
               <img 
-                src="/mahtem_assets/mahtem_logo_512x512.png" 
-                alt="MahTEM Logo" 
+                src="/icon-512.png" 
+                alt="StatMatik Logo" 
                 className="h-11 w-11 rounded-xl object-contain border border-white/10 bg-white/5 shadow-lg shadow-emerald-500/25"
               />
               <h2 className="text-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent tracking-wide">
-                MahTEM
+                StatMatik
               </h2>
             </div>
             
@@ -494,7 +494,7 @@ export function Header() {
                     <span className="text-zinc-400">Facebook:</span> Statmatik
                   </a>
                   <a href="https://www.youtube.com/channel/UC3VXE2d4hkwnmMiW6W0gYjA" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-red-500 transition-colors w-fit text-sm">
-                    <span className="text-zinc-400">YouTube:</span> @MahTEMYazılım
+                    <span className="text-zinc-400">YouTube:</span> @MahtemYazılım
                   </a>
                   <a href="mailto:bilgi@statmatik.com" className="flex items-center gap-2 hover:text-emerald-400 transition-colors w-fit text-sm">
                     <span className="text-zinc-400">E-mail:</span> bilgi@statmatik.com

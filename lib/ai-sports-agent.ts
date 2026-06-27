@@ -1,6 +1,9 @@
 import { supabaseAdmin } from "./supabase";
 import { getTeamById, TEAMS } from "@/data/teams";
 import { STADIUMS } from "@/data/stadiums";
+import { generateGroupFixtures } from "@/lib/fixtures";
+import { STATIC_PREDICTIONS } from "@/lib/store/ai-analysis-store";
+import { getLocalTeamId } from "./api-football";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -633,44 +636,80 @@ export async function generatePredictions(matches: Array<{
     playerStatuses.push(...mockInjuries);
 
     // 3. Tahmin hesaplama
-    const rankDiff = (away.fifaRank || 50) - (home.fifaRank || 50);
     let homeWin = 33.33;
     let draw = 33.33;
     let awayWin = 33.33;
+    let scoreline = "1-1";
+    const rankDiff = (away.fifaRank || 50) - (home.fifaRank || 50);
 
-    // FIFA sıralamasına göre ağırlık
-    if (rankDiff > 20) {
-      homeWin = 55 + (seed % 15);
-      awayWin = 15 + (seed % 10);
-      draw = 100 - homeWin - awayWin;
-    } else if (rankDiff < -20) {
-      awayWin = 55 + (seed % 15);
-      homeWin = 15 + (seed % 10);
-      draw = 100 - homeWin - awayWin;
+    if (STATIC_PREDICTIONS[match.id]) {
+      const staticPred = STATIC_PREDICTIONS[match.id];
+      scoreline = staticPred.skor;
+      const [hStr, aStr] = scoreline.split("-");
+      const hScore = parseInt(hStr, 10);
+      const aScore = parseInt(aStr, 10);
+
+      if (hScore > aScore) {
+        if (hScore - aScore >= 2) {
+          homeWin = 70;
+          draw = 20;
+          awayWin = 10;
+        } else {
+          homeWin = 55;
+          draw = 25;
+          awayWin = 20;
+        }
+      } else if (aScore > hScore) {
+        if (aScore - hScore >= 2) {
+          homeWin = 10;
+          draw = 20;
+          awayWin = 70;
+        } else {
+          homeWin = 20;
+          draw = 25;
+          awayWin = 55;
+        }
+      } else {
+        homeWin = 20;
+        draw = 60;
+        awayWin = 20;
+      }
     } else {
-      homeWin = 30 + (seed % 15);
-      awayWin = 30 + ((seed >> 2) % 15);
-      draw = 100 - homeWin - awayWin;
-    }
+      // FIFA sıralamasına göre ağırlık
+      if (rankDiff > 20) {
+        homeWin = 55 + (seed % 15);
+        awayWin = 15 + (seed % 10);
+        draw = 100 - homeWin - awayWin;
+      } else if (rankDiff < -20) {
+        awayWin = 55 + (seed % 15);
+        homeWin = 15 + (seed % 10);
+        draw = 100 - homeWin - awayWin;
+      } else {
+        homeWin = 30 + (seed % 15);
+        awayWin = 30 + ((seed >> 2) % 15);
+        draw = 100 - homeWin - awayWin;
+      }
 
-    // Hava durumu etkisi
-    if (mockWeather.condition === "snow" || mockWeather.temperature < 5) {
-      draw += 10;
-      homeWin -= 5;
-      awayWin -= 5;
-    }
+      // Hava durumu etkisi
+      if (mockWeather.condition === "snow" || mockWeather.temperature < 5) {
+        draw += 10;
+        homeWin -= 5;
+        awayWin -= 5;
+      }
 
-    // Skor tahmini
-    let h = 1 + Math.floor((homeWin / 40) * (seed % 3));
-    let a = 1 + Math.floor((awayWin / 40) * ((seed >> 1) % 3));
-    if (h === 0 && a === 0) h = 1;
+      // Skor tahmini
+      let h = 1 + Math.floor((homeWin / 40) * (seed % 3));
+      let a = 1 + Math.floor((awayWin / 40) * ((seed >> 1) % 3));
+      if (h === 0 && a === 0) h = 1;
+      scoreline = `${h}-${a}`;
+    }
 
     predictions.push({
       matchId: match.id,
       homeWin: Math.round(homeWin * 100) / 100,
       draw: Math.round(draw * 100) / 100,
       awayWin: Math.round(awayWin * 100) / 100,
-      predictedScoreline: `${h}-${a}`,
+      predictedScoreline: scoreline,
       confidence: 0.6 + (Math.abs(rankDiff) / 200)
     });
 
@@ -679,7 +718,7 @@ export async function generatePredictions(matches: Array<{
       homeWin,
       draw,
       awayWin,
-      scoreline: `${h}-${a}`,
+      scoreline,
       confidence: 0.6 + (Math.abs(rankDiff) / 200),
       weather: mockWeather,
       injuries: mockInjuries
@@ -778,6 +817,29 @@ export function generateAiCommentary(
   weather: WeatherData,
   injuries: PlayerStatusData[]
 ): AiCommentary {
+  // If static predictions exist, use them
+  if (STATIC_PREDICTIONS[matchId]) {
+    const staticPred = STATIC_PREDICTIONS[matchId];
+    
+    // Past match cleanup: if the match is in the past, return empty comment
+    const allFixtures = generateGroupFixtures();
+    const matchFixture = allFixtures.find((m) => m.id === matchId);
+    const isPastMatch = matchFixture 
+      ? (matchFixture.played || matchFixture.homeScore !== null || matchFixture.awayScore !== null) 
+      : false;
+
+    const commentTr = isPastMatch ? "" : staticPred.commentTr;
+    const commentEn = isPastMatch ? "" : staticPred.commentEn;
+
+    return {
+      tr: commentTr,
+      en: commentEn,
+      es: commentTr,
+      fr: commentTr,
+      de: commentTr
+    };
+  }
+
   const home = getTeamById(homeTeamId);
   const away = getTeamById(awayTeamId);
   const seed = hashString(matchId);
@@ -877,6 +939,51 @@ async function logAgentActivity(
 }
 
 // ============================================================
+// CANLI FİKSTÜR YARDIMCILARI (LIVE FIXTURE HELPERS)
+// ============================================================
+
+async function fetchLiveWorldCupMatches(): Promise<any[]> {
+  const rawKeys = process.env.API_FOOTBALL_KEY || "";
+  const keys = rawKeys.split(",").map(k => k.trim()).filter(k => k.length > 0);
+  if (keys.length === 0) {
+    console.warn("No API_FOOTBALL_KEY found in environment variables. Live scanning skipped.");
+    return [];
+  }
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    const url = "https://v3.football.api-sports.io/fixtures?league=1&season=2026";
+    console.log(`[AI Agent] Fetching live World Cup fixtures using key ${i + 1}/${keys.length}...`);
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "x-apisports-key": key },
+        next: { revalidate: 0 }
+      });
+      if (response.status === 429) continue;
+      if (!response.ok) continue;
+      const data = await response.json();
+      if (data.errors && !Array.isArray(data.errors) && Object.keys(data.errors).length > 0) continue;
+      return data.response || [];
+    } catch (err) {
+      console.error(`[AI Agent] API-Football key ${i+1} fetch failed:`, err);
+    }
+  }
+  return [];
+}
+
+function getRoundPrefix(apiRoundName: string): string | null {
+  const name = apiRoundName.toLowerCase();
+  if (name.includes("round of 32")) return "r32";
+  if (name.includes("round of 16")) return "r16";
+  if (name.includes("quarter-final") || name.includes("quarterfinal")) return "qf";
+  if (name.includes("semi-final") || name.includes("semifinal")) return "sf";
+  if (name.includes("final") && !name.includes("quarter") && !name.includes("semi") && !name.includes("third") && !name.includes("3rd")) return "final";
+  return null;
+}
+
+// ============================================================
 // ANA ÇALIŞTIRICI (MAIN RUNNER)
 // ============================================================
 
@@ -892,23 +999,202 @@ export async function runAiAgent(): Promise<{
     const rosterResult = await updateTeamRosters();
     console.log("✅ Kadro güncellemesi tamamlandı:", rosterResult);
 
-    // 2. Maç tahminleri - Basit örnek maçlar (ileride gerçek maç verileri gelecek)
-    const allMatches = TEAMS.slice(0, 10).map((team, index) => ({
-      id: `match-${index}`,
-      homeTeamId: team.id,
-      awayTeamId: TEAMS[(index + 1) % TEAMS.length].id,
-      date: new Date(Date.now() + index * 24 * 60 * 60 * 1000)
-    }));
-    
-    const predResult = await generatePredictions(allMatches as any);
-    console.log("✅ Tahminler tamamlandı:", predResult.predictions.length, "maç");
+    // 2. Canlı Fikstür Taraması ve Otomatik Maç Ekleme (Knockout / Üst Turlar)
+    console.log("🔍 Canlı fikstür taranıyor ve yeni üst tur eşleşmeleri kontrol ediliyor...");
+    let liveMatches: any[] = [];
+    try {
+      liveMatches = await fetchLiveWorldCupMatches();
+      console.log(`🔍 Canlı fikstürde ${liveMatches.length} maç bulundu.`);
+    } catch (apiErr) {
+      console.error("❌ Canlı fikstür API'sinden maçlar alınamadı:", apiErr);
+    }
 
-    // 3. Yorumları kaydet
+    const roundMatchesMap: Record<string, any[]> = {
+      r32: [],
+      r16: [],
+      qf: [],
+      sf: [],
+      final: []
+    };
+
+    for (const item of liveMatches) {
+      const roundName = item.league?.round || "";
+      const prefix = getRoundPrefix(roundName);
+      if (prefix && roundMatchesMap[prefix]) {
+        roundMatchesMap[prefix].push(item);
+      }
+    }
+
+    const resolvedKnockoutMatches: Array<{
+      id: string;
+      homeTeamId: string;
+      awayTeamId: string;
+      date: string;
+      time: string;
+    }> = [];
+
+    // Her tur için kronolojik olarak sırala ve slot ID ata
+    for (const [prefix, items] of Object.entries(roundMatchesMap)) {
+      items.sort((a, b) => {
+        const dateA = a.fixture?.date || "";
+        const dateB = b.fixture?.date || "";
+        return dateA.localeCompare(dateB);
+      });
+
+      for (let index = 0; index < items.length; index++) {
+        const item = items[index];
+        const homeId = getLocalTeamId(item.teams.home);
+        const awayId = getLocalTeamId(item.teams.away);
+
+        if (homeId && awayId) {
+          const slotId = `${prefix}-${index + 1}`;
+          
+          const fixtureDateRaw = item.fixture?.date || "";
+          let dateStr = "2026-07-01";
+          let timeStr = "12:00";
+          if (fixtureDateRaw) {
+            const d = new Date(fixtureDateRaw);
+            // Convert to Turkey Time UTC+3
+            const trDate = new Date(d.getTime() + 3 * 60 * 60 * 1000);
+            dateStr = trDate.toISOString().split("T")[0];
+            timeStr = trDate.toISOString().split("T")[1].substring(0, 5);
+          }
+
+          resolvedKnockoutMatches.push({
+            id: slotId,
+            homeTeamId: homeId,
+            awayTeamId: awayId,
+            date: dateStr,
+            time: timeStr
+          });
+        }
+      }
+    }
+
+    console.log(`🔍 Canlı fikstürden çözümlenen eşleşme sayısı: ${resolvedKnockoutMatches.length}`);
+
+    // Yeni eşleşmeleri kontrol et ve veritabanında yoksa otomatik olarak ekle
+    for (const match of resolvedKnockoutMatches) {
+      let existing = null;
+      try {
+        const { data } = await supabaseAdmin
+          .from("match_analyses")
+          .select("match_id, home_team_id, away_team_id")
+          .or(`match_id.eq.${match.id},and(home_team_id.eq.${match.homeTeamId},away_team_id.eq.${match.awayTeamId}),and(home_team_id.eq.${match.awayTeamId},away_team_id.eq.${match.homeTeamId})`)
+          .maybeSingle();
+        existing = data;
+      } catch (dbErr) {
+        console.error("Database query failed while checking match existence:", dbErr);
+      }
+
+      if (!existing) {
+        console.log(`🆕 Yeni Üst Tur Eşleşmesi Tespit Edildi: ${match.id} (${match.homeTeamId} vs ${match.awayTeamId})`);
+        
+        // AI tahmin motorunu çalıştır (saveMatchAnalysis otomatik olarak veritabanına ekleme/insert yapacaktır)
+        const predResult = await generatePredictions([{
+          id: match.id,
+          homeTeamId: match.homeTeamId,
+          awayTeamId: match.awayTeamId,
+          date: new Date(match.date)
+        }]);
+
+        if (predResult.predictions.length > 0) {
+          const pred = predResult.predictions[0];
+          const weather = predResult.weatherData.get(pred.matchId) || {
+            city: "World Cup Stadium",
+            temperature: 20,
+            condition: "sunny",
+            windSpeed: 10,
+            humidity: 50,
+            precipitationChance: 10
+          };
+
+          const commentary = generateAiCommentary(
+            pred.matchId,
+            match.homeTeamId,
+            match.awayTeamId,
+            pred,
+            weather,
+            predResult.playerStatuses
+          );
+
+          await supabaseAdmin
+            .from("match_analyses")
+            .update({
+              ai_commentary_tr: commentary.tr,
+              ai_commentary_en: commentary.en,
+              ai_commentary_es: commentary.es,
+              ai_commentary_fr: commentary.fr,
+              ai_commentary_de: commentary.de
+            })
+            .eq("match_id", pred.matchId);
+            
+          console.log(`✅ Yeni maç ve AI yorumları başarıyla eklendi: ${pred.matchId}`);
+        }
+      }
+    }
+
+    // 3. Maç tahminleri - Önümüzdeki 48 saatlik oynanmamış maçları seç (Grup + Canlı Üst Turlar)
+    const allGroupMatches = generateGroupFixtures().map(m => ({
+      id: m.id,
+      homeTeamId: m.homeTeamId,
+      awayTeamId: m.awayTeamId,
+      played: m.played || m.homeScore !== null || m.awayScore !== null,
+      date: m.date,
+      time: m.time || "12:00"
+    }));
+
+    const mergedFixtures = [...allGroupMatches];
+    for (const lm of resolvedKnockoutMatches) {
+      if (!mergedFixtures.some(f => f.id === lm.id)) {
+        mergedFixtures.push({
+          id: lm.id,
+          homeTeamId: lm.homeTeamId,
+          awayTeamId: lm.awayTeamId,
+          played: false,
+          date: lm.date,
+          time: lm.time
+        });
+      }
+    }
+
+    const now = Date.now();
+    const fortyEightHoursMs = 48 * 60 * 60 * 1000;
+
+    const upcomingMatches = mergedFixtures.filter((m) => {
+      if (m.played) return false;
+      
+      const [tsiHourStr, tsiMinStr] = (m.time || "12:00").split(":");
+      const tsiHour = parseInt(tsiHourStr, 10);
+      const tsiMin = parseInt(tsiMinStr, 10);
+      const [yearStr, monthStr, dayStr] = m.date.split("-");
+      const year = parseInt(yearStr, 10);
+      const month = parseInt(monthStr, 10) - 1;
+      const day = parseInt(dayStr, 10);
+
+      const tsiDate = new Date(Date.UTC(year, month, day, tsiHour, tsiMin, 0));
+      const matchUtcTime = tsiDate.getTime() - 3 * 60 * 60 * 1000;
+      
+      const timeDiff = matchUtcTime - now;
+      return timeDiff >= 0 && timeDiff <= fortyEightHoursMs;
+    });
+    
+    const formattedUpcoming = upcomingMatches.map(m => ({
+      id: m.id,
+      homeTeamId: m.homeTeamId,
+      awayTeamId: m.awayTeamId,
+      date: new Date(m.date)
+    }));
+
+    const predResult = await generatePredictions(formattedUpcoming);
+    console.log("✅ 48 saatlik tahminler tamamlandı:", predResult.predictions.length, "maç");
+
+    // Yorumları kaydet
     for (const pred of predResult.predictions) {
       const weather = predResult.weatherData.get(pred.matchId);
       if (weather) {
-        const homeTeamId = allMatches.find((m: any) => m.id === pred.matchId)?.homeTeamId || "";
-        const awayTeamId = allMatches.find((m: any) => m.id === pred.matchId)?.awayTeamId || "";
+        const homeTeamId = upcomingMatches.find((m: any) => m.id === pred.matchId)?.homeTeamId || "";
+        const awayTeamId = upcomingMatches.find((m: any) => m.id === pred.matchId)?.awayTeamId || "";
         
         const commentary = generateAiCommentary(
           pred.matchId,

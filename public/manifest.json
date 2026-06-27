@@ -1,7 +1,7 @@
 {
   "id": "com.statmatik.app",
-  "name": "MahTEM Yazılım",
-  "short_name": "MahTEM",
+  "name": "StatMatik",
+  "short_name": "StatMatik",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

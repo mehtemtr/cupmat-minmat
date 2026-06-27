@@ -114,7 +114,7 @@ export default function IOSInstallPrompt() {
         <div className="flex items-center gap-3">
           <img
             src="/icon-192.png"
-            alt="MahTEM App Logo"
+            alt="StatMatik App Logo"
             className="h-10 w-10 rounded-xl object-contain border border-white/10 bg-white/5 shadow-md shadow-emerald-500/10"
           />
           <div>
