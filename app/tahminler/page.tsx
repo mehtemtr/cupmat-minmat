@@ -812,7 +812,7 @@ export default function PredictionCenterPage() {
                   {aiAnalyses[match.id] && (
                     <>
                       {/* UI Guard: Eğer yorum boş veya null ise o yoruma ait metin kutusunu/kartını tamamen gizle, sadece skor tahminini temiz göster */}
-                      {(!aiAnalyses[match.id].analiz || aiAnalyses[match.id].analiz.trim() === "") ? (
+                      {(!aiAnalyses[match.id].analiz || aiAnalyses[match.id].analiz.trim() === "" || match.played) ? (
                         <div className="flex justify-center items-center py-2 animate-fadeIn">
                           <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-3 py-1 rounded-xl text-xs font-black uppercase tracking-wider">
                             AI Tahmini: {aiAnalyses[match.id].skor}

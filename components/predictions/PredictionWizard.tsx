@@ -240,7 +240,7 @@ export function PredictionWizard() {
                     </div>
                     <TeamLabel teamId={match.awayTeamId} />
                   </div>
-                  {aiEnabled && analysis && (
+                  {aiEnabled && analysis && !match.played && (
                     <div className="mt-3 overflow-hidden rounded-lg border border-violet-500/20 bg-violet-500/5">
                       {analysis.isLiveUpdate && (
                         <div className="flex items-center gap-2 bg-red-500/20 px-3 py-1.5 text-xs font-bold text-red-300">
