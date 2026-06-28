@@ -33,9 +33,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "19:00",
     "stadium": "Atlanta Stadı",
     "id": "A-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "A",
@@ -45,9 +45,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Guadalajara Stadı",
     "id": "A-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "group": "A",
@@ -57,9 +57,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Mexico City Stadı",
     "id": "A-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 3
   },
   {
     "group": "A",
@@ -69,9 +69,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Monterrey Stadı",
     "id": "A-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "group": "B",
@@ -105,9 +105,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Los Angeles Stadı",
     "id": "B-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 4,
+    "awayScore": 1
   },
   {
     "group": "B",
@@ -117,9 +117,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "BC Place Vancouver",
     "id": "B-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 6,
+    "awayScore": 0
   },
   {
     "group": "B",
@@ -129,9 +129,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "BC Place Vancouver Stadı",
     "id": "B-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "group": "B",
@@ -141,9 +141,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Seattle Stadı",
     "id": "B-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 1
   },
   {
     "group": "D",
@@ -165,9 +165,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "07:00",
     "stadium": "BC Place Vancouver Stadı",
     "id": "D-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 0
   },
   {
     "group": "D",
@@ -177,9 +177,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Seattle Stadı",
     "id": "D-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 0
   },
   {
     "group": "D",
@@ -189,9 +189,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "06:00",
     "stadium": "San Francisco Bay Area Stadı",
     "id": "D-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "group": "D",
@@ -201,9 +201,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Los Angeles Stadı",
     "id": "D-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 2
   },
   {
     "group": "D",
@@ -213,9 +213,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "San Francisco Bay Area Stadı",
     "id": "D-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "C",
@@ -225,9 +225,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "New York New Jersey Stadı",
     "id": "C-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "C",
@@ -237,9 +237,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Boston Stadı",
     "id": "C-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "group": "C",
@@ -249,9 +249,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "Boston Stadı",
     "id": "C-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "group": "C",
@@ -261,9 +261,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "03:30",
     "stadium": "Philadelphia Stadı",
     "id": "C-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 0
   },
   {
     "group": "C",
@@ -273,9 +273,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "Miami Stadı",
     "id": "C-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 3
   },
   {
     "group": "C",
@@ -285,9 +285,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "Atlanta Stadı",
     "id": "C-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 4,
+    "awayScore": 2
   },
   {
     "group": "E",
@@ -297,9 +297,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "20:00",
     "stadium": "Houston Stadı",
     "id": "E-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 4,
+    "awayScore": 0
   },
   {
     "group": "E",
@@ -309,9 +309,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:00",
     "stadium": "Philadelphia Stadı",
     "id": "E-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "group": "E",
@@ -321,9 +321,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "23:00",
     "stadium": "Toronto Stadı",
     "id": "E-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "group": "E",
@@ -333,9 +333,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "03:00",
     "stadium": "Kansas City Stadı",
     "id": "E-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "E",
@@ -345,9 +345,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "23:00",
     "stadium": "Philadelphia Stadı",
     "id": "E-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 2
   },
   {
     "group": "E",
@@ -357,9 +357,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "23:00",
     "stadium": "New York New Jersey Stadı",
     "id": "E-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "group": "F",
@@ -369,9 +369,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "23:00",
     "stadium": "Dallas Stadı",
     "id": "F-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 2
   },
   {
     "group": "F",
@@ -381,9 +381,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Monterrey Stadı",
     "id": "F-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 5,
+    "awayScore": 1
   },
   {
     "group": "F",
@@ -393,9 +393,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "20:00",
     "stadium": "Houston Stadı",
     "id": "F-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 5,
+    "awayScore": 1
   },
   {
     "group": "F",
@@ -405,9 +405,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "07:00",
     "stadium": "Monterrey Stadı",
     "id": "F-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 4
   },
   {
     "group": "F",
@@ -417,9 +417,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:00",
     "stadium": "Dallas Stadı",
     "id": "F-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "F",
@@ -429,9 +429,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:00",
     "stadium": "Kansas City Stadı",
     "id": "F-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "group": "H",
@@ -441,9 +441,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "19:00",
     "stadium": "Atlanta Stadı",
     "id": "H-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 3
   },
   {
     "group": "H",
@@ -453,9 +453,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "Miami Stadı",
     "id": "H-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "H",
@@ -465,9 +465,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "19:00",
     "stadium": "Atlanta Stadı",
     "id": "H-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 4,
+    "awayScore": 0
   },
   {
     "group": "H",
@@ -477,9 +477,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "Miami Stadı",
     "id": "H-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 2
   },
   {
     "group": "H",
@@ -489,9 +489,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "03:00",
     "stadium": "Houston Stadı",
     "id": "H-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "H",
@@ -501,9 +501,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "03:00",
     "stadium": "Guadalajara Stadı",
     "id": "H-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "group": "G",
@@ -513,9 +513,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Seattle Stadı",
     "id": "G-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "G",
@@ -525,9 +525,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Los Angeles Stadı",
     "id": "G-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 2
   },
   {
     "group": "G",
@@ -537,9 +537,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Los Angeles Stadı",
     "id": "G-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "G",
@@ -549,9 +549,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "BC Place Vancouver Stadı",
     "id": "G-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "group": "G",
@@ -561,9 +561,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "06:00",
     "stadium": "Seattle Stadı",
     "id": "G-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "G",
@@ -573,9 +573,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "06:00",
     "stadium": "BC Place Vancouver Stadı",
     "id": "G-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 5
   },
   {
     "group": "I",
@@ -585,9 +585,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "New York New Jersey Stadı",
     "id": "I-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 1
   },
   {
     "group": "I",
@@ -597,9 +597,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "01:00",
     "stadium": "Boston Stadı",
     "id": "I-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 4
   },
   {
     "group": "I",
@@ -609,9 +609,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "00:00",
     "stadium": "Philadelphia Stadı",
     "id": "I-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 0
   },
   {
     "group": "I",
@@ -621,9 +621,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "03:00",
     "stadium": "New York New Jersey Stadı",
     "id": "I-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 2
   },
   {
     "group": "I",
@@ -633,9 +633,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Boston Stadı",
     "id": "I-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 4
   },
   {
     "group": "I",
@@ -645,9 +645,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "22:00",
     "stadium": "Toronto Stadı",
     "id": "I-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 5,
+    "awayScore": 0
   },
   {
     "group": "J",
@@ -657,9 +657,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "04:00",
     "stadium": "Kansas City Stadı",
     "id": "J-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 0
   },
   {
     "group": "J",
@@ -669,9 +669,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "07:00",
     "stadium": "San Francisco Bay Area Stadı",
     "id": "J-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 1
   },
   {
     "group": "J",
@@ -681,9 +681,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "20:00",
     "stadium": "Dallas Stadı",
     "id": "J-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 0
   },
   {
     "group": "J",
@@ -693,9 +693,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "06:00",
     "stadium": "San Francisco Bay Area Stadı",
     "id": "J-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 2
   },
   {
     "group": "J",
@@ -705,9 +705,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Kansas City Stadı",
     "id": "J-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 3,
+    "awayScore": 3
   },
   {
     "group": "J",
@@ -717,9 +717,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Dallas Stadı",
     "id": "J-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "group": "K",
@@ -729,9 +729,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "20:00",
     "stadium": "Houston Stadı",
     "id": "K-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "group": "K",
@@ -741,9 +741,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Mexico City Stadı",
     "id": "K-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "group": "K",
@@ -753,9 +753,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "20:00",
     "stadium": "Houston Stadı",
     "id": "K-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 5,
+    "awayScore": 0
   },
   {
     "group": "K",
@@ -765,9 +765,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "05:00",
     "stadium": "Guadalajara Stadı",
     "id": "K-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "group": "K",
@@ -777,9 +777,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:30",
     "stadium": "Miami Stadı",
     "id": "K-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "K",
@@ -789,9 +789,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:30",
     "stadium": "Atlanta Stadı",
     "id": "K-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "L",
@@ -801,9 +801,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "23:00",
     "stadium": "Dallas Stadı",
     "id": "L-1",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 4,
+    "awayScore": 2
   },
   {
     "group": "L",
@@ -813,9 +813,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:00",
     "stadium": "Toronto Stadı",
     "id": "L-6",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "group": "L",
@@ -825,9 +825,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "23:00",
     "stadium": "Boston Stadı",
     "id": "L-2",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "group": "L",
@@ -837,9 +837,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "02:00",
     "stadium": "Toronto Stadı",
     "id": "L-5",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "group": "L",
@@ -849,9 +849,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "00:00",
     "stadium": "New York New Jersey Stadı",
     "id": "L-3",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 0,
+    "awayScore": 2
   },
   {
     "group": "L",
@@ -861,9 +861,9 @@ const GROUP_FIXTURES: MatchResult[] = [
     "time": "00:00",
     "stadium": "Philadelphia Stadı",
     "id": "L-4",
-    "played": false,
-    "homeScore": null,
-    "awayScore": null
+    "played": true,
+    "homeScore": 2,
+    "awayScore": 1
   }
 ];
 

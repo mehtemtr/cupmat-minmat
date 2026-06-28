@@ -4,6 +4,8 @@ import { calculatePlayerPoints, getGeneralPosition } from "./fantasy/points";
 import { generateGroupFixtures } from "./fixtures";
 import { generateSimulation } from "./simulation";
 import { getAdjustedTime } from "./tournament/time-helper";
+import fs from "fs";
+import path from "path";
 
 // Trigger Vercel auto-deploy with a new commit
 // Get list of API keys from env
@@ -157,26 +159,32 @@ function getMatchKickoff(dateStr: string, timeStr: string): number {
 }
 
 function getMatchesForStage(stage: string, allMatches: any[]): any[] {
+  const stg = stage.toLowerCase();
   return allMatches.filter((m) => {
+    const id = m.id;
+    if (!id) return false;
+
+    if (stg === "matchday_1") {
+      return id.endsWith("-1") || id.endsWith("-6");
+    } else if (stg === "matchday_2") {
+      return id.endsWith("-2") || id.endsWith("-5");
+    } else if (stg === "matchday_3") {
+      return id.endsWith("-3") || id.endsWith("-4");
+    } else if (stg === "matchday_4") {
+      return false;
+    }
+
     const dateStr = m.date;
     if (!dateStr) return false;
-    if (stage === "matchday_1") {
-      return dateStr >= "2026-06-08" && dateStr <= "2026-06-12";
-    } else if (stage === "matchday_2") {
-      return dateStr >= "2026-06-13" && dateStr <= "2026-06-17";
-    } else if (stage === "matchday_3") {
-      return dateStr >= "2026-06-18" && dateStr <= "2026-06-22";
-    } else if (stage === "matchday_4") {
-      return dateStr >= "2026-06-23" && dateStr <= "2026-06-27";
-    } else if (stage === "round_of_32") {
+    if (stg === "round_of_32") {
       return dateStr >= "2026-06-28" && dateStr <= "2026-07-03";
-    } else if (stage === "round_of_16") {
+    } else if (stg === "round_of_16") {
       return dateStr >= "2026-07-04" && dateStr <= "2026-07-08";
-    } else if (stage === "quarter_finals") {
+    } else if (stg === "quarter_finals") {
       return dateStr >= "2026-07-09" && dateStr <= "2026-07-12";
-    } else if (stage === "semi_finals") {
+    } else if (stg === "semi_finals") {
       return dateStr >= "2026-07-13" && dateStr <= "2026-07-16";
-    } else if (stage === "finals") {
+    } else if (stg === "finals") {
       return dateStr >= "2026-07-17";
     }
     return false;
@@ -237,7 +245,7 @@ async function fetchAllDbRosters(): Promise<any[]> {
 
 export async function syncSimulatedScores(stage: string): Promise<string[]> {
   const logs: string[] = [];
-  logs.push(`[Simulation-Sync] Starting fallback simulation-based sync for Stage ${stage}...`);
+  logs.push(`[Simulation-Sync] Starting real data-based sync from JSON for Stage ${stage}...`);
 
   const fixtures = generateGroupFixtures();
   const stageMatches = getMatchesForStage(stage, fixtures);
@@ -250,6 +258,19 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
   const dbRosters = await fetchAllDbRosters();
   if (dbRosters.length === 0) {
     throw new Error("No rosters found in database (team_rosters).");
+  }
+
+  // Load real tournament stats from JSON file if exists
+  let realStatsData: any = null;
+  try {
+    const statsPath = path.join(process.cwd(), "data", "real-tournament-stats.json");
+    if (fs.existsSync(statsPath)) {
+      const fileContent = fs.readFileSync(statsPath, "utf8");
+      realStatsData = JSON.parse(fileContent);
+      logs.push(`[Simulation-Sync] Loaded real tournament stats from JSON.`);
+    }
+  } catch (e: any) {
+    logs.push(`[Simulation-Sync] Failed to read real tournament stats: ${e.message}`);
   }
 
   const MOCK_CURRENT_TIME = getAdjustedTime();
@@ -279,26 +300,34 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
     return MOCK_CURRENT_TIME >= kickoff;
   });
 
-  // Merge real scores from liveMatches
+  // Merge real scores from liveMatches or realStatsData
   startedMatches.forEach(m => {
-    const apiMatch = liveMatches.find((lm: any) => {
-      const apiHomeTla = (lm.homeTeam.tla || "").toLowerCase().trim();
-      const apiAwayTla = (lm.awayTeam.tla || "").toLowerCase().trim();
-      const homeTla = apiHomeTla === "hai" ? "hti" : (apiHomeTla === "ury" ? "uru" : apiHomeTla);
-      const awayTla = apiAwayTla === "hai" ? "hti" : (apiAwayTla === "ury" ? "uru" : apiAwayTla);
-      return homeTla === m.homeTeamId && awayTla === m.awayTeamId;
-    });
+    const jsonMatch = realStatsData?.[stage]?.find((jm: any) => jm.matchId === m.id);
+    if (jsonMatch) {
+      m.homeScore = jsonMatch.homeScore;
+      m.awayScore = jsonMatch.awayScore;
+      m.played = true;
+      logs.push(`[Simulation-Sync] Match ${m.id} mapped to real JSON score: ${m.homeScore} - ${m.awayScore}`);
+    } else {
+      const apiMatch = liveMatches.find((lm: any) => {
+        const apiHomeTla = (lm.homeTeam.tla || "").toLowerCase().trim();
+        const apiAwayTla = (lm.awayTeam.tla || "").toLowerCase().trim();
+        const homeTla = apiHomeTla === "hai" ? "hti" : (apiHomeTla === "ury" ? "uru" : apiHomeTla);
+        const awayTla = apiAwayTla === "hai" ? "hti" : (apiAwayTla === "ury" ? "uru" : apiAwayTla);
+        return homeTla === m.homeTeamId && awayTla === m.awayTeamId;
+      });
 
-    if (apiMatch) {
-      const status = apiMatch.status;
-      const played = status === "FINISHED";
-      const isLive = ["IN_PLAY", "PAUSED"].includes(status);
-      if (played || isLive) {
-        m.homeScore = apiMatch.score.fullTime.home;
-        m.awayScore = apiMatch.score.fullTime.away;
-        m.played = played;
-        m.isLive = isLive;
-        logs.push(`[Simulation-Sync] Match ${m.id} mapped to real score: ${m.homeScore} - ${m.awayScore} (status: ${status})`);
+      if (apiMatch) {
+        const status = apiMatch.status;
+        const played = status === "FINISHED";
+        const isLive = ["IN_PLAY", "PAUSED"].includes(status);
+        if (played || isLive) {
+          m.homeScore = apiMatch.score.fullTime.home;
+          m.awayScore = apiMatch.score.fullTime.away;
+          m.played = played;
+          m.isLive = isLive;
+          logs.push(`[Simulation-Sync] Match ${m.id} mapped to Football-Data score: ${m.homeScore} - ${m.awayScore} (status: ${status})`);
+        }
       }
     }
   });
@@ -306,73 +335,73 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
   logs.push(`[Simulation-Sync] Found ${startedMatches.length}/${stageMatches.length} matches started/completed.`);
 
   for (const match of startedMatches) {
-    const kickoff = getMatchKickoff(match.date, match.time || "12:00");
-    const elapsedMs = MOCK_CURRENT_TIME - kickoff;
-    const isFinished = elapsedMs >= 120 * 60 * 1000;
-    const elapsedMinutes = isFinished ? 94 : Math.min(94, Math.max(1, Math.floor(elapsedMs / 60000)));
+    logs.push(`[Simulation-Sync] Processing Match ${match.id}: ${match.homeTeamId} vs ${match.awayTeamId}`);
 
-    logs.push(`[Simulation-Sync] Processing Match ${match.id}: ${match.homeTeamId} vs ${match.awayTeamId} (${elapsedMinutes} mins)`);
-
-    const homeTeam = TEAMS.find(t => t.id === match.homeTeamId);
-    const awayTeam = TEAMS.find(t => t.id === match.awayTeamId);
-
-    const homePlayers = dbRosters
-      .filter(r => r.team_id === match.homeTeamId)
-      .sort((a, b) => {
-        const indexA = homeTeam?.players.findIndex(p => p.name === a.player_name) ?? 0;
-        const indexB = homeTeam?.players.findIndex(p => p.name === b.player_name) ?? 0;
-        return indexA - indexB;
-      });
-
-    const awayPlayers = dbRosters
-      .filter(r => r.team_id === match.awayTeamId)
-      .sort((a, b) => {
-        const indexA = awayTeam?.players.findIndex(p => p.name === a.player_name) ?? 0;
-        const indexB = awayTeam?.players.findIndex(p => p.name === b.player_name) ?? 0;
-        return indexA - indexB;
-      });
+    const homePlayers = dbRosters.filter(r => r.team_id === match.homeTeamId);
+    const awayPlayers = dbRosters.filter(r => r.team_id === match.awayTeamId);
 
     if (homePlayers.length === 0 || awayPlayers.length === 0) {
       logs.push(`[Simulation-Sync] Missing rosters for teams ${match.homeTeamId} or ${match.awayTeamId}.`);
       continue;
     }
 
-    const events = generateSimulation(match, homePlayers, awayPlayers);
-    const activeEvents = events.filter(e => e.minute <= elapsedMinutes);
-    const scoreEvents = activeEvents.filter(e => e.scoreAfter);
-    const finalScore = scoreEvents.length > 0 ? scoreEvents[scoreEvents.length - 1].scoreAfter : { home: 0, away: 0 };
-    const homeGoals = finalScore?.home ?? 0;
-    const awayGoals = finalScore?.away ?? 0;
+    const jsonMatch = realStatsData?.[stage]?.find((jm: any) => jm.matchId === match.id);
 
+    if (!jsonMatch) {
+      logs.push(`[Simulation-Sync] No real stats found in JSON for Match ${match.id}. Player stats will not be generated for this match.`);
+      
+      // Still update manager stats if score is present
+      if (match.played && match.homeScore !== null && match.awayScore !== null) {
+        const homeGoals = match.homeScore;
+        const awayGoals = match.awayScore;
+        const homeResult = homeGoals > awayGoals ? "win" : homeGoals < awayGoals ? "loss" : "draw";
+        const awayResult = homeGoals < awayGoals ? "win" : homeGoals > awayGoals ? "loss" : "draw";
+        
+        const homeManagerPoints = calculateManagerPoints({ result: homeResult, goal_difference: homeGoals - awayGoals });
+        const awayManagerPoints = calculateManagerPoints({ result: awayResult, goal_difference: awayGoals - homeGoals });
+
+        const managerStats = [
+          {
+            manager_id: match.homeTeamId,
+            stage,
+            result: homeResult,
+            goal_difference: homeGoals - awayGoals,
+            points: homeManagerPoints
+          },
+          {
+            manager_id: match.awayTeamId,
+            stage,
+            result: awayResult,
+            goal_difference: awayGoals - homeGoals,
+            points: awayManagerPoints
+          }
+        ];
+
+        await supabaseAdmin
+          .from("manager_stage_stats")
+          .upsert(managerStats, { onConflict: "manager_id, stage" });
+      }
+      continue;
+    }
+
+    const homeGoals = jsonMatch.homeScore;
+    const awayGoals = jsonMatch.awayScore;
     const statsMap: Record<string, any> = {};
 
-    const getStarter11 = (players: any[]) => {
-      const gks = players.filter(p => getGeneralPosition(p.player_position) === "GK").slice(0, 1);
-      const defs = players.filter(p => getGeneralPosition(p.player_position) === "DEF").slice(0, 4);
-      const mids = players.filter(p => getGeneralPosition(p.player_position) === "MID").slice(0, 4);
-      const fwds = players.filter(p => getGeneralPosition(p.player_position) === "FWD").slice(0, 2);
-      const starters = [...gks, ...defs, ...mids, ...fwds];
-      const starterIds = new Set(starters.map(s => s.id));
-      const bench = players.filter(p => !starterIds.has(p.id));
-      return { starters, bench };
-    };
-
-    const homeSquad = getStarter11(homePlayers);
-    const awaySquad = getStarter11(awayPlayers);
-
-    const initPlayerStats = (player: any, isStarter: boolean) => {
-      statsMap[player.id] = {
-        player_id: player.id,
+    // 1. Initialize statsMap for all players listed in the JSON match
+    jsonMatch.players.forEach((jp: any) => {
+      statsMap[jp.playerId] = {
+        player_id: jp.playerId,
         stage,
-        minutes_played: isStarter ? elapsedMinutes : 0,
-        goals: 0,
-        assists: 0,
-        yellow_cards: 0,
-        red_cards: 0,
+        minutes_played: jp.minutesPlayed,
+        goals: jp.goals,
+        assists: jp.assists,
+        yellow_cards: jp.yellowCards,
+        red_cards: jp.redCards,
         clean_sheet: false,
         goals_conceded: 0,
         goal_difference: 0,
-        own_goals: 0,
+        own_goals: jp.ownGoals || 0,
         saves: 0,
         penalty_saved: 0,
         penalty_missed: 0,
@@ -380,71 +409,9 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
         penalty_conceded: 0,
         team_result: "draw"
       };
-    };
-
-    homePlayers.forEach(p => initPlayerStats(p, homeSquad.starters.some(s => s.id === p.id)));
-    awayPlayers.forEach(p => initPlayerStats(p, awaySquad.starters.some(s => s.id === p.id)));
-
-    activeEvents.forEach(ev => {
-      if (ev.type === "goal") {
-        const isOwnGoal = ev.textTr.includes("kendi kalesine") || ev.textEn.includes("own goal");
-        if (isOwnGoal) {
-          const ogPlayerName = ev.textTr.split("kendi kalesine gol atan oyuncu: ")[1]?.replace("!", "")?.trim() || 
-                               ev.textEn.split("own goal by ")[1]?.replace("!", "")?.trim() || "";
-          const ogPlayer = findBestPlayerMatch(ogPlayerName, [...homePlayers, ...awayPlayers]);
-          if (ogPlayer && statsMap[ogPlayer.id]) {
-            statsMap[ogPlayer.id].own_goals++;
-          }
-        } else {
-          const scorerName = ev.textTr.split("Golü atan oyuncu: ")[1]?.split(",")[0]?.replace("!", "")?.trim() || 
-                             ev.textEn.split("Goal by ")[1]?.split(",")[0]?.replace("!", "")?.trim() || "";
-          const scorer = findBestPlayerMatch(scorerName, [...homePlayers, ...awayPlayers]);
-          if (scorer && statsMap[scorer.id]) {
-            statsMap[scorer.id].goals++;
-          }
-
-          const assistName = ev.textTr.split("Asisti yapan oyuncu: ")[1]?.replace("!", "")?.trim() || 
-                             ev.textEn.split("Assist by ")[1]?.replace("!", "")?.trim() || "";
-          if (assistName) {
-            const assister = findBestPlayerMatch(assistName, [...homePlayers, ...awayPlayers]);
-            if (assister && statsMap[assister.id]) {
-              statsMap[assister.id].assists++;
-            }
-          }
-        }
-      } else if (ev.type === "card") {
-        const isRed = ev.textTr.includes("Kırmızı Kart") || ev.textEn.includes("Red Card") || ev.isRedCard;
-        let bookedName = "";
-        if (isRed) {
-          bookedName = ev.textTr.split("Kırmızı Kart gören oyuncu: ")[1]?.replace(".", "")?.trim() || 
-                       ev.textEn.split("Red Card for ")[1]?.replace(".", "")?.trim() || "";
-        } else {
-          bookedName = ev.textTr.split("Sarı Kart: ")[1]?.split(" rakibine")[0]?.trim() || 
-                       ev.textEn.split("Yellow Card: ")[1]?.split(" receives")[0]?.trim() || "";
-        }
-        const booked = findBestPlayerMatch(bookedName, [...homePlayers, ...awayPlayers]);
-        if (booked && statsMap[booked.id]) {
-          if (isRed) {
-            statsMap[booked.id].red_cards++;
-            statsMap[booked.id].minutes_played = ev.minute;
-          } else {
-            statsMap[booked.id].yellow_cards++;
-          }
-        }
-      } else if (ev.type === "sub") {
-        const outName = ev.textTr.split("oyuncu değişikliği. ")[1]?.split(" kenara")[0]?.trim() || "";
-        const inName = ev.textTr.split("kenara gelirken ")[1]?.split(" oyuna")[0]?.trim() || "";
-        const subOut = findBestPlayerMatch(outName, [...homePlayers, ...awayPlayers]);
-        const subIn = findBestPlayerMatch(inName, [...homePlayers, ...awayPlayers]);
-        if (subOut && statsMap[subOut.id]) {
-          statsMap[subOut.id].minutes_played = ev.minute;
-        }
-        if (subIn && statsMap[subIn.id]) {
-          statsMap[subIn.id].minutes_played = Math.max(0, elapsedMinutes - ev.minute);
-        }
-      }
     });
 
+    // 2. Helper to populate clean sheet, goals conceded, and goalkeeper saves
     const updateTeamOutcomes = (
       players: any[], 
       ownGoalsConceded: number, 
@@ -469,6 +436,7 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
           }
         }
         if (pos === "GK") {
+          // Generate a realistic number of goalkeeper saves if they played
           pStats.saves = Math.floor(Math.random() * 4) + 2;
         }
       });
@@ -480,6 +448,7 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
     updateTeamOutcomes(homePlayers, awayGoals, homeGoals, homeResult);
     updateTeamOutcomes(awayPlayers, homeGoals, awayGoals, awayResult);
 
+    // 3. Clear existing stats for these players and this stage
     const playerIdsToClear = [...homePlayers, ...awayPlayers].map(p => p.id);
     await supabaseAdmin
       .from("player_stage_stats")
@@ -487,13 +456,17 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
       .eq("stage", stage)
       .in("player_id", playerIdsToClear);
 
-    const playerStatsArray = Object.values(statsMap).filter(s => s.minutes_played > 0 || s.goals > 0 || s.yellow_cards > 0 || s.red_cards > 0 || s.own_goals > 0);
+    // 4. Calculate points for active players
+    const playerStatsArray = Object.values(statsMap).filter(
+      (s: any) => s.minutes_played > 0 || s.goals > 0 || s.yellow_cards > 0 || s.red_cards > 0 || s.own_goals > 0
+    );
     
     playerStatsArray.forEach((ps) => {
       const playerInfo = dbRosters.find((r) => r.id === ps.player_id);
       ps.points = calculatePlayerPoints(ps, playerInfo?.player_position || "MID");
     });
 
+    // 5. Save player stats to DB
     if (playerStatsArray.length > 0) {
       const { error: upsertErr } = await supabaseAdmin
         .from("player_stage_stats")
@@ -503,6 +476,7 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
       }
     }
 
+    // 6. Calculate and save manager points
     const homeManagerPoints = calculateManagerPoints({ result: homeResult, goal_difference: homeGoals - awayGoals });
     const awayManagerPoints = calculateManagerPoints({ result: awayResult, goal_difference: awayGoals - homeGoals });
 
@@ -532,14 +506,32 @@ export async function syncSimulatedScores(stage: string): Promise<string[]> {
     }
   }
 
-  logs.push(`[Simulation-Sync] Fallback simulation sync complete for Stage ${stage}!`);
+  logs.push(`[Simulation-Sync] Fallback sync complete for Stage ${stage}!`);
   return logs;
 }
+
 
 // Sync scores and stats for today's active or finished matches
 export async function syncApiFootballScores(stage = "matchday_1"): Promise<string[]> {
   const logs: string[] = [];
   logs.push("Starting API-Football Synchronization...");
+
+  // If real-tournament-stats.json exists and has data for this stage, use it directly!
+  try {
+    const statsPath = path.join(process.cwd(), "data", "real-tournament-stats.json");
+    if (fs.existsSync(statsPath)) {
+      const fileContent = fs.readFileSync(statsPath, "utf8");
+      const realStatsData = JSON.parse(fileContent);
+      if (realStatsData && realStatsData[stage]) {
+        logs.push(`[Sync] Found real stats in JSON for stage ${stage}. Using JSON-based sync directly.`);
+        const jsonLogs = await syncSimulatedScores(stage);
+        logs.push(...jsonLogs);
+        return logs;
+      }
+    }
+  } catch (e: any) {
+    logs.push(`[Sync] Failed to check real tournament stats JSON: ${e.message}`);
+  }
 
   try {
     // 1. Fetch World Cup 2026 matches list from API-Football

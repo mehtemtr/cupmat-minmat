@@ -6,7 +6,7 @@ import { OFFICIAL_GROUP_DRAW } from "@/data/official-groups";
 import { Redis } from "@upstash/redis";
 import { ensureTimeSpacedBots, STAGE_START_DATES } from "@/lib/fantasy/bot-registration";
 import { getAdjustedDate } from "@/lib/tournament/time-helper";
-import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic, getLockedTeamsForStage } from "@/lib/fantasy/points";
+import { getGeneralPosition, getPlayerMapping, translateToUuid, translateToStatic, getLockedTeamsForStage, getActiveTeamsForStage } from "@/lib/fantasy/points";
 
 const redis = Redis.fromEnv();
 
@@ -174,7 +174,8 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked, stage, lockedTeams, establishedNames });
+    const activeTeams = getActiveTeamsForStage(stage);
+    return NextResponse.json({ success: true, rosters: rostersWithDetails, isLocked, stage, lockedTeams, establishedNames, activeTeams });
   } catch (error: any) {
     console.error("GET rosters error:", error);
     return NextResponse.json(

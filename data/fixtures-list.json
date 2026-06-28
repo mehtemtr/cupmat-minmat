@@ -1,0 +1,434 @@
+[
+  {
+    "group": "A",
+    "homeTeamId": "mex",
+    "awayTeamId": "rsa",
+    "id": "A-1"
+  },
+  {
+    "group": "A",
+    "homeTeamId": "kor",
+    "awayTeamId": "cze",
+    "id": "A-6"
+  },
+  {
+    "group": "A",
+    "homeTeamId": "cze",
+    "awayTeamId": "rsa",
+    "id": "A-2"
+  },
+  {
+    "group": "A",
+    "homeTeamId": "mex",
+    "awayTeamId": "kor",
+    "id": "A-5"
+  },
+  {
+    "group": "A",
+    "homeTeamId": "cze",
+    "awayTeamId": "mex",
+    "id": "A-3"
+  },
+  {
+    "group": "A",
+    "homeTeamId": "rsa",
+    "awayTeamId": "kor",
+    "id": "A-4"
+  },
+  {
+    "group": "B",
+    "homeTeamId": "can",
+    "awayTeamId": "bih",
+    "id": "B-1"
+  },
+  {
+    "group": "B",
+    "homeTeamId": "qat",
+    "awayTeamId": "sui",
+    "id": "B-6"
+  },
+  {
+    "group": "B",
+    "homeTeamId": "sui",
+    "awayTeamId": "bih",
+    "id": "B-2"
+  },
+  {
+    "group": "B",
+    "homeTeamId": "can",
+    "awayTeamId": "qat",
+    "id": "B-5"
+  },
+  {
+    "group": "B",
+    "homeTeamId": "sui",
+    "awayTeamId": "can",
+    "id": "B-3"
+  },
+  {
+    "group": "B",
+    "homeTeamId": "bih",
+    "awayTeamId": "qat",
+    "id": "B-4"
+  },
+  {
+    "group": "D",
+    "homeTeamId": "usa",
+    "awayTeamId": "par",
+    "id": "D-1"
+  },
+  {
+    "group": "D",
+    "homeTeamId": "aus",
+    "awayTeamId": "tur",
+    "id": "D-6"
+  },
+  {
+    "group": "D",
+    "homeTeamId": "usa",
+    "awayTeamId": "aus",
+    "id": "D-2"
+  },
+  {
+    "group": "D",
+    "homeTeamId": "tur",
+    "awayTeamId": "par",
+    "id": "D-5"
+  },
+  {
+    "group": "D",
+    "homeTeamId": "tur",
+    "awayTeamId": "usa",
+    "id": "D-3"
+  },
+  {
+    "group": "D",
+    "homeTeamId": "par",
+    "awayTeamId": "aus",
+    "id": "D-4"
+  },
+  {
+    "group": "C",
+    "homeTeamId": "bra",
+    "awayTeamId": "mar",
+    "id": "C-1"
+  },
+  {
+    "group": "C",
+    "homeTeamId": "hti",
+    "awayTeamId": "sco",
+    "id": "C-6"
+  },
+  {
+    "group": "C",
+    "homeTeamId": "sco",
+    "awayTeamId": "mar",
+    "id": "C-2"
+  },
+  {
+    "group": "C",
+    "homeTeamId": "bra",
+    "awayTeamId": "hti",
+    "id": "C-5"
+  },
+  {
+    "group": "C",
+    "homeTeamId": "sco",
+    "awayTeamId": "bra",
+    "id": "C-3"
+  },
+  {
+    "group": "C",
+    "homeTeamId": "mar",
+    "awayTeamId": "hti",
+    "id": "C-4"
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ger",
+    "awayTeamId": "cuw",
+    "id": "E-1"
+  },
+  {
+    "group": "E",
+    "homeTeamId": "civ",
+    "awayTeamId": "ecu",
+    "id": "E-6"
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ger",
+    "awayTeamId": "civ",
+    "id": "E-2"
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ecu",
+    "awayTeamId": "cuw",
+    "id": "E-5"
+  },
+  {
+    "group": "E",
+    "homeTeamId": "cuw",
+    "awayTeamId": "civ",
+    "id": "E-3"
+  },
+  {
+    "group": "E",
+    "homeTeamId": "ecu",
+    "awayTeamId": "ger",
+    "id": "E-4"
+  },
+  {
+    "group": "F",
+    "homeTeamId": "ned",
+    "awayTeamId": "jpn",
+    "id": "F-1"
+  },
+  {
+    "group": "F",
+    "homeTeamId": "swe",
+    "awayTeamId": "tun",
+    "id": "F-6"
+  },
+  {
+    "group": "F",
+    "homeTeamId": "ned",
+    "awayTeamId": "swe",
+    "id": "F-2"
+  },
+  {
+    "group": "F",
+    "homeTeamId": "tun",
+    "awayTeamId": "jpn",
+    "id": "F-5"
+  },
+  {
+    "group": "F",
+    "homeTeamId": "jpn",
+    "awayTeamId": "swe",
+    "id": "F-3"
+  },
+  {
+    "group": "F",
+    "homeTeamId": "tun",
+    "awayTeamId": "ned",
+    "id": "F-4"
+  },
+  {
+    "group": "H",
+    "homeTeamId": "esp",
+    "awayTeamId": "cpv",
+    "id": "H-1"
+  },
+  {
+    "group": "H",
+    "homeTeamId": "ksa",
+    "awayTeamId": "uru",
+    "id": "H-6"
+  },
+  {
+    "group": "H",
+    "homeTeamId": "esp",
+    "awayTeamId": "ksa",
+    "id": "H-2"
+  },
+  {
+    "group": "H",
+    "homeTeamId": "uru",
+    "awayTeamId": "cpv",
+    "id": "H-5"
+  },
+  {
+    "group": "H",
+    "homeTeamId": "cpv",
+    "awayTeamId": "ksa",
+    "id": "H-3"
+  },
+  {
+    "group": "H",
+    "homeTeamId": "uru",
+    "awayTeamId": "esp",
+    "id": "H-4"
+  },
+  {
+    "group": "G",
+    "homeTeamId": "bel",
+    "awayTeamId": "egy",
+    "id": "G-1"
+  },
+  {
+    "group": "G",
+    "homeTeamId": "irn",
+    "awayTeamId": "nzl",
+    "id": "G-6"
+  },
+  {
+    "group": "G",
+    "homeTeamId": "bel",
+    "awayTeamId": "irn",
+    "id": "G-2"
+  },
+  {
+    "group": "G",
+    "homeTeamId": "nzl",
+    "awayTeamId": "egy",
+    "id": "G-5"
+  },
+  {
+    "group": "G",
+    "homeTeamId": "egy",
+    "awayTeamId": "irn",
+    "id": "G-3"
+  },
+  {
+    "group": "G",
+    "homeTeamId": "nzl",
+    "awayTeamId": "bel",
+    "id": "G-4"
+  },
+  {
+    "group": "I",
+    "homeTeamId": "fra",
+    "awayTeamId": "sen",
+    "id": "I-1"
+  },
+  {
+    "group": "I",
+    "homeTeamId": "irq",
+    "awayTeamId": "nor",
+    "id": "I-6"
+  },
+  {
+    "group": "I",
+    "homeTeamId": "fra",
+    "awayTeamId": "irq",
+    "id": "I-2"
+  },
+  {
+    "group": "I",
+    "homeTeamId": "nor",
+    "awayTeamId": "sen",
+    "id": "I-5"
+  },
+  {
+    "group": "I",
+    "homeTeamId": "nor",
+    "awayTeamId": "fra",
+    "id": "I-3"
+  },
+  {
+    "group": "I",
+    "homeTeamId": "sen",
+    "awayTeamId": "irq",
+    "id": "I-4"
+  },
+  {
+    "group": "J",
+    "homeTeamId": "arg",
+    "awayTeamId": "alg",
+    "id": "J-1"
+  },
+  {
+    "group": "J",
+    "homeTeamId": "aut",
+    "awayTeamId": "jor",
+    "id": "J-6"
+  },
+  {
+    "group": "J",
+    "homeTeamId": "arg",
+    "awayTeamId": "aut",
+    "id": "J-2"
+  },
+  {
+    "group": "J",
+    "homeTeamId": "jor",
+    "awayTeamId": "alg",
+    "id": "J-5"
+  },
+  {
+    "group": "J",
+    "homeTeamId": "alg",
+    "awayTeamId": "aut",
+    "id": "J-3"
+  },
+  {
+    "group": "J",
+    "homeTeamId": "jor",
+    "awayTeamId": "arg",
+    "id": "J-4"
+  },
+  {
+    "group": "K",
+    "homeTeamId": "por",
+    "awayTeamId": "cod",
+    "id": "K-1"
+  },
+  {
+    "group": "K",
+    "homeTeamId": "uzb",
+    "awayTeamId": "col",
+    "id": "K-6"
+  },
+  {
+    "group": "K",
+    "homeTeamId": "por",
+    "awayTeamId": "uzb",
+    "id": "K-2"
+  },
+  {
+    "group": "K",
+    "homeTeamId": "col",
+    "awayTeamId": "cod",
+    "id": "K-5"
+  },
+  {
+    "group": "K",
+    "homeTeamId": "col",
+    "awayTeamId": "por",
+    "id": "K-3"
+  },
+  {
+    "group": "K",
+    "homeTeamId": "cod",
+    "awayTeamId": "uzb",
+    "id": "K-4"
+  },
+  {
+    "group": "L",
+    "homeTeamId": "eng",
+    "awayTeamId": "cro",
+    "id": "L-1"
+  },
+  {
+    "group": "L",
+    "homeTeamId": "gha",
+    "awayTeamId": "pan",
+    "id": "L-6"
+  },
+  {
+    "group": "L",
+    "homeTeamId": "eng",
+    "awayTeamId": "gha",
+    "id": "L-2"
+  },
+  {
+    "group": "L",
+    "homeTeamId": "pan",
+    "awayTeamId": "cro",
+    "id": "L-5"
+  },
+  {
+    "group": "L",
+    "homeTeamId": "pan",
+    "awayTeamId": "eng",
+    "id": "L-3"
+  },
+  {
+    "group": "L",
+    "homeTeamId": "cro",
+    "awayTeamId": "gha",
+    "id": "L-4"
+  }
+]

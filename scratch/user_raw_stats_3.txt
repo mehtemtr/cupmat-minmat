@@ -1,0 +1,895 @@
+5. MAÇ: Meksika 3 - 0 Çekya (24 Haziran 2026)							
+🇲🇽 Meksika İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Santiago Giménez	2 (18', 45+1')	0	0	0	İlk 11	74'	74 dk
+Roberto Alvarado	1 (79')	1	0	0	İlk 11	Maç Sonu	90 dk
+Luis Romo	0	1	0	0	İlk 11	Maç Sonu	90 dk
+César Montes	0	0	1 (31')	0	İlk 11	Maç Sonu	90 dk
+Raúl Rangel (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Israel Reyes	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Johan Vásquez	0	0	0	0	İlk 11	82'	82 dk
+Jorge Sánchez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Edson Álvarez	0	0	0	0	İlk 11	63'	63 dk
+Julián Quiñones	0	0	0	0	İlk 11	63'	63 dk
+Orbelín Pineda	0	0	0	0	63'	Sonradan	27 dk
+César Huerta	0	0	0	0	63'	Sonradan	27 dk
+Raúl Jiménez	0	0	0	0	74'	Sonradan	16 dk
+Jesús Gallardo	0	0	0	0	82'	Sonradan	8 dk
+🇨🇿 Çekya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Tomáš Souček	0	0	1 (55')	0	İlk 11	Maç Sonu	90 dk
+Matěj Kovář (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Štěpán Chaloupek	0	0	0	0	İlk 11	46'	46 dk
+Robin Hranáč	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ladislav Krejčí	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Vladimír Coufal	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jaroslav Zelený	0	0	0	0	İlk 11	71'	71 dk
+Alexandr Sojka	0	0	0	0	İlk 11	60'	60 dk
+Lukáš Provod	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Adam Hložek	0	0	0	0	İlk 11	60'	60 dk
+Patrik Schick	0	0	0	0	İlk 11	71'	71 dk
+Martin Vitík	0	0	0	0	46'	Sonradan	44 dk
+Pavel Šulc	0	0	0	0	60'	Sonradan	30 dk
+Tomáš Chorý	0	0	0	0	60'	Sonradan	30 dk
+David Douděra	0	0	0	0	71'	Sonradan	19 dk
+Mojmír Chytil	0	0	0	0	71'	Sonradan	19 dk
+							
+6. MAÇ: Güney Afrika 1 - 0 Güney Kore (24 Haziran 2026)							
+🇿🇦 Güney Afrika İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Lyle Foster	1 (34')	0	0	0	İlk 11	80'	80 dk
+Teboho Mokoena	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Aubrey Modiba	0	0	1 (44')	0	İlk 11	Maç Sonu	90 dk
+Ronwen Williams (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Khuliso Mudau	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ime Okon	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nkosinathi Sibisi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Thalente Mbatha	0	0	0	0	İlk 11	73'	73 dk
+Oswin Appollis	0	0	0	0	İlk 11	62'	62 dk
+Evidence Makgopa	0	0	0	0	İlk 11	62'	62 dk
+Elias Mokwana	0	0	0	0	62'	Sonradan	28 dk
+Jayden Adams	0	0	0	0	62'	Sonradan	28 dk
+Luke Le Roux	0	0	0	0	73'	Sonradan	17 dk
+Mbekezeli Mbokazi	0	0	0	0	80'	Sonradan	10 dk
+🇰🇷 Güney Kore İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Paik Seung-ho	0	0	1 (19')	0	İlk 11	65'	65 dk
+Kim Seung-Gyu (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Kim Min-jae	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lee Han-beom	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Seol Young-woo	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Kim Jin-su	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hwang In-beom	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lee Kang-in	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lee Jae-sung	0	0	0	0	İlk 11	55'	55 dk
+Son Heung-min	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hwang Hee-chan	0	0	0	0	İlk 11	55'	55 dk
+Hong Hyun-seok	0	0	0	0	55'	Sonradan	35 dk
+Oh Hyeon-gyu	0	0	0	0	55'	Sonradan	35 dk
+Jeong Woo-yeong	0	0	0	0	65'	Sonradan	25 dk
+							
+							
+5. MAÇ: İsviçre 2 - 1 Kanada (24 Haziran 2026)							
+🇨🇭 İsviçre İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Ruben Vargas	1 (31')	0	0	0	İlk 11	79'	79 dk
+Dereck Kutesa	1 (68')	0	0	0	İlk 11	70'	70 dk
+Zeki Amdouni	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Granit Xhaka	0	1	1 (45')	0	İlk 11	Maç Sonu	90 dk
+Yann Sommer (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Manuel Akanji	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nico Elvedi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ricardo Rodríguez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Silvan Widmer	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Remo Freuler	0	0	0	0	İlk 11	62'	62 dk
+Denis Zakaria	0	0	0	0	İlk 11	62'	62 dk
+Michel Aebischer	0	0	0	0	62'	Sonradan	28 dk
+Vincent Sierro	0	0	0	0	62'	Sonradan	28 dk
+Dan Ndoye	0	0	0	0	70'	Sonradan	20 dk
+Noah Okafor	0	0	0	0	79'	Sonradan	11 dk
+🇨🇦 Kanada İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Promise David	1 (54')	0	0	0	60'	Sonradan	30 dk
+Jacob Shaffelburg	0	1	0	0	İlk 11	75'	75 dk
+Ismaël Koné	0	0	1 (24')	0	İlk 11	Maç Sonu	90 dk
+Kamal Miller	0	0	1 (88')	0	İlk 11	Maç Sonu	90 dk
+Dayne St. Clair (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Alistair Johnston	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Moïse Bombito	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Alphonso Davies	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Stephen Eustáquio	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Tajon Buchanan	0	0	0	0	İlk 11	60'	60 dk
+Jonathan David	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Cyle Larin	0	0	0	0	60'	Sonradan	30 dk
+Liam Millar	0	0	0	0	60'	Sonradan	30 dk
+Theo Bair	0	0	0	0	75'	Sonradan	15 dk
+							
+6. MAÇ: Bosna-Hersek 3 - 1 Katar (24 Haziran 2026)							
+🇧🇦 Bosna-Hersek İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Dženan Alajbegović	1 (19')	0	0	0	İlk 11	72'	72 dk
+Ermin Mahmić	1 (82')	0	0	0	İlk 11	Maç Sonu	90 dk
+Ermedin Demirović	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Haris Hajradinović	0	1	0	0	İlk 11	80'	80 dk
+Dennis Hadžikadunić	0	0	1 (64')	0	İlk 11	Maç Sonu	90 dk
+Nikola Vasilj (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Sead Kolašinac	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Anel Ahmedhodžić	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jusuf Gazibegović	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Amar Dedić	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Denis Huseinbašić	0	0	0	0	İlk 11	61'	61 dk
+Armin Gigović	0	0	0	0	61'	Sonradan	29 dk
+Benjamin Tahirović	0	0	0	0	72'	Sonradan	18 dk
+Rade Krunić	0	0	0	0	80'	Sonradan	10 dk
+Not: Homam Ahmed 47. dakikada kendi kalesine gol atmıştır.							
+QA Katar İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Hassan Al-Haydos	1 (60')	0	0	0	46'	Sonradan	44 dk
+Akram Afif	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Ahmed Fathy	0	0	1 (75')	0	İlk 11	Maç Sonu	90 dk
+Meshaal Barsham (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Tarek Salman	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Boualem Khoukhi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lucas Mendes	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Homam Ahmed	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jassem Gaber	0	0	0	0	İlk 11	46'	46 dk
+Mohammed Waad	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Almoez Ali	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Assim Madibo	0	0	0	0	46'	Sonradan	44 dk
+Yusuf Abdurisag	0	0	0	0	46'	Sonradan	44 dk
+							
+							
+5. MAÇ: İskoçya 0 - 3 Brezilya (24 Haziran 2026)							
+🇧🇷 Brezilya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Vinícius Júnior	2 (7', 45+2')	0	0	0	İlk 11	Maç Sonu	90 dk
+Matheus Cunha	1 (60')	0	0	0	İlk 11	76'	76 dk
+Bruno Guimarães	0	2	0	0	İlk 11	Maç Sonu	90 dk
+Rayan	0	1	0	0	İlk 11	82'	82 dk
+Danilo	0	0	1 (62')	0	İlk 11	Maç Sonu	90 dk
+Fabinho	0	0	1 (82')	0	65'	Sonradan	25 dk
+Alisson (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Marquinhos	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gabriel Magalhães	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Douglas Santos	0	0	0	0	İlk 11	82'	82 dk
+Casemiro	0	0	0	0	İlk 11	66'	66 dk
+Lucas Paquetá	0	0	0	0	İlk 11	66'	66 dk
+Gabriel Martinelli	0	0	0	0	66'	Sonradan	24 dk
+Neymar	0	0	0	0	76'	Sonradan	14 dk
+Alex Sandro	0	0	0	0	82'	Sonradan	8 dk
+Endrick	0	0	0	0	82'	Sonradan	8 dk
+🏴 İskoçya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Ryan Christie	0	0	1 (89')	0	82'	Sonradan	8 dk
+Angus Gunn (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nathan Patterson	0	0	0	0	İlk 11	82'	82 dk
+Scott McKenna	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jack Hendry	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Andrew Robertson	0	0	0	0	İlk 11	46'	45 dk
+Lewis Ferguson	0	0	0	0	İlk 11	Maç Sonu	90 dk
+John McGinn	0	0	0	0	İlk 11	90'	90 dk
+Ben Doak	0	0	0	0	İlk 11	82'	82 dk
+Scott McTominay	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Kenny McLean	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lawrence Shankland	0	0	0	0	İlk 11	90'	90 dk
+Kieran Tierney	0	0	0	0	46'	Sonradan	44 dk
+Anthony Ralston	0	0	0	0	82'	Sonradan	8 dk
+Ché Adams	0	0	0	0	90'	Sonradan	0 dk
+Findlay Curtis	0	0	0	0	90'	Sonradan	0 dk
+							
+6. MAÇ: Fas 4 - 2 Haiti (24 Haziran 2026)							
+🇲🇦 Fas İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Achraf Hakimi	1 (39')	1	0	0	İlk 11	Maç Sonu	90 dk
+Ismael Saibari	1 (45+1')	0	0	0	İlk 11	Maç Sonu	90 dk
+Soufiane Rahimi	1 (78')	0	0	0	70'	Sonradan	20 dk
+Gessime Yassine	1 (89')	0	0	0	70'	Sonradan	20 dk
+Bilal El Khannouss	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Yassine Bounou (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Reda Halhal	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Chadi Riad	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abde Saleh-Eddine	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Neil El Aynaoui	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Sofyan Amrabat	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Brahim Díaz	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ayoub El Kaabi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Azzedine Ounahi	0	0	0	0	70'	Sonradan	20 dk
+Noussair Mazraoui	0	0	0	0	83'	Sonradan	7 dk
+Younes El Mourabet	0	0	0	0	83'	Sonradan	7 dk
+Not: Yassine Bounou 10. dakikada şanssız bir şekilde kendi kalesine gol atmıştır.							
+🇭🇹 Haiti İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Wilson Isidor	1 (43')	0	0	0	İlk 11	Maç Sonu	90 dk
+Don Deedson Louicius	0	1	0	0	67'	Sonradan	23 dk
+Carlens Arcus	0	0	1 (80')	0	80'	Sonradan	10 dk
+Johny Placide (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jean-Kévin Duverne	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ricardo Adé	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hannes Delcroix	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mandanlo Guerrier	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Danley Jean Jacques	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jean-Ricner Bellegarde	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mbekezeli Mbokazi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mondy Prunier	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Duckens Nazon	0	0	0	0	İlk 11	67'	67 dk
+Frantzdy Pierrot	0	0	0	0	83'	Sonradan	7 dk
+Mikaël Cantave	0	0	0	0	80'	Sonradan	10 dk
+Not: Don Deedson Louicius'un asistinde 10. dakikada atılan ilk gol resmi kayıtlara Fas kalecisi Bounou'nun kendi kalesine attığı gol olarak geçmiştir.							
+							
+							
+5. MAÇ: Türkiye 3 - 2 ABD							
+🇹🇷 Türkiye İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Uğurcan Çakır (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Zeki Çelik	0	0	0	0	İlk 11	83'	83 dk
+Ozan Kabak	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abdülkerim Bardakcı	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Eren Elmalı	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Orkun Kökçü	1 (30')	0	0	0	İlk 11	87'	87 dk
+Salih Özcan	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Oğuz Aydın	0	0	0	0	İlk 11	90'	90 dk
+Arda Güler	1 (9')	0	0	0	İlk 11	Maç Sonu	90 dk
+Kenan Yıldız	0	0	0	0	İlk 11	83'	83 dk
+Barış Alper Yılmaz	0	1	0	0	İlk 11	90'	90 dk
+Çağlar Söyüncü	0	0	0	0	83'	Sonradan	7 dk
+Can Uzun	0	0	0	0	83'	Sonradan	7 dk
+Kaan Ayhan	1 (90+7')	0	0	0	87'	Sonradan	3 dk
+Mert Müldür	0	0	0	0	90'	Sonradan	1 dk
+İrfan Can Kahveci	0	0	0	0	90'	Sonradan	1 dk
+🇺🇸 ABD İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Matt Turner (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Joe Scally	0	0	0	0	İlk 11	76'	76 dk
+Mark McKenzie	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Miles Robinson	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Auston Trusty	1 (2')	0	0	0	İlk 11	Maç Sonu	90 dk
+Weston McKennie	0	0	0	0	İlk 11	85'	85 dk
+Sebastian Berhalter	1 (48')	1	1 (18')	0	İlk 11	Maç Sonu	90 dk
+Giovanni Reyna	0	0	0	0	İlk 11	75'	75 dk
+Timothy Weah	0	0	0	0	İlk 11	57'	57 dk
+Ricardo Pepi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Brenden Aaronson	0	0	0	0	İlk 11	76'	76 dk
+Christian Pulisic	0	0	0	0	57'	Sonradan	33 dk
+Sergiño Dest	0	0	0	0	75'	Sonradan	15 dk
+Alejandro Zendejas	0	0	0	0	76'	Sonradan	14 dk
+Alex Freeman	0	0	0	0	76'	Sonradan	14 dk
+Malik Tillman	0	0	0	0	85'	Sonradan	5 dk
+							
+⚽ 6. MAÇ: Paraguay 0 - 0 Avustralya							
+🇵🇾 Paraguay İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Orlando Gill (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Juan José Cáceres	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gustavo Velázquez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gustavo Gómez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Omar Alderete	0	0	0	0	İlk 11	84'	84 dk
+Alexandro Maidana	0	0	0	0	İlk 11	45'	45 dk
+Diego Gómez	0	0	1 (76')	0	İlk 11	90'	90 dk
+Adrián Andrés Cubas	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Matías Galarza	0	0	0	0	İlk 11	90'	90 dk
+Julio César Enciso	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gabriel Ávalos	0	0	0	0	İlk 11	67'	67 dk
+Maurício	0	0	0	0	45'	Sonradan	45 dk
+Álex Arce	0	0	0	0	67'	Sonradan	24 dk
+José Canale	0	0	0	0	84'	Sonradan	6 dk
+Damián Bobadilla	0	0	0	0	90'	Sonradan	1 dk
+Júnior Alonso	0	0	0	0	90'	Sonradan	1 dk
+🇦🇺 Avustralya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Patrick Beach (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Alessandro Circati	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Harry Souttar	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lucas Herrington	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Aziz Behich	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Aiden O'Neill	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jackson Irvine	0	0	1 (45')	0	İlk 11	83'	83 dk
+Jordan Bos	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Connor Metcalfe	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nestory Irankunda	0	0	0	0	İlk 11	83'	83 dk
+Cristian Volpato	0	0	0	0	İlk 11	58'	58 dk
+Ajdin Hrustic	0	0	0	0	58'	Sonradan	32 dk
+Paul Okon-Engstler	0	0	0	0	83'	Sonradan	7 dk
+Tete Yengi	0	0	0	0	83'	Sonradan	7 dk
+							
+							
+							
+5. MAÇ: Curaçao 0 - 2 Fildişi Sahili							
+🇨🇼 Curaçao İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Eloy Room (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Joshua Brenet	0	0	0	0	İlk 11	89'	89 dk
+Juriën Gaari	0	0	0	0	İlk 11	76'	76 dk
+Armando Obispo	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Sherel Floranus	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Deveron Fonville	0	0	0	0	İlk 11	76'	76 dk
+Tahith Chong	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Leandro Bacuna	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Livano Comenencia	0	0	0	0	İlk 11	60'	60 dk
+Juninho Bacuna	0	0	1 (75')	0	İlk 11	Maç Sonu	90 dk
+Jürgen Locadia	0	0	0	0	İlk 11	89'	89 dk
+Jeremy Antonisse	0	0	0	0	60'	Sonradan	30 dk
+Gervane Kastaneer	0	0	1 (83')	0	76'	Sonradan	14 dk
+Tyrese Noslin	0	0	0	0	76'	Sonradan	14 dk
+Shurandy Sambo	0	0	0	0	89'	Sonradan	1 dk
+Brandley Kuwas	0	0	0	0	89'	Sonradan	1 dk
+🇨🇮 Fildişi Sahili İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Yahia Fofana (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Guéla Doué	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Odilon Kossounou	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ousmane Diomande	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Christopher Opéri	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ibrahim Sangaré	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Franck Kessié	0	0	0	0	İlk 11	76'	76 dk
+Amad Diallo	0	0	0	0	İlk 11	45'	45 dk
+Yan Diomande	0	1	0	0	İlk 11	66'	66 dk
+Nicolas Pépé	2 (7', 64')	0	1 (35')	0	İlk 11	66'	66 dk
+Ange-Yoan Bonny	0	0	0	0	İlk 11	66'	66 dk
+Christ Inao Oulaï	0	0	0	0	45'	Sonradan	45 dk
+Elye Wahi	0	0	0	0	66'	Sonradan	24 dk
+Oumar Diakité	0	0	0	0	66'	Sonradan	24 dk
+Bazoumana Touré	0	0	0	0	66'	Sonradan	24 dk
+Jean Michaël Seri	0	0	0	0	76'	Sonradan	14 dk
+							
+6. MAÇ: Ekvador 2 - 1 Almanya							
+🇪🇨 Ekvador İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Hernán Galíndez (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Joel Ordóñez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Willian Pacho	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Piero Hincapié	0	0	1 (43')	0	İlk 11	70'	70 dk
+Alan Franco	0	0	1 (50')	0	İlk 11	63'	63 dk
+Pedro Vite	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Moisés Caicedo	0	0	0	0	İlk 11	Maç Sonu	90 dk
+John Yeboah	0	0	0	0	İlk 11	84'	84 dk
+Nilson Angulo	1 (9')	0	0	0	İlk 11	84'	84 dk
+Gonzalo Plata	1 (77')	0	1 (89')	0	İlk 11	Maç Sonu	90 dk
+Enner Valencia	0	0	0	0	İlk 11	63'	63 dk
+Ángelo Preciado	0	0	0	0	63'	Sonradan	27 dk
+Kevin Rodríguez	0	1	0	0	63'	Sonradan	27 dk
+Pervis Estupiñán	0	0	0	0	70'	Sonradan	20 dk
+Jordy Caicedo	0	0	0	0	84'	Sonradan	6 dk
+Félix Torres	0	0	0	0	84'	Sonradan	6 dk
+🇩🇪 Almanya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Manuel Neuer (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Joshua Kimmich	0	0	0	0	İlk 11	59'	59 dk
+Jonathan Tah	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Antonio Rüdiger	0	0	0	0	İlk 11	Maç Sonu	90 dk
+David Raum	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Felix Nmecha	0	0	0	0	İlk 11	64'	64 dk
+Aleksandar Pavlović	0	0	1 (44')	0	İlk 11	45'	45 dk
+Leroy Sané	1 (2')	0	0	0	İlk 11	Maç Sonu	90 dk
+Jamal Musiala	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Florian Wirtz	0	1	0	0	İlk 11	72'	72 dk
+Kai Havertz	0	0	0	0	İlk 11	59'	59 dk
+Angelo Stiller	0	0	0	0	45'	Sonradan	45 dk
+Deniz Undav	0	0	0	0	59'	Sonradan	31 dk
+Malick Thiaw	0	0	0	0	59'	Sonradan	31 dk
+Maximilian Beier	0	0	0	0	64'	Sonradan	26 dk
+Pascal Groß	0	0	0	0	72'	Sonradan	18 dk
+							
+							
+5. MAÇ: Japonya 1 - 1 İsveç							
+🇯🇵 Japonya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Zion Suzuki (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hiroki Itō	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ayumu Seko	0	0	0	0	İlk 11	74'	74 dk
+Ko Itakura	0	0	0	0	İlk 11	38'	38 dk
+Yukinari Sugawara	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Daichi Kamada	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ao Tanaka	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Keito Nakamura	0	0	0	0	İlk 11	74'	74 dk
+Ritsu Dōan	0	1	0	0	İlk 11	66'	66 dk
+Daizen Maeda	1 (56')	0	0	0	İlk 11	Maç Sonu	90 dk
+Ayase Ueda	0	0	0	0	İlk 11	65'	65 dk
+Shogo Taniguchi	0	0	1 (77')	0	38'	Sonradan	52 dk
+Koki Ogawa	0	0	0	0	65'	Sonradan	25 dk
+Junya Itō	0	0	0	0	66'	Sonradan	24 dk
+Yuto Nagatomo	0	0	0	0	74'	Sonradan	16 dk
+Tsuyoshi Watanabe	0	0	0	0	74'	Sonradan	16 dk
+🇸🇪 İsveç İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Jacob Widell Zetterström (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gustaf Lagerbielke	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Isak Hien	0	0	1 (32')	0	İlk 11	36'	36 dk
+Victor Lindelöf	0	0	0	0	İlk 11	86'	86 dk
+Alexander Bernhardsson	0	0	0	0	İlk 11	74'	74 dk
+Elliot Stroud	0	0	0	0	İlk 11	74'	74 dk
+Yasin Ayari	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gabriel Gudmundsson	0	0	0	0	İlk 11	87'	87 dk
+Anthony Elanga	1 (62')	0	0	0	İlk 11	Maç Sonu	90 dk
+Viktor Gyökeres	0	1	1 (85')	0	İlk 11	Maç Sonu	90 dk
+Alexander Isak	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lucas Bergvall	0	0	0	0	36'	Sonradan	54 dk
+Daniel Svensson	0	0	0	0	74'	Sonradan	16 dk
+Ken Sema	0	0	0	0	74'	Sonradan	16 dk
+Carl Starfelt	0	0	0	0	86'	Sonradan	4 dk
+Benjamin Nygren	0	0	0	0	87'	Sonradan	3 dk
+							
+⚽ 6. MAÇ: Tunus 1 - 3 Hollanda							
+🇹🇳 Tunus İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Eymen Dahman (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Yan Valery	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Montassar Talbi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mohamed Amine Ben Hamida	0	0	0	0	İlk 11	67'	67 dk
+Ali Abdi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rani Khedira	0	0	0	0	İlk 11	66'	66 dk
+Ellyes Skhiri	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hannibal Mejbri	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Ismaël Gharbi	0	0	0	0	İlk 11	74'	74 dk
+Anis Ben Slimane	0	0	0	0	İlk 11	67'	67 dk
+Hazım el-Mesturi	1 (54')	0	0	0	İlk 11	89'	89 dk
+Muhammed Bilhac Mahmud	0	0	0	0	66'	Sonradan	24 dk
+Elias Achouri	0	0	0	0	67'	Sonradan	23 dk
+Murtaza bin Yunus	0	0	0	0	67'	Sonradan	23 dk
+Firas Şavat	0	0	0	0	74'	Sonradan	16 dk
+Sebastian Tounekti	0	0	0	0	89'	Sonradan	1 dk
+Not: Hollanda'nın 3. dakikadaki ilk golü, Tunuslu Ellyes Skhiri'nin kendi kalesine (kk) attığı goldür.							
+🇳🇱 Hollanda İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Bart Verbruggen (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Denzel Dumfries	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jan Paul van Hecke	1 (62')	0	0	0	İlk 11	Maç Sonu	90 dk
+Virgil van Dijk	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Nathan Aké	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ryan Gravenberch	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Frenkie de Jong	0	0	0	0	İlk 11	72'	72 dk
+Tijjani Reijnders	0	1	0	0	İlk 11	72'	72 dk
+Donyell Malen	0	0	0	0	İlk 11	72'	72 dk
+Brian Brobbey	1 (7')	0	0	0	İlk 11	77'	77 dk
+Cody Gakpo	0	0	0	0	İlk 11	84'	84 dk
+Teun Koopmeiners	0	0	0	0	72'	Sonradan	18 dk
+Justin Kluivert	0	0	0	0	72'	Sonradan	18 dk
+Crysencio Summerville	0	0	0	0	72'	Sonradan	18 dk
+Memphis Depay	0	0	0	0	77'	Sonradan	13 dk
+Noa Lang	0	0	0	0	84'	Sonradan	6 dk
+							
+							
+5. MAÇ: Mısır 1 - 1 İran							
+🇪🇬 Mısır İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Mohamed El Shenawy (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mohamed Hany	0	0	0	0	İlk 11	78'	78 dk
+Mohamed Abdelmonem	0	0	1 (64')	0	İlk 11	Maç Sonu	90 dk
+Ahmed Hegazi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ahmed Fatouh	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Marwan Attia	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hamdi Fathi	0	0	0	0	İlk 11	82'	82 dk
+Emam Ashour	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Mohamed Salah	1 (42')	0	0	0	İlk 11	Maç Sonu	90 dk
+Mostafa Mohamed	0	0	0	0	İlk 11	69'	69 dk
+Trézéguet	0	0	0	0	İlk 11	69'	69 dk
+Omar Marmoush	0	0	0	0	69'	Sonradan	21 dk
+Mohamed Sherif	0	0	0	0	69'	Sonradan	21 dk
+Akram Tawfik	0	0	0	0	78'	Sonradan	12 dk
+Mohamed Elneny	0	0	0	0	82'	Sonradan	8 dk
+🇮🇷 İran İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Alireza Beiranvand (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ramin Rezaeian	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Hossein Kanaanizadegan	0	0	1 (31')	0	İlk 11	Maç Sonu	90 dk
+Shojae Khalilzadeh	0	0	0	0	İlk 11	75'	75 dk
+Milad Mohammadi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Saeid Ezatolahi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Saman Ghoddos	0	1	0	0	İlk 11	83'	83 dk
+Alireza Jahanbakhsh	0	0	0	0	İlk 11	62'	62 dk
+Mehdi Taremi	1 (58')	0	0	0	İlk 11	Maç Sonu	90 dk
+Mohammad Mohebi	0	0	0	0	İlk 11	62'	62 dk
+Sardar Azmoun	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ali Gholizadeh	0	0	0	0	62'	Sonradan	28 dk
+Mehdi Ghayedi	0	0	0	0	62'	Sonradan	28 dk
+Majid Hosseini	0	0	0	0	75'	Sonradan	15 dk
+Omid Nourafkan	0	0	0	0	83'	Sonradan	7 dk
+							
+5. MAÇ: Yeni Zelanda 1 - 5 Belçika							
+🇳🇿 Yeni Zelanda İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Oliver Sail (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Tim Payne	0	0	0	0	İlk 11	76'	76 dk
+Michael Boxall	0	0	1 (54')	0	İlk 11	Maç Sonu	90 dk
+Nando Pijnaker	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Liberato Cacace	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Joe Bell	0	0	0	0	İlk 11	81'	81 dk
+Matthew Garbett	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Sarpreet Singh	0	0	0	0	İlk 11	63'	63 dk
+Callum McCowatt	0	0	0	0	İlk 11	63'	63 dk
+Chris Wood	1 (22')	0	0	0	İlk 11	Maç Sonu	90 dk
+Ben Waine	0	0	0	0	İlk 11	76'	76 dk
+Elijah Just	0	0	0	0	63'	Sonradan	27 dk
+Alex Greive	0	0	0	0	63'	Sonradan	27 dk
+Storm Roux	0	0	0	0	76'	Sonradan	14 dk
+Max Mata	0	0	0	0	76'	Sonradan	14 dk
+Clayton Lewis	0	0	0	0	81'	Sonradan	9 dk
+🇧🇪 Belçika İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Koen Casteels (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Timothy Castagne	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Wout Faes	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Zeno Debast	0	0	0	0	İlk 11	80'	80 dk
+Arthur Theate	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Amadou Onana	1 (14')	1	0	0	İlk 11	72'	72 dk
+Orel Mangala	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Johan Bakayoko	1 (35')	1	0	0	İlk 11	61'	61 dk
+Kevin De Bruyne	1 (49')	2	0	0	İlk 11	80'	80 dk
+Jérémy Doku	0	0	0	0	İlk 11	61'	61 dk
+Loïs Openda	2 (44', 71')	0	0	0	İlk 11	Maç Sonu	90 dk
+Leandro Trossard	0	0	0	0	61'	Sonradan	29 dk
+Charles De Ketelaere	0	0	0	0	61'	Sonradan	29 dk
+Arthur Vermeeren	0	0	0	0	72'	Sonradan	18 dk
+Jan Vertonghen	0	0	0	0	80'	Sonradan	10 dk
+Youri Tielemans	0	0	0	0	80'	Sonradan	10 dk
+							
+							
+5. MAÇ: Yeşil Burun Adaları 0 - 0 Suudi Arabistan							
+🇨🇻 Yeşil Burun Adaları İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Vozinha (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Steven Moreira	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Logan Costa	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Roberto Lopes	0	0	1 (42')	0	İlk 11	Maç Sonu	90 dk
+João Paulo	0	0	0	0	İlk 11	78'	78 dk
+Kevin Pina	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jamiro Monteiro	0	0	0	0	İlk 11	65'	65 dk
+Deroy Duarte	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ryan Mendes	0	0	0	0	İlk 11	78'	78 dk
+Bebé	0	0	0	0	İlk 11	65'	65 dk
+Jovane Cabral	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Garry Rodrigues	0	0	0	0	65'	Sonradan	25 dk
+Kenny Rocha Santos	0	0	0	0	65'	Sonradan	25 dk
+Diney Borges	0	0	0	0	78'	Sonradan	12 dk
+Gilson Tavares	0	0	0	0	78'	Sonradan	12 dk
+🇸🇦 Suudi Arabistan İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Mohammed Al-Owais (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Saud Abdulhamid	0	0	1 (73')	0	İlk 11	Maç Sonu	90 dk
+Ali Lajami	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ali Al-Bulaihi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Yasir Al-Shahrani	0	0	0	0	İlk 11	82'	82 dk
+Faisal Al-Ghamdi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abdullah Al-Khaibari	0	0	0	0	İlk 11	61'	61 dk
+Mohamed Kanno	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ayman Ahmed	0	0	0	0	İlk 11	61'	61 dk
+Salem Al-Dawsari	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Firas Al-Buraikan	0	0	0	0	İlk 11	74'	74 dk
+Abdulelah Al-Malki	0	0	0	0	61'	Sonradan	29 dk
+Abdulrahman Ghareeb	0	0	0	0	61'	Sonradan	29 dk
+Saleh Al-Shehri	0	0	0	0	74'	Sonradan	16 dk
+Hassan Al-Tambakti	0	0	0	0	82'	Sonradan	8 dk
+							
+6. MAÇ: Uruguay 0 - 1 İspanya							
+🇺🇾 Uruguay İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Sergio Rochet (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nahitan Nández	0	0	1 (55')	0	İlk 11	Maç Sonu	90 dk
+Ronald Araújo	0	0	0	0	İlk 11	Maç Sonu	90 dk
+José María Giménez	0	0	0	0	İlk 11	82'	82 dk
+Mathías Olivera	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Manuel Ugarte	0	0	0	0	İlk 11	74'	74 dk
+Federico Valverde	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Facundo Pellistri	0	0	0	0	İlk 11	63'	63 dk
+Nicolás de la Cruz	0	0	0	0	İlk 11	63'	63 dk
+Brian Rodríguez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Darwin Núñez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Giorgian de Arrascaeta	0	0	0	0	63'	Sonradan	27 dk
+Facundo Torres	0	0	0	0	63'	Sonradan	27 dk
+Rodrigo Bentancur	0	0	0	0	74'	Sonradan	16 dk
+Sebastián Cáceres	0	0	0	0	82'	Sonradan	8 dk
+🇪🇸 İspanya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Unai Simón (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Dani Carvajal	0	0	1 (68')	0	İlk 11	Maç Sonu	90 dk
+Robin Le Normand	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Aymeric Laporte	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Alejandro Grimaldo	0	0	0	0	İlk 11	79'	79 dk
+Rodri	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Fabian Ruiz	0	0	0	0	İlk 11	71'	71 dk
+Lamine Yamal	0	1	0	0	İlk 11	85'	85 dk
+Dani Olmo	0	0	0	0	İlk 11	71'	71 dk
+Nico Williams	1 (31')	0	0	0	İlk 11	Maç Sonu	90 dk
+Álvaro Morata	0	0	0	0	İlk 11	79'	79 dk
+Pedri	0	0	0	0	71'	Sonradan	19 dk
+Mikel Oyarzabal	0	0	0	0	71'	Sonradan	19 dk
+Marc Cucurella	0	0	0	0	79'	Sonradan	11 dk
+Joselu	0	0	0	0	79'	Sonradan	11 dk
+Ferran Torres	0	0	0	0	85'	Sonradan	5 dk
+							
+5. MAÇ: Senegal 5 - 0 Irak							
+🇸🇳 Senegal İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Mory Diaw (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Krépin Diatta	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abdoulaye Seck	0	1	1 (18')	0	İlk 11	57'	57 dk
+Moussa Niakhaté	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ismail Jakobs	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Idrissa Gueye	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Lamine Camara	0	1	0	0	İlk 11	56'	56 dk
+Habib Diarra	1 (4')	0	0	0	İlk 11	56'	56 dk
+Ibrahim Mbaye	0	0	0	0	İlk 11	56'	56 dk
+Sadio Mané	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ismaïla Sarr	1 (56')	1	0	0	İlk 11	80'	80 dk
+Iliman Ndiaye	1 (82')	1	0	0	56'	Sonradan	34 dk
+Nicolas Jackson	0	0	0	0	56'	Sonradan	34 dk
+Pape Gueye	2 (59', 71')	1	1 (81')	0	56'	Sonradan	34 dk
+Pathé Ciss	0	0	0	0	57'	Sonradan	33 dk
+Assane Diao	0	0	0	0	80'	Sonradan	10 dk
+🇮🇶 Irak İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Ahmed Basil (GK)	0	0	0	0	İlk 11	45'	45 dk
+Frans Putros	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rebin Sulaka	0	0	0	1 (13')	İlk 11	13'	13 dk
+Akam Hashim	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Merchas Doski	0	0	1 (90')	0	İlk 11	Maç Sonu	90 dk
+İbrahim Bayeş	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Zidane Iqbal	0	0	0	0	İlk 11	66'	66 dk
+Amir Al-Ammari	0	0	1 (75')	0	İlk 11	Maç Sonu	90 dk
+Ahmed Qasem	0	0	0	0	İlk 11	15'	15 dk
+Ali Al-Hamadi	0	0	0	0	İlk 11	57'	57 dk
+Ali Casim	0	0	0	0	İlk 11	57'	57 dk
+Manaf Younis	0	0	0	0	15'	Sonradan	75 dk
+Celal Hasan (GK)	0	0	0	0	45'	Sonradan	45 dk
+Ali Yousif	0	0	0	0	57'	Sonradan	33 dk
+Ahmed Mekenzi	0	0	0	0	57'	Sonradan	33 dk
+Kevin Yakob	0	0	0	0	66'	Sonradan	24 dk
+							
+6. MAÇ: Norveç 1 - 4 Fransa							
+🇳🇴 Norveç İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Egil Selvik (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Fredrik Aursnes	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Henrik Falchener	0	0	0	0	İlk 11	67'	67 dk
+Leo Østigård	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Fredrik André Bjørkan	0	0	0	0	İlk 11	45'	45 dk
+Kristian Thorstvedt	0	0	0	0	İlk 11	45'	45 dk
+Patrick Berg	0	0	1 (10')	0	İlk 11	Maç Sonu	90 dk
+Thelo Aasgaard	1 (21')	0	0	0	İlk 11	Maç Sonu	90 dk
+Oscar Bobb	0	0	0	0	İlk 11	83'	83 dk
+Jørgen Strand Larsen	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Andreas Schjelderup	0	1	0	0	İlk 11	83'	83 dk
+Marcus H. Pedersen	0	0	0	0	45'	Sonradan	45 dk
+Morten Thorsby	0	0	0	0	45'	Sonradan	45 dk
+Sondre Langås	0	0	0	0	67'	Sonradan	23 dk
+Jens Petter Hauge	0	0	0	0	83'	Sonradan	7 dk
+Antonio Nusa	0	0	0	0	83'	Sonradan	7 dk
+Not: Norveç'te Jørgen Strand Larsen 49. dakikada bir penaltı atışından yararlanamamıştır.							
+🇫🇷 Fransa İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Mike Maignan (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jules Koundé	0	0	0	0	İlk 11	86'	86 dk
+Dayot Upamecano	0	0	0	0	İlk 11	75'	75 dk
+Maxence Lacroix	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Théo Hernandez	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Aurélien Tchouaméni	0	1	1 (74')	0	İlk 11	Maç Sonu	90 dk
+Manu Koné	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ousmane Dembélé	3 (7', 20', 32')	0	0	0	İlk 11	64'	64 dk
+Michael Olise	0	0	0	0	İlk 11	64'	64 dk
+Désiré Doué	1 (90+3')	0	0	0	İlk 11	Maç Sonu	90 dk
+Kylian Mbappé	0	2	0	0	İlk 11	86'	86 dk
+Bradley Barcola	0	1	0	0	64'	Sonradan	26 dk
+Rayan Cherki	0	0	0	0	64'	Sonradan	26 dk
+Ibrahima Konaté	0	0	0	0	75'	Sonradan	15 dk
+Malo Gusto	0	0	0	0	86'	Sonradan	4 dk
+Jean-Philippe Mateta	0	0	0	0	86'	Sonradan	4 dk
+							
+5. MAÇ: Ürdün 1 - 3 Arjantin							
+🇯🇴 Ürdün İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Yezid Ebu Leyla (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abdullah Nasib	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Yezen el-Arab	0	0	1 (64')	0	İlk 11	Maç Sonu	90 dk
+Hüsam Ebu Zeheb	0	0	0	0	İlk 11	89'	89 dk
+İhsan Haddad	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Nizar er-Reşdan	0	0	0	0	İlk 11	75'	75 dk
+Nur er-Revabide	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Muhanned Ebu Taha	0	0	1 (17')	0	İlk 11	Maç Sonu	90 dk
+Ali Azaizeh	0	0	0	0	İlk 11	45'	45 dk
+Udeh el-Fahuri	0	0	0	0	İlk 11	45'	45 dk
+Ali Ulvan	0	0	0	0	İlk 11	89'	89 dk
+Musa et-Ta'mari	1 (55')	0	0	0	45'	Sonradan	45 dk
+Mahmud el-Merzi	0	0	0	0	45'	Sonradan	45 dk
+Amir Camus	0	0	0	0	75'	Sonradan	15 dk
+Selim Ubeyd	0	0	0	0	89'	Sonradan	1 dk
+Muhammed Ebu Züreyk	0	0	1 (90+4')	0	89'	Sonradan	1 dk
+🇦🇷 Arjantin İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Emiliano Martínez (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Giuliano Simeone	0	0	0	0	İlk 11	71'	71 dk
+Nicolás Otamendi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Marcos Senesi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nicolás Tagliafico	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nico Paz	0	0	0	0	İlk 11	61'	61 dk
+Leandro Paredes	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Exequiel Palacios	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Giovani Lo Celso	1 (19')	0	0	0	İlk 11	60'	60 dk
+Julián Álvarez	0	0	0	0	İlk 11	82'	82 dk
+Lautaro Martínez	1 (31')	0	0	0	İlk 11	60'	60 dk
+Thiago Almada	0	0	0	0	60'	Sonradan	30 dk
+Lionel Messi	1 (80')	0	0	0	60'	Sonradan	30 dk
+Alexis Mac Allister	0	0	0	0	61'	Sonradan	29 dk
+Valentín Barco	0	0	0	0	71'	Sonradan	19 dk
+José Manuel López	0	0	0	0	82'	Sonradan	8 dk
+							
+⚽ 6. MAÇ: Cezayir 3 - 3 Avusturya							
+🇩🇿 Cezayir İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Oussama Benbot (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rafik Belghali	1 (45')	0	0	0	İlk 11	70'	70 dk
+Aissa Mandi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rami Bensebaini	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jaouen Hadjam	0	0	0	0	İlk 11	70'	70 dk
+Houssem Aouar	0	2	0	0	İlk 11	90'	90 dk
+Ibrahim Maza	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Riyad Mahrez	2 (60', 90+3')	0	0	0	İlk 11	Maç Sonu	90 dk
+Nabil Bentaleb	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Farès Chaïbi	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Amine Gouiri	0	0	0	0	İlk 11	70'	70 dk
+Rayan Aït-Nouri	0	0	0	0	70'	Sonradan	20 dk
+Zeyneddin Belid	0	0	0	0	70'	Sonradan	20 dk
+Samir Chergui	0	0	0	0	70'	Sonradan	20 dk
+Farès Ghedjemis	0	0	0	0	90'	Sonradan	1 dk
+🇦🇹 Avusturya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Alexander Schlager (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Stefan Posch	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Philipp Lienhart	0	0	0	0	İlk 11	Maç Sonu	90 dk
+David Alaba	0	1	0	0	İlk 11	62'	62 dk
+Phillipp Mwene	0	0	0	0	İlk 11	90'	90 dk
+Nicolas Seiwald	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Xaver Schlager	0	0	0	0	İlk 11	45'	45 dk
+Romano Schmid	0	0	0	0	İlk 11	45'	45 dk
+Konrad Laimer	0	1	0	0	İlk 11	Maç Sonu	90 dk
+Marcel Sabitzer	1 (55')	0	0	0	İlk 11	Maç Sonu	90 dk
+Marko Arnautović	1 (28')	0	1 (11')	0	İlk 11	45'	45 dk
+Paul Wanner	0	0	0	0	45'	Sonradan	45 dk
+Michael Gregoritsch	0	1	0	0	45'	Sonradan	45 dk
+Florian Grillitsch	0	0	0	0	45'	Sonradan	45 dk
+Kevin Danso	0	0	0	0	62'	Sonradan	28 dk
+Saša Kalajdžić	1 (90+6')	0	0	0	90'	Sonradan	1 dk
+							
+5. MAÇ: Kolombiya 0 - 0 Portekiz							
+🇨🇴 Kolombiya İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Camilo Vargas (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Daniel Muñoz	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Davinson Sánchez	0	0	1 (61')	0	İlk 11	Maç Sonu	90 dk
+Jhon Lucumí	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Johan Mojica	0	0	0	0	İlk 11	82'	82 dk
+Jefferson Lerma	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Richard Ríos	0	0	0	0	İlk 11	74'	74 dk
+Jhon Arias	0	0	0	0	İlk 11	Maç Sonu	90 dk
+James Rodríguez	0	0	0	0	İlk 11	74'	74 dk
+Luis Díaz	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jhon Durán	0	0	0	0	İlk 11	65'	65 dk
+Rafael Santos Borré	0	0	0	0	65'	Sonradan	25 dk
+Juan Fernando Quintero	0	0	0	0	74'	Sonradan	16 dk
+Kevin Castaño	0	0	0	0	74'	Sonradan	16 dk
+Yaser Asprilla	0	0	0	0	82'	Sonradan	8 dk
+🇵🇹 Portekiz İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Diogo Costa (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Diogo Dalot	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rúben Dias	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gonçalo Inácio	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Nuno Mendes	0	0	1 (40')	0	İlk 11	78'	78 dk
+João Palhinha	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Vitinha	0	0	0	0	İlk 11	68'	68 dk
+Bruno Fernandes	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Bernardo Silva	0	0	0	0	İlk 11	68'	68 dk
+Rafael Leão	0	0	0	0	İlk 11	78'	78 dk
+Cristiano Ronaldo	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rúben Neves	0	0	0	0	68'	Sonradan	22 dk
+João Félix	0	0	0	0	68'	Sonradan	22 dk
+João Cancelo	0	0	0	0	78'	Sonradan	12 dk
+Pedro Neto	0	0	0	0	78'	Sonradan	12 dk
+							
+⚽ 6. MAÇ: Demokratik Kongo 0 - 0 Özbekistan							
+🇨🇩 Demokratik Kongo İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Dimitry Bertaud (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gedeon Kalulu	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Chancel Mbemba	0	0	1 (73')	0	İlk 11	Maç Sonu	90 dk
+Henoc Inonga	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Arthur Masuaku	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Samuel Moutoussamy	0	0	0	0	İlk 11	81'	81 dk
+Charles Pickel	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Theo Bongonda	0	0	0	0	İlk 11	64'	64 dk
+Gaël Kakuta	0	0	0	0	İlk 11	64'	64 dk
+Yoane Wissa	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Simon Banza	0	0	0	0	İlk 11	75'	75 dk
+Meschack Elia	0	0	0	0	64'	Sonradan	26 dk
+Chadrac Akolo	0	0	0	0	64'	Sonradan	26 dk
+Fiston Mayele	0	0	0	0	75'	Sonradan	15 dk
+Edo Kayembe	0	0	0	0	81'	Sonradan	9 dk
+🇺🇿 Özbekistan İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Utkir Yusupov (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Rustam Ashurmatov	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abdukodir Khusanov	0	0	1 (34')	0	İlk 11	Maç Sonu	90 dk
+Husniddin Aliqulov	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Sherzod Nasrullaev	0	0	0	0	İlk 11	79'	79 dk
+Khojimat Erkinov	0	0	0	0	İlk 11	60'	60 dk
+Otabek Shukurov	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Odiljon Hamrobekov	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Farrukh Sayfiev	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Abbosbek Fayzullaev	0	0	0	0	İlk 11	85'	85 dk
+Eldor Shomurodov	0	0	0	0	İlk 11	79'	79 dk
+Jaloliddin Masharipov	0	0	0	0	60'	Sonradan	30 dk
+Igor Sergeev	0	0	0	0	79'	Sonradan	11 dk
+Zafarmurod Abdurakhmatov	0	0	0	0	79'	Sonradan	11 dk
+Oston Urunov	0	0	0	0	85'	Sonradan	5 dk
+							
+5. MAÇ: Panama 0 - 2 İngiltere							
+🇵🇦 Panama İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Orlando Mosquera (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+César Blackman	0	0	0	0	İlk 11	Maç Sonu	90 dk
+José Córdoba	0	0	1 (41')	0	İlk 11	Maç Sonu	90 dk
+Fidel Escobar	0	0	0	0	İlk 11	78'	78 dk
+Andrés Andrade	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Eric Davis	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Adalberto Carrasquilla	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Aníbal Godoy	0	0	0	0	İlk 11	64'	64 dk
+Édgar Yoel Bárcenas	0	0	0	0	İlk 11	72'	72 dk
+José Luis Rodríguez	0	0	0	0	İlk 11	64'	64 dk
+Cecilio Waterman	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Cristian Martínez	0	0	0	0	64'	Sonradan	26 dk
+Ismael Díaz	0	0	0	0	64'	Sonradan	26 dk
+Kahiser Lenis	0	0	0	0	72'	Sonradan	18 dk
+Eduardo Guerrero	0	0	0	0	78'	Sonradan	12 dk
+🏴 İngiltere İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Jordan Pickford (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Trent Alexander-Arnold	0	1	0	0	İlk 11	Maç Sonu	90 dk
+John Stones	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Marc Guéhi	0	0	0	0	İlk 11	75'	75 dk
+Kieran Trippier	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Declan Rice	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Jude Bellingham	1 (18')	0	0	0	İlk 11	80'	80 dk
+Bukayo Saka	0	0	0	0	İlk 11	67'	67 dk
+Phil Foden	0	1	0	0	İlk 11	67'	67 dk
+Anthony Gordon	0	0	1 (35')	0	İlk 11	Maç Sonu	90 dk
+Harry Kane	1 (58')	0	0	0	İlk 11	80'	80 dk
+Cole Palmer	0	0	0	0	67'	Sonradan	23 dk
+Jarrod Bowen	0	0	0	0	67'	Sonradan	23 dk
+Ezri Konsa	0	0	0	0	75'	Sonradan	15 dk
+Ollie Watkins	0	0	0	0	80'	Sonradan	10 dk
+Kobbie Mainoo	0	0	0	0	80'	Sonradan	10 dk
+							
+⚽ 6. MAÇ: Hırvatistan 2 - 1 Gana							
+🇭🇷 Hırvatistan İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Dominik Livaković (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Josip Stanišić	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Josip Šutalo	0	0	1 (68')	0	İlk 11	Maç Sonu	90 dk
+Joško Gvardiol	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Borna Sosa	0	1	0	0	İlk 11	82'	82 dk
+Marcelo Brozović	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mateo Kovačić	0	0	0	0	İlk 11	74'	74 dk
+Luka Modrić	0	0	0	0	İlk 11	63'	63 dk
+Lovro Majer	1 (14')	0	0	0	İlk 11	74'	74 dk
+Andrej Kramarić	1 (41')	1	0	0	İlk 11	Maç Sonu	90 dk
+Ivan Perişić	0	0	0	0	İlk 11	63'	63 dk
+Mario Pašalić	0	0	0	0	63'	Sonradan	27 dk
+Luka Ivanušec	0	0	0	0	63'	Sonradan	27 dk
+Martin Baturina	0	0	0	0	74'	Sonradan	16 dk
+Bruno Petković	0	0	0	0	74'	Sonradan	16 dk
+Marin Pongračić	0	0	0	0	82'	Sonradan	8 dk
+🇬🇭 Gana İstatistikleri							
+Oyuncu Adı	Gol	Asist	Sarı Kart	Kırmızı Kart	Giriş Dk	Çıkış Dk	Süre
+Lawrence Ati-Zigi (GK)	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Alidu Seidu	0	0	1 (55')	0	İlk 11	Maç Sonu	90 dk
+Alexander Djiku	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Mohammed Salisu	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Gideon Mensah	0	0	0	0	İlk 11	79'	79 dk
+Salis Abdul Samed	0	0	0	0	İlk 11	67'	67 dk
+Thomas Partey	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Ernest Nuamah	0	0	0	0	İlk 11	67'	67 dk
+Mohammed Kudus	1 (51')	0	0	0	İlk 11	Maç Sonu	90 dk
+Jordan Ayew	0	1	0	0	İlk 11	79'	79 dk
+Iñaki Williams	0	0	0	0	İlk 11	Maç Sonu	90 dk
+Elisha Owusu	0	0	0	0	67'	Sonradan	23 dk
+Antoine Semenyo	0	0	0	0	67'	Sonradan	23 dk
+Tariq Lamptey	0	0	0	0	79'	Sonradan	11 dk
+Osman Bukari	0	0	0	0	79'	Sonradan	11 dk

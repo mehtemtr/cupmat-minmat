@@ -294,19 +294,24 @@ function getMatchKickoff(dateStr: string, timeStr: string): number {
 }
 
 function getMatchesForStage(stage: string, allMatches: any[]): any[] {
+  const stg = stage.toLowerCase();
   return allMatches.filter((m) => {
+    const id = m.id;
+    if (!id) return false;
+
+    if (stg === "matchday_1") {
+      return id.endsWith("-1") || id.endsWith("-6");
+    } else if (stg === "matchday_2") {
+      return id.endsWith("-2") || id.endsWith("-5");
+    } else if (stg === "matchday_3") {
+      return id.endsWith("-3") || id.endsWith("-4");
+    } else if (stg === "matchday_4") {
+      return false;
+    }
+
     const dateStr = m.date;
     if (!dateStr) return false;
-    const stg = stage.toLowerCase();
-    if (stg === "matchday_1") {
-      return dateStr >= "2026-06-08" && dateStr <= "2026-06-12";
-    } else if (stg === "matchday_2") {
-      return dateStr >= "2026-06-13" && dateStr <= "2026-06-17";
-    } else if (stg === "matchday_3") {
-      return dateStr >= "2026-06-18" && dateStr <= "2026-06-22";
-    } else if (stg === "matchday_4") {
-      return dateStr >= "2026-06-23" && dateStr <= "2026-06-27";
-    } else if (stg === "round_of_32") {
+    if (stg === "round_of_32") {
       return dateStr >= "2026-06-28" && dateStr <= "2026-07-03";
     } else if (stg === "round_of_16") {
       return dateStr >= "2026-07-04" && dateStr <= "2026-07-08";
@@ -321,11 +326,36 @@ function getMatchesForStage(stage: string, allMatches: any[]): any[] {
   });
 }
 
+import { buildFullKnockoutBracket } from "../knockout";
+import { TEAMS } from "@/data/teams";
+
+function getKnockoutRoundKey(stage: string): string {
+  const stg = stage.toLowerCase();
+  if (stg === "round_of_16") return "r16";
+  if (stg === "quarter_finals") return "qf";
+  if (stg === "semi_finals") return "sf";
+  if (stg === "finals") return "final";
+  return "r32";
+}
+
 export function getLockedTeamsForStage(stage: string, now: Date): string[] {
-  const fixtures = generateGroupFixtures();
-  const stageMatches = getMatchesForStage(stage, fixtures);
+  const stg = stage.toLowerCase();
+  const groupFixtures = generateGroupFixtures();
+  let stageMatches: any[] = [];
+  
+  if (stg.startsWith("matchday_")) {
+    stageMatches = getMatchesForStage(stage, groupFixtures);
+  } else {
+    // Knockout stage
+    const fullBracket = buildFullKnockoutBracket(groupFixtures, {});
+    const roundKey = getKnockoutRoundKey(stg);
+    stageMatches = fullBracket.filter(m => m.round === roundKey);
+  }
+
   const locked: string[] = [];
   stageMatches.forEach((m) => {
+    // If teams are not resolved yet, skip
+    if (!m.homeTeamId || !m.awayTeamId) return;
     const kickoff = getMatchKickoff(m.date, m.time || "12:00");
     if (now.getTime() >= kickoff) {
       if (m.homeTeamId) locked.push(m.homeTeamId.toLowerCase());
@@ -334,3 +364,29 @@ export function getLockedTeamsForStage(stage: string, now: Date): string[] {
   });
   return locked;
 }
+
+export function getActiveTeamsForStage(stage: string): string[] {
+  const stg = stage.toLowerCase();
+  if (stg.startsWith("matchday_")) {
+    return TEAMS.map(t => t.id.toLowerCase());
+  }
+  
+  const groupFixtures = generateGroupFixtures();
+  const fullBracket = buildFullKnockoutBracket(groupFixtures, {});
+  const roundKey = getKnockoutRoundKey(stg);
+  const stageMatches = fullBracket.filter(m => m.round === roundKey);
+  
+  const active = new Set<string>();
+  stageMatches.forEach(m => {
+    if (m.homeTeamId) active.add(m.homeTeamId.toLowerCase());
+    if (m.awayTeamId) active.add(m.awayTeamId.toLowerCase());
+  });
+  
+  // Fallback: if no active teams found (e.g. bracket not generated yet), return all
+  if (active.size === 0) {
+    return TEAMS.map(t => t.id.toLowerCase());
+  }
+  
+  return Array.from(active);
+}
+

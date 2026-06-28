@@ -173,6 +173,7 @@ export default function FantasyPage() {
   const [registeredTeams, setRegisteredTeams] = useState<any[]>([]);
   const [isStageLocked, setIsStageLocked] = useState<boolean>(false);
   const [lockedTeams, setLockedTeams] = useState<string[]>([]);
+  const [activeTeams, setActiveTeams] = useState<string[]>([]);
 
   // UI state
   const [teaserBypass, setTeaserBypass] = useState(false);
@@ -256,9 +257,12 @@ export default function FantasyPage() {
       // If team is locked, do not allow selecting
       const isLocked = lockedTeams.includes(p.teamId.toLowerCase());
 
-      return matchesPosition && matchesSearch && matchesTeam && !isAlreadySelected && !isLocked;
+      // If team is eliminated, do not allow selecting
+      const isActive = activeTeams.length === 0 || activeTeams.includes(p.teamId.toLowerCase());
+
+      return matchesPosition && matchesSearch && matchesTeam && !isAlreadySelected && !isLocked && isActive;
     });
-  }, [allPlayersList, selectorModal.positionFilter, playerSearchQuery, playerSearchTeamFilter, starters, bench, lockedTeams]);
+  }, [allPlayersList, selectorModal.positionFilter, playerSearchQuery, playerSearchTeamFilter, starters, bench, lockedTeams, activeTeams]);
 
   // Load configuration and status
   useEffect(() => {
@@ -309,6 +313,11 @@ export default function FantasyPage() {
           setLockedTeams(dataRosters.lockedTeams);
         } else {
           setLockedTeams([]);
+        }
+        if (dataRosters.activeTeams) {
+          setActiveTeams(dataRosters.activeTeams);
+        } else {
+          setActiveTeams([]);
         }
         if (dataRosters.stage) {
           resolvedStage = dataRosters.stage;
@@ -1134,16 +1143,18 @@ export default function FantasyPage() {
                   className={`bg-slate-950 text-slate-200 text-sm font-bold px-3 py-2 rounded-xl border focus:outline-none focus:border-emerald-500 min-w-[160px] max-w-[220px] ${isStageLocked ? "border-slate-800/60 opacity-60 cursor-not-allowed" : "border-slate-800"}`}
                 >
                   <option value="">{locale === "tr" ? "-- Seçiniz --" : "-- Select --"}</option>
-                  {TEAMS.map((team) => {
-                    const managerName = team.manager?.name || "Bilinmiyor";
-                    const teamName = locale === "tr" ? team.nameTr : team.nameEn;
-                    const isLocked = lockedTeams.includes(team.id.toLowerCase());
-                    return (
-                      <option 
-                        key={team.id} 
-                        value={team.id}
-                        disabled={isLocked}
-                      >
+                  {TEAMS
+                    .filter((team) => activeTeams.length === 0 || activeTeams.includes(team.id.toLowerCase()))
+                    .map((team) => {
+                      const managerName = team.manager?.name || "Bilinmiyor";
+                      const teamName = locale === "tr" ? team.nameTr : team.nameEn;
+                      const isLocked = lockedTeams.includes(team.id.toLowerCase());
+                      return (
+                        <option 
+                          key={team.id} 
+                          value={team.id}
+                          disabled={isLocked}
+                        >
                         {managerName} ({teamName}) {isLocked ? "🔒" : ""}
                       </option>
                     );
@@ -1764,9 +1775,11 @@ export default function FantasyPage() {
                 className="w-full bg-slate-950 text-slate-300 text-xs px-4 py-2 rounded-xl border border-slate-800 focus:outline-none"
               >
                 <option value="">{t("fantasy.allTeams")}</option>
-                {Object.values(OFFICIAL_GROUP_DRAW).flat().map((teamCode) => (
-                  <option key={teamCode} value={teamCode}>{teamCode.toUpperCase()}</option>
-                ))}
+                {Object.values(OFFICIAL_GROUP_DRAW).flat()
+                  .filter((teamCode) => activeTeams.length === 0 || activeTeams.includes(teamCode.toLowerCase()))
+                  .map((teamCode) => (
+                    <option key={teamCode} value={teamCode}>{teamCode.toUpperCase()}</option>
+                  ))}
               </select>
             </div>
 
