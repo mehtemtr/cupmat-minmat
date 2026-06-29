@@ -298,8 +298,8 @@ const GROUP_FIXTURES: MatchResult[] = [
     "stadium": "Houston Stadı",
     "id": "E-1",
     "played": true,
-    "homeScore": 4,
-    "awayScore": 0
+    "homeScore": 7,
+    "awayScore": 1
   },
   {
     "group": "E",
@@ -322,7 +322,7 @@ const GROUP_FIXTURES: MatchResult[] = [
     "stadium": "Toronto Stadı",
     "id": "E-2",
     "played": true,
-    "homeScore": 0,
+    "homeScore": 2,
     "awayScore": 1
   },
   {

@@ -130,6 +130,27 @@ function buildR32Matches(standingsMap: Record<GroupId, StandingRow[]>): Knockout
     return null;
   };
 
+  const getThirdPlaceForGroup = (group: GroupId) => {
+    const standings = standingsMap[group];
+    return standings?.[2]?.teamId || null;
+  };
+
+  const qualifiedGroups = bestThirds.map(id => getTeamById(id)?.group).filter(Boolean) as GroupId[];
+  const sortedCombo = [...qualifiedGroups].sort().join(",");
+  const isDefaultCombo = sortedCombo === "B,D,E,F,G,I,J,L";
+
+  // Pre-defined mapping for the default combo (Annex C 2026 Regulations)
+  const defaultComboMap: Record<string, GroupId> = {
+    "r32-1": "D",  // Home E1 (Germany) vs D3 (Paraguay)
+    "r32-2": "F",  // Home I1 (France) vs F3 (Sweden)
+    "r32-7": "B",  // Home D1 (USA) vs B3 (Bosnia-Herzegovina)
+    "r32-8": "I",  // Home G1 (Belgium) vs I3 (Senegal)
+    "r32-11": "E", // Home A1 (Mexico) vs E3 (Ecuador)
+    "r32-12": "G", // Home L1 (England) vs G3 (Iran)
+    "r32-15": "J", // Home B1 (Switzerland) vs J3 (Algeria)
+    "r32-16": "L", // Home K1 (Colombia) vs L3 (Ghana)
+  };
+
   const getTeamIdFromSym = (sym: string): string | null => {
     const match = sym.match(/^([A-L])([12])$/);
     if (!match) return null;
@@ -144,8 +165,12 @@ function buildR32Matches(standingsMap: Record<GroupId, StandingRow[]>): Knockout
     if (def.awaySym) {
       awayTeamId = getTeamIdFromSym(def.awaySym);
     } else if (def.awayOpts) {
-      const homeTeam = homeTeamId ? getTeamById(homeTeamId) : null;
-      awayTeamId = getThirdPlaceForSlot(def.awayOpts, homeTeam?.group);
+      if (isDefaultCombo && defaultComboMap[def.id]) {
+        awayTeamId = getThirdPlaceForGroup(defaultComboMap[def.id]);
+      } else {
+        const homeTeam = homeTeamId ? getTeamById(homeTeamId) : null;
+        awayTeamId = getThirdPlaceForSlot(def.awayOpts, homeTeam?.group);
+      }
     }
 
     matches.push({
