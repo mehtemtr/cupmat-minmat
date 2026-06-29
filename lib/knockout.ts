@@ -5,7 +5,7 @@ import { calculateStandingsFromMatches, groupMatchesComplete, sortStandings } fr
 import { getMatchesForGroup } from "@/lib/fixtures";
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
-const R32_DEFS = [
+export const R32_DEFS = [
   { id: "r32-1", slot: "R32-1", name: "Maç 74", homeSym: "E1", awayOpts: ["A", "B", "C", "D", "F"] as GroupId[], date: "2026-06-29", time: "23:30", stadium: "Boston Stadı" },
   { id: "r32-2", slot: "R32-2", name: "Maç 77", homeSym: "I1", awayOpts: ["C", "D", "F", "G", "H"] as GroupId[], date: "2026-07-01", time: "00:00", stadium: "New York New Jersey Stadyumu" },
   { id: "r32-3", slot: "R32-3", name: "Maç 73", homeSym: "A2", awaySym: "B2", date: "2026-06-28", time: "22:00", stadium: "Los Angeles Stadı" },
@@ -24,7 +24,7 @@ const R32_DEFS = [
   { id: "r32-16", slot: "R32-16", name: "Maç 87", homeSym: "K1", awayOpts: ["D", "E", "I", "J", "L"] as GroupId[], date: "2026-07-04", time: "04:30", stadium: "Kansas City Stadı" }
 ];
 
-const R16_DEFS = [
+export const R16_DEFS = [
   { id: "r16-1", slot: "R16-1", name: "Maç 89", date: "2026-07-05", time: "00:00", stadium: "Philadelphia Stadı" },
   { id: "r16-2", slot: "R16-2", name: "Maç 90", date: "2026-07-04", time: "20:00", stadium: "Houston Stadı" },
   { id: "r16-3", slot: "R16-3", name: "Maç 93", date: "2026-07-06", time: "22:00", stadium: "Dallas Stadı" },
@@ -35,20 +35,28 @@ const R16_DEFS = [
   { id: "r16-8", slot: "R16-8", name: "Maç 96", date: "2026-07-07", time: "23:00", stadium: "BC Place Vancouver Stadı" }
 ];
 
-const QF_DEFS = [
+export const QF_DEFS = [
   { id: "qf-1", slot: "QF-1", name: "Maç 97", date: "2026-07-09", time: "23:00", stadium: "Boston Stadı" },
   { id: "qf-2", slot: "QF-2", name: "Maç 98", date: "2026-07-10", time: "22:00", stadium: "Los Angeles Stadı" },
   { id: "qf-3", slot: "QF-3", name: "Maç 99", date: "2026-07-12", time: "00:00", stadium: "Miami Stadı" },
   { id: "qf-4", slot: "QF-4", name: "Maç 100", date: "2026-07-12", time: "04:00", stadium: "Kansas City Stadı" }
 ];
 
-const SF_DEFS = [
+export const SF_DEFS = [
   { id: "sf-1", slot: "SF-1", name: "Maç 101", date: "2026-07-14", time: "22:00", stadium: "Dallas Stadı" },
   { id: "sf-2", slot: "SF-2", name: "Maç 102", date: "2026-07-15", time: "22:00", stadium: "Atlanta Stadı" }
 ];
 
-const FINAL_DEFS = [
+export const FINAL_DEFS = [
   { id: "final-1", slot: "Final-1", name: "Maç 104", date: "2026-07-19", time: "22:00", stadium: "New York New Jersey Stadı" }
+];
+
+export const KNOCKOUT_DEFS = [
+  ...R32_DEFS,
+  ...R16_DEFS,
+  ...QF_DEFS,
+  ...SF_DEFS,
+  ...FINAL_DEFS
 ];
 
 export function buildFullKnockoutBracket(

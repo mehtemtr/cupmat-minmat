@@ -224,33 +224,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const simulatedMatches = useMemo(() => {
-    return matches.map(m => {
-      if (!m.played) {
-        const kickoff = getMatchKickoffTime(m);
-        const diffMs = currentRealTime - kickoff;
-        const diffMin = Math.floor(diffMs / 60000);
-
-        if (diffMin >= 0 && diffMin < 120) {
-          return {
-            ...m,
-            isLive: true,
-            elapsedMin: diffMin,
-            homeScore: m.homeScore !== null ? m.homeScore : 0,
-            awayScore: m.awayScore !== null ? m.awayScore : 0,
-          };
-        } else if (diffMin >= 120) {
-          return {
-            ...m,
-            played: true,
-            isLive: false,
-            homeScore: m.homeScore !== null ? m.homeScore : 0,
-            awayScore: m.awayScore !== null ? m.awayScore : 0,
-          };
-        }
-      }
-      return m;
-    });
-  }, [matches, currentRealTime, getMatchKickoffTime]);
+    return matches;
+  }, [matches]);
 
   const knockoutBracket = useMemo(() => {
     return buildFullKnockoutBracket(simulatedMatches, predictions, groupTableOverrides);
@@ -504,7 +479,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, [aiEnabled, matches, aiAnalyses, predictions, locale]);
 
   const submitToLeaderboard = useCallback(async () => {
-    const points = totalPredictionPoints(predictions, simulatedMatches);
+    const points = totalPredictionPoints(predictions, [...simulatedMatches, ...knockoutBracket]);
     await fetch("/api/leaderboard", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -516,7 +491,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
         groupsComplete: allGroupsComplete(simulatedMatches),
       }),
     });
-  }, [predictions, simulatedMatches, displayName]);
+  }, [predictions, simulatedMatches, knockoutBracket, displayName]);
 
   const startSimulation = useCallback((match: any) => {
     const homeTeam = getTeamById(match.homeTeamId);
@@ -714,8 +689,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, [simulatedMatches, groupTableOverrides]);
 
   const predictionPoints = useMemo(
-    () => totalPredictionPoints(predictions, simulatedMatches),
-    [predictions, simulatedMatches],
+    () => totalPredictionPoints(predictions, [...simulatedMatches, ...knockoutBracket]),
+    [predictions, simulatedMatches, knockoutBracket],
   );
 
   const value = useMemo(

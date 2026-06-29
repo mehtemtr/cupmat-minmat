@@ -69,9 +69,11 @@ export default function StatisticsPage() {
   const [error, setError] = useState<string | null>(null);
   const [historySearch, setHistorySearch] = useState("");
   const [showAllHistory, setShowAllHistory] = useState(false);
+  const [liveMatchesTab, setLiveMatchesTab] = useState<"groups" | "r32">("groups");
 
   const {
     matches,
+    knockoutBracket,
     simMatchId,
     simRunning,
     simMinute,
@@ -124,12 +126,12 @@ export default function StatisticsPage() {
   }, [simMissedMinutes, t]);
 
   const displayMatches = useMemo(() => {
-    // Convert currentRealTime to TSİ (UTC+3) date string
-    const tzOffset = 3 * 60 * 60 * 1000;
-    const localDate = new Date(currentRealTime + tzOffset);
-    const todayStr = localDate.toISOString().split("T")[0]; // e.g. "2026-06-12"
+    const rawMatches = liveMatchesTab === "groups" 
+      ? matches 
+      : knockoutBracket.filter(m => m.round === "r32");
 
-    const activeMatches = matches.filter(m => m.date <= todayStr);
+    // Filter out matches that don't have both teams resolved
+    const activeMatches = rawMatches.filter(m => m.homeTeamId && m.awayTeamId);
     
     // Sort chronologically by date and time
     const sortedMatches = [...activeMatches].sort((a, b) => {
@@ -152,11 +154,11 @@ export default function StatisticsPage() {
       }
       return m;
     });
-  }, [matches, simMatchId, simScore, simMinute, currentRealTime]);
+  }, [matches, knockoutBracket, liveMatchesTab, simMatchId, simScore, simMinute]);
 
   const realLiveMatch = useMemo(() => {
     if (simMatchId) return null;
-    return displayMatches.find(m => m.isLive);
+    return displayMatches.find((m: any) => m.isLive);
   }, [displayMatches, simMatchId]);
 
   // Unified Commentary selectors
@@ -170,15 +172,28 @@ export default function StatisticsPage() {
   };
 
   const activeCommMatch = useMemo(() => {
+    const allPossibleMatches = [...matches, ...knockoutBracket];
+    let found: any = null;
     if (simMatchId) {
-      return displayMatches.find(m => m.id === simMatchId) || null;
+      found = allPossibleMatches.find(m => m.id === simMatchId);
+    } else if (selectedMatchId) {
+      found = allPossibleMatches.find(m => m.id === selectedMatchId);
+    } else if (realLiveMatch) {
+      found = realLiveMatch;
     }
-    if (selectedMatchId) {
-      return displayMatches.find(m => m.id === selectedMatchId) || null;
+    
+    if (found && simMatchId && found.id === simMatchId) {
+      return {
+        ...found,
+        homeScore: simScore.home,
+        awayScore: simScore.away,
+        played: simMinute >= 94,
+        isLive: simMinute < 94,
+        elapsedMin: simMinute
+      };
     }
-    if (realLiveMatch) return realLiveMatch;
-    return null;
-  }, [simMatchId, selectedMatchId, displayMatches, realLiveMatch]);
+    return found || null;
+  }, [simMatchId, selectedMatchId, matches, knockoutBracket, realLiveMatch, simScore, simMinute]);
 
   const activeCommEvents = useMemo(() => {
     if (simMatchId) return simEvents;
@@ -857,15 +872,41 @@ export default function StatisticsPage() {
 
               {/* Today's Matches Board */}
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-emerald-400" />
-                  <span>{locale === "tr" ? "Günün Maçları (11 Haziran 2026)" : "Matches of the Day (June 11, 2026)"}</span>
-                </h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-2">
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    <Calendar className="h-5 w-5 text-emerald-400" />
+                    <span>{locale === "tr" ? "Maç Simülatörü" : "Match Simulator"}</span>
+                  </h3>
+
+                  {/* Sub-tabs: Groups vs R32 */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setLiveMatchesTab("groups")}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        liveMatchesTab === "groups"
+                          ? "bg-emerald-500 text-[#060b14] font-black"
+                          : "bg-white/5 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {locale === "tr" ? "Grup Maçları" : "Group Matches"}
+                    </button>
+                    <button
+                      onClick={() => setLiveMatchesTab("r32")}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        liveMatchesTab === "r32"
+                          ? "bg-emerald-500 text-[#060b14] font-black"
+                          : "bg-white/5 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {locale === "tr" ? "Son 32 Maçları" : "Round of 32 Matches"}
+                    </button>
+                  </div>
+                </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
-                  {displayMatches.map((m) => {
-                    const homeTeam = getTeamById(m.homeTeamId);
-                    const awayTeam = getTeamById(m.awayTeamId);
+                  {displayMatches.map((m: any) => {
+                    const homeTeam = m.homeTeamId ? getTeamById(m.homeTeamId) : null;
+                    const awayTeam = m.awayTeamId ? getTeamById(m.awayTeamId) : null;
                     const homeName = locale === "tr" ? homeTeam?.nameTr : homeTeam?.nameEn;
                     const awayName = locale === "tr" ? awayTeam?.nameTr : awayTeam?.nameEn;
                     const isSimulated = simMatchId === m.id;
@@ -889,7 +930,10 @@ export default function StatisticsPage() {
                       >
                         <div className="flex justify-between items-center mb-3">
                           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">
-                            {locale === "tr" ? `Grup ${m.group}` : `Group ${m.group}`}
+                            {m.round === "r32"
+                              ? (locale === "tr" ? "Son 32 Turu" : "Round of 32")
+                              : (locale === "tr" ? `Grup ${m.group}` : `Group ${m.group}`)
+                            }
                           </span>
                           <div className="flex items-center gap-2">
                             {isLive ? (
@@ -903,7 +947,7 @@ export default function StatisticsPage() {
                               </span>
                             ) : (
                               <span className="text-xs font-semibold text-emerald-400/80">
-                                {locale === "tr" ? `Bugün ${m.time}` : `Today ${m.time}`}
+                                {m.date} &bull; {m.time}
                               </span>
                             )}
                           </div>
@@ -917,7 +961,7 @@ export default function StatisticsPage() {
                             className="flex items-center gap-3 w-5/12 overflow-hidden hover:text-emerald-400 cursor-pointer transition-colors group"
                           >
                             <img 
-                              src={getFlagUrl(m.homeTeamId)} 
+                              src={getFlagUrl(m.homeTeamId || "")} 
                               alt="" 
                               className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all"
                             />
@@ -941,7 +985,7 @@ export default function StatisticsPage() {
                           >
                             <span className="font-bold text-white text-sm truncate group-hover:text-emerald-400 transition-colors">{awayName}</span>
                             <img 
-                              src={getFlagUrl(m.awayTeamId)} 
+                              src={getFlagUrl(m.awayTeamId || "")} 
                               alt="" 
                               className="h-6 w-9 object-cover rounded shadow border border-white/10 shrink-0 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all"
                             />
@@ -950,7 +994,7 @@ export default function StatisticsPage() {
 
                         <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
                           <span className="text-[10px] text-zinc-500">
-                            {locale === "tr" ? "11 Haziran 2026" : "June 11, 2026"}
+                            {m.stadium || "World Cup Stadium"}
                           </span>
                           {!isSimulated && !simMatchId && !isLive && !isFinished && (
                             <button

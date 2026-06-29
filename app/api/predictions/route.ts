@@ -5,6 +5,7 @@ import { getLeaderboard, upsertSubmission } from "@/lib/store/leaderboard-store"
 import { generateGroupFixtures } from "@/lib/fixtures";
 import { getAdjustedDate } from "@/lib/tournament/time-helper";
 import type { PredictionSubmission, MatchPrediction } from "@/lib/types/tournament";
+import { KNOCKOUT_DEFS } from "@/lib/knockout";
 
 export async function GET() {
   try {
@@ -50,21 +51,30 @@ export async function POST(request: Request) {
     const existingSubmission = leaderboard.find((s) => s.userId === userId);
 
     const fixtures = generateGroupFixtures();
+    const allMatchDefs = [...fixtures, ...KNOCKOUT_DEFS];
 
     if (singleMatchId) {
-      if (!profile.genelTahminHakkiKullanildi) {
-        return NextResponse.json({
-          error: "Öncelikle turnuva başı genel tahmin hakkınızı kullanarak ilk tahminlerinizi kaydetmelisiniz."
-        }, { status: 400 });
+      const isKnockoutMatch = singleMatchId.startsWith("r32-") || 
+                              singleMatchId.startsWith("r16-") || 
+                              singleMatchId.startsWith("qf-") || 
+                              singleMatchId.startsWith("sf-") || 
+                              singleMatchId.startsWith("final-");
+
+      if (!isKnockoutMatch) {
+        if (!profile.genelTahminHakkiKullanildi) {
+          return NextResponse.json({
+            error: "Öncelikle turnuva başı genel tahmin hakkınızı kullanarak ilk tahminlerinizi kaydetmelisiniz."
+          }, { status: 400 });
+        }
+
+        if (profile.tahminGuncellemeHakki <= 0) {
+          return NextResponse.json({
+            error: "Yetersiz tahmin değiştirme hakkı! Değiştirme hakkı kazanmak için MinMat portalında rekor kırmalısınız."
+          }, { status: 400 });
+        }
       }
 
-      if (profile.tahminGuncellemeHakki <= 0) {
-        return NextResponse.json({
-          error: "Yetersiz tahmin değiştirme hakkı! Değiştirme hakkı kazanmak için MinMat portalında rekor kırmalısınız."
-        }, { status: 400 });
-      }
-
-      const targetMatch = fixtures.find((m) => m.id === singleMatchId);
+      const targetMatch = allMatchDefs.find((m) => m.id === singleMatchId);
       if (!targetMatch) {
         return NextResponse.json({ error: "Maç bulunamadı." }, { status: 404 });
       }
@@ -77,7 +87,9 @@ export async function POST(request: Request) {
         }, { status: 400 });
       }
 
-      profile.tahminGuncellemeHakki = Math.max(0, profile.tahminGuncellemeHakki - 1);
+      if (!isKnockoutMatch) {
+        profile.tahminGuncellemeHakki = Math.max(0, profile.tahminGuncellemeHakki - 1);
+      }
 
       const newScore = predictions[singleMatchId];
       if (!newScore || typeof newScore.home !== "number" || typeof newScore.away !== "number") {
@@ -106,7 +118,9 @@ export async function POST(request: Request) {
         success: true,
         profile,
         predictions: currentPredictions,
-        message: "Değiştirme hakkınız kullanılarak maç tahmini başarıyla güncellendi!"
+        message: isKnockoutMatch
+          ? "Eleme turu tahmini başarıyla güncellendi!"
+          : "Değiştirme hakkınız kullanılarak maç tahmini başarıyla güncellendi!"
       });
     }
 
@@ -119,7 +133,7 @@ export async function POST(request: Request) {
     const matchPredictions: Record<string, MatchPrediction> = {};
     const now = getAdjustedDate();
     for (const matchId of Object.keys(predictions)) {
-      const targetMatch = fixtures.find((m) => m.id === matchId);
+      const targetMatch = allMatchDefs.find((m) => m.id === matchId);
       if (targetMatch) {
         const matchDate = new Date(`${targetMatch.date}T${targetMatch.time || "00:00"}:00Z`);
         if (now < matchDate) {

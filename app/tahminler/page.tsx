@@ -11,7 +11,8 @@ import { getTeamById } from "@/data/teams";
 import { getAdjustedDate } from "@/lib/tournament/time-helper";
 import { useTournament } from "@/contexts/TournamentContext";
 import type { UserActivity } from "@/lib/store/gamification-store";
-import type { MatchResult } from "@/lib/types/tournament";
+import type { MatchResult, GroupId } from "@/lib/types/tournament";
+import { KNOCKOUT_DEFS } from "@/lib/knockout";
 
 const localDict = {
   tr: {
@@ -158,7 +159,7 @@ const TIMEZONES = [
 export default function PredictionCenterPage() {
   const { locale } = useTranslation();
   const { user, isLoaded: authLoaded } = useUser();
-  const { matches } = useTournament();
+  const { matches, knockoutBracket } = useTournament();
 
   const activeLang = (locale in localDict ? locale : "en") as keyof typeof localDict;
   const dict = localDict[activeLang];
@@ -181,10 +182,45 @@ export default function PredictionCenterPage() {
   const [aiLoading, setAiLoading] = useState<Record<string, boolean>>({});
   const [aiError, setAiError] = useState<Record<string, string>>({});
 
+  const [tahminTab, setTahminTab] = useState<"groups" | "r32">("groups");
+
   // Tüm grup aşaması maçlarını kronolojik olarak listele
   const upcomingMatches = useMemo(() => {
     return sortMatchesChronologically(matches);
   }, [matches]);
+
+  const r32Matches = useMemo(() => {
+    return knockoutBracket.filter((m) => m.round === "r32");
+  }, [knockoutBracket]);
+
+  const displayedMatches = useMemo(() => {
+    return tahminTab === "groups" ? upcomingMatches : r32Matches;
+  }, [tahminTab, upcomingMatches, r32Matches]);
+
+  const getPlaceholderTeamName = (sym: string | undefined, opts: GroupId[] | undefined, locale: string) => {
+    if (sym) {
+      const group = sym[0];
+      const rank = sym[1];
+      if (locale === "tr") {
+        return `${group} Grubu ${rank === "1" ? "Lideri" : "İkincisi"}`;
+      } else {
+        return `${rank === "1" ? "Winner" : "Runner-up"} Group ${group}`;
+      }
+    }
+    if (opts && opts.length > 0) {
+      if (locale === "tr") {
+        return `En İyi 3. (${opts.join("/")})`;
+      } else {
+        return `Best 3rd (${opts.join("/")})`;
+      }
+    }
+    return "TBD";
+  };
+
+  const getKnockoutMatchName = (match: any) => {
+    const def = KNOCKOUT_DEFS.find((d) => d.id === match.id);
+    return def ? def.name : match.slot || "Son 32";
+  };
 
   // Bugünün tarihine en yakın oynanmamış maçı bul (Initial Scroll Odak Noktası)
   const closestMatch = useMemo(() => {
@@ -240,9 +276,10 @@ export default function PredictionCenterPage() {
         setProfile(data.profile);
         setDbPredictions(data.predictions);
 
-        // Prepopulate input states
+        // Prepopulate input states for all matches
         const prepopulated: Record<string, { home: string; away: string }> = {};
-        upcomingMatches.forEach((m) => {
+        const allMatches = [...upcomingMatches, ...r32Matches];
+        allMatches.forEach((m) => {
           const saved = data.predictions[m.id];
           prepopulated[m.id] = {
             home: saved ? saved.home.toString() : "",
@@ -264,7 +301,7 @@ export default function PredictionCenterPage() {
     } else if (authLoaded && !user) {
       setLoading(false);
     }
-  }, [user, authLoaded]);
+  }, [user, authLoaded, knockoutBracket]);
 
   const handleViewAiPrediction = async (matchId: string, homeTeamId: string | null, awayTeamId: string | null) => {
     if (!user || !profile) {
@@ -534,6 +571,32 @@ export default function PredictionCenterPage() {
         </div>
       )}
 
+      {/* Tab Switcher: Grup vs Son 32 */}
+      <div className="flex border-b border-white/10 mb-6 gap-6 z-10 relative">
+        <button
+          type="button"
+          onClick={() => setTahminTab("groups")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+            tahminTab === "groups"
+              ? "border-emerald-500 text-emerald-400 font-extrabold"
+              : "border-transparent text-zinc-400 hover:text-white"
+          }`}
+        >
+          {locale === "tr" ? "Grup Aşaması Tahminleri" : "Group Stage Predictions"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTahminTab("r32")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+            tahminTab === "r32"
+              ? "border-emerald-500 text-emerald-400 font-extrabold"
+              : "border-transparent text-zinc-400 hover:text-white"
+          }`}
+        >
+          {locale === "tr" ? "Son 32 Turu Tahminleri" : "Round of 32 Predictions"}
+        </button>
+      </div>
+
       {/* Match Cards List */}
       <section className="space-y-6">
         
@@ -564,11 +627,12 @@ export default function PredictionCenterPage() {
         </div>
 
         <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
-          {upcomingMatches.map((match) => {
-            const home = getTeamById(match.homeTeamId);
-            const away = getTeamById(match.awayTeamId);
-
-            if (!home || !away) return null;
+          {displayedMatches.map((matchItem) => {
+            const match = matchItem as any;
+            const home = match.homeTeamId ? getTeamById(match.homeTeamId) : null;
+            const away = match.awayTeamId ? getTeamById(match.awayTeamId) : null;
+            const def = KNOCKOUT_DEFS.find((d: any) => d.id === match.id) as any;
+            const isKnockout = match.id.startsWith("r32-") || match.id.startsWith("r16-") || match.id.startsWith("qf-") || match.id.startsWith("sf-") || match.id.startsWith("final-");
 
             // Calculate dynamic timezone kickoff date and time using base TSİ time (UTC+3)
             const selectedTimezone = TIMEZONES.find((t) => t.id === timezoneId) || TIMEZONES[0];
@@ -610,7 +674,8 @@ export default function PredictionCenterPage() {
             // 1. Match not started AND (initial free submit mode OR user has update rights OR user toggled edit mode for this card)
             const hasUpdateRights = profile && profile.tahminGuncellemeHakki > 0;
             const isEditing = editingMatches[match.id];
-            const isInputDisabled = isMatchStarted || (!isFreeSubmitActive && !hasUpdateRights && !isEditing);
+            const isInputDisabled = isMatchStarted || !home || !away || 
+              (!isKnockout && !isFreeSubmitActive && !hasUpdateRights && !isEditing);
 
             return (
               <div
@@ -627,7 +692,7 @@ export default function PredictionCenterPage() {
                   {/* Kickoff top bar */}
                   <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-zinc-500 border-b border-zinc-900 pb-1.5 mb-1.5">
                     <span className="font-extrabold text-emerald-400 bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 uppercase tracking-widest text-[9px]">
-                      {dict.matchDay} {match.group}
+                      {isKnockout ? getKnockoutMatchName(match) : `${dict.matchDay} ${match.group}`}
                     </span>
                     <div className="flex items-center gap-1 font-semibold">
                       <span>📅 {formattedDate}</span>
@@ -641,18 +706,30 @@ export default function PredictionCenterPage() {
                   <div className="flex items-center justify-between gap-3 sm:gap-4 py-1">
                     {/* Home Team */}
                     <Link 
-                      href={`/ulkeler/${home.id}`}
-                      className="flex items-center gap-2.5 sm:gap-3 flex-1 hover:text-emerald-400 cursor-pointer transition-colors group overflow-hidden"
+                      href={home ? `/ulkeler/${home.id}` : "#"}
+                      onClick={(e) => { if (!home) e.preventDefault(); }}
+                      className={`flex items-center gap-2.5 sm:gap-3 flex-1 overflow-hidden ${
+                        home ? "hover:text-emerald-400 cursor-pointer transition-colors group" : "cursor-default"
+                      }`}
                     >
-                      <div className="relative w-9 h-6 sm:w-10 sm:h-6.5 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all flex-shrink-0">
-                        <img
-                          src={home.flagUrl}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="relative w-9 h-6 sm:w-10 sm:h-6.5 overflow-hidden rounded shadow border border-zinc-800/60 transition-all flex-shrink-0">
+                        {home ? (
+                          <img
+                            src={home.flagUrl}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-zinc-900 border border-zinc-850 flex items-center justify-center text-zinc-500 font-extrabold text-[10px]">
+                            ?
+                          </div>
+                        )}
                       </div>
-                      <span className="text-zinc-100 font-black text-sm sm:text-base truncate group-hover:text-emerald-400 transition-colors">
-                        {locale === "tr" ? home.nameTr : home.nameEn}
+                      <span className="text-zinc-100 font-black text-xs sm:text-sm truncate">
+                        {home 
+                          ? (locale === "tr" ? home.nameTr : home.nameEn) 
+                          : getPlaceholderTeamName(def?.homeSym, undefined, locale)
+                        }
                       </span>
                     </Link>
 
@@ -663,18 +740,30 @@ export default function PredictionCenterPage() {
 
                     {/* Away Team */}
                     <Link 
-                      href={`/ulkeler/${away.id}`}
-                      className="flex items-center gap-2.5 sm:gap-3 flex-1 justify-end text-right hover:text-emerald-400 cursor-pointer transition-colors group overflow-hidden"
+                      href={away ? `/ulkeler/${away.id}` : "#"}
+                      onClick={(e) => { if (!away) e.preventDefault(); }}
+                      className={`flex items-center gap-2.5 sm:gap-3 flex-1 justify-end text-right overflow-hidden ${
+                        away ? "hover:text-emerald-400 cursor-pointer transition-colors group" : "cursor-default"
+                      }`}
                     >
-                      <span className="text-zinc-100 font-black text-sm sm:text-base truncate group-hover:text-emerald-400 transition-colors">
-                        {locale === "tr" ? away.nameTr : away.nameEn}
+                      <span className="text-zinc-100 font-black text-xs sm:text-sm truncate">
+                        {away 
+                          ? (locale === "tr" ? away.nameTr : away.nameEn) 
+                          : getPlaceholderTeamName(undefined, def?.awayOpts, locale)
+                        }
                       </span>
-                      <div className="relative w-9 h-6 sm:w-10 sm:h-6.5 overflow-hidden rounded shadow border border-zinc-800/60 group-hover:ring-1 group-hover:ring-emerald-500/35 transition-all flex-shrink-0">
-                        <img
-                          src={away.flagUrl}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="relative w-9 h-6 sm:w-10 sm:h-6.5 overflow-hidden rounded shadow border border-zinc-800/60 transition-all flex-shrink-0">
+                        {away ? (
+                          <img
+                            src={away.flagUrl}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-zinc-900 border border-zinc-850 flex items-center justify-center text-zinc-500 font-extrabold text-[10px]">
+                            ?
+                          </div>
+                        )}
                       </div>
                     </Link>
                   </div>
@@ -719,6 +808,22 @@ export default function PredictionCenterPage() {
                       <div className="text-[11px] font-bold text-rose-500 flex items-center gap-1.5 mt-1 select-none">
                         {dict.lockedMatch}
                       </div>
+                    ) : (!home || !away) ? (
+                      <div className="text-[10px] font-bold text-zinc-500 text-center select-none py-1 leading-relaxed">
+                        ⚠️ {locale === "tr" ? "Eşleşen takımlar henüz belli değil." : "Teams are not yet determined."}
+                      </div>
+                    ) : isKnockout ? (
+                      <button
+                        onClick={() => handleSingleSave(match.id)}
+                        disabled={actionLoading !== null}
+                        className="w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs sm:text-sm font-black transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5"
+                      >
+                        {actionLoading === match.id ? (
+                          <div className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          locale === "tr" ? "Tahmini Kaydet" : "Save Prediction"
+                        )}
+                      </button>
                     ) : isFreeSubmitActive ? (
                       // Batch mode - just placeholder or instructions
                       <span className="text-[10px] text-zinc-500 font-medium tracking-wide text-center">
@@ -794,8 +899,8 @@ export default function PredictionCenterPage() {
                     ) : (
                       <button
                         onClick={() => handleViewAiPrediction(match.id, match.homeTeamId, match.awayTeamId)}
-                        disabled={aiLoading[match.id]}
-                        className="text-[10px] sm:text-xs font-black text-zinc-300 hover:text-white bg-indigo-600/10 hover:bg-indigo-600/25 border border-indigo-500/25 hover:border-indigo-500/40 rounded-xl px-3 py-2 flex items-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer"
+                        disabled={aiLoading[match.id] || !home || !away}
+                        className="text-[10px] sm:text-xs font-black text-zinc-300 hover:text-white bg-indigo-600/10 hover:bg-indigo-600/25 border border-indigo-500/25 hover:border-indigo-500/40 rounded-xl px-3 py-2 flex items-center gap-1.5 shadow transition-all active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         🧠 {aiLoading[match.id] ? (
                           <div className="w-3.5 h-3.5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />

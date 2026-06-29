@@ -2,10 +2,11 @@ import type { MatchResult } from "@/lib/types/tournament";
 
 export function scorePrediction(
   predicted: { home: number; away: number },
-  actual: MatchResult,
+  actual: any,
 ): number {
+  const isPlayed = 'played' in actual ? actual.played : (actual.homeScore !== null && actual.awayScore !== null);
   if (
-    !actual.played ||
+    !isPlayed ||
     actual.homeScore === null ||
     actual.awayScore === null
   ) {
@@ -34,7 +35,7 @@ export function scorePrediction(
 
 export function totalPredictionPoints(
   predictions: Record<string, { home: number; away: number }>,
-  actualMatches: MatchResult[],
+  actualMatches: any[],
 ): number {
   return actualMatches.reduce((sum, match) => {
     const pred = predictions[match.id];
