@@ -910,8 +910,23 @@ export default function StatisticsPage() {
                     const homeName = locale === "tr" ? homeTeam?.nameTr : homeTeam?.nameEn;
                     const awayName = locale === "tr" ? awayTeam?.nameTr : awayTeam?.nameEn;
                     const isSimulated = simMatchId === m.id;
-                    const isLive = m.isLive;
-                    const isFinished = m.played;
+
+                    const getMatchKickoff = (dateStr: string, timeStr: string): number => {
+                      const [hourStr, minStr] = (timeStr || "12:00").split(":");
+                      const [yrStr, moStr, dyStr] = dateStr.split("-");
+                      return new Date(Date.UTC(
+                        parseInt(yrStr, 10),
+                        parseInt(moStr, 10) - 1,
+                        parseInt(dyStr, 10),
+                        parseInt(hourStr, 10),
+                        parseInt(minStr, 10),
+                        0
+                      )).getTime() - (3 * 60 * 60 * 1000); // TSİ (UTC+3) to UTC
+                    };
+
+                    const kickoff = getMatchKickoff(m.date, m.time || "12:00");
+                    const isLive = m.isLive || (currentRealTime >= kickoff && currentRealTime < kickoff + 2 * 60 * 60 * 1000 && !m.played);
+                    const isFinished = m.played || (currentRealTime >= kickoff + 2 * 60 * 60 * 1000);
 
                     return (
                       <div 
@@ -970,7 +985,7 @@ export default function StatisticsPage() {
 
                           {/* Score / VS */}
                           <div className="flex items-center justify-center font-mono font-bold text-lg text-white w-2/12 bg-black/40 py-1 px-3 rounded-lg border border-white/5 shrink-0">
-                            {isLive || isFinished ? (
+                            {(isLive || isFinished) && m.homeScore !== null && m.awayScore !== null ? (
                               <span>{m.homeScore} - {m.awayScore}</span>
                             ) : (
                               <span className="text-zinc-500 text-sm">VS</span>
