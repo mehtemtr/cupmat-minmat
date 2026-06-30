@@ -62,7 +62,8 @@ export const KNOCKOUT_DEFS = [
 export function buildFullKnockoutBracket(
   allMatches: MatchResult[],
   predictions: Record<string, { home: number; away: number; homeET?: number; awayET?: number; homePen?: number; awayPen?: number }>,
-  groupTableOverrides?: Record<GroupId, string[]>
+  groupTableOverrides?: Record<GroupId, string[]>,
+  liveRawMatches?: any[]
 ): KnockoutMatch[] {
   const standingsMap = getGroupStandingsMap(allMatches, predictions, groupTableOverrides);
 
@@ -76,16 +77,19 @@ export function buildFullKnockoutBracket(
     return createPlaceholderBracket();
   }
 
-  const r32Matches = buildR32Matches(standingsMap);
-  const r16Matches = buildNextRound(r32Matches, predictions, "r16", 8);
-  const qfMatches = buildNextRound(r16Matches, predictions, "qf", 4);
-  const sfMatches = buildNextRound(qfMatches, predictions, "sf", 2);
-  const finalMatch = buildNextRound(sfMatches, predictions, "final", 1);
+  const r32Matches = buildR32Matches(standingsMap, liveRawMatches);
+  const r16Matches = buildNextRound(r32Matches, predictions, "r16", 8, liveRawMatches);
+  const qfMatches = buildNextRound(r16Matches, predictions, "qf", 4, liveRawMatches);
+  const sfMatches = buildNextRound(qfMatches, predictions, "sf", 2, liveRawMatches);
+  const finalMatch = buildNextRound(sfMatches, predictions, "final", 1, liveRawMatches);
 
   return [...r32Matches, ...r16Matches, ...qfMatches, ...sfMatches, ...finalMatch];
 }
 
-function buildR32Matches(standingsMap: Record<GroupId, StandingRow[]>): KnockoutMatch[] {
+function buildR32Matches(
+  standingsMap: Record<GroupId, StandingRow[]>,
+  liveRawMatches?: any[]
+): KnockoutMatch[] {
   const matches: KnockoutMatch[] = [];
 
   // Get best 8 third place teams
@@ -173,15 +177,74 @@ function buildR32Matches(standingsMap: Record<GroupId, StandingRow[]>): Knockout
       }
     }
 
+    // Resolve real score/played status/winner from live scores
+    let homeScore: number | null = null;
+    let awayScore: number | null = null;
+    let homeET: number | null = null;
+    let awayET: number | null = null;
+    let homePen: number | null = null;
+    let awayPen: number | null = null;
+    let played = false;
+    let isLive = false;
+    let winnerId: string | null = null;
+
+    if (liveRawMatches && homeTeamId && awayTeamId) {
+      const realMatch = liveRawMatches.find(rm => 
+        (rm.homeTeamId === homeTeamId && rm.awayTeamId === awayTeamId) ||
+        (rm.homeTeamId === awayTeamId && rm.awayTeamId === homeTeamId)
+      );
+      if (realMatch) {
+        const isSwapped = realMatch.homeTeamId === awayTeamId;
+        homeScore = isSwapped ? realMatch.awayScore : realMatch.homeScore;
+        awayScore = isSwapped ? realMatch.homeScore : realMatch.awayScore;
+        played = realMatch.played;
+        isLive = realMatch.isLive;
+        homeET = isSwapped ? realMatch.awayET : realMatch.homeET;
+        awayET = isSwapped ? realMatch.homeET : realMatch.awayET;
+        homePen = isSwapped ? realMatch.awayPen : realMatch.homePen;
+        awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
+
+        if (played && homeScore !== null && awayScore !== null) {
+          if (homeScore > awayScore) {
+            winnerId = homeTeamId;
+          } else if (awayScore > homeScore) {
+            winnerId = awayTeamId;
+          } else {
+            const hET = homeET ?? 0;
+            const aET = awayET ?? 0;
+            if (hET > aET) {
+              winnerId = homeTeamId;
+            } else if (aET > hET) {
+              winnerId = awayTeamId;
+            } else {
+              const hPen = homePen ?? 0;
+              const aPen = awayPen ?? 0;
+              if (hPen > aPen) {
+                winnerId = homeTeamId;
+              } else if (aPen > hPen) {
+                winnerId = awayTeamId;
+              }
+            }
+          }
+        }
+      }
+    }
+
     matches.push({
       id: def.id,
       round: "r32",
       slot: def.slot,
       homeTeamId,
       awayTeamId,
-      homeScore: null,
-      awayScore: null,
-      winnerId: null,
+      homeScore,
+      awayScore,
+      homeET,
+      awayET,
+      homePen,
+      awayPen,
+      winnerId,
+      played,
+      isLive,
       date: def.date,
       time: def.time,
       stadium: def.stadium,
@@ -195,7 +258,8 @@ function buildNextRound(
   prevRoundMatches: KnockoutMatch[],
   predictions: Record<string, { home: number; away: number; homeET?: number; awayET?: number; homePen?: number; awayPen?: number; source?: "user" | "ai" }>,
   roundType: "r16" | "qf" | "sf" | "final",
-  count: number
+  count: number,
+  liveRawMatches?: any[]
 ): KnockoutMatch[] {
   const matches: KnockoutMatch[] = [];
   
@@ -210,11 +274,64 @@ function buildNextRound(
     const prev1 = prevRoundMatches[i * 2];
     const prev2 = prevRoundMatches[i * 2 + 1];
     
-    const homeTeamId = prev1 ? getWinner(prev1.id, prev1.homeTeamId, prev1.awayTeamId, predictions) : null;
-    const awayTeamId = prev2 ? getWinner(prev2.id, prev2.homeTeamId, prev2.awayTeamId, predictions) : null;
+    // User predicted winners take precedence, otherwise fallback to real-world winner
+    const homeTeamId = prev1 ? (getWinner(prev1.id, prev1.homeTeamId, prev1.awayTeamId, predictions) || prev1.winnerId) : null;
+    const awayTeamId = prev2 ? (getWinner(prev2.id, prev2.homeTeamId, prev2.awayTeamId, predictions) || prev2.winnerId) : null;
 
     const def = roundDefs[i];
     const p = predictions[`${roundType}-${i + 1}`];
+
+    let homeScore: number | null = p?.home ?? null;
+    let awayScore: number | null = p?.away ?? null;
+    let homeET: number | null = p?.homeET ?? null;
+    let awayET: number | null = p?.awayET ?? null;
+    let homePen: number | null = p?.homePen ?? null;
+    let awayPen: number | null = p?.awayPen ?? null;
+    let played = false;
+    let isLive = false;
+    let winnerId: string | null = null;
+
+    if (liveRawMatches && homeTeamId && awayTeamId) {
+      const realMatch = liveRawMatches.find(rm => 
+        (rm.homeTeamId === homeTeamId && rm.awayTeamId === awayTeamId) ||
+        (rm.homeTeamId === awayTeamId && rm.awayTeamId === homeTeamId)
+      );
+      if (realMatch) {
+        const isSwapped = realMatch.homeTeamId === awayTeamId;
+        homeScore = isSwapped ? realMatch.awayScore : realMatch.homeScore;
+        awayScore = isSwapped ? realMatch.homeScore : realMatch.awayScore;
+        played = realMatch.played;
+        isLive = realMatch.isLive;
+        homeET = isSwapped ? realMatch.awayET : realMatch.homeET;
+        awayET = isSwapped ? realMatch.homeET : realMatch.awayET;
+        homePen = isSwapped ? realMatch.awayPen : realMatch.homePen;
+        awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
+
+        if (played && homeScore !== null && awayScore !== null) {
+          if (homeScore > awayScore) {
+            winnerId = homeTeamId;
+          } else if (awayScore > homeScore) {
+            winnerId = awayTeamId;
+          } else {
+            const hET = homeET ?? 0;
+            const aET = awayET ?? 0;
+            if (hET > aET) {
+              winnerId = homeTeamId;
+            } else if (aET > hET) {
+              winnerId = awayTeamId;
+            } else {
+              const hPen = homePen ?? 0;
+              const aPen = awayPen ?? 0;
+              if (hPen > aPen) {
+                winnerId = homeTeamId;
+              } else if (aPen > hPen) {
+                winnerId = awayTeamId;
+              }
+            }
+          }
+        }
+      }
+    }
 
     matches.push({
       id: `${roundType}-${i + 1}`,
@@ -222,13 +339,15 @@ function buildNextRound(
       slot: def.slot,
       homeTeamId,
       awayTeamId,
-      homeScore: p?.home ?? null,
-      awayScore: p?.away ?? null,
-      homeET: p?.homeET ?? null,
-      awayET: p?.awayET ?? null,
-      homePen: p?.homePen ?? null,
-      awayPen: p?.awayPen ?? null,
-      winnerId: null,
+      homeScore,
+      awayScore,
+      homeET,
+      awayET,
+      homePen,
+      awayPen,
+      winnerId,
+      played,
+      isLive,
       date: def.date,
       time: def.time,
       stadium: def.stadium,

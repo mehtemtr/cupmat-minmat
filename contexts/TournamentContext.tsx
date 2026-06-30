@@ -161,6 +161,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   const [aiEnabled, setAiEnabled] = useState(false);
   const [aiAnalyses, setAiAnalyses] = useState<AiAnalysis[]>([]);
   const [ready, setReady] = useState(false);
+  const [liveRawMatches, setLiveRawMatches] = useState<any[]>([]);
 
   const [groupTableOverrides, setGroupTableOverrides] = useState<Record<GroupId, string[]>>({} as Record<GroupId, string[]>);
 
@@ -228,8 +229,8 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
   }, [matches]);
 
   const knockoutBracket = useMemo(() => {
-    return buildFullKnockoutBracket(simulatedMatches, predictions, groupTableOverrides);
-  }, [simulatedMatches, predictions, groupTableOverrides]);
+    return buildFullKnockoutBracket(simulatedMatches, predictions, groupTableOverrides, liveRawMatches);
+  }, [simulatedMatches, predictions, groupTableOverrides, liveRawMatches]);
 
   useEffect(() => {
     const saved = loadState();
@@ -289,6 +290,10 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
                 return m;
               });
             });
+
+            if (Array.isArray(data.rawMatches)) {
+              setLiveRawMatches(data.rawMatches);
+            }
           }
         })
         .catch((err) => console.error("Failed to load live scores from API:", err));

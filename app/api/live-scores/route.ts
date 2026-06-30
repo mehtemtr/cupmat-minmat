@@ -61,11 +61,39 @@ export async function GET() {
       };
     }).filter(Boolean);
 
-    console.log(`[Live-Scores-API] Successfully mapped ${mappedMatches.length} matches.`);
+    // Map all raw matches (group and knockout stage) for dynamic mapping on client side
+    const rawMatches = apiMatches.map((m: any) => {
+      const apiHomeTla = (m.homeTeam?.tla || "").toLowerCase().trim();
+      const apiAwayTla = (m.awayTeam?.tla || "").toLowerCase().trim();
+
+      const homeTeamId = apiHomeTla === "hai" ? "hti" : (apiHomeTla === "ury" ? "uru" : apiHomeTla);
+      const awayTeamId = apiAwayTla === "hai" ? "hti" : (apiAwayTla === "ury" ? "uru" : apiAwayTla);
+
+      const status = m.status;
+      const played = status === "FINISHED";
+      const isLive = ["IN_PLAY", "PAUSED"].includes(status);
+
+      return {
+        homeTeamId,
+        awayTeamId,
+        homeScore: (played || isLive) ? m.score.fullTime.home : null,
+        awayScore: (played || isLive) ? m.score.fullTime.away : null,
+        homeET: (played || isLive) ? m.score.extraTime?.home : null,
+        awayET: (played || isLive) ? m.score.extraTime?.away : null,
+        homePen: (played || isLive) ? m.score.penalties?.home : null,
+        awayPen: (played || isLive) ? m.score.penalties?.away : null,
+        played,
+        isLive,
+        status,
+      };
+    });
+
+    console.log(`[Live-Scores-API] Successfully mapped ${mappedMatches.length} group matches and ${rawMatches.length} raw matches.`);
 
     return NextResponse.json({
       success: true,
       matches: mappedMatches,
+      rawMatches: rawMatches,
     });
   } catch (error: any) {
     console.error("[Live-Scores-API] Failed to fetch live scores:", error);
