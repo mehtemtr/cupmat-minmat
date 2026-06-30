@@ -70,6 +70,7 @@ export type TournamentContextValue = {
   standingsByGroup: ReturnType<typeof getGroupStandingsMap>;
   knockoutUnlocked: boolean;
   knockoutBracket: KnockoutMatch[];
+  liveRawMatches: any[];
   updateMatchScore: (
     matchId: string,
     home: number,
@@ -709,6 +710,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       standingsByGroup,
       knockoutUnlocked,
       knockoutBracket,
+      liveRawMatches,
       updateMatchScore,
       setPrediction,
       resetPredictions,
@@ -746,6 +748,7 @@ export function TournamentProvider({ children }: { children: React.ReactNode }) 
       standingsByGroup,
       knockoutUnlocked,
       knockoutBracket,
+      liveRawMatches,
       updateMatchScore,
       setPrediction,
       resetPredictions,

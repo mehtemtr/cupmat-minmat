@@ -9,6 +9,7 @@ import { TEAMS, getTeamById } from "@/data/teams";
 import { HISTORICAL_STANDINGS } from "@/data/historical-standings";
 import { generateGroupFixtures } from "@/lib/fixtures";
 import { getAdjustedTime } from "@/lib/tournament/time-helper";
+import { buildFullKnockoutBracket } from "@/lib/knockout";
 import {
   Users,
   Award,
@@ -88,6 +89,7 @@ export default function StatisticsPage() {
     activeReward,
     claimReward,
     dismissReward,
+    liveRawMatches,
   } = useTournament();
 
   // Real clock state
@@ -125,10 +127,15 @@ export default function StatisticsPage() {
     prevMissedCount.current = simMissedMinutes.length;
   }, [simMissedMinutes, t]);
 
+  const realKnockoutBracket = useMemo(() => {
+    // Generate the real-world bracket using actual group matches only (no predictions/overrides)
+    return buildFullKnockoutBracket(matches, {}, {}, liveRawMatches);
+  }, [matches, liveRawMatches]);
+
   const displayMatches = useMemo(() => {
     const rawMatches = liveMatchesTab === "groups" 
       ? matches 
-      : knockoutBracket.filter(m => m.round === "r32");
+      : realKnockoutBracket.filter(m => m.round === "r32");
 
     // Filter out matches that don't have both teams resolved
     const activeMatches = rawMatches.filter(m => m.homeTeamId && m.awayTeamId);
@@ -154,7 +161,7 @@ export default function StatisticsPage() {
       }
       return m;
     });
-  }, [matches, knockoutBracket, liveMatchesTab, simMatchId, simScore, simMinute]);
+  }, [matches, realKnockoutBracket, liveMatchesTab, simMatchId, simScore, simMinute]);
 
   const realLiveMatch = useMemo(() => {
     if (simMatchId) return null;
@@ -172,7 +179,7 @@ export default function StatisticsPage() {
   };
 
   const activeCommMatch = useMemo(() => {
-    const allPossibleMatches = [...matches, ...knockoutBracket];
+    const allPossibleMatches = [...matches, ...realKnockoutBracket];
     let found: any = null;
     if (simMatchId) {
       found = allPossibleMatches.find(m => m.id === simMatchId);
@@ -193,7 +200,7 @@ export default function StatisticsPage() {
       };
     }
     return found || null;
-  }, [simMatchId, selectedMatchId, matches, knockoutBracket, realLiveMatch, simScore, simMinute]);
+  }, [simMatchId, selectedMatchId, matches, realKnockoutBracket, realLiveMatch, simScore, simMinute]);
 
   const activeCommEvents = useMemo(() => {
     if (simMatchId) return simEvents;
