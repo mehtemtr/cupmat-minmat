@@ -554,7 +554,7 @@ export default function BracketPage() {
 
           {/* TAB: Tree View (Desktop Side-by-side Columns with SVG connecting curves) */}
           {activeTab === "tree" && (
-            <div className="w-full overflow-x-auto rounded-3xl border border-white/10 bg-[#060b14]/50 p-6 backdrop-blur">
+            <div className="w-full max-h-[calc(100vh-270px)] overflow-auto custom-scrollbar rounded-3xl border border-white/10 bg-[#060b14]/50 p-6 backdrop-blur">
               <div 
                 className="flex select-none min-w-[1440px] items-stretch justify-between" 
                 style={{ height: `${H}px` }}

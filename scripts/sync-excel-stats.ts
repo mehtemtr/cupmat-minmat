@@ -136,6 +136,7 @@ async function main() {
     console.log(`\nProcessing stage: ${stage}...`);
     const playersStats = parsedData[stage];
     const statsPayloadsBatch: any[] = [];
+    const seenInStage = new Set<string>();
     
     for (const row of playersStats) {
       const normalizedTeamTr = normalizeName(row.team_name);
@@ -164,6 +165,14 @@ async function main() {
         totalFailed++;
         continue;
       }
+
+      // Prevent database conflict if duplicate rows are in Excel for the same player & stage
+      const uniqueKey = `${player.id}_${stage}`;
+      if (seenInStage.has(uniqueKey)) {
+        console.warn(`Duplicate spreadsheet entry for player '${player.player_name}' in stage '${stage}'. Skipping duplicate.`);
+        continue;
+      }
+      seenInStage.add(uniqueKey);
 
       // Parse match result outcome
       const outcome = parseMatchResult(row.match_name, row.team_name);
@@ -198,15 +207,94 @@ async function main() {
 
     if (statsPayloadsBatch.length > 0) {
       console.log(`Bulk upserting ${statsPayloadsBatch.length} stats records into player_stage_stats...`);
-      // Upsert batch in chunks of 200 to prevent hitting Supabase parameters/query limits
       const chunkSize = 200;
       for (let i = 0; i < statsPayloadsBatch.length; i += chunkSize) {
         const chunk = statsPayloadsBatch.slice(i, i + chunkSize);
-        const { error: upsertErr } = await supabaseAdmin
+        
+        let { error: upsertErr } = await supabaseAdmin
           .from("player_stage_stats")
           .upsert(chunk, { onConflict: "player_id,stage" });
 
-        if (upsertErr) {
+        // Handle possible stale UUID mismatch if database player IDs were re-created on the fly
+        if (upsertErr && upsertErr.code === "23503") {
+          console.warn(`Foreign key violation in chunk starting at index ${i}. Reloading player rosters and retrying...`);
+          
+          // Fetch fresh rosters
+          const freshPlayers = [];
+          let fFrom = 0;
+          let fTo = 999;
+          let fHasMore = true;
+          while (fHasMore) {
+            const { data, error } = await supabaseAdmin.from("team_rosters").select("*").range(fFrom, fTo);
+            if (error) break;
+            if (data && data.length > 0) {
+              freshPlayers.push(...data);
+              if (data.length < 1000) fHasMore = false;
+              else { fFrom += 1000; fTo += 1000; }
+            } else { fHasMore = false; }
+          }
+          
+          // Re-map chunk payloads using fresh players
+          const freshMapByNumber = new Map<string, any>();
+          const freshMapByName = new Map<string, any>();
+          freshPlayers.forEach(p => {
+            const tId = p.team_id.toLowerCase();
+            if (p.player_number !== null && p.player_number !== undefined) {
+              freshMapByNumber.set(`${tId}_${p.player_number}`, p);
+            }
+            freshMapByName.set(`${tId}_${normalizeName(p.player_name)}`, p);
+          });
+          
+          // Re-build chunk
+          const remappedChunk = [];
+          const originalSourceRows = playersStats.slice(i, i + chunkSize);
+          
+          for (const row of originalSourceRows) {
+            const normalizedTeamTr = normalizeName(row.team_name);
+            let teamId = teamOverrides[normalizedTeamTr] || teamMap.get(normalizedTeamTr);
+            if (!teamId) continue;
+            
+            let player = freshMapByNumber.get(`${teamId}_${row.jersey_number}`);
+            if (!player) player = freshMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
+            if (!player) player = freshMapByName.get(`${teamId}_${normalizeName(row.player_short)}`);
+            if (!player) continue;
+            
+            const outcome = parseMatchResult(row.match_name, row.team_name);
+            const cleanSheet = outcome.goals_conceded === 0;
+            
+            const statsPayload: any = {
+              player_id: player.id,
+              stage: stage,
+              goals: row.goals || 0,
+              assists: row.assists || 0,
+              minutes_played: row.minutes_played || 0,
+              team_result: outcome.team_result,
+              goals_conceded: outcome.goals_conceded,
+              goal_difference: outcome.goal_difference,
+              clean_sheet: cleanSheet,
+              saves: row.saves || 0,
+              penalty_saved: row.penalties_saved || 0,
+              own_goals: row.own_goals || 0,
+              yellow_cards: row.yellow_cards || 0,
+              red_cards: row.red_cards || 0
+            };
+            statsPayload.points = calculatePlayerPoints(statsPayload, player.player_position);
+            remappedChunk.push(statsPayload);
+          }
+          
+          // Retry upsert
+          const { error: retryErr } = await supabaseAdmin
+            .from("player_stage_stats")
+            .upsert(remappedChunk, { onConflict: "player_id,stage" });
+            
+          if (retryErr) {
+            console.error(`Retry failed for chunk starting at index ${i}:`, retryErr);
+            totalFailed += chunk.length;
+          } else {
+            console.log(`Successfully self-healed and upserted chunk starting at index ${i}.`);
+            totalUpdated += remappedChunk.length;
+          }
+        } else if (upsertErr) {
           console.error(`Error bulk upserting stats chunk starting at index ${i}:`, upsertErr);
           totalFailed += chunk.length;
         } else {
