@@ -39,6 +39,38 @@ export async function GET() {
       }
     }
 
+    // Self-Healing Recovery: if player_stage_stats was wiped due to rosters being re-seeded
+    if (allStats.length === 0) {
+      console.log("[All-Player-Summaries] Stats table is empty! Running self-healing sync...");
+      const { runPlayerStatsSync } = await import("@/lib/stats/sync");
+      try {
+        await runPlayerStatsSync();
+        
+        // Fetch rows again after successful synchronization
+        from = 0;
+        to = 999;
+        hasMore = true;
+        while (hasMore) {
+          const { data, error } = await supabaseAdmin
+            .from("player_stage_stats")
+            .select("player_id, points, goals, assists, minutes_played, goals_conceded")
+            .range(from, to);
+
+          if (error) break;
+          if (data && data.length > 0) {
+            allStats.push(...data);
+            if (data.length < 1000) hasMore = false;
+            else { from += 1000; to += 1000; }
+          } else {
+            hasMore = false;
+          }
+        }
+        console.log(`[All-Player-Summaries] Self-healing sync successful. Loaded ${allStats.length} records.`);
+      } catch (syncErr) {
+        console.error("[All-Player-Summaries] Self-healing sync failed:", syncErr);
+      }
+    }
+
     // 3. Aggregate stats by static ID
     const summaries: Record<string, {
       points: number;

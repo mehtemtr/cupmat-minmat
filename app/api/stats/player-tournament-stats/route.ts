@@ -137,7 +137,7 @@ export async function GET(request: Request) {
 
     if (playerDbId) {
       // 3. Fetch basic stats from player_stage_stats
-      const { data: stageStats, error: statsError } = await supabaseAdmin
+      let { data: stageStats, error: statsError } = await supabaseAdmin
         .from("player_stage_stats")
         .select("*")
         .eq("player_id", playerDbId);
@@ -145,6 +145,27 @@ export async function GET(request: Request) {
       if (statsError) {
         console.error("[Player-Tournament-Stats] Stats error:", statsError);
         return NextResponse.json({ success: false, error: statsError.message }, { status: 500 });
+      }
+
+      // Self-Healing Recovery: if player_stage_stats was wiped due to rosters being re-seeded
+      if (!stageStats || stageStats.length === 0) {
+        console.log("[Player-Tournament-Stats] Stats not found! Running self-healing sync...");
+        const { runPlayerStatsSync } = await import("@/lib/stats/sync");
+        try {
+          await runPlayerStatsSync();
+          
+          // Re-fetch stageStats with fresh sync data
+          const { data: freshStats, error: freshStatsError } = await supabaseAdmin
+            .from("player_stage_stats")
+            .select("*")
+            .eq("player_id", playerDbId);
+            
+          if (!freshStatsError && freshStats) {
+            stageStats = freshStats;
+          }
+        } catch (syncErr) {
+          console.error("[Player-Tournament-Stats] Self-healing sync failed:", syncErr);
+        }
       }
 
       (stageStats || []).forEach((s) => {
