@@ -129,7 +129,7 @@ export default function FootballersListPage() {
   const [loadingSummaries, setLoadingSummaries] = useState(true);
 
   useEffect(() => {
-    fetch("/api/stats/all-player-summaries?v=1.0.8")
+    fetch("/api/stats/all-player-summaries?v=1.0.9")
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.summaries) {

@@ -287,7 +287,7 @@ export default function FootballerDetailPage() {
     if (!id) return;
     let isMounted = true;
     setLoadingStats(true);
-    fetch(`/api/stats/player-tournament-stats?id=${id}&v=1.0.8`)
+    fetch(`/api/stats/player-tournament-stats?id=${id}&v=1.0.9`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted && data.success && data.stats) {

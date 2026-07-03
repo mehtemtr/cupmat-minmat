@@ -150,14 +150,14 @@ async function main() {
         continue;
       }
 
-      // Try matching by number first, then by name
-      let player = playerMapByNumber.get(`${teamId}_${row.jersey_number}`);
-      if (!player) {
-        player = playerMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
-      }
+      // Try matching by name first, then by number
+      let player = playerMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
       if (!player) {
         // Try fallback on short name
         player = playerMapByName.get(`${teamId}_${normalizeName(row.player_short)}`);
+      }
+      if (!player) {
+        player = playerMapByNumber.get(`${teamId}_${row.jersey_number}`);
       }
 
       if (!player) {
@@ -254,9 +254,9 @@ async function main() {
             let teamId = teamOverrides[normalizedTeamTr] || teamMap.get(normalizedTeamTr);
             if (!teamId) continue;
             
-            let player = freshMapByNumber.get(`${teamId}_${row.jersey_number}`);
-            if (!player) player = freshMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
+            let player = freshMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
             if (!player) player = freshMapByName.get(`${teamId}_${normalizeName(row.player_short)}`);
+            if (!player) player = freshMapByNumber.get(`${teamId}_${row.jersey_number}`);
             if (!player) continue;
             
             const outcome = parseMatchResult(row.match_name, row.team_name);

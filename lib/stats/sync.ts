@@ -134,12 +134,12 @@ export async function runPlayerStatsSync() {
       
       if (!teamId) continue;
 
-      let player = playerMapByNumber.get(`${teamId}_${row.jersey_number}`);
-      if (!player) {
-        player = playerMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
-      }
+      let player = playerMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
       if (!player) {
         player = playerMapByName.get(`${teamId}_${normalizeName(row.player_short)}`);
+      }
+      if (!player) {
+        player = playerMapByNumber.get(`${teamId}_${row.jersey_number}`);
       }
 
       if (!player) {
