@@ -233,7 +233,7 @@ export default function StatisticsPage() {
   useEffect(() => {
     let active = true;
     const loadLeaders = () => {
-      fetch("/api/stats/tournament-leaders")
+      fetch("/api/stats/tournament-leaders?v=1.0.9")
         .then((res) => res.json())
         .then((data) => {
           if (active && data.success) {

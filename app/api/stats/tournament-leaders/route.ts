@@ -5,29 +5,49 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const { data, error } = await supabaseAdmin
-      .from("player_stage_stats")
-      .select(`
-        player_id,
-        goals,
-        yellow_cards,
-        red_cards,
-        team_rosters (
-          player_name,
-          team_id,
-          player_position
-        )
-      `);
+    const allStats: any[] = [];
+    let from = 0;
+    let to = 999;
+    let hasMore = true;
 
-    if (error) {
-      console.error("[Tournament-Leaders-API] Error:", error);
-      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    while (hasMore) {
+      const { data: chunk, error } = await supabaseAdmin
+        .from("player_stage_stats")
+        .select(`
+          player_id,
+          goals,
+          yellow_cards,
+          red_cards,
+          team_rosters (
+            player_name,
+            team_id,
+            player_position
+          )
+        `)
+        .range(from, to);
+
+      if (error) {
+        console.error("[Tournament-Leaders-API] Error:", error);
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+      }
+
+      if (chunk && chunk.length > 0) {
+        allStats.push(...chunk);
+        if (chunk.length < 1000) {
+          hasMore = false;
+        } else {
+          from += 1000;
+          to += 1000;
+        }
+      } else {
+        hasMore = false;
+      }
     }
 
     const scorersMap: Record<string, { player: { id: string; name: string; position: string }; team: { id: string }; goals: number }> = {};
     const cardsMap: Record<string, { player: { id: string; name: string; position: string }; team: { id: string }; yellow_cards: number; red_cards: number }> = {};
 
-    (data || []).forEach((row: any) => {
+    (allStats || []).forEach((row: any) => {
       const pId = row.player_id;
       const roster = row.team_rosters;
       if (!roster) return;
