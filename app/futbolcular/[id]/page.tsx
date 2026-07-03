@@ -41,7 +41,27 @@ const localDict = {
     ownGoals: "Kendi Kalesine Gol",
     cleanSheets: "Gol Yememe Maçı",
     fantasyPoints: "Taktik Puanı",
-    loading: "İstatistikler Yükleniyor..."
+    loading: "İstatistikler Yükleniyor...",
+    // New goalkeeper stats
+    goalsConceded: "Yenilen Gol",
+    saves: "Kurtarış",
+    penaltySaved: "Penaltı Kurtarma",
+    shotsOnGoalAgainst: "Kaleyi Bulan Şut Karşıtı",
+    xgConceded: "Beklenen Yenilen Gol (xGC)",
+    xgotConceded: "Beklenen İsabetli Şut Yenilen Gol (xGOTC)",
+    goalsPrevented: "Önlenen Gol",
+    claimedCrosses: "Orta Durdurma",
+    clearances: "Uzaklaştırma",
+    punches: "Yumruklama",
+    // New outfield stats
+    touches: "Topla Buluşma",
+    xg: "Beklenen Gol (xG)",
+    xa: "Beklenen Asist (xA)",
+    shotsOnGoal: "Kaleyi Bulan Şut",
+    shots: "Şut",
+    bigChancesCreated: "Yaratılan Büyük Şans",
+    interceptions: "Pas Kesme",
+    duelsWon: "Kazanılan İkili Mücadele"
   },
   en: {
     back: "← All Footballers",
@@ -72,7 +92,27 @@ const localDict = {
     ownGoals: "Own Goals",
     cleanSheets: "Clean Sheets",
     fantasyPoints: "Tactics Points",
-    loading: "Loading stats..."
+    loading: "Loading stats...",
+    // New goalkeeper stats
+    goalsConceded: "Goals Conceded",
+    saves: "Saves",
+    penaltySaved: "Penalties Saved",
+    shotsOnGoalAgainst: "Shots on Target Against",
+    xgConceded: "Expected Goals Conceded (xGC)",
+    xgotConceded: "Expected Goals on Target Conceded (xGOTC)",
+    goalsPrevented: "Goals Prevented",
+    claimedCrosses: "Crosses Claimed",
+    clearances: "Clearances",
+    punches: "Punches",
+    // New outfield stats
+    touches: "Touches",
+    xg: "Expected Goals (xG)",
+    xa: "Expected Assists (xA)",
+    shotsOnGoal: "Shots on Target",
+    shots: "Shots",
+    bigChancesCreated: "Big Chances Created",
+    interceptions: "Interceptions",
+    duelsWon: "Duels Won"
   },
   es: {
     back: "← Todos los Futbolistas",
@@ -103,7 +143,25 @@ const localDict = {
     ownGoals: "Goles en Contra",
     cleanSheets: "Portería a Cero",
     fantasyPoints: "Puntos Tácticos",
-    loading: "Cargando..."
+    loading: "Cargando...",
+    goalsConceded: "Goles Concedidos",
+    saves: "Paradas",
+    penaltySaved: "Penaltis Parados",
+    shotsOnGoalAgainst: "Disparos a Puerta en Contra",
+    xgConceded: "Goles Esperados en Contra (xGC)",
+    xgotConceded: "xGOT en Contra (xGOTC)",
+    goalsPrevented: "Goles Evitados",
+    claimedCrosses: "Centros Atrapados",
+    clearances: "Despejes",
+    punches: "Despejes de Puño",
+    touches: "Toques",
+    xg: "Goles Esperados (xG)",
+    xa: "Asistencias Esperadas (xA)",
+    shotsOnGoal: "Disparos a Puerta",
+    shots: "Disparos",
+    bigChancesCreated: "Grandes Ocasiones Creadas",
+    interceptions: "Intercepciones",
+    duelsWon: "Duelos Ganados"
   },
   fr: {
     back: "← Tous les Joueurs",
@@ -134,7 +192,25 @@ const localDict = {
     ownGoals: "Buts contre son camp",
     cleanSheets: "Matchs sans encaisser",
     fantasyPoints: "Points Tactiques",
-    loading: "Chargement..."
+    loading: "Chargement...",
+    goalsConceded: "Buts Encaissés",
+    saves: "Arrêts",
+    penaltySaved: "Penaltys Arrêtés",
+    shotsOnGoalAgainst: "Tirs Cadrés Subis",
+    xgConceded: "Buts Attendus Concédés (xGC)",
+    xgotConceded: "xGOT Concédés (xGOTC)",
+    goalsPrevented: "Buts Évités",
+    claimedCrosses: "Centres Captés",
+    clearances: "Dégagements",
+    punches: "Pugilats",
+    touches: "Ballons Touchés",
+    xg: "Buts Attendus (xG)",
+    xa: "Passes D. Attendues (xA)",
+    shotsOnGoal: "Tirs Cadrés",
+    shots: "Tirs",
+    bigChancesCreated: "Grandes Occasions Créées",
+    interceptions: "Interceptions",
+    duelsWon: "Duels Gagnés"
   },
   de: {
     back: "← Alle Spieler",
@@ -165,7 +241,25 @@ const localDict = {
     ownGoals: "Eigentore",
     cleanSheets: "Weiße Weste",
     fantasyPoints: "Taktik-Punkte",
-    loading: "Laden..."
+    loading: "Laden...",
+    goalsConceded: "Gegentore",
+    saves: "Paraden",
+    penaltySaved: "Elfmeter Gehalten",
+    shotsOnGoalAgainst: "Torschüsse Gegen",
+    xgConceded: "Expected Goals Gegen (xGC)",
+    xgotConceded: "Expected Goals on Target Gegen (xGOTC)",
+    goalsPrevented: "Verhinderte Tore",
+    claimedCrosses: "Abgefangene Flanken",
+    clearances: "Befreiungsschläge",
+    punches: "Faustbälle",
+    touches: "Ballkontakte",
+    xg: "Expected Goals (xG)",
+    xa: "Expected Assists (xA)",
+    shotsOnGoal: "Schüsse aufs Tor",
+    shots: "Schüsse",
+    bigChancesCreated: "Großchancen Kreiert",
+    interceptions: "Abgefangene Bälle",
+    duelsWon: "Gewonnene Zweikämpfe"
   }
 };
 
@@ -455,13 +549,32 @@ export default function FootballerDetailPage() {
                   redCards: 0,
                   ownGoals: 0,
                   cleanSheets: 0,
-                  points: 0
+                  points: 0,
+                  isGoalkeeper: player.position.toUpperCase() === "GK",
+                  goalsConceded: 0,
+                  saves: 0,
+                  penaltySaved: 0,
+                  shotsOnGoalAgainst: 0,
+                  xgConceded: 0.0,
+                  xgotConceded: 0.0,
+                  goalsPrevented: 0.0,
+                  claimedCrosses: 0,
+                  clearances: 0,
+                  punches: 0,
+                  touches: 0,
+                  xg: 0.0,
+                  xa: 0.0,
+                  shotsOnGoal: 0,
+                  shots: 0,
+                  bigChancesCreated: 0,
+                  interceptions: 0,
+                  duelsWon: 0
                 };
 
                 return (
                   <>
                     {/* Stat row: Matches Played */}
-                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
                       <span className="text-zinc-500 text-xs block">{dict.matchesPlayed}</span>
                       <span className="text-xl font-bold text-white mt-1 block">
                         🏃‍♂️ {displayStats.matchesPlayed}
@@ -469,48 +582,178 @@ export default function FootballerDetailPage() {
                     </div>
 
                     {/* Stat row: Fantasy Points */}
-                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-emerald-950 transition-colors">
                       <span className="text-zinc-500 text-xs block">{dict.fantasyPoints}</span>
                       <span className="text-xl font-bold text-emerald-400 mt-1 block">
                         💎 {displayStats.points}
                       </span>
                     </div>
 
-                    {/* Stat row: Goals */}
-                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                      <span className="text-zinc-500 text-xs block">{dict.goals}</span>
-                      <span className="text-xl font-bold text-white mt-1 block">
-                        ⚽ {displayStats.goals}
-                      </span>
-                    </div>
+                    {displayStats.isGoalkeeper ? (
+                      /* GOALKEEPER CARD DETAILS */
+                      <>
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.goalsConceded}</span>
+                          <span className="text-xl font-bold text-rose-400 mt-1 block">
+                            🥅 {displayStats.goalsConceded}
+                          </span>
+                        </div>
 
-                    {/* Stat row: Assists */}
-                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
-                      <span className="text-zinc-500 text-xs block">{dict.assists}</span>
-                      <span className="text-xl font-bold text-white mt-1 block">
-                        👟 {displayStats.assists}
-                      </span>
-                    </div>
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.saves}</span>
+                          <span className="text-xl font-bold text-sky-400 mt-1 block">
+                            🧤 {displayStats.saves}
+                          </span>
+                        </div>
 
-                    {/* Stat row: Yellow Cards */}
-                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.penaltySaved}</span>
+                          <span className="text-xl font-bold text-emerald-400 mt-1 block">
+                            ⛔ {displayStats.penaltySaved}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.shotsOnGoalAgainst}</span>
+                          <span className="text-xl font-bold text-white mt-1 block">
+                            🎯 {displayStats.shotsOnGoalAgainst}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.xgConceded}</span>
+                          <span className="text-xl font-bold text-amber-500 mt-1 block">
+                            📈 {displayStats.xgConceded}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.xgotConceded}</span>
+                          <span className="text-xl font-bold text-orange-400 mt-1 block">
+                            📊 {displayStats.xgotConceded}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.goalsPrevented}</span>
+                          <span className="text-xl font-bold text-emerald-400 mt-1 block">
+                            🛡️ {displayStats.goalsPrevented}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.claimedCrosses}</span>
+                          <span className="text-xl font-bold text-white mt-1 block">
+                            🙌 {displayStats.claimedCrosses}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.clearances}</span>
+                          <span className="text-xl font-bold text-zinc-400 mt-1 block">
+                            💥 {displayStats.clearances}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.punches}</span>
+                          <span className="text-xl font-bold text-zinc-400 mt-1 block">
+                            👊 {displayStats.punches}
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      /* OUTFIELD PLAYER CARD DETAILS */
+                      <>
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.goals}</span>
+                          <span className="text-xl font-bold text-white mt-1 block">
+                            ⚽ {displayStats.goals}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.assists}</span>
+                          <span className="text-xl font-bold text-white mt-1 block">
+                            👟 {displayStats.assists}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.touches}</span>
+                          <span className="text-xl font-bold text-sky-400 mt-1 block">
+                            🔄 {displayStats.touches}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.xg}</span>
+                          <span className="text-xl font-bold text-amber-500 mt-1 block">
+                            📈 {displayStats.xg}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.xa}</span>
+                          <span className="text-xl font-bold text-orange-400 mt-1 block">
+                            📊 {displayStats.xa}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.shotsOnGoal}</span>
+                          <span className="text-xl font-bold text-white mt-1 block">
+                            🎯 {displayStats.shotsOnGoal}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.shots}</span>
+                          <span className="text-xl font-bold text-zinc-400 mt-1 block">
+                            💥 {displayStats.shots}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.bigChancesCreated}</span>
+                          <span className="text-xl font-bold text-emerald-400 mt-1 block">
+                            💡 {displayStats.bigChancesCreated}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.interceptions}</span>
+                          <span className="text-xl font-bold text-white mt-1 block">
+                            🛡️ {displayStats.interceptions}
+                          </span>
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
+                          <span className="text-zinc-500 text-xs block">{dict.duelsWon}</span>
+                          <span className="text-xl font-bold text-sky-400 mt-1 block">
+                            ⚔️ {displayStats.duelsWon}
+                          </span>
+                        </div>
+                      </>
+                    )}
+
+                    {/* Universal cards */}
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
                       <span className="text-zinc-500 text-xs block">{dict.yellowCards}</span>
                       <span className="text-xl font-bold text-amber-500 mt-1 block">
                         🟨 {displayStats.yellowCards}
                       </span>
                     </div>
 
-                    {/* Stat row: Red Cards */}
-                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                    <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
                       <span className="text-zinc-500 text-xs block">{dict.redCards}</span>
                       <span className="text-xl font-bold text-rose-500 mt-1 block">
                         🟥 {displayStats.redCards}
                       </span>
                     </div>
 
-                    {/* Stat row: Clean Sheets (Only for DF and GK) */}
-                    {(player.position.toUpperCase() === "DF" || player.position.toUpperCase() === "GK") && (
-                      <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                    {displayStats.cleanSheets > 0 && (
+                      <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
                         <span className="text-zinc-500 text-xs block">{dict.cleanSheets}</span>
                         <span className="text-xl font-bold text-sky-400 mt-1 block">
                           🛡️ {displayStats.cleanSheets}
@@ -518,9 +761,8 @@ export default function FootballerDetailPage() {
                       </div>
                     )}
 
-                    {/* Stat row: Own Goals (Only if > 0) */}
                     {displayStats.ownGoals > 0 && (
-                      <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900">
+                      <div className="p-4 rounded-2xl bg-zinc-900/20 border border-zinc-900 shadow-sm hover:border-zinc-800 transition-colors">
                         <span className="text-zinc-500 text-xs block">{dict.ownGoals}</span>
                         <span className="text-xl font-bold text-red-400 mt-1 block">
                           😈 {displayStats.ownGoals}

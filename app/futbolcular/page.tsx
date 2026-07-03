@@ -24,7 +24,11 @@ const localDict = {
     club: "Kulüp",
     viewProfile: "Profili İncele →",
     noResults: "Arama kriterlerine uygun futbolcu bulunamadı.",
-    country: "Ülke"
+    country: "Ülke",
+    fantasyPoints: "Puan",
+    goals: "Gol",
+    assists: "Asist",
+    goalsConceded: "Yenilen"
   },
   en: {
     title: "World Cup Stars",
@@ -39,7 +43,11 @@ const localDict = {
     club: "Club",
     viewProfile: "View Profile →",
     noResults: "No players found matching the search criteria.",
-    country: "Country"
+    country: "Country",
+    fantasyPoints: "Pts",
+    goals: "Goals",
+    assists: "Assists",
+    goalsConceded: "Conceded"
   },
   es: {
     title: "Estrellas del Mundial",
@@ -54,7 +62,11 @@ const localDict = {
     club: "Club",
     viewProfile: "Ver Perfil →",
     noResults: "No se encontraron futbolistas con los criterios de búsqueda.",
-    country: "País"
+    country: "País",
+    fantasyPoints: "Pts",
+    goals: "Goles",
+    assists: "Asistencias",
+    goalsConceded: "Encajados"
   },
   fr: {
     title: "Étoiles de la Coupe du Monde",
@@ -69,7 +81,11 @@ const localDict = {
     club: "Club",
     viewProfile: "Voir le Profil →",
     noResults: "Aucun joueur trouvé correspondant à vos critères.",
-    country: "Pays"
+    country: "Pays",
+    fantasyPoints: "Pts",
+    goals: "Buts",
+    assists: "Passes D.",
+    goalsConceded: "Encaissés"
   },
   de: {
     title: "WM-Sterne",
@@ -84,7 +100,11 @@ const localDict = {
     club: "Verein",
     viewProfile: "Profil anzeigen →",
     noResults: "Keine Spieler gefunden, die den Kriterien entsprechen.",
-    country: "Land"
+    country: "Land",
+    fantasyPoints: "Pkte",
+    goals: "Tore",
+    assists: "Vorlagen",
+    goalsConceded: "Gegentore"
   }
 };
 
@@ -98,6 +118,27 @@ export default function FootballersListPage() {
 
   const [search, setSearch] = useState("");
   const [activePosition, setActivePosition] = useState<"ALL" | "GK" | "DF" | "MF" | "FW">("ALL");
+
+  const [summaries, setSummaries] = useState<Record<string, {
+    points: number;
+    goals: number;
+    assists: number;
+    matchesPlayed: number;
+    goalsConceded: number;
+  }>>({});
+  const [loadingSummaries, setLoadingSummaries] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/stats/all-player-summaries")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.summaries) {
+          setSummaries(data.summaries);
+        }
+      })
+      .catch((err) => console.error("Error loading summaries:", err))
+      .finally(() => setLoadingSummaries(false));
+  }, []);
 
   const allPlayers = useMemo(() => getAllPlayers(), []);
 
@@ -262,6 +303,35 @@ export default function FootballersListPage() {
                 <p className="text-[11px] text-zinc-500 mt-1 flex items-center gap-1">
                   ⚽ {dict.club}: <span className="text-zinc-400 font-medium truncate max-w-[120px]">{player.club}</span>
                 </p>
+
+                {/* Player Stats Summary Row */}
+                {(() => {
+                  const summary = summaries[player.id] || { points: 0, goals: 0, assists: 0, matchesPlayed: 0, goalsConceded: 0 };
+                  const isGK = player.position.toUpperCase() === "GK";
+                  return (
+                    <div className="mt-4 pt-3 border-t border-zinc-900 grid grid-cols-3 gap-2 text-center text-[10px]">
+                      <div>
+                        <span className="text-zinc-500 block">{dict.fantasyPoints}</span>
+                        <span className="font-extrabold text-emerald-400 mt-0.5 block">💎 {summary.points}</span>
+                      </div>
+                      {isGK ? (
+                        <div>
+                          <span className="text-zinc-500 block">{dict.goalsConceded}</span>
+                          <span className="font-bold text-rose-400 mt-0.5 block">🥅 {summary.goalsConceded}</span>
+                        </div>
+                      ) : (
+                        <div>
+                          <span className="text-zinc-500 block">{dict.goals}</span>
+                          <span className="font-bold text-white mt-0.5 block">⚽ {summary.goals}</span>
+                        </div>
+                      )}
+                      <div>
+                        <span className="text-zinc-500 block">{dict.assists}</span>
+                        <span className="font-bold text-white mt-0.5 block">👟 {summary.assists}</span>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Action Button */}
