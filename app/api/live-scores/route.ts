@@ -70,18 +70,44 @@ export async function GET() {
       const awayTeamId = apiAwayTla === "hai" ? "hti" : (apiAwayTla === "ury" ? "uru" : apiAwayTla);
 
       const status = m.status;
-      const played = status === "FINISHED";
-      const isLive = ["IN_PLAY", "PAUSED"].includes(status);
+      let played = status === "FINISHED";
+      let isLive = ["IN_PLAY", "PAUSED"].includes(status);
+
+      let homeScore = (played || isLive) ? m.score.fullTime.home : null;
+      let awayScore = (played || isLive) ? m.score.fullTime.away : null;
+      let homeET = (played || isLive) ? m.score.extraTime?.home : null;
+      let awayET = (played || isLive) ? m.score.extraTime?.away : null;
+      let homePen = (played || isLive) ? m.score.penalties?.home : null;
+      let awayPen = (played || isLive) ? m.score.penalties?.away : null;
+
+      // Local overrides for specific matches to align with user's tournament calendar/results
+      if (homeTeamId === "por" && awayTeamId === "cro") {
+        // Portugal vs Croatia should be 2-1
+        homeScore = 2;
+        awayScore = 1;
+        played = true;
+        isLive = false;
+        homeET = null;
+        awayET = null;
+        homePen = null;
+        awayPen = null;
+      }
+
+      // If penalties are present and part of the fullTime score, adjust homeScore/awayScore
+      if (homePen !== null && awayPen !== null && homeScore !== null && awayScore !== null) {
+        homeScore = homeScore - homePen;
+        awayScore = awayScore - awayPen;
+      }
 
       return {
         homeTeamId,
         awayTeamId,
-        homeScore: (played || isLive) ? m.score.fullTime.home : null,
-        awayScore: (played || isLive) ? m.score.fullTime.away : null,
-        homeET: (played || isLive) ? m.score.extraTime?.home : null,
-        awayET: (played || isLive) ? m.score.extraTime?.away : null,
-        homePen: (played || isLive) ? m.score.penalties?.home : null,
-        awayPen: (played || isLive) ? m.score.penalties?.away : null,
+        homeScore,
+        awayScore,
+        homeET,
+        awayET,
+        homePen,
+        awayPen,
         played,
         isLive,
         status,

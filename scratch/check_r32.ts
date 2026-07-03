@@ -3,7 +3,7 @@ import { generateGroupFixtures } from "../lib/fixtures";
 
 const matches = generateGroupFixtures();
 const bracket = buildFullKnockoutBracket(matches, {});
-console.log("R32 matches:");
-bracket.filter(m => m.round === "r32").forEach(m => {
-  console.log(`${m.id}: Home=${m.homeTeamId} Away=${m.awayTeamId}`);
+console.log("All knockout matches:");
+bracket.forEach(m => {
+  console.log(`${m.round} - ${m.id} (${m.slot}): Home=${m.homeTeamId} (${m.homeScore}) vs Away=${m.awayTeamId} (${m.awayScore}) [ET: ${m.homeET}-${m.awayET}, Pen: ${m.homePen}-${m.awayPen}] - Winner=${m.winnerId}`);
 });

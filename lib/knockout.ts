@@ -4,6 +4,30 @@ import { getTeamsByGroup, getTeamById } from "@/data/teams";
 import { calculateStandingsFromMatches, groupMatchesComplete, sortStandings } from "@/lib/standings";
 import { getMatchesForGroup } from "@/lib/fixtures";
 
+export const KNOCKOUT_STATIC_RESULTS: Record<string, {
+  homeScore: number;
+  awayScore: number;
+  homeET?: number | null;
+  awayET?: number | null;
+  homePen?: number | null;
+  awayPen?: number | null;
+  winnerId: string;
+  played: boolean;
+}> = {
+  "r32-1": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 3, awayPen: 4, winnerId: "par", played: true }, // Germany vs Paraguay
+  "r32-2": { homeScore: 3, awayScore: 0, winnerId: "fra", played: true }, // France vs Sweden
+  "r32-3": { homeScore: 0, awayScore: 1, winnerId: "can", played: true }, // South Africa vs Canada
+  "r32-4": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 2, awayPen: 3, winnerId: "mar", played: true }, // Netherlands vs Morocco
+  "r32-5": { homeScore: 2, awayScore: 1, winnerId: "por", played: true }, // Portugal vs Croatia
+  "r32-6": { homeScore: 3, awayScore: 0, winnerId: "esp", played: true }, // Spain vs Austria
+  "r32-7": { homeScore: 2, awayScore: 0, winnerId: "usa", played: true }, // USA vs Bosnia-Herzegovina
+  "r32-8": { homeScore: 3, awayScore: 2, winnerId: "bel", played: true }, // Belgium vs Senegal
+  "r32-9": { homeScore: 2, awayScore: 1, winnerId: "bra", played: true }, // Brazil vs Japan
+  "r32-10": { homeScore: 1, awayScore: 2, winnerId: "nor", played: true }, // Ivory Coast vs Norway
+  "r32-11": { homeScore: 2, awayScore: 0, winnerId: "mex", played: true }, // Mexico vs Ecuador
+  "r32-12": { homeScore: 2, awayScore: 1, winnerId: "eng", played: true }, // England vs DR Congo
+};
+
 // Definitions of official slots, dates, times, and stadiums for all rounds
 export const R32_DEFS = [
   { id: "r32-1", slot: "R32-1", name: "Maç 74", homeSym: "E1", awayOpts: ["A", "B", "C", "D", "F"] as GroupId[], date: "2026-06-29", time: "23:30", stadium: "Boston Stadı" },
@@ -77,7 +101,7 @@ export function buildFullKnockoutBracket(
     return createPlaceholderBracket();
   }
 
-  const r32Matches = buildR32Matches(standingsMap, liveRawMatches);
+  const r32Matches = buildR32Matches(standingsMap, predictions, liveRawMatches);
   const r16Matches = buildNextRound(r32Matches, predictions, "r16", 8, liveRawMatches);
   const qfMatches = buildNextRound(r16Matches, predictions, "qf", 4, liveRawMatches);
   const sfMatches = buildNextRound(qfMatches, predictions, "sf", 2, liveRawMatches);
@@ -88,6 +112,7 @@ export function buildFullKnockoutBracket(
 
 function buildR32Matches(
   standingsMap: Record<GroupId, StandingRow[]>,
+  predictions?: Record<string, any>,
   liveRawMatches?: any[]
 ): KnockoutMatch[] {
   const matches: KnockoutMatch[] = [];
@@ -169,7 +194,22 @@ function buildR32Matches(
     if (def.awaySym) {
       awayTeamId = getTeamIdFromSym(def.awaySym);
     } else if (def.awayOpts) {
-      if (isDefaultCombo && defaultComboMap[def.id]) {
+      // Force user's specific Round of 32 pairings when predictions are empty or live scores are active
+      const forceAwayMap: Record<string, string> = {
+        "r32-1": "par",
+        "r32-2": "swe",
+        "r32-7": "bih",
+        "r32-8": "sen",
+        "r32-11": "ecu",
+        "r32-12": "cod",
+        "r32-15": "alg",
+        "r32-16": "gha"
+      };
+
+      const useForced = !predictions || Object.keys(predictions).length === 0 || (liveRawMatches && liveRawMatches.length > 0);
+      if (useForced && forceAwayMap[def.id]) {
+        awayTeamId = forceAwayMap[def.id];
+      } else if (isDefaultCombo && defaultComboMap[def.id]) {
         awayTeamId = getThirdPlaceForGroup(defaultComboMap[def.id]);
       } else {
         const homeTeam = homeTeamId ? getTeamById(homeTeamId) : null;
@@ -177,7 +217,7 @@ function buildR32Matches(
       }
     }
 
-    // Resolve real score/played status/winner from live scores
+    // Resolve real score/played status/winner from static results or live scores
     let homeScore: number | null = null;
     let awayScore: number | null = null;
     let homeET: number | null = null;
@@ -188,7 +228,18 @@ function buildR32Matches(
     let isLive = false;
     let winnerId: string | null = null;
 
-    if (liveRawMatches && homeTeamId && awayTeamId) {
+    // Use static fallback results for already completed matches if available
+    const staticRes = KNOCKOUT_STATIC_RESULTS[def.id];
+    if (staticRes && homeTeamId && awayTeamId) {
+      homeScore = staticRes.homeScore;
+      awayScore = staticRes.awayScore;
+      homeET = staticRes.homeET ?? null;
+      awayET = staticRes.awayET ?? null;
+      homePen = staticRes.homePen ?? null;
+      awayPen = staticRes.awayPen ?? null;
+      played = staticRes.played;
+      winnerId = staticRes.winnerId;
+    } else if (liveRawMatches && homeTeamId && awayTeamId) {
       const realMatch = liveRawMatches.find(rm => 
         (rm.homeTeamId === homeTeamId && rm.awayTeamId === awayTeamId) ||
         (rm.homeTeamId === awayTeamId && rm.awayTeamId === homeTeamId)
@@ -203,6 +254,12 @@ function buildR32Matches(
         awayET = isSwapped ? realMatch.homeET : realMatch.awayET;
         homePen = isSwapped ? realMatch.awayPen : realMatch.homePen;
         awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
+
+        // Subtract penalty goals from the fullTime score if they are included in it
+        if (homePen !== null && awayPen !== null && homeScore !== null && awayScore !== null) {
+          homeScore = homeScore - homePen;
+          awayScore = awayScore - awayPen;
+        }
 
         if (played && homeScore !== null && awayScore !== null) {
           if (homeScore > awayScore) {
@@ -306,6 +363,12 @@ function buildNextRound(
         awayET = isSwapped ? realMatch.homeET : realMatch.awayET;
         homePen = isSwapped ? realMatch.awayPen : realMatch.homePen;
         awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
+
+        // Subtract penalty goals from the fullTime score if they are included in it
+        if (homePen !== null && awayPen !== null && homeScore !== null && awayScore !== null) {
+          homeScore = homeScore - homePen;
+          awayScore = awayScore - awayPen;
+        }
 
         if (played && homeScore !== null && awayScore !== null) {
           if (homeScore > awayScore) {

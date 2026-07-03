@@ -43,20 +43,8 @@ async function main() {
   
   console.log(`Total matches in Football-Data: ${apiMatches.length}`);
   
-  // Find any match involving Germany (ger) or Sweden (swe)
-  const matches = apiMatches.filter((m: any) => {
-    const home = (m.homeTeam.tla || "").toLowerCase().trim();
-    const away = (m.awayTeam.tla || "").toLowerCase().trim();
-    return home === "ger" || away === "ger" || home === "swe" || away === "swe";
-  });
-
-  console.log("Found matches involving GER or SWE:", matches.length);
-  matches.forEach((m: any) => {
-    const home = (m.homeTeam.tla || "").toLowerCase().trim();
-    const away = (m.awayTeam.tla || "").toLowerCase().trim();
-    console.log(`Match ${m.id || ""}: ${m.homeTeam.name} (${home}) vs ${m.awayTeam.name} (${away})`);
-    console.log(`  Stage: ${m.stage}, Status: ${m.status}, Score: ${m.score.fullTime.home} - ${m.score.fullTime.away}`);
-  });
+  const m19 = apiMatches.find((m: any) => m.id === 537419);
+  console.log(JSON.stringify(m19, null, 2));
 }
 
 main();
