@@ -3,7 +3,7 @@
 import { PageShell } from "@/components/PageShell";
 import { getAllPlayers, getTeamName, sortPlayersWithBjkBias } from "@/data/teams";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
