@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-import playerDbMap from "@/data/player-db-map.json";
+import { getPlayerMapping } from "@/lib/fantasy/points";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    // 1. Build a reverse map: DB UUID -> Static Player ID
-    const dbToStatic: Record<string, string> = {};
-    for (const [staticId, dbUuid] of Object.entries(playerDbMap)) {
-      dbToStatic[dbUuid] = staticId;
-    }
+    // 1. Resolve dynamic player mapping at runtime
+    const { uuidToStatic } = await getPlayerMapping();
 
     // 2. Fetch all rows from player_stage_stats
     const { data: allStats, error } = await supabaseAdmin
@@ -33,7 +30,7 @@ export async function GET() {
 
     (allStats || []).forEach((row) => {
       const dbUuid = row.player_id;
-      const staticId = dbToStatic[dbUuid];
+      const staticId = uuidToStatic[dbUuid];
       if (!staticId) return;
 
       if (!summaries[staticId]) {

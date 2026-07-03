@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getAllPlayers, TEAMS } from "@/data/teams";
-import playerDbMap from "@/data/player-db-map.json";
+import { getPlayerMapping } from "@/lib/fantasy/points";
 import fs from "fs";
 import path from "path";
 
@@ -53,8 +53,9 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: false, error: "Player not found in static data" }, { status: 404 });
     }
 
-    // 1. Try direct UUID lookup from pre-built mapping
-    const dbUUID = (playerDbMap as Record<string, string>)[playerId];
+    // 1. Try direct UUID lookup from dynamic mapping
+    const { staticToUuid } = await getPlayerMapping();
+    const dbUUID = staticToUuid[playerId];
     let playerDbId: string | null = dbUUID || null;
 
     // 2. Query team_rosters to get player details (jersey_number)
