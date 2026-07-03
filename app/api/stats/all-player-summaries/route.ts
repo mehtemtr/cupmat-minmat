@@ -9,14 +9,34 @@ export async function GET() {
     // 1. Resolve dynamic player mapping at runtime
     const { uuidToStatic } = await getPlayerMapping();
 
-    // 2. Fetch all rows from player_stage_stats
-    const { data: allStats, error } = await supabaseAdmin
-      .from("player_stage_stats")
-      .select("player_id, points, goals, assists, minutes_played, goals_conceded");
+    // 2. Fetch all rows from player_stage_stats (with pagination)
+    const allStats: any[] = [];
+    let from = 0;
+    let to = 999;
+    let hasMore = true;
 
-    if (error) {
-      console.error("[All-Player-Summaries] Error:", error);
-      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    while (hasMore) {
+      const { data, error } = await supabaseAdmin
+        .from("player_stage_stats")
+        .select("player_id, points, goals, assists, minutes_played, goals_conceded")
+        .range(from, to);
+
+      if (error) {
+        console.error("[All-Player-Summaries] DB Error:", error);
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+      }
+
+      if (data && data.length > 0) {
+        allStats.push(...data);
+        if (data.length < 1000) {
+          hasMore = false;
+        } else {
+          from += 1000;
+          to += 1000;
+        }
+      } else {
+        hasMore = false;
+      }
     }
 
     // 3. Aggregate stats by static ID
