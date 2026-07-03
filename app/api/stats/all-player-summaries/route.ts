@@ -62,7 +62,7 @@ export async function GET() {
     }), {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=600"
+        "Cache-Control": "public, max-age=10, s-maxage=10, stale-while-revalidate=5"
       }
     });
 
