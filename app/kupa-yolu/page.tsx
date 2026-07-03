@@ -198,10 +198,10 @@ const roundTitles: Record<string, Record<string, string>> = {
 };
 
 function getMatchWinner(
-  match: KnockoutMatch,
+  match: KnockoutMatch | undefined | null,
   predictions: Record<string, MatchPrediction>
 ): string | null {
-  if (!match.homeTeamId || !match.awayTeamId) return null;
+  if (!match || !match.homeTeamId || !match.awayTeamId) return null;
   const p = predictions[match.id];
   if (!p) return null;
 
@@ -554,10 +554,10 @@ export default function BracketPage() {
 
           {/* TAB: Tree View (Desktop Side-by-side Columns with SVG connecting curves) */}
           {activeTab === "tree" && (
-            <div className="w-full max-h-[calc(100vh-270px)] overflow-auto custom-scrollbar rounded-3xl border border-white/10 bg-[#060b14]/50 p-6 backdrop-blur">
+            <div className="w-full overflow-x-auto custom-scrollbar rounded-3xl border border-white/10 bg-[#060b14]/50 p-6 backdrop-blur">
               <div 
                 className="flex select-none min-w-[1440px] items-stretch justify-between" 
-                style={{ height: `${H}px` }}
+                style={{ height: `${H}px`, minHeight: `${H}px` }}
               >
                 {/* COLUMN 1: ROUND OF 32 */}
                 <div className="flex flex-col justify-around h-full py-2 z-10">

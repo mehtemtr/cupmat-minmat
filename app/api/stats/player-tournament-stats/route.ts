@@ -1,9 +1,66 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getAllPlayers } from "@/data/teams";
-import { findBestPlayerMatch } from "@/lib/api-football";
 
 export const dynamic = "force-dynamic";
+
+// Normalize helper - same as sync script
+function normalizeName(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ç/g, "c")
+    .replace(/ğ/g, "g")
+    .replace(/ı/g, "i")
+    .replace(/ö/g, "o")
+    .replace(/ş/g, "s")
+    .replace(/ü/g, "u")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+// Try to find the best name match between English static data name and DB Turkish names
+function findBestPlayerMatch(
+  staticName: string,
+  dbPlayers: { id: string; player_name: string; player_number?: number }[],
+  jerseyNumber?: number
+): any | null {
+  const cleanEn = normalizeName(staticName);
+  if (!cleanEn) return null;
+
+  // 1. Jersey number exact match (most reliable)
+  if (jerseyNumber) {
+    const byNumber = dbPlayers.find((p) => p.player_number === jerseyNumber);
+    if (byNumber) return byNumber;
+  }
+
+  // 2. Exact clean name match
+  let match = dbPlayers.find((p) => normalizeName(p.player_name) === cleanEn);
+  if (match) return match;
+
+  // 3. Substring match (either way)
+  match = dbPlayers.find(
+    (p) =>
+      normalizeName(p.player_name).includes(cleanEn) ||
+      cleanEn.includes(normalizeName(p.player_name))
+  );
+  if (match) return match;
+
+  // 4. Last name match
+  const parts = staticName.split(" ").filter((p) => p.length > 0);
+  const lastName = normalizeName(parts[parts.length - 1] || "");
+
+  if (lastName.length > 2) {
+    const byLastName = dbPlayers.filter((p) => {
+      const dbParts = p.player_name.split(" ").filter((pt: string) => pt.length > 0);
+      const dbLastName = normalizeName(dbParts[dbParts.length - 1] || "");
+      return dbLastName === lastName;
+    });
+    if (byLastName.length === 1) return byLastName[0];
+  }
+
+  return null;
+}
 
 export async function GET(request: Request) {
   try {
@@ -24,7 +81,7 @@ export async function GET(request: Request) {
     // 1. Fetch team roster from DB to get the UUID
     const { data: dbPlayers, error: rosterError } = await supabaseAdmin
       .from("team_rosters")
-      .select("id, player_name, team_id, player_position")
+      .select("id, player_name, team_id, player_position, player_number")
       .eq("team_id", player.teamId);
 
     if (rosterError) {
@@ -32,8 +89,13 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: false, error: rosterError.message }, { status: 500 });
     }
 
-    const matchedPlayer = findBestPlayerMatch(player.name, dbPlayers || []);
+    // Extract jersey number from player id if available (e.g. mex-p1 -> 1)
+    const idParts = playerId.split("-p");
+    const playerIndex = idParts.length > 1 ? parseInt(idParts[1], 10) : null;
+
+    const matchedPlayer = findBestPlayerMatch(player.name, dbPlayers || [], playerIndex ?? undefined);
     if (!matchedPlayer) {
+      console.log(`[Player-Tournament-Stats] No DB match found for '${player.name}' (${player.teamId})`);
       return NextResponse.json({
         success: true,
         stats: {
@@ -70,7 +132,6 @@ export async function GET(request: Request) {
     let points = 0;
 
     (stageStats || []).forEach((s) => {
-      // A player has played if they participated in the match (minutes_played > 0)
       if (s.minutes_played > 0) {
         matchesPlayed++;
       }
