@@ -97,6 +97,8 @@ export type KnockoutMatch = {
   homePen?: number | null;
   awayPen?: number | null;
   winnerId: string | null;
+  played?: boolean;
+  isLive?: boolean;
   date: string;
   time?: string;
   stadium?: string;

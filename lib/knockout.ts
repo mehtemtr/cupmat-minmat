@@ -42,10 +42,10 @@ export const R32_DEFS = [
   { id: "r32-10", slot: "R32-10", name: "Maç 78", homeSym: "E2", awaySym: "I2", date: "2026-06-30", time: "20:00", stadium: "Dallas Stadı" },
   { id: "r32-11", slot: "R32-11", name: "Maç 79", homeSym: "A1", awayOpts: ["C", "E", "F", "H", "I"] as GroupId[], date: "2026-07-01", time: "04:00", stadium: "Mexico City Stadı" },
   { id: "r32-12", slot: "R32-12", name: "Maç 80", homeSym: "L1", awayOpts: ["E", "H", "I", "J", "K"] as GroupId[], date: "2026-07-01", time: "19:00", stadium: "Atlanta Stadı" },
-  { id: "r32-13", slot: "R32-13", name: "Maç 86", homeSym: "J1", awaySym: "H2", date: "2026-07-04", time: "01:00", stadium: "Miami Stadı" },
-  { id: "r32-14", slot: "R32-14", name: "Maç 88", homeSym: "D2", awaySym: "G2", date: "2026-07-03", time: "21:00", stadium: "Dallas Stadı" },
-  { id: "r32-15", slot: "R32-15", name: "Maç 85", homeSym: "B1", awayOpts: ["E", "F", "G", "I", "J"] as GroupId[], date: "2026-07-03", time: "06:00", stadium: "BC Place Vancouver Stadı" },
-  { id: "r32-16", slot: "R32-16", name: "Maç 87", homeSym: "K1", awayOpts: ["D", "E", "I", "J", "L"] as GroupId[], date: "2026-07-04", time: "04:30", stadium: "Kansas City Stadı" }
+  { id: "r32-13", slot: "R32-13", name: "Maç 85", homeSym: "B1", awayOpts: ["E", "F", "G", "I", "J"] as GroupId[], date: "2026-07-03", time: "06:00", stadium: "BC Place Vancouver Stadı" },
+  { id: "r32-14", slot: "R32-14", name: "Maç 87", homeSym: "K1", awayOpts: ["D", "E", "I", "J", "L"] as GroupId[], date: "2026-07-04", time: "04:30", stadium: "Kansas City Stadı" },
+  { id: "r32-15", slot: "R32-15", name: "Maç 86", homeSym: "J1", awaySym: "H2", date: "2026-07-04", time: "01:00", stadium: "Miami Stadı" },
+  { id: "r32-16", slot: "R32-16", name: "Maç 88", homeSym: "D2", awaySym: "G2", date: "2026-07-03", time: "21:00", stadium: "Dallas Stadı" }
 ];
 
 export const R16_DEFS = [
@@ -55,8 +55,8 @@ export const R16_DEFS = [
   { id: "r16-4", slot: "R16-4", name: "Maç 94", date: "2026-07-07", time: "03:00", stadium: "Seattle Stadı" },
   { id: "r16-5", slot: "R16-5", name: "Maç 91", date: "2026-07-05", time: "23:00", stadium: "New York New Jersey Stadı" },
   { id: "r16-6", slot: "R16-6", name: "Maç 92", date: "2026-07-06", time: "03:00", stadium: "Mexico City Stadı" },
-  { id: "r16-7", slot: "R16-7", name: "Maç 95", date: "2026-07-07", time: "19:00", stadium: "Atlanta Stadı" },
-  { id: "r16-8", slot: "R16-8", name: "Maç 96", date: "2026-07-07", time: "23:00", stadium: "BC Place Vancouver Stadı" }
+  { id: "r16-7", slot: "R16-7", name: "Maç 96", date: "2026-07-07", time: "23:00", stadium: "BC Place Vancouver Stadı" },
+  { id: "r16-8", slot: "R16-8", name: "Maç 95", date: "2026-07-07", time: "19:00", stadium: "Atlanta Stadı" }
 ];
 
 export const QF_DEFS = [
@@ -176,8 +176,8 @@ function buildR32Matches(
     "r32-8": "I",  // Home G1 (Belgium) vs I3 (Senegal)
     "r32-11": "E", // Home A1 (Mexico) vs E3 (Ecuador)
     "r32-12": "G", // Home L1 (England) vs G3 (Iran)
-    "r32-15": "J", // Home B1 (Switzerland) vs J3 (Algeria)
-    "r32-16": "L", // Home K1 (Colombia) vs L3 (Ghana)
+    "r32-13": "J", // Home B1 (Switzerland) vs J3 (Algeria)
+    "r32-14": "L", // Home K1 (Colombia) vs L3 (Ghana)
   };
 
   const getTeamIdFromSym = (sym: string): string | null => {
@@ -202,8 +202,8 @@ function buildR32Matches(
         "r32-8": "sen",
         "r32-11": "ecu",
         "r32-12": "cod",
-        "r32-15": "alg",
-        "r32-16": "gha"
+        "r32-13": "alg",
+        "r32-14": "gha"
       };
 
       const useForced = !predictions || Object.keys(predictions).length === 0 || (liveRawMatches && liveRawMatches.length > 0);

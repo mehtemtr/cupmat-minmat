@@ -129,7 +129,7 @@ export default function StatisticsPage() {
 
   const realKnockoutBracket = useMemo(() => {
     // Generate the real-world bracket using actual group matches only (no predictions/overrides)
-    return buildFullKnockoutBracket(matches, {}, {}, liveRawMatches);
+    return buildFullKnockoutBracket(matches, {}, undefined, liveRawMatches);
   }, [matches, liveRawMatches]);
 
   const displayMatches = useMemo(() => {
