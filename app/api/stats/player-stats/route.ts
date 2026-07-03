@@ -201,7 +201,7 @@ export async function GET() {
       };
     }).sort((a, b) => a.teamNameTr.localeCompare(b.teamNameTr));
 
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       success: true,
       youngest,
       oldest,
@@ -209,6 +209,11 @@ export async function GET() {
       topCities,
       confederations: confederationCounts,
       countryAverages
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600"
+      }
     });
 
   } catch (err: any) {

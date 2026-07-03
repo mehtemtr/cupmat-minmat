@@ -69,10 +69,15 @@ export async function GET() {
       return b.yellow_cards - a.yellow_cards;
     });
 
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       success: true,
       scorers,
       cards
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=600"
+      }
     });
   } catch (error: any) {
     console.error("[Tournament-Leaders-API] Crash:", error);

@@ -212,7 +212,7 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       success: true,
       stats: {
         matchesPlayed,
@@ -244,6 +244,11 @@ export async function GET(request: Request) {
         bigChancesCreated,
         interceptions,
         duelsWon
+      }
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=600"
       }
     });
 

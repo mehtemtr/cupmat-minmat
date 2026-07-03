@@ -56,9 +56,14 @@ export async function GET() {
       }
     });
 
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       success: true,
       summaries
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=600"
+      }
     });
 
   } catch (error: any) {
