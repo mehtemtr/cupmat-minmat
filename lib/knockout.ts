@@ -31,6 +31,7 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r32-15": { homeScore: 2, awayScore: 2, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "arg", played: true }, // Argentina vs Cape Verde
   "r32-16": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "aus", played: true }, // Australia vs Egypt
   "r16-1": { homeScore: 0, awayScore: 3, winnerId: "mar", played: true }, // Canada vs Morocco
+  "r16-2": { homeScore: 0, awayScore: 1, winnerId: "fra", played: true }, // Paraguay vs France
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
