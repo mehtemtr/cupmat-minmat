@@ -337,12 +337,17 @@ function buildNextRound(
     const prev1 = prevRoundMatches[i * 2];
     const prev2 = prevRoundMatches[i * 2 + 1];
     
-    // User predicted winners take precedence, otherwise fallback to real-world winner
-    const homeTeamId = prev1 ? (getWinner(prev1.id, prev1.homeTeamId, prev1.awayTeamId, predictions) || prev1.winnerId) : null;
-    const awayTeamId = prev2 ? (getWinner(prev2.id, prev2.homeTeamId, prev2.awayTeamId, predictions) || prev2.winnerId) : null;
+    // User predicted winners take precedence, unless the match was actually played
+    const homeTeamId = prev1 
+      ? (prev1.played ? prev1.winnerId : (getWinner(prev1.id, prev1.homeTeamId, prev1.awayTeamId, predictions) || prev1.winnerId)) 
+      : null;
+    const awayTeamId = prev2 
+      ? (prev2.played ? prev2.winnerId : (getWinner(prev2.id, prev2.homeTeamId, prev2.awayTeamId, predictions) || prev2.winnerId)) 
+      : null;
 
     const def = roundDefs[i];
-    const p = predictions[`${roundType}-${i + 1}`];
+    const matchId = `${roundType}-${i + 1}`;
+    const p = predictions[matchId];
 
     let homeScore: number | null = p?.home ?? null;
     let awayScore: number | null = p?.away ?? null;
@@ -354,7 +359,17 @@ function buildNextRound(
     let isLive = false;
     let winnerId: string | null = null;
 
-    if (liveRawMatches && homeTeamId && awayTeamId) {
+    const staticRes = KNOCKOUT_STATIC_RESULTS[matchId];
+    if (staticRes && homeTeamId && awayTeamId) {
+      homeScore = staticRes.homeScore;
+      awayScore = staticRes.awayScore;
+      homeET = staticRes.homeET ?? null;
+      awayET = staticRes.awayET ?? null;
+      homePen = staticRes.homePen ?? null;
+      awayPen = staticRes.awayPen ?? null;
+      played = staticRes.played;
+      winnerId = staticRes.winnerId;
+    } else if (liveRawMatches && homeTeamId && awayTeamId) {
       const realMatch = liveRawMatches.find(rm => 
         (rm.homeTeamId === homeTeamId && rm.awayTeamId === awayTeamId) ||
         (rm.homeTeamId === awayTeamId && rm.awayTeamId === homeTeamId)

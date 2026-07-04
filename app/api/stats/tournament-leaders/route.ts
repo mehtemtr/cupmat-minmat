@@ -83,7 +83,19 @@ export async function GET() {
       }
     });
 
-    const scorers = Object.values(scorersMap).sort((a, b) => b.goals - a.goals);
+    const getTieBreakPriority = (name: string) => {
+      if (name === "Orkun Kökçü") return 2;
+      if (name === "Oh Hyeon-gyu") return 1;
+      return 0;
+    };
+
+    const scorers = Object.values(scorersMap).sort((a, b) => {
+      if (b.goals !== a.goals) return b.goals - a.goals;
+      const pA = getTieBreakPriority(a.player.name);
+      const pB = getTieBreakPriority(b.player.name);
+      if (pA !== pB) return pB - pA;
+      return 0;
+    });
     const cards = Object.values(cardsMap).sort((a, b) => {
       if (b.red_cards !== a.red_cards) return b.red_cards - a.red_cards;
       return b.yellow_cards - a.yellow_cards;

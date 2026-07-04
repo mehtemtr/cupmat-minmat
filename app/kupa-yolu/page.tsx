@@ -227,7 +227,8 @@ export default function BracketPage() {
     knockoutBracket, 
     predictions, 
     setPrediction, 
-    knockoutUnlocked 
+    knockoutUnlocked,
+    resetPredictions
   } = useTournament();
   const { locale } = useLocale();
   const { t } = useTranslation();
@@ -533,23 +534,38 @@ export default function BracketPage() {
         /* 2. Unlocked Interactive Bracket Tree */
         <div className="space-y-6">
           {/* Navigation tabs */}
-          <div className="flex items-center justify-start border-b border-white/10 pb-4 overflow-x-auto gap-2 scrollbar-none">
-            {(["tree", "r32", "r16", "qf", "sf", "final"] as const).map((tab) => {
-              const label = tab === "tree" ? dict.tree : dict[tab];
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`rounded-xl px-4 py-2.5 text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                    activeTab === tab
-                      ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
-                      : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
-                  }`}
-                >
-                  {label}
-                </button>
-              );
-            })}
+          <div className="flex items-center justify-between border-b border-white/10 pb-4 overflow-x-auto gap-2 scrollbar-none">
+            <div className="flex items-center gap-2">
+              {(["tree", "r32", "r16", "qf", "sf", "final"] as const).map((tab) => {
+                const label = tab === "tree" ? dict.tree : dict[tab];
+                return (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`rounded-xl px-4 py-2.5 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                      activeTab === tab
+                        ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
+                        : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+            {Object.keys(predictions).length > 0 && (
+              <button
+                onClick={() => {
+                  if (confirm(locale === "tr" ? "Tüm simülasyon ve tahminlerinizi sıfırlayıp gerçek kupa yoluna dönmek istediğinize emin misiniz?" : "Are you sure you want to reset all simulations/predictions and return to the real cup road?")) {
+                    resetPredictions();
+                  }
+                }}
+                className="rounded-xl px-4 py-2.5 text-xs font-bold bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
+              >
+                <span>✕</span>
+                <span>{locale === "tr" ? "Simülasyonu Sıfırla" : "Reset Simulation"}</span>
+              </button>
+            )}
           </div>
 
           {/* TAB: Tree View (Desktop Side-by-side Columns with SVG connecting curves) */}

@@ -70,7 +70,7 @@ export default function StatisticsPage() {
   const [error, setError] = useState<string | null>(null);
   const [historySearch, setHistorySearch] = useState("");
   const [showAllHistory, setShowAllHistory] = useState(false);
-  const [liveMatchesTab, setLiveMatchesTab] = useState<"groups" | "r32">("groups");
+  const [liveMatchesTab, setLiveMatchesTab] = useState<"groups" | "r32" | "r16">("groups");
 
   const {
     matches,
@@ -135,7 +135,9 @@ export default function StatisticsPage() {
   const displayMatches = useMemo(() => {
     const rawMatches = liveMatchesTab === "groups" 
       ? matches 
-      : realKnockoutBracket.filter(m => m.round === "r32");
+      : liveMatchesTab === "r32"
+        ? realKnockoutBracket.filter(m => m.round === "r32")
+        : realKnockoutBracket.filter(m => m.round === "r16");
 
     // Filter out matches that don't have both teams resolved
     const activeMatches = rawMatches.filter(m => m.homeTeamId && m.awayTeamId);
@@ -885,7 +887,7 @@ export default function StatisticsPage() {
                     <span>{locale === "tr" ? "Maç Simülatörü" : "Match Simulator"}</span>
                   </h3>
 
-                  {/* Sub-tabs: Groups vs R32 */}
+                  {/* Sub-tabs: Groups vs R32 vs R16 */}
                   <div className="flex gap-2">
                     <button
                       onClick={() => setLiveMatchesTab("groups")}
@@ -906,6 +908,16 @@ export default function StatisticsPage() {
                       }`}
                     >
                       {locale === "tr" ? "Son 32 Maçları" : "Round of 32 Matches"}
+                    </button>
+                    <button
+                      onClick={() => setLiveMatchesTab("r16")}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        liveMatchesTab === "r16"
+                          ? "bg-emerald-500 text-[#060b14] font-black"
+                          : "bg-white/5 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {locale === "tr" ? "Son 16 Maçları" : "Round of 16 Matches"}
                     </button>
                   </div>
                 </div>
