@@ -52,6 +52,18 @@ def main():
 
         df = pd.read_excel(file_path, sheet_name=sheet)
         
+        # Check layout shift:
+        # If the first column (index 0) is "Kaleciler için" or "Diğerleri için", then offset is 1, else 0.
+        first_col = str(df.columns[0]).strip().lower()
+        first_row_val = ""
+        if len(df) > 0:
+            first_row_val = str(df.iloc[0, 0]).strip().lower()
+            
+        offset = 0
+        if "kaleciler" in first_col or "diğerleri" in first_col or "kaleciler" in first_row_val or "diğerleri" in first_row_val:
+            offset = 1
+            print(f"  Detected offset column (offset = {offset})")
+
         # Check if first row contains sub-headers (we drop index 0)
         # The headers are already columns of df, but row 0 contains subheadings
         rows_to_parse = df.iloc[1:]
@@ -59,18 +71,20 @@ def main():
         players_list = []
 
         for idx, row in rows_to_parse.iterrows():
-            match_name = str(row.iloc[0]).strip()
-            team_name = str(row.iloc[1]).strip()
-            jersey_num = to_int(row.iloc[2])
-            pos = str(row.iloc[3]).strip()
-            player_name = str(row.iloc[4]).strip()
-            player_short = str(row.iloc[5]).strip()
+            row_len = len(row)
+            
+            match_name = str(row.iloc[0 + offset]).strip()
+            team_name = str(row.iloc[1 + offset]).strip()
+            jersey_num = to_int(row.iloc[2 + offset])
+            pos = str(row.iloc[3 + offset]).strip()
+            player_name = str(row.iloc[4 + offset]).strip()
+            player_short = str(row.iloc[5 + offset]).strip()
             
             # Skip empty rows
             if not player_name or player_name == "nan" or not match_name or match_name == "nan":
                 continue
 
-            minutes = to_int(row.iloc[7])
+            minutes = to_int(row.iloc[7 + offset])
             
             player_stat = {
                 "match_name": match_name,
@@ -82,53 +96,73 @@ def main():
                 "minutes_played": minutes,
             }
 
-            yellow_cards = 0
+            # New card and penalty stats:
+            # KK (Kırmızı Kart) - Index 18
+            # SK (Sarı Kart) - Index 19
+            # PKu/PK (Penaltı Kurtarışı / Penaltı Kaçırdı) - Index 20
+            # KKG (Kendi Kalesine Gol) - Index 21
             red_cards = 0
-            if len(row) > 18:
-                yellow_cards = to_int(row.iloc[18])
-            if len(row) > 19:
-                red_cards = to_int(row.iloc[19])
+            yellow_cards = 0
+            penalties_saved = 0
+            penalties_missed = 0
+            own_goals = 0
+            
+            if row_len > 18:
+                red_cards = to_int(row.iloc[18])
+            if row_len > 19:
+                yellow_cards = to_int(row.iloc[19])
+            if row_len > 20:
+                val_20 = to_int(row.iloc[20])
+                if pos == "K":
+                    penalties_saved = val_20
+                else:
+                    penalties_missed = val_20
+            if row_len > 21:
+                own_goals = to_int(row.iloc[21])
 
             if pos == "K":
                 # Goalkeeper stats
                 player_stat.update({
                     "is_goalkeeper": True,
-                    "goals_conceded": to_int(row.iloc[6]),
-                    "saves": to_int(row.iloc[8]),
-                    "shots_on_goal_against": to_int(row.iloc[9]),
-                    "xg_conceded": to_float(row.iloc[10], is_gk_ratio=True),
-                    "xgot_conceded": to_float(row.iloc[11], is_gk_ratio=True),
-                    "goals_prevented": to_float(row.iloc[12], is_gk_ratio=True),
-                    "claimed_crosses": to_int(row.iloc[13]),
-                    "clearances": to_int(row.iloc[14]),
-                    "punches": to_int(row.iloc[15]),
-                    "penalties_saved": to_int(row.iloc[16]),
+                    "goals_conceded": to_int(row.iloc[6 + offset]),
+                    "saves": to_int(row.iloc[8 + offset]),
+                    "shots_on_goal_against": to_int(row.iloc[9 + offset]),
+                    "xg_conceded": to_float(row.iloc[10 + offset], is_gk_ratio=True),
+                    "xgot_conceded": to_float(row.iloc[11 + offset], is_gk_ratio=True),
+                    "goals_prevented": to_float(row.iloc[12 + offset], is_gk_ratio=True),
+                    "claimed_crosses": to_int(row.iloc[13 + offset]),
+                    "clearances": to_int(row.iloc[14 + offset]),
+                    "punches": to_int(row.iloc[15 + offset]),
+                    "penalties_saved": penalties_saved if penalties_saved > 0 else to_int(row.iloc[16 + offset]),
                     "goals": 0,
                     "assists": 0,
                     "yellow_cards": yellow_cards,
                     "red_cards": red_cards,
-                    "own_goals": 0
+                    "penalty_saved": penalties_saved,
+                    "penalty_missed": 0,
+                    "own_goals": own_goals
                 })
             else:
                 # Outfield player stats
                 player_stat.update({
                     "is_goalkeeper": False,
-                    "touches": to_int(row.iloc[6]),
-                    "goals": to_int(row.iloc[8]),
-                    "assists": to_int(row.iloc[9]),
-                    "xg": to_float(row.iloc[10]),
-                    "xa": to_float(row.iloc[11]),
-                    "shots_on_goal": to_int(row.iloc[12]),
-                    "shots": to_int(row.iloc[13]),
-                    "big_chances_created": to_int(row.iloc[14]),
-                    "interceptions": to_int(row.iloc[15]),
-                    "duels_won": to_int(row.iloc[16]),
+                    "touches": to_int(row.iloc[6 + offset]),
+                    "goals": to_int(row.iloc[8 + offset]),
+                    "assists": to_int(row.iloc[9 + offset]),
+                    "xg": to_float(row.iloc[10 + offset]),
+                    "xa": to_float(row.iloc[11 + offset]),
+                    "shots_on_goal": to_int(row.iloc[12 + offset]),
+                    "shots": to_int(row.iloc[13 + offset]),
+                    "big_chances_created": to_int(row.iloc[14 + offset]),
+                    "interceptions": to_int(row.iloc[15 + offset]),
+                    "duels_won": to_int(row.iloc[16 + offset]),
                     "goals_conceded": 0,
                     "saves": 0,
                     "penalty_saved": 0,
+                    "penalty_missed": penalties_missed,
                     "yellow_cards": yellow_cards,
                     "red_cards": red_cards,
-                    "own_goals": 0
+                    "own_goals": own_goals
                 })
 
             players_list.append(player_stat)

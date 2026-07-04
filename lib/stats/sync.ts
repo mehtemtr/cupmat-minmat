@@ -165,7 +165,8 @@ export async function runPlayerStatsSync() {
         goal_difference: outcome.goal_difference,
         clean_sheet: cleanSheet,
         saves: row.saves || 0,
-        penalty_saved: row.penalties_saved || 0,
+        penalty_saved: row.penalty_saved || row.penalties_saved || 0,
+        penalty_missed: row.penalty_missed || 0,
         own_goals: row.own_goals || 0,
         yellow_cards: row.yellow_cards || 0,
         red_cards: row.red_cards || 0
