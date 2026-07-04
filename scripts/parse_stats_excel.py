@@ -82,6 +82,13 @@ def main():
                 "minutes_played": minutes,
             }
 
+            yellow_cards = 0
+            red_cards = 0
+            if len(row) > 18:
+                yellow_cards = to_int(row.iloc[18])
+            if len(row) > 19:
+                red_cards = to_int(row.iloc[19])
+
             if pos == "K":
                 # Goalkeeper stats
                 player_stat.update({
@@ -98,8 +105,8 @@ def main():
                     "penalties_saved": to_int(row.iloc[16]),
                     "goals": 0,
                     "assists": 0,
-                    "yellow_cards": 0,
-                    "red_cards": 0,
+                    "yellow_cards": yellow_cards,
+                    "red_cards": red_cards,
                     "own_goals": 0
                 })
             else:
@@ -119,8 +126,8 @@ def main():
                     "goals_conceded": 0,
                     "saves": 0,
                     "penalty_saved": 0,
-                    "yellow_cards": 0,
-                    "red_cards": 0,
+                    "yellow_cards": yellow_cards,
+                    "red_cards": red_cards,
                     "own_goals": 0
                 })
 
