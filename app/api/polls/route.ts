@@ -124,6 +124,9 @@ export async function GET() {
       } else if (year === 2026 && month === 6 && day >= 20 && day <= 27) {
         // Keep the custom squad selection poll active for 1 week (June 20 to June 27, 2026)
         pinnedPollId = "e5015e12-32b0-466d-9fc0-c5c4975fd96d";
+      } else if (year === 2026 && month === 7 && day >= 1 && day <= 15) {
+        // Pin the top scorer poll
+        pinnedPollId = "f7267123-bc9f-4310-9110-82a1b32d84aa";
       }
 
       if (pinnedPollId) {

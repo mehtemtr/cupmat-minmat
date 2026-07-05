@@ -397,9 +397,9 @@ export default function StatisticsPage() {
   ];
 
   const historicalScorers = [
-    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 18, matches: 27, code: "ar", emoji: "🇦🇷" },
+    { name: "Lionel Messi", countryTr: "Arjantin", countryEn: "Argentina", goals: 13, matches: 27, code: "ar", emoji: "🇦🇷" },
     { name: "Miroslav Klose", countryTr: "Almanya", countryEn: "Germany", goals: 16, matches: 24, code: "de", emoji: "🇩🇪" },
-    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 16, matches: 15, code: "fr", emoji: "🇫🇷" },
+    { name: "Kylian Mbappé", countryTr: "Fransa", countryEn: "France", goals: 12, matches: 15, code: "fr", emoji: "🇫🇷" },
     { name: "Ronaldo", countryTr: "Brezilya", countryEn: "Brazil", goals: 15, matches: 19, code: "br", emoji: "🇧🇷" },
     { name: "Gerd Müller", countryTr: "Almanya", countryEn: "Germany", goals: 14, matches: 13, code: "de", emoji: "🇩🇪" },
     { name: "Just Fontaine", countryTr: "Fransa", countryEn: "France", goals: 13, matches: 6, code: "fr", emoji: "🇫🇷" },
@@ -408,8 +408,8 @@ export default function StatisticsPage() {
     { name: "Sándor Kocsis", countryTr: "Macaristan", countryEn: "Hungary", goals: 11, matches: 5, code: "hu", emoji: "🇭🇺" },
     { name: "Grzegorz Lato", countryTr: "Polonya", countryEn: "Poland", goals: 10, matches: 20, code: "pl", emoji: "🇵🇱" },
     { name: "Thomas Müller", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 19, code: "de", emoji: "🇩🇪" },
-    { name: "Harry Kane", countryTr: "İngiltere", countryEn: "England", goals: 10, matches: 11, code: "gb-eng", emoji: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-    { name: "Cristiano Ronaldo", countryTr: "Portekiz", countryEn: "Portugal", goals: 10, matches: 22, code: "pt", emoji: "🇵🇹" },
+    { name: "Harry Kane", countryTr: "İngiltere", countryEn: "England", goals: 8, matches: 11, code: "gb-eng", emoji: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+    { name: "Cristiano Ronaldo", countryTr: "Portekiz", countryEn: "Portugal", goals: 8, matches: 22, code: "pt", emoji: "🇵🇹" },
     { name: "Helmut Rahn", countryTr: "Almanya", countryEn: "Germany", goals: 10, matches: 10, code: "de", emoji: "🇩🇪" },
     { name: "Teófilo Cubillas", countryTr: "Peru", countryEn: "Peru", goals: 10, matches: 13, code: "pe", emoji: "🇵🇪" },
     { name: "Gabriel Batistuta", countryTr: "Arjantin", countryEn: "Argentina", goals: 10, matches: 12, code: "ar", emoji: "🇦🇷" },
