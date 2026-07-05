@@ -13,6 +13,7 @@ import { useTournament } from "@/contexts/TournamentContext";
 import type { UserActivity } from "@/lib/store/gamification-store";
 import type { MatchResult, GroupId } from "@/lib/types/tournament";
 import { KNOCKOUT_DEFS } from "@/lib/knockout";
+import { scorePrediction } from "@/lib/predictions/scoring";
 
 const localDict = {
   tr: {
@@ -182,7 +183,7 @@ export default function PredictionCenterPage() {
   const [aiLoading, setAiLoading] = useState<Record<string, boolean>>({});
   const [aiError, setAiError] = useState<Record<string, string>>({});
 
-  const [tahminTab, setTahminTab] = useState<"groups" | "r32">("groups");
+  const [tahminTab, setTahminTab] = useState<"groups" | "r32" | "r16" | "qf" | "sf" | "final">("groups");
 
   // Tüm grup aşaması maçlarını kronolojik olarak listele
   const upcomingMatches = useMemo(() => {
@@ -193,9 +194,40 @@ export default function PredictionCenterPage() {
     return knockoutBracket.filter((m) => m.round === "r32");
   }, [knockoutBracket]);
 
+  const r16Matches = useMemo(() => {
+    return knockoutBracket.filter((m) => m.round === "r16");
+  }, [knockoutBracket]);
+
+  const qfMatches = useMemo(() => {
+    return knockoutBracket.filter((m) => m.round === "qf");
+  }, [knockoutBracket]);
+
+  const sfMatches = useMemo(() => {
+    return knockoutBracket.filter((m) => m.round === "sf");
+  }, [knockoutBracket]);
+
+  const finalMatches = useMemo(() => {
+    return knockoutBracket.filter((m) => m.round === "final");
+  }, [knockoutBracket]);
+
   const displayedMatches = useMemo(() => {
-    return tahminTab === "groups" ? upcomingMatches : r32Matches;
-  }, [tahminTab, upcomingMatches, r32Matches]);
+    switch (tahminTab) {
+      case "groups":
+        return upcomingMatches;
+      case "r32":
+        return r32Matches;
+      case "r16":
+        return r16Matches;
+      case "qf":
+        return qfMatches;
+      case "sf":
+        return sfMatches;
+      case "final":
+        return finalMatches;
+      default:
+        return upcomingMatches;
+    }
+  }, [tahminTab, upcomingMatches, r32Matches, r16Matches, qfMatches, sfMatches, finalMatches]);
 
   const getPlaceholderTeamName = (sym: string | undefined, opts: GroupId[] | undefined, locale: string) => {
     if (sym) {
@@ -220,6 +252,28 @@ export default function PredictionCenterPage() {
   const getKnockoutMatchName = (match: any) => {
     const def = KNOCKOUT_DEFS.find((d) => d.id === match.id);
     return def ? def.name : match.slot || "Son 32";
+  };
+
+  const getKnockoutRoundName = (round: string, locale: string) => {
+    if (locale === "tr") {
+      switch (round) {
+        case "r32": return "Son 32";
+        case "r16": return "Son 16";
+        case "qf": return "Çeyrek Final";
+        case "sf": return "Yarı Final";
+        case "final": return "Final";
+        default: return "Eleme Turu";
+      }
+    } else {
+      switch (round) {
+        case "r32": return "Round of 32";
+        case "r16": return "Round of 16";
+        case "qf": return "Quarter-Finals";
+        case "sf": return "Semi-Finals";
+        case "final": return "Final";
+        default: return "Knockout Round";
+      }
+    }
   };
 
   // Bugünün tarihine en yakın oynanmamış maçı bul (Initial Scroll Odak Noktası)
@@ -278,7 +332,14 @@ export default function PredictionCenterPage() {
 
         // Prepopulate input states for all matches
         const prepopulated: Record<string, { home: string; away: string }> = {};
-        const allMatches = [...upcomingMatches, ...r32Matches];
+        const allMatches = [
+          ...upcomingMatches,
+          ...r32Matches,
+          ...r16Matches,
+          ...qfMatches,
+          ...sfMatches,
+          ...finalMatches
+        ];
         allMatches.forEach((m) => {
           const saved = data.predictions[m.id];
           prepopulated[m.id] = {
@@ -571,29 +632,73 @@ export default function PredictionCenterPage() {
         </div>
       )}
 
-      {/* Tab Switcher: Grup vs Son 32 */}
-      <div className="flex border-b border-white/10 mb-6 gap-6 z-10 relative">
+      {/* Tab Switcher: Grup vs Eleme Aşamaları */}
+      <div className="flex border-b border-white/10 mb-6 gap-6 z-10 relative overflow-x-auto pb-1 scrollbar-thin">
         <button
           type="button"
           onClick={() => setTahminTab("groups")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
             tahminTab === "groups"
               ? "border-emerald-500 text-emerald-400 font-extrabold"
               : "border-transparent text-zinc-400 hover:text-white"
           }`}
         >
-          {locale === "tr" ? "Grup Aşaması Tahminleri" : "Group Stage Predictions"}
+          {locale === "tr" ? "Grup Aşaması" : "Group Stage"}
         </button>
         <button
           type="button"
           onClick={() => setTahminTab("r32")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
             tahminTab === "r32"
               ? "border-emerald-500 text-emerald-400 font-extrabold"
               : "border-transparent text-zinc-400 hover:text-white"
           }`}
         >
-          {locale === "tr" ? "Son 32 Turu Tahminleri" : "Round of 32 Predictions"}
+          {locale === "tr" ? "Son 32 Turu" : "Round of 32"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTahminTab("r16")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+            tahminTab === "r16"
+              ? "border-emerald-500 text-emerald-400 font-extrabold"
+              : "border-transparent text-zinc-400 hover:text-white"
+          }`}
+        >
+          {locale === "tr" ? "Son 16 Turu" : "Round of 16"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTahminTab("qf")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+            tahminTab === "qf"
+              ? "border-emerald-500 text-emerald-400 font-extrabold"
+              : "border-transparent text-zinc-400 hover:text-white"
+          }`}
+        >
+          {locale === "tr" ? "Çeyrek Final" : "Quarter-Finals"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTahminTab("sf")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+            tahminTab === "sf"
+              ? "border-emerald-500 text-emerald-400 font-extrabold"
+              : "border-transparent text-zinc-400 hover:text-white"
+          }`}
+        >
+          {locale === "tr" ? "Yarı Final" : "Semi-Finals"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTahminTab("final")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+            tahminTab === "final"
+              ? "border-emerald-500 text-emerald-400 font-extrabold"
+              : "border-transparent text-zinc-400 hover:text-white"
+          }`}
+        >
+          {locale === "tr" ? "Final" : "Final"}
         </button>
       </div>
 
