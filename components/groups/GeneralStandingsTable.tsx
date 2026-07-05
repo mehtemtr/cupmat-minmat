@@ -257,7 +257,7 @@ type SortOrder = "asc" | "desc";
 
 export function GeneralStandingsTable() {
   const router = useRouter();
-  const { standingsByGroup } = useTournament();
+  const { standingsByGroup, knockoutBracket } = useTournament();
   const { locale } = useLocale();
 
   const currentLang = (locale in standingsTranslations ? locale : "en") as keyof typeof standingsTranslations;
@@ -267,22 +267,102 @@ export function GeneralStandingsTable() {
   const [sortField, setSortField] = useState<SortField>("points");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
 
-  // Flatten and prepare standings data
+  // Flatten and prepare standings data with knockout stages included
   const allStandings = useMemo(() => {
-    return Object.entries(standingsByGroup).flatMap(([groupId, rows]) => 
-      rows.map((row) => {
-        const team = getTeamById(row.teamId);
-        return {
-          ...row,
-          groupId,
-          teamName: team ? getTeamName(team, locale) : "",
-          fifaRank: team?.fifaRank || 999,
-          confederation: team?.confederation || "",
-          flagUrl: team?.flagUrl || "",
-        };
-      })
+    // 1. Group stage rows
+    const groupRows = Object.entries(standingsByGroup).flatMap(([groupId, rows]) => 
+      rows.map((row) => ({
+        ...row,
+        groupId,
+      }))
     );
-  }, [standingsByGroup, locale]);
+
+    // Map by team ID for easy accumulation
+    const teamStandingsMap: Record<string, {
+      teamId: string;
+      groupId: string;
+      played: number;
+      won: number;
+      drawn: number;
+      lost: number;
+      goalsFor: number;
+      goalsAgainst: number;
+      goalDifference: number;
+      points: number;
+    }> = {};
+
+    groupRows.forEach((row) => {
+      teamStandingsMap[row.teamId] = {
+        teamId: row.teamId,
+        groupId: row.groupId,
+        played: row.played,
+        won: row.won,
+        drawn: row.drawn,
+        lost: row.lost,
+        goalsFor: row.goalsFor,
+        goalsAgainst: row.goalsAgainst,
+        goalDifference: row.goalDifference,
+        points: row.points,
+      };
+    });
+
+    // 2. Add knockout matches results if played/predicted
+    if (knockoutBracket && Array.isArray(knockoutBracket)) {
+      knockoutBracket.forEach((match) => {
+        const { homeTeamId, awayTeamId, homeScore, awayScore, homeET, awayET, played } = match;
+        if (!homeTeamId || !awayTeamId) return;
+
+        // Check if there is a played or predicted result
+        const isPlayed = played || (homeScore !== null && awayScore !== null);
+        if (!isPlayed || homeScore === null || awayScore === null) return;
+
+        const homeRow = teamStandingsMap[homeTeamId];
+        const awayRow = teamStandingsMap[awayTeamId];
+
+        if (homeRow && awayRow) {
+          const hGoals = homeScore + (homeET ?? 0);
+          const aGoals = awayScore + (awayET ?? 0);
+
+          homeRow.played += 1;
+          awayRow.played += 1;
+
+          homeRow.goalsFor += hGoals;
+          homeRow.goalsAgainst += aGoals;
+          awayRow.goalsFor += aGoals;
+          awayRow.goalsAgainst += hGoals;
+
+          if (hGoals > aGoals) {
+            homeRow.won += 1;
+            homeRow.points += 3;
+            awayRow.lost += 1;
+          } else if (hGoals < aGoals) {
+            awayRow.won += 1;
+            awayRow.points += 3;
+            homeRow.lost += 1;
+          } else {
+            homeRow.drawn += 1;
+            homeRow.points += 1;
+            awayRow.drawn += 1;
+            awayRow.points += 1;
+          }
+
+          homeRow.goalDifference = homeRow.goalsFor - homeRow.goalsAgainst;
+          awayRow.goalDifference = awayRow.goalsFor - awayRow.goalsAgainst;
+        }
+      });
+    }
+
+    return Object.values(teamStandingsMap).map((row) => {
+      const team = getTeamById(row.teamId);
+      return {
+        ...row,
+        teamName: team ? getTeamName(team, locale) : "",
+        fifaRank: team?.fifaRank || 999,
+        confederation: team?.confederation || "",
+        flagUrl: team?.flagUrl || "",
+      };
+    });
+  }, [standingsByGroup, knockoutBracket, locale]);
 
   // Sort and filter logic
   const processedStandings = useMemo(() => {

@@ -44,6 +44,48 @@ export async function GET() {
       }
     }
 
+    // Self-Healing Recovery: if player_stage_stats was wiped due to rosters being re-seeded
+    if (allStats.length === 0) {
+      console.log("[Tournament-Leaders-API] Stats table is empty! Running self-healing sync...");
+      const { runPlayerStatsSync } = await import("@/lib/stats/sync");
+      try {
+        await runPlayerStatsSync();
+        
+        // Fetch rows again after successful synchronization
+        from = 0;
+        to = 999;
+        hasMore = true;
+        while (hasMore) {
+          const { data: chunk, error } = await supabaseAdmin
+            .from("player_stage_stats")
+            .select(`
+              player_id,
+              goals,
+              yellow_cards,
+              red_cards,
+              team_rosters (
+                player_name,
+                team_id,
+                player_position
+              )
+            `)
+            .range(from, to);
+
+          if (error) break;
+          if (chunk && chunk.length > 0) {
+            allStats.push(...chunk);
+            if (chunk.length < 1000) hasMore = false;
+            else { from += 1000; to += 1000; }
+          } else {
+            hasMore = false;
+          }
+        }
+        console.log(`[Tournament-Leaders-API] Self-healing sync successful. Loaded ${allStats.length} records.`);
+      } catch (syncErr) {
+        console.error("[Tournament-Leaders-API] Self-healing sync failed:", syncErr);
+      }
+    }
+
     const scorersMap: Record<string, { player: { id: string; name: string; position: string }; team: { id: string }; goals: number }> = {};
     const cardsMap: Record<string, { player: { id: string; name: string; position: string }; team: { id: string }; yellow_cards: number; red_cards: number }> = {};
 
