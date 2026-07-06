@@ -839,8 +839,10 @@ export default function PredictionCenterPage() {
                     </Link>
 
                     {/* VS Indicator */}
-                    <span className="text-zinc-500 font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 bg-zinc-900 border border-zinc-800 rounded-lg flex-shrink-0">
-                      VS
+                    <span className={`font-black text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 bg-zinc-900 border border-zinc-800 rounded-lg flex-shrink-0 ${
+                      (match.played || match.homeScore !== null) ? "text-emerald-400" : "text-zinc-500"
+                    }`}>
+                      {(match.played || match.homeScore !== null) ? `${match.homeScore} - ${match.awayScore}` : "VS"}
                     </span>
 
                     {/* Away Team */}
