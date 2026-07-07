@@ -113,14 +113,14 @@ def main():
                 yellow_cards = to_int(row.iloc[19])
             if row_len > 20:
                 val_20 = to_int(row.iloc[20])
-                if pos == "K":
+                if pos.strip().upper() in ["K", "KL"]:
                     penalties_saved = val_20
                 else:
                     penalties_missed = val_20
             if row_len > 21:
                 own_goals = to_int(row.iloc[21])
 
-            if pos == "K":
+            if pos.strip().upper() in ["K", "KL"]:
                 # Goalkeeper stats
                 player_stat.update({
                     "is_goalkeeper": True,

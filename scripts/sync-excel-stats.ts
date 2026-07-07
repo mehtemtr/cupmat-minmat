@@ -151,13 +151,59 @@ async function main() {
       }
 
       // Try matching by name first, then by number
-      let player = playerMapByName.get(`${teamId}_${normalizeName(row.player_name)}`);
-      if (!player) {
-        // Try fallback on short name
-        player = playerMapByName.get(`${teamId}_${normalizeName(row.player_short)}`);
+      const cleanExcelName = normalizeName(row.player_name);
+      const cleanExcelShort = normalizeName(row.player_short);
+
+      const teamPlayers = dbPlayers.filter((p: any) => p.team_id.toLowerCase() === teamId);
+
+      if (cleanExcelName === "rauljimenez") {
+        console.log(`[DEBUG] Matching Raul Jimenez. teamId: '${teamId}', teamPlayers count: ${teamPlayers.length}`);
+        console.log(`[DEBUG] teamPlayers names:`, teamPlayers.map(p => p.player_name));
       }
+      
+      if (cleanExcelName === "kylianmbappe") {
+        console.log(`[DEBUG] Matching Kylian Mbappe. teamId: '${teamId}', teamPlayers count: ${teamPlayers.length}`);
+        console.log(`[DEBUG] teamPlayers names:`, teamPlayers.map(p => p.player_name));
+        console.log(`[DEBUG] teamPlayers normalized:`, teamPlayers.map(p => normalizeName(p.player_name)));
+      }
+
+      // 1. Exact match on normalized name
+      let player = teamPlayers.find((p: any) => normalizeName(p.player_name) === cleanExcelName);
+
+      // 2. Token-based match: check if the DB player name contains all words of the Excel name (to support middle names like Erling Braut Haaland)
       if (!player) {
-        player = playerMapByNumber.get(`${teamId}_${row.jersey_number}`);
+        player = teamPlayers.find((p: any) => {
+          const dbTokens = p.player_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/).filter(Boolean);
+          const excelTokens = row.player_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/).filter(Boolean);
+          return excelTokens.every(tok => dbTokens.some(dbTok => dbTok.includes(tok) || tok.includes(dbTok)));
+        });
+      }
+
+      // 3. Fallback to short name matching
+      if (!player && cleanExcelShort) {
+        player = teamPlayers.find((p: any) => {
+          const cleanDbName = normalizeName(p.player_name);
+          return cleanDbName.includes(cleanExcelShort) || cleanExcelShort.includes(cleanDbName);
+        });
+      }
+
+      // 4. Safe fallback to jersey number matching (verify name similarity to avoid false matches like Haaland matching Pedersen)
+      if (!player && row.jersey_number !== null) {
+        const potentialPlayer = playerMapByNumber.get(`${teamId}_${row.jersey_number}`);
+        if (potentialPlayer) {
+          const cleanDb = normalizeName(potentialPlayer.player_name);
+          const cleanExcel = normalizeName(row.player_name);
+          
+          // Get last names
+          const dbLastName = cleanDb.split(" ").pop() || "";
+          const excelLastName = cleanExcel.split(" ").pop() || "";
+
+          if (cleanDb.includes(excelLastName) || cleanExcel.includes(dbLastName)) {
+            player = potentialPlayer;
+          } else {
+            console.warn(`Prevented false match by jersey number: Excel '${row.player_name}' (#${row.jersey_number}) would have matched DB '${potentialPlayer.player_name}' in team '${teamId}'`);
+          }
+        }
       }
 
       if (!player) {

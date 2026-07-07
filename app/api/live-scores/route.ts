@@ -81,16 +81,32 @@ export async function GET() {
       let awayPen = (played || isLive) ? m.score.penalties?.away : null;
 
       // Local overrides for specific matches to align with user's tournament calendar/results
-      if (homeTeamId === "por" && awayTeamId === "cro") {
-        // Portugal vs Croatia should be 2-1
-        homeScore = 2;
-        awayScore = 1;
-        played = true;
-        isLive = false;
-        homeET = null;
-        awayET = null;
-        homePen = null;
-        awayPen = null;
+      const overrides: Record<string, { homeScore: number; awayScore: number; played: boolean; isLive: boolean; status: string; homeET?: number | null; awayET?: number | null; homePen?: number | null; awayPen?: number | null }> = {
+        "por_cro": { homeScore: 2, awayScore: 1, played: true, isLive: false, status: "FINISHED" }, // Group stage override
+        "can_mar": { homeScore: 0, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
+        "par_fra": { homeScore: 0, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+        "por_esp": { homeScore: 0, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+        "usa_bel": { homeScore: 1, awayScore: 4, played: true, isLive: false, status: "FINISHED" },
+        "bra_nor": { homeScore: 1, awayScore: 2, played: true, isLive: false, status: "FINISHED" },
+        "mex_eng": { homeScore: 2, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
+        "arg_egy": { homeScore: 0, awayScore: 1, played: false, isLive: true, status: "PAUSED" }, // Live match
+      };
+
+      const key1 = `${homeTeamId}_${awayTeamId}`;
+      const key2 = `${awayTeamId}_${homeTeamId}`;
+      const matchOverride = overrides[key1] || overrides[key2];
+
+      if (matchOverride) {
+        const isSwapped = overrides[key2] !== undefined;
+        homeScore = isSwapped ? matchOverride.awayScore : matchOverride.homeScore;
+        awayScore = isSwapped ? matchOverride.homeScore : matchOverride.awayScore;
+        played = matchOverride.played;
+        isLive = matchOverride.isLive;
+        status = matchOverride.status;
+        homeET = isSwapped ? (matchOverride.awayET ?? null) : (matchOverride.homeET ?? null);
+        awayET = isSwapped ? (matchOverride.homeET ?? null) : (matchOverride.awayET ?? null);
+        homePen = isSwapped ? (matchOverride.awayPen ?? null) : (matchOverride.homePen ?? null);
+        awayPen = isSwapped ? (matchOverride.homePen ?? null) : (matchOverride.awayPen ?? null);
       }
 
       // If penalties are present and part of the fullTime score, adjust homeScore/awayScore
@@ -114,7 +130,35 @@ export async function GET() {
       };
     });
 
-    console.log(`[Live-Scores-API] Successfully mapped ${mappedMatches.length} group matches and ${rawMatches.length} raw matches.`);
+    // Ensure all local overrides are included in rawMatches (even if they are not returned by the API)
+    Object.entries(overrides).forEach(([key, override]) => {
+      const [t1, t2] = key.split("_");
+      if (t1 === "por" && t2 === "cro") return; // Skip group stage override
+
+      const exists = rawMatches.some(
+        (rm: any) =>
+          (rm.homeTeamId === t1 && rm.awayTeamId === t2) ||
+          (rm.homeTeamId === t2 && rm.awayTeamId === t1)
+      );
+
+      if (!exists) {
+        rawMatches.push({
+          homeTeamId: t1,
+          awayTeamId: t2,
+          homeScore: override.homeScore,
+          awayScore: override.awayScore,
+          homeET: override.homeET ?? null,
+          awayET: override.awayET ?? null,
+          homePen: override.homePen ?? null,
+          awayPen: override.awayPen ?? null,
+          played: override.played,
+          isLive: override.isLive,
+          status: override.status,
+        });
+      }
+    });
+
+    console.log(`[Live-Scores-API] Successfully mapped ${mappedMatches.length} group matches and ${rawMatches.length} raw matches (including overrides).`);
 
     return NextResponse.json({
       success: true,
