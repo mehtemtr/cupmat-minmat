@@ -70,7 +70,7 @@ export default function StatisticsPage() {
   const [error, setError] = useState<string | null>(null);
   const [historySearch, setHistorySearch] = useState("");
   const [showAllHistory, setShowAllHistory] = useState(false);
-  const [liveMatchesTab, setLiveMatchesTab] = useState<"groups" | "r32" | "r16">("groups");
+  const [liveMatchesTab, setLiveMatchesTab] = useState<"groups" | "r32" | "r16" | "qf" | "sf" | "final">("groups");
 
   const {
     matches,
@@ -137,7 +137,13 @@ export default function StatisticsPage() {
       ? matches 
       : liveMatchesTab === "r32"
         ? realKnockoutBracket.filter(m => m.round === "r32")
-        : realKnockoutBracket.filter(m => m.round === "r16");
+        : liveMatchesTab === "r16"
+          ? realKnockoutBracket.filter(m => m.round === "r16")
+          : liveMatchesTab === "qf"
+            ? realKnockoutBracket.filter(m => m.round === "qf")
+            : liveMatchesTab === "sf"
+              ? realKnockoutBracket.filter(m => m.round === "sf")
+              : realKnockoutBracket.filter(m => m.round === "final");
 
     // Filter out matches that don't have both teams resolved
     const activeMatches = rawMatches.filter(m => m.homeTeamId && m.awayTeamId);
@@ -888,7 +894,7 @@ export default function StatisticsPage() {
                   </h3>
 
                   {/* Sub-tabs: Groups vs R32 vs R16 */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 flex-wrap">
                     <button
                       onClick={() => setLiveMatchesTab("groups")}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
@@ -907,7 +913,7 @@ export default function StatisticsPage() {
                           : "bg-white/5 text-zinc-400 hover:text-white"
                       }`}
                     >
-                      {locale === "tr" ? "Son 32 Maçları" : "Round of 32 Matches"}
+                      {locale === "tr" ? "Son 32" : "Round of 32"}
                     </button>
                     <button
                       onClick={() => setLiveMatchesTab("r16")}
@@ -917,7 +923,37 @@ export default function StatisticsPage() {
                           : "bg-white/5 text-zinc-400 hover:text-white"
                       }`}
                     >
-                      {locale === "tr" ? "Son 16 Maçları" : "Round of 16 Matches"}
+                      {locale === "tr" ? "Son 16" : "Round of 16"}
+                    </button>
+                    <button
+                      onClick={() => setLiveMatchesTab("qf")}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        liveMatchesTab === "qf"
+                          ? "bg-emerald-500 text-[#060b14] font-black"
+                          : "bg-white/5 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {locale === "tr" ? "Çeyrek Final" : "Quarter Finals"}
+                    </button>
+                    <button
+                      onClick={() => setLiveMatchesTab("sf")}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        liveMatchesTab === "sf"
+                          ? "bg-emerald-500 text-[#060b14] font-black"
+                          : "bg-white/5 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {locale === "tr" ? "Yarı Final" : "Semi Finals"}
+                    </button>
+                    <button
+                      onClick={() => setLiveMatchesTab("final")}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        liveMatchesTab === "final"
+                          ? "bg-emerald-500 text-[#060b14] font-black"
+                          : "bg-white/5 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {locale === "tr" ? "Final" : "Final"}
                     </button>
                   </div>
                 </div>
