@@ -1,0 +1,48 @@
+const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
+const path = require('path');
+
+const workspaceDir = __dirname + '/..';
+let envText = '';
+if (fs.existsSync(path.join(workspaceDir, '.env.local'))) envText += fs.readFileSync(path.join(workspaceDir, '.env.local'), 'utf8') + '\n';
+if (fs.existsSync(path.join(workspaceDir, '.env'))) envText += fs.readFileSync(path.join(workspaceDir, '.env'), 'utf8') + '\n';
+
+const lines = envText.split(/\r?\n/);
+const getEnv = (key) => {
+  const line = lines.find(l => l.trim().startsWith(key + '='));
+  if (!line) return '';
+  const val = line.substring(line.indexOf('=') + 1).trim();
+  return val.replace(/^['"]|['"]$/g, '');
+};
+
+const supabaseUrl = getEnv('NEXT_PUBLIC_SUPABASE_URL');
+const supabaseServiceKey = getEnv('SUPABASE_SERVICE_ROLE_KEY');
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+async function run() {
+  try {
+    const { data: stats, error } = await supabase
+      .from('player_stage_stats')
+      .select('player_id, stage, team_result, goals, assists, team_rosters(player_name, team_id)')
+      .eq('stage', 'round_of_16');
+      
+    if (error) {
+      console.error("Error:", error);
+      return;
+    }
+    
+    console.log("Total stats in DB for round_of_16:", stats.length);
+    const teams = new Set();
+    stats.forEach(s => {
+      if (s.team_rosters) {
+        teams.add(s.team_rosters.team_id);
+      }
+    });
+    console.log("Teams in DB for round_of_16:", Array.from(teams));
+  } catch (err) {
+    console.error("Failed running test:", err);
+  }
+}
+
+run();

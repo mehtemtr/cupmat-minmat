@@ -32,7 +32,10 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r32-16": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 3, awayPen: 4, winnerId: "egy", played: true }, // Australia vs Egypt
   "r16-1": { homeScore: 0, awayScore: 3, winnerId: "mar", played: true }, // Canada vs Morocco
   "r16-2": { homeScore: 0, awayScore: 1, winnerId: "fra", played: true }, // Paraguay vs France
+  "r16-3": { homeScore: 0, awayScore: 1, winnerId: "esp", played: true }, // Portugal vs Spain
+  "r16-4": { homeScore: 1, awayScore: 4, winnerId: "bel", played: true }, // USA vs Belgium
   "r16-5": { homeScore: 1, awayScore: 2, winnerId: "nor", played: true }, // Brazil vs Norway
+  "r16-6": { homeScore: 2, awayScore: 3, winnerId: "eng", played: true }, // Mexico vs England
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
@@ -263,7 +266,7 @@ function buildR32Matches(
         awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
 
         // Subtract penalty goals from the fullTime score if they are included in it
-        if (homePen !== null && awayPen !== null && homeScore !== null && awayScore !== null) {
+        if (typeof homePen === "number" && typeof awayPen === "number" && homeScore !== null && awayScore !== null) {
           homeScore = homeScore - homePen;
           awayScore = awayScore - awayPen;
         }

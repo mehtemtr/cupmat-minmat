@@ -94,7 +94,7 @@ export async function GET() {
       }
 
       // If penalties are present and part of the fullTime score, adjust homeScore/awayScore
-      if (homePen !== null && awayPen !== null && homeScore !== null && awayScore !== null) {
+      if (typeof homePen === "number" && typeof awayPen === "number" && homeScore !== null && awayScore !== null) {
         homeScore = homeScore - homePen;
         awayScore = awayScore - awayPen;
       }
