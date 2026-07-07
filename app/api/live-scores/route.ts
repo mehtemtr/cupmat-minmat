@@ -89,7 +89,7 @@ export async function GET() {
         "usa_bel": { homeScore: 1, awayScore: 4, played: true, isLive: false, status: "FINISHED" },
         "bra_nor": { homeScore: 1, awayScore: 2, played: true, isLive: false, status: "FINISHED" },
         "mex_eng": { homeScore: 2, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
-        "arg_egy": { homeScore: 0, awayScore: 1, played: false, isLive: true, status: "PAUSED" }, // Live match
+        "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" }, // Finished match
       };
 
       const key1 = `${homeTeamId}_${awayTeamId}`;

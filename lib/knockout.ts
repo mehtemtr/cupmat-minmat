@@ -36,6 +36,7 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r16-4": { homeScore: 1, awayScore: 4, winnerId: "bel", played: true }, // USA vs Belgium
   "r16-5": { homeScore: 1, awayScore: 2, winnerId: "nor", played: true }, // Brazil vs Norway
   "r16-6": { homeScore: 2, awayScore: 3, winnerId: "eng", played: true }, // Mexico vs England
+  "r16-8": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
