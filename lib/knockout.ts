@@ -36,6 +36,7 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r16-4": { homeScore: 1, awayScore: 4, winnerId: "bel", played: true }, // USA vs Belgium
   "r16-5": { homeScore: 1, awayScore: 2, winnerId: "nor", played: true }, // Brazil vs Norway
   "r16-6": { homeScore: 2, awayScore: 3, winnerId: "eng", played: true }, // Mexico vs England
+  "r16-7": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "sui", played: true }, // Switzerland vs Colombia
   "r16-8": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
 };
 
