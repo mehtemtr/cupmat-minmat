@@ -1246,6 +1246,27 @@ export default function StatisticsPage() {
                               <span className="font-mono text-zinc-500 font-bold w-5">{idx + 1}.</span>
                               <img src={getFlagUrl(team.id)} alt="" className="h-4.5 w-7 object-cover rounded shadow border border-white/10" />
                               <span className="font-bold text-white text-sm">{player.name}</span>
+                              {player.name === "Orkun Kökçü" && (
+                                <span className="group relative inline-flex items-center ml-1.5 cursor-help">
+                                  <span className="relative flex h-3.5 w-3.5 items-center justify-center">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400/50 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 items-center justify-center text-[8px] shadow-lg shadow-emerald-500/50">
+                                      ⚖️
+                                    </span>
+                                  </span>
+                                  {/* Tooltip Content */}
+                                  <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2.5 w-72 -translate-x-1/2 rounded-xl border border-emerald-500/30 bg-zinc-950/95 p-3 text-xs font-semibold leading-relaxed text-zinc-200 opacity-0 shadow-2xl shadow-emerald-950/30 backdrop-blur-md transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 translate-y-1">
+                                    <span className="block font-black text-emerald-400 mb-1">
+                                      ⚖️ {locale === "tr" ? "StatMatik Değerlendirmesi" : "StatMatik Evaluation"}
+                                    </span>
+                                    {locale === "tr" 
+                                      ? "Bizim analizimiz sonucunda lobilerin rengi değil, performansın liyakati. Dünya Kupası'nın matematiksel ADALETİ için golü Orkun KÖKÇÜ'ye yazdık."
+                                      : "As a result of our analysis, it's not the color of the lobbies, but the merit of performance. For the mathematical JUSTICE of the World Cup, we credited the goal to Orkun KÖKÇÜ."}
+                                    {/* Tooltip arrow */}
+                                    <span className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-zinc-950"></span>
+                                  </span>
+                                </span>
+                              )}
                               <span className="text-xs text-zinc-400">({teamInfo ? (locale === "tr" ? teamInfo.nameTr : teamInfo.nameEn) : ""})</span>
                             </div>
                             <span className="font-extrabold text-emerald-400 text-sm">{goals} Gol</span>

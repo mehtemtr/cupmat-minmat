@@ -774,6 +774,21 @@ export default function FootballerDetailPage() {
               })()}
             </div>
           </div>
+
+          {/* StatMatik Evaluation Card for Orkun Kökçü */}
+          {player.name === "Orkun Kökçü" && (
+            <div className="rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/15 via-zinc-950/40 to-transparent p-6 backdrop-blur-md shadow-2xl relative overflow-hidden animate-fadeIn">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+              <h3 className="text-lg font-extrabold text-emerald-400 mb-4 flex items-center gap-2 border-b border-zinc-900/40 pb-3">
+                ⚖️ {locale === "tr" ? "StatMatik Değerlendirmesi" : "StatMatik Evaluation"}
+              </h3>
+              <p className="text-zinc-200 leading-relaxed text-sm font-semibold italic">
+                &ldquo;{locale === "tr"
+                  ? "Bizim analizimiz sonucunda lobilerin rengi değil, performansın liyakati. Dünya Kupası'nın matematiksel ADALETİ için golü Orkun KÖKÇÜ'ye yazdık."
+                  : "As a result of our analysis, it's not the color of the lobbies, but the merit of performance. For the mathematical JUSTICE of the World Cup, we credited the goal to Orkun KÖKÇÜ."}&rdquo;
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </PageShell>
