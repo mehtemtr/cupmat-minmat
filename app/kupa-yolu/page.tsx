@@ -202,6 +202,11 @@ function getMatchWinner(
   predictions: Record<string, MatchPrediction>
 ): string | null {
   if (!match || !match.homeTeamId || !match.awayTeamId) return null;
+
+  if (match.played && match.winnerId) {
+    return match.winnerId;
+  }
+
   const p = predictions[match.id];
   if (!p) return null;
 
@@ -326,6 +331,15 @@ export default function BracketPage() {
 
     const hasTeams = home && away;
 
+    const displayHomeScore = match.played ? (match.homeScore ?? 0) : (pred?.home ?? 0);
+    const displayAwayScore = match.played ? (match.awayScore ?? 0) : (pred?.away ?? 0);
+    const displayHomeET = match.played ? match.homeET : pred?.homeET;
+    const displayAwayET = match.played ? match.awayET : pred?.awayET;
+    const displayHomePen = match.played ? match.homePen : pred?.homePen;
+    const displayAwayPen = match.played ? match.awayPen : pred?.awayPen;
+    const displayHasDraw = displayHomeScore === displayAwayScore;
+    const displayHasEtDraw = displayHomeET === displayAwayET;
+
     return (
       <div 
         onClick={() => hasTeams && openPredictModal(match)}
@@ -366,9 +380,9 @@ export default function BracketPage() {
             </div>
             {hasTeams && (
               <span className={`font-mono text-xs font-bold ${isHomeWinner ? "text-emerald-400" : "text-zinc-400"}`}>
-                {pred?.home ?? 0}
-                {pred && pred.home === pred.away && pred.homeET !== undefined && ` (${pred.homeET})`}
-                {pred && pred.home === pred.away && pred.homeET === pred.awayET && pred.homePen !== undefined && ` [${pred.homePen}]`}
+                {displayHomeScore}
+                {displayHasDraw && displayHomeET !== undefined && displayHomeET !== null && ` (${displayHomeET})`}
+                {displayHasDraw && displayHasEtDraw && displayHomePen !== undefined && displayHomePen !== null && ` [${displayHomePen}]`}
               </span>
             )}
           </div>
@@ -395,9 +409,9 @@ export default function BracketPage() {
             </div>
             {hasTeams && (
               <span className={`font-mono text-xs font-bold ${isAwayWinner ? "text-emerald-400" : "text-zinc-400"}`}>
-                {pred?.away ?? 0}
-                {pred && pred.home === pred.away && pred.awayET !== undefined && ` (${pred.awayET})`}
-                {pred && pred.home === pred.away && pred.homeET === pred.awayET && pred.awayPen !== undefined && ` [${pred.awayPen}]`}
+                {displayAwayScore}
+                {displayHasDraw && displayAwayET !== undefined && displayAwayET !== null && ` (${displayAwayET})`}
+                {displayHasDraw && displayHasEtDraw && displayAwayPen !== undefined && displayAwayPen !== null && ` [${displayAwayPen}]`}
               </span>
             )}
           </div>
@@ -422,6 +436,15 @@ export default function BracketPage() {
           const pred = predictions[m.id];
           const hasTeams = home && away;
           const winnerId = getMatchWinner(m, predictions);
+
+          const displayHomeScore = m.played ? (m.homeScore ?? 0) : (pred?.home ?? 0);
+          const displayAwayScore = m.played ? (m.awayScore ?? 0) : (pred?.away ?? 0);
+          const displayHomeET = m.played ? m.homeET : pred?.homeET;
+          const displayAwayET = m.played ? m.awayET : pred?.awayET;
+          const displayHomePen = m.played ? m.homePen : pred?.homePen;
+          const displayAwayPen = m.played ? m.awayPen : pred?.awayPen;
+          const displayHasDraw = displayHomeScore === displayAwayScore;
+          const displayHasEtDraw = displayHomeET === displayAwayET;
 
           return (
             <div 
@@ -456,7 +479,7 @@ export default function BracketPage() {
                       <span className="text-xs text-zinc-500 italic">TBD</span>
                     )}
                   </div>
-                  {hasTeams && <span className="font-mono text-sm font-bold text-white">{pred?.home ?? 0}</span>}
+                  {hasTeams && <span className="font-mono text-sm font-bold text-white">{displayHomeScore}</span>}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -473,20 +496,24 @@ export default function BracketPage() {
                       <span className="text-xs text-zinc-500 italic">TBD</span>
                     )}
                   </div>
-                  {hasTeams && <span className="font-mono text-sm font-bold text-white">{pred?.away ?? 0}</span>}
+                  {hasTeams && <span className="font-mono text-sm font-bold text-white">{displayAwayScore}</span>}
                 </div>
               </div>
               
-              {hasTeams && pred && pred.home === pred.away && (
+              {hasTeams && displayHasDraw && (
                 <div className="mt-4 border-t border-white/5 pt-3 space-y-1.5 text-xs text-zinc-400 font-mono">
                   <div className="flex justify-between">
                     <span>{dict.etLabel}:</span>
-                    <span className="font-bold text-white">{pred.homeET ?? 0} - {pred.awayET ?? 0}</span>
+                    <span className="font-bold text-white">
+                      {displayHomeET ?? 0} - {displayAwayET ?? 0}
+                    </span>
                   </div>
-                  {pred.homeET === pred.awayET && (
+                  {displayHasEtDraw && (
                     <div className="flex justify-between">
                       <span>{dict.penLabel}:</span>
-                      <span className="font-bold text-amber-400">{pred.homePen ?? 0} - {pred.awayPen ?? 0}</span>
+                      <span className="font-bold text-amber-400">
+                        {displayHomePen ?? 0} - {displayAwayPen ?? 0}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -600,7 +627,7 @@ export default function BracketPage() {
                         key={i}
                         d={`M 0 ${y1} C 30 ${y1}, 30 ${y2}, 60 ${y2}`}
                         fill="none"
-                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.06)"}
+                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.18)"}
                         strokeWidth={isWinner ? "2.5" : "1.5"}
                         className={isWinner ? "drop-shadow-[0_0_4px_rgba(16,185,129,0.3)]" : ""}
                       />
@@ -632,7 +659,7 @@ export default function BracketPage() {
                         key={i}
                         d={`M 0 ${y1} C 30 ${y1}, 30 ${y2}, 60 ${y2}`}
                         fill="none"
-                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.06)"}
+                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.18)"}
                         strokeWidth={isWinner ? "2.5" : "1.5"}
                         className={isWinner ? "drop-shadow-[0_0_4px_rgba(16,185,129,0.3)]" : ""}
                       />
@@ -664,7 +691,7 @@ export default function BracketPage() {
                         key={i}
                         d={`M 0 ${y1} C 30 ${y1}, 30 ${y2}, 60 ${y2}`}
                         fill="none"
-                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.06)"}
+                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.18)"}
                         strokeWidth={isWinner ? "2.5" : "1.5"}
                         className={isWinner ? "drop-shadow-[0_0_4px_rgba(16,185,129,0.3)]" : ""}
                       />
@@ -696,7 +723,7 @@ export default function BracketPage() {
                         key={i}
                         d={`M 0 ${y1} C 30 ${y1}, 30 ${y2}, 60 ${y2}`}
                         fill="none"
-                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.06)"}
+                        stroke={isWinner ? "#10b981" : "rgba(255,255,255,0.18)"}
                         strokeWidth={isWinner ? "2.5" : "1.5"}
                         className={isWinner ? "drop-shadow-[0_0_4px_rgba(16,185,129,0.3)]" : ""}
                       />

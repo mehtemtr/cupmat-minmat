@@ -14,10 +14,10 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   winnerId: string;
   played: boolean;
 }> = {
-  "r32-1": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 3, awayPen: 4, winnerId: "par", played: true }, // Germany vs Paraguay
-  "r32-2": { homeScore: 3, awayScore: 0, winnerId: "fra", played: true }, // France vs Sweden
-  "r32-3": { homeScore: 0, awayScore: 1, winnerId: "can", played: true }, // South Africa vs Canada
-  "r32-4": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 2, awayPen: 3, winnerId: "mar", played: true }, // Netherlands vs Morocco
+  "r32-1": { homeScore: 0, awayScore: 1, winnerId: "can", played: true }, // South Africa vs Canada
+  "r32-2": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 2, awayPen: 3, winnerId: "mar", played: true }, // Netherlands vs Morocco
+  "r32-3": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 3, awayPen: 4, winnerId: "par", played: true }, // Germany vs Paraguay
+  "r32-4": { homeScore: 3, awayScore: 0, winnerId: "fra", played: true }, // France vs Sweden
   "r32-5": { homeScore: 2, awayScore: 1, winnerId: "por", played: true }, // Portugal vs Croatia
   "r32-6": { homeScore: 3, awayScore: 0, winnerId: "esp", played: true }, // Spain vs Austria
   "r32-7": { homeScore: 2, awayScore: 0, winnerId: "usa", played: true }, // USA vs Bosnia-Herzegovina
@@ -42,10 +42,10 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
 export const R32_DEFS = [
-  { id: "r32-1", slot: "R32-1", name: "Maç 74", homeSym: "E1", awayOpts: ["A", "B", "C", "D", "F"] as GroupId[], date: "2026-06-29", time: "23:30", stadium: "Boston Stadı" },
-  { id: "r32-2", slot: "R32-2", name: "Maç 77", homeSym: "I1", awayOpts: ["C", "D", "F", "G", "H"] as GroupId[], date: "2026-07-01", time: "00:00", stadium: "New York New Jersey Stadyumu" },
-  { id: "r32-3", slot: "R32-3", name: "Maç 73", homeSym: "A2", awaySym: "B2", date: "2026-06-28", time: "22:00", stadium: "Los Angeles Stadı" },
-  { id: "r32-4", slot: "R32-4", name: "Maç 75", homeSym: "F1", awaySym: "C2", date: "2026-06-30", time: "04:00", stadium: "Monterrey Stadı" },
+  { id: "r32-1", slot: "R32-1", name: "Maç 73", homeSym: "A2", awaySym: "B2", date: "2026-06-28", time: "22:00", stadium: "Los Angeles Stadı" },
+  { id: "r32-2", slot: "R32-2", name: "Maç 75", homeSym: "F1", awaySym: "C2", date: "2026-06-30", time: "04:00", stadium: "Monterrey Stadı" },
+  { id: "r32-3", slot: "R32-3", name: "Maç 74", homeSym: "E1", awayOpts: ["A", "B", "C", "D", "F"] as GroupId[], date: "2026-06-29", time: "23:30", stadium: "Boston Stadı" },
+  { id: "r32-4", slot: "R32-4", name: "Maç 77", homeSym: "I1", awayOpts: ["C", "D", "F", "G", "H"] as GroupId[], date: "2026-07-01", time: "00:00", stadium: "New York New Jersey Stadyumu" },
   { id: "r32-5", slot: "R32-5", name: "Maç 83", homeSym: "K2", awaySym: "L2", date: "2026-07-03", time: "02:00", stadium: "Toronto Stadı" },
   { id: "r32-6", slot: "R32-6", name: "Maç 84", homeSym: "H1", awaySym: "J2", date: "2026-07-02", time: "22:00", stadium: "Los Angeles Stadı" },
   { id: "r32-7", slot: "R32-7", name: "Maç 81", homeSym: "D1", awayOpts: ["B", "E", "F", "I", "J"] as GroupId[], date: "2026-07-02", time: "03:00", stadium: "San Francisco Bay Area Stadı" },
@@ -182,8 +182,8 @@ function buildR32Matches(
 
   // Pre-defined mapping for the default combo (Annex C 2026 Regulations)
   const defaultComboMap: Record<string, GroupId> = {
-    "r32-1": "D",  // Home E1 (Germany) vs D3 (Paraguay)
-    "r32-2": "F",  // Home I1 (France) vs F3 (Sweden)
+    "r32-3": "D",  // Home E1 (Germany) vs D3 (Paraguay)
+    "r32-4": "F",  // Home I1 (France) vs F3 (Sweden)
     "r32-7": "B",  // Home D1 (USA) vs B3 (Bosnia-Herzegovina)
     "r32-8": "I",  // Home G1 (Belgium) vs I3 (Senegal)
     "r32-11": "E", // Home A1 (Mexico) vs E3 (Ecuador)
@@ -208,8 +208,8 @@ function buildR32Matches(
     } else if (def.awayOpts) {
       // Force user's specific Round of 32 pairings when predictions are empty or live scores are active
       const forceAwayMap: Record<string, string> = {
-        "r32-1": "par",
-        "r32-2": "swe",
+        "r32-3": "par",
+        "r32-4": "swe",
         "r32-7": "bih",
         "r32-8": "sen",
         "r32-11": "ecu",
