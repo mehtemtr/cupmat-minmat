@@ -91,6 +91,7 @@ export async function GET() {
         "mex_eng": { homeScore: 2, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
         "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" }, // Finished match
         "sui_col": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, played: true, isLive: false, status: "FINISHED" },
+        "fra_mar": { homeScore: 2, awayScore: 0, played: false, isLive: true, status: "IN_PLAY" },
       };
 
       const key1 = `${homeTeamId}_${awayTeamId}`;

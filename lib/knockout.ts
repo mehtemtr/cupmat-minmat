@@ -30,14 +30,14 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r32-14": { homeScore: 1, awayScore: 0, winnerId: "col", played: true }, // Colombia vs Ghana
   "r32-15": { homeScore: 2, awayScore: 2, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "arg", played: true }, // Argentina vs Cape Verde
   "r32-16": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 3, awayPen: 4, winnerId: "egy", played: true }, // Australia vs Egypt
-  "r16-1": { homeScore: 0, awayScore: 3, winnerId: "mar", played: true }, // Canada vs Morocco
-  "r16-2": { homeScore: 0, awayScore: 1, winnerId: "fra", played: true }, // Paraguay vs France
+  "r16-1": { homeScore: 0, awayScore: 1, winnerId: "fra", played: true }, // Paraguay vs France
+  "r16-2": { homeScore: 0, awayScore: 3, winnerId: "mar", played: true }, // Canada vs Morocco
   "r16-3": { homeScore: 0, awayScore: 1, winnerId: "esp", played: true }, // Portugal vs Spain
   "r16-4": { homeScore: 1, awayScore: 4, winnerId: "bel", played: true }, // USA vs Belgium
   "r16-5": { homeScore: 1, awayScore: 2, winnerId: "nor", played: true }, // Brazil vs Norway
   "r16-6": { homeScore: 2, awayScore: 3, winnerId: "eng", played: true }, // Mexico vs England
-  "r16-7": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "sui", played: true }, // Switzerland vs Colombia
-  "r16-8": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
+  "r16-7": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
+  "r16-8": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "sui", played: true }, // Switzerland vs Colombia
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
@@ -61,14 +61,14 @@ export const R32_DEFS = [
 ];
 
 export const R16_DEFS = [
-  { id: "r16-1", slot: "R16-1", name: "Maç 89", date: "2026-07-05", time: "00:00", stadium: "Philadelphia Stadı" },
-  { id: "r16-2", slot: "R16-2", name: "Maç 90", date: "2026-07-04", time: "20:00", stadium: "Houston Stadı" },
+  { id: "r16-1", slot: "R16-1", name: "Maç 90", date: "2026-07-04", time: "20:00", stadium: "Houston Stadı" },
+  { id: "r16-2", slot: "R16-2", name: "Maç 89", date: "2026-07-05", time: "00:00", stadium: "Philadelphia Stadı" },
   { id: "r16-3", slot: "R16-3", name: "Maç 93", date: "2026-07-06", time: "22:00", stadium: "Dallas Stadı" },
   { id: "r16-4", slot: "R16-4", name: "Maç 94", date: "2026-07-07", time: "03:00", stadium: "Seattle Stadı" },
   { id: "r16-5", slot: "R16-5", name: "Maç 91", date: "2026-07-05", time: "23:00", stadium: "New York New Jersey Stadı" },
   { id: "r16-6", slot: "R16-6", name: "Maç 92", date: "2026-07-06", time: "03:00", stadium: "Mexico City Stadı" },
-  { id: "r16-7", slot: "R16-7", name: "Maç 96", date: "2026-07-07", time: "23:00", stadium: "BC Place Vancouver Stadı" },
-  { id: "r16-8", slot: "R16-8", name: "Maç 95", date: "2026-07-07", time: "19:00", stadium: "Atlanta Stadı" }
+  { id: "r16-7", slot: "R16-7", name: "Maç 95", date: "2026-07-07", time: "19:00", stadium: "Atlanta Stadı" },
+  { id: "r16-8", slot: "R16-8", name: "Maç 96", date: "2026-07-07", time: "23:00", stadium: "BC Place Vancouver Stadı" }
 ];
 
 export const QF_DEFS = [
