@@ -6,35 +6,40 @@ export const revalidate = 300;
 
 export async function GET() {
   const token = process.env.FOOTBALL_DATA_TOKEN || "";
+  const freshFixtures = generateGroupFixtures();
   
-  if (!token) {
-    console.warn("[Live-Scores-API] FOOTBALL_DATA_TOKEN is not defined.");
-    return NextResponse.json({ success: false, error: "Token not configured" }, { status: 500 });
+  let apiMatches: any[] = [];
+  
+  if (token) {
+    try {
+      const url = "https://api.football-data.org/v4/competitions/WC/matches";
+      console.log("[Live-Scores-API] Querying Football-Data.org World Cup matches...");
+      
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          "X-Auth-Token": token,
+        },
+        next: { revalidate: 300 }, // Enable Next.js caching for 5 minutes
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        apiMatches = data.matches || [];
+      } else {
+        console.warn(`Football-Data API returned non-OK status: ${res.status}`);
+      }
+    } catch (error: any) {
+      console.error("[Live-Scores-API] Failed to fetch from Football-Data API:", error);
+    }
+  } else {
+    console.warn("[Live-Scores-API] FOOTBALL_DATA_TOKEN is not defined. Using local overrides only.");
   }
 
   try {
-    const url = "https://api.football-data.org/v4/competitions/WC/matches";
-    console.log("[Live-Scores-API] Querying Football-Data.org World Cup matches...");
-    
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        "X-Auth-Token": token,
-      },
-      next: { revalidate: 300 }, // Enable Next.js caching for 5 minutes
-    });
-
-    if (!res.ok) {
-      throw new Error(`Football-Data API error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-    const apiMatches = data.matches || [];
-    const freshFixtures = generateGroupFixtures();
-
     const mappedMatches = apiMatches.map((m: any) => {
-      const apiHomeTla = (m.homeTeam.tla || "").toLowerCase().trim();
-      const apiAwayTla = (m.awayTeam.tla || "").toLowerCase().trim();
+      const apiHomeTla = (m.homeTeam?.tla || "").toLowerCase().trim();
+      const apiAwayTla = (m.awayTeam?.tla || "").toLowerCase().trim();
 
       // Normalize Football-Data.org API TLA (hai, ury) to local tournament IDs (hti, uru)
       const homeTla = apiHomeTla === "hai" ? "hti" : (apiHomeTla === "ury" ? "uru" : apiHomeTla);
@@ -59,7 +64,7 @@ export async function GET() {
         isLive,
         status,
       };
-    }).filter(Boolean);
+    }).filter(Boolean) as any[];
 
     // Map all raw matches (group and knockout stage) for dynamic mapping on client side
     const rawMatches = apiMatches.map((m: any) => {
@@ -132,6 +137,20 @@ export async function GET() {
       };
     });
 
+    // Local overrides definition for the fallback insertion
+    const overrides: Record<string, { homeScore: number; awayScore: number; played: boolean; isLive: boolean; status: string; homeET?: number | null; awayET?: number | null; homePen?: number | null; awayPen?: number | null }> = {
+      "por_cro": { homeScore: 2, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+      "can_mar": { homeScore: 0, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
+      "par_fra": { homeScore: 0, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+      "por_esp": { homeScore: 0, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+      "usa_bel": { homeScore: 1, awayScore: 4, played: true, isLive: false, status: "FINISHED" },
+      "bra_nor": { homeScore: 1, awayScore: 2, played: true, isLive: false, status: "FINISHED" },
+      "mex_eng": { homeScore: 2, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
+      "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" },
+      "sui_col": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, played: true, isLive: false, status: "FINISHED" },
+      "fra_mar": { homeScore: 2, awayScore: 0, played: false, isLive: true, status: "IN_PLAY" },
+    };
+
     // Ensure all local overrides are included in rawMatches (even if they are not returned by the API)
     Object.entries(overrides).forEach(([key, override]) => {
       const [t1, t2] = key.split("_");
@@ -160,6 +179,28 @@ export async function GET() {
       }
     });
 
+    // Ensure group overrides are also merged into mappedMatches if they exist in freshFixtures
+    Object.entries(overrides).forEach(([key, override]) => {
+      const [t1, t2] = key.split("_");
+      const localMatch = freshFixtures.find(
+        (f) => (f.homeTeamId === t1 && f.awayTeamId === t2) || (f.homeTeamId === t2 && f.awayTeamId === t1)
+      );
+      if (localMatch) {
+        const exists = mappedMatches.some((mm: any) => mm.id === localMatch.id);
+        if (!exists) {
+          const isSwapped = localMatch.homeTeamId === t2;
+          mappedMatches.push({
+            id: localMatch.id,
+            homeScore: isSwapped ? override.awayScore : override.homeScore,
+            awayScore: isSwapped ? override.homeScore : override.awayScore,
+            played: override.played,
+            isLive: override.isLive,
+            status: override.status,
+          });
+        }
+      }
+    });
+
     console.log(`[Live-Scores-API] Successfully mapped ${mappedMatches.length} group matches and ${rawMatches.length} raw matches (including overrides).`);
 
     return NextResponse.json({
@@ -168,9 +209,9 @@ export async function GET() {
       rawMatches: rawMatches,
     });
   } catch (error: any) {
-    console.error("[Live-Scores-API] Failed to fetch live scores:", error);
+    console.error("[Live-Scores-API] Failed to process live scores:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch scores", details: error.message || String(error) },
+      { success: false, error: "Failed to process scores", details: error.message || String(error) },
       { status: 500 }
     );
   }
