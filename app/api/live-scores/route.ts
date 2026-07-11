@@ -74,7 +74,7 @@ export async function GET() {
       const homeTeamId = apiHomeTla === "hai" ? "hti" : (apiHomeTla === "ury" ? "uru" : apiHomeTla);
       const awayTeamId = apiAwayTla === "hai" ? "hti" : (apiAwayTla === "ury" ? "uru" : apiAwayTla);
 
-      const status = m.status;
+      let status = m.status;
       let played = status === "FINISHED";
       let isLive = ["IN_PLAY", "PAUSED"].includes(status);
 
@@ -97,6 +97,7 @@ export async function GET() {
         "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" }, // Finished match
         "sui_col": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, played: true, isLive: false, status: "FINISHED" },
         "fra_mar": { homeScore: 2, awayScore: 0, played: false, isLive: true, status: "IN_PLAY" },
+        "esp_bel": { homeScore: 2, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
       };
 
       const key1 = `${homeTeamId}_${awayTeamId}`;
@@ -149,6 +150,7 @@ export async function GET() {
       "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" },
       "sui_col": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, played: true, isLive: false, status: "FINISHED" },
       "fra_mar": { homeScore: 2, awayScore: 0, played: false, isLive: true, status: "IN_PLAY" },
+      "esp_bel": { homeScore: 2, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
     };
 
     // Ensure all local overrides are included in rawMatches (even if they are not returned by the API)

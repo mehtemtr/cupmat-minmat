@@ -148,7 +148,7 @@ export async function runPlayerStatsSync() {
         player = teamPlayers.find((p: any) => {
           const dbTokens = p.player_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/).filter(Boolean);
           const excelTokens = row.player_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/\s+/).filter(Boolean);
-          return excelTokens.every(tok => dbTokens.some(dbTok => dbTok.includes(tok) || tok.includes(dbTok)));
+          return excelTokens.every((tok: string) => dbTokens.some((dbTok: string) => dbTok.includes(tok) || tok.includes(dbTok)));
         });
       }
 

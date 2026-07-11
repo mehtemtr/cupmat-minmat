@@ -38,6 +38,7 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r16-6": { homeScore: 2, awayScore: 3, winnerId: "eng", played: true }, // Mexico vs England
   "r16-7": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
   "r16-8": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "sui", played: true }, // Switzerland vs Colombia
+  "qf-2": { homeScore: 2, awayScore: 1, winnerId: "esp", played: true }, // Spain vs Belgium
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
@@ -392,7 +393,7 @@ function buildNextRound(
         awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
 
         // Subtract penalty goals from the fullTime score if they are included in it
-        if (homePen !== null && awayPen !== null && homeScore !== null && awayScore !== null) {
+        if (typeof homePen === "number" && typeof awayPen === "number" && homeScore !== null && awayScore !== null) {
           homeScore = homeScore - homePen;
           awayScore = awayScore - awayPen;
         }
