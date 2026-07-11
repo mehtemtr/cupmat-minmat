@@ -2,6 +2,7 @@
   "id": "com.statmatik.app",
   "name": "StatMatik",
   "short_name": "StatMatik",
+  "description": "StatMatik - CupMat & MinMat Entegrasyonlu Matematik, Zeka ve Rekabet Platformu",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
