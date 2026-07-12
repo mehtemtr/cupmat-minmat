@@ -109,11 +109,16 @@ function KnockoutMatchCard({
 
   return (
     <div className="relative rounded-xl border border-white/5 bg-black/40 p-4 pt-8 transition-all hover:border-emerald-500/30">
-      <div className="absolute left-3 top-2 flex items-center gap-2">
-        <span className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-zinc-500">
-          <Calendar className="h-2.5 w-2.5" />
-          {match.date}
-        </span>
+      <div className="absolute left-3 right-3 top-2 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-emerald-400 font-bold">
+            {match.slot === "ThirdPlace-1" ? (locale === "tr" ? "Üçüncülük" : "3rd Place") : (match.slot === "Final-1" ? (locale === "tr" ? "Final" : "Final") : match.slot)}
+          </span>
+          <span className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-zinc-500">
+            <Calendar className="h-2.5 w-2.5" />
+            {match.date} {match.time ? `• ${match.time}` : ""}
+          </span>
+        </div>
         {pred?.source === "ai" && (
           <span className="rounded bg-violet-500/20 px-1.5 py-0.5 text-[8px] font-bold text-violet-300">YZ</span>
         )}

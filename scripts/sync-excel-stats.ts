@@ -20,7 +20,73 @@ const normalizeName = (name: string): string => {
 };
 
 // Parse match result from match string (e.g. "Güney Kore - Çekya 2 - 1")
+// Parse match result from match string (e.g. "Güney Kore - Çekya 2 - 1")
 function parseMatchResult(matchName: string, teamName: string): { team_result: "win" | "draw" | "loss"; goal_difference: number; goals_conceded: number } {
+  // Normalize match name and team name for lookup
+  const cleanMatchKey = matchName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+  const cleanTeamKey = teamName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+
+  // Hardcoded outcomes for matches that don't have scores in their match names
+  const knockoutOutcomes: Record<string, Record<string, { team_result: "win" | "draw" | "loss"; goal_difference: number; goals_conceded: number }>> = {
+    "kanadafas": {
+      "kanada": { team_result: "loss", goal_difference: -3, goals_conceded: 3 },
+      "fas": { team_result: "win", goal_difference: 3, goals_conceded: 0 }
+    },
+    "paraguayfransa": {
+      "paraguay": { team_result: "loss", goal_difference: -1, goals_conceded: 1 },
+      "fransa": { team_result: "win", goal_difference: 1, goals_conceded: 0 }
+    },
+    "brezilyanorvec": {
+      "brezilya": { team_result: "loss", goal_difference: -1, goals_conceded: 2 },
+      "norvec": { team_result: "win", goal_difference: 1, goals_conceded: 1 }
+    },
+    "meksikaingiltere": {
+      "meksika": { team_result: "loss", goal_difference: -1, goals_conceded: 3 },
+      "ingiltere": { team_result: "win", goal_difference: 1, goals_conceded: 2 }
+    },
+    "portekizispanya": {
+      "portekiz": { team_result: "loss", goal_difference: -1, goals_conceded: 1 },
+      "ispanya": { team_result: "win", goal_difference: 1, goals_conceded: 0 }
+    },
+    "abdbelcika": {
+      "abd": { team_result: "loss", goal_difference: -3, goals_conceded: 4 },
+      "belcika": { team_result: "win", goal_difference: 3, goals_conceded: 1 }
+    },
+    "arjantinmisir": {
+      "arjantin": { team_result: "win", goal_difference: 1, goals_conceded: 2 },
+      "misir": { team_result: "loss", goal_difference: -1, goals_conceded: 3 }
+    },
+    "isvicrekolombiya": {
+      "isvicre": { team_result: "draw", goal_difference: 0, goals_conceded: 0 },
+      "kolombiya": { team_result: "draw", goal_difference: 0, goals_conceded: 0 }
+    },
+    "fransafas": {
+      "fransa": { team_result: "win", goal_difference: 2, goals_conceded: 0 },
+      "fas": { team_result: "loss", goal_difference: -2, goals_conceded: 2 }
+    },
+    "ispanyabelcika": {
+      "ispanya": { team_result: "win", goal_difference: 1, goals_conceded: 1 },
+      "belcika": { team_result: "loss", goal_difference: -1, goals_conceded: 2 }
+    },
+    "norvecingiltere": {
+      "norvec": { team_result: "loss", goal_difference: -1, goals_conceded: 2 },
+      "ingiltere": { team_result: "win", goal_difference: 1, goals_conceded: 1 }
+    },
+    "arjantinisvicre": {
+      "arjantin": { team_result: "win", goal_difference: 2, goals_conceded: 1 },
+      "isvicre": { team_result: "loss", goal_difference: -2, goals_conceded: 3 }
+    }
+  };
+
+  if (knockoutOutcomes[cleanMatchKey]) {
+    // Find matching team key
+    for (const key of Object.keys(knockoutOutcomes[cleanMatchKey])) {
+      if (cleanTeamKey.includes(key) || key.includes(cleanTeamKey)) {
+        return knockoutOutcomes[cleanMatchKey][key];
+      }
+    }
+  }
+
   const regex = /^(.*?)\s*-\s*(.*?)\s+(\d+)\s*-\s*(\d+)$/;
   const match = matchName.trim().match(regex);
   if (!match) {

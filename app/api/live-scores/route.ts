@@ -96,8 +96,10 @@ export async function GET() {
         "mex_eng": { homeScore: 2, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
         "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" }, // Finished match
         "sui_col": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, played: true, isLive: false, status: "FINISHED" },
-        "fra_mar": { homeScore: 2, awayScore: 0, played: false, isLive: true, status: "IN_PLAY" },
+        "fra_mar": { homeScore: 2, awayScore: 0, played: true, isLive: false, status: "FINISHED" },
         "esp_bel": { homeScore: 2, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+        "nor_eng": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 1, played: true, isLive: false, status: "FINISHED" },
+        "sui_arg": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 2, played: true, isLive: false, status: "FINISHED" },
       };
 
       const key1 = `${homeTeamId}_${awayTeamId}`;
@@ -149,8 +151,10 @@ export async function GET() {
       "mex_eng": { homeScore: 2, awayScore: 3, played: true, isLive: false, status: "FINISHED" },
       "arg_egy": { homeScore: 3, awayScore: 2, played: true, isLive: false, status: "FINISHED" },
       "sui_col": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, played: true, isLive: false, status: "FINISHED" },
-      "fra_mar": { homeScore: 2, awayScore: 0, played: false, isLive: true, status: "IN_PLAY" },
+      "fra_mar": { homeScore: 2, awayScore: 0, played: true, isLive: false, status: "FINISHED" },
       "esp_bel": { homeScore: 2, awayScore: 1, played: true, isLive: false, status: "FINISHED" },
+      "nor_eng": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 1, played: true, isLive: false, status: "FINISHED" },
+      "sui_arg": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 2, played: true, isLive: false, status: "FINISHED" },
     };
 
     // Ensure all local overrides are included in rawMatches (even if they are not returned by the API)

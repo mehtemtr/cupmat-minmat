@@ -317,7 +317,8 @@ export default function BracketPage() {
   const r16Matches = knockoutBracket.filter(m => m.round === "r16");
   const qfMatches = knockoutBracket.filter(m => m.round === "qf");
   const sfMatches = knockoutBracket.filter(m => m.round === "sf");
-  const finalMatch = knockoutBracket.find(m => m.round === "final") || null;
+  const finalMatch = knockoutBracket.find(m => m.id === "final-1") || null;
+  const thirdPlaceMatch = knockoutBracket.find(m => m.id === "third-place") || null;
 
   // Render match card in tree view
   const renderTreeCard = (match: KnockoutMatch) => {
@@ -350,7 +351,7 @@ export default function BracketPage() {
         }`}
       >
         <div className="flex items-center justify-between text-[9px] uppercase tracking-wider text-zinc-500 mb-2 font-mono">
-          <span>{match.slot} {match.time ? `• ${match.time}` : ""}</span>
+          <span>{match.slot === "ThirdPlace-1" ? (locale === "tr" ? "Üçüncülük" : "3rd Place") : (match.slot === "Final-1" ? (locale === "tr" ? "Final" : "Final") : match.slot)} {match.time ? `• ${match.time}` : ""}</span>
           <span className="flex items-center gap-1">
             <Calendar className="h-2.5 w-2.5" />
             {match.date || "TBD"}
@@ -750,7 +751,7 @@ export default function BracketPage() {
           {activeTab === "r16" && renderFocusedList(r16Matches)}
           {activeTab === "qf" && renderFocusedList(qfMatches)}
           {activeTab === "sf" && renderFocusedList(sfMatches)}
-          {activeTab === "final" && finalMatch && renderFocusedList([finalMatch])}
+          {activeTab === "final" && renderFocusedList([thirdPlaceMatch, finalMatch].filter(Boolean) as KnockoutMatch[])}
         </div>
       )}
 

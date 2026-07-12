@@ -52,6 +52,10 @@ def main():
 
         df = pd.read_excel(file_path, sheet_name=sheet)
         
+        if len(df.columns) == 0 or len(df) == 0:
+            print(f"  Skipping empty sheet '{sheet}'")
+            continue
+
         # Check layout shift:
         # If the first column (index 0) is "Kaleciler için" or "Diğerleri için", then offset is 1, else 0.
         first_col = str(df.columns[0]).strip().lower()
@@ -68,7 +72,7 @@ def main():
         # The headers are already columns of df, but row 0 contains subheadings
         rows_to_parse = df.iloc[1:]
 
-        players_list = []
+
 
         for idx, row in rows_to_parse.iterrows():
             row_len = len(row)
@@ -165,9 +169,13 @@ def main():
                     "own_goals": own_goals
                 })
 
-            players_list.append(player_stat)
-        
-        parsed_data[stage] = players_list
+            row_stage = stage
+            match_name_clean = match_name.lower().replace(" ", "").replace("–", "-").replace("ı", "i").replace("ş", "s").replace("ç", "c").replace("ğ", "g").replace("ö", "o").replace("ü", "u").replace("\u0307", "")
+            qf_matches = ["fransa-fas", "ispanya-belcika", "norvec-ingiltere", "arjantin-isvicre"]
+            if stage == "round_of_16" and any(qm in match_name_clean for qm in qf_matches):
+                row_stage = "quarter_finals"
+                
+            parsed_data.setdefault(row_stage, []).append(player_stat)
 
     os.makedirs("scratch", exist_ok=True)
     out_path = "scratch/parsed_excel_stats.json"

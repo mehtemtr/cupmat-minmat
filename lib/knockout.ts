@@ -30,15 +30,18 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "r32-14": { homeScore: 1, awayScore: 0, winnerId: "col", played: true }, // Colombia vs Ghana
   "r32-15": { homeScore: 2, awayScore: 2, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "arg", played: true }, // Argentina vs Cape Verde
   "r32-16": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 0, homePen: 3, awayPen: 4, winnerId: "egy", played: true }, // Australia vs Egypt
-  "r16-1": { homeScore: 0, awayScore: 1, winnerId: "fra", played: true }, // Paraguay vs France
-  "r16-2": { homeScore: 0, awayScore: 3, winnerId: "mar", played: true }, // Canada vs Morocco
+  "r16-1": { homeScore: 0, awayScore: 3, winnerId: "mar", played: true }, // Canada vs Morocco
+  "r16-2": { homeScore: 0, awayScore: 1, winnerId: "fra", played: true }, // Paraguay vs France
   "r16-3": { homeScore: 0, awayScore: 1, winnerId: "esp", played: true }, // Portugal vs Spain
   "r16-4": { homeScore: 1, awayScore: 4, winnerId: "bel", played: true }, // USA vs Belgium
   "r16-5": { homeScore: 1, awayScore: 2, winnerId: "nor", played: true }, // Brazil vs Norway
   "r16-6": { homeScore: 2, awayScore: 3, winnerId: "eng", played: true }, // Mexico vs England
-  "r16-7": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
-  "r16-8": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "sui", played: true }, // Switzerland vs Colombia
+  "r16-7": { homeScore: 0, awayScore: 0, homeET: 0, awayET: 0, homePen: 4, awayPen: 3, winnerId: "sui", played: true }, // Switzerland vs Colombia
+  "r16-8": { homeScore: 3, awayScore: 2, winnerId: "arg", played: true }, // Argentina vs Egypt
+  "qf-1": { homeScore: 0, awayScore: 2, winnerId: "fra", played: true }, // Morocco vs France
   "qf-2": { homeScore: 2, awayScore: 1, winnerId: "esp", played: true }, // Spain vs Belgium
+  "qf-3": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 1, winnerId: "eng", played: true }, // Norway vs England
+  "qf-4": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 2, winnerId: "arg", played: true }, // Switzerland vs Argentina
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds
@@ -88,11 +91,21 @@ export const FINAL_DEFS = [
   { id: "final-1", slot: "Final-1", name: "Maç 104", date: "2026-07-19", time: "22:00", stadium: "New York New Jersey Stadı" }
 ];
 
+export const THIRD_PLACE_DEF = {
+  id: "third-place",
+  slot: "ThirdPlace-1",
+  name: "Maç 103",
+  date: "2026-07-19",
+  time: "00:00",
+  stadium: "Miami Stadı"
+};
+
 export const KNOCKOUT_DEFS = [
   ...R32_DEFS,
   ...R16_DEFS,
   ...QF_DEFS,
   ...SF_DEFS,
+  THIRD_PLACE_DEF,
   ...FINAL_DEFS
 ];
 
@@ -118,9 +131,10 @@ export function buildFullKnockoutBracket(
   const r16Matches = buildNextRound(r32Matches, predictions, "r16", 8, liveRawMatches);
   const qfMatches = buildNextRound(r16Matches, predictions, "qf", 4, liveRawMatches);
   const sfMatches = buildNextRound(qfMatches, predictions, "sf", 2, liveRawMatches);
+  const thirdPlaceMatch = buildThirdPlaceMatch(sfMatches, predictions, liveRawMatches);
   const finalMatch = buildNextRound(sfMatches, predictions, "final", 1, liveRawMatches);
 
-  return [...r32Matches, ...r16Matches, ...qfMatches, ...sfMatches, ...finalMatch];
+  return [...r32Matches, ...r16Matches, ...qfMatches, ...sfMatches, thirdPlaceMatch, ...finalMatch];
 }
 
 function buildR32Matches(
@@ -475,6 +489,130 @@ function getWinner(
   return homeId; 
 }
 
+function getLoserId(match: KnockoutMatch): string | null {
+  if (!match.homeTeamId || !match.awayTeamId || !match.winnerId) return null;
+  return match.winnerId === match.homeTeamId ? match.awayTeamId : match.homeTeamId;
+}
+
+function getLoserFromPrediction(
+  match: KnockoutMatch,
+  predictions: Record<string, any>
+): string | null {
+  if (!match.homeTeamId || !match.awayTeamId) return null;
+  const p = predictions[match.id];
+  if (!p) return null;
+  const winner = getWinner(match.id, match.homeTeamId, match.awayTeamId, predictions);
+  if (!winner) return null;
+  return winner === match.homeTeamId ? match.awayTeamId : match.homeTeamId;
+}
+
+function buildThirdPlaceMatch(
+  sfMatches: KnockoutMatch[],
+  predictions: Record<string, any>,
+  liveRawMatches?: any[]
+): KnockoutMatch {
+  const sf1 = sfMatches[0];
+  const sf2 = sfMatches[1];
+  
+  const homeTeamId = sf1 
+    ? (sf1.played ? getLoserId(sf1) : (getLoserFromPrediction(sf1, predictions) || getLoserId(sf1))) 
+    : null;
+  const awayTeamId = sf2 
+    ? (sf2.played ? getLoserId(sf2) : (getLoserFromPrediction(sf2, predictions) || getLoserId(sf2))) 
+    : null;
+
+  const def = THIRD_PLACE_DEF;
+  const matchId = "third-place";
+  const p = predictions[matchId];
+
+  let homeScore: number | null = p?.home ?? null;
+  let awayScore: number | null = p?.away ?? null;
+  let homeET: number | null = p?.homeET ?? null;
+  let awayET: number | null = p?.awayET ?? null;
+  let homePen: number | null = p?.homePen ?? null;
+  let awayPen: number | null = p?.awayPen ?? null;
+  let played = false;
+  let isLive = false;
+  let winnerId: string | null = null;
+
+  const staticRes = KNOCKOUT_STATIC_RESULTS[matchId];
+  if (staticRes && homeTeamId && awayTeamId) {
+    homeScore = staticRes.homeScore;
+    awayScore = staticRes.awayScore;
+    homeET = staticRes.homeET ?? null;
+    awayET = staticRes.awayET ?? null;
+    homePen = staticRes.homePen ?? null;
+    awayPen = staticRes.awayPen ?? null;
+    played = staticRes.played;
+    winnerId = staticRes.winnerId;
+  } else if (liveRawMatches && homeTeamId && awayTeamId) {
+    const realMatch = liveRawMatches.find(rm => 
+      (rm.homeTeamId === homeTeamId && rm.awayTeamId === awayTeamId) ||
+      (rm.homeTeamId === awayTeamId && rm.awayTeamId === homeTeamId)
+    );
+    if (realMatch) {
+      const isSwapped = realMatch.homeTeamId === awayTeamId;
+      homeScore = isSwapped ? realMatch.awayScore : realMatch.homeScore;
+      awayScore = isSwapped ? realMatch.homeScore : realMatch.awayScore;
+      played = realMatch.played;
+      isLive = realMatch.isLive;
+      homeET = isSwapped ? realMatch.awayET : realMatch.homeET;
+      awayET = isSwapped ? realMatch.homeET : realMatch.awayET;
+      homePen = isSwapped ? realMatch.awayPen : realMatch.homePen;
+      awayPen = isSwapped ? realMatch.homePen : realMatch.awayPen;
+
+      if (typeof homePen === "number" && typeof awayPen === "number" && homeScore !== null && awayScore !== null) {
+        homeScore = homeScore - homePen;
+        awayScore = awayScore - awayPen;
+      }
+
+      if (played && homeScore !== null && awayScore !== null) {
+        if (homeScore > awayScore) {
+          winnerId = homeTeamId;
+        } else if (awayScore > homeScore) {
+          winnerId = awayTeamId;
+        } else {
+          const hET = homeET ?? 0;
+          const aET = awayET ?? 0;
+          if (hET > aET) {
+            winnerId = homeTeamId;
+          } else if (aET > hET) {
+            winnerId = awayTeamId;
+          } else {
+            const hPen = homePen ?? 0;
+            const aPen = awayPen ?? 0;
+            if (hPen > aPen) {
+              winnerId = homeTeamId;
+            } else if (aPen > hPen) {
+              winnerId = awayTeamId;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return {
+    id: "third-place",
+    round: "final",
+    slot: def.slot,
+    homeTeamId,
+    awayTeamId,
+    homeScore,
+    awayScore,
+    homeET,
+    awayET,
+    homePen,
+    awayPen,
+    winnerId,
+    played,
+    isLive,
+    date: def.date,
+    time: def.time,
+    stadium: def.stadium,
+  };
+}
+
 export function buildRoundOf32(allMatches: MatchResult[]): KnockoutMatch[] {
   return buildFullKnockoutBracket(allMatches, {});
 }
@@ -544,6 +682,20 @@ function createPlaceholderBracket(): KnockoutMatch[] {
       time: def.time,
       stadium: def.stadium,
     });
+  });
+
+  matches.push({
+    id: THIRD_PLACE_DEF.id,
+    round: "final",
+    slot: THIRD_PLACE_DEF.slot,
+    homeTeamId: null,
+    awayTeamId: null,
+    homeScore: null,
+    awayScore: null,
+    winnerId: null,
+    date: THIRD_PLACE_DEF.date,
+    time: THIRD_PLACE_DEF.time,
+    stadium: THIRD_PLACE_DEF.stadium,
   });
 
   FINAL_DEFS.forEach((def) => {
