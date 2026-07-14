@@ -75,6 +75,10 @@ function parseMatchResult(matchName: string, teamName: string): { team_result: "
     "arjantinisvicre": {
       "arjantin": { team_result: "win", goal_difference: 2, goals_conceded: 1 },
       "isvicre": { team_result: "loss", goal_difference: -2, goals_conceded: 3 }
+    },
+    "fransaispanya": {
+      "fransa": { team_result: "loss", goal_difference: -2, goals_conceded: 2 },
+      "ispanya": { team_result: "win", goal_difference: 2, goals_conceded: 0 }
     }
   };
 
@@ -203,6 +207,7 @@ async function main() {
     const playersStats = parsedData[stage];
     const statsPayloadsBatch: any[] = [];
     const seenInStage = new Set<string>();
+    const managerStatsMap = new Map<string, { stage: string; result: "win" | "draw" | "loss"; goal_difference: number }>();
     
     for (const row of playersStats) {
       const normalizedTeamTr = normalizeName(row.team_name);
@@ -288,6 +293,14 @@ async function main() {
 
       // Parse match result outcome
       const outcome = parseMatchResult(row.match_name, row.team_name);
+
+      if (teamId) {
+        managerStatsMap.set(teamId, {
+          stage: stage,
+          result: outcome.team_result,
+          goal_difference: outcome.goal_difference
+        });
+      }
 
       // Determine clean sheet
       const cleanSheet = outcome.goals_conceded === 0;
@@ -414,6 +427,24 @@ async function main() {
         } else {
           totalUpdated += chunk.length;
         }
+      }
+    }
+
+    if (managerStatsMap.size > 0) {
+      const managerPayloads = Array.from(managerStatsMap.entries()).map(([mgrId, val]) => ({
+        manager_id: mgrId,
+        stage: val.stage,
+        result: val.result,
+        goal_difference: val.goal_difference
+      }));
+      console.log(`Bulk upserting ${managerPayloads.length} manager stats records into manager_stage_stats for stage ${stage}...`);
+      const { error: mgrErr } = await supabaseAdmin
+        .from("manager_stage_stats")
+        .upsert(managerPayloads, { onConflict: "manager_id,stage" });
+      if (mgrErr) {
+        console.error(`Error bulk upserting manager stats for stage ${stage}:`, mgrErr);
+      } else {
+        console.log(`Successfully upserted manager stats for stage ${stage}.`);
       }
     }
   }
