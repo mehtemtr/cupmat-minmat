@@ -79,6 +79,10 @@ function parseMatchResult(matchName: string, teamName: string): { team_result: "
     "fransaispanya": {
       "fransa": { team_result: "loss", goal_difference: -2, goals_conceded: 2 },
       "ispanya": { team_result: "win", goal_difference: 2, goals_conceded: 0 }
+    },
+    "ingilterearjantin": {
+      "ingiltere": { team_result: "loss", goal_difference: -1, goals_conceded: 2 },
+      "arjantin": { team_result: "win", goal_difference: 1, goals_conceded: 1 }
     }
   };
 
