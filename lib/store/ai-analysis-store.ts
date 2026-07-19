@@ -76,13 +76,35 @@ function generateConsistentAnalysis(
   a: number,
   locale: Locale,
   seed: number,
-  playedMatches: any[]
+  playedMatches: any[],
+  matchId?: string
 ): string | null {
-  // 2. BAĞIMSIZLIK VE KALİTE FİLTRESİ (QUALITY GUARD):
-  // Eğer maç hakkında kaliteli ve özgün bir yorum üretilemiyorsa (örn. seed % 6 === 0),
-  // boş veya null değeri dönülür. Şablon cümleler yazılmaz.
-  if (seed % 6 === 0) {
+  // Final maçı için her zaman yorum üretilsin!
+  if (matchId !== "final-1" && seed % 6 === 0) {
     return null;
+  }
+
+  if (matchId === "final-1") {
+    const activeLocale = (locale === "tr" || locale === "en") ? locale : "en";
+    if (h > a) {
+      if (activeLocale === "tr") {
+        return `Dev finalde devasa bir mücadele bizleri bekliyor. ${homeName}, güçlü kadro yapısı, taktiksel disiplini ve sahadaki yüksek odaklanmasıyla kupayı kazanmaya yakın taraf. Karşılaşma boyunca rakibine oyununu kabul ettirmeye çalışacak olan ${homeName}, final tecrübesiyle şampiyonluğa uzanacaktır.`;
+      } else {
+        return `An epic battle awaits us in the grand final. With their strong squad depth, tactical discipline, and immense focus on the pitch, ${homeName} is the side closer to winning the trophy. Striving to dictate the tempo of the game throughout the match, ${homeName} will lift the championship with their final experience.`;
+      }
+    } else if (a > h) {
+      if (activeLocale === "tr") {
+        return `Dev finalde devasa bir mücadele bizleri bekliyor. ${awayName}, güçlü kadro yapısı, taktiksel disiplini ve sahadaki yüksek odaklanmasıyla kupayı kazanmaya yakın taraf. Karşılaşma boyunca rakibine oyununu kabul ettirmeye çalışacak olan ${awayName}, final tecrübesiyle şampiyonluğa uzanacaktır.`;
+      } else {
+        return `An epic battle awaits us in the grand final. With their strong squad depth, tactical discipline, and immense focus on the pitch, ${awayName} is the side closer to winning the trophy. Striving to dictate the tempo of the game throughout the match, ${awayName} will lift the championship with their final experience.`;
+      }
+    } else {
+      if (activeLocale === "tr") {
+        return `Dünya Kupası'nın büyük finalinde futbolseverleri nefes kesen, taktiksel açıdan son derece dengeli bir mücadele bekliyor. İki dev ekibin de sahaya yansıtacağı yüksek konsantrasyon ve kontrollü oyun anlayışı nedeniyle normal sürenin başa baş bir beraberlikle tamamlanması ve şampiyonun uzatma dakikalarında veya penaltı atışlarında belirlenmesi oldukça olası görünüyor.`;
+      } else {
+        return `In the grand final of the World Cup, football fans can expect a breathtaking, tactically balanced contest. Due to the high concentration and cautious game plan implemented by both giant teams, the regular time is highly likely to end in a closely-fought draw, leading the championship to be decided in extra time or penalty shootouts.`;
+      }
+    }
   }
 
   const homeStats = getTeamStats(homeId, playedMatches);
@@ -258,7 +280,7 @@ export function getAiAnalysis(
 
   const consistentComment = isPastMatch 
     ? null 
-    : generateConsistentAnalysis(homeName, awayName, homeTeamId, awayTeamId, h, a, locale, seed, allFixtures.filter(f => f.played || f.homeScore !== null));
+    : generateConsistentAnalysis(homeName, awayName, homeTeamId, awayTeamId, h, a, locale, seed, allFixtures.filter(f => f.played || f.homeScore !== null), matchId);
 
   // Custom expert analyst system prompt simulation in the active locale
   let prefix = "";

@@ -849,6 +849,35 @@ export function generateAiCommentary(
   const awayNameTr = away?.nameTr || "Deplasman";
   const awayNameEn = away?.nameEn || "Away";
 
+  if (matchId === "final-1") {
+    const [h, a] = prediction.predictedScoreline.split("-").map(Number);
+    if (h > a) {
+      return {
+        tr: `Dev finalde devasa bir mücadele bizleri bekliyor. ${homeNameTr}, güçlü kadro yapısı, taktiksel disiplini ve sahadaki yüksek odaklanmasıyla kupayı kazanmaya yakın taraf. Karşılaşma boyunca rakibine oyununu kabul ettirmeye çalışacak olan ${homeNameTr}, final tecrübesiyle şampiyonluğa uzanacaktır.`,
+        en: `An epic battle awaits us in the grand final. With their strong squad depth, tactical discipline, and immense focus on the pitch, ${homeNameEn} is the side closer to winning the trophy. Striving to dictate the tempo of the game throughout the match, ${homeNameEn} will lift the championship with their final experience.`,
+        es: `Nos espera una batalla épica en la gran final. Con su sólida plantilla, disciplina táctica y gran concentración en el campo, ${homeNameEn} es el equipo más cercano a ganar el trofeo. Con el objetivo de dictar el ritmo del juego, ${homeNameEn} se coronará campeón con su experiencia en finales.`,
+        fr: `Une bataille épique nous attend dans la grande finale. Avec la profondeur de son effectif, sa discipline tactique et sa grande concentration sur le terrain, ${homeNameEn} est l'équipe la plus proche de remporter le trophée. Cherchant à imposer son rythme, ${homeNameEn} remportera le championnat grâce à son expérience des finales.`,
+        de: `Ein epischer Kampf erwartet uns im großen Finale. Mit ihrer starken Kaderbreite, taktischen Disziplin und großen Konzentration auf dem Platz ist ${homeNameEn} die Mannschaft, die dem Pokalgewinn näher steht. ${homeNameEn} wird versuchen, das Spiel zu diktieren und sich dank ihrer Finalerfahrung die Meisterschaft sichern.`
+      };
+    } else if (a > h) {
+      return {
+        tr: `Dev finalde devasa bir mücadele bizleri bekliyor. ${awayNameTr}, güçlü kadro yapısı, taktiksel disiplini ve sahadaki yüksek odaklanmasıyla kupayı kazanmaya yakın taraf. Karşılaşma boyunca rakibine oyununu kabul ettirmeye çalışacak olan ${awayNameTr}, final tecrübesiyle şampiyonluğa uzanacaktır.`,
+        en: `An epic battle awaits us in the grand final. With their strong squad depth, tactical discipline, and immense focus on the pitch, ${awayNameEn} is the side closer to winning the trophy. Striving to dictate the tempo of the game throughout the match, ${awayNameEn} will lift the championship with their final experience.`,
+        es: `Nos espera una batalla épica en la gran final. Con su sólida plantilla, disciplina táctica y gran concentración en el campo, ${awayNameEn} es el equipo más cercano a ganar el trofeo. Con el objetivo de dictar el ritmo del juego, ${awayNameEn} se coronará campeón con su experiencia en finales.`,
+        fr: `Une bataille épique nous attend dans la grande finale. Avec la profondeur de son effectif, sa discipline tactique et sa grande concentration sur le terrain, ${awayNameEn} est l'équipe la plus proche de remporter le trophée. Cherchant à imposer son rythme, ${awayNameEn} remportera le championnat grâce à son expérience des finales.`,
+        de: `Ein epischer Kampf erwartet uns im großen Finale. Mit ihrer starken Kaderbreite, taktischen Disziplin und großen Konzentration auf dem Platz ist ${awayNameEn} die Mannschaft, die dem Pokalgewinn näher steht. ${awayNameEn} wird versuchen, das Spiel zu diktieren und sich dank ihrer Finalerfahrung die Meisterschaft sichern.`
+      };
+    } else {
+      return {
+        tr: `Dünya Kupası'nın büyük finalinde futbolseverleri nefes kesen, taktiksel açıdan son derece dengeli bir mücadele bekliyor. İki dev ekibin de sahaya yansıtacağı yüksek konsantrasyon ve kontrollü oyun anlayışı nedeniyle normal sürenin başa baş bir beraberlikle tamamlanması ve şampiyonun uzatma dakikalarında veya penaltı atışlarında belirlenmesi oldukça olası görünüyor.`,
+        en: `In the grand final of the World Cup, football fans can expect a breathtaking, tactically balanced contest. Due to the high concentration and cautious game plan implemented by both giant teams, the regular time is highly likely to end in a closely-fought draw, leading the championship to be decided in extra time or penalty shootouts.`,
+        es: `En la gran final de la Copa del Mundo, los aficionados al fútbol pueden esperar un choque impresionante y tácticamente equilibrado. Debido a la alta concentración y al planteamiento cauteloso de ambos gigantes, es muy probable que el tiempo reglamentario termine en un empate muy reñido, por lo que el campeón se decidirá en la prórroga o en los penaltis.`,
+        fr: `Dans la grande finale de la Coupe du Monde, les fans de football peuvent s'attendre à un match palpitant et tactiquement équilibré. En raison de la grande concentration et du plan de jeu prudent des deux géants, il est fort probable que le temps réglementaire se solde par un match nul très disputé, menant à une prolongation ou aux tirs au but.`,
+        de: `Im großen Finale der Weltmeisterschaft können Fußballfans ein atemberaubendes, taktisch ausgeglichenes Spiel erwarten. Aufgrund der hohen Konzentration und der vorsichtigen Spielweise beider Riesenteams ist es sehr wahrscheinlich, dass die reguläre Spielzeit mit einem hart umkämpften Unentschieden endet, sodass die Entscheidung in der Verlängerung oder im Elfmeterschießen fallen wird.`
+      };
+    }
+  }
+
   // 2. BAĞIMSIZLIK VE KALİTE FİLTRESİ (QUALITY GUARD):
   // Maç hakkında özgün, kaliteli ve üretilen skorla çelişmeyen yorum yapılamıyorsa boş döneriz.
   if (seed % 6 === 0) {
