@@ -124,9 +124,12 @@ export async function GET() {
       } else if (year === 2026 && month === 6 && day >= 20 && day <= 27) {
         // Keep the custom squad selection poll active for 1 week (June 20 to June 27, 2026)
         pinnedPollId = "e5015e12-32b0-466d-9fc0-c5c4975fd96d";
-      } else if (year === 2026 && month === 7 && day >= 1 && day <= 20) {
+      } else if (year === 2026 && month === 7 && day >= 1 && day < 19) {
         // Pin the champion poll
         pinnedPollId = "c603b57d-12a8-4c31-9a7b-3b37a1f592cd";
+      } else if (year === 2026 && month === 7 && day >= 19 && day <= 31) {
+        // Pin the post-world-cup work preference poll
+        pinnedPollId = "d5015e12-32b0-466d-9fc0-c5c4975fd96e";
       }
 
       if (pinnedPollId) {

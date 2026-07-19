@@ -43,6 +43,8 @@ export const KNOCKOUT_STATIC_RESULTS: Record<string, {
   "qf-3": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 1, winnerId: "eng", played: true }, // Norway vs England
   "qf-4": { homeScore: 1, awayScore: 1, homeET: 0, awayET: 2, winnerId: "arg", played: true }, // Switzerland vs Argentina
   "sf-1": { homeScore: 0, awayScore: 2, winnerId: "esp", played: true }, // France vs Spain
+  "sf-2": { homeScore: 1, awayScore: 2, winnerId: "arg", played: true }, // England vs Argentina
+  "third-place": { homeScore: 4, awayScore: 6, winnerId: "eng", played: true }, // France vs England
 };
 
 // Definitions of official slots, dates, times, and stadiums for all rounds

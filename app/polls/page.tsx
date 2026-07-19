@@ -16,8 +16,17 @@ import {
   BarChart2,
   MessageSquare,
   ArrowLeft,
-  Share2
+  Share2,
+  Instagram,
+  Facebook,
+  Youtube
 } from "lucide-react";
+
+const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 interface PollOption {
   tr: string;
@@ -322,6 +331,68 @@ export default function PollsPage() {
     return option[locale] || option.tr || option.en;
   };
 
+  const isOtherOption = (option: any) => {
+    if (!option) return false;
+    const nameTr = (option.tr || "").toLowerCase();
+    const nameEn = (option.en || "").toLowerCase();
+    return nameTr.includes("diğer") || nameEn.includes("other");
+  };
+
+  const getSocialText = () => {
+    if (locale === "tr") return "Önerilerinizi sosyal medya hesaplarımızdan bize iletebilirsiniz:";
+    return "You can send us your suggestions via our social media accounts:";
+  };
+
+  const renderSocialLinks = () => {
+    return (
+      <div className="mt-3 flex flex-col gap-2 p-3 rounded-xl bg-zinc-900/60 border border-zinc-800/80 animate-in slide-in-from-top-2 duration-200">
+        <p className="text-xs text-zinc-400 font-medium">{getSocialText()}</p>
+        <div className="flex items-center gap-3">
+          <a 
+            href="https://x.com/Statmatikcom" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center justify-center h-8 w-8 rounded-lg bg-zinc-950 text-zinc-350 hover:text-white hover:bg-zinc-800 border border-zinc-800 transition-all hover:scale-105 active:scale-95"
+            title="X"
+          >
+            <XIcon className="h-4.5 w-4.5" />
+          </a>
+          <a 
+            href="https://www.instagram.com/statmatik/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center justify-center h-8 w-8 rounded-lg bg-zinc-950 text-pink-500 hover:text-pink-400 hover:bg-zinc-800 border border-zinc-800 transition-all hover:scale-105 active:scale-95"
+            title="Instagram"
+          >
+            <Instagram className="h-4.5 w-4.5" />
+          </a>
+          <a 
+            href="https://www.facebook.com/profile.php?id=61590443797517" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center justify-center h-8 w-8 rounded-lg bg-zinc-950 text-blue-555 hover:text-blue-400 hover:bg-zinc-800 border border-zinc-800 transition-all hover:scale-105 active:scale-95"
+            title="Facebook"
+          >
+            <Facebook className="h-4.5 w-4.5" />
+          </a>
+          <a 
+            href="https://www.youtube.com/channel/UC3VXE2d4hkwnmMiW6W0gYjA" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center justify-center h-8 w-8 rounded-lg bg-zinc-950 text-red-500 hover:text-red-400 hover:bg-zinc-800 border border-zinc-800 transition-all hover:scale-105 active:scale-95"
+            title="YouTube"
+          >
+            <Youtube className="h-4.5 w-4.5" />
+          </a>
+        </div>
+      </div>
+    );
+  };
+
   const getCategoryLabel = (cat: string) => {
     if (cat === "site") return t("polls.categorysite");
     if (cat === "current_wc") return t("polls.categorycurrent_wc");
@@ -589,19 +660,22 @@ export default function PollsPage() {
                 <div className="space-y-3">
                   {dailyOpinionPoll.options.map((option, idx) => {
                     const isSelected = selectedOpinionIndex === idx;
+                    const isOther = isOtherOption(option);
                     return (
-                      <button
-                        key={idx}
-                        onClick={() => setSelectedOpinionIndex(idx)}
-                        className={`w-full flex items-center justify-between rounded-2xl border p-4.5 text-left text-sm transition-all ${
-                          isSelected 
-                            ? "border-blue-500 bg-blue-950/10 text-blue-400 ring-1 ring-blue-500/20" 
-                            : "border-zinc-800 bg-zinc-900/30 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/60"
-                        }`}
-                      >
-                        <span>{getTranslatedOption(option)}</span>
-                        {isSelected && <Check className="h-4.5 w-4.5 text-blue-400" />}
-                      </button>
+                      <div key={idx} className="w-full flex flex-col gap-1">
+                        <button
+                          onClick={() => setSelectedOpinionIndex(idx)}
+                          className={`w-full flex items-center justify-between rounded-2xl border p-4.5 text-left text-sm transition-all ${
+                            isSelected 
+                              ? "border-blue-500 bg-blue-950/10 text-blue-400 ring-1 ring-blue-500/20" 
+                              : "border-zinc-800 bg-zinc-900/30 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/60"
+                          }`}
+                        >
+                          <span>{getTranslatedOption(option)}</span>
+                          {isSelected && <Check className="h-4.5 w-4.5 text-blue-400" />}
+                        </button>
+                        {isOther && isSelected && renderSocialLinks()}
+                      </div>
                     );
                   })}
                 </div>
@@ -629,6 +703,7 @@ export default function PollsPage() {
                       const count = opinionPollStats[idx] || 0;
                       const percent = getPercent(count);
                       const isUserChoice = userOpinionSubmission.selected_option_index === idx;
+                      const isOther = isOtherOption(option);
 
                       return (
                         <div 
@@ -659,6 +734,11 @@ export default function PollsPage() {
                             {percent}% ({count} {t("polls.votesUnit")})
                             </span>
                           </div>
+                          {isOther && (
+                            <div className="relative z-20">
+                              {renderSocialLinks()}
+                            </div>
+                          )}
                         </div>
                       );
                     });
