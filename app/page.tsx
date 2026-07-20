@@ -780,29 +780,6 @@ export default function EntryPage() {
         })()}
 
         <div className="grid w-full gap-8 md:grid-cols-2">
-          {/* CupMat Card */}
-          <Link href="/cupmat" className="group relative">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-emerald-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
-            <div className="relative flex h-full flex-col items-center justify-center rounded-3xl border border-white/10 bg-[#060b14] p-12 text-center transition-transform duration-300 group-hover:-translate-y-2">
-              <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-emerald-500/10 ring-1 ring-emerald-400/20 shadow-[0_0_30px_rgba(52,211,153,0.1)] overflow-hidden p-4">
-                <Image 
-                  src="/logo_s_clean.png" 
-                  alt="CupMat Icon" 
-                  width={64} 
-                  height={64} 
-                  className="object-contain"
-                />
-              </div>
-              <h2 className="mb-4 text-4xl font-black tracking-tight text-white uppercase">CupMat</h2>
-              <p className="mb-10 max-w-[280px] text-lg leading-relaxed text-zinc-400">
-                {t("hero.cupMatDesc")}
-              </p>
-              <div className="flex items-center gap-2 font-bold text-emerald-400">
-                {t("hero.playStart")} <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </div>
-            </div>
-          </Link>
-
           {/* MinMat Card */}
           <Link href="/minmat" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
@@ -822,6 +799,29 @@ export default function EntryPage() {
               </p>
               <div className="flex items-center gap-2 font-bold text-blue-400">
                 {t("hero.mindRefresh")} <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+
+          {/* CupMat Card */}
+          <Link href="/cupmat" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-emerald-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex h-full flex-col items-center justify-center rounded-3xl border border-white/10 bg-[#060b14] p-12 text-center transition-transform duration-300 group-hover:-translate-y-2">
+              <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-emerald-500/10 ring-1 ring-emerald-400/20 shadow-[0_0_30px_rgba(52,211,153,0.1)] overflow-hidden p-4">
+                <Image 
+                  src="/logo_s_clean.png" 
+                  alt="CupMat Icon" 
+                  width={64} 
+                  height={64} 
+                  className="object-contain"
+                />
+              </div>
+              <h2 className="mb-4 text-4xl font-black tracking-tight text-white uppercase">CupMat</h2>
+              <p className="mb-10 max-w-[280px] text-lg leading-relaxed text-zinc-400">
+                {t("hero.cupMatDesc")}
+              </p>
+              <div className="flex items-center gap-2 font-bold text-emerald-400">
+                {t("hero.playStart")} <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
