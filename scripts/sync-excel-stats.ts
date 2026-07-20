@@ -91,6 +91,34 @@ function parseMatchResult(matchName: string, teamName: string): { team_result: "
     "ingilterefransa": {
       "fransa": { team_result: "loss", goal_difference: -2, goals_conceded: 6 },
       "ingiltere": { team_result: "win", goal_difference: 2, goals_conceded: 4 }
+    },
+    "ispanyaarjantin": {
+      "ispanya": { team_result: "win", goal_difference: 1, goals_conceded: 0 },
+      "arjantin": { team_result: "loss", goal_difference: -1, goals_conceded: 1 }
+    },
+    "portekizhirvatistan": {
+      "portekiz": { team_result: "win", goal_difference: 1, goals_conceded: 1 },
+      "hirvatistan": { team_result: "loss", goal_difference: -1, goals_conceded: 2 }
+    },
+    "ispanyaavusturya": {
+      "ispanya": { team_result: "win", goal_difference: 3, goals_conceded: 0 },
+      "avusturya": { team_result: "loss", goal_difference: -3, goals_conceded: 3 }
+    },
+    "isvicrecezayir": {
+      "isvicre": { team_result: "win", goal_difference: 2, goals_conceded: 0 },
+      "cezayir": { team_result: "loss", goal_difference: -2, goals_conceded: 2 }
+    },
+    "avustralyamisir": {
+      "avustralya": { team_result: "draw", goal_difference: 0, goals_conceded: 1 },
+      "misir": { team_result: "draw", goal_difference: 0, goals_conceded: 1 }
+    },
+    "arjantinyesilburun": {
+      "arjantin": { team_result: "draw", goal_difference: 0, goals_conceded: 2 },
+      "yesilburun": { team_result: "draw", goal_difference: 0, goals_conceded: 3 }
+    },
+    "kolombiyagana": {
+      "kolombiya": { team_result: "win", goal_difference: 1, goals_conceded: 0 },
+      "gana": { team_result: "loss", goal_difference: -1, goals_conceded: 1 }
     }
   };
 
