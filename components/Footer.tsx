@@ -14,16 +14,12 @@ export function Footer() {
   const { t } = useTranslation();
   const pathname = usePathname();
 
-  if (pathname === "/" || pathname === "/minmat") return null;
+  if (pathname === "/" || pathname === "/minmat" || pathname === "/minlan") return null;
 
   return (
     <footer className="border-t border-white/10 bg-[#060b14] py-12">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="flex items-center gap-2 text-zinc-400">
-            <Trophy className="h-5 w-5 text-emerald-400" />
-            <span className="text-sm">{t("footer.tagline")}</span>
-          </div>
 
           {/* Social Media & Feedback */}
           <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 my-1 text-zinc-400">

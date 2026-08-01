@@ -75,6 +75,10 @@ export default function BottomNavbar() {
     window.dispatchEvent(new Event("open-help-modal"));
   };
 
+  const isMinlanEnabled =
+    process.env.NODE_ENV === "development" ||
+    process.env.NEXT_PUBLIC_ENABLE_MINLAN === "true";
+
   const navItems = [
     {
       label: locale === "tr" ? "Ana Sayfa" : "Home",
@@ -82,17 +86,28 @@ export default function BottomNavbar() {
       icon: Home,
       isActive: pathname === "/cupmat",
     },
+    ...(isMinlanEnabled
+      ? [
+          {
+            label: "MinLan",
+            href: "/minlan",
+            icon: Sparkles,
+            isActive: pathname?.startsWith("/minlan"),
+          },
+        ]
+      : [
+          {
+            label: locale === "tr" ? "Tahmin" : "Predict",
+            href: "/tahminler",
+            icon: Sparkles,
+            isActive: pathname === "/tahminler" || pathname === "/predictions",
+          },
+        ]),
     {
       label: "MinMat",
       href: "/minmat",
       icon: Calculator,
       isActive: pathname?.startsWith("/minmat"),
-    },
-    {
-      label: locale === "tr" ? "Tahmin" : "Predict",
-      href: "/tahminler",
-      icon: Sparkles,
-      isActive: pathname === "/tahminler" || pathname === "/predictions",
     },
     {
       label: locale === "tr" ? "Sıralama" : "Ranks",
