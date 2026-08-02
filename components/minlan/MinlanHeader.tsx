@@ -1,21 +1,24 @@
 "use client";
 
 import React from "react";
-import { MinlanCommunityStats } from "@/lib/minlan/types";
+import { LanguageCode, MinlanCommunityStats } from "@/lib/minlan/types";
+import { getMinlanTranslation } from "@/lib/minlan/i18n";
 import { Flame } from "lucide-react";
 
 interface MinlanHeaderProps {
+  nativeLang?: LanguageCode;
   communityStats: MinlanCommunityStats;
 }
 
-export function MinlanHeader({ communityStats }: MinlanHeaderProps) {
+export function MinlanHeader({ nativeLang = "tr", communityStats }: MinlanHeaderProps) {
+  const t = getMinlanTranslation(nativeLang);
   const currentMatches = communityStats.total_card_matches;
   const targetMatches = communityStats.target_card_matches;
   const progressPercent = Math.min(100, Math.floor((currentMatches / targetMatches) * 100));
 
   return (
     <div className="w-full pb-3 mb-2 border-b border-slate-800/80 flex flex-col items-center select-none">
-      {/* Centered Brand Logo, Title & Slogan */}
+      {/* Centered Brand Logo, Title & Multilingual Slogan */}
       <div className="flex flex-col items-center justify-center text-center mb-3">
         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-950 border border-cyan-500/30 flex items-center justify-center overflow-hidden p-1 shadow-lg shadow-cyan-500/20 mb-2">
           <img
@@ -28,7 +31,7 @@ export function MinlanHeader({ communityStats }: MinlanHeaderProps) {
           MinLan — Dil Avı
         </h1>
         <p className="text-xs text-slate-400 font-medium italic">
-          Bir lisan, bir insan. Kaç kişilik istersin?
+          {t.slogan}
         </p>
       </div>
 
@@ -37,7 +40,7 @@ export function MinlanHeader({ communityStats }: MinlanHeaderProps) {
         <div className="flex items-center justify-between text-[11px] sm:text-xs">
           <div className="flex items-center gap-1.5 text-cyan-400 font-bold">
             <Flame className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span>TOPLULUK HEDEFİ (4. Kategori Kilidi İçin)</span>
+            <span className="uppercase tracking-wider">{t.communityGoal}</span>
           </div>
           <div className="text-slate-300 font-mono font-bold text-[11px]">
             <span className="text-cyan-400">{currentMatches.toLocaleString("tr-TR")}</span> /{" "}

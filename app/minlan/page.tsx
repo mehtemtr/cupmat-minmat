@@ -124,6 +124,7 @@ export default function MinlanPage() {
         <div className="w-full max-w-xl mx-auto bg-[#060b14] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl flex flex-col items-center select-none">
           {/* 1. Header with Centered Brand Title, Slogan & Compact Community Progress */}
           <MinlanHeader
+            nativeLang={nativeLang}
             communityStats={communityStats}
           />
 

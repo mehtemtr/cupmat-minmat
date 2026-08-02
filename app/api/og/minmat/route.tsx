@@ -9,7 +9,7 @@ const translations = {
     by: "Oyuncu:",
     score: "Puan:",
     category: "Kategori:",
-    playText: "statmatik.com | Zeka ve Matematik Oyunu",
+    playText: "statmatik.com | MinMat — Sayı Avı",
     modes: {
       add: "Toplama",
       sub: "Çıkarma",

@@ -40,7 +40,7 @@ export default function MinMatPage() {
         const currentLang = (lang || "tr").toLowerCase();
         
         const shareTexts: Record<string, string> = {
-          tr: "MinMat Zeka ve Matematik Oyununda {score} puan yaptım! Rekorumu geçebilir misin? 🏆",
+          tr: "MinMat - Sayı Avı oyununda {score} puan yaptım! Rekorumu geçebilir misin? 🏆",
           en: "I scored {score} in MinMat Brain & Math Game! Can you beat my record? 🏆",
           de: "Ich habe {score} Punkte im MinMat-Mathespiel erreicht! Kannst du meinen Rekord schlagen? 🏆",
           fr: "J'ai obtenu {score} points au jeu de maths MinMat ! Peux-tu battre mon record ? 🏆",

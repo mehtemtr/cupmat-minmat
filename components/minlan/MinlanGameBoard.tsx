@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { LanguageCode, MinlanCard, SUPPORTED_LANGUAGES, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
+import { getMinlanTranslation } from "@/lib/minlan/i18n";
 import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe } from "lucide-react";
 
 interface MinlanGameBoardProps {
@@ -29,6 +30,7 @@ export function MinlanGameBoard({
   onRecordProgress,
   onOpenLeaderboard,
 }: MinlanGameBoardProps) {
+  const t = getMinlanTranslation(nativeLang);
   const [roundLevel, setRoundLevel] = useState<number>(1);
   const [cards, setCards] = useState<MinlanCard[]>([]);
   const [flippedCards, setFlippedCards] = useState<MinlanCard[]>([]);
@@ -171,12 +173,12 @@ export function MinlanGameBoard({
           if (newStreak === 4 || newStreak === 7 || newStreak === 9) {
             setLives((currLives) => {
               if (currLives >= 5) {
-                setTimeLeft((t) => t + 5);
+                setTimeLeft((tVal) => tVal + 5);
                 setScore((s) => s + 500);
-                setRewardToast(`❤️ MAX CAN (5/5)! +5 Saniye & +500 Puan Bonusu! 🎁`);
+                setRewardToast(t.maxLifeReward);
                 return 5;
               } else {
-                setRewardToast(`❤️ ARDIŞIK ${newStreak} DOĞRU! +1 Ekstra Can! 🎉`);
+                setRewardToast(t.streakLifeReward.replace("{streak}", String(newStreak)));
                 return currLives + 1;
               }
             });
@@ -275,7 +277,7 @@ export function MinlanGameBoard({
         {/* Target Language Selector Badge (MinMat Style) */}
         <div className="px-4 py-2 bg-slate-900 border border-cyan-500/40 rounded-2xl flex items-center gap-2 shadow-lg">
           <Globe className="w-4 h-4 text-cyan-400" />
-          <span className="text-xs font-bold text-slate-400 uppercase hidden sm:inline">Öğrenilen Dil:</span>
+          <span className="text-xs font-bold text-slate-400 uppercase hidden sm:inline">{t.targetLangLabel}</span>
           <select
             value={targetLang}
             onChange={(e) => onTargetLangChange(e.target.value as LanguageCode)}
@@ -306,7 +308,7 @@ export function MinlanGameBoard({
 
         {/* Round Level */}
         <div className="text-sm font-extrabold text-white">
-          Tur {roundLevel}
+          {t.roundText} {roundLevel}
         </div>
 
         {/* Pause Button */}
@@ -394,7 +396,7 @@ export function MinlanGameBoard({
           className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs rounded-xl flex items-center gap-2 transition-all cursor-pointer"
         >
           <Home className="w-4 h-4 text-cyan-400" />
-          <span>Menü</span>
+          <span>{t.menuText}</span>
         </button>
 
         <button
@@ -402,7 +404,7 @@ export function MinlanGameBoard({
           className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-amber-300 font-bold text-xs rounded-xl flex items-center gap-2 transition-all cursor-pointer"
         >
           <Trophy className="w-4 h-4 text-amber-400" />
-          <span>Puan Tablosu</span>
+          <span>{t.scoreTableText}</span>
         </button>
       </div>
 
@@ -418,30 +420,30 @@ export function MinlanGameBoard({
           </div>
           <h3 className="text-xl font-black text-white mb-1">MinLan — Dil Avı</h3>
           <p className="text-xs text-slate-400 mb-6 italic">
-            Bir lisan, bir insan. Kaç kişilik istersin?
+            {t.slogan}
           </p>
           <button
             onClick={startRound}
             className="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-base rounded-2xl shadow-xl shadow-emerald-500/25 transition-all cursor-pointer transform hover:scale-105 active:scale-95"
           >
-            OYUNA BAŞLA 🚀
+            {t.startGameText}
           </button>
         </div>
       ) : gameState === "paused" ? (
         <div className="py-16 text-center text-slate-400">
           <Pause className="w-12 h-12 mx-auto mb-3 text-cyan-400 animate-pulse" />
-          <p className="text-lg font-bold text-white">OYUN DURAKLATILDI</p>
+          <p className="text-lg font-bold text-white">{t.pausedTitle}</p>
           <button
             onClick={() => setGameState("playing")}
             className="mt-4 px-6 py-2.5 bg-cyan-500 text-slate-950 font-black rounded-xl cursor-pointer"
           >
-            Devam Et
+            {t.resumeText}
           </button>
         </div>
       ) : loading ? (
         <div className="py-16 text-center text-cyan-400">
           <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <span className="text-sm font-bold">Kartlar Yükleniyor...</span>
+          <span className="text-sm font-bold">{t.cardsLoadingText}</span>
         </div>
       ) : (
         /* Fixed 3-Column Grid Container with Larger Cards & Full Logo Backs */
@@ -500,10 +502,10 @@ export function MinlanGameBoard({
             <CheckCircle2 className="w-6 h-6 text-emerald-400 animate-bounce" />
             <div>
               <span className="font-extrabold text-sm text-emerald-300 block">
-                TUR {roundLevel} TAMAMLANDI! 🎉
+                {t.roundCompletedTitle.replace("{round}", String(roundLevel))}
               </span>
               <span className="text-xs text-slate-300">
-                Kart sayısı 2 arttı (+1 Eşleşme). Sonraki tura geçiliyor...
+                {t.roundCompletedDesc}
               </span>
             </div>
           </div>
@@ -515,16 +517,16 @@ export function MinlanGameBoard({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 animate-fadeIn">
           <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl text-center max-w-md w-full shadow-2xl">
             <div className="text-5xl mb-4">⏰</div>
-            <h3 className="text-2xl font-black text-white mb-2">OYUN BİTTİ!</h3>
+            <h3 className="text-2xl font-black text-white mb-2">{t.gameOverTitle}</h3>
             <p className="text-sm text-slate-400 mb-6">
-              Tur {roundLevel}'de tamamlandı. Toplam <span className="text-amber-400 font-bold">{score} Puan</span> topladın.
+              {t.roundText} {roundLevel}. {t.totalScoreText}: <span className="text-amber-400 font-bold">{score}</span>
             </p>
             <button
               onClick={resetEntireGame}
               className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 flex items-center justify-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-5 h-5 text-cyan-400" />
-              <span>YENİDEN BAŞLA (TUR 1)</span>
+              <span>{t.playAgainText}</span>
             </button>
           </div>
         </div>
