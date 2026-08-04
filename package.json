@@ -7,7 +7,6 @@
     "dev:clean": "node scripts/clean.mjs && next dev --turbopack",
     "build": "next build",
     "pages:build": "npx @cloudflare/next-on-pages@1 --override-version-check",
-    "cloudflare:build": "npx @opennextjs/cloudflare",
     "start": "next start",
     "lint": "next lint",
     "validate:teams": "npx tsx scripts/validate-teams.ts"
@@ -27,7 +26,6 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.16",
     "@eslint/eslintrc": "^3.3.1",
-    "@opennextjs/cloudflare": "^1.20.2",
     "@tailwindcss/postcss": "^4.1.7",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.4",
