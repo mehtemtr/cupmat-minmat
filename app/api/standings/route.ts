@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import type { MatchResult } from "@/lib/types/tournament";
 import { getGroupStandingsMap } from "@/lib/knockout";

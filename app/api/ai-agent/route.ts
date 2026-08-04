@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { runAiAgent, updateTeamRosters, generatePredictions } from "@/lib/ai-sports-agent";
 import { supabaseAdmin } from "@/lib/supabase";

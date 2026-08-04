@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { getStore, saveStore } from "@/lib/store/gamification-store";
 import { supabaseAdmin } from "@/lib/supabase";

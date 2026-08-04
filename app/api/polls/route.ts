@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { requireApiAuth } from "@/lib/auth/api-auth";

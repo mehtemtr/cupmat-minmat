@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { LanguageCode, MinlanCard } from "@/lib/minlan/types";
 import dataset from "@/lib/minlan/data/minlan_full_dataset.json";
