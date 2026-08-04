@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "dev:clean": "node scripts/clean.mjs && next dev --turbopack",
     "build": "next build",
-    "pages:build": "npx @cloudflare/next-on-pages@1",
+    "pages:build": "npx @cloudflare/next-on-pages@1 --override-version-check",
     "cloudflare:build": "npx @opennextjs/cloudflare",
     "start": "next start",
     "lint": "next lint",
@@ -19,7 +19,7 @@
     "@upstash/redis": "^1.38.0",
     "@vercel/kv": "^3.0.0",
     "lucide-react": "^0.511.0",
-    "next": "^15.3.2",
+    "next": "15.5.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "svix": "^1.94.0"
@@ -33,7 +33,7 @@
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "eslint": "^9.27.0",
-    "eslint-config-next": "^15.3.2",
+    "eslint-config-next": "15.5.2",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",
     "wrangler": "^4.118.0"
