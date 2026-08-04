@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import dataset from "@/lib/minlan/data/minlan_full_dataset.json";

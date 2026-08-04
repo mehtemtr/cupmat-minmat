@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { updatePlayerStatus } from "@/lib/store/player-status-store";
 import { invalidateAiAnalysis } from "@/lib/store/ai-analysis-store";

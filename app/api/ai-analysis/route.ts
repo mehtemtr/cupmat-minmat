@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { requireApiAuth } from "@/lib/auth/api-auth";
 import { getOrCreateProfile } from "@/lib/store/gamification-store";
