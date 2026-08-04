@@ -266,14 +266,14 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 w-full flex h-16 items-center justify-between sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 sm:gap-4">
             <Link
-              href="/cupmat"
+              href="/"
               className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-400"
               title="Ana Sayfaya Dön"
             >
               <Home className="h-5 w-5" />
             </Link>
             <Link
-              href="/cupmat"
+              href="/"
               className="flex items-center gap-2 sm:gap-2.5 text-white"
             >
             <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-400/20 overflow-hidden p-1 shadow-md">

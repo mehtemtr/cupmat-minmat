@@ -87,9 +87,9 @@ export default function BottomNavbar() {
   const navItems = [
     {
       label: locale === "tr" ? "Ana Sayfa" : "Home",
-      href: "/cupmat",
+      href: "/",
       icon: Home,
-      isActive: pathname === "/cupmat",
+      isActive: pathname === "/",
     },
     ...(isNewsEnabled
       ? [

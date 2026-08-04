@@ -846,7 +846,7 @@ export default function EntryPage() {
           </Link>
 
           {/* 3. CupMat Card (En sağ) */}
-          <Link href="/cupmat" className="group relative">
+          <Link href="/groups" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-teal-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>

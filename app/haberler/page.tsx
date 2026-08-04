@@ -457,7 +457,7 @@ export default function HaberlerPage() {
         <h1 className="text-2xl font-black text-white mb-2">{t.portalTitle} — Yakında!</h1>
         <p className="text-sm text-slate-400 max-w-md mb-6">{t.testModeSub}</p>
         <a
-          href="/cupmat"
+          href="/"
           className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-sm transition-all"
         >
           Ana Sayfaya Dön
