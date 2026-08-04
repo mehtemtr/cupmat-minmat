@@ -178,17 +178,22 @@ export function calculateTitleSimilarity(title1: string, title2: string): number
 }
 
 /**
- * Clean HTML entities from string
+ * Clean HTML entities, tags, and raw links from string
  */
-function cleanText(text: string): string {
-  return text
+export function cleanText(text: string | null | undefined): string {
+  if (!text) return "";
+  let clean = text
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/<[^>]*>?/gm, " ") // Strip HTML tags e.g. <a href="...">
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
     .trim();
+  return clean;
 }
 
 /**

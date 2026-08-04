@@ -278,8 +278,8 @@ export function Header() {
             >
             <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-400/20 overflow-hidden p-1 shadow-md">
               <img 
-                src="/logo_s_clean.png" 
-                alt="CupMat Logo" 
+                src="/statmatik_logo_final.png" 
+                alt="Statmatik Logo" 
                 className="h-full w-full object-contain"
               />
             </span>
@@ -289,14 +289,14 @@ export function Header() {
           </Link>
           </div>
 
-          {/* CUPMAT MENÜ Dropdown */}
+          {/* STATMATİK MENÜ Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="inline-flex items-center gap-1 sm:gap-2 rounded-xl border border-white/10 bg-[#060b14]/80 px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-500/10 transition hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-emerald-300"
             >
-              CUPMAT MENÜ
+              STATMATİK MENÜ
               <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
             </button>
 

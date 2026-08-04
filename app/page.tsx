@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation, useLocale } from "@/contexts/LocaleContext";
-import { Trophy, Sparkles, ChevronRight, Calculator, Activity } from "lucide-react";
+import { Trophy, Sparkles, ChevronRight, Calculator, Activity, Newspaper, Gamepad2 } from "lucide-react";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
 
 function BirthdayCake() {
@@ -328,6 +328,22 @@ export default function EntryPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const [newsHeadlines, setNewsHeadlines] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    fetch(`/api/news?limit=3&lang=${locale}`)
+      .then((res) => {
+        if (!res || !res.ok) return null;
+        return res.json();
+      })
+      .then((data) => {
+        if (data && data.articles && data.articles.length > 0) {
+          setNewsHeadlines(data.articles.map((a: any) => a.title));
+        }
+      })
+      .catch((err) => console.error("News ticker fetch error:", err));
+  }, [locale]);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#04080e] selection:bg-emerald-500/30">
@@ -351,38 +367,43 @@ export default function EntryPage() {
             </div>
           </div>
           
-          <div className="relative flex overflow-x-hidden border-y border-white/5 bg-white/[0.02] py-6">
-            <div className="animate-marquee flex whitespace-nowrap gap-12">
+          <div className="relative flex overflow-x-hidden border-y border-cyan-500/20 bg-cyan-500/[0.03] py-4 shadow-lg shadow-cyan-500/5 select-none">
+            <div className="animate-marquee flex whitespace-nowrap gap-8 items-center">
               {[1, 2, 3, 4].map((i) => (
-                <h1 key={i} className="text-2xl font-black tracking-tight text-white uppercase sm:text-4xl">
-                  {locale === "tr" ? (
-                    <>
-                      <span>Lobilerin rengi değil, </span>
-                      <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
-                        performansın liyakati.
-                      </span>
-                      <span> Dünya Kupası'nın matematiksel adaleti: </span>
-                      <span className="bg-gradient-to-r from-red-500 via-red-400 to-white bg-clip-text text-transparent">
-                        Statmatik.com
-                      </span>
-                    </>
+                <div key={i} className="flex items-center gap-6 text-sm sm:text-base font-bold text-slate-200">
+                  <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shrink-0">
+                    <Newspaper className="w-3.5 h-3.5" /> NewsGlo Akış
+                  </span>
+                  {newsHeadlines.length > 0 ? (
+                    newsHeadlines.map((headline, idx) => (
+                      <React.Fragment key={idx}>
+                        <span className="hover:text-cyan-400 transition-colors cursor-pointer font-bold text-white">
+                          {headline}
+                        </span>
+                        <span className="text-cyan-400 font-extrabold text-xs">✦</span>
+                      </React.Fragment>
+                    ))
                   ) : (
-                    (() => {
-                      const parts = t("hero.slogan").split(/(statmatik\.com)/i);
-                      return (
-                        <>
-                          {parts[0]}
-                          {parts[1] && (
-                            <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-                              {parts[1]}
-                            </span>
-                          )}
-                          {parts[2]}
-                        </>
-                      );
-                    })()
+                    <>
+                      <span className="text-white font-extrabold">
+                        Matematiğin bir şeyi yoktur; her şeyin bir matematiği vardır.
+                      </span>
+                      <span className="text-cyan-400 font-extrabold text-xs">✦</span>
+                      <span className="text-emerald-400 font-extrabold">
+                        CupMat — Futbolun matematiksel adaleti. Lobilerin rengi değil, performansın liyakati.
+                      </span>
+                      <span className="text-cyan-400 font-extrabold text-xs">✦</span>
+                      <span className="text-blue-400 font-extrabold">
+                        MinMat — Sayı Avı (Matematik Hafıza Oyunu). Zihnini canlandır!
+                      </span>
+                      <span className="text-cyan-400 font-extrabold text-xs">✦</span>
+                      <span className="text-cyan-300 font-extrabold">
+                        NewsGlo — Küresel Bilim, Teknoloji, Sağlık, Çevre ve Gelişmeler Akışı.
+                      </span>
+                      <span className="text-cyan-400 font-extrabold text-xs">✦</span>
+                    </>
                   )}
-                </h1>
+                </div>
               ))}
             </div>
           </div>
@@ -779,49 +800,72 @@ export default function EntryPage() {
           );
         })()}
 
-        <div className="grid w-full gap-8 md:grid-cols-2">
-          {/* MinMat Card */}
-          <Link href="/minmat" className="group relative">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
-            <div className="relative flex h-full flex-col items-center justify-center rounded-3xl border border-white/10 bg-[#060b14] p-12 text-center transition-transform duration-300 group-hover:-translate-y-2">
-              <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-blue-500/10 ring-1 ring-blue-400/20 shadow-[0_0_30px_rgba(59,130,246,0.1)] overflow-hidden p-4">
-                <Image 
-                  src="/minmat/icon.png" 
-                  alt="MinMat Icon" 
-                  width={64} 
-                  height={64} 
-                  className="object-contain"
-                />
+        <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-3">
+          {/* 1. NewsGlo Card (En sol) */}
+          <Link href="/haberler" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
+              <div>
+                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cyan-500/10 ring-1 ring-cyan-400/20 shadow-[0_0_30px_rgba(6,182,212,0.1)] overflow-hidden p-3 text-cyan-400">
+                  <Newspaper className="w-10 h-10" />
+                </div>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">NewsGlo</h2>
+                <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
+                  {t("hero.newsGloDesc")}
+                </p>
               </div>
-              <h2 className="mb-4 text-4xl font-black tracking-tight text-white uppercase">MinMat</h2>
-              <p className="mb-10 max-w-[280px] text-lg leading-relaxed text-zinc-400">
-                {t("hero.minMatDesc")}
-              </p>
-              <div className="flex items-center gap-2 font-bold text-blue-400">
-                {t("hero.mindRefresh")} <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <div className="flex items-center gap-2 font-bold text-cyan-400 text-xs sm:text-sm">
+                NewsGlo Akışına Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
 
-          {/* CupMat Card */}
-          <Link href="/cupmat" className="group relative">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-emerald-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
-            <div className="relative flex h-full flex-col items-center justify-center rounded-3xl border border-white/10 bg-[#060b14] p-12 text-center transition-transform duration-300 group-hover:-translate-y-2">
-              <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-emerald-500/10 ring-1 ring-emerald-400/20 shadow-[0_0_30px_rgba(52,211,153,0.1)] overflow-hidden p-4">
-                <Image 
-                  src="/logo_s_clean.png" 
-                  alt="CupMat Icon" 
-                  width={64} 
-                  height={64} 
-                  className="object-contain"
-                />
+          {/* 2. MinMat Card (Ortada) */}
+          <Link href="/minmat" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
+              <div>
+                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-500/10 ring-1 ring-blue-400/20 shadow-[0_0_30px_rgba(59,130,246,0.1)] overflow-hidden p-3">
+                  <Image 
+                    src="/minmat/icon.png" 
+                    alt="MinMat Icon" 
+                    width={56} 
+                    height={56} 
+                    className="object-contain"
+                  />
+                </div>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">MinMat — Sayı Avı</h2>
+                <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
+                  {t("hero.minMatDesc")}
+                </p>
               </div>
-              <h2 className="mb-4 text-4xl font-black tracking-tight text-white uppercase">CupMat</h2>
-              <p className="mb-10 max-w-[280px] text-lg leading-relaxed text-zinc-400">
-                {t("hero.cupMatDesc")}
-              </p>
-              <div className="flex items-center gap-2 font-bold text-emerald-400">
-                {t("hero.playStart")} <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <div className="flex items-center gap-2 font-bold text-blue-400 text-xs sm:text-sm">
+                {t("hero.mindRefresh")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 3. CupMat Card (En sağ) */}
+          <Link href="/cupmat" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-teal-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
+              <div>
+                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-emerald-500/10 ring-1 ring-emerald-400/20 shadow-[0_0_30px_rgba(52,211,153,0.1)] overflow-hidden p-3">
+                  <Image 
+                    src="/logo_s_clean.png" 
+                    alt="CupMat Icon" 
+                    width={56} 
+                    height={56} 
+                    className="object-contain"
+                  />
+                </div>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">CupMat</h2>
+                <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
+                  {t("hero.cupMatDesc")}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 font-bold text-emerald-400 text-xs sm:text-sm">
+                {t("hero.playStart")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>

@@ -84,7 +84,7 @@ export function MinlanCategoryCarousel({
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-slate-400 tracking-wide mt-2">❓ Sürpriz Kutu</h3>
-                  <p className="text-[11px] text-slate-500 mt-1">Gelecekte Topluluk Hedefiyle Açılacak</p>
+                  <p className="text-[11px] text-slate-500 mt-1">Gelecekte Açılacak</p>
                 </div>
               </div>
             );

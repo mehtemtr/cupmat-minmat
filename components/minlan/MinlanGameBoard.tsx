@@ -5,6 +5,40 @@ import { LanguageCode, MinlanCard, SUPPORTED_LANGUAGES, MinlanCategory, MinlanCo
 import { getMinlanTranslation } from "@/lib/minlan/i18n";
 import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe } from "lucide-react";
 
+const ROUND_TIMER_TABLE: Record<number, number> = {
+  1: 27,
+  2: 36,
+  3: 45,
+  4: 54,
+  5: 63,
+  6: 71,
+  7: 79,
+  8: 87,
+  9: 95,
+  10: 103,
+  11: 110,
+  12: 117,
+  13: 124,
+  14: 131,
+  15: 138,
+  16: 144,
+  17: 150,
+  18: 156,
+  19: 162,
+  20: 168,
+  21: 174,
+  22: 180,
+  23: 186,
+};
+
+function getTimerSecondsForRound(round: number): number {
+  if (ROUND_TIMER_TABLE[round]) {
+    return ROUND_TIMER_TABLE[round];
+  }
+  // For round 24+, continue adding +6 seconds per round
+  return 186 + (round - 23) * 6;
+}
+
 interface MinlanGameBoardProps {
   categoryId: string;
   categoryName: string;
@@ -39,7 +73,7 @@ export function MinlanGameBoard({
   const [lives, setLives] = useState<number>(3);
   const [mistakes, setMistakes] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<number>(30);
+  const [timeLeft, setTimeLeft] = useState<number>(27);
   const [gameState, setGameState] = useState<"idle" | "playing" | "paused" | "game_over">("idle");
   const [loading, setLoading] = useState<boolean>(false);
   const [showRoundSuccess, setShowRoundSuccess] = useState<boolean>(false);
@@ -73,7 +107,7 @@ export function MinlanGameBoard({
 
   // Round progression: Round 1 = 3 pairs (6 cards). Every round adds 2 cards (+1 pair)
   const pairCount = 3 + (roundLevel - 1);
-  const maxTimerSeconds = Math.max(12, 35 - (roundLevel - 1) * 2);
+  const maxTimerSeconds = getTimerSecondsForRound(roundLevel);
 
   // Fetch cards for current round
   const loadRoundCards = useCallback(async () => {
@@ -257,7 +291,7 @@ export function MinlanGameBoard({
     { id: "cat-1", icon: "🏠", label: getCategoryTitle(categories[0] || { name_tr: "Günlük Yaşam" } as any), isUnlocked: true },
     { id: "cat-2", icon: "🍎", label: getCategoryTitle(categories[1] || { name_tr: "Yiyecek" } as any), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
     { id: "cat-3", icon: "✈️", label: getCategoryTitle(categories[2] || { name_tr: "Seyahat" } as any), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-4", icon: "🩺", label: getCategoryTitle(categories[3] || { name_tr: "Sağlık" } as any), isUnlocked: isCommunityGoalMet && unlockedCategoryIds.includes("cat-4"), lockReason: "🔒 Topluluk Kart Eşleme Hedefi (25.000 Eşleme)" },
+    { id: "cat-4", icon: "🩺", label: getCategoryTitle(categories[3] || { name_tr: "Sağlık" } as any), isUnlocked: unlockedCategoryIds.includes("cat-4"), lockReason: "🔒 3. Kategoride Tur 4'ü Bitir" },
     { id: "cat-5", icon: "💼", label: getCategoryTitle(categories[4] || { name_tr: "Meslek" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
     { id: "cat-6", icon: "💰", label: getCategoryTitle(categories[5] || { name_tr: "Alışveriş" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
     { id: "cat-7", icon: "🎁", label: "Sürpriz Kutu", isUnlocked: false, lockReason: "🔒 Gizli Sürpriz Kategori" },

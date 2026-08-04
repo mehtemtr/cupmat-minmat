@@ -19,6 +19,7 @@ import {
   HelpCircle, 
   Info,
   BarChart2,
+  Newspaper,
   HelpCircle as QuestionIcon
 } from "lucide-react";
 import AuthPanel from "./AuthPanel";
@@ -79,6 +80,10 @@ export default function BottomNavbar() {
     process.env.NODE_ENV === "development" ||
     process.env.NEXT_PUBLIC_ENABLE_MINLAN === "true";
 
+  const isNewsEnabled =
+    process.env.NODE_ENV === "development" ||
+    process.env.NEXT_PUBLIC_ENABLE_NEWS === "true";
+
   const navItems = [
     {
       label: locale === "tr" ? "Ana Sayfa" : "Home",
@@ -86,6 +91,16 @@ export default function BottomNavbar() {
       icon: Home,
       isActive: pathname === "/cupmat",
     },
+    ...(isNewsEnabled
+      ? [
+          {
+            label: "NewsGlo",
+            href: "/haberler",
+            icon: Newspaper,
+            isActive: pathname?.startsWith("/haberler"),
+          },
+        ]
+      : []),
     ...(isMinlanEnabled
       ? [
           {
