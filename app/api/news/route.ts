@@ -155,8 +155,27 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
 ];
 
 async function checkAndTriggerLazyFetch() {
-  // Paused on main server to save 100% CPU. Compilation moving to dedicated news server.
-  return;
+  if (isFetchingNews) return;
+  try {
+    const { data: lastLog } = await supabaseAdmin
+      .from("news_fetch_logs")
+      .select("created_at")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const lastFetchTime = lastLog?.created_at ? new Date(lastLog.created_at).getTime() : 0;
+    const timeSinceLastFetch = Date.now() - lastFetchTime;
+
+    if (timeSinceLastFetch >= LAZY_FETCH_INTERVAL_MS) {
+      isFetchingNews = true;
+      fetchAndStoreNews()
+        .catch((err) => console.error("[Cloudflare LazyFetch] Error:", err))
+        .finally(() => { isFetchingNews = false; });
+    }
+  } catch (err) {
+    // Ignore error
+  }
 }
 
 export async function GET(request: Request) {
