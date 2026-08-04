@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "dev:clean": "node scripts/clean.mjs && next dev --turbopack",
     "build": "next build",
-    "pages:build": "node scripts/build-pages.mjs",
+    "pages:build": "npx opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
     "validate:teams": "npx tsx scripts/validate-teams.ts"
