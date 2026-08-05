@@ -195,37 +195,51 @@ export async function GET(request: Request) {
     // 1. If language is Turkish ('tr'), try querying Supabase live DB news feed safely
     if (lang === "tr") {
       try {
-        let query = supabaseAdmin
-          .from("news")
-          .select("id, title, snippet, source, category, link, published_at", { count: "exact" })
-          .order("published_at", { ascending: false });
+        const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+        if (key && key.includes(".")) {
+          // Cloudflare environment base64 decode safe
+          const b64 = key.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+          const payload = Buffer.from(b64, "base64").toString("utf8");
+          const claims = JSON.parse(payload);
+          const supabaseUrl = `https://${claims.ref}.supabase.co`;
 
-        if (category !== "all") {
-          query = query.eq("category", category);
-        }
+          let fetchUrl = `${supabaseUrl}/rest/v1/news?select=id,title,snippet,source,category,link,published_at&order=published_at.desc&limit=${limit}&offset=${offset}`;
+          if (category !== "all") fetchUrl += `&category=eq.${encodeURIComponent(category)}`;
+          if (search) fetchUrl += `&title=ilike.*${encodeURIComponent(search)}*`;
 
-        if (search) {
-          query = query.ilike("title", `%${search}%`);
-        }
-
-        const { data: dbNews, count, error } = await query.range(offset, offset + limit - 1);
-
-        if (!error && dbNews && dbNews.length > 0) {
-          const cleanedDbNews = dbNews.map((item) => ({
-            ...item,
-            title: cleanText(item.title || ""),
-            snippet: cleanText(item.snippet || ""),
-          }));
-
-          return NextResponse.json({
-            success: true,
-            articles: cleanedDbNews,
-            page,
-            limit,
-            total: count || cleanedDbNews.length,
-            hasMore: offset + cleanedDbNews.length < (count || cleanedDbNews.length),
-            isMock: false,
+          const res = await fetch(fetchUrl, {
+            headers: { apikey: key, Authorization: `Bearer ${key}` },
+            cache: "no-store"
           });
+          
+          if (res.ok) {
+            const dbNews = await res.json();
+            if (dbNews && dbNews.length > 0) {
+              const countRes = await fetch(`${supabaseUrl}/rest/v1/news?select=id&limit=1`, {
+                headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact" }
+              });
+              let count = dbNews.length;
+              if (countRes.ok) {
+                const range = countRes.headers.get("content-range");
+                if (range) count = parseInt(range.split("/")[1], 10) || count;
+              }
+            const cleanedDbNews = dbNews.map((item: any) => ({
+              ...item,
+              title: cleanText(item.title || ""),
+              snippet: cleanText(item.snippet || ""),
+            }));
+
+            return NextResponse.json({
+              success: true,
+              articles: cleanedDbNews,
+              page,
+              limit,
+              total: count || cleanedDbNews.length,
+              hasMore: offset + cleanedDbNews.length < (count || cleanedDbNews.length),
+              isMock: false,
+            });
+            }
+          }
         }
       } catch (dbErr) {
         // Fallback
