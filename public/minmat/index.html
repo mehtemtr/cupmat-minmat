@@ -1097,17 +1097,6 @@
       </div>
       <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 16px;">MinMat — Sayı Avı</p>
       
-      <!-- Sistem Bilgi Kutusu -->
-      <div id="systemInfoBox" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 12px; padding: 12px; margin-bottom: 16px; font-size: 12px; line-height: 1.6; text-align: left;">
-        <div id="sysInfoTitle" style="font-weight: 800; color: #22c55e; margin-bottom: 6px; font-size: 13px;">
-          🔄 Süre Sistemi Güncellendi!
-        </div>
-        <div id="sysInfoContent" style="color: #cbd5e1;">
-          • MinMat süre birikme hatası giderilmiş ve <strong>Seviye 8 ve üzeri yanlış skorlar temizlenmiştir.</strong><br>
-          • Ek süre kullanımı tek bir oyunda <strong>en fazla 10 saniye</strong> ile sınırlandırılmıştır.<br>
-          • Yeni <strong>süre aktarımı (%50)</strong> ve artan süre bonuslarıyla artık Seviye 8 ve üzerine <strong>adil bir şekilde ulaşabilirsiniz!</strong>
-        </div>
-      </div>
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
       <div id="minmatUserBadgeContainer" class="lobby-badge-wrapper" style="margin-bottom: 16px; display: none;"></div>
       
@@ -1364,7 +1353,7 @@
         authWarn: "⚠️ Global sıralamaya girmek ve ödül kazanmak için giriş yapmalısınız.", authVerified: "✓ Doğrulanmış Hesap",
         authLoginBtn: "🔑 Giriş Yap / Google ile Bağlan", authSaveWarn: "⚠️ Giriş yapmadığınız için skorunuz dünya genel sıralamasına kaydedilemedi.",
         signout: "Çıkış Yap",
-        cupmatSwitch: "🏆 Cupmat'a Geç (Yeni Güncellemeleri İncele)",
+        cupmatSwitch: "🏠 StatMatik'e Dön",
         saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!",
         sysInfoTitle: "🔄 Süre Sistemi Güncellendi!",
         sysInfoContent: "• MinMat süre birikme hatası giderilmiş ve <strong>Seviye 8 ve üzeri yanlış skorlar temizlenmiştir.</strong><br>• Ek süre kullanımı tek bir oyunda <strong>en fazla 10 saniye</strong> ile sınırlandırılmıştır.<br>• Yeni <strong>süre aktarımı (%50)</strong> ve artan süre bonuslarıyla artık Seviye 8 ve üzerine <strong>adil bir şekilde ulaşabilirsiniz!</strong>",
@@ -1402,7 +1391,7 @@
         authWarn: "⚠️ You must sign in to enter the global leaderboard and win prizes.", authVerified: "✓ Verified Account",
         authLoginBtn: "🔑 Sign In / Connect with Google", authSaveWarn: "⚠️ Since you are not signed in, your score could not be saved to the global rankings.",
         signout: "Sign Out",
-        cupmatSwitch: "🏆 Go to Cupmat (Check New Updates)",
+        cupmatSwitch: "🏠 Back to StatMatik",
         saving: "⏳ Saving...", saved: "✓ Saved successfully!",
         sysInfoTitle: "🔄 Time System Updated!",
         sysInfoContent: "• MinMat time accumulation bug has been fixed and <strong>scores with Level 8+ have been cleaned up.</strong><br>• Extra time usage is limited to <strong>a maximum of 10 seconds</strong> per game.<br>• With the new <strong>time carry-over (50%)</strong> and scaling time bonuses, you can now <strong>fairly reach Level 8 and beyond!</strong>",
@@ -1677,9 +1666,9 @@
 
     function goToCupmat() {
       if (window.self !== window.top) {
-        window.top.location.href = "/cupmat";
+        window.top.location.href = "/";
       } else {
-        window.location.href = "/cupmat";
+        window.location.href = "/";
       }
     }
 
