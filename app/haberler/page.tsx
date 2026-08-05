@@ -471,24 +471,6 @@ export default function HaberlerPage() {
       <div className="fixed bottom-20 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Local Test Guard Banner */}
-        <div className="mb-6 p-4 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/30 rounded-2xl flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-xs font-black text-amber-300 uppercase tracking-wider block">
-                {t.testModeTitle}
-              </span>
-              <p className="text-xs text-slate-300">{t.testModeSub}</p>
-            </div>
-          </div>
-          <span className="text-[11px] font-bold px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-lg">
-            {t.notLive} 🔒
-          </span>
-        </div>
-
         {/* Portal Header Section */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
           <div>
