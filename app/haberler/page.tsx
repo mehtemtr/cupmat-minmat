@@ -578,9 +578,15 @@ export default function HaberlerPage() {
                       >
                         {getCategoryNameLocalized(article.category)}
                       </span>
-                      <div className="flex items-center gap-1 text-[11px] text-slate-500 font-medium">
-                        <Clock className="w-3 h-3 text-slate-500" />
-                        {formatRelativeTime(article.published_at)}
+                      <div className="flex items-center gap-1.5 opacity-60">
+                        <Clock className="w-3.5 h-3.5" />
+                        {new Date(article.published_at) > new Date() ? (
+                          <span className="text-amber-400 font-semibold flex items-center gap-1">
+                            📌 {currentLang === 'tr' ? 'Sabitlendi' : 'Pinned'}
+                          </span>
+                        ) : (
+                          formatRelativeTime(article.published_at)
+                        )}
                       </div>
                     </div>
 
