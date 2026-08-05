@@ -192,9 +192,8 @@ export async function GET(request: Request) {
 
     const offset = (page - 1) * limit;
 
-    // 1. If language is Turkish ('tr'), try querying Supabase live DB news feed safely
-    if (lang === "tr") {
-      try {
+    // 1. Try querying Supabase live DB news feed safely
+    try {
         const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
         if (key && key.includes(".")) {
           // Cloudflare environment base64 decode safe
@@ -244,7 +243,6 @@ export async function GET(request: Request) {
       } catch (dbErr) {
         // Fallback
       }
-    }
 
     // 2. Multilingual Dataset Fallback (100% safe)
     let formattedDataset = MULTILINGUAL_NEWS_DATASET.map((base) => {
