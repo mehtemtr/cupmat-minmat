@@ -546,11 +546,27 @@ export default function HaberlerPage() {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-              {articles.map((article) => (
+              {articles.map((article) => {
+                const isInternal = article.link && article.link.includes("statmatik.com");
+                const isJustAnnouncement = !article.link || article.link === "https://statmatik.com" || article.link === "https://news.statmatik.com" || article.link === "https://statmatik.com/";
+                const isClickable = !isJustAnnouncement;
+
+                return (
                 <div
                   key={article.id}
-                  onClick={() => setConfirmRedirectArticle(article)}
-                  className="bg-[#060b14] border border-slate-800/80 hover:border-slate-700 rounded-2xl p-5 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/5 cursor-pointer flex flex-col justify-between group"
+                  onClick={() => {
+                    if (!isClickable) return;
+                    if (isInternal) {
+                      window.location.href = article.link;
+                    } else {
+                      setConfirmRedirectArticle(article);
+                    }
+                  }}
+                  className={`bg-[#060b14] border border-slate-800/80 rounded-2xl p-5 flex flex-col justify-between group ${
+                    isClickable
+                      ? "hover:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/5 cursor-pointer"
+                      : "cursor-default"
+                  }`}
                 >
                   <div>
                     {/* Header Badges */}
@@ -569,7 +585,9 @@ export default function HaberlerPage() {
                     </div>
 
                     {/* Title (HTML Sanitized) */}
-                    <h3 className="text-sm font-black text-slate-100 group-hover:text-cyan-400 transition-colors line-clamp-2 leading-snug mb-2">
+                    <h3 className={`text-sm font-black text-slate-100 mb-2 leading-snug line-clamp-2 ${
+                      isClickable ? "group-hover:text-cyan-400 transition-colors" : ""
+                    }`}>
                       {article.title}
                     </h3>
 
@@ -585,12 +603,15 @@ export default function HaberlerPage() {
                       <Globe className="w-3 h-3 text-slate-500" />
                       {article.source || "NewsGlo"}
                     </span>
-                    <span className="text-xs text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      {t.inspect} <ExternalLink className="w-3 h-3" />
-                    </span>
+                    {isClickable && (
+                      <span className="text-xs text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        {t.inspect} <ExternalLink className="w-3 h-3" />
+                      </span>
+                    )}
                   </div>
                 </div>
-              ))}
+              );
+            })}
             </div>
 
             {/* Load More Button */}
