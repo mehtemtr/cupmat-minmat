@@ -802,9 +802,9 @@ export default function EntryPage() {
 
         <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-3">
           {/* 1. NewsGlo Card (En sol) */}
-          <Link href="https://news.statmatik.com" className="group relative">
+          <Link href="#" className="group relative cursor-not-allowed">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
-            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
+            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2 opacity-75">
               <div>
                 <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cyan-500/10 ring-1 ring-cyan-400/20 shadow-[0_0_30px_rgba(6,182,212,0.1)] overflow-hidden p-3 text-cyan-400">
                   <Newspaper className="w-10 h-10" />
@@ -814,8 +814,8 @@ export default function EntryPage() {
                   {t("hero.newsGloDesc")}
                 </p>
               </div>
-              <div className="flex items-center gap-2 font-bold text-cyan-400 text-xs sm:text-sm">
-                NewsGlo Akışına Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <div className="flex items-center gap-2 font-bold text-yellow-500 text-xs sm:text-sm">
+                Kısa Süreli Bakımda (Çok Yakında)
               </div>
             </div>
           </Link>
