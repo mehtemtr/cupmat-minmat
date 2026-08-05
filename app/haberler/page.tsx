@@ -323,10 +323,8 @@ export default function HaberlerPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [confirmRedirectArticle, setConfirmRedirectArticle] = useState<NewsArticle | null>(null);
 
-  // Production Guard: Only active in local development OR if NEXT_PUBLIC_ENABLE_NEWS="true"
-  const isNewsEnabled =
-    process.env.NODE_ENV === "development" ||
-    process.env.NEXT_PUBLIC_ENABLE_NEWS === "true";
+  // Production Guard: Removed. NewsGlo is now active.
+  const isNewsEnabled = true;
 
   useEffect(() => {
     if (!isNewsEnabled) return;
