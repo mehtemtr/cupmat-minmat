@@ -377,9 +377,9 @@ export default function EntryPage() {
                   {newsHeadlines.length > 0 ? (
                     newsHeadlines.map((headline, idx) => (
                       <React.Fragment key={idx}>
-                        <span className="hover:text-cyan-400 transition-colors cursor-pointer font-bold text-white">
+                        <Link href="https://news.statmatik.com/haberler" className="hover:text-cyan-400 transition-colors cursor-pointer font-bold text-white">
                           {headline}
-                        </span>
+                        </Link>
                         <span className="text-cyan-400 font-extrabold text-xs">✦</span>
                       </React.Fragment>
                     ))
