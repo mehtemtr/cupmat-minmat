@@ -178,6 +178,19 @@ async function checkAndTriggerLazyFetch() {
   }
 }
 
+async function translateText(text: string, targetLang: string): Promise<string> {
+  if (!text || targetLang === "tr") return text;
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=tr&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    if (!res.ok) return text;
+    const data = await res.json();
+    return data[0].map((item: any) => item[0]).join("");
+  } catch (e) {
+    return text;
+  }
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -222,11 +235,14 @@ export async function GET(request: Request) {
                 const range = countRes.headers.get("content-range");
                 if (range) count = parseInt(range.split("/")[1], 10) || count;
               }
-            const cleanedDbNews = dbNews.map((item: any) => ({
-              ...item,
-              title: cleanText(item.title || ""),
-              snippet: cleanText(item.snippet || ""),
-            }));
+            
+            const cleanedDbNews = await Promise.all(
+              dbNews.map(async (item: any) => ({
+                ...item,
+                title: cleanText(await translateText(item.title || "", lang)),
+                snippet: cleanText(await translateText(item.snippet || "", lang)),
+              }))
+            );
 
             return NextResponse.json({
               success: true,
