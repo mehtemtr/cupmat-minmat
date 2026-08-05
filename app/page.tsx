@@ -802,7 +802,7 @@ export default function EntryPage() {
 
         <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-3">
           {/* 1. NewsGlo Card (En sol) */}
-          <Link href="/haberler" className="group relative">
+          <Link href="https://news.statmatik.com" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>
