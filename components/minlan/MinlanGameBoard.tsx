@@ -503,12 +503,12 @@ export function MinlanGameBoard({
                   </span>
                 </div>
               ) : (
-                /* Card Back: LARGE FULL MINLAN LOGO IMAGE */
-                <div className="w-full h-full flex items-center justify-center p-1 sm:p-2">
+                /* Card Back: LARGE FULL MINLAN LOGO IMAGE WITH 85% SIZE (NEGATIVE SPACE) */
+                <div className="w-full h-full flex items-center justify-center">
                   <img
                     src="/minlan-logo.png"
                     alt="MinLan Logo"
-                    className="w-full h-full object-contain max-w-[85%] max-h-[85%]"
+                    className="w-full h-full object-contain max-w-[85%] max-h-[85%] opacity-90 drop-shadow-sm"
                   />
                 </div>
               )}
