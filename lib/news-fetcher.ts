@@ -27,47 +27,45 @@ export interface NewsFetchResult {
 const PUBLISHER_RANKS = [
   {
     keywords: [
-      "anadolu ajansı",
-      "aa.com.tr",
-      "trt",
-      "bbc",
       "reuters",
-      "bloomberg",
-      "dw.com",
-      "euronews",
-      "afp",
       "ap news",
+      "associated press",
+      "bbc",
+      "bloomberg",
+      "al jazeera",
+      "afp",
+      "npr",
+      "pbs",
+      "financial times",
     ],
     rank: 100,
   },
   {
     keywords: [
-      "hürriyet",
-      "milliyet",
-      "sabah",
-      "ntv",
-      "habertürk",
-      "cumhuriyet",
-      "sözcü",
-      "dünya",
-      "ekonomim",
-      "trt haber",
+      "the new york times",
+      "washington post",
+      "the guardian",
+      "wall street journal",
+      "cnn",
+      "nbc",
+      "cbs",
+      "abc news",
+      "time",
+      "economist",
     ],
     rank: 80,
   },
   {
     keywords: [
-      "ilke haber",
-      "medyaloji",
-      "vatan",
-      "akşam",
-      "star",
-      "yeni şafak",
-      "gazete duvar",
-      "t24",
-      "webrazzi",
-      "fintechtime",
-      "doviz.com",
+      "cnbc",
+      "forbes",
+      "business insider",
+      "techcrunch",
+      "wired",
+      "national geographic",
+      "scientific american",
+      "nature",
+      "science magazine",
     ],
     rank: 50,
   },
@@ -175,6 +173,22 @@ export function calculateTitleSimilarity(title1: string, title2: string): number
   // Weighted score
   const score = wordJaccard * 0.4 + minWordOverlap * 0.3 + triJaccard * 0.3;
   return score;
+}
+
+/**
+ * Translate text to Turkish dynamically before insertion.
+ */
+async function translateText(text: string, targetLang: string = "tr"): Promise<string> {
+  if (!text) return text;
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    if (!res.ok) return text;
+    const data = await res.json();
+    return data[0].map((item: any) => item[0]).join("");
+  } catch (e) {
+    return text;
+  }
 }
 
 /**
@@ -522,11 +536,25 @@ export async function fetchAndStoreNews(): Promise<NewsFetchResult> {
 
     // 3. Loop over active countries
     for (const country of activeCountries) {
-      const queryTerm = country.short_name_tr || country.name_tr || country.name_en;
-      const searchQuery = `"${queryTerm}" (bilim OR teknoloji OR "yapay zeka" OR sağlık OR çevre OR iklim OR keşif OR ekonomi OR yenilik -futbol -derbi -transfer -lig)`;
-      const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(searchQuery)}&hl=tr&gl=TR&ceid=TR:tr`;
+      const gl = (country.iso2 || "US").toUpperCase();
+      const queryTerm = country.name_tr || gl;
+      
+      // Determine HL (language code) based on country ISO2
+      let hl = "en-US";
+      const langMap: Record<string, string> = {
+        "TR": "tr", "US": "en-US", "GB": "en-GB", "DE": "de", "FR": "fr",
+        "IT": "it", "ES": "es", "KR": "ko", "JP": "ja", "CN": "zh-CN",
+        "RU": "ru", "SA": "ar", "AE": "ar", "BR": "pt-BR", "PT": "pt-PT",
+        "NL": "nl", "IN": "hi", "MX": "es-419", "AR": "es-419", "GR": "el",
+        "ZA": "en-ZA", "AU": "en-AU", "CA": "en-CA"
+      };
+      if (langMap[gl]) hl = langMap[gl];
 
-      logs.push(`[NewsFetcher] Fetching news for '${queryTerm}'...`);
+      // Fetch Top Headlines of that local country
+      const rssUrl = `https://news.google.com/rss?hl=${hl}&gl=${gl}&ceid=${gl}:${hl}`;
+
+      logs.push(`[NewsFetcher] Fetching local top news for '${country.name_tr || gl}' (gl=${gl}, hl=${hl})...`);
+
 
       // Fetch recent existing titles from DB for this country to prevent near-duplicates
       const { data: existingDbItems } = await supabaseAdmin
@@ -572,12 +600,15 @@ export async function fetchAndStoreNews(): Promise<NewsFetchResult> {
           const rawSource = sourceMatch ? sourceMatch[1] : "";
           const rawSnippet = descriptionMatch ? descriptionMatch[1] : "";
 
-          const title = cleanText(rawTitle);
+          const enTitle = cleanText(rawTitle);
           const link = cleanText(rawLink);
           const source = cleanText(rawSource) || null;
-          const snippet = cleanText(rawSnippet) || null;
+          const enSnippet = cleanText(rawSnippet) || null;
 
-          if (title && link) {
+          if (enTitle && link) {
+            // Translate the English global news into Turkish before processing
+            const title = await translateText(enTitle, "tr");
+            const snippet = enSnippet ? await translateText(enSnippet, "tr") : null;
             // Check 48-hour published_at cutoff limit (24-48h freshness window)
             const nowMs = Date.now();
             const FORTY_EIGHT_HOURS_MS = 48 * 60 * 60 * 1000;

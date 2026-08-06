@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-import { fetchAndStoreNews, cleanText } from "@/lib/news-fetcher";
+import { fetchAndStoreNews, cleanText, calculateTitleSimilarity } from "@/lib/news-fetcher";
 
 // Minimum interval between background news fetches (2 hours = 120 minutes)
 const LAZY_FETCH_INTERVAL_MS = 2 * 60 * 60 * 1000;
@@ -215,7 +215,7 @@ export async function GET(request: Request) {
           const claims = JSON.parse(payload);
           const supabaseUrl = `https://${claims.ref}.supabase.co`;
 
-          let fetchUrl = `${supabaseUrl}/rest/v1/news?select=id,title,snippet,source,category,link,published_at&order=published_at.desc&limit=${limit}&offset=${offset}`;
+          let fetchUrl = `${supabaseUrl}/rest/v1/news?select=id,title,snippet,source,category,link,published_at,featured_order&order=featured_order.asc.nullslast,published_at.desc&limit=${limit * 2}&offset=${offset}`;
           if (category !== "all") fetchUrl += `&category=eq.${encodeURIComponent(category)}`;
           if (search) fetchUrl += `&title=ilike.*${encodeURIComponent(search)}*`;
 
@@ -236,8 +236,26 @@ export async function GET(request: Request) {
                 if (range) count = parseInt(range.split("/")[1], 10) || count;
               }
             
+            // Ön yüzde tekrar eden haberleri engellemek için benzerlik filtresi (Similarity Filter)
+            const uniqueDbNews: any[] = [];
+            for (const item of dbNews) {
+              let isDuplicate = false;
+              for (const existing of uniqueDbNews) {
+                if (calculateTitleSimilarity(item.title || "", existing.title || "") >= 0.55) {
+                  isDuplicate = true;
+                  break;
+                }
+              }
+              if (!isDuplicate) {
+                uniqueDbNews.push(item);
+              }
+            }
+
+            // İstenen limit kadarını alıyoruz
+            const paginatedUniqueNews = uniqueDbNews.slice(0, limit);
+
             const cleanedDbNews = await Promise.all(
-              dbNews.map(async (item: any) => ({
+              paginatedUniqueNews.map(async (item: any) => ({
                 ...item,
                 title: cleanText(await translateText(item.title || "", lang)),
                 snippet: cleanText(await translateText(item.snippet || "", lang)),
