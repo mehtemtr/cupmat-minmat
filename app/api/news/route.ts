@@ -154,29 +154,8 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   },
 ];
 
-async function checkAndTriggerLazyFetch() {
-  if (isFetchingNews) return;
-  try {
-    const { data: lastLog } = await supabaseAdmin
-      .from("news_fetch_logs")
-      .select("created_at")
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
-    const lastFetchTime = lastLog?.created_at ? new Date(lastLog.created_at).getTime() : 0;
-    const timeSinceLastFetch = Date.now() - lastFetchTime;
-
-    if (timeSinceLastFetch >= LAZY_FETCH_INTERVAL_MS) {
-      isFetchingNews = true;
-      fetchAndStoreNews()
-        .catch((err) => console.error("[Cloudflare LazyFetch] Error:", err))
-        .finally(() => { isFetchingNews = false; });
-    }
-  } catch (err) {
-    // Ignore error
-  }
-}
+// Lazy fetch has been disabled to prevent Vercel CPU limit issues.
+// Cloudflare Workers (custom-worker.js) now handles automated fetching.
 
 async function translateText(text: string, targetLang: string): Promise<string> {
   if (!text || targetLang === "tr") return text;
@@ -200,8 +179,7 @@ export async function GET(request: Request) {
     const search = (searchParams.get("search") || "").trim().toLowerCase();
     const lang = searchParams.get("lang") || "tr";
 
-    // Safely trigger background lazy fetch
-    checkAndTriggerLazyFetch().catch(() => {});
+    // Lazy fetch is handled by Cloudflare Workers cron now.
 
     const offset = (page - 1) * limit;
 

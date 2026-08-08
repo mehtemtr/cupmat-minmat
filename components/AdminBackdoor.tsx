@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 
 export default function AdminBackdoor() {
   const keySequenceRef = useRef<string[]>([]);
-  const targetSequence = ["a", "j", "t", "r", "a", "n"];
   const [toast, setToast] = useState<{
     type: "loading" | "success" | "error" | null;
     message: string;
@@ -32,32 +31,33 @@ export default function AdminBackdoor() {
 
       keySequenceRef.current.push(key);
 
-      if (keySequenceRef.current.length > targetSequence.length) {
+      if (keySequenceRef.current.length > 15) {
         keySequenceRef.current.shift();
       }
 
-      const isMatch = keySequenceRef.current.length === targetSequence.length &&
-        keySequenceRef.current.every((k, i) => k === targetSequence[i]);
+      const currentString = keySequenceRef.current.join("");
 
-      if (isMatch) {
+      if (currentString.endsWith("ajtran")) {
         console.log("🔐 Admin Backdoor tetiklendi: AJTRAN");
         const secret = process.env.NEXT_PUBLIC_CRON_SECRET || "";
         
-        setToast({ type: "loading", message: "🤖 Yapay Zeka Ajanı çalışıyor, kadrolar güncelleniyor..." });
+        setToast({ type: "loading", message: "📰 NewsGlo Haber Taraması Başlatılıyor..." });
         
-        fetch(`/api/ai-agent?task=full&secret=${secret}`, { method: "GET" })
-          .then(async (res) => {
-            if (res.ok) {
-              setToast({ type: "success", message: "✅ Kadro ve Maç Analizleri Başarıyla Güncellendi!" });
-              setTimeout(() => setToast({ type: null, message: "" }), 4000);
+        fetch(`/api/cron/fetch-news`, { 
+          method: "GET",
+          headers: { "Authorization": `Bearer ${secret}` }
+        })
+          .then(async (newsRes) => {
+            if (newsRes.ok) {
+              setToast({ type: "success", message: "✅ NewsGlo Haberleri Başarıyla Güncellendi!" });
             } else {
-              const data = await res.json().catch(() => ({}));
+              const data = await newsRes.json().catch(() => ({}));
               setToast({ 
                 type: "error", 
-                message: `❌ Ajan Hatası: ${data.error || res.statusText || "Bilinmeyen Hata"}` 
+                message: `❌ Haber Hatası: ${data.error || newsRes.statusText || "Bilinmeyen Hata"}` 
               });
-              setTimeout(() => setToast({ type: null, message: "" }), 5000);
             }
+            setTimeout(() => setToast({ type: null, message: "" }), 5000);
           })
           .catch((err) => {
             setToast({ type: "error", message: `❌ Sunucu Hatası: ${err.message || String(err)}` });
