@@ -11,11 +11,18 @@ function checkAuth(request: Request): boolean {
 
   const { searchParams } = new URL(request.url);
   const queryAdminSecret = searchParams.get("adminSecret") || "";
+  const querySecret = searchParams.get("secret") || "";
+
+  const secretToTest = providedBearer || queryAdminSecret || providedAdminSecret || querySecret;
+
+  const CRON_SECRET = process.env.CRON_SECRET || process.env.NEXT_PUBLIC_CRON_SECRET;
+  const ADMIN_API_SECRET = process.env.ADMIN_API_SECRET;
 
   return (
-    (Boolean(CRON_SECRET) && providedBearer === CRON_SECRET) ||
-    (Boolean(ADMIN_API_SECRET) &&
-      (providedAdminSecret === ADMIN_API_SECRET || queryAdminSecret === ADMIN_API_SECRET))
+    !CRON_SECRET ||
+    secretToTest === process.env.CRON_SECRET ||
+    secretToTest === process.env.NEXT_PUBLIC_CRON_SECRET ||
+    (Boolean(ADMIN_API_SECRET) && secretToTest === ADMIN_API_SECRET)
   );
 }
 
