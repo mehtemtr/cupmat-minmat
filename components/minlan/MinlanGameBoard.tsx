@@ -583,13 +583,23 @@ export function MinlanGameBoard({
             <p className="text-sm text-slate-400 mb-6">
               {t.roundText} {roundLevel}. {t.totalScoreText}: <span className="text-amber-400 font-bold">{score}</span>
             </p>
-            <button
-              onClick={resetEntireGame}
-              className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <RotateCcw className="w-5 h-5 text-cyan-400" />
-              <span>{t.playAgainText}</span>
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+              <button
+                onClick={resetEntireGame}
+                className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 flex items-center justify-center gap-2 cursor-pointer transition-all"
+              >
+                <RotateCcw className="w-5 h-5 text-cyan-400" />
+                <span>{t.playAgainText}</span>
+              </button>
+
+              <button
+                onClick={onOpenLeaderboard}
+                className="w-full py-4 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold rounded-2xl border border-amber-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all"
+              >
+                <Trophy className="w-5 h-5 text-amber-400" />
+                <span>{t.scoreTableText}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
