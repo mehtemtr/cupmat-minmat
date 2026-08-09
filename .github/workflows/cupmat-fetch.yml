@@ -1,9 +1,6 @@
 name: Automated Cupmat Fetcher
 
 on:
-  schedule:
-    # Runs every 30 minutes
-    - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
       site_url:

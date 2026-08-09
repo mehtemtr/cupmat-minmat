@@ -1,9 +1,6 @@
 name: Automated API-Football Sync
 
 on:
-  schedule:
-    # Runs every day at 03:00
-    - cron: '0 3 * * *'
   workflow_dispatch:
     inputs:
       site_url:
