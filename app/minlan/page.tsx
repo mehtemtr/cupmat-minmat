@@ -76,25 +76,6 @@ export default function MinlanPage() {
       <div className="fixed bottom-20 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Local Test Banner */}
-        <div className="mb-6 p-4 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/30 rounded-2xl flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-xs font-black text-amber-300 uppercase tracking-wider block">
-                LOCAL TEST & PREVIEW MODU
-              </span>
-              <p className="text-xs text-slate-300">
-                Arayüzü ve kart mekaniklerini burada test edebilir, istediğin değişiklikleri iletebilirsin.
-              </p>
-            </div>
-          </div>
-          <span className="text-[11px] font-bold px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-lg">
-            Canlıya Alınmadı 🔒
-          </span>
-        </div>
 
         {/* Single Unified Card Container (One Single Box Layout matching MinMat) */}
         <div className="w-full max-w-xl mx-auto bg-[#060b14] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl flex flex-col items-center select-none">
