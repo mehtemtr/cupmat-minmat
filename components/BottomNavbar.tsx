@@ -87,7 +87,7 @@ export default function BottomNavbar() {
   const navItems = [
     {
       label: locale === "tr" ? "Ana Sayfa" : "Home",
-      href: "/",
+      href: process.env.NODE_ENV === "development" ? "/" : "https://statmatik.com",
       icon: Home,
       isActive: pathname === "/",
     },
