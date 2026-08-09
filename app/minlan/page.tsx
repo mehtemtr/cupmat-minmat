@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { MinlanHeader } from "@/components/minlan/MinlanHeader";
 import { MinlanGameBoard } from "@/components/minlan/MinlanGameBoard";
 import { MinlanLeaderboardModal } from "@/components/minlan/MinlanLeaderboardModal";
+import { MinlanMistakesModal } from "@/components/minlan/MinlanMistakesModal";
 import { LanguageCode, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
 import { MOCK_MINLAN_CATEGORIES, MOCK_COMMUNITY_STATS } from "@/lib/minlan/mock-data";
 import { Sparkles, Trophy, ShieldCheck, HeartHandshake } from "lucide-react";
@@ -20,6 +21,7 @@ export default function MinlanPage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("cat-1");
   const [communityStats, setCommunityStats] = useState<MinlanCommunityStats>(MOCK_COMMUNITY_STATS);
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState<boolean>(false);
+  const [isMistakesOpen, setIsMistakesOpen] = useState<boolean>(false);
   const [userLevel] = useState<number>(1);
 
 
@@ -118,6 +120,7 @@ export default function MinlanPage() {
             onSelectCategory={setSelectedCategoryId}
             onRecordProgress={handleRecordProgress}
             onOpenLeaderboard={() => setIsLeaderboardOpen(true)}
+            onOpenMistakes={() => setIsMistakesOpen(true)}
           />
         </div>
 
@@ -125,6 +128,14 @@ export default function MinlanPage() {
         <MinlanLeaderboardModal
           isOpen={isLeaderboardOpen}
           onClose={() => setIsLeaderboardOpen(false)}
+        />
+
+        {/* 5. Mistakes Analysis Modal */}
+        <MinlanMistakesModal
+          isOpen={isMistakesOpen}
+          onClose={() => setIsMistakesOpen(false)}
+          nativeLang={nativeLang}
+          targetLang={targetLang}
         />
       </div>
     </div>

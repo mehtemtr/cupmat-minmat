@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS minlan_words (
 -- 3. MinLan User Progress Table
 CREATE TABLE IF NOT EXISTS minlan_user_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL,
+  user_id TEXT REFERENCES public.profiles(id) ON DELETE CASCADE,
   category_id UUID REFERENCES minlan_categories(id) ON DELETE CASCADE,
   native_lang VARCHAR(10) DEFAULT 'tr' NOT NULL,
   target_lang VARCHAR(10) DEFAULT 'en' NOT NULL,

@@ -23,7 +23,7 @@ export interface MinlanDictionary {
 
 export const MINLAN_TRANSLATIONS: Record<LanguageCode, MinlanDictionary> = {
   tr: {
-    slogan: "Bir lisan, bir insan. Kaç kişilik istersin?",
+    slogan: "Bir dil, bir insan. Kaç kişiliksin?",
     leaderboard: "Sıralama",
     communityGoal: "TOPLULUK HEDEFİ (4. Kategori Kilidi İçin)",
     targetLangLabel: "Öğrenilen Dil:",

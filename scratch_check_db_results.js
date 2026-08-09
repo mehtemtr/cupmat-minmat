@@ -22,9 +22,8 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function run() {
   try {
-    const { data: profiles, error: profilesErr } = await supabase.from('profiles').select('*').limit(5);
-    console.log("profiles sample:", profiles, profilesErr);
-
+    const { error: insErr } = await supabase.from('minlan_user_progress').insert({ user_id: 'user_123', category_id: '861a5b48-8df0-4b2e-9d2f-123456789012' });
+    console.log("Insert err:", insErr);
   } catch (err) {
     console.error("Failed running test:", err);
   }

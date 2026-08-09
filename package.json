@@ -21,7 +21,6 @@
     "lucide-react": "^0.511.0",
     "next": "^15.5.22",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "svix": "^1.94.0"
   },
   "devDependencies": {
@@ -29,10 +28,12 @@
     "@tailwindcss/postcss": "^4.1.7",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5",
+    "@types/react-dom": "^19.2.4",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.5.22",
+    "react-dom": "^19.2.8",
     "tailwindcss": "^4.1.7",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "wrangler": "^4.120.0"
   }

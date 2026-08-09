@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { LanguageCode, MinlanCard, SUPPORTED_LANGUAGES, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
 import { getMinlanTranslation } from "@/lib/minlan/i18n";
-import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe, LogOut } from "lucide-react";
+import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe, LogOut, BrainCircuit } from "lucide-react";
 
 const ROUND_TIMER_TABLE: Record<number, number> = {
   1: 27,
@@ -51,6 +51,7 @@ interface MinlanGameBoardProps {
   onSelectCategory: (id: string) => void;
   onRecordProgress: (matches: number, score: number, sessionScore?: number) => void;
   onOpenLeaderboard: () => void;
+  onOpenMistakes: () => void;
 }
 
 export function MinlanGameBoard({
@@ -64,6 +65,7 @@ export function MinlanGameBoard({
   onSelectCategory,
   onRecordProgress,
   onOpenLeaderboard,
+  onOpenMistakes,
 }: MinlanGameBoardProps) {
   const router = useRouter();
   const t = getMinlanTranslation(nativeLang);
@@ -274,6 +276,17 @@ export function MinlanGameBoard({
           setFlippedCards([]);
           setStreak(0);
 
+          // Track the mistake asynchronously
+          fetch("/api/minlan/mistakes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              wordId: card1.wordPairId,
+              nativeLang,
+              targetLang
+            })
+          }).catch((err) => console.error("Failed to track mistake", err));
+
           const newMistakes = mistakes + 1;
           setMistakes(newMistakes);
 
@@ -450,7 +463,7 @@ export function MinlanGameBoard({
         })}
       </div>
 
-      {/* 5. Action Buttons: Menu & Leaderboard */}
+      {/* 5. Action Buttons: Menu & Leaderboard & Mistakes */}
       <div className="flex items-center justify-center gap-3 mb-6">
         <button
           onClick={() => {
@@ -464,6 +477,14 @@ export function MinlanGameBoard({
         >
           {gameState === "idle" ? <LogOut className="w-4 h-4 text-cyan-400" /> : <Home className="w-4 h-4 text-cyan-400" />}
           <span>{gameState === "idle" ? "Ana Sayfa" : t.menuText}</span>
+        </button>
+
+        <button
+          onClick={onOpenMistakes}
+          className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 border border-purple-500/30 text-purple-400 font-bold rounded-xl text-xs hover:bg-purple-500/20 transition-all cursor-pointer"
+        >
+          <BrainCircuit className="w-4 h-4" />
+          Hatalarım
         </button>
 
         <button
@@ -595,6 +616,14 @@ export function MinlanGameBoard({
               >
                 <RotateCcw className="w-5 h-5 text-cyan-400" />
                 <span>{t.playAgainText}</span>
+              </button>
+
+              <button
+                onClick={onOpenMistakes}
+                className="w-full py-4 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold rounded-2xl border border-purple-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all"
+              >
+                <BrainCircuit className="w-5 h-5 text-purple-400" />
+                <span>Hatalarım</span>
               </button>
 
               <button
