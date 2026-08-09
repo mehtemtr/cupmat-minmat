@@ -19,8 +19,7 @@ export async function GET(request: Request) {
         target_lang,
         score,
         category_id,
-        created_at,
-        profiles ( nickname, email )
+        created_at
       `)
       .order("score", { ascending: false })
       .order("created_at", { ascending: false })
@@ -42,11 +41,28 @@ export async function GET(request: Request) {
       throw error;
     }
 
+    // Manual join to avoid Foreign Key errors if DB schema was created without it
+    const userIds = data.map((d: any) => d.user_id).filter(Boolean);
+    let profilesDict: any = {};
+    if (userIds.length > 0) {
+      const { data: profilesData } = await supabaseAdmin
+        .from("profiles")
+        .select("id, nickname, email")
+        .in("id", userIds);
+        
+      if (profilesData) {
+        profilesData.forEach((p: any) => {
+          profilesDict[p.id] = p;
+        });
+      }
+    }
+
     const formattedData = data.map((item: any, index: number) => {
       const cat = MOCK_MINLAN_CATEGORIES.find(c => c.id === item.category_id);
+      const profile = profilesDict[item.user_id];
       return {
         rank: index + 1,
-        name: item.profiles?.nickname || item.profiles?.email?.split('@')[0] || "Unknown",
+        name: profile?.nickname || profile?.email?.split('@')[0] || "Unknown",
         score: item.score,
         native: item.native_lang,
         target: item.target_lang,
