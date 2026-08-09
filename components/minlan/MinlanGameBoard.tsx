@@ -311,13 +311,18 @@ export function MinlanGameBoard({
   // Cat 4: 🩺 (Locked / Yakında)
   // Cat 5 & 6: 🌿 & 📈 (Locked / Yakında)
   // Cat 7, 8, 9: Removed from UI
+  const getCatLabel = (id: string, defaultName: string) => {
+    const c = categories.find((cat) => cat.id === id);
+    return c ? getCategoryTitle(c) : defaultName;
+  };
+
   const selectorItems = [
-    { id: "cat-1", icon: "🏠", label: getCategoryTitle(categories[0] || { name_tr: "Günlük Yaşam" } as any), isUnlocked: true, lockReason: "" },
-    { id: "cat-2", icon: "💻", label: getCategoryTitle(categories[1] || { name_tr: "Teknoloji" } as any), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-3", icon: "🔬", label: getCategoryTitle(categories[2] || { name_tr: "Bilim" } as any), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-4", icon: "🩺", label: getCategoryTitle(categories[3] || { name_tr: "Sağlık" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
-    { id: "cat-5", icon: "🌿", label: getCategoryTitle(categories[4] || { name_tr: "Çevre & İklim" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
-    { id: "cat-6", icon: "📈", label: getCategoryTitle(categories[5] || { name_tr: "Ekonomi & Finans" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
+    { id: "cat-1", icon: "🏠", label: getCatLabel("cat-1", "Günlük Yaşam"), isUnlocked: true, lockReason: "" },
+    { id: "cat-2", icon: "💻", label: getCatLabel("cat-2", "Teknoloji"), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-3", icon: "🔬", label: getCatLabel("cat-3", "Bilim"), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-4", icon: "🩺", label: getCatLabel("cat-4", "Sağlık"), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
+    { id: "cat-5", icon: "🌿", label: getCatLabel("cat-5", "Çevre & İklim"), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
+    { id: "cat-6", icon: "📈", label: getCatLabel("cat-6", "Ekonomi & Finans"), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
   ];
 
   return (
