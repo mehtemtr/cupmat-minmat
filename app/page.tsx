@@ -804,8 +804,8 @@ export default function EntryPage() {
           );
         })()}
 
-        <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-3">
-          {/* 1. NewsGlo Card (En sol) */}
+        <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* 1. NewsGlo Card */}
           <Link href="https://news.statmatik.com/haberler" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
@@ -824,7 +824,26 @@ export default function EntryPage() {
             </div>
           </Link>
 
-          {/* 2. MinMat Card (Ortada) */}
+          {/* 2. Minlan Card */}
+          <Link href="/minlan" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-purple-500 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
+              <div>
+                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-purple-500/10 ring-1 ring-purple-400/20 shadow-[0_0_30px_rgba(168,85,247,0.1)] overflow-hidden p-3 text-purple-400">
+                  <Gamepad2 className="w-10 h-10" />
+                </div>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">Minlan</h2>
+                <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
+                  {locale === "tr" ? "9 Dilde Karşılıklı Kelime Mücadelesi. Rakiplerinle yarış ve zirveye çık!" : "9-Language Cross-Lingual Word Challenge. Compete and rise to the top!"}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 font-bold text-purple-400 text-xs sm:text-sm">
+                Minlan'a Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 3. MinMat Card */}
           <Link href="/minmat" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
