@@ -91,33 +91,12 @@ export default function BottomNavbar() {
       icon: Home,
       isActive: pathname === "/",
     },
-    ...(isNewsEnabled
-      ? [
-          {
-            label: "NewsGlo",
-            href: "/haberler",
-            icon: Newspaper,
-            isActive: pathname?.startsWith("/haberler"),
-          },
-        ]
-      : []),
-    ...(isMinlanEnabled
-      ? [
-          {
-            label: "MinLan",
-            href: process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan",
-            icon: Sparkles,
-            isActive: pathname?.startsWith("/minlan"),
-          },
-        ]
-      : [
-          {
-            label: locale === "tr" ? "Tahmin" : "Predict",
-            href: "/tahminler",
-            icon: Sparkles,
-            isActive: pathname === "/tahminler" || pathname === "/predictions",
-          },
-        ]),
+    {
+      label: "MinLan",
+      href: process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan",
+      icon: Sparkles,
+      isActive: pathname?.startsWith("/minlan"),
+    },
     {
       label: "MinMat",
       href: "/minmat",
@@ -125,10 +104,10 @@ export default function BottomNavbar() {
       isActive: pathname?.startsWith("/minmat"),
     },
     {
-      label: locale === "tr" ? "Sıralama" : "Ranks",
-      href: "/leaderboard",
-      icon: Trophy,
-      isActive: pathname === "/leaderboard",
+      label: "NewsGlo",
+      href: process.env.NODE_ENV === "development" ? "/haberler" : "https://news.statmatik.com",
+      icon: Newspaper,
+      isActive: pathname?.startsWith("/haberler") || pathname?.includes("news"),
     },
   ];
 

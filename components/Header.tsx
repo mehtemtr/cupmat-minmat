@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Trophy, Info, HelpCircle, Calculator, ChevronDown, Youtube } from "lucide-react";
+import { Home, Trophy, Info, HelpCircle, Calculator, ChevronDown, Youtube, Sparkles, Newspaper } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslation } from "@/contexts/LocaleContext";
@@ -252,6 +252,28 @@ export function Header() {
     locale === "it" ? "Vai a MinMat" :
     "Go to MinMat";
 
+  const minLanSwitchLabel =
+    locale === "tr" ? "MinLan'a Geç" :
+    locale === "de" ? "Zu MinLan" :
+    locale === "fr" ? "Aller à MinLan" :
+    locale === "es" ? "Ir a MinLan" :
+    locale === "pt" ? "Ir para o MinLan" :
+    locale === "ar" ? "الذهاب إلى MinLan" :
+    locale === "ko" ? "MinLan으로 이동" :
+    locale === "it" ? "Vai a MinLan" :
+    "Go to MinLan";
+
+  const newsGloSwitchLabel =
+    locale === "tr" ? "NewsGlo'ya Geç" :
+    locale === "de" ? "Zu NewsGlo" :
+    locale === "fr" ? "Aller à NewsGlo" :
+    locale === "es" ? "Ir a NewsGlo" :
+    locale === "pt" ? "Ir para o NewsGlo" :
+    locale === "ar" ? "الذهاب إلى NewsGlo" :
+    locale === "ko" ? "NewsGlo로 이동" :
+    locale === "it" ? "Vai a NewsGlo" :
+    "Go to NewsGlo";
+
   // Kök seçim kapısı (/) — header yok; CupMat dünyasında navbar gösterilir
   if (pathname === "/") return null;
 
@@ -312,6 +334,26 @@ export function Header() {
                   >
                     <Calculator className="h-4 w-4" />
                     <span>{minMatSwitchLabel}</span>
+                  </Link>
+                  
+                  {/* MinLan Link */}
+                  <Link
+                    href={process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan"}
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-purple-300 hover:bg-purple-500/10 transition-colors"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    <span>{minLanSwitchLabel}</span>
+                  </Link>
+
+                  {/* NewsGlo Link */}
+                  <Link
+                    href={process.env.NODE_ENV === "development" ? "/haberler" : "https://news.statmatik.com"}
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-orange-300 hover:bg-orange-500/10 transition-colors"
+                  >
+                    <Newspaper className="h-4 w-4" />
+                    <span>{newsGloSwitchLabel}</span>
                   </Link>
                   
                   {/* Divider */}
