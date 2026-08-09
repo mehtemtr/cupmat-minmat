@@ -50,8 +50,12 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-              <Trophy className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-2xl bg-slate-950 border border-cyan-500/30 flex items-center justify-center overflow-hidden p-1 shadow-lg shadow-cyan-500/20">
+              <img
+                src="/minlan-logo.png"
+                alt="MinLan Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h3 className="text-xl font-black text-white">MinLan Liderlik Tablosu</h3>
