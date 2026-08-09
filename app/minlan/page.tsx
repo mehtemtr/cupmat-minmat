@@ -46,13 +46,15 @@ export default function MinlanPage() {
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId) || categories[0];
 
   // Callback when a game round is completed to record match progress & update local community bar
-  const handleRecordProgress = async (matches: number, score: number) => {
+  const handleRecordProgress = async (matches: number, score: number, sessionScore?: number) => {
     try {
       // Optimistically update local community stats
-      setCommunityStats((prev) => ({
-        ...prev,
-        total_card_matches: prev.total_card_matches + matches,
-      }));
+      if (matches > 0) {
+        setCommunityStats((prev) => ({
+          ...prev,
+          total_card_matches: prev.total_card_matches + matches,
+        }));
+      }
 
       // Call API
       await fetch("/api/minlan/progress", {
@@ -61,6 +63,7 @@ export default function MinlanPage() {
         body: JSON.stringify({
           matchesEarned: matches,
           scoreEarned: score,
+          sessionScore,
           categoryId: selectedCategoryId,
           nativeLang,
           targetLang,

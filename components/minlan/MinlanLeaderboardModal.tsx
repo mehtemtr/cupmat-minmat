@@ -165,6 +165,12 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
                         <span>{nativeObj?.flag || "🏳️"} → {targetObj?.flag || "🏳️"}</span>
                         <span>•</span>
                         <span>{safeItem.category || "Kategori Yok"}</span>
+                        {safeItem.date && (
+                          <>
+                            <span>•</span>
+                            <span>{new Date(safeItem.date).toLocaleDateString("tr-TR")} {new Date(safeItem.date).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

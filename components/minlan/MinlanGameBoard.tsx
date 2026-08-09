@@ -48,7 +48,7 @@ interface MinlanGameBoardProps {
   communityStats: MinlanCommunityStats;
   onTargetLangChange: (lang: LanguageCode) => void;
   onSelectCategory: (id: string) => void;
-  onRecordProgress: (matches: number, score: number) => void;
+  onRecordProgress: (matches: number, score: number, sessionScore?: number) => void;
   onOpenLeaderboard: () => void;
 }
 
@@ -169,15 +169,23 @@ export function MinlanGameBoard({
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [gameState, timeLeft]);
+  }, [gameState, timeLeft, score, onRecordProgress]);
 
   const resetEntireGame = () => {
+    if (score > 0 && gameState === "playing") {
+      onRecordProgress(0, 0, score);
+    }
+    setGameState("idle");
     setRoundLevel(1);
     setScore(0);
     setLives(3);
     setMistakes(0);
     setStreak(0);
-    setGameState("idle");
+    setTimeLeft(27);
+    setFlippedCards([]);
+    setCards([]);
+    setMatchedPairsCount(0);
+    setShowRoundSuccess(false);
   };
 
   const handleCardClick = (clickedCard: MinlanCard) => {
@@ -270,6 +278,7 @@ export function MinlanGameBoard({
               const newLives = l - 1;
               if (newLives <= 0) {
                 setGameState("game_over");
+                onRecordProgress(0, 0, score);
               }
               return Math.max(0, newLives);
             });

@@ -12,16 +12,18 @@ export async function GET(request: Request) {
     const categoryId = searchParams.get("category") || "all";
 
     let query = supabaseAdmin
-      .from("minlan_user_progress")
+      .from("minlan_leaderboard")
       .select(`
         user_id,
         native_lang,
         target_lang,
-        total_score,
+        score,
         category_id,
+        created_at,
         profiles ( nickname, email )
       `)
-      .order("total_score", { ascending: false })
+      .order("score", { ascending: false })
+      .order("created_at", { ascending: false })
       .limit(50);
 
     if (nativeLang !== "all") {
@@ -45,10 +47,11 @@ export async function GET(request: Request) {
       return {
         rank: index + 1,
         name: item.profiles?.nickname || item.profiles?.email?.split('@')[0] || "Unknown",
-        score: item.total_score,
+        score: item.score,
         native: item.native_lang,
         target: item.target_lang,
         category: cat ? cat.name_tr : "Bilinmeyen Kategori",
+        date: item.created_at,
       };
     });
 

@@ -80,6 +80,25 @@ export async function POST(request: Request) {
       }
     }
 
+    // 3. Insert Session Score into Leaderboard
+    const sessionScore = parseInt(body.sessionScore || "0", 10);
+    if (internalUserId && categoryId && sessionScore > 0) {
+      try {
+        await supabaseAdmin
+          .from("minlan_leaderboard")
+          .insert({
+            user_id: internalUserId,
+            category_id: categoryId,
+            native_lang: nativeLang,
+            target_lang: targetLang,
+            score: sessionScore,
+            matches_count: 0 // Optional: if we wanted to track session matches
+          });
+      } catch (e) {
+        console.error("Could not insert into minlan_leaderboard:", e);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       matchesAdded: matches,
