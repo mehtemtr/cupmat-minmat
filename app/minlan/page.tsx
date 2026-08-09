@@ -20,30 +20,6 @@ export default function MinlanPage() {
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState<boolean>(false);
   const [userLevel] = useState<number>(1);
 
-  // Production Guard: MinLan is ONLY active in local development OR if NEXT_PUBLIC_ENABLE_MINLAN="true"
-  const isMinlanEnabled =
-    process.env.NODE_ENV === "development" ||
-    process.env.NEXT_PUBLIC_ENABLE_MINLAN === "true";
-
-  if (!isMinlanEnabled) {
-    return (
-      <div className="min-h-screen bg-[#04080e] text-white flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-3xl mb-4 shadow-lg shadow-cyan-500/20">
-          🔒
-        </div>
-        <h1 className="text-2xl font-black text-white mb-2">MinLan — Yakında Sizlerle!</h1>
-        <p className="text-sm text-slate-400 max-w-md mb-6">
-          MinLan (9 Dilli Hafıza Oyunu) şu an geliştirme ve test aşamasındadır. Çok yakında yayında olacaktır.
-        </p>
-        <a
-          href="/"
-          className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-sm transition-all"
-        >
-          Ana Sayfaya Dön
-        </a>
-      </div>
-    );
-  }
 
   // Fetch Categories and Community Stats
   useEffect(() => {
