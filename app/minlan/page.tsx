@@ -36,7 +36,7 @@ export default function MinlanPage() {
           MinLan (9 Dilli Hafıza Oyunu) şu an geliştirme ve test aşamasındadır. Çok yakında yayında olacaktır.
         </p>
         <a
-          href="/cupmat"
+          href="/"
           className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-sm transition-all"
         >
           Ana Sayfaya Dön
