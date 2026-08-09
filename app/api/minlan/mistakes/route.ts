@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
-import { MOCK_MINLAN_WORDS } from "@/lib/minlan/mock-data";
+import dataset from "@/lib/minlan/data/minlan_full_dataset.json";
 
 export async function POST(request: Request) {
   try {
@@ -100,9 +100,9 @@ export async function GET(request: Request) {
     // Sort by count descending
     const sortedWordIds = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 5);
 
-    // Map to actual word objects from mock data
+    // Map to actual word objects from full dataset
     const mistakes = sortedWordIds.map(id => {
-      const word = MOCK_MINLAN_WORDS.find(w => w.id === id);
+      const word = dataset.words.find(w => w.id === id);
       return {
         word_id: id,
         count: counts[id],
