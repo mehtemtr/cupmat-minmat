@@ -14,9 +14,6 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
   const [nativeFilter, setNativeFilter] = useState<string>("all");
   const [targetFilter, setTargetFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-
-  if (!isOpen) return null;
-
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -44,6 +41,8 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
     
     fetchLeaderboard();
   }, [isOpen, nativeFilter, targetFilter, categoryFilter]);
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
