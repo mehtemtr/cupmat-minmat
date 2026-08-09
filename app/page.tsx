@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useTranslation, useLocale } from "@/contexts/LocaleContext";
 import { Trophy, Sparkles, ChevronRight, Calculator, Activity, Newspaper, Gamepad2 } from "lucide-react";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
+import { MinlanCountdown } from "@/components/MinlanCountdown";
 
 function BirthdayCake() {
   const [isBlownOut, setIsBlownOut] = useState(false);
@@ -410,6 +411,9 @@ export default function EntryPage() {
         </header>
 
 
+
+        {/* Minlan Countdown Section */}
+        <MinlanCountdown />
 
         {/* Dynamic Celebrations Section */}
         {activeBanners.includes("psg") && (
