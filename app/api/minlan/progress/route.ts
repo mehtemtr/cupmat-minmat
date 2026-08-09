@@ -1,13 +1,28 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { matchesEarned, scoreEarned, userId, categoryId } = body;
+    const { matchesEarned, scoreEarned, categoryId, nativeLang = "tr", targetLang = "en" } = body;
 
     const matches = parseInt(matchesEarned || "0", 10);
     const score = parseInt(scoreEarned || "0", 10);
+    
+    // Resolve internal profile ID from Clerk Auth
+    let internalUserId = null;
+    const { userId: clerkUserId } = await auth();
+    if (clerkUserId) {
+      const { data: profile } = await supabaseAdmin
+        .from("profiles")
+        .select("id")
+        .eq("user_id", clerkUserId)
+        .maybeSingle();
+      if (profile) {
+        internalUserId = profile.id;
+      }
+    }
 
     if (matches > 0) {
       // 1. Increment Community Matches Counter in DB
@@ -30,12 +45,12 @@ export async function POST(request: Request) {
     }
 
     // 2. Insert/Update User Progress
-    if (userId && categoryId && score > 0) {
+    if (internalUserId && categoryId && score > 0) {
       try {
         const { data: existing, error: selectErr } = await supabaseAdmin
           .from("minlan_user_progress")
           .select("total_score, max_round_reached, total_matches_count")
-          .eq("user_id", userId)
+          .eq("user_id", internalUserId)
           .eq("category_id", categoryId)
           .maybeSingle();
 
@@ -52,10 +67,10 @@ export async function POST(request: Request) {
         await supabaseAdmin
           .from("minlan_user_progress")
           .upsert({
-             user_id: userId,
+             user_id: internalUserId,
              category_id: categoryId,
-             native_lang: "tr", // Should be dynamic if user can change, assuming tr
-             target_lang: "en", // Assuming en for now, or fetch from request
+             native_lang: nativeLang, 
+             target_lang: targetLang, 
              total_score: currentScore + score,
              total_matches_count: currentMatchesCount + matches,
              updated_at: new Date().toISOString()

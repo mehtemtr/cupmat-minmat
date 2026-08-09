@@ -62,6 +62,8 @@ export default function MinlanPage() {
           matchesEarned: matches,
           scoreEarned: score,
           categoryId: selectedCategoryId,
+          nativeLang,
+          targetLang,
         }),
       });
     } catch (e) {
