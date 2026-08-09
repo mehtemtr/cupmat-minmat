@@ -12,15 +12,17 @@ export async function POST(request: Request) {
     
     // Resolve internal profile ID from Clerk Auth
     let internalUserId = null;
+    let username = null;
     const { userId: clerkUserId } = await auth();
     if (clerkUserId) {
       const { data: profile } = await supabaseAdmin
         .from("profiles")
-        .select("id")
+        .select("id, nickname")
         .eq("user_id", clerkUserId)
         .maybeSingle();
       if (profile) {
         internalUserId = profile.id;
+        username = profile.nickname;
       }
     }
 
@@ -92,7 +94,8 @@ export async function POST(request: Request) {
             native_lang: nativeLang,
             target_lang: targetLang,
             score: sessionScore,
-            matches_count: 0 // Optional: if we wanted to track session matches
+            matches_count: 0, // Optional: if we wanted to track session matches
+            username: username
           });
       } catch (e) {
         console.error("Could not insert into minlan_leaderboard:", e);
