@@ -105,7 +105,7 @@ export default function BottomNavbar() {
     },
     {
       label: "NewsGlo",
-      href: process.env.NODE_ENV === "development" ? "/haberler" : "https://news.statmatik.com",
+      href: "/haberler",
       icon: Newspaper,
       isActive: pathname?.startsWith("/haberler") || pathname?.includes("news"),
     },

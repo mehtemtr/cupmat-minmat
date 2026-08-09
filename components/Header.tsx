@@ -348,7 +348,7 @@ export function Header() {
 
                   {/* NewsGlo Link */}
                   <Link
-                    href={process.env.NODE_ENV === "development" ? "/haberler" : "https://news.statmatik.com"}
+                    href="/haberler"
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-orange-300 hover:bg-orange-500/10 transition-colors"
                   >
