@@ -19,7 +19,8 @@ export async function GET(request: Request) {
         target_lang,
         score,
         category_id,
-        created_at
+        created_at,
+        username
       `)
       .order("score", { ascending: false })
       .order("created_at", { ascending: false })
@@ -60,9 +61,12 @@ export async function GET(request: Request) {
     const formattedData = data.map((item: any, index: number) => {
       const cat = MOCK_MINLAN_CATEGORIES.find(c => c.id === item.category_id);
       const profile = profilesDict[item.user_id];
+      // Use the new username column if available, fallback to profile nickname, then email
+      const finalName = item.username || profile?.nickname || profile?.email?.split('@')[0] || "Unknown";
+      
       return {
         rank: index + 1,
-        name: profile?.nickname || profile?.email?.split('@')[0] || "Unknown",
+        name: finalName,
         score: item.score,
         native: item.native_lang,
         target: item.target_lang,
