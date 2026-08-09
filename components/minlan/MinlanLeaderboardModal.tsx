@@ -17,14 +17,33 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
 
   if (!isOpen) return null;
 
-  // Mock Leaderboard Rankings
-  const mockLeaderboard = [
-    { rank: 1, name: "Ahmet_TR", score: 14850, native: "tr", target: "en", category: "Teknoloji" },
-    { rank: 2, name: "Elena_DE", score: 12400, native: "de", target: "en", category: "Bilim" },
-    { rank: 3, name: "Caner_TR", score: 11200, native: "tr", target: "de", category: "Günlük" },
-    { rank: 4, name: "Klaus_DE", score: 9800, native: "de", target: "ar", category: "Sağlık" },
-    { rank: 5, name: "Sophie_FR", score: 8900, native: "fr", target: "es", category: "Ekonomi" },
-  ];
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  React.useEffect(() => {
+    if (!isOpen) return;
+    
+    async function fetchLeaderboard() {
+      setLoading(true);
+      try {
+        const timestamp = Date.now();
+        const res = await fetch(
+          `/api/minlan/leaderboard?native=${nativeFilter}&target=${targetFilter}&category=${categoryFilter}&t=${timestamp}`,
+          { cache: "no-store" }
+        );
+        const data = await res.json();
+        if (data.success) {
+          setLeaderboard(data.leaderboard);
+        }
+      } catch (err) {
+        console.error("Failed to fetch leaderboard", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchLeaderboard();
+  }, [isOpen, nativeFilter, targetFilter, categoryFilter]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
@@ -106,7 +125,11 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
         {/* Leaderboard Table */}
         <div className="overflow-y-auto flex-1 scrollbar-none pr-1">
           <div className="space-y-2">
-            {mockLeaderboard.map((item) => {
+            {loading ? (
+               <div className="p-8 text-center text-slate-400">Yükleniyor...</div>
+            ) : leaderboard.length === 0 ? (
+               <div className="p-8 text-center text-slate-400">Bu filtrede henüz puan yok. İlk sen ol!</div>
+            ) : leaderboard.map((item) => {
               const nativeObj = SUPPORTED_LANGUAGES.find((l) => l.code === item.native);
               const targetObj = SUPPORTED_LANGUAGES.find((l) => l.code === item.target);
 
