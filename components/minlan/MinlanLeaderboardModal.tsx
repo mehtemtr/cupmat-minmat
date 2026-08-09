@@ -168,7 +168,17 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
                         {safeItem.date && (
                           <>
                             <span>•</span>
-                            <span>{new Date(safeItem.date).toLocaleDateString("tr-TR")} {new Date(safeItem.date).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</span>
+                            <span>
+                              {(() => {
+                                try {
+                                  const d = new Date(safeItem.date);
+                                  if (isNaN(d.getTime())) return "";
+                                  return `${d.toLocaleDateString("tr-TR")} ${d.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}`;
+                                } catch (e) {
+                                  return "";
+                                }
+                              })()}
+                            </span>
                           </>
                         )}
                       </div>

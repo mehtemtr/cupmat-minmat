@@ -107,6 +107,7 @@ export default function MinlanPage() {
 
           {/* 2. Interactive Memory Game Board */}
           <MinlanGameBoard
+            key={`${selectedCategoryId}-${nativeLang}-${targetLang}`}
             categoryId={selectedCategoryId}
             categoryName={selectedCategory.name_tr}
             categories={categories}
