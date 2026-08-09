@@ -834,7 +834,7 @@ export default function EntryPage() {
                 </div>
                 <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">Minlan</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
-                  {locale === "tr" ? "9 Dilde Karşılıklı Kelime Mücadelesi. Rakiplerinle yarış ve zirveye çık!" : "9-Language Cross-Lingual Word Challenge. Compete and rise to the top!"}
+                  {locale === "tr" ? "Bir dil, bir insan; kaç kişiliksin? 9 Dilde Karşılıklı Kelime Mücadelesi." : "One language, one person; how many people are you? 9-Language Word Challenge."}
                 </p>
               </div>
               <div className="flex items-center gap-2 font-bold text-purple-400 text-xs sm:text-sm">
