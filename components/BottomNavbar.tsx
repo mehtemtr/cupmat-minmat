@@ -105,7 +105,7 @@ export default function BottomNavbar() {
       ? [
           {
             label: "MinLan",
-            href: "/minlan",
+            href: process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan",
             icon: Sparkles,
             isActive: pathname?.startsWith("/minlan"),
           },

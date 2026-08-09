@@ -84,7 +84,7 @@ export function MinlanCountdown() {
                   <span className="text-sm font-bold text-green-400 tracking-wider">YAYINDA!</span>
                 </div>
                 <Link 
-                  href="/minlan"
+                  href={process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan"}
                   className="w-full group/btn relative inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl overflow-hidden font-black text-white shadow-[0_0_20px_rgba(147,51,234,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)]"
                 >
                   <span className="relative z-10 flex items-center gap-2">

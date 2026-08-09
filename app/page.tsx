@@ -825,7 +825,7 @@ export default function EntryPage() {
           </Link>
 
           {/* 2. Minlan Card */}
-          <Link href="/minlan" className="group relative">
+          <Link href={process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan"} className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-purple-500 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>
