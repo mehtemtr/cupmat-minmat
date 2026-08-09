@@ -7,11 +7,12 @@ import { MinlanLeaderboardModal } from "@/components/minlan/MinlanLeaderboardMod
 import { LanguageCode, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
 import { MOCK_MINLAN_CATEGORIES, MOCK_COMMUNITY_STATS } from "@/lib/minlan/mock-data";
 import { Sparkles, Trophy, ShieldCheck, HeartHandshake } from "lucide-react";
-import { SignedOut, SignInButton } from "@clerk/nextjs";
+import { SignInButton, useAuth } from "@clerk/nextjs";
 
 import { useLocale } from "@/contexts/LocaleContext";
 
 export default function MinlanPage() {
+  const { isLoaded, userId } = useAuth();
   const { locale } = useLocale();
   const nativeLang: LanguageCode = (locale as LanguageCode) || "tr";
   const [targetLang, setTargetLang] = useState<LanguageCode>("en");
@@ -91,7 +92,7 @@ export default function MinlanPage() {
             communityStats={communityStats}
           />
 
-          <SignedOut>
+          {isLoaded && !userId && (
             <div className="w-full bg-slate-900 border border-amber-500/30 text-amber-200 text-xs p-3 rounded-2xl mb-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg shadow-amber-500/5">
               <span className="text-center sm:text-left leading-relaxed">
                 Puan tablosunda yer almak ve ödül kazanmak için giriş yapmalısınız.
@@ -102,7 +103,7 @@ export default function MinlanPage() {
                 </button>
               </SignInButton>
             </div>
-          </SignedOut>
+          )}
 
           {/* 2. Interactive Memory Game Board */}
           <MinlanGameBoard
