@@ -164,6 +164,9 @@ export function MinlanGameBoard({
         setTimeLeft((prev) => {
           if (prev <= 1) {
             setGameState("game_over");
+            if (score > 0) {
+              onRecordProgress(0, 0, score);
+            }
             return 0;
           }
           return prev - 1;
