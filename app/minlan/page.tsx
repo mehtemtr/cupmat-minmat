@@ -7,6 +7,7 @@ import { MinlanLeaderboardModal } from "@/components/minlan/MinlanLeaderboardMod
 import { LanguageCode, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
 import { MOCK_MINLAN_CATEGORIES, MOCK_COMMUNITY_STATS } from "@/lib/minlan/mock-data";
 import { Sparkles, Trophy, ShieldCheck, HeartHandshake } from "lucide-react";
+import { SignedOut, SignInButton } from "@clerk/nextjs";
 
 import { useLocale } from "@/contexts/LocaleContext";
 
@@ -89,6 +90,19 @@ export default function MinlanPage() {
             nativeLang={nativeLang}
             communityStats={communityStats}
           />
+
+          <SignedOut>
+            <div className="w-full bg-slate-900 border border-amber-500/30 text-amber-200 text-xs p-3 rounded-2xl mb-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg shadow-amber-500/5">
+              <span className="text-center sm:text-left leading-relaxed">
+                Puan tablosunda yer almak ve ödül kazanmak için giriş yapmalısınız.
+              </span>
+              <SignInButton mode="modal">
+                <button className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-1.5 px-4 rounded-xl transition-all whitespace-nowrap">
+                  Giriş Yap
+                </button>
+              </SignInButton>
+            </div>
+          </SignedOut>
 
           {/* 2. Interactive Memory Game Board */}
           <MinlanGameBoard

@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { LanguageCode, MinlanCard, SUPPORTED_LANGUAGES, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
 import { getMinlanTranslation } from "@/lib/minlan/i18n";
-import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe } from "lucide-react";
+import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe, LogOut } from "lucide-react";
 
 const ROUND_TIMER_TABLE: Record<number, number> = {
   1: 27,
@@ -64,6 +65,7 @@ export function MinlanGameBoard({
   onRecordProgress,
   onOpenLeaderboard,
 }: MinlanGameBoardProps) {
+  const router = useRouter();
   const t = getMinlanTranslation(nativeLang);
   const [roundLevel, setRoundLevel] = useState<number>(1);
   const [cards, setCards] = useState<MinlanCard[]>([]);
@@ -443,11 +445,17 @@ export function MinlanGameBoard({
       {/* 5. Action Buttons: Menu & Leaderboard */}
       <div className="flex items-center justify-center gap-3 mb-6">
         <button
-          onClick={resetEntireGame}
+          onClick={() => {
+            if (gameState === "idle") {
+              router.push("/");
+            } else {
+              resetEntireGame();
+            }
+          }}
           className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs rounded-xl flex items-center gap-2 transition-all cursor-pointer"
         >
-          <Home className="w-4 h-4 text-cyan-400" />
-          <span>{t.menuText}</span>
+          {gameState === "idle" ? <LogOut className="w-4 h-4 text-cyan-400" /> : <Home className="w-4 h-4 text-cyan-400" />}
+          <span>{gameState === "idle" ? "Ana Sayfa" : t.menuText}</span>
         </button>
 
         <button
