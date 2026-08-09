@@ -127,49 +127,50 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
           <div className="space-y-2">
             {loading ? (
                <div className="p-8 text-center text-slate-400">Yükleniyor...</div>
-            ) : leaderboard.length === 0 ? (
+            ) : (!leaderboard || leaderboard.length === 0) ? (
                <div className="p-8 text-center text-slate-400">Bu filtrede henüz puan yok. İlk sen ol!</div>
-            ) : leaderboard.map((item) => {
-              const nativeObj = SUPPORTED_LANGUAGES.find((l) => l.code === item.native);
-              const targetObj = SUPPORTED_LANGUAGES.find((l) => l.code === item.target);
+            ) : leaderboard.map((item, idx) => {
+              const safeItem = item || {};
+              const nativeObj = SUPPORTED_LANGUAGES.find((l) => l.code === safeItem.native);
+              const targetObj = SUPPORTED_LANGUAGES.find((l) => l.code === safeItem.target);
 
               return (
                 <div
-                  key={item.rank}
+                  key={safeItem.rank || idx}
                   className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all ${
-                    item.rank === 1
+                    safeItem.rank === 1
                       ? "bg-amber-500/10 border-amber-500/40 text-amber-300"
-                      : item.rank === 2
+                      : safeItem.rank === 2
                       ? "bg-slate-800/80 border-slate-700 text-slate-200"
-                      : item.rank === 3
+                      : safeItem.rank === 3
                       ? "bg-amber-900/20 border-amber-800/40 text-amber-400"
                       : "bg-slate-950/60 border-slate-800/80 text-slate-300"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center font-black text-sm">
-                      {item.rank === 1 ? (
+                      {safeItem.rank === 1 ? (
                         <Medal className="w-5 h-5 text-amber-400" />
-                      ) : item.rank === 2 ? (
+                      ) : safeItem.rank === 2 ? (
                         <Award className="w-5 h-5 text-slate-300" />
-                      ) : item.rank === 3 ? (
+                      ) : safeItem.rank === 3 ? (
                         <Award className="w-5 h-5 text-amber-600" />
                       ) : (
-                        item.rank
+                        safeItem.rank || "-"
                       )}
                     </div>
                     <div>
-                      <span className="font-bold text-sm text-white block">{item.name}</span>
+                      <span className="font-bold text-sm text-white block">{safeItem.name || "Bilinmeyen Oyuncu"}</span>
                       <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                        <span>{nativeObj?.flag} → {targetObj?.flag}</span>
+                        <span>{nativeObj?.flag || "🏳️"} → {targetObj?.flag || "🏳️"}</span>
                         <span>•</span>
-                        <span>{item.category}</span>
+                        <span>{safeItem.category || "Kategori Yok"}</span>
                       </div>
                     </div>
                   </div>
 
                   <span className="font-mono font-black text-base text-amber-400">
-                    {item.score.toLocaleString("tr-TR")} P
+                    {Number(safeItem.score || 0).toLocaleString("tr-TR")} P
                   </span>
                 </div>
               );
