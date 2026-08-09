@@ -79,31 +79,42 @@ export function MinlanGameBoard({
   const [showRoundSuccess, setShowRoundSuccess] = useState<boolean>(false);
   const [rewardToast, setRewardToast] = useState<string | null>(null);
 
-  // Permanently unlocked category IDs stored in localStorage
-  const [unlockedCategoryIds, setUnlockedCategoryIds] = useState<string[]>(() => {
+  // Permanently unlocked category IDs stored in localStorage as a dictionary of language pairs
+  const [unlockedCategoryDict, setUnlockedCategoryDict] = useState<Record<string, string[]>>(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("minlan_unlocked_categories");
+      const saved = localStorage.getItem("minlan_unlocked_categories_v2");
       if (saved) {
         try {
           return JSON.parse(saved);
         } catch (e) {}
       }
     }
-    return ["cat-1"]; // Category 1 is open by default
+    return {};
   });
 
+  const currentPairKey = `${nativeLang}-${targetLang}`;
+  const unlockedCategoryIds = unlockedCategoryDict[currentPairKey] || ["cat-1"];
+
   const unlockNextCategoryPermanent = (nextCatId: string) => {
-    setUnlockedCategoryIds((prev) => {
-      if (!prev.includes(nextCatId)) {
-        const updated = [...prev, nextCatId];
+    setUnlockedCategoryDict((prev) => {
+      const currentList = prev[currentPairKey] || ["cat-1"];
+      if (!currentList.includes(nextCatId)) {
+        const updatedList = [...currentList, nextCatId];
+        const updatedDict = { ...prev, [currentPairKey]: updatedList };
         if (typeof window !== "undefined") {
-          localStorage.setItem("minlan_unlocked_categories", JSON.stringify(updated));
+          localStorage.setItem("minlan_unlocked_categories_v2", JSON.stringify(updatedDict));
         }
-        return updated;
+        return updatedDict;
       }
       return prev;
     });
   };
+
+  useEffect(() => {
+    if (categoryId !== "cat-1" && !unlockedCategoryIds.includes(categoryId)) {
+      onSelectCategory("cat-1");
+    }
+  }, [currentPairKey, categoryId, unlockedCategoryIds, onSelectCategory]);
 
   // Round progression: Round 1 = 3 pairs (6 cards). Every round adds 2 cards (+1 pair)
   const pairCount = 3 + (roundLevel - 1);
@@ -281,21 +292,18 @@ export function MinlanGameBoard({
 
   // Custom Category Selector Items according to user instructions:
   // Cat 1: 🏠 (Open)
-  // Cat 2: 🍎 (Open if Cat 1 Tur 4 finished)
-  // Cat 3: ✈️ (Open if Cat 2 Tur 4 finished)
-  // Cat 4: 🩺 (COMMUNITY LOCKED until 25k matches)
-  // Cat 5 & 6: 💼 & 💰 (Locked / Yakında)
-  // Cat 7, 8, 9: 🎁 (Sürpriz Kutu / Secret Box)
-  // Karma: 👑 (Master Karma Category)
+  // Cat 2: 💻 (Open if Cat 1 Tur 4 finished for THIS language pair)
+  // Cat 3: 🔬 (Open if Cat 2 Tur 4 finished for THIS language pair)
+  // Cat 4: 🩺 (Locked / Yakında)
+  // Cat 5 & 6: 🌿 & 📈 (Locked / Yakında)
+  // Cat 7, 8, 9: Removed from UI
   const selectorItems = [
-    { id: "cat-1", icon: "🏠", label: getCategoryTitle(categories[0] || { name_tr: "Günlük Yaşam" } as any), isUnlocked: true },
-    { id: "cat-2", icon: "🍎", label: getCategoryTitle(categories[1] || { name_tr: "Yiyecek" } as any), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-3", icon: "✈️", label: getCategoryTitle(categories[2] || { name_tr: "Seyahat" } as any), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-4", icon: "🩺", label: getCategoryTitle(categories[3] || { name_tr: "Sağlık" } as any), isUnlocked: unlockedCategoryIds.includes("cat-4"), lockReason: "🔒 3. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-5", icon: "💼", label: getCategoryTitle(categories[4] || { name_tr: "Meslek" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
-    { id: "cat-6", icon: "💰", label: getCategoryTitle(categories[5] || { name_tr: "Alışveriş" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
-    { id: "cat-7", icon: "🎁", label: "Sürpriz Kutu", isUnlocked: false, lockReason: "🔒 Gizli Sürpriz Kategori" },
-    { id: "cat-9", icon: "👑", label: "MASTER KARMA", isUnlocked: true, lockReason: "" },
+    { id: "cat-1", icon: "🏠", label: getCategoryTitle(categories[0] || { name_tr: "Günlük Yaşam" } as any), isUnlocked: true, lockReason: "" },
+    { id: "cat-2", icon: "💻", label: getCategoryTitle(categories[1] || { name_tr: "Teknoloji" } as any), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-3", icon: "🔬", label: getCategoryTitle(categories[2] || { name_tr: "Bilim" } as any), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-4", icon: "🩺", label: getCategoryTitle(categories[3] || { name_tr: "Sağlık" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
+    { id: "cat-5", icon: "🌿", label: getCategoryTitle(categories[4] || { name_tr: "Çevre & İklim" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
+    { id: "cat-6", icon: "📈", label: getCategoryTitle(categories[5] || { name_tr: "Ekonomi & Finans" } as any), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
   ];
 
   return (
