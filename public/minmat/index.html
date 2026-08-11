@@ -2946,7 +2946,7 @@
       if (rowEl) rowEl.style.display = "none";
 
       try {
-        const res = await fetch("/api/gamification?displayName=" + encodeURIComponent(playerName));
+        const res = await fetch("/api/gamification?displayName=" + encodeURIComponent(playerName) + "&light=true");
         if (res.ok) {
           const data = await res.json();
           if (data.success && data.profile) {

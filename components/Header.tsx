@@ -76,7 +76,7 @@ export function Header() {
 
     const fetchPoints = async () => {
       try {
-        const res = await fetch(`/api/gamification?userId=${user.id}`);
+        const res = await fetch(`/api/gamification?userId=${user.id}&light=true`);
         const data = await res.json();
         if (data.success && data.profile) {
           setTaraftarPuani(data.profile.taraftarPuani);

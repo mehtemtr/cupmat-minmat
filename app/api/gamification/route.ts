@@ -37,25 +37,39 @@ export async function GET(request: Request) {
       profile = await getProfileByDisplayName(displayName);
     }
 
-    const leaderboard = await getGamificationLeaderboard();
-    const gecmisSampiyonlar = await getGecmisSampiyonlar();
-    const periodEnd = await getPeriodEnd();
-    const { cupMatRewards, minMatRewards } = await getRewardLeaderboards();
+    const isLight = searchParams.get("light") === "true";
 
-    // Yeni sistem: getRewardLeaderboards() fonksiyonundan gelen verileri kullan
-    const cupMatPodium72h = cupMatRewards;
-    const minMatPodium72h = minMatRewards;
+    let leaderboard = null;
+    let gecmisSampiyonlar = null;
+    let periodEnd = null;
+    let cupMatRewards = null;
+    let minMatRewards = null;
+    let cupMatPodium72h = null;
+    let minMatPodium72h = null;
+
+    if (!isLight) {
+      leaderboard = await getGamificationLeaderboard();
+      gecmisSampiyonlar = await getGecmisSampiyonlar();
+      periodEnd = await getPeriodEnd();
+      const rewards = await getRewardLeaderboards();
+      cupMatRewards = rewards.cupMatRewards;
+      minMatRewards = rewards.minMatRewards;
+      cupMatPodium72h = cupMatRewards;
+      minMatPodium72h = minMatRewards;
+    }
 
     return NextResponse.json({
       success: true,
       profile,
-      leaderboard,
-      gecmisSampiyonlar,
-      periodEnd,
-      cupMatRewards,
-      minMatRewards,
-      cupMatPodium72h,
-      minMatPodium72h,
+      ...(isLight ? {} : {
+        leaderboard,
+        gecmisSampiyonlar,
+        periodEnd,
+        cupMatRewards,
+        minMatRewards,
+        cupMatPodium72h,
+        minMatPodium72h,
+      })
     });
   } catch (error) {
     console.error("GET Gamification error:", error);
