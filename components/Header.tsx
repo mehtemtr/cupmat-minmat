@@ -241,50 +241,6 @@ export function Header() {
   };
 
 
-  const minMatSwitchLabel =
-    locale === "tr" ? "MinMat'a Geç" :
-    locale === "de" ? "Zu MinMat" :
-    locale === "fr" ? "Aller à MinMat" :
-    locale === "es" ? "Ir a MinMat" :
-    locale === "pt" ? "Ir para o MinMat" :
-    locale === "ar" ? "الذهاب إلى MinMat" :
-    locale === "ko" ? "MinMat으로 이동" :
-    locale === "it" ? "Vai a MinMat" :
-    "Go to MinMat";
-
-  const minLanSwitchLabel =
-    locale === "tr" ? "MinLan'a Geç" :
-    locale === "de" ? "Zu MinLan" :
-    locale === "fr" ? "Aller à MinLan" :
-    locale === "es" ? "Ir a MinLan" :
-    locale === "pt" ? "Ir para o MinLan" :
-    locale === "ar" ? "الذهاب إلى MinLan" :
-    locale === "ko" ? "MinLan으로 이동" :
-    locale === "it" ? "Vai a MinLan" :
-    "Go to MinLan";
-
-  const newsGloSwitchLabel =
-    locale === "tr" ? "NewsGlo'ya Geç" :
-    locale === "de" ? "Zu NewsGlo" :
-    locale === "fr" ? "Aller à NewsGlo" :
-    locale === "es" ? "Ir a NewsGlo" :
-    locale === "pt" ? "Ir para o NewsGlo" :
-    locale === "ar" ? "الذهاب إلى NewsGlo" :
-    locale === "ko" ? "NewsGlo로 이동" :
-    locale === "it" ? "Vai a NewsGlo" :
-    "Go to NewsGlo";
-
-  const cupMatSwitchLabel =
-    locale === "tr" ? "CupMat'e Geç" :
-    locale === "de" ? "Zu CupMat" :
-    locale === "fr" ? "Aller à CupMat" :
-    locale === "es" ? "Ir a CupMat" :
-    locale === "pt" ? "Ir para o CupMat" :
-    locale === "ar" ? "الذهاب إلى CupMat" :
-    locale === "ko" ? "CupMat으로 이동" :
-    locale === "it" ? "Vai a CupMat" :
-    "Go to CupMat";
-
   // Kök seçim kapısı (/) — header yok; CupMat dünyasında navbar gösterilir
   if (pathname === "/") return null;
 
@@ -344,7 +300,7 @@ export function Header() {
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-blue-300 hover:bg-blue-500/10 transition-colors"
                   >
                     <Calculator className="h-4 w-4" />
-                    <span>{minMatSwitchLabel}</span>
+                    <span>MinMat</span>
                   </Link>
                   
                   {/* MinLan Link */}
@@ -354,7 +310,7 @@ export function Header() {
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-purple-300 hover:bg-purple-500/10 transition-colors"
                   >
                     <Sparkles className="h-4 w-4" />
-                    <span>{minLanSwitchLabel}</span>
+                    <span>MinLan</span>
                   </Link>
 
                   {/* CupMat Link */}
@@ -364,7 +320,7 @@ export function Header() {
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-emerald-300 hover:bg-emerald-500/10 transition-colors"
                   >
                     <Trophy className="h-4 w-4" />
-                    <span>{cupMatSwitchLabel}</span>
+                    <span>CupMat</span>
                   </Link>
                   
                   {/* NewsGlo Link */}
@@ -374,7 +330,7 @@ export function Header() {
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-orange-300 hover:bg-orange-500/10 transition-colors"
                   >
                     <Newspaper className="h-4 w-4" />
-                    <span>{newsGloSwitchLabel}</span>
+                    <span>NewsGlo</span>
                   </Link>
 
                   {/* Divider */}
