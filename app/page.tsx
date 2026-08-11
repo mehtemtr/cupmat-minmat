@@ -811,7 +811,13 @@ export default function EntryPage() {
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>
                 <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cyan-500/10 ring-1 ring-cyan-400/20 shadow-[0_0_30px_rgba(6,182,212,0.1)] overflow-hidden p-3 text-cyan-400">
-                  <Newspaper className="w-10 h-10" />
+                  <Image 
+                    src="/newsglo-logo.jpg" 
+                    alt="NewsGlo Logo" 
+                    width={56} 
+                    height={56} 
+                    className="object-contain rounded-xl"
+                  />
                 </div>
                 <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">NewsGlo</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
@@ -830,7 +836,13 @@ export default function EntryPage() {
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>
                 <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-purple-500/10 ring-1 ring-purple-400/20 shadow-[0_0_30px_rgba(168,85,247,0.1)] overflow-hidden p-3 text-purple-400">
-                  <Gamepad2 className="w-10 h-10" />
+                  <Image 
+                    src="/minlan-logo.png" 
+                    alt="MinLan Logo" 
+                    width={56} 
+                    height={56} 
+                    className="object-contain rounded-xl"
+                  />
                 </div>
                 <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">{t("hero.minlanTitle")}</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
