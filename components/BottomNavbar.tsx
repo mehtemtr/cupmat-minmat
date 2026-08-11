@@ -92,6 +92,12 @@ export default function BottomNavbar() {
       isActive: pathname === "/",
     },
     {
+      label: "CupMat",
+      href: "/cupmat",
+      icon: Trophy,
+      isActive: pathname?.startsWith("/cupmat"),
+    },
+    {
       label: "MinLan",
       href: process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan",
       icon: Sparkles,
@@ -181,7 +187,7 @@ export default function BottomNavbar() {
                 className="h-full w-full object-contain"
               />
             </span>
-            <span className="font-extrabold text-white text-lg tracking-tight">CupMat & MinMat</span>
+            <span className="font-extrabold text-white text-lg tracking-tight">StatMatik</span>
           </div>
           <button
             type="button"
@@ -207,74 +213,32 @@ export default function BottomNavbar() {
             <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">{moreLabel}</h4>
             <div className="grid grid-cols-2 gap-3">
               <Link
-                href="/fantasy"
+                href="/cupmat"
+                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
+              >
+                <Trophy className="h-4 w-4 text-emerald-400" />
+                <span>CupMat</span>
+              </Link>
+              <Link
+                href="/minmat"
+                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
+              >
+                <Calculator className="h-4 w-4 text-emerald-400" />
+                <span>MinMat</span>
+              </Link>
+              <Link
+                href={process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan"}
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >
                 <Sparkles className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.fantasy")}</span>
+                <span>MinLan</span>
               </Link>
               <Link
-                href="/kupa-yolu"
+                href="/haberler"
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >
-                <Trophy className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.bracket")}</span>
-              </Link>
-              <Link
-                href="/leagues"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <Users className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.leagues")}</span>
-              </Link>
-              <Link
-                href="/polls"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <Activity className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.polls")}</span>
-              </Link>
-              <Link
-                href="/stats"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <BarChart2 className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.stats")}</span>
-              </Link>
-              <Link
-                href="/teams"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <Trophy className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.teams")}</span>
-              </Link>
-              <Link
-                href="/groups"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <Calendar className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.groups")}</span>
-              </Link>
-              <Link
-                href="/venues"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <Home className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.venues")}</span>
-              </Link>
-              <Link
-                href="/hakemler"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <User className="h-4 w-4 text-emerald-400" />
-                <span>{t("hero.referees")}</span>
-              </Link>
-              <Link
-                href="/futbolcular"
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
-              >
-                <User className="h-4 w-4 text-emerald-400" />
-                <span>{t("nav.footballers")}</span>
+                <Newspaper className="h-4 w-4 text-emerald-400" />
+                <span>NewsGlo</span>
               </Link>
             </div>
           </div>
