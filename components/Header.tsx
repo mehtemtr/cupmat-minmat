@@ -327,9 +327,9 @@ export function Header() {
                   <Link
                     href="/haberler"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-orange-300 hover:bg-orange-500/10 transition-colors"
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-blue-400 hover:bg-blue-500/10 transition-colors"
                   >
-                    <Newspaper className="h-4 w-4" />
+                    <img src="/newsglo-logo.jpg" alt="NewsGlo Logo" className="h-5 w-5 object-contain rounded-md" />
                     <span>NewsGlo</span>
                   </Link>
 
