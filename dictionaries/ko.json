@@ -37,10 +37,13 @@
     "countries": "국가 상세 정보",
     "referees": "심판 통계",
     "slogan": "축구는 수학이고, 수학은 모든 것입니다. statmatik.com과 함께 축구의 수학을 풀어보세요!",
-    "cupMatDesc": "AI 기반, 2026 세계 선수권 대회에 관한 모든 것!",
+    "cupMatDesc": "국제 컵 경기 결과, 순위 및 통계",
     "minMatDesc": "부모님과 자녀가 암산으로 빠르게 계산하도록 돕는 두뇌 게임!",
     "playStart": "월드컵 보기",
-    "mindRefresh": "두뇌 회전하기"
+    "mindRefresh": "두뇌 회전하기",
+    "minlanTitle": "민란 — 언어 사냥",
+    "minlanQuote": "언어 하나에 사람 한 명; 당신은 몇 사람입니까?",
+    "minlanDesc": "9개 국어 대화형 단어 및 기억력 게임."
   },
   "countdown": {
     "label": "개막까지 남은 시간",

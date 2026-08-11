@@ -832,13 +832,9 @@ export default function EntryPage() {
                 <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-purple-500/10 ring-1 ring-purple-400/20 shadow-[0_0_30px_rgba(168,85,247,0.1)] overflow-hidden p-3 text-purple-400">
                   <Gamepad2 className="w-10 h-10" />
                 </div>
-                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">MİNLAN — DİL AVI</h2>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">{t("hero.minlanTitle")}</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
-                  {locale === "tr" ? (
-                    <>Bir dil, bir insan; kaç kişiliksin?<br />9 Dilde Karşılıklı Kelime Öğrenme ve Hafıza Oyunu.</>
-                  ) : (
-                    <>One language, one person; how many people are you?<br />9-Language Interactive Vocabulary & Memory Game.</>
-                  )}
+                  {t("hero.minlanQuote")}<br />{t("hero.minlanDesc")}
                 </p>
               </div>
               <div className="flex items-center gap-2 font-bold text-purple-400 text-xs sm:text-sm">
@@ -888,7 +884,7 @@ export default function EntryPage() {
                 </div>
                 <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">CUPMAT</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
-                  {locale === "tr" ? "Uluslararası Kupaların sonuçları, puanları ve istatistikleri" : t("hero.cupMatDesc")}
+                  {t("hero.cupMatDesc")}
                 </p>
               </div>
               <div className="flex items-center gap-2 font-bold text-emerald-400 text-xs sm:text-sm">

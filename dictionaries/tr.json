@@ -37,12 +37,15 @@
     "countries": "Ülke Detayları",
     "referees": "Hakem İstatistikleri",
     "slogan": "Matematiğin bir şeyi yoktur; her şeyin bir matematiği vardır. Lobilerin rengi değil, performansın liyakati.",
-    "cupMatDesc": "Futbolun matematiksel adaleti. Lobilerin rengi değil, performansın liyakati.",
+    "cupMatDesc": "Uluslararası Kupaların sonuçları, puanları ve istatistikleri",
     "minMatDesc": "MinMat — Sayı Avı (Matematik Hafıza Oyunu). Sizin ve çocuklarınızın zihinden hesap yapmasını kolaylaştıran zeka oyunu.",
     "newsGloDesc": "NewsGlo — Küresel Bilim, Teknoloji, Sağlık, Çevre ve Gelişmeler Akışı.",
     "minLanDesc": "MinLan — 9 Dilli Matematik & Kelime Hafıza Oyunu.",
     "playStart": "Kupayı Gör",
-    "mindRefresh": "Zihnini Canlandır"
+    "mindRefresh": "Zihnini Canlandır",
+    "minlanTitle": "MİNLAN — DİL AVI",
+    "minlanQuote": "Bir dil, bir insan; kaç kişiliksin?",
+    "minlanDesc": "9 Dilde Karşılıklı Kelime Öğrenme ve Hafıza Oyunu."
   },
   "countdown": {
     "label": "Açılışa kalan",

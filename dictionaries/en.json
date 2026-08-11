@@ -37,10 +37,13 @@
     "countries": "Country Details",
     "referees": "Referee Stats",
     "slogan": "Football is math, math is everything. Solve the math of football with statmatik.com!",
-    "cupMatDesc": "AI-powered, everything about the 2026 World Championship!",
+    "cupMatDesc": "International Cups results, standings, and statistics",
     "minMatDesc": "Brain game that will make it easier for you and your children to calculate from memory!",
     "playStart": "Explore the Cup",
-    "mindRefresh": "Refresh Your Mind"
+    "mindRefresh": "Refresh Your Mind",
+    "minlanTitle": "MINLAN — LANGUAGE HUNT",
+    "minlanQuote": "One language, one person; how many people are you?",
+    "minlanDesc": "9-Language Interactive Vocabulary & Memory Game."
   },
   "countdown": {
     "label": "Time until kickoff",

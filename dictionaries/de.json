@@ -37,10 +37,13 @@
     "countries": "Länderdetails",
     "referees": "Schiedsrichterstatistiken",
     "slogan": "Fußball ist Mathematik, Mathematik ist alles. Lösen Sie die Mathematik des Fußballs mit statmatik.com!",
-    "cupMatDesc": "KI-Unterstützung, alles über die 2026 Weltmeisterschaft!",
+    "cupMatDesc": "Ergebnisse, Tabellen und Statistiken internationaler Pokale",
     "minMatDesc": "Ein Gehirntraining, das Ihnen und Ihren Kindern das Kopfrechnen erleichtert!",
     "playStart": "Pokal ansehen",
-    "mindRefresh": "Geist Beleben"
+    "mindRefresh": "Geist Beleben",
+    "minlanTitle": "MINLAN — SPRACHJAGD",
+    "minlanQuote": "Eine Sprache, ein Mensch; wie viele Personen bist du?",
+    "minlanDesc": "Interaktives Vokabel- und Gedächtnisspiel in 9 Sprachen."
   },
   "countdown": {
     "label": "Zeit bis zum Anpfiff",

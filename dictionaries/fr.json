@@ -37,10 +37,13 @@
     "countries": "Détails du pays",
     "referees": "Stats arbitres",
     "slogan": "Le football est mathématique, la mathématique est tout. Résolvez la mathématique du football avec statmatik.com !",
-    "cupMatDesc": "Tout sur le Championnat du Monde 2026 grâce à l'IA !",
+    "cupMatDesc": "Résultats, classements et statistiques des Coupes Internationales",
     "minMatDesc": "Un jeu cérébral qui facilitera le calcul mental pour vous et vos enfants !",
     "playStart": "Voir la Coupe",
-    "mindRefresh": "Rafraîchissez votre Esprit"
+    "mindRefresh": "Rafraîchissez votre Esprit",
+    "minlanTitle": "MINLAN — CHASSE AUX LANGUES",
+    "minlanQuote": "Une langue, une personne ; combien de personnes êtes-vous ?",
+    "minlanDesc": "Jeu Interactif de Vocabulaire et de Mémoire en 9 Langues."
   },
   "countdown": {
     "label": "Temps avant le coup d'envoi",
