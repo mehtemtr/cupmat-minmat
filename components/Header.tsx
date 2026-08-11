@@ -274,6 +274,17 @@ export function Header() {
     locale === "it" ? "Vai a NewsGlo" :
     "Go to NewsGlo";
 
+  const cupMatSwitchLabel =
+    locale === "tr" ? "CupMat'e Geç" :
+    locale === "de" ? "Zu CupMat" :
+    locale === "fr" ? "Aller à CupMat" :
+    locale === "es" ? "Ir a CupMat" :
+    locale === "pt" ? "Ir para o CupMat" :
+    locale === "ar" ? "الذهاب إلى CupMat" :
+    locale === "ko" ? "CupMat으로 이동" :
+    locale === "it" ? "Vai a CupMat" :
+    "Go to CupMat";
+
   // Kök seçim kapısı (/) — header yok; CupMat dünyasında navbar gösterilir
   if (pathname === "/") return null;
 
@@ -346,6 +357,16 @@ export function Header() {
                     <span>{minLanSwitchLabel}</span>
                   </Link>
 
+                  {/* CupMat Link */}
+                  <Link
+                    href="/cupmat"
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-emerald-300 hover:bg-emerald-500/10 transition-colors"
+                  >
+                    <Trophy className="h-4 w-4" />
+                    <span>{cupMatSwitchLabel}</span>
+                  </Link>
+                  
                   {/* NewsGlo Link */}
                   <Link
                     href="/haberler"
@@ -355,25 +376,6 @@ export function Header() {
                     <Newspaper className="h-4 w-4" />
                     <span>{newsGloSwitchLabel}</span>
                   </Link>
-                  
-                  {/* Divider */}
-                  <div className="my-1 h-px bg-white/10" />
-                  
-                  {/* Nav Links */}
-                  {navKeys.map(({ href, key }) => (
-                    <Link
-                      key={key}
-                      href={href}
-                      onClick={() => setDropdownOpen(false)}
-                      className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors ${
-                        pathname === href
-                          ? "bg-emerald-400/10 text-emerald-300"
-                          : "text-zinc-300 hover:bg-white/5 hover:text-white"
-                      }`}
-                    >
-                      {t(key)}
-                    </Link>
-                  ))}
 
                   {/* Divider */}
                   <div className="my-1 h-px bg-white/10 sm:hidden" />
