@@ -299,7 +299,7 @@ export function Header() {
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-blue-300 hover:bg-blue-500/10 transition-colors"
                   >
-                    <Calculator className="h-4 w-4" />
+                    <img src="/minmat/icon.png" alt="MinMat Logo" className="h-5 w-5 object-contain" />
                     <span>MinMat</span>
                   </Link>
                   
@@ -309,7 +309,7 @@ export function Header() {
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-purple-300 hover:bg-purple-500/10 transition-colors"
                   >
-                    <Sparkles className="h-4 w-4" />
+                    <img src="/minlan-logo.png" alt="MinLan Logo" className="h-5 w-5 object-contain rounded-md" />
                     <span>MinLan</span>
                   </Link>
 
@@ -319,7 +319,7 @@ export function Header() {
                     onClick={() => setDropdownOpen(false)}
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-emerald-300 hover:bg-emerald-500/10 transition-colors"
                   >
-                    <Trophy className="h-4 w-4" />
+                    <img src="/logo_s_clean.png" alt="CupMat Logo" className="h-5 w-5 object-contain" />
                     <span>CupMat</span>
                   </Link>
                   
