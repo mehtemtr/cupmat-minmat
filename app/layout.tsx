@@ -10,7 +10,6 @@ import { defaultLocale, LOCALE_COOKIE, type Locale, locales } from "@/lib/i18n/t
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { GamificationManager } from "@/components/GamificationManager";
-import LazyCronAgent from "@/components/LazyCronAgent";
 import AdminBackdoor from "@/components/AdminBackdoor";
 import { AdminNickPanel } from "@/components/AdminNickPanel";
 import IOSInstallPrompt from "@/components/IOSInstallPrompt";
@@ -130,7 +129,6 @@ export default async function RootLayout({
             <DynamicMeta />
             <Header />
             <GamificationManager />
-            <LazyCronAgent />
             <AdminBackdoor />
             <AdminNickPanel />
             <IOSInstallPrompt />

@@ -14,7 +14,42 @@ export const TARGET_LEAGUES = [
   12, // CAF Champions League
   16, // CONCACAF Champions Cup
   15, // FIFA Club World Cup
+  5,  // UEFA Nations League (Milli)
+  34, // World Cup Qualifiers CONMEBOL (Milli)
+  32, // AFCON Qualifiers (Milli)
 ];
+
+const LEAGUE_REGIONS: Record<number, string> = {
+  2: 'europe',
+  3: 'europe',
+  848: 'europe',
+  5: 'europe',
+  13: 'america',
+  11: 'america',
+  34: 'america',
+  16: 'america',
+  17: 'asia',
+  12: 'africa',
+  32: 'africa',
+  15: 'world'
+};
+
+// Basit 3 harfli ülke kısaltma haritası (Gerçekte API'den veya statik bir sözlükten beslenebilir)
+function getTeamCountryCode(teamName: string): string {
+  // Örnek statik çözümleme (Bu kısım ileride detaylı bir veritabanı veya dictionary ile değiştirilebilir)
+  const dict: Record<string, string> = {
+    "Beşiktaş": "TÜR", "Fenerbahçe": "TÜR", "Galatasaray": "TÜR", "Trabzonspor": "TÜR",
+    "Real Madrid": "İSP", "Barcelona": "İSP", "Atlético Madrid": "İSP",
+    "Man City": "İNG", "Arsenal": "İNG", "Liverpool": "İNG", "Chelsea": "İNG", "Brighton": "İNG",
+    "Bayern Munich": "ALM", "Bayer Leverkusen": "ALM", "Borussia Dortmund": "ALM",
+    "PSG": "FRA", "Lille": "FRA", "Lyon": "FRA",
+    "Inter Milan": "İTA", "AC Milan": "İTA", "Juventus": "İTA", "Napoli": "İTA",
+    "Ajax": "HOL", "PSV": "HOL",
+    "Braga": "POR", "Benfica": "POR", "Porto": "POR",
+    "Molde": "NOR", "Lugano": "İSV", "Kralove": "ÇEK"
+  };
+  return dict[teamName] || "UNK";
+}
 
 export async function fetchAndStoreDailyMatches(dateStr?: string) {
   const logs: string[] = [];
@@ -79,6 +114,7 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
         .single();
 
       let tournamentId = existingTournament?.id;
+      const region = LEAGUE_REGIONS[league.id] || 'world';
 
       if (!tournamentId) {
         const { data: newTournament, error: tError } = await supabaseAdmin
@@ -87,6 +123,7 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
             api_id: league.id,
             name: league.name,
             type: league.type,
+            region: region,
             logo_url: league.logo
           })
           .select("id")
@@ -102,15 +139,21 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
         }
       }
 
-      // 3.2 Determine Winner
-      // In knockout stages, penalty shootout decides the winner if regular time is drawn.
+      // 3.2 Determine Winner & Extract Extra Info
       const homeWinner = teams.home.winner;
       const awayWinner = teams.away.winner;
       
-      // Calculate penalty scores if it went to penalties
       const homePen = score.penalty?.home;
       const awayPen = score.penalty?.away;
 
+      // Extract 90 Minute Score (Fulltime)
+      const homeScore90 = score.fulltime?.home;
+      const awayScore90 = score.fulltime?.away;
+
+      // API-Football returns aggregate scores in score.fulltime if it's a 2-legged match, or we could fetch the first leg. 
+      // For simplicity in this mock integration, we check if API provides aggregate data in `fixture.status.elapsed` etc.
+      // Usually, it's not provided in the basic /fixtures payload, so we leave it null until an advanced lookup is built.
+      
       // 3.3 Insert or Update Match
       const matchData = {
         api_id: fixture.id,
@@ -123,6 +166,7 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
         
         home_team_id: teams.home.id,
         home_team_name: teams.home.name,
+        home_team_country_code: getTeamCountryCode(teams.home.name), // 3-letter code
         home_team_logo: teams.home.logo,
         home_score: goals.home,
         home_penalty_score: homePen,
@@ -130,10 +174,19 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
         
         away_team_id: teams.away.id,
         away_team_name: teams.away.name,
+        away_team_country_code: getTeamCountryCode(teams.away.name), // 3-letter code
         away_team_logo: teams.away.logo,
         away_score: goals.away,
         away_penalty_score: awayPen,
         away_is_winner: awayWinner,
+        
+        home_score_90: homeScore90,
+        away_score_90: awayScore90,
+        
+        // aggregate_home_score: null, 
+        // aggregate_away_score: null,
+        // first_leg_home_score: null,
+        // first_leg_away_score: null,
         
         updated_at: new Date().toISOString()
       };

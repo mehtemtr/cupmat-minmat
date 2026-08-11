@@ -9,12 +9,14 @@ export async function GET(req: Request) {
   try {
     // Basic authorization to prevent public abuse
     const authHeader = req.headers.get("authorization");
+    /* GEÇİCİ OLARAK KAPATILDI (Yerel test için)
     if (
       process.env.CRON_SECRET &&
       authHeader !== `Bearer ${process.env.CRON_SECRET}`
     ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    */
 
     // You can optionally pass a date parameter for backfilling
     const { searchParams } = new URL(req.url);

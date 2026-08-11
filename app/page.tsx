@@ -832,12 +832,12 @@ export default function EntryPage() {
                 <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-purple-500/10 ring-1 ring-purple-400/20 shadow-[0_0_30px_rgba(168,85,247,0.1)] overflow-hidden p-3 text-purple-400">
                   <Gamepad2 className="w-10 h-10" />
                 </div>
-                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">Minlan — Dil Avı</h2>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">MİNLAN — DİL AVI</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
                   {locale === "tr" ? (
-                    <>Bir dil, bir insan; kaç kişiliksin?<br />9 Dilde Karşılıklı Kelime Mücadelesi.</>
+                    <>Bir dil, bir insan; kaç kişiliksin?<br />9 Dilde Karşılıklı Kelime Öğrenme ve Hafıza Oyunu.</>
                   ) : (
-                    <>One language, one person; how many people are you?<br />9-Language Word Challenge.</>
+                    <>One language, one person; how many people are you?<br />9-Language Interactive Vocabulary & Memory Game.</>
                   )}
                 </p>
               </div>
@@ -873,7 +873,7 @@ export default function EntryPage() {
           </Link>
 
           {/* 3. CupMat Card (En sağ) */}
-          <Link href="/groups" className="group relative">
+          <Link href="/cupmat" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-teal-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>
@@ -886,9 +886,9 @@ export default function EntryPage() {
                     className="object-contain"
                   />
                 </div>
-                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">CupMat</h2>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">CUPMAT</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
-                  {t("hero.cupMatDesc")}
+                  {locale === "tr" ? "Uluslararası Kupaların sonuçları, puanları ve istatistikleri" : t("hero.cupMatDesc")}
                 </p>
               </div>
               <div className="flex items-center gap-2 font-bold text-emerald-400 text-xs sm:text-sm">

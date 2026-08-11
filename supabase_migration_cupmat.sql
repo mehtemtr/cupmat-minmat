@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS public.cupmat_tournaments (
     api_id INTEGER UNIQUE NOT NULL, -- API-Football league ID (e.g. 2 for UCL, 3 for UEL)
     name VARCHAR(255) NOT NULL, -- "UEFA Champions League"
     type VARCHAR(50), -- "Cup"
+    region VARCHAR(50), -- "europe", "asia", "africa", "america", "world"
     logo_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS public.cupmat_matches (
     -- Home Team
     home_team_id INTEGER NOT NULL,
     home_team_name VARCHAR(255) NOT NULL,
+    home_team_country_code VARCHAR(10), -- 3-letter code, e.g. "TÜR"
     home_team_logo TEXT,
     home_score INTEGER,
     home_penalty_score INTEGER,
@@ -33,10 +35,21 @@ CREATE TABLE IF NOT EXISTS public.cupmat_matches (
     -- Away Team
     away_team_id INTEGER NOT NULL,
     away_team_name VARCHAR(255) NOT NULL,
+    away_team_country_code VARCHAR(10), -- 3-letter code, e.g. "ENG"
     away_team_logo TEXT,
     away_score INTEGER,
     away_penalty_score INTEGER,
     away_is_winner BOOLEAN,
+    
+    -- Aggregate & First Leg (for knockout matches)
+    aggregate_home_score INTEGER,
+    aggregate_away_score INTEGER,
+    first_leg_home_score INTEGER,
+    first_leg_away_score INTEGER,
+    
+    -- 90 Minute Scores (for StatMatik)
+    home_score_90 INTEGER,
+    away_score_90 INTEGER,
     
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
