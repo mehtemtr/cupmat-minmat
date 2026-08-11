@@ -475,8 +475,8 @@ export default function HaberlerPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-                <Newspaper className="w-6 h-6" />
+              <div className="p-1 rounded-xl bg-cyan-500/10 border border-cyan-500/30 shadow-md shadow-cyan-500/20">
+                <img src="/newsglo-logo.jpg" alt="NewsGlo" className="w-8 h-8 rounded-lg object-contain" />
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                 {t.portalTitle}
