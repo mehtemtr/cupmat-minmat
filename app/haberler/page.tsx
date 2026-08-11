@@ -548,7 +548,7 @@ export default function HaberlerPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
               {articles.map((article) => {
                 const isInternal = article.link && (article.link.includes("statmatik.com") || article.link.startsWith("/"));
-                const isJustAnnouncement = !article.link || article.link === "https://statmatik.com" || article.link === "https://news.statmatik.com" || article.link === "https://statmatik.com/";
+                const isJustAnnouncement = !article.link || article.link === "https://statmatik.com" || article.link === "https://news.statmatik.com" || article.link === "https://statmatik.com/" || article.category === "Statmatik";
                 const isClickable = !isJustAnnouncement;
 
                 return (
