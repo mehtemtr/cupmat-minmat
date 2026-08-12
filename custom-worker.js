@@ -8,20 +8,13 @@ export default {
     let paths = [];
     
     switch (event.cron) {
-      case "0 6 * * *":
-        paths.push("/api/ai-agent?task=full");
-        break;
       case "0 0 */3 * *":
         paths.push("/api/cron/period-reset");
         break;
-      case "0 3 * * *":
-        paths.push("/api/cron/sync-api-football");
-        break;
-      case "0 */4 * * *":
-        // Bu cron kullanılmıyor ama kalsa da boş geçer
+      case "*/15 * * * *":
+        paths.push("/api/cron/cupmat-fetch");
         break;
       case "*/30 * * * *":
-        paths.push("/api/cron/cupmat-fetch");
         paths.push("/api/cron/fetch-news");
         break;
       default:
