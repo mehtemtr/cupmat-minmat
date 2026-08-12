@@ -8,30 +8,38 @@ export const TARGET_LEAGUES = [
   2,  // UEFA Champions League
   3,  // UEFA Europa League
   848, // UEFA Conference League
+  73, // UEFA Super Cup
   13, // Copa Libertadores
   17, // AFC Champions League
+  18, // AFC Cup / Champions League Two
   11, // Copa Sudamericana
   12, // CAF Champions League
+  20, // CAF Confederation Cup
   16, // CONCACAF Champions Cup
   15, // FIFA Club World Cup
   5,  // UEFA Nations League (Milli)
   34, // World Cup Qualifiers CONMEBOL (Milli)
   32, // AFCON Qualifiers (Milli)
+  68, // OFC Champions League
 ];
 
 const LEAGUE_REGIONS: Record<number, string> = {
   2: 'europe',
   3: 'europe',
   848: 'europe',
+  73: 'europe',
   5: 'europe',
   13: 'america',
   11: 'america',
   34: 'america',
   16: 'america',
   17: 'asia',
+  18: 'asia',
   12: 'africa',
   32: 'africa',
-  15: 'world'
+  20: 'africa',
+  15: 'world',
+  68: 'oceania'
 };
 
 // Basit 3 harfli ülke kısaltma haritası (Gerçekte API'den veya statik bir sözlükten beslenebilir)
