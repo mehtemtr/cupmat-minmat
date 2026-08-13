@@ -95,24 +95,28 @@ export default function BottomNavbar() {
       label: "CupMat",
       href: "/cupmat",
       icon: Trophy,
+      imgSrc: "/logo_s_clean.png",
       isActive: pathname?.startsWith("/cupmat"),
     },
     {
       label: "MinLan",
       href: process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan",
       icon: Sparkles,
+      imgSrc: "/minlan-logo.png",
       isActive: pathname?.startsWith("/minlan"),
     },
     {
       label: "MinMat",
       href: "/minmat",
       icon: Calculator,
+      imgSrc: "/minmat/icon.png",
       isActive: pathname?.startsWith("/minmat"),
     },
     {
       label: "NewsGlo",
       href: "/haberler",
       icon: Newspaper,
+      imgSrc: "/newsglo-logo.jpg",
       isActive: pathname?.startsWith("/haberler") || pathname?.includes("news"),
     },
   ];
@@ -138,7 +142,11 @@ export default function BottomNavbar() {
                   item.isActive ? activeTextColor : "text-zinc-400 hover:text-zinc-200"
                 }`}
               >
-                <Icon className="h-5 w-5 mb-0.5" strokeWidth={item.isActive ? 2.5 : 2} />
+                {item.imgSrc ? (
+                  <img src={item.imgSrc} alt={item.label} className={`w-5 h-5 mb-0.5 object-contain ${item.isActive ? "" : "opacity-70 grayscale"} transition-all`} />
+                ) : (
+                  <Icon className="h-5 w-5 mb-0.5" strokeWidth={item.isActive ? 2.5 : 2} />
+                )}
                 <span className="text-[10px] font-bold tracking-tight">{item.label}</span>
               </Link>
             );
@@ -216,28 +224,28 @@ export default function BottomNavbar() {
                 href="/cupmat"
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >
-                <Trophy className="h-4 w-4 text-emerald-400" />
+                <img src="/logo_s_clean.png" alt="CupMat" className="h-4 w-4 object-contain" />
                 <span>CupMat</span>
               </Link>
               <Link
                 href="/minmat"
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >
-                <Calculator className="h-4 w-4 text-emerald-400" />
+                <img src="/minmat/icon.png" alt="MinMat" className="h-4 w-4 object-contain" />
                 <span>MinMat</span>
               </Link>
               <Link
                 href={process.env.NODE_ENV === "development" ? "/minlan" : "https://statmatik.com/minlan"}
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >
-                <Sparkles className="h-4 w-4 text-emerald-400" />
+                <img src="/minlan-logo.png" alt="MinLan" className="h-4 w-4 object-contain rounded-sm" />
                 <span>MinLan</span>
               </Link>
               <Link
                 href="/haberler"
                 className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] transition text-zinc-200 text-sm font-semibold"
               >
-                <Newspaper className="h-4 w-4 text-emerald-400" />
+                <img src="/newsglo-logo.jpg" alt="NewsGlo" className="h-4 w-4 object-contain rounded-sm" />
                 <span>NewsGlo</span>
               </Link>
             </div>

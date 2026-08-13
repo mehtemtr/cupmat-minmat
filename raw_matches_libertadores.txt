@@ -1,0 +1,129 @@
+Güney Amerika
+Libertadores Kupası
+	Türü	Tarih		Ev	Sonuç			Deplasman	Penaltı	
+	1. Tur	04 Şubat 2026	MS	The Strongest	2	-	1	Dep. Tachira		
+	1. Tur	05 Şubat 2026	MS	CS 2 de Mayo	1	-	0	Alianza Lima		
+	1. Tur	06 Şubat 2026	MS	CA Juventud	0	-	1	Uni. Catolica		
+	1. Tur	11 Şubat 2026	PEN	Dep. Tachira	1	-	0	The Strongest	5	3
+	1. Tur	12 Şubat 2026	MS	Alianza Lima	1	-	1	CS 2 de Mayo		
+	1. Tur	13 Şubat 2026	PEN	Uni. Catolica	3	-	4	CA Juventud	3	4
+	2. Tur	18 Şubat 2026	MS	Carabobo	1	-	0	Huachipato		
+	2. Tur	18 Şubat 2026	MS	CS 2 de Mayo	2	-	2	S. Cristal		
+	2. Tur	18 Şubat 2026	MS	Liverpool M.	1	-	2	Medellin		
+	2. Tur	19 Şubat 2026	MS	O'Higgins	1	-	0	Bahia BA		
+	2. Tur	19 Şubat 2026	MS	Barcelona SC	0	-	1	Argentinos Jr.		
+	2. Tur	19 Şubat 2026	MS	Nacional Potosi	1	-	0	Botafogo RJ		
+	2. Tur	20 Şubat 2026	MS	CA Juventud	0	-	0	Club Guarani		
+	2. Tur	20 Şubat 2026	MS	Dep. Tachira	0	-	1	Dep. Tolima		
+	2. Tur	25 Şubat 2026	MS	Huachipato	1	-	2	Carabobo		
+	2. Tur	25 Şubat 2026	MS	Medellin	0	-	0	Liverpool M.		
+	2. Tur	25 Şubat 2026	PEN	S. Cristal	0	-	0	CS 2 de Mayo	5	4
+	2. Tur	26 Şubat 2026	PEN	Bahia BA	2	-	1	O'Higgins	3	4
+	2. Tur	26 Şubat 2026	PEN	Argentinos Jr.	0	-	1	Barcelona SC	4	5
+	2. Tur	26 Şubat 2026	MS	Botafogo RJ	2	-	0	Nacional Potosi		
+	2. Tur	27 Şubat 2026	MS	Club Guarani	1	-	2	CA Juventud		
+	2. Tur	27 Şubat 2026	PEN	Dep. Tolima	0	-	1	Dep. Tachira	3	0
+	3. Tur	04 Mart 2026	MS	Barcelona SC	1	-	1	Botafogo RJ		
+	3. Tur	05 Mart 2026	MS	Carabobo	0	-	1	S. Cristal		
+	3. Tur	05 Mart 2026	MS	O'Higgins	1	-	0	Dep. Tolima		
+	3. Tur	06 Mart 2026	MS	CA Juventud	1	-	1	Medellin		
+	3. Tur	11 Mart 2026	MS	Botafogo RJ	0	-	1	Barcelona SC		
+	3. Tur	12 Mart 2026	PEN	S. Cristal	1	-	2	Carabobo	3	2
+	3. Tur	12 Mart 2026	MS	Dep. Tolima	2	-	0	O'Higgins		
+	3. Tur	13 Mart 2026	MS	Medellin	2	-	1	CA Juventud		
+C	1. Hafta	08 Nisan 2026	MS	Ind. Mendoza	1	-	0	Bolivar		
+C	1. Hafta	08 Nisan 2026	MS	Dep. La Guaira	0	-	0	Fluminense		
+D	1. Hafta	08 Nisan 2026	MS	Barcelona SC	0	-	1	Cruzeiro MG		
+G	1. Hafta	08 Nisan 2026	MS	Always Ready	0	-	1	LDU Quito		
+D	1. Hafta	08 Nisan 2026	MS	U. Catolica	1	-	2	Boca Juniors		
+B	1. Hafta	08 Nisan 2026	MS	Dep. Tolima	0	-	0	U. Deportes		
+B	1. Hafta	09 Nisan 2026	MS	Coquimbo U.	1	-	1	Nacional		
+G	1. Hafta	09 Nisan 2026	MS	Mirassol SP	1	-	0	Atl Lanus		
+A	1. Hafta	09 Nisan 2026	MS	Medellin	1	-	1	Estudiantes		
+A	1. Hafta	09 Nisan 2026	MS	Cusco	0	-	2	Flamengo		
+F	1. Hafta	09 Nisan 2026	MS	Atl. Junior	1	-	1	Palmeiras		
+F	1. Hafta	09 Nisan 2026	MS	S. Cristal	1	-	0	Cerro Porteno		
+H	1. Hafta	10 Nisan 2026	MS	UCV	3	-	1	Libertad		
+H	1. Hafta	10 Nisan 2026	MS	Rosario C.	0	-	0	Ind. del Valle		
+E	1. Hafta	10 Nisan 2026	MS	Platense	0	-	2	Corinthians		
+E	1. Hafta	10 Nisan 2026	MS	Santa Fe	1	-	1	CA Penarol		
+A	2. Hafta	15 Nisan 2026	MS	Estudiantes	2	-	1	Cusco		
+B	2. Hafta	15 Nisan 2026	MS	Nacional	3	-	1	Dep. Tolima		
+F	2. Hafta	15 Nisan 2026	MS	Cerro Porteno	1	-	0	Atl. Junior		
+C	2. Hafta	15 Nisan 2026	MS	Bolivar	1	-	1	Dep. La Guaira		
+D	2. Hafta	15 Nisan 2026	MS	Boca Juniors	3	-	0	Barcelona SC		
+B	2. Hafta	15 Nisan 2026	MS	U. Deportes	0	-	2	Coquimbo U.		
+G	2. Hafta	15 Nisan 2026	MS	LDU Quito	2	-	0	Mirassol SP		
+D	2. Hafta	16 Nisan 2026	MS	Cruzeiro MG	1	-	2	U. Catolica		
+H	2. Hafta	16 Nisan 2026	MS	Libertad	0	-	1	Rosario C.		
+C	2. Hafta	16 Nisan 2026	MS	Fluminense	1	-	2	Ind. Mendoza		
+E	2. Hafta	16 Nisan 2026	MS	Corinthians	2	-	0	Santa Fe		
+H	2. Hafta	16 Nisan 2026	MS	Ind. del Valle	3	-	1	UCV		
+F	2. Hafta	17 Nisan 2026	MS	Palmeiras	2	-	1	S. Cristal		
+G	2. Hafta	17 Nisan 2026	MS	Atl Lanus	1	-	0	Always Ready		
+A	2. Hafta	17 Nisan 2026	MS	Flamengo	4	-	1	Medellin		
+E	2. Hafta	17 Nisan 2026	MS	CA Penarol	1	-	2	Platense		
+G	3. Hafta	29 Nisan 2026	MS	Atl Lanus	1	-	0	LDU Quito		
+H	3. Hafta	29 Nisan 2026	MS	Libertad	2	-	3	Ind. del Valle		
+H	3. Hafta	29 Nisan 2026	MS	UCV	0	-	3	Rosario C.		
+D	3. Hafta	29 Nisan 2026	MS	Cruzeiro MG	1	-	0	Boca Juniors		
+B	3. Hafta	29 Nisan 2026	MS	Dep. Tolima	3	-	0	Coquimbo U.		
+F	3. Hafta	29 Nisan 2026	MS	S. Cristal	2	-	0	Atl. Junior		
+E	3. Hafta	30 Nisan 2026	MS	Platense	2	-	1	Santa Fe		
+G	3. Hafta	30 Nisan 2026	MS	Mirassol SP	2	-	0	Always Ready		
+D	3. Hafta	30 Nisan 2026	MS	Barcelona SC	1	-	2	U. Catolica		
+A	3. Hafta	30 Nisan 2026	MS	Estudiantes	1	-	1	Flamengo		
+F	3. Hafta	30 Nisan 2026	MS	Cerro Porteno	1	-	1	Palmeiras		
+B	3. Hafta	30 Nisan 2026	MS	U. Deportes	4	-	2	Nacional		
+C	3. Hafta	01 Mayıs 2026	MS	Bolivar	2	-	0	Fluminense		
+C	3. Hafta	01 Mayıs 2026	MS	Ind. Mendoza	4	-	1	Dep. La Guaira		
+E	3. Hafta	01 Mayıs 2026	MS	Corinthians	2	-	0	CA Penarol		
+A	3. Hafta	01 Mayıs 2026	MS	Medellin	1	-	0	Cusco		
+F	4. Hafta	06 Mayıs 2026	MS	S. Cristal	0	-	2	Palmeiras		
+H	4. Hafta	06 Mayıs 2026	MS	Rosario C.	1	-	0	Libertad		
+D	4. Hafta	06 Mayıs 2026	MS	Barcelona SC	1	-	0	Boca Juniors		
+H	4. Hafta	06 Mayıs 2026	MS	UCV	2	-	0	Ind. del Valle		
+G	4. Hafta	06 Mayıs 2026	MS	Always Ready	4	-	0	Atl Lanus		
+A	4. Hafta	07 Mayıs 2026	MS	Cusco	1	-	1	Estudiantes		
+C	4. Hafta	07 Mayıs 2026	MS	Dep. La Guaira	1	-	1	Bolivar		
+C	4. Hafta	07 Mayıs 2026	MS	Ind. Mendoza	1	-	1	Fluminense		
+E	4. Hafta	07 Mayıs 2026	MS	Santa Fe	1	-	1	Corinthians		
+B	4. Hafta	07 Mayıs 2026	MS	Dep. Tolima	3	-	0	Nacional		
+D	4. Hafta	07 Mayıs 2026	MS	U. Catolica	0	-	0	Cruzeiro MG		
+E	4. Hafta	08 Mayıs 2026	MS	Platense	1	-	1	CA Penarol		
+G	4. Hafta	08 Mayıs 2026	MS	Mirassol SP	2	-	0	LDU Quito		
+B	4. Hafta	08 Mayıs 2026	MS	Coquimbo U.	2	-	1	U. Deportes		
+A	4. Hafta	08 Mayıs 2026	HÜK	Medellin	0	-	3	Flamengo		
+F	4. Hafta	08 Mayıs 2026	MS	Atl. Junior	0	-	1	Cerro Porteno		
+B	5. Hafta	20 Mayıs 2026	MS	Coquimbo U.	3	-	0	Dep. Tolima		
+C	5. Hafta	20 Mayıs 2026	MS	Fluminense	2	-	1	Bolivar		
+H	5. Hafta	20 Mayıs 2026	MS	Rosario C.	4	-	0	UCV		
+E	5. Hafta	20 Mayıs 2026	MS	Santa Fe	2	-	1	Platense		
+G	5. Hafta	20 Mayıs 2026	MS	Always Ready	1	-	2	Mirassol SP		
+D	5. Hafta	20 Mayıs 2026	MS	Boca Juniors	1	-	1	Cruzeiro MG		
+H	5. Hafta	20 Mayıs 2026	MS	Ind. del Valle	4	-	1	Libertad		
+B	5. Hafta	21 Mayıs 2026	MS	Nacional	0	-	0	U. Deportes		
+A	5. Hafta	21 Mayıs 2026	MS	Flamengo	1	-	0	Estudiantes		
+F	5. Hafta	21 Mayıs 2026	MS	Palmeiras	0	-	1	Cerro Porteno		
+G	5. Hafta	21 Mayıs 2026	MS	LDU Quito	2	-	0	Atl Lanus		
+A	5. Hafta	21 Mayıs 2026	MS	Cusco	2	-	3	Medellin		
+F	5. Hafta	21 Mayıs 2026	MS	Atl. Junior	3	-	2	S. Cristal		
+C	5. Hafta	22 Mayıs 2026	MS	Dep. La Guaira	2	-	4	Ind. Mendoza		
+D	5. Hafta	22 Mayıs 2026	MS	U. Catolica	2	-	0	Barcelona SC		
+E	5. Hafta	22 Mayıs 2026	MS	CA Penarol	1	-	1	Corinthians		
+G	6. Hafta	27 Mayıs 2026	MS	LDU Quito	3	-	2	Always Ready		
+G	6. Hafta	27 Mayıs 2026	MS	Atl Lanus	1	-	0	Mirassol SP		
+A	6. Hafta	27 Mayıs 2026	MS	Flamengo	3	-	0	Cusco		
+A	6. Hafta	27 Mayıs 2026	MS	Estudiantes	1	-	0	Medellin		
+B	6. Hafta	27 Mayıs 2026	MS	Nacional	1	-	0	Coquimbo U.		
+B	6. Hafta	27 Mayıs 2026	MS	U. Deportes	0	-	0	Dep. Tolima		
+H	6. Hafta	28 Mayıs 2026	MS	Ind. del Valle	1	-	0	Rosario C.		
+H	6. Hafta	28 Mayıs 2026	MS	Libertad	0	-	1	UCV		
+C	6. Hafta	28 Mayıs 2026	MS	Fluminense	3	-	1	Dep. La Guaira		
+C	6. Hafta	28 Mayıs 2026	MS	Bolivar	1	-	3	Ind. Mendoza		
+E	6. Hafta	28 Mayıs 2026	MS	CA Penarol	0	-	1	Santa Fe		
+E	6. Hafta	28 Mayıs 2026	MS	Corinthians	0	-	2	Platense		
+F	6. Hafta	29 Mayıs 2026	MS	Palmeiras	4	-	1	Atl. Junior		
+F	6. Hafta	29 Mayıs 2026	MS	Cerro Porteno	2	-	0	S. Cristal		
+D	6. Hafta	29 Mayıs 2026	MS	Boca Juniors	0	-	1	U. Catolica		
+D	6. Hafta	29 Mayıs 2026	MS	Cruzeiro MG	4	-	0	Barcelona SC

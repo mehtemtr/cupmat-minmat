@@ -1,0 +1,25 @@
+Avrupa Şampiyonlar Ligi
+3. Ön Eleme
+4.08.2026
+MS	Mjallby	1	-	2	S. Bratislava
+MS	Ararat-Armenia	2	-	1	NK Celje
+MS	HB Sheva	1	-	0	Kızılyıldız
+MS	Levski Sofya	1	-	0	K. Almaty
+MS	D. Zagreb	5	-	0	Kauno Zalgiris
+MS	Olympiakos	0	-	0	NEC Nijmegen
+MS	Union SG	3	-	3	Bodo/Glimt
+MS	Sparta Prag	2	-	1	Lyon
+5.08.2026
+MS	Aarhus	2	-	1	Sabah
+MS	Fenerbahçe	2	-	0	Sturm Graz
+11.08.2026
+18:00	K. Almaty	-	Levski Sofya
+19:00	Sabah	-	Aarhus
+19:00	Bodo/Glimt	-	Union SG
+20:00	Kauno Zalgiris	-	D. Zagreb
+20:30	NEC Nijmegen	-	Olympiakos
+21:00	Kızılyıldız	-	HB Sheva
+21:15	S. Bratislava	-	Mjallby
+21:15	NK Celje	-	Ararat-Armenia
+21:30	Sturm Graz	-	Fenerbahçe
+22:00	Lyon	-	Sparta Prag

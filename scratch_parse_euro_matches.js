@@ -1,0 +1,513 @@
+const fs = require('fs');
+
+const rawData = `Avrupa Şampiyonlar Ligi
+1. Eleme Turu
+Salı 07.07.2026
+MS	Sabah	2	-	0	The New Saints
+MS	Lincoln Red	3	-	1	Inter Escaldes
+MS	Ararat-Armenia	2	-	0	Riga
+MS	Kauno Zalgiris	1	-	1	Drita
+MS	Vardar	0	-	2	Kuopion
+MS	Floriana	2	-	0	Shamrock R.
+MS	Tre Fiori	0	-	1	Larne
+MS	Banja Luka	1	-	1	Levski Sofya
+MS	Klaksvik	2	-	1	Atert
+MS	Vikingur R.	1	-	0	Gyor
+Çarşamba 08.07.2026
+MS	K. Almaty	2	-	1	Sutjeska
+MS	Flora T.	2	-	3	Iberia
+MS	ML Rogachev	1	-	4	Univ. Craiova
+MS	Petrocub	1	-	1	Egnatia
+Salı 14.07.2026
+UZT	Kuopion	2	-	3	Vardar	0	2	2	3
+MS	Iberia	2	-	2	Flora T.
+MS	Inter Escaldes	1	-	1	Lincoln Red
+MS	Riga	3	-	2	Ararat-Armenia
+MS	Gyor	2	-	2	Vikingur R.
+MS	The New Saints	1	-	2	Sabah
+MS	Levski Sofya	4	-	0	Banja Luka
+MS	Drita	2	-	3	Kauno Zalgiris
+MS	Shamrock R.	5	-	1	Floriana
+MS	Larne	2	-	1	Tre Fiori
+Çarşamba 15.07.2026
+MS	Univ. Craiova	1	-	0	ML Rogachev
+MS	Atert	1	-	2	Klaksvik
+MS	Egnatia	6	-	1	Petrocub
+MS	Sutjeska	0	-	2	K. Almaty
+
+2. Eleme Turu
+Salı 21.07.2026
+MS	Mjallby	3	-	0	Lincoln Red
+MS	Sabah	1	-	0	Kuopion
+MS	Ararat-Armenia	2	-	0	Shamrock R.
+MS	Iberia	0	-	2	S. Bratislava
+MS	Aarhus	1	-	4	Lech Poznan
+MS	Thun	1	-	1	D. Zagreb
+MS	Fenerbahçe	1	-	0	Gornik Zabrze
+MS	Sturm Graz	4	-	0	Hearts
+MS	Klaksvik	0	-	0	Kauno Zalgiris
+MS	Larne	0	-	4	Kızılyıldız
+MS	Vikingur R.	2	-	1	HB Sheva
+Çarşamba 22.07.2026
+MS	Omonia	1	-	0	K. Almaty
+MS	Levski Sofya	1	-	0	Univ. Craiova
+MS	Egnatia	3	-	3	NK Celje
+Salı 28.07.2026
+MS	Kuopion	0	-	2	Sabah
+MS	Lincoln Red	0	-	0	Mjallby
+UZT	D. Zagreb	3	-	2	Thun	2	2	3	2
+PEN	NK Celje	2	-	2	Egnatia	1	1	2	2	4	1
+MS	Hearts	0	-	2	Sturm Graz
+MS	Shamrock R.	2	-	1	Ararat-Armenia
+Çarşamba 29.07.2026
+PEN	K. Almaty	1	-	0	Omonia	1	0	1	0	6	5
+MS	Kauno Zalgiris	1	-	0	Klaksvik
+PEN	Lech Poznan	1	-	4	Aarhus	0	3	1	4	3	4
+MS	HB Sheva	2	-	0	Vikingur R.
+MS	Univ. Craiova	2	-	2	Levski Sofya
+MS	Kızılyıldız	5	-	0	Larne
+MS	Gornik Zabrze	1	-	1	Fenerbahçe
+MS	S. Bratislava	1	-	1	Iberia
+
+Salı 04.08.2026
+MS	Mjallby	1	-	2	S. Bratislava
+MS	Ararat-Armenia	2	-	1	NK Celje
+MS	HB Sheva	1	-	0	Kızılyıldız
+MS	Levski Sofya	1	-	0	K. Almaty
+MS	D. Zagreb	5	-	0	Kauno Zalgiris
+MS	Olympiakos	0	-	0	NEC Nijmegen
+MS	Union SG	3	-	3	Bodo/Glimt
+MS	Sparta Prag	2	-	1	Lyon
+Çarşamba 05.08.2026
+MS	Aarhus	2	-	1	Sabah
+MS	Fenerbahçe	2	-	0	Sturm Graz
+Salı 11.08.2026
+18:00	K. Almaty	-	Levski Sofya
+19:00	Sabah	-	Aarhus
+19:00	Bodo/Glimt	-	Union SG
+20:00	Kauno Zalgiris	-	D. Zagreb
+20:30	NEC Nijmegen	-	Olympiakos
+21:00	Kızılyıldız	-	HB Sheva
+21:15	S. Bratislava	-	Mjallby
+21:15	NK Celje	-	Ararat-Armenia
+21:30	Sturm Graz	-	Fenerbahçe
+22:00	Lyon	-	Sparta Prag
+
+
+Avrupa Ligi
+1. Ön Eleme
+09 Temmuz 2026
+MS	Karabağ	3	-	0	IF Vestri
+MS	Dinamo Kiev	0	-	0	U. Cluj
+MS	Sheriff	0	-	0	Aluminij
+MS	Hajduk Split	2	-	0	MSK Zilina
+MS	CSKA Sofya	3	-	2	Derry City
+MS	FK Vojvodina	1	-	2	Ferencvaros
+16 Temmuz 2026
+PEN	U. Cluj	0	-	0	Dinamo Kiev	0	0	0	0	2	4
+MS	Derry City	1	-	2	CSKA Sofya
+MS	Aluminij	0	-	1	Sheriff
+MS	Ferencvaros	3	-	0	FK Vojvodina
+MS	MSK Zilina	2	-	1	Hajduk Split
+MS	IF Vestri	0	-	3	Karabağ
+2. Ön Eleme
+23 Temmuz 2026
+MS	Karabağ	0	-	0	CSKA Sofya
+MS	Hammarby	1	-	1	Anderlecht
+MS	Tromsö	0	-	1	H. Kralove
+MS	Sheriff	0	-	5	M. Tel Aviv
+MS	Dinamo Kiev	2	-	3	PAOK
+MS	Twente	1	-	2	Ferencvaros
+MS	Beşiktaş	1	-	0	Midtjylland
+MS	St. Gallen	2	-	1	Benfica
+MS	Hajduk Split	2	-	0	Pafos
+MS	M. Tel Aviv	1	-	0	Sheriff
+MS	H. Kralove	3	-	1	Tromsö
+MS	Midtjylland	0	-	2	Beşiktaş
+UZ	Pafos	4	-	0	Hajduk Split	2	0	4	0
+MS	PAOK	2	-	0	Dinamo Kiev
+PEN	CSKA Sofya	0	-	0	Karabağ	0	0	0	0	5	4
+MS	Anderlecht	3	-	1	Hammarby
+MS	Ferencvaros	2	-	2	Twente
+MS	Benfica	5	-	0	St. Gallen
+04 Ağustos 2026
+MS	Larne	0	-	0	Iberia
+MS	Shamrock R.	3	-	1	Egnatia
+05 Ağustos 2026
+MS	Ferencvaros	1	-	0	Gornik Zabrze
+06 Ağustos 2026
+MS	Kuopion	1	-	1	Univ. Craiova
+MS	J. Bialystok	2	-	1	Rangers
+MS	M. Tel Aviv	0	-	3	CSKA Sofya
+MS	H. Kralove	0	-	1	Beşiktaş
+MS	Salzburg	1	-	0	Pafos
+MS	Lincoln Red	1	-	1	Omonia
+MS	Lech Poznan	1	-	0	Klaksvik
+MS	PAOK	0	-	1	Anderlecht
+MS	Thun	3	-	0	Vikingur R.
+MS	Benfica	6	-	1	Hearts
+11 Ağustos 2026
+19:00	Iberia	-			Larne
+13 Ağustos 2026
+20:00	Beşiktaş	-			H. Kralove
+20:00	Pafos	-			Salzburg
+20:00	Gornik Zabrze	-			Ferencvaros
+20:00	Omonia	-			Lincoln Red
+20:00	Univ. Craiova	-			Kuopion
+20:30	Vikingur R.	-			Thun
+21:00	CSKA Sofya	-			M. Tel Aviv
+21:30	Rangers	-			J. Bialystok
+21:30	Anderlecht	-			PAOK
+21:45	Hearts	-			Benfica
+21:45	Klaksvik	-			Lech Poznan
+22:00	Egnatia	-			Shamrock R.
+Konferans Ligi
+1. Ön Eleme
+07 Temmuz 2026
+MS	Strassen	1	-	0	La Fiorita
+MS	AF Elbasani	1	-	1	BATE Borisov
+08 Temmuz 2026
+MS	Zira	3	-	0	Torpedo Kutaisi
+MS	Connah's	0	-	0	Ballkani
+MS	Differdange	0	-	0	Ilves
+09 Temmuz 2026
+MS	AC Escaldes	2	-	1	Mornar
+MS	Hegelmann	1	-	1	Paide Flora
+MS	Alashkert	1	-	1	Yelimay
+MS	Dila Gori	3	-	1	Virtus
+MS	Nomme Kalju	1	-	0	Linfield
+MS	FK Liepaja	1	-	0	FK Decic
+MS	Bohemians	2	-	0	St Josephs FC
+MS	Velez Mostar	1	-	1	Milsami
+MS	Dinamo Minsk	0	-	1	Sileks
+MS	Marsaxlokk	0	-	3	Pyunik
+MS	Mondorf	1	-	2	Dinamo Tiflis
+MS	Caernarfon	0	-	5	Levadia
+MS	Europa FC	0	-	5	FK Shkendija
+MS	KF Vllaznia	2	-	1	Malisheva
+MS	Glentoran	1	-	2	Rigas Skola
+MS	Petrovac	1	-	3	Zalgiris
+MS	Penybont	0	-	1	Santa Coloma
+MS	Runavik	1	-	1	Hamrun
+MS	Dinamo Tirana	0	-	1	Astana
+MS	Sarajevo	1	-	1	Inter Turku
+MS	Stjarnan	3	-	1	Vikingur Gota
+14 Temmuz 2026
+MS	La Fiorita	0	-	2	Strassen
+15 Temmuz 2026
+MS	Malisheva	5	-	0	KF Vllaznia
+MS	FK Decic	1	-	2	FK Liepaja
+16 Temmuz 2026
+UZ	Astana	1	-	4	Dinamo Tirana	1	2	1	4
+PEN	Yelimay	2	-	2	Alashkert	1	1	2	2	5	6
+MS	Inter Turku	2	-	1	Sarajevo
+MS	St Josephs FC	0	-	0	Bohemians
+MS	Torpedo Kutaisi	0	-	3	Zira
+MS	Ilves	3	-	1	Differdange
+MS	Pyunik	1	-	0	Marsaxlokk
+MS	Paide Flora	3	-	0	Hegelmann
+MS	Rigas Skola	2	-	0	Glentoran
+MS	Levadia	5	-	0	Caernarfon
+MS	Vikingur Gota	2	-	2	Stjarnan
+MS	Milsami	0	-	1	Velez Mostar
+UZ	Dinamo Tiflis	1	-	1	Mondorf	0	1	1	1
+PEN	BATE Borisov	0	-	0	AF Elbasani	0	0	0	0	5	4
+MS	Zalgiris	2	-	1	Petrovac
+MS	Santa Coloma	3	-	0	Penybont
+MS	Hamrun	1	-	2	Runavik
+MS	Ballkani	3	-	2	Connah's
+PEN	Sileks	0	-	1	Dinamo Minsk	0	1	0	1	5	6
+MS	FK Shkendija	1	-	0	Europa FC
+MS	Mornar	1	-	2	AC Escaldes
+MS	Linfield	2	-	2	Nomme Kalju
+MS	Virtus	1	-	0	Dila Gori
+2. Ön Eleme
+21 Temmuz 2026
+MS	Göteborg	1	-	2	Levadia
+MS	Floriana	1	-	1	Drita
+MS	Atert	2	-	6	Gyor
+22 Temmuz 2026
+MS	Neftçi PFK	2	-	4	Dinamo Minsk
+MS	Bohemians	2	-	1	Ballkani
+MS	Başakşehir	1	-	1	Inter Turku
+MS	Vardar	2	-	3	Riga
+MS	S. Trnava	0	-	0	CSKA 1948
+MS	Zeleznicar	0	-	1	Braga
+23 Temmuz 2026
+MS	Malisheva	2	-	0	Hibernian
+MS	FK Liepaja	0	-	2	Austria Wien
+MS	Alashkert	1	-	1	CFR Cluj
+MS	FK Panevezys	1	-	1	Tobol
+MS	HJK Helsinki	5	-	0	Coleraine
+MS	Debrecen	1	-	0	Pyunik
+MS	Dila Gori	0	-	4	Apollon L.
+MS	Paide Flora	1	-	0	Zira
+MS	Flora T.	1	-	0	The New Saints
+MS	Rakow C.	3	-	1	Valletta
+MS	Rigas Skola	4	-	1	IF Vestri
+MS	Dunajska S.	1	-	0	Velez Mostar
+MS	AEK Larnaca	0	-	1	Beitar
+MS	U. Cluj	2	-	2	Brann
+MS	GAIS	1	-	0	Nordsjaelland
+MS	FC Zimbru	1	-	1	Noah
+MS	Dinamo Tiflis	3	-	0	Zalgiris
+MS	BATE Borisov	1	-	1	Sion
+MS	Santa Coloma	1	-	3	Rapid Wien
+MS	ML Rogachev	3	-	0	Sutjeska
+MS	Vaduz	4	-	0	AC Escaldes
+MS	FCSB	2	-	3	FK Auda
+MS	Aluminij	1	-	1	Dinamo Tirana
+MS	VSN Varazdin	3	-	2	Jablonec
+MS	Paksi	1	-	2	Panathinaikos
+MS	FK Vojvodina	1	-	4	Ajax
+MS	Polessya	3	-	3	Kopenhag
+MS	Lugano	1	-	0	Dukagjini
+MS	MSK Zilina	2	-	1	Katowice
+MS	LNZ Cherkasy	0	-	0	KAA Gent
+MS	H. Tel Aviv	2	-	0	Ludogorets
+MS	Banja Luka	3	-	0	Petrocub
+MS	Bravo	2	-	1	FK Shkendija
+MS	Rijeka	1	-	0	Derry City
+MS	Shelbourne	5	-	2	Nomme Kalju
+MS	Motherwell	2	-	0	HB Torshavn
+MS	Runavik	0	-	2	Koper
+MS	Stjarnan	1	-	0	Ilves
+MS	Partizan	4	-	0	Strassen
+MS	Valur Reykjavik	1	-	0	Zrinjski
+28 Temmuz 2026
+MS	Apollon L.	3	-	0	Dila Gori
+UZ	Riga	5	-	2	Vardar	1	2	5	2
+PEN	CSKA 1948	0	-	0	S. Trnava	0	0	0	0	5	3
+UZ	Drita	2	-	1	Floriana	1	1	2	1
+29 Temmuz 2026
+MS	Dukagjini	1	-	5	Lugano
+MS	Kopenhag	2	-	1	Polessya
+MS	Rapid Wien	6	-	2	Santa Coloma
+30 Temmuz 2026
+PEN	Tobol	1	-	1	FK Panevezys	1	1	1	1	3	2
+MS	AC Escaldes	0	-	2	Vaduz
+MS	Pyunik	0	-	0	Debrecen
+MS	Noah	2	-	1	FC Zimbru
+MS	Inter Turku	2	-	0	Başakşehir
+MS	FK Auda	4	-	1	FCSB
+MS	Nomme Kalju	2	-	1	Shelbourne
+MS	Jablonec	2	-	0	VSN Varazdin
+PEN	Ilves	2	-	1	Stjarnan	1	0	2	1	5	4
+MS	Zira	1	-	1	Paide Flora
+UZ	Levadia	1	-	3	Göteborg	0	1	1	3
+MS	Brann	3	-	1	U. Cluj
+MS	Nordsjaelland	6	-	0	GAIS
+MS	Zalgiris	7	-	2	Dinamo Tiflis
+MS	Velez Mostar	0	-	3	Dunajska S.
+MS	HB Torshavn	0	-	3	Motherwell
+MS	Dinamo Minsk	0	-	1	Neftçi PFK
+MS	Petrocub	3	-	3	Banja Luka
+MS	Gyor	1	-	1	Atert
+MS	Derry City	0	-	1	Rijeka
+MS	Valletta	0	-	4	Rakow C.
+PEN	Beitar	2	-	3	AEK Larnaca	2	3	2	3	4	3
+PEN	The New Saints	1	-	0	Flora T.	1	0	1	0	2	4
+MS	FK Shkendija	3	-	1	Bravo
+MS	IF Vestri	1	-	1	Rigas Skola
+MS	Ajax	4	-	1	FK Vojvodina
+PEN	Ballkani	3	-	2	Bohemians	3	2	3	2	4	5
+MS	Ludogorets	2	-	2	H. Tel Aviv
+MS	Sion	4	-	0	BATE Borisov
+MS	Strassen	0	-	1	Partizan
+MS	Austria Wien	3	-	1	FK Liepaja
+MS	Zrinjski	2	-	2	Valur Reykjavik
+MS	Katowice	3	-	1	MSK Zilina
+MS	Panathinaikos	2	-	2	Paksi
+MS	CFR Cluj	3	-	0	Alashkert
+PEN	KAA Gent	0	-	0	LNZ Cherkasy	0	0	0	0	4	2
+MS	Coleraine	0	-	3	HJK Helsinki
+PEN	Koper	1	-	3	Runavik	0	2	1	3	3	4
+MS	Dinamo Tirana	3	-	0	Aluminij
+MS	Braga	4	-	0	Zeleznicar
+MS	Hibernian	4	-	1	Malisheva
+MS	Sutjeska	1	-	2	ML Rogachev
+3. Ön Eleme
+04 Ağustos 2026
+MS	FK Auda	1	-	0	Dinamo Tirana
+05 Ağustos 2026
+MS	Brann	0	-	1	Apollon L.
+MS	Panathinaikos	1	-	1	CSKA 1948
+06 Ağustos 2026
+MS	Inter Turku	2	-	1	Vaduz
+MS	Noah	2	-	2	Sion
+MS	Jablonec	2	-	0	Rigas Skola
+MS	Paide Flora	1	-	4	Rapid Wien
+MS	HJK Helsinki	1	-	1	Motherwell
+MS	CFR Cluj	0	-	5	Tromsö
+MS	Riga	1	-	0	Gyor
+MS	Inter Escaldes	2	-	0	Flora T.
+MS	Zalgiris	2	-	5	Hajduk Split
+MS	Debrecen	0	-	3	Kopenhag
+MS	Göteborg	0	-	1	KAA Gent
+MS	Rakow C.	0	-	0	Hammarby
+MS	Sheriff	1	-	3	St. Gallen
+MS	Dinamo Kiev	1	-	0	Karabağ
+MS	Beitar	1	-	2	Austria Wien
+MS	H. Tel Aviv	2	-	0	Katowice
+MS	Ajax	3	-	1	Shelbourne
+MS	Twente	6	-	0	Dunajska S.
+MS	Banja Luka	1	-	0	ML Rogachev
+MS	Valur Reykjavik	0	-	2	Nordsjaelland
+MS	Braga	1	-	0	Dinamo Minsk
+MS	Lugano	2	-	0	Runavik
+MS	Rijeka	1	-	0	Ilves
+MS	Bohemians	0	-	2	Midtjylland
+MS	Tre Fiori	1	-	4	Drita
+MS	Partizan	3	-	0	Tobol
+MS	Hibernian	2	-	1	FK Shkendija
+11 Ağustos 2026
+20:00	Apollon L.	-			Brann
+20:30	CSKA 1948	-			Panathinaikos
+12 Ağustos 2026
+19:00	Katowice	-			H. Tel Aviv
+19:00	Kopenhag	-			Debrecen
+19:00	Rapid Wien	-			Paide Flora
+13 Ağustos 2026
+18:00	Tobol	-			Partizan
+19:00	Flora T.	-			Inter Escaldes
+19:00	Ilves	-			Rijeka
+19:00	Karabağ	-			Dinamo Kiev
+19:30	Rigas Skola	-			Jablonec
+20:00	ML Rogachev	-			Banja Luka
+20:00	Nordsjaelland	-			Valur Reykjavik
+20:00	Dinamo Minsk	-			Braga
+20:00	Dunajska S.	-			Twente
+20:00	Tromsö	-			CFR Cluj
+20:00	Midtjylland	-			Bohemians
+20:00	Hammarby	-			Rakow C.
+20:30	Vaduz	-			Inter Turku
+20:30	Runavik	-			Lugano
+21:00	Drita	-			Tre Fiori
+21:00	FK Shkendija	-			Hibernian
+21:00	St. Gallen	-			Sheriff
+21:15	Sion	-			Noah
+21:30	Gyor	-			Riga
+21:30	Austria Wien	-			Beitar
+21:30	KAA Gent	-			Göteborg
+21:30	Motherwell	-			HJK Helsinki
+21:45	Shelbourne	-			Ajax
+22:00	Dinamo Tirana	-			FK Auda
+22:00	Hajduk Split	-			Zalgiris`;
+
+const lines = rawData.split('\n').map(l => l.trim()).filter(Boolean);
+let currentTournament = "";
+let currentRound = "";
+let currentDate = "";
+
+const parsedMatches = [];
+
+for (const line of lines) {
+    if (line.includes('Ligi')) {
+        let rawTournament = line;
+        if (rawTournament.includes('Şampiyonlar Ligi')) {
+            currentTournament = "UEFA Şampiyonlar Ligi";
+        } else if (rawTournament.includes('Avrupa Ligi')) {
+            currentTournament = "UEFA Avrupa Ligi";
+        } else if (rawTournament.includes('Konferans Ligi')) {
+            currentTournament = "UEFA Konferans Ligi";
+        } else {
+            currentTournament = rawTournament;
+        }
+        continue;
+    }
+    if (line.includes('Turu') || line.includes('Ön Eleme')) {
+        currentRound = line;
+        continue;
+    }
+    
+    // Check if line is a date (e.g., "Salı 07.07.2026" or "09 Temmuz 2026")
+    if (/^[A-Za-zçÇşŞıİğĞüÜöÖ]+\s+\d{2}\.\d{2}\.\d{4}$/.test(line) || /^\d{2}\s+[A-Za-zçÇşŞıİğĞüÜöÖ]+\s+\d{4}$/.test(line)) {
+        currentDate = line; // Simplified date handling for now
+        continue;
+    }
+    
+    // Parse match lines
+    // MS	Sabah	2	-	0	The New Saints
+    // UZT	Kuopion	2	-	3	Vardar	0	2	2	3
+    // PEN	NK Celje	2	-	2	Egnatia	1	1	2	2	4	1
+    // 18:00	K. Almaty	-	Levski Sofya
+    
+    const parts = line.split(/\t+/);
+    if (parts.length < 3) continue;
+    
+    let status = parts[0];
+    let isScheduled = false;
+    
+    if (/^\d{2}:\d{2}$/.test(status)) {
+        isScheduled = true;
+    }
+    
+    if (isScheduled) {
+        // e.g., 18:00	K. Almaty	-	Levski Sofya
+        // actually in data: 18:00	K. Almaty	-			Levski Sofya (sometimes extra tabs)
+        // clean up parts array by removing empty elements and mapping
+        const cleanParts = parts.filter(p => p.trim() !== '');
+        
+        // 18:00 K. Almaty - Levski Sofya
+        const time = cleanParts[0];
+        const home_team = cleanParts[1];
+        let away_team = "";
+        
+        if (cleanParts.length >= 4) {
+             away_team = cleanParts.slice(3).join(' '); 
+        } else if (cleanParts.length === 3 && cleanParts[2].includes('-')) {
+             // Handle "team - team" in a single part if tabs were missed
+             away_team = "UNKNOWN"; // Will refine regex below
+        }
+    } else {
+        // Results
+        // MS Sabah 2 - 0 The New Saints
+        // UZT Kuopion 2 - 3 Vardar 0 2 2 3
+        const home_team = parts[1];
+        const home_score = parseInt(parts[2], 10);
+        const away_score = parseInt(parts[4], 10);
+        const away_team = parts[5];
+        
+        let home_score_90 = home_score;
+        let away_score_90 = away_score;
+        let home_penalty_score = null;
+        let away_penalty_score = null;
+        let db_status = "FT";
+        
+        if (status === 'UZ' || status === 'UZT') {
+            db_status = "AET";
+            if (parts.length >= 8) {
+                home_score_90 = parseInt(parts[6], 10);
+                away_score_90 = parseInt(parts[7], 10);
+            }
+        } else if (status === 'PEN') {
+            db_status = "PEN";
+            if (parts.length >= 12) {
+                home_score_90 = parseInt(parts[6], 10);
+                away_score_90 = parseInt(parts[7], 10);
+                home_penalty_score = parseInt(parts[10], 10);
+                away_penalty_score = parseInt(parts[11], 10);
+            }
+        }
+        
+        parsedMatches.push({
+            tournament: currentTournament,
+            round: currentRound,
+            dateStr: currentDate,
+            status: db_status,
+            home_team,
+            away_team,
+            home_score,
+            away_score,
+            home_score_90,
+            away_score_90,
+            home_penalty_score,
+            away_penalty_score
+        });
+    }
+}
+
+console.log(JSON.stringify(parsedMatches.slice(0, 5), null, 2));
+console.log(`Parsed ${parsedMatches.length} matches.`);
+
+fs.writeFileSync('scratch/parsed_euro_matches.json', JSON.stringify(parsedMatches, null, 2));

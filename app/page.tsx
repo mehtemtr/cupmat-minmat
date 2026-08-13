@@ -378,7 +378,7 @@ export default function EntryPage() {
                   {newsHeadlines.length > 0 ? (
                     newsHeadlines.map((headline, idx) => (
                       <React.Fragment key={idx}>
-                        <Link href="https://news.statmatik.com/haberler" className="hover:text-cyan-400 transition-colors cursor-pointer font-bold text-white">
+                        <Link href="/haberler" className="hover:text-cyan-400 transition-colors cursor-pointer font-bold text-white">
                           {headline}
                         </Link>
                         <span className="text-cyan-400 font-extrabold text-xs">✦</span>
@@ -413,7 +413,6 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
-        <MinlanCountdown />
 
         {/* Dynamic Celebrations Section */}
         {activeBanners.includes("psg") && (
@@ -804,28 +803,28 @@ export default function EntryPage() {
           );
         })()}
 
-        <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* 1. NewsGlo Card */}
-          <Link href="https://news.statmatik.com/haberler" className="group relative">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+        <div className="grid w-full gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-2">
+          {/* 1. MinMat Card */}
+          <Link href="/minmat" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
               <div>
-                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cyan-500/10 ring-1 ring-cyan-400/20 shadow-[0_0_30px_rgba(6,182,212,0.1)] overflow-hidden p-3 text-cyan-400">
+                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-500/10 ring-1 ring-blue-400/20 shadow-[0_0_30px_rgba(59,130,246,0.1)] overflow-hidden p-3">
                   <Image 
-                    src="/newsglo-logo.jpg" 
-                    alt="NewsGlo Logo" 
+                    src="/minmat/icon.png" 
+                    alt="MinMat Icon" 
                     width={56} 
                     height={56} 
-                    className="object-contain rounded-xl"
+                    className="object-contain"
                   />
                 </div>
-                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">NewsGlo</h2>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">MinMat — Sayı Avı</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
-                  {t("hero.newsGloDesc")}
+                  {t("hero.minMatDesc")}
                 </p>
               </div>
-              <div className="flex items-center gap-2 font-bold text-cyan-400 text-xs sm:text-sm">
-                NewsGlo Akışına Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <div className="flex items-center gap-2 font-bold text-blue-400 text-xs sm:text-sm">
+                {t("hero.mindRefresh")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
@@ -855,32 +854,7 @@ export default function EntryPage() {
             </div>
           </Link>
 
-          {/* 3. MinMat Card */}
-          <Link href="/minmat" className="group relative">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
-            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
-              <div>
-                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-500/10 ring-1 ring-blue-400/20 shadow-[0_0_30px_rgba(59,130,246,0.1)] overflow-hidden p-3">
-                  <Image 
-                    src="/minmat/icon.png" 
-                    alt="MinMat Icon" 
-                    width={56} 
-                    height={56} 
-                    className="object-contain"
-                  />
-                </div>
-                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">MinMat — Sayı Avı</h2>
-                <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
-                  {t("hero.minMatDesc")}
-                </p>
-              </div>
-              <div className="flex items-center gap-2 font-bold text-blue-400 text-xs sm:text-sm">
-                {t("hero.mindRefresh")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </div>
-            </div>
-          </Link>
-
-          {/* 3. CupMat Card (En sağ) */}
+          {/* 3. CupMat Card */}
           <Link href="/cupmat" className="group relative">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-teal-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
             <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
@@ -901,6 +875,31 @@ export default function EntryPage() {
               </div>
               <div className="flex items-center gap-2 font-bold text-emerald-400 text-xs sm:text-sm">
                 {t("hero.playStart")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 4. NewsGlo Card */}
+          <Link href="/haberler" className="group relative">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex h-full flex-col items-center justify-between rounded-3xl border border-white/10 bg-[#060b14] p-8 text-center transition-transform duration-300 group-hover:-translate-y-2">
+              <div>
+                <div className="mb-6 mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cyan-500/10 ring-1 ring-cyan-400/20 shadow-[0_0_30px_rgba(6,182,212,0.1)] overflow-hidden p-3 text-cyan-400">
+                  <Image 
+                    src="/newsglo-logo.jpg" 
+                    alt="NewsGlo Logo" 
+                    width={56} 
+                    height={56} 
+                    className="object-contain rounded-xl"
+                  />
+                </div>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">NewsGlo</h2>
+                <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
+                  {t("hero.newsGloDesc")}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 font-bold text-cyan-400 text-xs sm:text-sm">
+                NewsGlo Akışına Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
