@@ -107,6 +107,26 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
     let inserted = 0;
     let updated = 0;
 
+    // 3.0 Pre-fetch existing tournaments to avoid sequential DB lookups
+    const { data: allTournaments } = await supabaseAdmin.from("cupmat_tournaments").select("id, api_id");
+    const tournamentMap = new Map();
+    if (allTournaments) {
+      allTournaments.forEach(t => tournamentMap.set(t.api_id, t.id));
+    }
+
+    // 3.0 Pre-fetch existing matches to avoid sequential DB lookups
+    const fixtureIds = targetFixtures.map((f: any) => f.fixture.id);
+    const { data: existingMatches } = await supabaseAdmin
+      .from("cupmat_matches")
+      .select("id, api_id")
+      .in("api_id", fixtureIds);
+    const matchMap = new Map();
+    if (existingMatches) {
+      existingMatches.forEach(m => matchMap.set(m.api_id, m.id));
+    }
+
+    const promises = [];
+
     for (const item of targetFixtures) {
       const fixture = item.fixture;
       const league = item.league;
@@ -115,16 +135,10 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
       const score = item.score;
 
       // 3.1 Ensure Tournament exists in our DB
-      const { data: existingTournament } = await supabaseAdmin
-        .from("cupmat_tournaments")
-        .select("id")
-        .eq("api_id", league.id)
-        .single();
-
-      let tournamentId = existingTournament?.id;
-      const region = LEAGUE_REGIONS[league.id] || 'world';
-
+      let tournamentId = tournamentMap.get(league.id);
+      
       if (!tournamentId) {
+        const region = LEAGUE_REGIONS[league.id] || 'world';
         const { data: newTournament, error: tError } = await supabaseAdmin
           .from("cupmat_tournaments")
           .insert({
@@ -143,6 +157,7 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
         }
         if (newTournament) {
             tournamentId = newTournament.id;
+            tournamentMap.set(league.id, tournamentId);
             logs.push(`[DB] Created new tournament: ${league.name}`);
         }
       }
@@ -157,10 +172,6 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
       // Extract 90 Minute Score (Fulltime)
       const homeScore90 = score.fulltime?.home;
       const awayScore90 = score.fulltime?.away;
-
-      // API-Football returns aggregate scores in score.fulltime if it's a 2-legged match, or we could fetch the first leg. 
-      // For simplicity in this mock integration, we check if API provides aggregate data in `fixture.status.elapsed` etc.
-      // Usually, it's not provided in the basic /fixtures payload, so we leave it null until an advanced lookup is built.
       
       // 3.3 Insert or Update Match
       const matchData = {
@@ -191,43 +202,43 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
         home_score_90: homeScore90,
         away_score_90: awayScore90,
         
-        // aggregate_home_score: null, 
-        // aggregate_away_score: null,
-        // first_leg_home_score: null,
-        // first_leg_away_score: null,
-        
         updated_at: new Date().toISOString()
       };
 
-      const { data: existingMatch } = await supabaseAdmin
-        .from("cupmat_matches")
-        .select("id")
-        .eq("api_id", fixture.id)
-        .single();
+      const existingMatchId = matchMap.get(fixture.id);
 
-      if (existingMatch) {
-        const { error: updateError } = await supabaseAdmin
-          .from("cupmat_matches")
-          .update(matchData)
-          .eq("id", existingMatch.id);
-          
-        if (updateError) {
-          logs.push(`[ERROR] Update failed for match ${fixture.id}: ${updateError.message}`);
-        } else {
-          updated++;
-        }
+      if (existingMatchId) {
+        promises.push(
+          supabaseAdmin
+            .from("cupmat_matches")
+            .update(matchData)
+            .eq("id", existingMatchId)
+            .then(({ error: updateError }) => {
+              if (updateError) {
+                logs.push(`[ERROR] Update failed for match ${fixture.id}: ${updateError.message}`);
+              } else {
+                updated++;
+              }
+            })
+        );
       } else {
-        const { error: insertError } = await supabaseAdmin
-          .from("cupmat_matches")
-          .insert(matchData);
-          
-        if (insertError) {
-          logs.push(`[ERROR] Insert failed for match ${fixture.id}: ${insertError.message}`);
-        } else {
-          inserted++;
-        }
+        promises.push(
+          supabaseAdmin
+            .from("cupmat_matches")
+            .insert(matchData)
+            .then(({ error: insertError }) => {
+              if (insertError) {
+                logs.push(`[ERROR] Insert failed for match ${fixture.id}: ${insertError.message}`);
+              } else {
+                inserted++;
+              }
+            })
+        );
       }
     }
+    
+    // Execute all database updates/inserts in parallel to prevent Vercel 10s timeouts
+    await Promise.all(promises);
 
     logs.push(`[DB] Successfully processed matches. Inserted: ${inserted}, Updated: ${updated}`);
     return { success: true, inserted, updated, logs };
