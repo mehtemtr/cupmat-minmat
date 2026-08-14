@@ -54,6 +54,25 @@ function readPersistedLocale(): Locale | null {
   return null;
 }
 
+function detectBrowserLocale(): Locale | null {
+  if (typeof window === "undefined" || typeof window.navigator === "undefined") return null;
+  
+  const langStr = window.navigator.language || (window.navigator as any).userLanguage || "";
+  const shortLang = langStr.split('-')[0].toLowerCase();
+  
+  const validLocales = ["en", "tr", "es", "fr", "de", "pt", "ar", "ko", "it"];
+  
+  if (validLocales.includes(shortLang)) {
+    return shortLang as Locale;
+  }
+  
+  if (shortLang && shortLang !== "tr") {
+    return "en";
+  }
+  
+  return null;
+}
+
 function persistLocale(locale: Locale) {
   // Save to cookie
   document.cookie = `${LOCALE_COOKIE}=${locale};path=/;max-age=31536000;SameSite=Lax`;
@@ -78,9 +97,15 @@ export function LocaleProvider({
     const saved = readPersistedLocale();
     if (saved) {
       setLocaleState(saved);
+    } else {
+      const detected = detectBrowserLocale();
+      if (detected && detected !== initialLocale) {
+        setLocaleState(detected);
+        persistLocale(detected);
+      }
     }
     setHydrated(true);
-  }, []);
+  }, [initialLocale]);
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);

@@ -271,6 +271,21 @@ const getPromoText = (now: Date): string => {
   return promoTexts[idx];
 };
 
+const getPlayStoreBadgeUrl = (lang: string) => {
+  const map: Record<string, string> = {
+    en: "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png",
+    tr: "https://play.google.com/intl/tr_tr/badges/static/images/badges/tr_badge_web_generic.png",
+    es: "https://play.google.com/intl/es/badges/static/images/badges/es_badge_web_generic.png",
+    fr: "https://play.google.com/intl/fr/badges/static/images/badges/fr_badge_web_generic.png",
+    de: "https://play.google.com/intl/de/badges/static/images/badges/de_badge_web_generic.png",
+    pt: "https://play.google.com/intl/pt-BR/badges/static/images/badges/pt-br_badge_web_generic.png",
+    ar: "https://play.google.com/intl/ar/badges/static/images/badges/ar_badge_web_generic.png",
+    ko: "https://play.google.com/intl/ko/badges/static/images/badges/ko_badge_web_generic.png",
+    it: "https://play.google.com/intl/it/badges/static/images/badges/it_badge_web_generic.png",
+  };
+  return map[lang] || map['en'];
+};
+
 export default function EntryPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -818,7 +833,7 @@ export default function EntryPage() {
                     className="object-contain"
                   />
                 </div>
-                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">MinMat — Sayı Avı</h2>
+                <h2 className="mb-2 text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">{t("hero.minMatTitle")}</h2>
                 <p className="mb-6 max-w-[280px] mx-auto text-xs sm:text-sm leading-relaxed text-zinc-300 font-medium">
                   {t("hero.minMatDesc")}
                 </p>
@@ -849,7 +864,7 @@ export default function EntryPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2 font-bold text-purple-400 text-xs sm:text-sm">
-                Minlan'a Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                {t("hero.goToMinLan")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
@@ -899,10 +914,26 @@ export default function EntryPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2 font-bold text-cyan-400 text-xs sm:text-sm">
-                NewsGlo Akışına Git <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                {t("hero.goToNewsGlo")} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
+        </div>
+
+        <div className="mt-16 flex flex-col items-center justify-center text-center">
+          <a
+            href="https://play.google.com/store/apps/details?id=com.statmatik.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative inline-block transition-transform hover:scale-105 active:scale-95"
+          >
+            <div className="absolute -inset-2 rounded-2xl bg-emerald-500/20 opacity-0 blur-lg transition duration-500 group-hover:opacity-100" />
+            <img
+              alt="Get it on Google Play"
+              src={getPlayStoreBadgeUrl(locale)}
+              className="relative h-16 w-auto sm:h-20"
+            />
+          </a>
         </div>
 
         <footer className="mt-20 flex items-center gap-8 text-zinc-500">

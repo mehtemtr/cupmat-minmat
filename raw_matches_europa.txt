@@ -55,18 +55,18 @@ MS	Benfica	6	-	1	Hearts
 11 Ağustos 2026
 19:00	Iberia	-			Larne
 13 Ağustos 2026
-20:00	Beşiktaş	-			H. Kralove
-20:00	Pafos	-			Salzburg
-20:00	Gornik Zabrze	-			Ferencvaros
-20:00	Omonia	-			Lincoln Red
-20:00	Univ. Craiova	-			Kuopion
-20:30	Vikingur R.	-			Thun
-21:00	CSKA Sofya	-			M. Tel Aviv
-21:30	Rangers	-			J. Bialystok
-21:30	Anderlecht	-			PAOK
-21:45	Hearts	-			Benfica
-21:45	Klaksvik	-			Lech Poznan
-22:00	Egnatia	-			Shamrock R.
+MS	Beşiktaş	1	-	0	H. Kralove
+MS	Pafos	3	-	3	Salzburg
+MS	Gornik Zabrze	1	-	1	Ferencvaros
+MS	Omonia	1	-	0	Lincoln Red
+MS	Univ. Craiova	2	-	1	Kuopion
+MS	Vikingur R.	3	-	2	Thun
+MS	CSKA Sofya	1	-	3	M. Tel Aviv
+MS	Rangers	1	-	1	J. Bialystok
+MS	Anderlecht	3	-	2	PAOK
+MS	Hearts	1	-	1	Benfica
+ERT	Klaksvik	-			Lech Poznan
+MS	Egnatia	5	-	1	Shamrock R.
 Konferans Ligi
 1. Ön Eleme
 07 Temmuz 2026
