@@ -48,7 +48,11 @@
         "minLanDesc": "MinLan — Gioco di memoria per matematica e vocabolario in 9 lingue.",
         "minMatTitle": "MINMAT — CACCIA AI NUMERI",
         "goToMinLan": "Vai a MinLan",
-        "goToNewsGlo": "Vai al Feed di NewsGlo"
+        "goToNewsGlo": "Vai al Feed di NewsGlo",
+        "tickerMathematic": "La matematica non ha una cosa; tutto ha una matematica.",
+        "tickerCupMat": "CupMat — La giustizia matematica del calcio. Merito delle prestazioni, non delle lobby.",
+        "tickerMinMat": "MinMat — Caccia ai Numeri (Gioco di Memoria). Rivitalizza la tua mente!",
+        "tickerNewsGlo": "NewsGlo — Un flusso globale di notizie su scienza, tecnologia, salute, ambiente e sviluppo."
     },
     "countdown": {
         "label": "Tempo al calcio d'inizio",

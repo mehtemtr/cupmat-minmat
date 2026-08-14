@@ -48,7 +48,11 @@
         "minLanDesc": "MinLan — لعبة ذاكرة للرياضيات والمفردات بـ 9 لغات.",
         "minMatTitle": "MINMAT — صيد الأرقام",
         "goToMinLan": "الذهاب إلى MinLan",
-        "goToNewsGlo": "الذهاب إلى تغذية NewsGlo"
+        "goToNewsGlo": "الذهاب إلى تغذية NewsGlo",
+        "tickerMathematic": "الرياضيات ليس لها شيء؛ كل شيء له رياضيات.",
+        "tickerCupMat": "CupMat — العدالة الرياضية لكرة القدم. جدارة الأداء، وليس جماعات الضغط.",
+        "tickerMinMat": "MinMat — صيد الأرقام (لعبة الذاكرة). جدد نشاط عقلك!",
+        "tickerNewsGlo": "NewsGlo — تدفق عالمي لأخبار العلوم والتكنولوجيا والصحة والبيئة والتنمية."
     },
     "countdown": {
         "label": "الوقت المتبقي حتى ركلة الانطلاق",

@@ -402,19 +402,19 @@ export default function EntryPage() {
                   ) : (
                     <>
                       <span className="text-white font-extrabold">
-                        Matematiğin bir şeyi yoktur; her şeyin bir matematiği vardır.
+                        {t("hero.tickerMathematic")}
                       </span>
                       <span className="text-cyan-400 font-extrabold text-xs">✦</span>
                       <span className="text-emerald-400 font-extrabold">
-                        CupMat — Futbolun matematiksel adaleti. Lobilerin rengi değil, performansın liyakati.
+                        {t("hero.tickerCupMat")}
                       </span>
                       <span className="text-cyan-400 font-extrabold text-xs">✦</span>
                       <span className="text-blue-400 font-extrabold">
-                        MinMat — Sayı Avı (Matematik Hafıza Oyunu). Zihnini canlandır!
+                        {t("hero.tickerMinMat")}
                       </span>
                       <span className="text-cyan-400 font-extrabold text-xs">✦</span>
                       <span className="text-cyan-300 font-extrabold">
-                        NewsGlo — Küresel Bilim, Teknoloji, Sağlık, Çevre ve Gelişmeler Akışı.
+                        {t("hero.tickerNewsGlo")}
                       </span>
                       <span className="text-cyan-400 font-extrabold text-xs">✦</span>
                     </>

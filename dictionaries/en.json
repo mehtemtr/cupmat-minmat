@@ -48,7 +48,11 @@
         "minLanDesc": "MinLan — A 9-Language Math & Vocabulary Memory Game.",
         "minMatTitle": "MINMAT — NUMBER HUNT",
         "goToMinLan": "Go to MinLan",
-        "goToNewsGlo": "Go to NewsGlo Feed"
+        "goToNewsGlo": "Go to NewsGlo Feed",
+        "tickerMathematic": "Mathematics doesn't have a thing; everything has a mathematics.",
+        "tickerCupMat": "CupMat — The mathematical justice of football. Merit of performance, not lobby colors.",
+        "tickerMinMat": "MinMat — Number Hunt (Math Memory Game). Revitalize your mind!",
+        "tickerNewsGlo": "NewsGlo — A global stream of Science, Technology, Health, Environment, and Development news."
     },
     "countdown": {
         "label": "Time until kickoff",

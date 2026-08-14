@@ -48,7 +48,11 @@
         "minlanDesc": "9 Dilde Karşılıklı Kelime Öğrenme ve Hafıza Oyunu.",
         "minMatTitle": "MINMAT — SAYI AVI",
         "goToMinLan": "Minlan'a Git",
-        "goToNewsGlo": "NewsGlo Akışına Git"
+        "goToNewsGlo": "NewsGlo Akışına Git",
+        "tickerMathematic": "Matematiğin bir şeyi yoktur; her şeyin bir matematiği vardır.",
+        "tickerCupMat": "CupMat — Futbolun matematiksel adaleti. Lobilerin rengi değil, performansın liyakati.",
+        "tickerMinMat": "MinMat — Sayı Avı (Matematik Hafıza Oyunu). Zihnini canlandır!",
+        "tickerNewsGlo": "NewsGlo — Küresel Bilim, Teknoloji, Sağlık, Çevre ve Gelişmeler Akışı."
     },
     "countdown": {
         "label": "Açılışa kalan",

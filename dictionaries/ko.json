@@ -48,7 +48,11 @@
         "minLanDesc": "MinLan — 9개 국어 수학 및 어휘 기억력 게임.",
         "minMatTitle": "MINMAT — 숫자 사냥",
         "goToMinLan": "MinLan으로 이동",
-        "goToNewsGlo": "NewsGlo 피드로 이동"
+        "goToNewsGlo": "NewsGlo 피드로 이동",
+        "tickerMathematic": "수학에는 무언가가 있는 것이 아닙니다; 모든 것에는 수학이 있습니다.",
+        "tickerCupMat": "CupMat — 축구의 수학적 정의. 로비가 아닌 성과에 따른 보상.",
+        "tickerMinMat": "MinMat — 숫자 사냥 (기억력 게임). 두뇌를 깨우세요!",
+        "tickerNewsGlo": "NewsGlo — 과학, 기술, 건강, 환경 및 발전에 관한 글로벌 뉴스 피드."
     },
     "countdown": {
         "label": "개막까지 남은 시간",

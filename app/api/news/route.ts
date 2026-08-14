@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { supabaseAdmin } from "@/lib/supabase";
 import { fetchAndStoreNews, cleanText, calculateTitleSimilarity } from "@/lib/news-fetcher";
 
@@ -158,10 +159,16 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
 // Cloudflare Workers (custom-worker.js) now handles automated fetching.
 
 async function translateText(text: string, targetLang: string): Promise<string> {
-  if (!text || targetLang === "tr") return text;
+  if (!text) return text;
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=tr&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url, { 
+      headers: { 
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36' 
+      },
+      // Ensure we don't cache translation errors
+      cache: "no-store" 
+    });
     if (!res.ok) return text;
     const data = await res.json();
     return data[0].map((item: any) => item[0]).join("");

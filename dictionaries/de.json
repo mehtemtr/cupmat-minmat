@@ -48,7 +48,11 @@
         "minLanDesc": "MinLan — Ein Mathe- und Vokabel-Gedächtnisspiel in 9 Sprachen.",
         "minMatTitle": "MINMAT — ZAHLENJAGD",
         "goToMinLan": "Zu MinLan",
-        "goToNewsGlo": "Zum NewsGlo-Feed"
+        "goToNewsGlo": "Zum NewsGlo-Feed",
+        "tickerMathematic": "Mathematik hat kein Ding; alles hat eine Mathematik.",
+        "tickerCupMat": "CupMat — Die mathematische Gerechtigkeit des Fußballs. Leistung zählt, keine Lobbys.",
+        "tickerMinMat": "MinMat — Zahlenjagd (Gedächtnisspiel). Beleben Sie Ihren Geist!",
+        "tickerNewsGlo": "NewsGlo — Ein globaler Feed für Wissenschaft, Technologie, Gesundheit, Umwelt und Entwicklung."
     },
     "countdown": {
         "label": "Zeit bis zum Anpfiff",
