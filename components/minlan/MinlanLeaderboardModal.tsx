@@ -168,6 +168,8 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
                         <span>{nativeObj?.flag || "🏳️"} → {targetObj?.flag || "🏳️"}</span>
                         <span>•</span>
                         <span>{safeItem.category || "Kategori Yok"}</span>
+                        <span>•</span>
+                        <span className="font-bold text-amber-500/80">Tur {safeItem.round || 1}</span>
                         {safeItem.date && (
                           <>
                             <span>•</span>

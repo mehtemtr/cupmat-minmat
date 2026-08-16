@@ -60,3 +60,17 @@ CREATE TABLE IF NOT EXISTS minlan_community_stats (
 INSERT INTO minlan_community_stats (id, total_card_matches, target_card_matches)
 VALUES (1, 18420, 25000)
 ON CONFLICT (id) DO NOTHING;
+
+-- 5. MinLan Mistakes Table (Hatalarım)
+CREATE TABLE IF NOT EXISTS minlan_mistakes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT REFERENCES public.profiles(id) ON DELETE CASCADE,
+  word_id TEXT NOT NULL,
+  native_lang VARCHAR(10) NOT NULL,
+  target_lang VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. Add round_reached to Minlan Leaderboard
+ALTER TABLE minlan_leaderboard 
+ADD COLUMN IF NOT EXISTS round_reached INT DEFAULT 1;

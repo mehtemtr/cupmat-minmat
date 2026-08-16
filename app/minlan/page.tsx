@@ -50,7 +50,7 @@ export default function MinlanPage() {
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId) || categories[0];
 
   // Callback when a game round is completed to record match progress & update local community bar
-  const handleRecordProgress = async (matches: number, score: number, sessionScore?: number) => {
+  const handleRecordProgress = async (matches: number, score: number, sessionScore?: number, roundReached?: number) => {
     try {
       // Optimistically update local community stats
       if (matches > 0) {
@@ -68,6 +68,7 @@ export default function MinlanPage() {
           matchesEarned: matches,
           scoreEarned: score,
           sessionScore,
+          roundReached,
           categoryId: selectedCategoryId,
           nativeLang,
           targetLang,

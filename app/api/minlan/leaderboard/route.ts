@@ -16,11 +16,11 @@ export async function GET(request: Request) {
       .select(`
         user_id,
         native_lang,
-        target_lang,
         score,
         category_id,
         created_at,
-        username
+        username,
+        round_reached
       `)
       .order("score", { ascending: false })
       .order("created_at", { ascending: false })
@@ -72,6 +72,7 @@ export async function GET(request: Request) {
         target: item.target_lang,
         category: cat ? cat.name_tr : "Bilinmeyen Kategori",
         date: item.created_at,
+        round: item.round_reached || 1,
       };
     });
 

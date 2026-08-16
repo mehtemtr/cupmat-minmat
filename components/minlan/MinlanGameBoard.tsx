@@ -49,7 +49,7 @@ interface MinlanGameBoardProps {
   communityStats: MinlanCommunityStats;
   onTargetLangChange: (lang: LanguageCode) => void;
   onSelectCategory: (id: string) => void;
-  onRecordProgress: (matches: number, score: number, sessionScore?: number) => void;
+  onRecordProgress: (matches: number, score: number, sessionScore?: number, roundReached?: number) => void;
   onOpenLeaderboard: () => void;
   onOpenMistakes: () => void;
 }
@@ -78,6 +78,7 @@ export function MinlanGameBoard({
   const [mistakes, setMistakes] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<number>(27);
+  const [carryOverTime, setCarryOverTime] = useState<number>(0);
   const [gameState, setGameState] = useState<"idle" | "playing" | "paused" | "game_over">("idle");
   const [loading, setLoading] = useState<boolean>(false);
   const [showRoundSuccess, setShowRoundSuccess] = useState<boolean>(false);
@@ -148,13 +149,14 @@ export function MinlanGameBoard({
 
   useEffect(() => {
     if (gameState === "playing") {
-      setTimeLeft(maxTimerSeconds);
+      setTimeLeft(maxTimerSeconds + carryOverTime);
       loadRoundCards();
     }
-  }, [roundLevel, categoryId, nativeLang, targetLang, gameState, loadRoundCards, maxTimerSeconds]);
+  }, [roundLevel, categoryId, nativeLang, targetLang, gameState, loadRoundCards, maxTimerSeconds, carryOverTime]);
 
   const startRound = () => {
     setGameState("playing");
+    setCarryOverTime(0);
     setTimeLeft(maxTimerSeconds);
     loadRoundCards();
   };
@@ -167,7 +169,7 @@ export function MinlanGameBoard({
           if (prev <= 1) {
             setGameState("game_over");
             if (score > 0) {
-              onRecordProgress(0, 0, score);
+              onRecordProgress(0, 0, score, roundLevel);
             }
             return 0;
           }
@@ -180,7 +182,7 @@ export function MinlanGameBoard({
 
   const resetEntireGame = () => {
     if (score > 0 && gameState === "playing") {
-      onRecordProgress(0, 0, score);
+      onRecordProgress(0, 0, score, roundLevel);
     }
     setGameState("idle");
     setRoundLevel(1);
@@ -189,6 +191,7 @@ export function MinlanGameBoard({
     setMistakes(0);
     setStreak(0);
     setTimeLeft(27);
+    setCarryOverTime(0);
     setFlippedCards([]);
     setCards([]);
     setMatchedPairsCount(0);
@@ -262,6 +265,7 @@ export function MinlanGameBoard({
 
             setTimeout(() => {
               setShowRoundSuccess(false);
+              setCarryOverTime(Math.floor(timeLeft / 2));
               setRoundLevel((prev) => prev + 1);
             }, 800);
           }
@@ -296,7 +300,7 @@ export function MinlanGameBoard({
               const newLives = l - 1;
               if (newLives <= 0) {
                 setGameState("game_over");
-                onRecordProgress(0, 0, score);
+                onRecordProgress(0, 0, score, roundLevel);
               }
               return Math.max(0, newLives);
             });

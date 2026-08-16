@@ -19,6 +19,7 @@ export function MinlanMistakesModal({
 }: MinlanMistakesModalProps) {
   const [mistakes, setMistakes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [timeframe, setTimeframe] = useState<"3days" | "all">("3days");
 
   useEffect(() => {
     if (!isOpen) return;
@@ -28,7 +29,7 @@ export function MinlanMistakesModal({
       try {
         const timestamp = Date.now();
         const res = await fetch(
-          `/api/minlan/mistakes?native=${nativeLang}&target=${targetLang}&t=${timestamp}`,
+          `/api/minlan/mistakes?native=${nativeLang}&target=${targetLang}&timeframe=${timeframe}&t=${timestamp}`,
           { cache: "no-store" }
         );
         const data = await res.json();
@@ -43,7 +44,7 @@ export function MinlanMistakesModal({
     }
 
     fetchMistakes();
-  }, [isOpen, nativeLang, targetLang]);
+  }, [isOpen, nativeLang, targetLang, timeframe]);
 
   if (!isOpen) return null;
 
@@ -61,7 +62,7 @@ export function MinlanMistakesModal({
             </div>
             <div>
               <h3 className="text-xl font-black text-white">Hata Analizi</h3>
-              <p className="text-xs text-slate-400">Son 3 günde en çok karıştırılanlar</p>
+              <p className="text-xs text-slate-400">En çok karıştırılan kelimeler</p>
             </div>
           </div>
           <button
@@ -73,9 +74,28 @@ export function MinlanMistakesModal({
         </div>
 
         {/* Content */}
-        <div className="mt-5 space-y-3">
-          <div className="text-center text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">
+        <div className="mt-5 space-y-3 flex-1 flex flex-col">
+          <div className="text-center text-xs font-bold text-slate-400 mb-1 uppercase tracking-wider">
             {nativeObj?.flag} {nativeObj?.name} → {targetObj?.flag} {targetObj?.name}
+          </div>
+
+          <div className="flex bg-slate-800 p-1 rounded-xl w-full max-w-xs mx-auto mb-3">
+            <button
+              onClick={() => setTimeframe("3days")}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                timeframe === "3days" ? "bg-purple-500/20 text-purple-400" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              Son 3 Gün
+            </button>
+            <button
+              onClick={() => setTimeframe("all")}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                timeframe === "all" ? "bg-purple-500/20 text-purple-400" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              Tüm Zamanlar
+            </button>
           </div>
 
           {loading ? (
@@ -89,10 +109,14 @@ export function MinlanMistakesModal({
                 <span className="text-2xl">🎉</span>
               </div>
               <span className="font-bold text-emerald-400">Harika iş çıkarıyorsun!</span>
-              <span className="text-sm">Son 3 günde kayıtlı hatan bulunmuyor.</span>
+              <span className="text-sm">
+                {timeframe === "3days" 
+                  ? "Son 3 günde kayıtlı hatan bulunmuyor." 
+                  : "Hiç kayıtlı hatan bulunmuyor."}
+              </span>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 overflow-y-auto max-h-[40vh] pr-1 scrollbar-none">
               {mistakes.map((m, idx) => (
                 <div
                   key={m.word_id || idx}

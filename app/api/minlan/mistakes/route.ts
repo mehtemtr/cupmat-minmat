@@ -56,6 +56,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const nativeLang = searchParams.get("native") || "tr";
     const targetLang = searchParams.get("target") || "en";
+    const timeframe = searchParams.get("timeframe") || "3days";
 
     // Resolve internal profile ID
     let internalUserId = null;
@@ -75,17 +76,21 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: true, mistakes: [] });
     }
 
-    // Fetch mistakes for the last 3 days
-    const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-
-    const { data, error } = await supabaseAdmin
+    // Fetch mistakes
+    let query = supabaseAdmin
       .from("minlan_mistakes")
       .select("word_id")
       .eq("user_id", internalUserId)
       .eq("native_lang", nativeLang)
-      .eq("target_lang", targetLang)
-      .gte("created_at", threeDaysAgo.toISOString());
+      .eq("target_lang", targetLang);
+
+    if (timeframe === "3days") {
+      const threeDaysAgo = new Date();
+      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+      query = query.gte("created_at", threeDaysAgo.toISOString());
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       throw error;
@@ -98,7 +103,7 @@ export async function GET(request: Request) {
     }
 
     // Sort by count descending
-    const sortedWordIds = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 5);
+    const sortedWordIds = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 10);
 
     // Map to actual word objects from full dataset
     const mistakes = sortedWordIds.map(id => {

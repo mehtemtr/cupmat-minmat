@@ -1,0 +1,31 @@
+# StatMatik Proje Kuralları ve Mimarisi (.agentrules)
+
+Bu belge StatMatik projesi için yapay zeka ajanlarının uyması gereken temel kuralları, proje mimarisini, modülleri ve geçmişte alınan kararları içerir. 
+**Yapay zeka asistanları bu dosyayı referans alarak bağlamı (context) asla unutmamalıdır.**
+
+## 1. Temel İletişim ve İşleyiş Kuralları
+- **Türkçe İletişim:** Kullanıcı ile iletişim kurarken, onay menüleri (modal) sunarken, soru sorarken ve şıkları listelerken KESİNLİKLE Türkçe kullanılacaktır. İngilizce cevaplar veya sistem onay pencerelerinden kaçınılacak / bu durum kullanıcıya izah edilecektir.
+- **Sunucu ve Altyapı:** Proje Vercel'de DEĞİL, **Cloudflare Pages / Workers** üzerinde çalışmaktadır. Cloudflare ortamının CPU işlem süresi (milisaniye bazında) ve genel Worker zaman aşımı (timeout) kuralları çok sıkıdır.
+- **Veritabanı İşlemleri (Supabase):** Veritabanı (Supabase) işlemlerinde, döngü (`for`) içerisinde sırayla tek tek (`await`) sorgu yapmaktan kaçınılmalıdır (Timeout'a sebep olur). Her zaman `Promise.all` ile paralel işlemler veya `.in()` ile toplu (batch) sorgular kullanılmalıdır.
+
+## 2. Proje Yapısı ve Teknoloji
+- **Framework:** Next.js (App Router). UI bileşenleri React bazlıdır. Server Components ve Client Components dengesine dikkat edilmelidir.
+- **Veritabanı:** Supabase (PostgreSQL). Tüm arka uç (backend) bağlantıları `lib/supabase.ts` içerisindeki `supabaseAdmin` üzerinden güvenli şekilde yapılır.
+- **Çoklu Dil (i18n):** Proje 9 dilli bir mimariye sahiptir (Türkçe, İngilizce, Almanca, Fransızca, İspanyolca, Portekizce, Arapça, Korece, İtalyanca). Dil metinleri `dictionaries/` klasöründe tutulur ve `contexts/LocaleContext.tsx` üzerinden tüm uygulamaya dağıtılır. Bileşenlerde çeviri için `t("key")` yapısı kullanılır.
+- **Stil:** Tailwind CSS kullanılarak modern, mobil uyumlu ve premium hissettiren tasarımlar uygulanır.
+- **Zamanlanmış Görevler (Cron):** Cron görevleri Cloudflare üzerinden tetiklenir (`wrangler.json` ile yönetilir). API rotaları `app/api/cron/` altında yer alır.
+
+## 3. Modüller (StatMatik Dünyası)
+Proje 4 ana ayaktan oluşur ve `app/page.tsx` üzerindeki 2x2 ızgara (grid) yapısı ile sunulur:
+1. **MinMat (Sayı Avı):** Matematiksel zekayı ve hızı test eden, puanlama sistemli mini oyun modülü.
+2. **MinLan:** Kullanıcının dil öğrenmesine ve kelime pratikleri yapmasına olanak tanıyan oyunlaştırılmış dil öğrenme modülü.
+3. **CupMat:** Dünya çapındaki kıtasal (Şampiyonlar Ligi, Libertadores vb.) kupa maçlarının skorlarını anlık takip eden, takım ve oyuncu istatistiklerini barındıran modül. Cron görevleri (örn: `fetchAndStoreDailyMatches`) aracılığıyla API-Football üzerinden her 15 dakikada bir otomatik skor çeker ve Supabase'e yazar.
+4. **NewsGlo:** Global futbol haberlerinin otomatik çekilip listelendiği haber akış modülü.
+
+## 4. Kullanıcı Arayüzü (UI) Kararları
+- **Menü İkonları:** Alt navigasyon barı (`components/BottomNavbar.tsx`), açılır çekmece menüsü (Drawer) ve üst bilgisayar menüsünde (`components/Header.tsx`), sıradan ikonlar yerine projenin **kendi özel logoları** (MinMat, MinLan, CupMat ve NewsGlo resim dosyaları) kullanılmalıdır.
+- **Oyunlaştırma (Gamification):** Kullanıcı etkileşimlerini artırmak için (Hakkında menüsünde kalma süresi, yardım okuma, maç takip etme vb.) "Taraftar Puanı" sistemi devrededir ve her eklemeye bu oyunlaştırma kurgusu entegre edilmelidir.
+- **Görsel Kalite:** Animasyonlar, geçişler, renk paletleri ve modern cam efekti (glassmorphism) gibi tasarım standartları korunmalıdır.
+
+## 5. Uygulama Talimatı
+**Ey Yapay Zeka Ajanı:** Herhangi bir görev verildiğinde ilk iş olarak bu kurallara aykırı bir adım atmadığından emin ol. Cloudflare sistemine yük bindirecek ağır AI komutlarını ve veritabanı kilitlenmelerini engelleyecek optimizasyonlarla hareket et. Kullanıcının dil ve tasarım kuralları kırmızı çizgidir.

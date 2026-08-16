@@ -5,10 +5,11 @@ import { auth } from "@clerk/nextjs/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { matchesEarned, scoreEarned, categoryId, nativeLang = "tr", targetLang = "en" } = body;
+    const { matchesEarned, scoreEarned, categoryId, roundReached, nativeLang = "tr", targetLang = "en" } = body;
 
     const matches = parseInt(matchesEarned || "0", 10);
     const score = parseInt(scoreEarned || "0", 10);
+    const round = parseInt(roundReached || "1", 10);
     
     // Resolve internal profile ID from Clerk Auth
     let internalUserId = null;
@@ -95,7 +96,8 @@ export async function POST(request: Request) {
             target_lang: targetLang,
             score: sessionScore,
             matches_count: 0, // Optional: if we wanted to track session matches
-            username: username
+            username: username,
+            round_reached: round
           });
       } catch (e) {
         console.error("Could not insert into minlan_leaderboard:", e);
