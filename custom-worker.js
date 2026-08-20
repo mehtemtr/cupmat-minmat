@@ -11,7 +11,7 @@ export default {
       case "0 0 */3 * *":
         paths.push("/api/cron/period-reset");
         break;
-      case "*/15 * * * *":
+      case "0 * * * *":
         paths.push("/api/cron/cupmat-fetch");
         break;
       case "*/30 * * * *":

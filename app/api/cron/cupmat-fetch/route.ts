@@ -25,7 +25,27 @@ export async function GET(req: Request) {
     console.log(`[Cron:CupMat] Starting match sync... Date: ${dateParam || "Today"}`);
     
     // Call the unified sync function
-    const result = await fetchAndStoreDailyMatches(dateParam || undefined);
+    let result;
+    if (dateParam) {
+      result = await fetchAndStoreDailyMatches(dateParam);
+    } else {
+      // Fetch today
+      const today = new Date().toISOString().split("T")[0];
+      const resToday = await fetchAndStoreDailyMatches(today);
+      
+      // Fetch yesterday
+      const yesterdayDate = new Date();
+      yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+      const yesterday = yesterdayDate.toISOString().split("T")[0];
+      const resYesterday = await fetchAndStoreDailyMatches(yesterday);
+      
+      result = {
+        success: resToday.success && resYesterday.success,
+        inserted: (resToday.inserted || 0) + (resYesterday.inserted || 0),
+        updated: (resToday.updated || 0) + (resYesterday.updated || 0),
+        logs: [...(resToday.logs || []), ...(resYesterday.logs || [])]
+      };
+    }
 
     if (result.success) {
       return NextResponse.json({
