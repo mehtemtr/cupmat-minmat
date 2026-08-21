@@ -39,11 +39,30 @@ export async function GET(req: Request) {
       const yesterday = yesterdayDate.toISOString().split("T")[0];
       const resYesterday = await fetchAndStoreDailyMatches(yesterday);
       
+      // Günde sadece 1 kez (Örn: UTC 04:00) gelecek 7 günün maçlarını çek (100 API limitini aşmamak için)
+      const currentHour = new Date().getUTCHours();
+      let futureInserted = 0;
+      let futureUpdated = 0;
+      const futureLogs: string[] = [];
+
+      if (currentHour === 4) {
+        futureLogs.push("[Cron:CupMat] Scheduled daily pull for upcoming 7 days...");
+        for (let i = 1; i <= 7; i++) {
+          const futureDateObj = new Date();
+          futureDateObj.setDate(futureDateObj.getDate() + i);
+          const futureDateStr = futureDateObj.toISOString().split("T")[0];
+          const resFuture = await fetchAndStoreDailyMatches(futureDateStr);
+          futureInserted += resFuture.inserted || 0;
+          futureUpdated += resFuture.updated || 0;
+          if (resFuture.logs) futureLogs.push(...resFuture.logs);
+        }
+      }
+      
       result = {
         success: resToday.success && resYesterday.success,
-        inserted: (resToday.inserted || 0) + (resYesterday.inserted || 0),
-        updated: (resToday.updated || 0) + (resYesterday.updated || 0),
-        logs: [...(resToday.logs || []), ...(resYesterday.logs || [])]
+        inserted: (resToday.inserted || 0) + (resYesterday.inserted || 0) + futureInserted,
+        updated: (resToday.updated || 0) + (resYesterday.updated || 0) + futureUpdated,
+        logs: [...(resToday.logs || []), ...(resYesterday.logs || []), ...futureLogs]
       };
     }
 
