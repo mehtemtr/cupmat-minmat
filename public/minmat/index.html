@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -2036,9 +2036,19 @@
       }
     }
 
-    function updateAuthUI() {
+    async function updateAuthUI() {
       if (!initialStartDone) {
         initialStartDone = true;
+        if (!userSession.isAuthenticated) {
+          try {
+            let res = await fetch("/api/profile/guest-name?lang=" + currentLang);
+            let data = await res.json();
+            if (data && data.guestName) {
+              guestUsername = data.guestName;
+              isGuestMode = true; // Activate guest mode so startGame uses guestUsername
+            }
+          } catch(e) {}
+        }
         setTimeout(startGame, 100);
       }
       let input = document.getElementById("playerInput");
