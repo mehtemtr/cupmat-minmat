@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { fetchAndStoreDailyMatches } from "@/lib/api-football-cupmat";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 export const dynamic = "force-dynamic";
 
@@ -66,7 +69,22 @@ export async function GET(req: Request) {
       };
     }
 
-    if (result.success) {
+    // Log to Redis for the secret page
+    const logEntry = {
+      timestamp: new Date().toISOString(),
+      success: result ? result.success : false,
+      inserted: result ? result.inserted : 0,
+      updated: result ? result.updated : 0,
+      logs: result ? result.logs : ["Failed entirely or no result object"]
+    };
+    try {
+      await redis.lpush("cupmat:cron_logs", JSON.stringify(logEntry));
+      await redis.ltrim("cupmat:cron_logs", 0, 49); // Keep last 50 logs
+    } catch(e) {
+      console.error("Redis logging failed:", e);
+    }
+
+    if (result && result.success) {
       return NextResponse.json({
         success: true,
         message: "Match sync completed successfully.",
@@ -78,11 +96,22 @@ export async function GET(req: Request) {
       return NextResponse.json({
         success: false,
         error: "Failed to sync matches.",
-        logs: result.logs
+        logs: result ? result.logs : []
       }, { status: 500 });
     }
   } catch (error: any) {
     console.error("[Cron:CupMat] Fatal error:", error);
+    try {
+      await redis.lpush("cupmat:cron_logs", JSON.stringify({
+        timestamp: new Date().toISOString(),
+        success: false,
+        inserted: 0,
+        updated: 0,
+        logs: [`[FATAL ERROR] ${error.message}`]
+      }));
+      await redis.ltrim("cupmat:cron_logs", 0, 49);
+    } catch(e) {}
+    
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }
