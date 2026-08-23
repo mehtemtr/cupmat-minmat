@@ -7,37 +7,19 @@ import { getMinlanTranslation } from "@/lib/minlan/i18n";
 import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe, LogOut, BrainCircuit } from "lucide-react";
 
 const ROUND_TIMER_TABLE: Record<number, number> = {
-  1: 27,
-  2: 36,
-  3: 45,
-  4: 54,
-  5: 63,
-  6: 71,
-  7: 79,
-  8: 87,
-  9: 95,
-  10: 103,
-  11: 110,
-  12: 117,
-  13: 124,
-  14: 131,
-  15: 138,
-  16: 144,
-  17: 150,
-  18: 156,
-  19: 162,
-  20: 168,
-  21: 174,
-  22: 180,
-  23: 186,
+  1: 27, 2: 36, 3: 45, 4: 54, 5: 63,
+  6: 71, 7: 79, 8: 87, 9: 95, 10: 103,
+  11: 102, 12: 101, 13: 100, 14: 99, 15: 98,
+  16: 96, 17: 94, 18: 92, 19: 90, 20: 88,
+  21: 85, 22: 82, 23: 79, 24: 73, 25: 70
 };
 
 function getTimerSecondsForRound(round: number): number {
   if (ROUND_TIMER_TABLE[round]) {
     return ROUND_TIMER_TABLE[round];
   }
-  // For round 24+, continue adding +6 seconds per round
-  return 186 + (round - 23) * 6;
+  // 25. turdan sonrası 70 saniyede sabitlenir
+  return 70;
 }
 
 interface MinlanGameBoardProps {
@@ -121,8 +103,8 @@ export function MinlanGameBoard({
     }
   }, [currentPairKey, categoryId, unlockedCategoryIds, onSelectCategory]);
 
-  // Round progression: Round 1 = 3 pairs (6 cards). Every round adds 2 cards (+1 pair)
-  const pairCount = 3 + (roundLevel - 1);
+  // Round progression: Round 1 = 3 pairs (6 cards). Every round adds 2 cards (+1 pair). Max 12 pairs (24 cards) at round 10.
+  const pairCount = Math.min(12, 3 + (roundLevel - 1));
   const maxTimerSeconds = getTimerSecondsForRound(roundLevel);
 
   // Fetch cards for current round
@@ -249,7 +231,8 @@ export function MinlanGameBoard({
             setTimeout(() => setRewardToast(null), 2000);
           }
 
-          const bonusScore = 100 + newStreak * 20 + timeLeft * 5;
+          const basePoint = 100 + (roundLevel * 10);
+          const bonusScore = basePoint + newStreak * 20 + timeLeft * 5;
           setScore((s) => s + bonusScore);
 
           if (newMatchedCount >= pairCount) {
@@ -539,14 +522,14 @@ export function MinlanGameBoard({
           <span className="text-sm font-bold">{t.cardsLoadingText}</span>
         </div>
       ) : (
-        /* Fixed 3-Column Grid Container with Larger Cards & Full Logo Backs */
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 w-full max-w-sm sm:max-w-md mx-auto my-2">
+        /* Dynamic Grid Container: 3 cols initially, 4 on mobile and 6 on desktop for >16 cards */
+        <div className={`grid ${cards.length > 16 ? "grid-cols-4 sm:grid-cols-6 max-w-full sm:max-w-3xl gap-2 sm:gap-3" : "grid-cols-3 gap-3 sm:gap-4 max-w-sm sm:max-w-md"} w-full mx-auto my-2`}>
           {cards.map((card) => (
             <button
               key={card.id}
               onClick={() => handleCardClick(card)}
               disabled={card.isMatched || card.isFlipped}
-              className={`h-28 sm:h-36 rounded-2xl p-2 flex flex-col items-center justify-center text-center transition-all duration-300 transform cursor-pointer border relative overflow-hidden ${
+              className={`${cards.length > 16 ? "h-20 sm:h-24 rounded-xl p-1" : "h-28 sm:h-36 rounded-2xl p-2"} flex flex-col items-center justify-center text-center transition-all duration-300 transform cursor-pointer border relative overflow-hidden ${
                 card.isMatched
                   ? "bg-emerald-950/40 border-emerald-500/50 text-emerald-300 opacity-60 scale-95"
                   : card.isFlipped
@@ -556,8 +539,8 @@ export function MinlanGameBoard({
             >
               {card.isFlipped || card.isMatched ? (
                 /* Flipped Card: Clean Large Word Text ONLY */
-                <div className="w-full h-full flex items-center justify-center p-2 animate-fadeIn">
-                  <span className="text-sm sm:text-base font-black text-white leading-tight break-words px-1">
+                <div className="w-full h-full flex items-center justify-center p-1 sm:p-2 animate-fadeIn">
+                  <span className={`${cards.length > 16 ? "text-[10px] leading-tight sm:text-xs" : "text-sm sm:text-base"} font-black text-white leading-tight break-words px-1`}>
                     {card.text}
                   </span>
                 </div>

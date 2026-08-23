@@ -88,7 +88,7 @@ export default function MinlanPage() {
       <div className="max-w-6xl mx-auto relative z-10">
 
         {/* Single Unified Card Container (One Single Box Layout matching MinMat) */}
-        <div className="w-full max-w-xl mx-auto bg-[#060b14] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl flex flex-col items-center select-none">
+        <div className="w-full max-w-3xl mx-auto bg-[#060b14] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl flex flex-col items-center select-none">
           {/* 1. Header with Centered Brand Title, Slogan & Compact Community Progress */}
           <MinlanHeader
             nativeLang={nativeLang}
