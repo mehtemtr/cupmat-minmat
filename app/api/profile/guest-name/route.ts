@@ -8,8 +8,20 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const lang = searchParams.get("lang") || "tr";
     
-    // tr ise Kartal, değilse Eagle
-    const prefix = lang === "tr" ? "Kartal" : "Eagle";
+    // Dillere göre "Kartal" çevirileri
+    const prefixMap: Record<string, string> = {
+      tr: "Kartal",
+      en: "Eagle",
+      de: "Adler",
+      fr: "Aigle",
+      es: "Aguila",
+      pt: "Aguia",
+      it: "Aquila",
+      ar: "Nasr", // Arapça
+      ko: "Doksuri" // Korece
+    };
+    
+    const prefix = prefixMap[lang] || "Eagle";
     const key = `guest_counter:${prefix.toLowerCase()}`;
 
     // Redis INCR
