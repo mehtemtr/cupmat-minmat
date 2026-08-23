@@ -229,6 +229,7 @@ export function MinlanGameBoard({
           setMatchedPairsCount(newMatchedCount);
           const newStreak = streak + 1;
           setStreak(newStreak);
+          setMistakes(0);
 
           // MinMat Consecutive Match Streak Life Reward Rule:
           // 4, 7, 9 consecutive matches give +1 Life (max 5)
