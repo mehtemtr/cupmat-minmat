@@ -1014,13 +1014,7 @@ export async function handleGamificationAction(
       break;
     }
 
-    case "player_scout": {
-      const added = amount || 3;
-      profile.taraftarPuani += added;
-      profile.mevcutPeriyotPuani += added;
-      message = `Futbolcu keşif ödülü kazanıldı: +${added} Puan!`;
-      break;
-    }
+
 
     case "help_clicked": {
       if (!profile.yardimTiklandi) {
@@ -1081,13 +1075,7 @@ export async function handleGamificationAction(
       break;
     }
 
-    case "poll_answered": {
-      const added = amount || 10;
-      profile.taraftarPuani += added;
-      profile.mevcutPeriyotPuani += added;
-      message = `Anket/Soru cevaplama ödülü: +${added} Taraftar Puanı!`;
-      break;
-    }
+
 
     default:
       return { success: false, profile, message: "Bilinmeyen eylem tipi." };
