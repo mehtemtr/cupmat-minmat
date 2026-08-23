@@ -61,6 +61,9 @@ export function MinlanGameBoard({
   const [streak, setStreak] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<number>(27);
   const [carryOverTime, setCarryOverTime] = useState<number>(0);
+  const [totalLifetimeMatches, setTotalLifetimeMatches] = useState<number>(0);
+  const [nextBonusTarget, setNextBonusTarget] = useState<number>(20);
+  const [bonusLevel, setBonusLevel] = useState<number>(1);
   const [gameState, setGameState] = useState<"idle" | "playing" | "paused" | "game_over">("idle");
   const [loading, setLoading] = useState<boolean>(false);
   const [showRoundSuccess, setShowRoundSuccess] = useState<boolean>(false);
@@ -174,6 +177,9 @@ export function MinlanGameBoard({
     setStreak(0);
     setTimeLeft(27);
     setCarryOverTime(0);
+    setTotalLifetimeMatches(0);
+    setNextBonusTarget(20);
+    setBonusLevel(1);
     setFlippedCards([]);
     setCards([]);
     setMatchedPairsCount(0);
@@ -212,6 +218,33 @@ export function MinlanGameBoard({
           const newStreak = streak + 1;
           setStreak(newStreak);
           setMistakes(0);
+
+          const newTotalMatches = totalLifetimeMatches + 1;
+          setTotalLifetimeMatches(newTotalMatches);
+
+          if (newTotalMatches >= nextBonusTarget) {
+            let nextGap = 50;
+            if (bonusLevel === 1) nextGap = 30;
+            else if (bonusLevel === 2) nextGap = 38;
+            else if (bonusLevel === 3) nextGap = 44;
+            else if (bonusLevel === 4) nextGap = 48;
+            
+            setNextBonusTarget(nextBonusTarget + nextGap);
+            setBonusLevel((prev) => prev + 1);
+
+            setLives((currLives) => {
+              if (currLives >= 5) {
+                setTimeLeft((tVal) => tVal + 10);
+                setScore((s) => s + 1000);
+                setRewardToast("Usta Bonusu: +10 Saniye & +1000 Puan! 🎁");
+                return 5;
+              } else {
+                setRewardToast("Usta Bonusu: +1 Can! ❤️");
+                return currLives + 1;
+              }
+            });
+            setTimeout(() => setRewardToast(null), 3000);
+          }
 
           // MinMat Consecutive Match Streak Life Reward Rule:
           // 4, 7, 9 consecutive matches give +1 Life (max 5)
