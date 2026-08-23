@@ -387,60 +387,6 @@ export function MinlanGameBoard({
         </div>
       </div>
 
-      {/* 3. MinMat Exact Stats Row: Score, Timer, Round, Pause, Hearts, Mistakes, Combo */}
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 bg-slate-950/80 border border-slate-800 px-4 sm:px-6 py-3 rounded-2xl mb-5 w-full max-w-xl">
-        {/* Score */}
-        <div className="flex items-center gap-1.5 font-mono font-black text-amber-400 text-lg">
-          <span>⭐</span>
-          <span>{score}</span>
-        </div>
-
-        {/* Timer */}
-        <div className="flex items-center gap-1.5 font-mono font-black text-cyan-300 text-lg">
-          <span>⏱️</span>
-          <span>{timeLeft}</span>
-        </div>
-
-        {/* Round Level */}
-        <div className="text-sm font-extrabold text-white">
-          {t.roundText} {roundLevel}
-        </div>
-
-        {/* Pause Button */}
-        <button
-          onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
-          className="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-all cursor-pointer"
-          title={gameState === "paused" ? "Devam Et" : "Duraklat"}
-        >
-          {gameState === "paused" ? <Play className="w-4 h-4 text-emerald-400" /> : <Pause className="w-4 h-4 text-cyan-400" />}
-        </button>
-
-        {/* Hearts / Lives (Max 5 Hearts) */}
-        <div className="flex items-center gap-1">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Heart
-              key={i}
-              className={`w-4 h-4 transition-all ${
-                i < lives
-                  ? "text-rose-500 fill-rose-500 scale-100"
-                  : "text-slate-800 fill-slate-900 opacity-40"
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Mistake Counter */}
-        <div className="flex items-center gap-1 text-xs font-bold text-amber-400">
-          <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-          <span>{mistakes}/3</span>
-        </div>
-
-        {/* Combo Streak */}
-        <div className="flex items-center gap-1 text-xs font-bold text-orange-400">
-          <Flame className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
-          <span>{streak}</span>
-        </div>
-      </div>
 
       {/* 4. Category Selector Icons (MinMat '+' '-' 'x' '/' style directly on top of board) */}
       <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-5 flex-wrap">
@@ -515,6 +461,61 @@ export function MinlanGameBoard({
           <Trophy className="w-4 h-4 text-amber-400" />
           <span>{t.scoreTableText}</span>
         </button>
+      </div>
+
+      {/* 3. MinMat Exact Stats Row: Score, Timer, Round, Pause, Hearts, Mistakes, Combo */}
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 bg-slate-950/80 border border-slate-800 px-4 sm:px-6 py-3 rounded-2xl mb-5 w-full max-w-xl">
+        {/* Score */}
+        <div className="flex items-center gap-1.5 font-mono font-black text-amber-400 text-lg">
+          <span>⭐</span>
+          <span>{score}</span>
+        </div>
+
+        {/* Timer */}
+        <div className="flex items-center gap-1.5 font-mono font-black text-cyan-300 text-lg">
+          <span>⏱️</span>
+          <span>{timeLeft}</span>
+        </div>
+
+        {/* Round Level */}
+        <div className="text-sm font-extrabold text-white">
+          {t.roundText} {roundLevel}
+        </div>
+
+        {/* Pause Button */}
+        <button
+          onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
+          className="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-all cursor-pointer"
+          title={gameState === "paused" ? "Devam Et" : "Duraklat"}
+        >
+          {gameState === "paused" ? <Play className="w-4 h-4 text-emerald-400" /> : <Pause className="w-4 h-4 text-cyan-400" />}
+        </button>
+
+        {/* Hearts / Lives (Max 5 Hearts) */}
+        <div className="flex items-center gap-1">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Heart
+              key={i}
+              className={`w-4 h-4 transition-all ${
+                i < lives
+                  ? "text-rose-500 fill-rose-500 scale-100"
+                  : "text-slate-800 fill-slate-900 opacity-40"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Mistake Counter */}
+        <div className="flex items-center gap-1 text-xs font-bold text-amber-400">
+          <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+          <span>{mistakes}/3</span>
+        </div>
+
+        {/* Combo Streak */}
+        <div className="flex items-center gap-1 text-xs font-bold text-orange-400">
+          <Flame className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
+          <span>{streak}</span>
+        </div>
       </div>
 
       {/* 6. Active Memory Game Board Cards */}
