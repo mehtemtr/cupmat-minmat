@@ -10,10 +10,15 @@ Kullanıcıların site içindeki etkileşimleri "Taraftar Puanı" (ve mevcut per
 
 **Periyot (Dönem) Sistemi:** Liderlik tablosu her 72 saatte (3 günde) bir sıfırlanır. Dönem birincileri kalıcı olarak "Geçmiş Şampiyonlar" (Hall of Fame) listesine eklenir ve diğer oyunlarda avantaj sağlayan bonuslar kazanır.
 
-## 2. MinMat (Matematik Oyunu) Puanlaması
-- Puanlar matematiksel işlemin doğruluğuna ve hızına göre hesaplanır.
-- **Bölüm (Level):** Bölüm ilerledikçe kazanılan taban puan artar.
-- **Zaman Bonusu:** Hızlı cevaplar ekstra çarpan (combo) puanı getirir.
+## 2. MinMat (Sayı Avı) Puanlaması
+- 4 işlem (Toplama, Çıkarma, Çarpma, Bölme) ve Karışık mod tabanlı hızlı matematik oyunu.
+- **Taban Puan:** Oyun moduna göre değişir. Toplama: `10`, Çıkarma: `11`, Çarpma: `12`, Bölme: `13`, Karışık: `15`. Puan Formülü: `(Taban Puan + (Tur - 1) + Kombo) * 5`. Puanlar tur seviyesiyle birlikte artar.
+- **Kart Sınırı ve Süre:** Kartlar her turda artar ve 16. turda maksimum **36 karta (18 eşleşme)** ulaşarak orada sabitlenir. Her eşleşme için oyuncuya yaklaşık `5 saniye` verilir, böylece maksimum kartta (36 kart) tur süresi 90 saniye tabanına (artı bonuslar) sabitlenir.
+- **Seri (Combo) Bonusu:** Arka arkaya yanlışsız yapılan her eşleşme kombo sayacını artırır ve kazanılan puanı doğrudan katlar.
+- **Can / Süre Ödülleri:** 4, 7 ve 9 kombolarda oyuncuya ekstra +1 Can verilir. Eğer can zaten maksimum (5) ise +123 Puan can bonusu kazanır.
+- **Usta Bonusu (Logaritmik Dönüm Noktası):** Tıpkı MinLan gibi, kombolar bozulsada oyun boyunca yapılan toplam doğru eşleşme sayısı sayılır. 20, 50, 88, 132, 180 ve sonrasında her 50 eşleşmede bir Usta Bonusu kazanılır (Can < 5 ise **+1 Can**, Can = 5 ise **+10 Saniye ve 1000 Puan**).
+- **Zaman / Tur Bonusu:** Tur tamamlandığında kalan sürenin yarısı sonraki tura devreder. Ayrıca 6. turdan itibaren tur tamamlandıkça (örneğin 9. turda +9 sn) ek süre bonusu verilir.
+- **Taraftar Puanı (Periyot Puanı):** Puan tablosundaki (Leaderboard) derecelere göre oyuncular Periyot Puanı (Taraftar Puanı) kazanır.
 - **Oyun Sonu:** Oyuncunun dönem içinde yaptığı *en yüksek skor* liderlik tablosuna yansır (kümülatif değil, "High Score" mantığı).
 
 ## 3. MinLan (Dil ve Hafıza Oyunu) Puanlaması

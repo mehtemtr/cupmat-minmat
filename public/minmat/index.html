@@ -2712,6 +2712,9 @@
     let timeLeft = 0;
     let timer = null;
     let combo = 0;
+    let totalLifetimeMatches = 0;
+    let nextBonusTarget = 20;
+    let bonusLevel = 1;
     let isGameOver = false;
     let isGameOverSaved = false;
     let playerName = "Adsız";
@@ -2913,6 +2916,11 @@
       }
       updateLivesUI();
       level = 1;
+      wrongCount = 0;
+      combo = 0;
+      totalLifetimeMatches = 0;
+      nextBonusTarget = 20;
+      bonusLevel = 1;
       const playerTextEl = document.getElementById("playerText");
       if (playerTextEl) {
         playerTextEl.innerText = "👤 " + playerName;
@@ -3141,7 +3149,7 @@
 
     function createCards() {
       let a, b, question, answer;
-      let pairCount = level + 2;
+      let pairCount = Math.min(18, level + 2); // Max 18 pairs (36 cards)
       totalPairs = pairCount * 2;
 
       let arr = [];
@@ -3252,6 +3260,34 @@
         }
 
         if (combo >= 3) showEffect("🔥 KOMBO x" + combo);
+
+        totalLifetimeMatches++;
+        if (totalLifetimeMatches >= nextBonusTarget) {
+          let nextGap = 50;
+          if (bonusLevel === 1) nextGap = 30;
+          else if (bonusLevel === 2) nextGap = 38;
+          else if (bonusLevel === 3) nextGap = 44;
+          else if (bonusLevel === 4) nextGap = 48;
+          
+          nextBonusTarget += nextGap;
+          bonusLevel++;
+
+          if (lives >= 5) {
+            timeLeft += 10;
+            score += 1000;
+            updateTimeUI();
+            
+            let label = "🎁 USTA BONUSU: +10 SN & 1000 Puan!";
+            if (currentLang === "en") label = "🎁 MASTER BONUS: +10 SEC & 1000 Pts!";
+            showEffect(label);
+          } else {
+            lives++;
+            animateLives();
+            let label = "❤️ USTA BONUSU: +1 CAN!";
+            if (currentLang === "en") label = "❤️ MASTER BONUS: +1 LIFE!";
+            showEffect(label);
+          }
+        }
 
         let baseScore = 10;
         if (gameMode === "sub") baseScore = 11;
