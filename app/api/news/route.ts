@@ -239,13 +239,18 @@ export async function GET(request: Request) {
             // İstenen limit kadarını alıyoruz
             const paginatedUniqueNews = uniqueDbNews.slice(0, limit);
 
-            const cleanedDbNews = await Promise.all(
-              paginatedUniqueNews.map(async (item: any) => ({
+            const cleanedDbNews = [];
+            for (const item of paginatedUniqueNews) {
+              const translatedTitle = await translateText(item.title || "", lang);
+              const translatedSnippet = await translateText(item.snippet || "", lang);
+              cleanedDbNews.push({
                 ...item,
-                title: cleanText(await translateText(item.title || "", lang)),
-                snippet: cleanText(await translateText(item.snippet || "", lang)),
-              }))
-            );
+                title: cleanText(translatedTitle),
+                snippet: cleanText(translatedSnippet),
+              });
+              // Small delay to prevent Google Translate rate limiting
+              await new Promise(resolve => setTimeout(resolve, 50));
+            }
 
             return NextResponse.json({
               success: true,
