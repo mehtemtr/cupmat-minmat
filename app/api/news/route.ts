@@ -294,7 +294,24 @@ export async function GET(request: Request) {
                 snippet: cleanText(translatedSnippet),
               });
               // Small delay to prevent Google Translate rate limiting
-              await new Promise(resolve => setTimeout(resolve, 50));
+            }
+
+            // INJECT STATMATIK UPDATE AT THE TOP (IF FIRST PAGE)
+            if (page === 1) {
+              const statMatikUpdate = MULTILINGUAL_NEWS_DATASET.find(n => n.id === "newsglo-statmatik-update");
+              if (statMatikUpdate) {
+                const smTrans = statMatikUpdate.translations[lang] || statMatikUpdate.translations["en"];
+                cleanedDbNews.unshift({
+                  id: statMatikUpdate.id,
+                  category: statMatikUpdate.category,
+                  source: statMatikUpdate.source,
+                  link: statMatikUpdate.link,
+                  published_at: statMatikUpdate.published_at,
+                  title: smTrans.title,
+                  snippet: smTrans.snippet,
+                  image_url: null,
+                });
+              }
             }
 
             return NextResponse.json({
