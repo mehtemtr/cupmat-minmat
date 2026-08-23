@@ -12,15 +12,12 @@ import { aboutHelpTranslations, type TranslationLang } from "@/data/about-help-t
 
 const navKeys = [
   { href: "/teams", key: "nav.teams" },
-  { href: "/futbolcular", key: "nav.footballers" },
   { href: "/groups", key: "nav.groups" },
   { href: "/venues", key: "nav.venues" },
   { href: "/tahminler", key: "nav.predictions" },
   { href: "/kupa-yolu", key: "nav.bracket" },
-  { href: "/hakemler", key: "hero.referees" },
   { href: "/leagues", key: "nav.leagues" },
   { href: "/polls", key: "nav.polls" },
-  { href: "/fantasy", key: "nav.fantasy" },
   { href: "/leaderboard", key: "nav.leaderboard" },
   { href: "/stats", key: "nav.stats" },
 ] as const;
