@@ -5,41 +5,44 @@ const API_URL = "https://v3.football.api-sports.io";
 
 // We only want to track these continental/global leagues
 export const TARGET_LEAGUES = [
-  2,  // UEFA Champions League
-  3,  // UEFA Europa League
+  // --- KULÜP (CLUBS) ---
+  2,   // UEFA Champions League
+  3,   // UEFA Europa League
   848, // UEFA Conference League
-  73, // UEFA Super Cup
-  13, // Copa Libertadores
-  17, // AFC Champions League
-  18, // AFC Cup / Champions League Two
-  11, // Copa Sudamericana
-  12, // CAF Champions League
-  20, // CAF Confederation Cup
-  16, // CONCACAF Champions Cup
-  15, // FIFA Club World Cup
-  5,  // UEFA Nations League (Milli)
-  34, // World Cup Qualifiers CONMEBOL (Milli)
-  32, // AFCON Qualifiers (Milli)
-  68, // OFC Champions League
+  73,  // UEFA Super Cup
+  13,  // Copa Libertadores (South America)
+  11,  // Copa Sudamericana (South America)
+  17,  // AFC Champions League (Asia)
+  18,  // AFC Cup / Champions League Two (Asia)
+  12,  // CAF Champions League (Africa)
+  20,  // CAF Confederation Cup (Africa)
+  16,  // CONCACAF Champions Cup (North America)
+  68,  // OFC Champions League (Oceania)
+  15,  // FIFA Club World Cup (Global)
+  
+  // --- MİLLİ TAKIM (NATIONAL TEAMS) ---
+  1,   // FIFA World Cup
+  4,   // Euro Championship
+  5,   // UEFA Nations League
+  9,   // Copa America
+  6,   // Africa Cup of Nations (AFCON)
+  7,   // AFC Asian Cup
+  22,  // CONCACAF Gold Cup
+  32,  // AFCON Qualifiers
+  34,  // World Cup Qualifiers (CONMEBOL)
 ];
 
 const LEAGUE_REGIONS: Record<number, string> = {
-  2: 'europe',
-  3: 'europe',
-  848: 'europe',
-  73: 'europe',
-  5: 'europe',
-  13: 'america',
-  11: 'america',
-  34: 'america',
-  16: 'america',
-  17: 'asia',
-  18: 'asia',
-  12: 'africa',
-  32: 'africa',
-  20: 'africa',
-  15: 'world',
-  68: 'oceania'
+  // Europe
+  2: 'europe', 3: 'europe', 848: 'europe', 73: 'europe', 5: 'europe', 4: 'europe',
+  // America
+  13: 'america', 11: 'america', 34: 'america', 16: 'america', 9: 'america', 22: 'america',
+  // Asia
+  17: 'asia', 18: 'asia', 7: 'asia',
+  // Africa
+  12: 'africa', 32: 'africa', 20: 'africa', 6: 'africa',
+  // World / Oceania
+  15: 'world', 1: 'world', 68: 'oceania'
 };
 
 // Basit 3 harfli ülke kısaltma haritası (Gerçekte API'den veya statik bir sözlükten beslenebilir)
