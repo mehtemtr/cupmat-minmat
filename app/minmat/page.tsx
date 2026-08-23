@@ -115,7 +115,7 @@ export default function MinMatPage() {
     <div className="fixed inset-x-0 top-0 bottom-16 md:top-16 md:bottom-0 bg-[#060b14] overflow-hidden flex flex-col">
       <div className="w-full flex-1 overflow-hidden">
         <iframe 
-          src={`/minmat/index.html?v=${Date.now()}`}
+          src={`/minmat/app.html?v=${Date.now()}`}
           className="w-full h-full border-0 block"
           title="MinMat Oyunu"
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"

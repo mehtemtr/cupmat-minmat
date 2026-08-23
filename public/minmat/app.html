@@ -1,0 +1,3905 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MinMat – Sayı Avı</title>
+  <link rel="icon" href="/icon.png" type="image/png">
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
+  <script>
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MinMat – Sayı Avı</title>
+  <link rel="icon" href="/icon.png" type="image/png">
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMHYYVM3BK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-GMHYYVM3BK');
+  </script>
+
+  <!-- Clerk Authentication SDK -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: #04080e;
+      color: white;
+    }
+
+    .screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 30px 10px;
+    }
+
+    @media (min-height: 700px) {
+      .screen {
+        justify-content: center;
+      }
+    }
+
+    .active {
+      display: flex;
+    }
+
+    #grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+      width: 100%;
+      max-width: min(100%, 480px);
+      box-sizing: border-box;
+      padding: 0 10px;
+      justify-content: center;
+      justify-items: center;
+    }
+
+    button {
+      background: #1e293b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #334155;
+      transform: translateY(-1px);
+    }
+
+    #modeBox button {
+      width: 45px;
+      height: 45px;
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mix-dice {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 2px;
+      width: 24px;
+      height: 24px;
+      border: 1.5px solid currentColor;
+      border-radius: 6px;
+      padding: 2px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.03);
+      line-height: 1;
+    }
+
+    .mix-dice span {
+      font-size: 8px;
+      font-weight: 900;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mix-dice.small {
+      width: 18px;
+      height: 18px;
+      border-width: 1.2px;
+      border-radius: 4px;
+      padding: 1px;
+      gap: 1px;
+    }
+
+    .mix-dice.small span {
+      font-size: 7px;
+    }
+
+    #topBar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .topRow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+    }
+
+    #gameOverScreen {
+      background: #04080e;
+      overflow-y: auto;
+      padding: 40px 10px;
+      justify-content: flex-start; /* Fix flexbox top scroll clipping on desktop */
+    }
+
+    #effects {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      pointer-events: none;
+    }
+
+    .card {
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 70px;
+      max-height: 70px;
+      background: #334155;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: clamp(12px, 3.8vw, 18px);
+      background-image: url("/minmat/icon.png");
+      background-size: 85%;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: transparent;
+      user-select: none;
+      touch-action: manipulation;
+      box-sizing: border-box;
+    }
+
+    .card.open {
+      background: #22c55e;
+      color: white;
+      background-image: none;
+    }
+
+    .effect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: yellow;
+      font-size: 30px;
+      font-weight: bold;
+      pointer-events: none;
+      animation: pop 0.8s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      50% { transform: translate(-50%, -60%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -80%) scale(1); opacity: 0; }
+    }
+
+    .heartPop {
+      animation: heartPop 0.8s ease;
+    }
+
+    @keyframes heartPop {
+      0%, 100% { transform: scale(1); }
+      40% { transform: scale(1.4); }
+      70% { transform: scale(1.2); }
+    }
+
+    .timeWarning {
+      animation: blink 0.6s infinite;
+      color: red !important;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .scoreRow {
+      display: grid;
+      grid-template-columns: 40px 100px 90px 80px 60px 80px;
+      gap: 5px;
+      align-items: center;
+      padding: 8px;
+      margin: 4px 0;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+    }
+
+    .scoreHead {
+      font-weight: bold;
+      color: #facc15;
+    }
+
+    .firstPlace {
+      background: linear-gradient(90deg, #facc15, #ca8a04);
+      color: black;
+      font-weight: bold;
+      transform: scale(1.03);
+    }
+
+    .secondPlace {
+      background: linear-gradient(90deg, #a855f7, #6d28d9);
+      font-weight: bold;
+    }
+
+    .thirdPlace {
+      background: linear-gradient(90deg, #f97316, #ea580c);
+      font-weight: bold;
+    }
+
+    .myScoreHighlight {
+      border: 1.5px solid #22c55e !important;
+      background: rgba(34, 197, 94, 0.15) !important;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+    }
+
+    .retryBtn {
+      width: 100%;
+      max-width: 480px;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .retryBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.35);
+      filter: brightness(1.1);
+    }
+
+    .shareScoreBtn {
+      width: 100%;
+      max-width: 480px;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .shareScoreBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+      filter: brightness(1.1);
+    }
+
+    #playerInput {
+      margin-bottom: 18px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: white;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      width: 280px;
+      transition: border 0.3s;
+    }
+
+    #playerInput:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
+    }
+
+    #playerInput::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    #playerBar {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #playerBar span {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 14px;
+      border-radius: 12px;
+    }
+
+    #levelEffect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-weight: bold;
+      color: #facc15;
+      opacity: 0;
+      pointer-events: none;
+      text-shadow: 0 0 20px #facc15;
+      z-index: 9999;
+    }
+
+    .levelAnim {
+      animation: levelPop 1s ease;
+    }
+
+    @keyframes levelPop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    #pauseBtn {
+      border: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      font-size: 20px;
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .cupmatWorldSwitch {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 10001;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      background: linear-gradient(135deg, #34d399, #059669);
+      color: #041018;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 22px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .cupmatWorldSwitch:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 28px rgba(16, 185, 129, 0.5);
+    }
+
+    .topRightNav {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 10px;
+      z-index: 10000;
+    }
+
+    .topRightBtn {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .topRightBtn:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: #22c55e;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(4, 8, 14, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 11000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-container {
+      background: linear-gradient(145deg, #0f172a, #04080e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      width: 90%;
+      max-width: 650px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.1);
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-backdrop.active .modal-container {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #38bdf8, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .modal-body {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    .modal-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 15px;
+      margin-bottom: 6px;
+    }
+
+    .modal-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .modal-list li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .modal-list li::before {
+      content: "•";
+      color: #22c55e;
+    }
+
+    .memorial-card {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.07), rgba(234, 179, 8, 0.02));
+      border: 1px dashed rgba(234, 179, 8, 0.4);
+      border-radius: 16px;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .memorial-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #facc15;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .memorial-names {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fef08a;
+      line-height: 1.7;
+    }
+
+    .modal-close-btn {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #scoreFilters {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    #scoreFilters button {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .modeLocked {
+      opacity: 0.35;
+      cursor: not-allowed !important;
+      position: relative;
+    }
+
+    .modeLocked::after {
+      content: '🔒';
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      font-size: 12px;
+    }
+
+    .modeActive {
+      background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+
+    #modeBox {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    #menuScreen {
+      background: #04080e;
+      position: relative;
+    }
+
+    .menuCard {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      background: #060b14;
+      padding: 40px 32px 32px;
+      text-align: center;
+      width: 340px;
+      max-width: 90vw;
+    }
+
+    .menuLogo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      border-radius: 20px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .menuLogo img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .menuTitle {
+      font-size: 36px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+      background: linear-gradient(135deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .menuStartBtn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .menuLeaderboardBtn {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .menuHomeBtn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      background: transparent;
+      color: #94a3b8;
+    }
+
+    .langToggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(6, 11, 20, 0.8);
+      padding: 6px 14px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .screenNav {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .navBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdownBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 140px;
+      justify-content: space-between;
+    }
+
+    .dropdownBtn:hover {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .dropdownContent {
+      display: none;
+      position: absolute;
+      background-color: #0f172a;
+      min-width: 155px;
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      z-index: 11000;
+      overflow: hidden;
+      margin-top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .open-up .dropdownContent {
+      bottom: 100%;
+      top: auto;
+      margin-bottom: 4px;
+      margin-top: 0;
+    }
+
+    .dropdownContent a {
+      color: #94a3b8;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .dropdownContent a:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .dropdownContent a.activeLangOption {
+      background-color: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      font-weight: 700;
+    }
+
+    .dropdown.show .dropdownContent {
+      display: block;
+    }
+
+    .dropdownArrow {
+      font-size: 10px;
+      color: #64748b;
+      margin-left: 4px;
+      transition: transform 0.2s;
+    }
+
+    .dropdown.show .dropdownArrow {
+      transform: rotate(180deg);
+    }
+    
+    .extraTimeActive {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #4ade80;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 8px;
+      padding: 3px 8px;
+      margin-left: 6px;
+    }
+    
+    .authStatusVerified {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .authStatusWarn {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .authLoginBtn {
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(74, 222, 128, 0.4);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2));
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .authSaveWarnBanner {
+      margin: 14px 0;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #f87171;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .screen {
+      box-sizing: border-box;
+      padding: 0 16px;
+    }
+
+    #leaderboard {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto 16px auto;
+    }
+
+    .scoreRow {
+      width: 100%;
+      box-sizing: border-box;
+      grid-template-columns: 35px 2fr 1.8fr 1.5fr 1fr 1.5fr;
+      padding: 8px 12px;
+      margin: 6px 0;
+      gap: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .scoreRow {
+        grid-template-columns: 30px 1.5fr 1.2fr 1.1fr 1fr 1fr;
+        font-size: 11px;
+        padding: 8px 6px;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .card {
+        max-width: 58px;
+        max-height: 58px;
+        font-size: clamp(10px, 3.8vw, 15px);
+        border-radius: 8px;
+      }
+      #grid {
+        gap: 8px;
+      }
+      .scoreRow {
+        grid-template-columns: 24px 1.4fr 1.1fr 1fr 0.8fr 0.9fr;
+        font-size: 10px;
+        padding: 6px 4px;
+        gap: 3px;
+      }
+      .retryBtn {
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+      .menuCard {
+        padding: 30px 20px 20px;
+      }
+      .cupmatWorldSwitch {
+        padding: 8px 12px;
+        font-size: 11px;
+        top: 12px;
+        left: 12px;
+      }
+      .topRightNav {
+        top: 12px;
+        right: 12px;
+        gap: 6px;
+      }
+      .topRightBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+      }
+    }
+
+    /* Custom MinMat Badges and Glowing Themes */
+    .minmat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .minmat-badge-tier0 {
+      display: none;
+    }
+
+    .minmat-badge-tier1 { /* Level 10 - Matematik Savaşçısı */
+      background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(205, 127, 50, 0.4));
+      color: #cd7f32;
+      border-color: rgba(205, 127, 50, 0.5);
+      box-shadow: 0 0 8px rgba(205, 127, 50, 0.25);
+    }
+
+    .minmat-badge-tier2 { /* Level 15 - Zihin Ustası */
+      background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.45));
+      color: #cbd5e1;
+      border-color: rgba(148, 163, 184, 0.5);
+      box-shadow: 0 0 10px rgba(148, 163, 184, 0.3);
+    }
+
+    .minmat-badge-tier3 { /* Level 20 - Sayıların Efendisi */
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.45));
+      color: #facc15;
+      border-color: rgba(234, 179, 8, 0.5);
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.35);
+      text-shadow: 0 0 2px rgba(234, 179, 8, 0.5);
+    }
+
+    .minmat-badge-tier4 { /* Level 25 - Zeka Efsanesi */
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      animation: pulseGlow 2s infinite ease-in-out;
+      text-shadow: 0 0 4px rgba(56, 189, 248, 0.6);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); border-color: rgba(56, 189, 248, 0.5); }
+      50% { box-shadow: 0 0 22px rgba(56, 189, 248, 0.7); border-color: rgba(168, 85, 247, 0.8); color: #c084fc; }
+    }
+
+    .lobby-badge-wrapper {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    #pauseOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    #pauseOverlay .pause-icon {
+      font-size: 80px;
+      animation: pausePulse 1.5s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes pausePulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Pause Overlay -->
+  <div id="pauseOverlay" onclick="togglePause()">
+    <div class="pause-icon">▶️</div>
+  </div>
+
+  <button type="button" class="cupmatWorldSwitch" id="btnCupmatSwitch" onclick="goToCupmat()">🏆 Cupmat'a Geç</button>
+
+  <!-- Top Right Navigation Panel (Unified flexbox aligned to prevent mobile overlap) -->
+  <div class="topRightNav" style="gap: 8px; z-index: 10000; align-items: center; display: flex; flex-direction: row-reverse;">
+    <div id="minmatAuthPanel" style="display: flex; gap: 8px;"></div>
+    <button class="topRightBtn" onclick="openAbout()" id="btnAbout" title="Hakkında">ℹ️</button>
+    <button class="topRightBtn" onclick="openHelp()" id="btnHelp" title="Yardım">❓</button>
+  </div>
+
+  <!-- MENÜ EKRANI -->
+  <div id="menuScreen" class="screen">
+    <div class="menuCard">
+      <div class="dropdown" id="menuLangDropdownContainer" style="margin-bottom: 20px;">
+        <button class="dropdownBtn" onclick="toggleDropdown('menuLangDropdown')" id="menuLangDropdownBtn">
+          <span class="langFlagActive">🇹🇷</span> <span class="langLabelActive">Türkçe</span> <span class="dropdownArrow">▼</span>
+        </button>
+        <div class="dropdownContent" id="menuLangDropdown">
+          <a href="#" onclick="selectLang('tr', 'menuLangDropdown', event)">🇹🇷 Türkçe</a>
+          <a href="#" onclick="selectLang('en', 'menuLangDropdown', event)">🇬🇧 English</a>
+          <a href="#" onclick="selectLang('de', 'menuLangDropdown', event)">🇩🇪 Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'menuLangDropdown', event)">🇫🇷 Français</a>
+          <a href="#" onclick="selectLang('es', 'menuLangDropdown', event)">🇪🇸 Español</a>
+          <a href="#" onclick="selectLang('pt', 'menuLangDropdown', event)">🇧🇷 Português</a>
+          <a href="#" onclick="selectLang('ar', 'menuLangDropdown', event)">🇸🇦 العربية</a>
+          <a href="#" onclick="selectLang('ko', 'menuLangDropdown', event)">🇰🇷 한국어</a>
+          <a href="#" onclick="selectLang('it', 'menuLangDropdown', event)">🇮🇹 Italiano</a>
+        </div>
+      </div>
+      <div class="menuLogo">
+        <img src="/minmat/icon.png" alt="MinMat">
+      </div>
+      <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 16px;">MinMat — Sayı Avı</p>
+      
+      <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
+      <div id="minmatUserBadgeContainer" class="lobby-badge-wrapper" style="margin-bottom: 16px; display: none;"></div>
+      
+      <!-- Boost Selection Container -->
+      <div id="boostSelectionContainer" style="display: none; width: 100%; margin-bottom: 16px; text-align: left; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 12px; box-sizing: border-box;">
+        <div style="font-size: 11px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <span id="boostBarTitle">⚡ Aktif Maç Hediyeleri</span>
+          <span id="boostExpiryLabel" style="font-size: 9px; color: #94a3b8; text-transform: none; font-weight: 600;"></span>
+        </div>
+        <div id="boostBarNoGifts" style="display: none; font-size: 11px; color: #94a3b8; text-align: center; padding: 8px 0;">
+          Aktif maç hediyeniz bulunmamaktadır.
+        </div>
+        <div id="boostBarGiftsList" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Time Boost -->
+          <div id="boostOpt-time" onclick="selectBoost('time')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">⏱️</span>
+              <div>
+                <div id="labelTimeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek Süre (+10sn)</div>
+                <div id="labelTimeDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 10 saniye fazladan başla</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="boostTimeStock" style="font-size: 10px; font-weight: 850; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 9999px;">0/3</span>
+              <div class="boostRadio" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"><div style="width: 6px; height: 6px; border-radius: 50%; background: transparent;"></div></div>
+            </div>
+          </div>
+          <!-- Life Boost -->
+          <div id="boostOpt-life" onclick="selectBoost('life')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">❤️</span>
+              <div>
+                <div id="labelLifeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek Can (+1 Can)</div>
+                <div id="labelLifeDesc" style="font-size: 9px; color: #94a3b8;">3 yerine 4 canla oyuna başla</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="boostLifeStock" style="font-size: 10px; font-weight: 850; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 9999px;">0/3</span>
+              <div class="boostRadio" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"><div style="width: 6px; height: 6px; border-radius: 50%; background: transparent;"></div></div>
+            </div>
+          </div>
+          <!-- Score Boost -->
+          <div id="boostOpt-score" onclick="selectBoost('score')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">⭐</span>
+              <div>
+                <div id="labelScoreTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Başlangıç Puanı (+250)</div>
+                <div id="labelScoreDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 250 puan önde başla</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="boostScoreStock" style="font-size: 10px; font-weight: 850; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 9999px;">0/3</span>
+              <div class="boostRadio" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; display: flex; align-items: center; justify-content: center; box-sizing: border-box;"><div style="width: 6px; height: 6px; border-radius: 50%; background: transparent;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">🎮 Oyunu Başlat</button>
+      <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
+      <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
+      <div id="playerInputContainer" style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+        <input id="playerInput" type="text" maxlength="16" placeholder="İsmini yaz...">
+        <div id="playerInputStatus" style="font-size: 11px; font-weight: 700; margin-top: -10px; margin-bottom: 12px; text-align: center; min-height: 16px; display: none;"></div>
+      </div>
+      <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
+      <button class="menuHomeBtn" onclick="if (window.self !== window.top) { window.top.location.href = '/'; } else { window.location.href = '/'; }" id="btnHome">🏠 Ana Sayfaya Dön</button>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameScreen" class="screen active">
+    <div id="gameTitle">
+      <p id="gameSubtitle" style="font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px;">MinMat — Sayı Avı</p>
+    </div>
+    <div id="playerBar" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <span id="modeText">🎯 Topla</span>
+      <span id="gameHudBadge" class="minmat-badge minmat-badge-tier0" style="display: none;"></span>
+    </div>
+    <div id="topBar">
+      <div class="topRow">
+        <span id="score">⭐ 0</span>
+        <span id="time">⏱️ 30</span>
+        <span id="levelLabel">Tur 1</span>
+        <button id="pauseBtn" onclick="togglePause()">⏸️</button>
+      </div>
+      <div id="extraTimeRow" style="display: none; justify-content: center; margin: 4px 0; width: 100%;">
+        <span id="extraTimeBadge" class="extraTimeActive" style="margin-left: 0;"></span>
+      </div>
+      <div class="topRow">
+        <span id="lives">❤️❤️❤️</span>
+        <span id="wrongBar">⚠️ 0/3</span>
+        <span id="combo">🔥 0</span>
+      </div>
+    </div>
+
+    <div id="modeBox">
+      <button id="modeBtn_add" onclick="setMode('add')">➕</button>
+      <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
+      <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
+      <button id="modeBtn_div" onclick="setMode('div')">/</button>
+      <button id="modeBtn_mix" onclick="setMode('mix')" style="padding: 0;">
+        <div class="mix-dice">
+          <span>+</span><span>-</span>
+          <span>×</span><span>÷</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="screenNav">
+      <button class="navBtn" onclick="if(window.self !== window.top) { window.parent.location.href = '/' } else { window.location.href = '/' }">🏠 <span id="navMenuText">Ana Sayfa</span></button>
+      <button class="navBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardGame">🏆 Puan Tablosu</button>
+      <div class="dropdown open-up" id="gameLangDropdownContainer">
+        <button class="navBtn dropdownBtn" onclick="toggleDropdown('gameLangDropdown')">
+          <span class="langIcon">🌐</span>
+          <span id="gameLangLabel">TR</span> <span class="dropdownArrow">▼</span>
+        </button>
+        <div class="dropdownContent" id="gameLangDropdown">
+          <a href="#" onclick="selectLang('tr', 'gameLangDropdown', event)">🇹🇷 Türkçe</a>
+          <a href="#" onclick="selectLang('en', 'gameLangDropdown', event)">🇬🇧 English</a>
+          <a href="#" onclick="selectLang('de', 'gameLangDropdown', event)">🇩🇪 Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'gameLangDropdown', event)">🇫🇷 Français</a>
+          <a href="#" onclick="selectLang('es', 'gameLangDropdown', event)">🇪🇸 Español</a>
+          <a href="#" onclick="selectLang('pt', 'gameLangDropdown', event)">🇧🇷 Português</a>
+          <a href="#" onclick="selectLang('ar', 'gameLangDropdown', event)">🇸🇦 العربية</a>
+          <a href="#" onclick="selectLang('ko', 'gameLangDropdown', event)">🇰🇷 한국어</a>
+          <a href="#" onclick="selectLang('it', 'gameLangDropdown', event)">🇮🇹 Italiano</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="grid"></div>
+  </div>
+  <div id="levelEffect"></div>
+
+  <!-- GAME OVER / LEADERBOARD VIEW -->
+  <div id="gameOverScreen" class="screen">
+    <h1 id="gameOverTitle">Oyun Bitti</h1>
+    <p id="finalScoreRow"><span id="scoreLabel">Puan</span>: <span id="finalScore"></span></p>
+    <div id="gameOverBadgeContainer" style="margin-top: -6px; margin-bottom: 12px; display: none;"></div>
+    <div id="authSaveContainer" style="width: 100%; max-width: 320px; margin: 0 auto;"></div>
+    <div id="leaderboardTabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:12px;">
+      <button onclick="switchTab('scores')" id="tabScores" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(16,185,129,0.2); color:#6ee7b7; font-weight:700; font-size:13px; cursor:pointer;">🏆 Puan Tablosu</button>
+      <button onclick="switchTab('rewards')" id="tabRewards" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:13px; cursor:pointer;">🎁 Ödül Tablosu</button>
+    </div>
+
+    <div id="scoreFilters" style="margin-bottom: 12px;">
+      <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">Hepsi</button>
+      <button onclick="setLeaderboardFilter('add')" id="btnFilterAdd">➕</button>
+      <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">➖</button>
+      <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">✖️</button>
+      <button onclick="setLeaderboardFilter('div')" id="btnFilterDiv">/</button>
+      <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix" style="padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center;">
+        <div class="mix-dice small">
+          <span>+</span><span>-</span>
+          <span>×</span><span>÷</span>
+        </div>
+      </button>
+    </div>
+
+    <div id="leaderboard"></div>
+    <div id="rewardBoard" style="display:none; width:100%; max-width:480px; margin: 0 auto;"></div>
+
+    <button class="retryBtn" onclick="startGame()" id="btnRetry">🔄 Bir Daha</button>
+    <button class="shareScoreBtn" onclick="shareScore()" id="btnShareScore">🔗 <span id="btnShareScoreText">Skoru Paylaş (+%20 Bonus)</span></button>
+
+    <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
+      <button class="navBtn" onclick="if(window.self !== window.top) { window.parent.location.href = '/' } else { window.location.href = '/' }">🏠 <span id="navMenuText2">Ana Sayfa</span></button>
+      <div class="dropdown open-up" id="goLangDropdownContainer">
+        <button class="navBtn dropdownBtn" onclick="toggleDropdown('goLangDropdown')">
+          <span class="langIcon">🌐</span>
+          <span id="goLangLabel">TR</span> <span class="dropdownArrow">▼</span>
+        </button>
+        <div class="dropdownContent" id="goLangDropdown">
+          <a href="#" onclick="selectLang('tr', 'goLangDropdown', event)">🇹🇷 Türkçe</a>
+          <a href="#" onclick="selectLang('en', 'goLangDropdown', event)">🇬🇧 English</a>
+          <a href="#" onclick="selectLang('de', 'goLangDropdown', event)">🇩🇪 Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'goLangDropdown', event)">🇫🇷 Français</a>
+          <a href="#" onclick="selectLang('es', 'goLangDropdown', event)">🇪🇸 Español</a>
+          <a href="#" onclick="selectLang('pt', 'goLangDropdown', event)">🇧🇷 Português</a>
+          <a href="#" onclick="selectLang('ar', 'goLangDropdown', event)">🇸🇦 العربية</a>
+          <a href="#" onclick="selectLang('ko', 'goLangDropdown', event)">🇰🇷 한국어</a>
+          <a href="#" onclick="selectLang('it', 'goLangDropdown', event)">🇮🇹 Italiano</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HAKKINDA MODAL -->
+  <div id="aboutModal" class="modal-backdrop" onclick="closeModal('aboutModal')">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">StatMatik</h2>
+      </div>
+      <div class="modal-body">
+        <p id="aboutDesc">statmatik.com, zihinsel gelişimi, futbolu ve güncel dünyayı tek bir noktada buluşturan yenilikçi bir platformdur.</p>
+        <div class="modal-section-title" id="aboutStudioTitle">🚀 Yapımcı Stüdyo</div>
+        <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mahtem Yazılım Stüdyosu</p>
+        <div class="modal-section-title" id="aboutTeamTitle">💻 Geliştirici Ekibi</div>
+        <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mehmet Ali Hayri Temizel & Mehtap Temizel & Harun Temizel</p>
+        <div class="modal-section-title" id="aboutVersionTitle">📌 Sürüm</div>
+        <p style="margin:0 0 10px 15px; color:#94a3b8;" id="aboutVersionVal">v1.0.1.0 (Temmuz 2026)</p>
+        <div class="memorial-card">
+          <div class="memorial-title" id="aboutMemorialTitle">✨ Anılarına, Saygı Sevgi ve Rahmetle ✨</div>
+          <div class="memorial-names">
+            Mehmet Ali KILIÇ • Hayri TEMİZEL<br>
+            Lütfiye TEMİZEL • Hüseyin TEMİZEL<br>
+            Şükran TEMİZEL • Abdurrahman Hayri TEMİZEL
+          </div>
+          <div class="memorial-footer" id="aboutMemorialFooter" style="margin-top:8px; font-size:12px; color:#fef08a;">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
+        </div>
+      </div>
+      <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
+        <button class="modal-close-btn" id="aboutModalCloseBtn" onclick="closeModal('aboutModal')">❌ Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- YARDIM MODAL -->
+  <div id="helpModal" class="modal-backdrop" onclick="closeModal('helpModal')">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title" id="helpModalTitle">Nasıl Oynanır?</h2>
+      </div>
+      <div class="modal-body">
+        <ul class="modal-list">
+          <li id="helpPlatform"><strong>StatMatik:</strong> Oyun, haber ve futbol sonuçlarını bir araya getiren entegre bir platformdur.</li>
+          <li id="helpGames"><strong>Oyunlar (MinMat/MinLan):</strong> Ekranda yer alan işlem kartlarını sonuçlarıyla eşleştirerek beyin jimnastiği yapabilirsiniz.</li>
+          <li id="helpFootball"><strong>CupMat (Yakında):</strong> Uluslararası turnuvaların ve milli maçların sonuçlarını, istatistiklerini ve puan durumlarını takip edebilirsiniz.</li>
+        </ul>
+      </div>
+      <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
+        <button class="modal-close-btn" id="helpModalCloseBtn" onclick="closeModal('helpModal')">❌ Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ===== DIL / LANGUAGE ===== */
+    let currentLang = localStorage.getItem("wc2026-locale") || localStorage.getItem("minmat_lang") || "tr";
+
+    const translations = {
+      tr: {
+        shareScore: "🔗 Skoru Paylaş (+%20 Bonus)", shareBonusActive: "⚡ %20 Paylaşım Bonusu Aktif!",
+        placeholder: "İsmini yaz...", start: "Başla", home: "🏠 Ana Sayfaya Dön", puanTablosu: "🏆 Puan Tablosu",
+        gameOver: "Oyun Bitti", score: "Puan", again: "🔄 Bir Daha", leaderAll: "🏆 En İyi Puanlar",
+        leaderAdd: "🏆 Topla Puanları", leaderSub: "🏆 Çıkar Puanları", leaderMul: "🏆 Çarp Puanları",
+        leaderDiv: "🏆 Böl Puanları", leaderMix: "🏆 4 İşlem Puanları", colName: "Ad", colDate: "Tarih/Saat",
+        colCat: "Kategori", colRound: "Tur", colScore: "Puan", modeAdd: "Toplama", modeSub: "Çıkarma",
+        modeMul: "Çarpma", modeDiv: "Bölme", modeMix: "4 İşlem", shortAdd: "Topla", shortSub: "Çıkar",
+        shortMul: "Çarp", shortDiv: "Böl", shortMix: "4 İşlem", round: "Tur", nameErr: "İsim en az 3 karakter olmalı",
+        guest: "Misafir", menu: "Menü", subtitle: "MinMat — Sayı Avı", all: "Hepsi",
+        authWarn: "⚠️ Global sıralamaya girmek ve ödül kazanmak için giriş yapmalısınız.", authVerified: "✓ Doğrulanmış Hesap",
+        authLoginBtn: "🔑 Giriş Yap / Google ile Bağlan", authSaveWarn: "⚠️ Giriş yapmadığınız için skorunuz dünya genel sıralamasına kaydedilemedi.",
+        signout: "Çıkış Yap",
+        cupmatSwitch: "🏠 StatMatik'e Dön",
+        saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!",
+        sysInfoTitle: "🔄 Süre Sistemi Güncellendi!",
+        sysInfoContent: "• MinMat süre birikme hatası giderilmiş ve <strong>Seviye 8 ve üzeri yanlış skorlar temizlenmiştir.</strong><br>• Ek süre kullanımı tek bir oyunda <strong>en fazla 10 saniye</strong> ile sınırlandırılmıştır.<br>• Yeni <strong>süre aktarımı (%50)</strong> ve artan süre bonuslarıyla artık Seviye 8 ve üzerine <strong>adil bir şekilde ulaşabilirsiniz!</strong>",
+        btnGuestText: "👤 Misafir Olarak Devam Et",
+        btnLoginMenuText: "🔑 Giriş Yap / Kayıt Ol",
+        guestMode: "👤 Misafir Modu:",
+        change: "Değiştir",
+        signin: "Giriş Yap",
+        about: "Hakkında",
+        help: "Yardım",
+        aboutDesc: "statmatik.com, zihinsel gelişimi, futbolu ve güncel dünyayı tek bir noktada buluşturan yenilikçi bir platformdur.",
+        aboutStudio: "🚀 Yapımcı Stüdyo",
+        aboutTeam: "💻 Geliştirici Ekibi",
+        aboutVersion: "📌 Sürüm",
+        aboutVersionValue: "v1.0.1.0 (Temmuz 2026)",
+        aboutMemorialTitle: "✨ Anılarına, Saygı Sevgi ve Rahmetle ✨",
+        aboutMemorialFooter: "Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.",
+        helpTitle: "Nasıl Oynanır?",
+        helpClose: "❌ Kapat",
+        helpPlatform: "<strong>StatMatik Platformu:</strong> Oyun, haber ve futbol verilerini bir araya getiren entegre bir sistemdir.", helpGames: "<strong>Oyunlar (MinMat/MinLan):</strong> İşlem kartlarını doğru sonuçlarla eşleştirerek seviye atlayın ve beyin jimnastiği yapın.", helpFootball: "<strong>CupMat (Yakında):</strong> Uluslararası kupa ve milli maç sonuçlarını, puan durumlarını buradan takip edebilirsiniz."
+      },
+      en: {
+        shareScore: "🔗 Share Score (+20% Bonus)", shareBonusActive: "⚡ 20% Share Bonus Active!",
+        placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
+        gameOver: "Game Over", score: "Score", again: "🔄 Play Again", leaderAll: "🏆 Best Scores",
+        leaderAdd: "🏆 Addition Scores", leaderSub: "🏆 Subtraction Scores", leaderMul: "🏆 Multiplication Scores",
+        leaderDiv: "🏆 Division Scores", leaderMix: "🏆 Mixed Scores", colName: "Name", colDate: "Date/Time",
+        colCat: "Category", colRound: "Round", colScore: "Score", modeAdd: "Addition", modeSub: "Subtraction",
+        modeMul: "Multiplication", modeDiv: "Division", modeMix: "Mixed", shortAdd: "Add", shortSub: "Sub",
+        shortMul: "Mul", shortDiv: "Div", shortMix: "Mixed", round: "Round", nameErr: "Name must be at least 3 characters",
+        guest: "Guest", menu: "Menu", subtitle: "MinMat — Number Hunt", all: "All",
+        authWarn: "⚠️ You must sign in to enter the global leaderboard and win prizes.", authVerified: "✓ Verified Account",
+        authLoginBtn: "🔑 Sign In / Connect with Google", authSaveWarn: "⚠️ Since you are not signed in, your score could not be saved to the global rankings.",
+        signout: "Sign Out",
+        cupmatSwitch: "🏠 Back to StatMatik",
+        saving: "⏳ Saving...", saved: "✓ Saved successfully!",
+        sysInfoTitle: "🔄 Time System Updated!",
+        sysInfoContent: "• MinMat time accumulation bug has been fixed and <strong>scores with Level 8+ have been cleaned up.</strong><br>• Extra time usage is limited to <strong>a maximum of 10 seconds</strong> per game.<br>• With the new <strong>time carry-over (50%)</strong> and scaling time bonuses, you can now <strong>fairly reach Level 8 and beyond!</strong>",
+        btnGuestText: "👤 Continue as Guest",
+        btnLoginMenuText: "🔑 Sign In / Sign Up",
+        guestMode: "👤 Guest Mode:",
+        change: "Change",
+        signin: "Sign In",
+        about: "About",
+        help: "Help",
+        aboutDesc: "This game is designed to develop mental calculation speed, mathematical intelligence, and strategic thinking in a fun way through the integration of CupMat & MinMat.",
+        aboutStudio: "🚀 Production Studio",
+        aboutTeam: "💻 Developer Team",
+        aboutVersion: "📌 Version",
+        aboutVersionValue: "v1.0.0 (May 2026)",
+        aboutMemorialTitle: "✨ In Loving Memory, with Respect and Grace ✨",
+        aboutMemorialFooter: "Dedicated to their cherished memory. May their souls rest in peace, and their names live forever.",
+        helpTitle: "How to Play?",
+        helpClose: "❌ Close",
+        helpPlatform: "<strong>StatMatik Platform:</strong> An integrated system combining games, news, and football data.", helpGames: "<strong>Games (MinMat/MinLan):</strong> Match operation cards with correct results to level up and exercise your brain.", helpFootball: "<strong>CupMat (Soon):</strong> Track international cup and national match results, and standings here."
+      },
+      de: {
+        shareScore: "🔗 Ergebnis teilen (+20% Bonus)", shareBonusActive: "⚡ 20% Teilungsbonus aktiv!",
+        placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
+        gameOver: "Spiel Vorbei", score: "Punkte", again: "🔄 Nochmal", leaderAll: "🏆 Beste Punkte",
+        leaderAdd: "🏆 Addition Punkte", leaderSub: "🏆 Subtraktion Punkte", leaderMul: "🏆 Multiplikation Punkte",
+        leaderDiv: "🏆 Division Punkte", leaderMix: "🏆 Gemischt Punkte", colName: "Name", colDate: "Datum/Uhrzeit",
+        colCat: "Kategorie", colRound: "Runde", colScore: "Punkte", modeAdd: "Addition", modeSub: "Subtraktion",
+        modeMul: "Multiplikation", modeDiv: "Division", modeMix: "Gemischt", shortAdd: "Add", shortSub: "Sub",
+        shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Runde", nameErr: "Name muss mindestens 3 Zeichen haben",
+        guest: "Gast", menu: "Menü", subtitle: "MinMat — Zahlenjagd", all: "Alle",
+        authWarn: "⚠️ Sie müssen sich anmelden, um an der globalen Bestenliste teilzunehmen.", authVerified: "✓ Verifiziertes Konto",
+        authLoginBtn: "🔑 Einloggen / Google-Verbindung", authSaveWarn: "⚠️ Da Sie nicht angemeldet sind, wurde Ihr Punktestand nicht in die globale Liste eingetragen.",
+        signout: "Abmelden",
+        cupmatSwitch: "🏆 Zu Cupmat (Neue Updates ansehen)",
+        saving: "⏳ Speichern...", saved: "✓ Erfolgreich gespeichert!",
+        sysInfoTitle: "🔄 System Aktualisiert!",
+        sysInfoContent: "• Neues <strong>E-Mail + Passwort</strong>-System ist aktiv<br>• <strong>Gäste</strong> können keine Belohnungen erhalten oder auf der Bestenliste erscheinen<br>• Die Sitzung wird zwischen <strong>MinMat &amp; CupMat</strong> geteilt<br>• Sie können die neuen Turnier-Updates auf CupMat ansehen!",
+        btnGuestText: "👤 Als Gast fortfahren",
+        btnLoginMenuText: "🔑 Einloggen / Registrieren",
+        guestMode: "👤 Gastmodus:",
+        change: "Ändern",
+        signin: "Einloggen",
+        about: "Über",
+        help: "Hilfe",
+        aboutDesc: "Dieses Spiel wurde entwickelt, um die mentale Rechengeschwindigkeit, die mathematische Intelligenz und das strategische Denken auf spielerische Weise durch die Integration von CupMat & MinMat zu fördern.",
+        aboutStudio: "🚀 Produktionsstudio",
+        aboutTeam: "💻 Entwicklerteam",
+        aboutVersion: "📌 Version",
+        aboutVersionValue: "v1.0.0 (Mai 2026)",
+        aboutMemorialTitle: "✨ In liebevollem Gedenken, mit Respekt und Gnade ✨",
+        aboutMemorialFooter: "Ihrem geschätzten Andenken gewidmet. Mögen ihre Seelen in Frieden ruhen und ihre Namen ewig leben.",
+        helpTitle: "Spielanleitung",
+        helpClose: "❌ Schließen",
+        helpPlatform: "<strong>StatMatik Plattform:</strong> Ein integriertes System aus Spielen, Nachrichten und Fußballdaten.", helpGames: "<strong>Spiele (MinMat/MinLan):</strong> Ordne Rechenkarten den richtigen Ergebnissen zu, um ein Level aufzusteigen.", helpFootball: "<strong>CupMat (Bald):</strong> Verfolgen Sie hier internationale Pokal- und Länderspielergebnisse sowie Tabellen."
+      },
+      fr: {
+        shareScore: "🔗 Partager le score (+20% bonus)", shareBonusActive: "⚡ Bonus de partage de 20% actif !",
+        placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
+        gameOver: "Jeu Terminé", score: "Score", again: "🔄 Rejouer", leaderAll: "🏆 Meilleurs Scores",
+        leaderAdd: "🏆 Scores Addition", leaderSub: "🏆 Scores Soustraction", leaderMul: "🏆 Scores Multiplication",
+        leaderDiv: "🏆 Scores Division", leaderMix: "🏆 Scores Mixte", colName: "Nom", colDate: "Date/Heure",
+        colCat: "Catégorie", colRound: "Tour", colScore: "Score", modeAdd: "Addition", modeSub: "Soustraction",
+        modeMul: "Multiplication", modeDiv: "Division", modeMix: "Mixte", shortAdd: "Add", shortSub: "Sub",
+        shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Tour", nameErr: "Le nom doit comporter au menos 3 caractères",
+        guest: "Invité", menu: "Menu", subtitle: "MinMat — Chasse aux Nombres", all: "Tous",
+        authWarn: "⚠️ Vous devez vous connecter pour figurer dans le classement mondial et gagner des prix.", authVerified: "✓ Compte Vérifié",
+        authLoginBtn: "🔑 Se connecter / Google", authSaveWarn: "⚠️ Comme vous n'êtes pas connecté, votre score n'a pas pu être enregistré.",
+        signout: "Déconnexion",
+        cupmatSwitch: "🏆 Aller à Cupmat (Voir les nouveautés)",
+        saving: "⏳ Enregistrement...", saved: "✓ Enregistré avec succès!",
+        sysInfoTitle: "🔄 Système Mis à Jour !",
+        sysInfoContent: "• Le nouveau système <strong>e-mail + mot de passe</strong> est actif<br>• Les <strong>invités</strong> ne peuvent pas gagner de récompenses ni figurer au classement<br>• La session est partagée entre <strong>MinMat &amp; CupMat</strong><br>• Vous pouvez consulter les nouvelles mises à jour du tournoi sur CupMat !",
+        btnGuestText: "👤 Continuer en tant qu'invité",
+        btnLoginMenuText: "🔑 Se connecter / S'inscrire",
+        guestMode: "👤 Mode invité :",
+        change: "Modifier",
+        signin: "Se connecter",
+        about: "À propos",
+        help: "Aide",
+        aboutDesc: "Ce jeu est conçu pour développer la vitesse de calcul mental, l'intelligence mathématique et la pensée stratégique de manière ludique grâce à l'intégration de CupMat & MinMat.",
+        aboutStudio: "🚀 Studio de Production",
+        aboutTeam: "💻 Équipe de Développement",
+        aboutVersion: "📌 Version",
+        aboutVersionValue: "v1.0.0 (Mai 2026)",
+        aboutMemorialTitle: "✨ À leur mémoire, avec respect, amour et grâce ✨",
+        aboutMemorialFooter: "Dédié à leur précieuse mémoire. Que leurs âmes reposent en paix et que leurs noms vivent pour toujours.",
+        helpTitle: "Comment jouer ?",
+        helpClose: "❌ Fermer",
+        helpPlatform: "<strong>Plateforme StatMatik :</strong> Un système intégré regroupant jeux, actualités et données sur le football.", helpGames: "<strong>Jeux (MinMat/MinLan) :</strong> Associez les cartes d'opération aux bons résultats pour monter en niveau.", helpFootball: "<strong>CupMat (Bientôt) :</strong> Suivez ici les résultats des coupes internationales et des matchs nationaux."
+      },
+      es: {
+        shareScore: "🔗 Compartir puntuación (+20% bono)", shareBonusActive: "⚡ ¡Bono de compartir de 20% activo!",
+        placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
+        gameOver: "Juego Terminado", score: "Puntuación", again: "🔄 Jugar de Nuevo", leaderAll: "🏆 Mejores Puntuaciones",
+        leaderAdd: "🏆 Puntos Suma", leaderSub: "🏆 Puntos Resta", leaderMul: "🏆 Puntos Multiplikación",
+        leaderDiv: "🏆 Puntos División", leaderMix: "🏆 Puntos Mixto", colName: "Nombre", colDate: "Fecha/Hora",
+        colCat: "Categoría", colRound: "Ronda", colScore: "Puntos", modeAdd: "Suma", modeSub: "Resta",
+        modeMul: "Multiplikación", modeDiv: "División", modeMix: "Mixto", shortAdd: "Suma", shortSub: "Resta",
+        shortMul: "Mult", shortDiv: "Div", shortMix: "Mix", round: "Ronda", nameErr: "El nombre debe tener al menos 3 caracteres",
+        guest: "Invitado", menu: "Menü", subtitle: "MinMat — Caza de Números", all: "Todos",
+        authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de classificação global y ganar premios.", authVerified: "✓ Cuenta Verificada",
+        authLoginBtn: "🔑 Iniciar Sesión / Google", authSaveWarn: "⚠️ Como no has iniciado sesión, tu puntuación no se pudo guardar la tabla global.",
+        signout: "Sign Out",
+        cupmatSwitch: "🏆 Ir a Cupmat (Ver nuevas actualizaciones)",
+        saving: "⏳ Guardando...", saved: "✓ Guardado con éxito!",
+        sysInfoTitle: "🔄 ¡Sistema Actualizado!",
+        sysInfoContent: "• El nuevo sistema de <strong>correo electrónico + contraseña</strong> está activo<br>• Los <strong>invitados</strong> no pueden ganar recompenses ni aparecer en la tabla de clasificación<br>• La sesión se comparte entre <strong>MinMat y CupMat</strong><br>• ¡Puedes revisar las nuevas actualizaciones del torneo en CupMat!",
+        btnGuestText: "👤 Continuar como invitado",
+        btnLoginMenuText: "🔑 Iniciar sesión / Registrarse",
+        guestMode: "👤 Modo invitado:",
+        change: "Cambiar",
+        signin: "Iniciar sesión",
+        about: "Acerca de",
+        help: "Ayuda",
+        aboutDesc: "Este juego está diseñado para desarrollar la velocidad del cálculo mental, la inteligencia matemática y el pensamiento estratégico de una manera divertida a través de la integración de CupMat y MinMat.",
+        aboutStudio: "🚀 Estudio de Producción",
+        aboutTeam: "💻 Equipo de Desarrollo",
+        aboutVersion: "📌 Versión",
+        aboutVersionValue: "v1.0.0 (Mayo 2026)",
+        aboutMemorialTitle: "✨ En memoria amorosa, con respeto y gracia ✨",
+        aboutMemorialFooter: "Dedicado a su preciada memoria. Que sus almas descansen en paz y sus nombres vivan para siempre.",
+        helpTitle: "¿Cómo jugar?",
+        helpClose: "❌ Cerrar",
+        helpPlatform: "<strong>Plataforma StatMatik:</strong> Un sistema integrado que combina juegos, noticias y datos de fútbol.", helpGames: "<strong>Juegos (MinMat/MinLan):</strong> Empareja tarjetas de operación con los resultados correctos para subir de nivel.", helpFootball: "<strong>CupMat (Pronto):</strong> Sigue los resultados de copas internacionales y partidos nacionales aquí."
+      },
+      pt: {
+        shareScore: "🔗 Compartilhar pontuação (+20% bônus)", shareBonusActive: "⚡ Bônus de compartilhamento de 20% ativo!",
+        placeholder: "Digite seu nome...", start: "Iniciar", home: "🏠 Voltar ao Início", puanTablosu: "🏆 Classificação",
+        gameOver: "Fim de Jogo", score: "Pontos", again: "🔄 Jogar Novamente", leaderAll: "🏆 Melhores Pontuações",
+        leaderAdd: "🏆 Pontos de Soma", leaderSub: "🏆 Pontos de Subtração", leaderMul: "🏆 Pontos de Multiplicação",
+        leaderDiv: "🏆 Pontos de Divisão", leaderMix: "🏆 Pontos Mistos", colName: "Nome", colDate: "Data/Hora",
+        colCat: "Categoria", colRound: "Rodada", colScore: "Pontos", modeAdd: "Adição", modeSub: "Subtração",
+        modeMul: "Multiplicação", modeDiv: "Divisão", modeMix: "Misto", shortAdd: "Soma", shortSub: "Sub",
+        shortMul: "Mult", shortDiv: "Div", shortMix: "Misto", round: "Rodada", nameErr: "O nome deve ter pelo menos 3 caracteres",
+        guest: "Convidado", menu: "Menu", subtitle: "MinMat — Caça aos Números", all: "Todos",
+        authWarn: "⚠️ Você deve fazer login para entrar no ranking global e ganhar prêmios.", authVerified: "✓ Conta Verificada",
+        authLoginBtn: "🔑 Entrar / Conectar com o Google", authSaveWarn: "⚠️ Como você não está conectado, sua pontuação não pôde ser salva na classificação global.",
+        signout: "Sair",
+        cupmatSwitch: "🏆 Ir para o Cupmat (Ver Novas Atualizações)",
+        saving: "⏳ Salvando...", saved: "✓ Salvo com sucesso!",
+        sysInfoTitle: "🔄 Sistema Atualizado!",
+        sysInfoContent: "• Novo sistema de <strong>e-mail + senha</strong> está ativo<br>• <strong>Convidados</strong> não podem ganhar recompensas ou aparecer no ranking<br>• A sessão é compartilhada entre <strong>MinMat e CupMat</strong><br>• Você pode revisar as novas updates no CupMat!",
+        btnGuestText: "👤 Continuar como convidado",
+        btnLoginMenuText: "🔑 Entrar / Cadastrar-se",
+        guestMode: "👤 Modo convidado:",
+        change: "Alterar",
+        signin: "Entrar",
+        about: "Sobre",
+        help: "Ajuda",
+        aboutDesc: "Este jogo foi projetado para desenvolver a velocidade do cálculo mental, a inteligência matemática e o pensamento estratégico de forma divertida por meio da integração do CupMat & MinMat.",
+        aboutStudio: "🚀 Estúdio de Produção",
+        aboutTeam: "💻 Equipe de Desenvolvimento",
+        aboutVersion: "📌 Versão",
+        aboutVersionValue: "v1.0.0 (Maio 2026)",
+        aboutMemorialTitle: "✨ Em memória amorosa, com respeito e graça ✨",
+        aboutMemorialFooter: "Dedicado à sua querida memória. Que suas almas descansem em paz e seus nomes vivam para sempre.",
+        helpTitle: "Como jogar?",
+        helpClose: "❌ Fechar",
+        helpPlatform: "<strong>Plataforma StatMatik:</strong> Um sistema integrado que combina jogos, notícias e dados de futebol.", helpGames: "<strong>Jogos (MinMat/MinLan):</strong> Combine cartas de operação com os resultados corretos para subir de nível.", helpFootball: "<strong>CupMat (Em breve):</strong> Acompanhe os resultados das taças internacionais e partidas nacionais aqui."
+      },
+      ar: {
+        shareScore: "🔗 مشاركة النتيجة (مكافأة +20%)", shareBonusActive: "⚡ مكافأة المشاركة 20% نشطة!",
+        placeholder: "أدخل اسمك...", start: "ابدأ", home: "🏠 العودة للرئيسية", puanTablosu: "🏆 جدول الترتيب",
+        gameOver: "انتهت اللعبة", score: "النقاط", again: "🔄 العب مجدداً", leaderAll: "🏆 أفضل النقاط",
+        leaderAdd: "🏆 نقاط الجمع", leaderSub: "🏆 نقاط الطرح", leaderMul: "🏆 نقاط الضرب",
+        leaderDiv: "🏆 نقاط القسمة", leaderMix: "🏆 النقاط المشتركة", colName: "الاسم", colDate: "التاريخ/الوقت",
+        colCat: "الفئة", colRound: "الجولة", colScore: "النقاط", modeAdd: "الجمع", modeSub: "الطرح",
+        modeMul: "الضرب", modeDiv: "القسمة", modeMix: "العمليات الأربع", shortAdd: "جمع", shortSub: "طرح",
+        shortMul: "ضرب", shortDiv: "قسمة", shortMix: "مشترك", round: "جولة", nameErr: "يجب أن يكون الاسم 3 أحرف على الأقل",
+        guest: "ضيف", menu: "القائمة", subtitle: "MinMat — صيد الأرقام", all: "الكل",
+        authWarn: "⚠️ يجب عليك تسجيل الدخول للدخول في جدول الترتيب العالمي والفوز بالجوائز.", authVerified: "✓ حساب موثق",
+        authLoginBtn: "🔑 تسجيل الدخول / الربط مع Google", authSaveWarn: "⚠️ نظراً لعدم تسجيل دخولك، لم يتم حفظ نتيجتك في الترتيب العالمي.",
+        signout: "تسجيل الخروج",
+        cupmatSwitch: "🏆 الذهاب إلى Cupmat (تحقق من التحديثات الجديدة)",
+        saving: "⏳ جاري الحفظ...", saved: "✓ تم الحفظ بنجاح!",
+        sysInfoTitle: "🔄 تم تحديث النظام!",
+        sysInfoContent: "• نظام <strong>البريد الإلكتروني + كلمة المرور</strong> الجديد نشط<br>• لا يمكن <strong>للضيوف</strong> كسب مكافآت أو الظهور في جدول الترتيب<br>• الجلسة مشتركة بين <strong>MinMat و CupMat</strong><br>• يمكنك مراجعة تحديثات البطولة الجديدة على CupMat!",
+        btnGuestText: "👤 المتابعة كضيف",
+        btnLoginMenuText: "🔑 تسجيل الدخول / التسجيل",
+        guestMode: "👤 وضع الضيف:",
+        change: "تغيير",
+        signin: "تسجيل الدخول",
+        about: "حول",
+        help: "مساعدة",
+        aboutDesc: "تم تصميم هذه اللعبة لتطوير سرعة الحساب الذهني، والذكاء الرياضي، والتفكير الاستراتيجي بطريقة ممتعة من خلال التكامل بين CupMat و MinMat.",
+        aboutStudio: "🚀 استوديو الإنتاج",
+        aboutTeam: "💻 فريق التطوير",
+        aboutVersion: "📌 الإصدار",
+        aboutVersionValue: "v1.0.0 (مايو 2026)",
+        aboutMemorialTitle: "✨ في ذكرى محبة، مع الاحترام والرحمة ✨",
+        aboutMemorialFooter: "مكرس لذكراهم العزيزة. لتسترح أرواحهم بسلام، ولتعش أسماؤهم إلى الأبد.",
+        helpTitle: "كيف تلعب؟",
+        helpClose: "❌ إغلاق",
+        helpPlatform: "<strong>منصة StatMatik:</strong> نظام متكامل يجمع بين الألعاب والأخبار وبيانات كرة القدم.", helpGames: "<strong>الألعاب (MinMat/MinLan):</strong> قم بمطابقة بطاقات العمليات مع النتائج الصحيحة للارتقاء في المستوى.", helpFootball: "<strong>CupMat (قريباً):</strong> تابع نتائج الكؤوس الدولية والمباريات الوطنية هنا."
+      },
+      ko: {
+        shareScore: "🔗 점수 공유하기 (+20% 보너스)", shareBonusActive: "⚡ 20% 공유 보너스 활성화!",
+        placeholder: "이름을 입력하세요...", start: "시작", home: "🏠 홈으로 돌아가기", puanTablosu: "🏆 순위표",
+        gameOver: "게임 오버", score: "점수", again: "🔄 다시 하기", leaderAll: "🏆 최고 점수",
+        leaderAdd: "🏆 덧셈 점수", leaderSub: "🏆 뺄셈 점수", leaderMul: "🏆 곱셈 점수",
+        leaderDiv: "🏆 나눗셈 점수", leaderMix: "🏆 혼합 점수", colName: "이름", colDate: "날짜/시간",
+        colCat: "카테고리", colRound: "라운드", colScore: "점수", modeAdd: "덧셈", modeSub: "뺄셈",
+        modeMul: "곱셈", modeDiv: "나눗셈", modeMix: "혼합 계산", shortAdd: "더하기", shortSub: "빼기",
+        shortMul: "곱하기", shortDiv: "나누기", shortMix: "혼합", round: "라운드", nameErr: "이름은 최소 3글자 이상이어야 합니다",
+        guest: "게스트", menu: "메뉴", subtitle: "MinMat — 숫자 사냥", all: "전체",
+        authWarn: "⚠️ 글로벌 순위표에 등록되고 상을 받으려면 로그인해야 합니다.", authVerified: "✓ 인증된 계정",
+        authLoginBtn: "🔑 로그인 / Google 계정 연결", authSaveWarn: "⚠️ 로그인하지 않았기 때문에 점수가 글로벌 순위표에 저장되지 않았습니다.",
+        signout: "로그아웃",
+        cupmatSwitch: "🏆 Cupmat으로 이동 (새 업데이트 확인)",
+        saving: "⏳ 저장 중...", saved: "✓ 성공적으로 저장되었습니다!",
+        sysInfoTitle: "🔄 시스템 업데이트 완료!",
+        sysInfoContent: "• 새로운 <strong>이메일 + 비밀번호</strong> 시스템 활성화<br>• <strong>게스트</strong>는 보상을 받거나 순위표에 표시되지 않습니다<br>• <strong>MinMat &amp; CupMat</strong> 간에 세션이 공유됩니다<br>• CupMat에서 새로운 토너먼트 업데이트를 확인하세요!",
+        btnGuestText: "👤 게스트로 계속하기",
+        btnLoginMenuText: "🔑 로그인 / 회원가입",
+        guestMode: "👤 게스트 모드:",
+        change: "변경",
+        signin: "로그인",
+        about: "정보",
+        help: "도움말",
+        aboutDesc: "이 게임은 CupMat 및 MinMat의 통합을 통해 재미있는 방식으로 암산 속도, 수학적 지능 및 전략적 사고를 개발하도록 설계되었습니다.",
+        aboutStudio: "🚀 제작 스튜디오",
+        aboutTeam: "💻 개발자 팀",
+        aboutVersion: "📌 버전",
+        aboutVersionValue: "v1.0.0 (2026년 5월)",
+        aboutMemorialTitle: "✨ 존경과 사랑, 은혜를 담아 그들의 기억을 기립니다 ✨",
+        aboutMemorialFooter: "그들의 소중한 기억에 바칩니다. 영혼이 평안히 쉬기를, 그리고 그들의 이름이 영원히 기억되기를.",
+        helpTitle: "게임 방법",
+        helpClose: "❌ 닫기",
+        helpPlatform: "<strong>StatMatik 플랫폼:</strong> 게임, 뉴스 및 축구 데이터를 결합한 통합 시스템입니다.", helpGames: "<strong>게임 (MinMat/MinLan):</strong> 연산 카드를 올바른 결과와 일치시켜 레벨을 올리세요.", helpFootball: "<strong>CupMat (곧):</strong> 여기서 국제 컵 및 국가 대표팀 경기 결과를 확인하세요."
+      },
+      it: {
+        shareScore: "🔗 Condividi punteggio (+20% bonus)", shareBonusActive: "⚡ Bonus di condivisione del 20% attivo!",
+        placeholder: "Inserisci il tuo nome...", start: "Inizia", home: "🏠 Torna alla Home", puanTablosu: "🏆 Classifica",
+        gameOver: "Gioco Terminato", score: "Punteggio", again: "🔄 Gioca Ancora", leaderAll: "🏆 Migliori Punteggi",
+        leaderAdd: "🏆 Punteggi Addizione", leaderSub: "🏆 Punteggi Sottrazione", leaderMul: "🏆 Punteggi Moltiplicazione",
+        leaderDiv: "🏆 Punteggi Divisione", leaderMix: "🏆 Punteggi Misto", colName: "Nome", colDate: "Data/Ora",
+        colCat: "Categoria", colRound: "Turno", colScore: "Punteggio", modeAdd: "Addizione", modeSub: "Sottrazione",
+        modeMul: "Moltiplicazione", modeDiv: "Divisione", modeMix: "Misto", shortAdd: "Add", shortSub: "Sot",
+        shortMul: "Mol", shortDiv: "Div", shortMix: "Misto", round: "Turno", nameErr: "Il nome deve avere almeno 3 caratteri",
+        guest: "Ospite", menu: "Menu", subtitle: "MinMat — Caccia ai Numeri", all: "Tutti",
+        authWarn: "⚠️ Devi accedere per entrare nella classifica globale e vincere premi.", authVerified: "✓ Account Verificato",
+        authLoginBtn: "🔑 Accedi / Connettiti con Google", authSaveWarn: "⚠️ Poiché non hai effettuato l'accesso, il tuo punteggio non è stato salvato nella classifica globale.",
+        signout: "Disconnetti",
+        cupmatSwitch: "🏆 Vai a Cupmat (Vedi Nuovi Aggiornamenti)",
+        saving: "⏳ Salvataggio...", saved: "✓ Salvato con successo!",
+        sysInfoTitle: "🔄 Sistema Aggiornato!",
+        sysInfoContent: "• Il nuovo sistema <strong>e-mail + password</strong> è attivo<br>• Gli <strong>ospiti</strong> non possono guadagnare premi o apparire in classifica<br>• La sessione è condivisa tra <strong>MinMat e CupMat</strong><br>• Puoi visualizzare i nuovi aggiornamenti del torneo su CupMat!"
+      }
+    };
+
+    function goToCupmat() {
+      if (window.self !== window.top) {
+        window.top.location.href = "/";
+      } else {
+        window.location.href = "/";
+      }
+    }
+
+    function t(key) {
+      let lang = translations[currentLang] || translations["tr"];
+      return lang[key] || translations["tr"][key] || key;
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem("wc2026-locale", lang);
+      localStorage.setItem("minmat_lang", lang);
+      applyLang();
+    }
+
+    function applyLang() {
+      let pi = document.getElementById("playerInput");
+      if (pi) pi.placeholder = t("placeholder");
+      let bs = document.getElementById("btnStart");
+      if (bs) bs.innerText = t("start");
+      let bh = document.getElementById("btnHome");
+      if (bh) bh.innerText = t("home");
+      let bcs = document.getElementById("btnCupmatSwitch");
+      if (bcs) bcs.innerText = t("cupmatSwitch");
+      let blm = document.getElementById("btnLeaderboardMenu");
+      if (blm) blm.innerText = t("puanTablosu");
+      let blg = document.getElementById("btnLeaderboardGame");
+      if (blg) blg.innerText = t("puanTablosu");
+      let go = document.getElementById("gameOverTitle");
+      if (go) go.innerText = t("gameOver");
+      let ra = document.getElementById("btnRetry");
+      if (ra) ra.innerText = t("again");
+      let bss = document.getElementById("btnShareScoreText");
+      if (bss) bss.innerText = t("shareScore");
+
+      let sit = document.getElementById("sysInfoTitle");
+      if (sit) sit.innerText = t("sysInfoTitle");
+      let sic = document.getElementById("sysInfoContent");
+      if (sic) sic.innerHTML = t("sysInfoContent");
+
+      let hmt = document.getElementById("helpModalTitle");
+      if (hmt) {
+        hmt.innerText = t("helpTitle");
+      }
+      let hmcb = document.getElementById("helpModalCloseBtn");
+      if (hmcb) {
+        hmcb.innerText = t("helpClose");
+      }
+      let amcb = document.getElementById("aboutModalCloseBtn");
+      if (amcb) {
+        amcb.innerText = t("helpClose");
+      }
+
+      let hsm = document.getElementById("helpSelectMode");
+      if (hsm) hsm.innerHTML = t("helpSelectMode");
+      let hm = document.getElementById("helpMatch");
+      if (hm) hm.innerHTML = t("helpMatch");
+      let hlu = document.getElementById("helpLevelUp");
+      if (hlu) hlu.innerHTML = t("helpLevelUp");
+      let hll = document.getElementById("helpLevelLocks");
+      if (hll) hll.innerHTML = t("helpLevelLocks");
+
+      let ad = document.getElementById("aboutDesc");
+      if (ad) ad.innerText = t("aboutDesc");
+      let ast = document.getElementById("aboutStudioTitle");
+      if (ast) ast.innerText = t("aboutStudio");
+      let att = document.getElementById("aboutTeamTitle");
+      if (att) att.innerText = t("aboutTeam");
+      let avt = document.getElementById("aboutVersionTitle");
+      if (avt) avt.innerText = t("aboutVersion");
+      let avv = document.getElementById("aboutVersionVal");
+      if (avv) avv.innerText = t("aboutVersionValue");
+      let amt = document.getElementById("aboutMemorialTitle");
+      if (amt) amt.innerText = t("aboutMemorialTitle");
+      let amf = document.getElementById("aboutMemorialFooter");
+      if (amf) amf.innerText = t("aboutMemorialFooter");
+
+      let bab = document.getElementById("btnAbout");
+      if (bab) bab.title = t("about");
+      let bhb = document.getElementById("btnHelp");
+      if (bhb) bhb.title = t("help");
+
+      let bg = document.getElementById("btnGuest");
+      if (bg) bg.innerText = t("btnGuestText");
+      let blm2 = document.getElementById("btnLoginMenu");
+      if (blm2) blm2.innerText = t("btnLoginMenuText");
+
+      let ms = document.getElementById("menuSub");
+      if (ms) ms.innerText = t("subtitle");
+
+
+      let langUp = currentLang.toUpperCase();
+      let gl = document.getElementById("gameLangLabel");
+      if (gl) gl.innerText = langUp;
+      let gol = document.getElementById("goLangLabel");
+      if (gol) gol.innerText = langUp;
+
+      let gs = document.getElementById("gameSubtitle");
+      if (gs) gs.innerText = t("subtitle");
+      let mt = document.getElementById("modeText");
+      if (mt) mt.innerText = "🎯 " + shortModeName(gameMode);
+
+      // Update dropdown button contents and active option classes
+      const langNames = {
+        tr: "Türkçe",
+        en: "English",
+        de: "Deutsch",
+        fr: "Français",
+        es: "Español",
+        pt: "Português",
+        ar: "العربية",
+        ko: "한국어",
+        it: "Italiano"
+      };
+      const langFlags = {
+        tr: "🇹🇷",
+        en: "🇬🇧",
+        de: "🇩🇪",
+        fr: "🇫🇷",
+        es: "🇪🇸",
+        pt: "🇧🇷",
+        ar: "🇸🇦",
+        ko: "🇰🇷",
+        it: "🇮🇹"
+      };
+
+      const menuBtn = document.getElementById("menuLangDropdownBtn");
+      if (menuBtn) {
+        menuBtn.innerHTML = `<span class="langFlagActive">${langFlags[currentLang] || "🇹🇷"}</span> <span class="langLabelActive">${langNames[currentLang] || "Türkçe"}</span> <span class="dropdownArrow">▼</span>`;
+      }
+
+      const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
+      dropdowns.forEach(dId => {
+        const el = document.getElementById(dId);
+        if (el) {
+          el.querySelectorAll("a").forEach(a => {
+            if (a.getAttribute("onclick") && a.getAttribute("onclick").includes(`'${currentLang}'`)) {
+              a.classList.add("activeLangOption");
+            } else {
+              a.classList.remove("activeLangOption");
+            }
+          });
+        }
+      });
+
+      let sl = document.getElementById("scoreLabel");
+      if (sl) sl.innerText = t("score");
+      let fa = document.getElementById("btnFilterAll");
+      if (fa) fa.innerText = t("all");
+
+      if (document.getElementById("gameOverScreen").classList.contains("active")) {
+        renderLeaderboard();
+      }
+      updateAuthUI();
+    }
+
+    let userSession = { isAuthenticated: false };
+    let isGuestMode = false;
+    let guestUsername = "";
+
+    function getNextGuestCounter() {
+      const stored = localStorage.getItem("minmat_guest_counter");
+      let counter = stored ? parseInt(stored, 10) : 0;
+      return counter;
+    }
+
+    function incrementGuestCounter() {
+      const current = getNextGuestCounter();
+      const next = current + 1;
+      localStorage.setItem("minmat_guest_counter", next.toString());
+      return next;
+    }
+
+    function generateGuestUsername() {
+      let stored = getStoredGuestUsername();
+      if (stored) {
+        return stored;
+      }
+      
+      const counter = getNextGuestCounter();
+      const username = "KaraKartal" + (1923 + counter);
+      storeGuestUsername(username);
+      incrementGuestCounter();
+      return username;
+    }
+
+    function getStoredGuestUsername() {
+      return localStorage.getItem("minmat_guest_username");
+    }
+
+    function storeGuestUsername(username) {
+      localStorage.setItem("minmat_guest_username", username);
+    }
+
+    function continueAsGuest() {
+      let stored = getStoredGuestUsername();
+      if (!stored) {
+        stored = generateGuestUsername();
+        storeGuestUsername(stored);
+      }
+      guestUsername = stored;
+      isGuestMode = true;
+      
+      const input = document.getElementById("playerInput");
+      if (input) {
+        input.value = guestUsername;
+      }
+      
+      startGame();
+    }
+
+    async function getClerkToken() {
+      console.log("=== getClerkToken TETİKLENDİ ===");
+      // 1. Eğer iframe içindeysek parent pencereden güncel token isteyelim (Oturum paylaşımı için en güvenilir yol)
+      if (window.self !== window.top) {
+        try {
+          console.log("[IFRAME] Parent pencereden token talep ediliyor...");
+          const tokenFromParent = await new Promise((resolve) => {
+            const channel = new MessageChannel();
+            const timeoutId = setTimeout(() => {
+              console.warn("[IFRAME] Parent token talebi zaman aşımına uğradı.");
+              resolve(null);
+            }, 2000);
+            channel.port1.onmessage = (event) => {
+              clearTimeout(timeoutId);
+              resolve(event.data.token);
+            };
+            window.parent.postMessage({ type: "GET_CLERK_TOKEN" }, "*", [channel.port2]);
+          });
+          if (tokenFromParent) {
+            console.log("[IFRAME] Parent pencereden token başarıyla alındı.");
+            return tokenFromParent;
+          }
+        } catch (e) {
+          console.error("[IFRAME] Parent pencereden token istenirken hata:", e);
+        }
+      }
+
+      // 2. Yoksa (yerel test veya parent yanıt vermedi) kendi içindeki Clerk SDK'yı dene
+      try {
+        if (window.Clerk && window.Clerk.session) {
+          return await window.Clerk.session.getToken();
+        }
+      } catch (e) {
+        console.error("Error getting Clerk token locally:", e);
+      }
+      return null;
+    }
+
+    async function checkAuthSession() {
+      try {
+        const token = await getClerkToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        
+        const response = await fetch("/api/auth/session", {
+          credentials: "include",
+          headers
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Session API response:", data);
+          if (data.isAuthenticated && data.userSession) {
+            userSession = {
+              isAuthenticated: true,
+              ...data.userSession
+            };
+            console.log("kullanıcı giriş yaptı: " + (userSession.displayName || userSession.username || userSession.email || "Adsız"));
+            
+            // Sync levels and unlocked states: merge local progress with database values
+            let hasLocalUpdates = false;
+
+            if (userSession.minmatMaxLevels) {
+              let modes = ["add", "sub", "mul", "div", "mix"];
+              modes.forEach(m => {
+                let dbVal = userSession.minmatMaxLevels[m] || 1;
+                let localVal = parseInt(localStorage.getItem("minmat_maxLevel_" + m)) || 1;
+                if (localVal > dbVal) {
+                  hasLocalUpdates = true;
+                }
+                localStorage.setItem("minmat_maxLevel_" + m, Math.max(dbVal, localVal));
+              });
+            }
+
+            if (userSession.minmatUnlockedModes) {
+              let unlockModes = ["sub", "mul", "div", "mix"];
+              unlockModes.forEach(m => {
+                let dbVal = userSession.minmatUnlockedModes[m] === true;
+                let localVal = localStorage.getItem("minmat_unlocked_" + m) === "true";
+                if (localVal && !dbVal) {
+                  hasLocalUpdates = true;
+                }
+                localStorage.setItem("minmat_unlocked_" + m, (dbVal || localVal) ? "true" : "false");
+              });
+            }
+
+            updateModeButtons();
+
+            if (hasLocalUpdates) {
+              console.log("[IFRAME] Yerelde daha yüksek ilerleme tespit edildi, veritabanı güncelleniyor...");
+              submitProgressToDb();
+            }
+          } else {
+            userSession = { isAuthenticated: false };
+            console.log("kullanıcı çıkış yaptı");
+          }
+        } else {
+          userSession = { isAuthenticated: false };
+          console.log("kullanıcı çıkış yaptı");
+        }
+      } catch (e) {
+        console.error("Error checking session:", e);
+        userSession = { isAuthenticated: false };
+        console.log("kullanıcı çıkış yaptı");
+      }
+      updateAuthUI();
+    }
+
+    async function submitProgressToDb() {
+      if (!userSession.isAuthenticated) return;
+      try {
+        const token = await getClerkToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        
+        const levels = {
+          add: getMaxLevel("add"),
+          sub: getMaxLevel("sub"),
+          mul: getMaxLevel("mul"),
+          div: getMaxLevel("div"),
+          mix: getMaxLevel("mix")
+        };
+        const unlocked = {
+          sub: localStorage.getItem("minmat_unlocked_sub") === "true",
+          mul: localStorage.getItem("minmat_unlocked_mul") === "true",
+          div: localStorage.getItem("minmat_unlocked_div") === "true",
+          mix: localStorage.getItem("minmat_unlocked_mix") === "true"
+        };
+        
+        const response = await fetch("/api/profile/minmat-progress", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ levels, unlocked })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            if (data.minmatMaxLevels) {
+              userSession.minmatMaxLevels = data.minmatMaxLevels;
+            }
+            if (data.minmatUnlockedModes) {
+              userSession.minmatUnlockedModes = data.minmatUnlockedModes;
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Error saving progress to DB:", e);
+      }
+    }
+
+    async function updateAuthUI() {
+      if (!initialStartDone) {
+        initialStartDone = true;
+        if (!userSession.isAuthenticated) {
+          try {
+            let res = await fetch("/api/profile/guest-name?lang=" + currentLang);
+            let data = await res.json();
+            if (data && data.guestName) {
+              guestUsername = data.guestName;
+              isGuestMode = true;
+            }
+          } catch(e) {}
+        }
+        setTimeout(startGame, 100);
+      }
+      let input = document.getElementById("playerInput");
+      let authContainer = document.getElementById("authContainer");
+      let authSaveContainer = document.getElementById("authSaveContainer");
+      let btnGuest = document.getElementById("btnGuest");
+      let btnLoginMenu = document.getElementById("btnLoginMenu");
+      let btnStart = document.getElementById("btnStart");
+      let minmatAuthPanel = document.getElementById("minmatAuthPanel");
+      
+      if (!input || !authContainer || !minmatAuthPanel) return;
+
+      // Sağ üst köşedeki auth panelini güncelle
+      if (userSession.isAuthenticated) {
+        const displayName = userSession.displayName || userSession.username || "Kullanıcı";
+        
+        // Clerk user ID'sini TÜM localStorage anahtarlarına kaydet!
+        if (userSession.userId) {
+          localStorage.setItem('clerk_user_id', userSession.userId);
+          localStorage.setItem('clerkUserId', userSession.userId);
+          localStorage.setItem('userId', userSession.userId);
+          localStorage.setItem('user_id', userSession.userId);
+          console.log("[FRONTEND updateAuthUI] Clerk user ID'si tüm localStorage anahtarlarına kaydedildi:", userSession.userId);
+        }
+        
+        minmatAuthPanel.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px; padding:6px 12px; background:rgba(6,11,20,0.8); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.1); border-radius:999px; cursor:default;">
+            <span style="font-size:13px; font-weight:700; color:#4ade80;">${displayName}</span>
+            <button onclick="redirectToSignOut()" style="background:transparent; border:none; color:#ef4444; font-size:12px; cursor:pointer; font-weight:700; padding:0; margin-left:4px;">${t("signout").split(" ")[0]}</button>
+          </div>
+        `;
+      } else {
+        minmatAuthPanel.innerHTML = `
+          <button onclick="openClerkSignIn()" style="display:flex; align-items:center; gap:6px; padding:8px 14px; background:linear-gradient(135deg, rgba(34,197,94,0.2), rgba(59,130,246,0.2)); border:1px solid rgba(74,222,128,0.4); color:white; border-radius:999px; font-size:13px; font-weight:800; cursor:pointer;">
+            <span>🔑</span>
+            <span>${t("signin")}</span>
+          </button>
+        `;
+        
+        // LocalStorage'daki user ID'sini temizle
+        localStorage.removeItem('clerk_user_id');
+      }
+
+      if (userSession.isAuthenticated) {
+        isGuestMode = false;
+        const displayName = userSession.displayName || userSession.username || "KaraKartal1923";
+        if (document.activeElement !== input) {
+          input.value = displayName;
+        }
+        input.readOnly = false;
+        input.disabled = false;
+        input.style.opacity = "1";
+        input.style.cursor = "text";
+        
+        const pic = document.getElementById("playerInputContainer");
+        if (pic) pic.style.display = "none";
+        
+        if (btnGuest) btnGuest.style.display = "none";
+        if (btnLoginMenu) btnLoginMenu.style.display = "none";
+        if (btnStart) btnStart.style.display = "block";
+        
+        renderBoostSelection();
+        
+        authContainer.innerHTML = `
+          <div class="authStatusVerified">
+            <span>${t("authVerified")}: ${displayName}</span>
+            <button onclick="redirectToSignOut()" style="background:transparent; border:none; color:#ef4444; text-decoration:underline; font-size:11px; cursor:pointer; font-weight:bold; margin-left:8px; padding:0;">[${t("signout")}]</button>
+          </div>
+        `;
+        if (authSaveContainer) authSaveContainer.innerHTML = "";
+      } else if (isGuestMode && guestUsername) {
+        input.value = guestUsername;
+        input.readOnly = true;
+        input.disabled = true;
+        input.style.opacity = "0.75";
+        input.style.cursor = "not-allowed";
+        
+        const pic = document.getElementById("playerInputContainer");
+        if (pic) pic.style.display = "none";
+        
+        if (btnGuest) btnGuest.style.display = "none";
+        if (btnLoginMenu) btnLoginMenu.style.display = "block";
+        
+        const container = document.getElementById("boostSelectionContainer");
+        if (container) container.style.display = "none";
+        
+        authContainer.innerHTML = `
+          <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.35); padding: 10px 12px; border-radius: 12px; color: #a5b4fc; font-size: 12px; font-weight: 700;">
+            ${t("guestMode")} ${guestUsername}
+            <button onclick="exitGuestMode()" style="background:transparent; border:none; color:#f87171; text-decoration:underline; font-size:11px; cursor:pointer; font-weight:bold; margin-left:8px; padding:0;">[${t("change")}]</button>
+          </div>
+        `;
+        if (authSaveContainer) {
+          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">${t("authSaveWarn")}</div>`;
+        }
+      } else {
+        isGuestMode = false;
+        input.readOnly = false;
+        input.disabled = false;
+        input.style.opacity = "1";
+        input.style.cursor = "text";
+        
+        const pic = document.getElementById("playerInputContainer");
+        if (pic) pic.style.display = "flex";
+        
+        if (btnGuest) btnGuest.style.display = "block";
+        if (btnLoginMenu) btnLoginMenu.style.display = "block";
+        
+        const container = document.getElementById("boostSelectionContainer");
+        if (container) container.style.display = "none";
+        
+        authContainer.innerHTML = `
+          <div class="authStatusWarn">${t("authWarn")}</div>
+        `;
+        if (authSaveContainer) {
+          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">${t("authSaveWarn")}</div>`;
+        }
+        
+        const storedGuest = getStoredGuestUsername();
+        if (storedGuest) {
+          input.value = storedGuest;
+        }
+      }
+      checkInput();
+      updateLobbyBadge();
+    }
+
+    function exitGuestMode() {
+      isGuestMode = false;
+      guestUsername = "";
+      updateAuthUI();
+    }
+
+    function openClerkSignIn() {
+      if (window.self !== window.top) {
+        redirectToLogin();
+      } else if (window.Clerk && window.Clerk.openSignIn) {
+        window.Clerk.openSignIn();
+      } else {
+        redirectToLogin();
+      }
+    }
+
+    function redirectToLogin() {
+      const params = new URLSearchParams();
+      params.set("fresh", "1");
+      const redirectUrl = (window.self !== window.top) ? "/minmat" : window.location.pathname;
+      params.set("redirect_url", redirectUrl);
+      if (window.self !== window.top) {
+        window.top.location.href = `/sign-in?${params.toString()}`;
+      } else {
+        window.location.href = `/sign-in?${params.toString()}`;
+      }
+    }
+
+    function redirectToSignOut() {
+      console.log("kullanıcı çıkış yaptı");
+      const currentPath = (window.self !== window.top) ? "/minmat" : (window.location.pathname + window.location.search);
+      if (window.self !== window.top) {
+        window.top.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
+      } else {
+        window.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      applyLang();
+      
+      // Listen to updates from parent
+      window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "NICKNAME_UPDATED") {
+          console.log("[IFRAME] Received NICKNAME_UPDATED from parent:", event.data.nickname);
+          userSession.displayName = event.data.nickname;
+          localStorage.setItem("minmat_last_name", event.data.nickname);
+          let input = document.getElementById("playerInput");
+          if (input) {
+            input.value = event.data.nickname;
+          }
+          updateAuthUI();
+        } else if (event.data && event.data.type === "LOCALE_CHANGED") {
+          console.log("[IFRAME] Received LOCALE_CHANGED from parent:", event.data.locale);
+          setLang(event.data.locale);
+        } else if (event.data && event.data.type === "SHARE_SUCCESS") {
+          console.log("[IFRAME] Received SHARE_SUCCESS from parent.");
+          localStorage.setItem("minmat_share_boost", "active");
+          let activeMsg = "";
+          if (currentLang === "tr") {
+            activeMsg = "🎉 Harika! Skor paylaşıldı. İlk oyununda geçerli olmak üzere %20 Ekstra Skor Bonusu aktif edildi!";
+          } else if (currentLang === "en") {
+            activeMsg = "🎉 Awesome! Score shared. 20% Extra Score Bonus has been activated for your next game!";
+          } else if (currentLang === "de") {
+            activeMsg = "🎉 Super! Ergebnis geteilt. 20% Extra-Punkte-Bonus wurde für dein nächstes Spiel aktiviert!";
+          } else if (currentLang === "fr") {
+            activeMsg = "🎉 Super ! Score partagé. Un bonus de score supplémentaire de 20 % a été activé pour votre prochaine partie !";
+          } else if (currentLang === "es") {
+            activeMsg = "🎉 ¡Genial! Puntuación compartida. ¡Se ha activado un bono de puntuación adicional del 20 % para tu próximo juego!";
+          } else if (currentLang === "pt") {
+            activeMsg = "🎉 Incrível! Pontuação compartilhada. Um bônus de pontuação extra de 20% foi ativado para o seu próximo jogo!";
+          } else if (currentLang === "it") {
+            activeMsg = "🎉 Fantastico! Punteggio condiviso. Un bonus del 20% sul punteggio extra è stato attivato per la tua prossima partita!";
+          } else if (currentLang === "ko") {
+            activeMsg = "🎉 멋집니다! 점수가 공유되었습니다. 다음 게임에 적용될 20% 추가 점수 보너스가 활성화되었습니다!";
+          } else if (currentLang === "ar") {
+            activeMsg = "🎉 رائع! تم مشاركة النتيجة. تم تفعيل مكافأة النقاط الإضافية بنسبة 20% للعبتك القادمة!";
+          } else {
+            activeMsg = "🎉 Score shared! 20% Extra Score Bonus activated for your next game!";
+          }
+          alert(activeMsg);
+        }
+      });
+
+      let input = document.getElementById("playerInput");
+      if (input) {
+        let lastName = localStorage.getItem("minmat_last_name") || "";
+        input.value = lastName;
+        input.addEventListener("input", checkInput);
+        checkInput();
+      }
+      
+      // Eğer iframe içindeysek Clerk yüklemesini tamamen pas geçelim (Mükerrer ve sonsuz döngü engelleme)
+      if (window.self !== window.top) {
+        console.log("[IFRAME] Iframe içindeyiz, Clerk SDK yüklenmesi pas geçiliyor. Oturum parent pencereden yönetilecek.");
+        
+        // Mükerrer butonları gizle (Hakkında, Yardım, Çıkış, Cupmat'a Geç)
+        const topRightNav = document.querySelector('.topRightNav');
+        if (topRightNav) {
+          topRightNav.style.display = 'none';
+        }
+        const switchBtn = document.getElementById('btnCupmatSwitch');
+        if (switchBtn) {
+          switchBtn.style.display = 'none';
+        }
+        
+        // Mükerrer dil dropdownlarını gizle
+        const menuLangDropdownContainer = document.getElementById('menuLangDropdownContainer');
+        if (menuLangDropdownContainer) {
+          menuLangDropdownContainer.style.display = 'none';
+        }
+        const gameLangDropdownContainer = document.getElementById('gameLangDropdownContainer');
+        if (gameLangDropdownContainer) {
+          gameLangDropdownContainer.style.display = 'none';
+        }
+        const goLangDropdownContainer = document.getElementById('goLangDropdownContainer');
+        if (goLangDropdownContainer) {
+          goLangDropdownContainer.style.display = 'none';
+        }
+        
+        checkAuthSession();
+        return;
+      }
+      
+      try {
+        // API'den Clerk anahtarını çek
+        const clerkKeyRes = await fetch('/api/clerk-key');
+        let publishableKey = null;
+        
+        if (clerkKeyRes.ok) {
+          const data = await clerkKeyRes.json();
+          publishableKey = data.publishableKey;
+        }
+        
+        if (window.Clerk) {
+          // Eğer Clerk zaten yüklü ve aktifse load() çağırmayalım
+          if (window.Clerk.loaded) {
+            console.log("[Clerk] Zaten yüklü ve aktif.");
+            checkAuthSession();
+            if (window.Clerk.addListener) {
+              window.Clerk.addListener((e) => {
+                console.log("[Clerk Listener] Oturum durumu değişti:", e);
+                checkAuthSession();
+              });
+            }
+          } else if (publishableKey) {
+            console.log("[Clerk] Yükleniyor...", publishableKey);
+            window.Clerk.publishableKey = publishableKey;
+            window.Clerk.load({
+              publishableKey
+            }).then(() => {
+              console.log("[Clerk] Başarıyla yüklendi.");
+              checkAuthSession();
+              if (window.Clerk.addListener) {
+                window.Clerk.addListener((e) => {
+                  console.log("[Clerk Listener] Oturum durumu değişti:", e);
+                  checkAuthSession();
+                });
+              }
+            }).catch((err) => {
+              console.error("[Clerk Load Hatası]:", err);
+              checkAuthSession();
+            });
+          } else {
+            console.warn("[Clerk] Publishable key bulunamadı.");
+            checkAuthSession();
+          }
+        } else {
+          console.warn("[Clerk] SDK SDK bulunamadı.");
+          checkAuthSession();
+        }
+      } catch (error) {
+        console.error("Clerk yükleme hatası:", error);
+        checkAuthSession();
+      }
+    });
+
+    function checkInput() {
+      let input = document.getElementById("playerInput");
+      let btnLeaderboard = document.getElementById("btnLeaderboardMenu");
+      let btnStart = document.getElementById("btnStart");
+      if (!input || !btnLeaderboard || !btnStart) return;
+      let val = input.value.trim();
+      if (val.length >= 3 || userSession.isAuthenticated || isGuestMode) {
+        btnLeaderboard.disabled = false;
+      } else {
+        btnLeaderboard.disabled = true;
+      }
+
+      // Dynamically toggle start button visibility
+      if (userSession.isAuthenticated || isGuestMode) {
+        btnStart.style.display = "block";
+      } else if (val.length >= 3) {
+        btnStart.style.display = "block";
+      } else {
+        btnStart.style.display = "none";
+      }
+    }
+
+    function backToMenu() {
+      clearInterval(timer);
+      isGameOver = true;
+      isPaused = false;
+      let overlay = document.getElementById("pauseOverlay");
+      if (overlay) overlay.style.display = "none";
+      let btn = document.getElementById("pauseBtn");
+      if (btn) btn.innerText = "⏸️";
+      show("menuScreen");
+    }
+
+    function shareScore() {
+      let userName = playerName || t("guest");
+      window.parent.postMessage({
+        type: "SHARE_SCORE",
+        score: score,
+        mode: gameMode,
+        name: userName,
+        lang: currentLang
+      }, "*");
+    }
+
+    function toggleDropdown(id) {
+      // Close other dropdowns
+      const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
+      dropdowns.forEach(dId => {
+        if (dId !== id) {
+          const el = document.getElementById(dId);
+          if (el) el.parentElement.classList.remove("show");
+        }
+      });
+
+      const el = document.getElementById(id);
+      if (el) {
+        el.parentElement.classList.toggle("show");
+      }
+    }
+
+    // Close dropdowns on outside click
+    window.addEventListener("click", function(event) {
+      if (!event.target.closest(".dropdownBtn")) {
+        const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
+        dropdowns.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.parentElement.classList.remove("show");
+        });
+      }
+    });
+
+    function selectLang(lang, dropdownId, event) {
+      if (event) event.preventDefault();
+      setLang(lang);
+      const el = document.getElementById(dropdownId);
+      if (el) el.parentElement.classList.remove("show");
+    }
+
+    function cycleLang() {
+      let langs = ["tr", "en", "de", "fr", "es", "pt", "ar", "ko", "it"];
+      let idx = langs.indexOf(currentLang);
+      let next = langs[(idx + 1) % langs.length];
+      setLang(next);
+    }
+
+    function openAbout() {
+      if (document.getElementById("gameScreen").classList.contains("active") && !isPaused) {
+        togglePause();
+      }
+      document.getElementById("aboutModal").classList.add("active");
+    }
+
+    function openHelp() {
+      if (document.getElementById("gameScreen").classList.contains("active") && !isPaused) {
+        togglePause();
+      }
+      document.getElementById("helpModal").classList.add("active");
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove("active");
+      if (document.getElementById("gameScreen").classList.contains("active") && isPaused) {
+        togglePause();
+      }
+    }
+
+    /* BOOST & MATCH REWARD VARIABLES & LOGIC */
+    let selectedBoost = null;
+    let activeGameBoost = null;
+
+    const boostDict = {
+      tr: {
+        title: "⚡ Aktif Maç Hediyeleri",
+        timeTitle: "Ek Süre (+10sn)",
+        timeDesc: "Oyuna 10 saniye fazladan başla",
+        lifeTitle: "Ek Can (+1 Can)",
+        lifeDesc: "3 yerine 4 canla oyuna başla",
+        scoreTitle: "Başlangıç Puanı (+250)",
+        scoreDesc: "Oyuna 250 puan önde başla",
+        expires: "Kalan Süre:",
+        noGifts: "Aktif maç hediyeniz bulunmamaktadır."
+      },
+      en: {
+        title: "⚡ Active Match Gifts",
+        timeTitle: "Extra Time (+10s)",
+        timeDesc: "Start the game with 10 extra seconds",
+        lifeTitle: "Extra Life (+1 Life)",
+        lifeDesc: "Start the game with 4 lives instead of 3",
+        scoreTitle: "Starting Score (+250)",
+        scoreDesc: "Start the game with 250 extra points",
+        expires: "Expires:",
+        noGifts: "You have no active match gifts."
+      },
+      de: {
+        title: "⚡ Aktive Spielgeschenke",
+        timeTitle: "Zusätzliche Zeit (+10s)",
+        timeDesc: "Starte das Spiel mit 10 zusätzlichen Sekunden",
+        lifeTitle: "Zusätzliches Leben (+1)",
+        lifeDesc: "Starte das Spiel mit 4 Leben statt 3",
+        scoreTitle: "Startpunktzahl (+250)",
+        scoreDesc: "Starte das Spiel mit 250 Extrapunkten",
+        expires: "Gültig bis:",
+        noGifts: "Sie haben keine aktiven Spielgeschenke."
+      },
+      fr: {
+        title: "⚡ Cadeaux de Match Actifs",
+        timeTitle: "Temps Supplémentaire (+10s)",
+        timeDesc: "Commencez le jeu avec 10 secondes supplémentaires",
+        lifeTitle: "Vie Supplémentaire (+1)",
+        lifeDesc: "Commencez le jeu avec 4 vies au lieu de 3",
+        scoreTitle: "Score de Départ (+250)",
+        scoreDesc: "Commencez le jeu avec 250 points d'avance",
+        expires: "Expire le:",
+        noGifts: "Vous n'avez pas de cadeaux de match actifs."
+      },
+      es: {
+        title: "⚡ Regalos de Partido Activos",
+        timeTitle: "Tiempo Extra (+10s)",
+        timeDesc: "Comienza el juego con 10 segundos extra",
+        lifeTitle: "Vida Extra (+1 Vida)",
+        lifeDesc: "Comienza el juego con 4 vidas en lugar de 3",
+        scoreTitle: "Puntuación Inicial (+250)",
+        scoreDesc: "Comienza el juego con 250 puntos de ventaja",
+        expires: "Vence el:",
+        noGifts: "No tienes regalos de partido activos."
+      },
+      pt: {
+        title: "⚡ Presentes de Jogo Ativos",
+        timeTitle: "Tempo Extra (+10s)",
+        timeDesc: "Comece o jogo com 10 segundos extras",
+        lifeTitle: "Vida Extra (+1 Vida)",
+        lifeDesc: "Comece o jogo com 4 vidas em vez de 3",
+        scoreTitle: "Pontuação Inicial (+250)",
+        scoreDesc: "Comece o jogo com 250 pontos extras",
+        expires: "Expira em:",
+        noGifts: "Você não tem presentes de jogo ativos."
+      },
+      it: {
+        title: "⚡ Regali Partita Attivi",
+        timeTitle: "Tempo Extra (+10s)",
+        timeDesc: "Inizia il gioco con 10 secondi in più",
+        lifeTitle: "Vita Extra (+1 Vita)",
+        lifeDesc: "Inizia il gioco con 4 vite invece di 3",
+        scoreTitle: "Punteggio Iniziale (+250)",
+        scoreDesc: "Inizia il gioco con 250 punti in più",
+        expires: "Scade il:",
+        noGifts: "Non hai regali partita attivi."
+      },
+      ko: {
+        title: "⚡ 활성 매치 선물",
+        timeTitle: "추가 시간 (+10초)",
+        timeDesc: "10초 추가 시간을 가지고 게임을 시작합니다",
+        lifeTitle: "추가 생명 (+1 목숨)",
+        lifeDesc: "목숨 3개 대신 4개로 게임을 시작합니다",
+        scoreTitle: "시작 점수 (+250점)",
+        scoreDesc: "250점을 획득한 상태로 게임을 시작합니다",
+        expires: "만료일:",
+        noGifts: "활성화된 매치 선물이 없습니다."
+      },
+      ar: {
+        title: "⚡ هدايا المباراة النشطة",
+        timeTitle: "وقت إضافي (+10 ثوانٍ)",
+        timeDesc: "ابدأ اللعبة مع 10 ثوانٍ إضافية",
+        lifeTitle: "حياة إضافية (+1 حياة)",
+        lifeDesc: "ابدأ اللعبة بـ 4 أرواح بدلاً من 3",
+        scoreTitle: "نقاط البدء (+250)",
+        scoreDesc: "ابدأ اللعبة بـ 250 نقطة إضافية",
+        expires: "تنتهي الصلاحية:",
+        noGifts: "ليس لديك هدايا مباراة نشطة."
+      }
+    };
+
+    function selectBoost(type) {
+      if (!userSession.isAuthenticated) return;
+      
+      let charges = 0;
+      if (type === "time") charges = userSession.minmatBoostTimeCharges || 0;
+      else if (type === "life") charges = userSession.minmatBoostLifeCharges || 0;
+      else if (type === "score") charges = userSession.minmatBoostScoreCharges || 0;
+
+      if (charges <= 0) return;
+
+      if (selectedBoost === type) {
+        selectedBoost = null;
+      } else {
+        selectedBoost = type;
+      }
+
+      updateBoostSelectionUI();
+    }
+
+    function updateBoostSelectionUI() {
+      const types = ["time", "life", "score"];
+      types.forEach(t => {
+        const el = document.getElementById("boostOpt-" + t);
+        if (!el) return;
+        
+        let charges = 0;
+        if (t === "time") charges = userSession.minmatBoostTimeCharges || 0;
+        else if (t === "life") charges = userSession.minmatBoostLifeCharges || 0;
+        else if (t === "score") charges = userSession.minmatBoostScoreCharges || 0;
+
+        const radioInner = el.querySelector(".boostRadio div");
+        
+        if (charges <= 0) {
+          el.style.opacity = "0.4";
+          el.style.cursor = "not-allowed";
+          el.style.borderColor = "#334155";
+          el.style.background = "#0f172a";
+          if (radioInner) radioInner.style.background = "transparent";
+        } else {
+          el.style.opacity = "1";
+          el.style.cursor = "pointer";
+          
+          if (selectedBoost === t) {
+            el.style.borderColor = "#f59e0b";
+            el.style.background = "rgba(245, 158, 11, 0.15)";
+            if (radioInner) radioInner.style.background = "#f59e0b";
+          } else {
+            el.style.borderColor = "#334155";
+            el.style.background = "#1e293b";
+            if (radioInner) radioInner.style.background = "transparent";
+          }
+        }
+      });
+    }
+
+    function renderBoostSelection() {
+      const container = document.getElementById("boostSelectionContainer");
+      if (!container) return;
+
+      if (!userSession.isAuthenticated) {
+        container.style.display = "none";
+        return;
+      }
+
+      const timeCharges = userSession.minmatBoostTimeCharges || 0;
+      const lifeCharges = userSession.minmatBoostLifeCharges || 0;
+      const scoreCharges = userSession.minmatBoostScoreCharges || 0;
+      const totalCharges = timeCharges + lifeCharges + scoreCharges;
+
+      const lang = boostDict[currentLang] || boostDict["en"];
+
+      document.getElementById("boostBarTitle").innerText = lang.title;
+      document.getElementById("labelTimeTitle").innerText = lang.timeTitle;
+      document.getElementById("labelTimeDesc").innerText = lang.timeDesc;
+      document.getElementById("labelLifeTitle").innerText = lang.lifeTitle;
+      document.getElementById("labelLifeDesc").innerText = lang.lifeDesc;
+      document.getElementById("labelScoreTitle").innerText = lang.scoreTitle;
+      document.getElementById("labelScoreDesc").innerText = lang.scoreDesc;
+
+      document.getElementById("boostTimeStock").innerText = `${timeCharges}/3`;
+      document.getElementById("boostLifeStock").innerText = `${lifeCharges}/3`;
+      document.getElementById("boostScoreStock").innerText = `${scoreCharges}/3`;
+
+      const expiryLabel = document.getElementById("boostExpiryLabel");
+      if (userSession.minmatBoostExpiresAt && totalCharges > 0) {
+        const now = new Date();
+        const expiresAt = new Date(userSession.minmatBoostExpiresAt);
+        const diffMs = expiresAt - now;
+        if (diffMs > 0) {
+          const hours = Math.floor(diffMs / (1000 * 60 * 60));
+          const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+          expiryLabel.innerText = currentLang === "tr" 
+            ? `${lang.expires} ${hours}s ${mins}d` 
+            : `${lang.expires} ${hours}h ${mins}m`;
+        } else {
+          expiryLabel.innerText = "";
+        }
+      } else {
+        expiryLabel.innerText = "";
+      }
+
+      const noGiftsEl = document.getElementById("boostBarNoGifts");
+      const giftsListEl = document.getElementById("boostBarGiftsList");
+
+      if (totalCharges <= 0) {
+        noGiftsEl.innerText = lang.noGifts;
+        noGiftsEl.style.display = "block";
+        giftsListEl.style.display = "none";
+      } else {
+        noGiftsEl.style.display = "none";
+        giftsListEl.style.display = "flex";
+      }
+
+      container.style.display = "block";
+      updateBoostSelectionUI();
+    }
+
+    async function consumeSelectedBoost() {
+      if (!selectedBoost || !userSession.isAuthenticated) return;
+      activeGameBoost = selectedBoost;
+      const consumedType = selectedBoost;
+      selectedBoost = null;
+      
+      try {
+        const token = await getClerkToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        const res = await fetch("/api/profile/consume-boost", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ boostType: consumedType }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log("Boost consumed successfully:", data);
+          userSession.minmatBoostTimeCharges = data.minmatBoostTimeCharges;
+          userSession.minmatBoostLifeCharges = data.minmatBoostLifeCharges;
+          userSession.minmatBoostScoreCharges = data.minmatBoostScoreCharges;
+          userSession.minmatBoostExpiresAt = data.minmatBoostExpiresAt;
+        }
+      } catch (err) {
+        console.error("Error consuming boost:", err);
+      }
+    }
+
+    /* GAME LOGIC GLOBAL VARIABLES */
+    let score = 0;
+    let lives = 3;
+    let level = 1;
+    let wrongCount = 0;
+    let gameMode = "add"; 
+    let first = null;
+    let lock = false;
+    let matched = 0;
+    let totalPairs = 0;
+    let leaderboardFilter = "all";
+    let timeLeft = 0;
+    let timer = null;
+    let combo = 0;
+    let totalLifetimeMatches = 0;
+    let nextBonusTarget = 20;
+    let bonusLevel = 1;
+    let isGameOver = false;
+    let isGameOverSaved = false;
+    let isGameStarted = false;
+    let initialStartDone = false;
+    let playerName = "Adsız";
+    let isPaused = false;
+    let extraTimeSeconds = 0;
+    let periodSecondsPerLevel = 0;
+    let periodPointsPerLevel = 0;
+    let badgeExtraTimeSeconds = 0;
+    let badgeScoreMultiplier = 1.00;
+    let hasShareBoost = false;
+    let activeTab = "scores";
+
+    function getOverallMaxLevel() {
+      let modes = ["add", "sub", "mul", "div", "mix"];
+      let maxVal = 1;
+      modes.forEach(m => {
+        let lvl = parseInt(localStorage.getItem("minmat_maxLevel_" + m)) || 1;
+        if (lvl > maxVal) maxVal = lvl;
+      });
+      return maxVal;
+    }
+
+    function getMinMatTier(maxLevel) {
+      if (maxLevel >= 25) {
+        return {
+          tier: 4,
+          name: currentLang === "tr" ? "💎 Zeka Efsanesi" : "💎 Math Legend",
+          extraSeconds: 6,
+          multiplier: 1.25,
+          className: "minmat-badge-tier4"
+        };
+      } else if (maxLevel >= 20) {
+        return {
+          tier: 3,
+          name: currentLang === "tr" ? "🥇 Sayıların Efendisi" : "🥇 Lord of Numbers",
+          extraSeconds: 4,
+          multiplier: 1.15,
+          className: "minmat-badge-tier3"
+        };
+      } else if (maxLevel >= 15) {
+        return {
+          tier: 2,
+          name: currentLang === "tr" ? "🥈 Zihin Ustası" : "🥈 Mind Master",
+          extraSeconds: 2,
+          multiplier: 1.10,
+          className: "minmat-badge-tier2"
+        };
+      } else if (maxLevel >= 10) {
+        return {
+          tier: 1,
+          name: currentLang === "tr" ? "🥉 Matematik Savaşçısı" : "🥉 Math Warrior",
+          extraSeconds: 1,
+          multiplier: 1.05,
+          className: "minmat-badge-tier1"
+        };
+      }
+      return {
+        tier: 0,
+        name: "",
+        extraSeconds: 0,
+        multiplier: 1.00,
+        className: "minmat-badge-tier0"
+      };
+    }
+
+    function updateLobbyBadge() {
+      const badgeContainer = document.getElementById("minmatUserBadgeContainer");
+      if (!badgeContainer) return;
+
+      const maxLevel = getOverallMaxLevel();
+      const tierInfo = getMinMatTier(maxLevel);
+
+      if (tierInfo.tier > 0) {
+        let rewardText = "";
+        if (currentLang === "tr") {
+          rewardText = `Bonus: +${tierInfo.extraSeconds}sn/tur | +%${Math.round((tierInfo.multiplier - 1) * 100)} Puan`;
+        } else {
+          rewardText = `Bonus: +${tierInfo.extraSeconds}s/round | +${Math.round((tierInfo.multiplier - 1) * 100)}% Pts`;
+        }
+
+        badgeContainer.innerHTML = `
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <span class="minmat-badge ${tierInfo.className}">${tierInfo.name}</span>
+            <span style="font-size: 11px; font-weight: 700; color: #a5b4fc; opacity: 0.95;">${rewardText}</span>
+          </div>
+        `;
+        badgeContainer.style.display = "flex";
+      } else {
+        badgeContainer.style.display = "none";
+      }
+    }
+
+    function getMaxLevel(mode) {
+      return parseInt(localStorage.getItem("minmat_maxLevel_" + mode)) || 1;
+    }
+
+    function updateMaxLevel(mode, lvl) {
+      let current = getMaxLevel(mode);
+      if (lvl > current) {
+        localStorage.setItem("minmat_maxLevel_" + mode, lvl);
+        
+        // Seviye 4 veya üzerine ulaşıldığında bir sonraki kategorinin kilidini aç
+        if (mode === "add" && lvl >= 4) localStorage.setItem("minmat_unlocked_sub", "true");
+        if (mode === "sub" && lvl >= 4) localStorage.setItem("minmat_unlocked_mul", "true");
+        if (mode === "mul" && lvl >= 4) localStorage.setItem("minmat_unlocked_div", "true");
+        if (mode === "div" && lvl >= 4) localStorage.setItem("minmat_unlocked_mix", "true");
+
+        updateModeButtons();
+        if (userSession.isAuthenticated) {
+          submitProgressToDb();
+        }
+      }
+    }
+
+    function isModeUnlocked(mode) {
+      if (mode === "add") return true;
+
+      // Öncelikle yerel kilit açılma bayrağına bak
+      if (localStorage.getItem("minmat_unlocked_" + mode) === "true") return true;
+
+      // Yedek seviye sınırı kontrolü
+      if (mode === "sub") return getMaxLevel("add") >= 4;
+      if (mode === "mul") return getMaxLevel("sub") >= 4;
+      if (mode === "div") return getMaxLevel("mul") >= 4;
+      if (mode === "mix") return getMaxLevel("div") >= 4;
+      return false;
+    }
+
+    function updateModeButtons() {
+      let modes = ["add", "sub", "mul", "div", "mix"];
+      modes.forEach(m => {
+        let btn = document.getElementById("modeBtn_" + m);
+        if (!btn) return;
+        if (isModeUnlocked(m)) {
+          btn.classList.remove("modeLocked");
+          btn.disabled = false;
+        } else {
+          btn.classList.add("modeLocked");
+          btn.disabled = true;
+        }
+        if (m === gameMode) {
+          btn.classList.add("modeActive");
+        } else {
+          btn.classList.remove("modeActive");
+        }
+      });
+    }
+
+    function show(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    async function startGame() {
+      let inputVal = document.getElementById("playerInput") ? document.getElementById("playerInput").value.trim() : "";
+      
+      if (userSession.isAuthenticated) {
+        playerName = userSession.displayName || userSession.username || "Kullanıcı";
+      } else if (isGuestMode && guestUsername) {
+        playerName = guestUsername;
+      } else {
+        playerName = inputVal || (currentLang === "en" ? "Guest" : "Misafir");
+      }
+
+      localStorage.setItem("minmat_last_name", playerName);
+      isGameOver = false;
+      isGameOverSaved = false;
+      isGameStarted = false;
+      isPaused = false;
+
+      // Consume share boost if active
+      if (localStorage.getItem("minmat_share_boost") === "active") {
+        hasShareBoost = true;
+        localStorage.removeItem("minmat_share_boost");
+      } else {
+        hasShareBoost = false;
+      }
+      let overlay = document.getElementById("pauseOverlay");
+      if (overlay) overlay.style.display = "none";
+      let pauseBtn = document.getElementById("pauseBtn");
+      if (pauseBtn) pauseBtn.innerText = "⏸️";
+
+      activeGameBoost = null;
+      if (selectedBoost && userSession.isAuthenticated) {
+        await consumeSelectedBoost();
+      }
+
+      score = 0;
+      if (activeGameBoost === "score") {
+        score = 250;
+      }
+
+      lives = 3;
+      if (activeGameBoost === "life") {
+        lives = 4;
+      }
+      updateLivesUI();
+      level = 1;
+      wrongCount = 0;
+      combo = 0;
+      totalLifetimeMatches = 0;
+      nextBonusTarget = 20;
+      bonusLevel = 1;
+      const playerTextEl = document.getElementById("playerText");
+      if (playerTextEl) {
+        playerTextEl.innerText = "👤 " + playerName;
+      }
+      document.getElementById("modeText").innerText = "🎯 " + shortModeName(gameMode);
+
+      // Initialize badge bonuses based on overall max level achieved
+      const maxLvl = getOverallMaxLevel();
+      const tierInfo = getMinMatTier(maxLvl);
+      badgeExtraTimeSeconds = tierInfo.extraSeconds;
+      badgeScoreMultiplier = tierInfo.multiplier;
+
+      // Update HUD badge display
+      const hudBadge = document.getElementById("gameHudBadge");
+      if (hudBadge) {
+        if (tierInfo.tier > 0) {
+          hudBadge.className = `minmat-badge ${tierInfo.className}`;
+          hudBadge.innerText = tierInfo.name;
+          hudBadge.style.display = "inline-flex";
+        } else {
+          hudBadge.style.display = "none";
+        }
+      }
+
+      extraTimeSeconds = 0;
+      periodSecondsPerLevel = 0;
+      periodPointsPerLevel = 0;
+      let badgeEl = document.getElementById("extraTimeBadge");
+      let rowEl = document.getElementById("extraTimeRow");
+      if (badgeEl) badgeEl.style.display = "none";
+      if (rowEl) rowEl.style.display = "none";
+
+      try {
+        const res = await fetch("/api/gamification?displayName=" + encodeURIComponent(playerName) + "&light=true");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.profile) {
+            const p = data.profile;
+            if (typeof p.minmatEkSure === "number" && p.minmatEkSure > 0) {
+              const secondsToUse = Math.min(p.minmatEkSure, 10);
+              if (secondsToUse > 0 && userSession.isAuthenticated) {
+                try {
+                  const token = await getClerkToken();
+                  const headers = { "Content-Type": "application/json" };
+                  if (token) {
+                    headers["Authorization"] = `Bearer ${token}`;
+                  }
+                  const consumeRes = await fetch("/api/gamification", {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify({
+                      action: "use_minmat_time",
+                      amount: secondsToUse
+                    })
+                  });
+                  if (consumeRes.ok) {
+                    const consumeData = await consumeRes.json();
+                    console.log("MinMat extra time consumed:", secondsToUse, consumeData);
+                    extraTimeSeconds = secondsToUse;
+                  } else {
+                    console.error("Failed to consume MinMat extra time");
+                    extraTimeSeconds = 0;
+                  }
+                } catch (consumeErr) {
+                  console.error("Error consuming MinMat extra time:", consumeErr);
+                  extraTimeSeconds = 0;
+                }
+              } else {
+                extraTimeSeconds = secondsToUse;
+              }
+            }
+            if (p.periyotOdulAktif) {
+              periodSecondsPerLevel = Number(p.periyotOdulMinmatSaniyeSeviye) || 0;
+              periodPointsPerLevel = Number(p.periyotOdulMinmatPuanSeviye) || 0;
+            }
+            const totalBonus = extraTimeSeconds + periodSecondsPerLevel;
+            if (badgeEl && (extraTimeSeconds > 0 || periodSecondsPerLevel > 0)) {
+              let suffix = "sn Cupmat Bonusu Aktif!";
+              if (currentLang === "en") suffix = "s Cupmat Bonus Active!";
+              else if (currentLang === "de") suffix = "s Cupmat-Bonus Aktiv!";
+              else if (currentLang === "fr") suffix = "s Bonus Cupmat Actif!";
+              else if (currentLang === "es") suffix = "s ¡Bono Cupmat Activo!";
+              else if (currentLang === "pt") suffix = "s Bônus Cupmat Ativo!";
+              else if (currentLang === "ar") suffix = " ثوانٍ مكافأة Cupmat نشطة!";
+              else if (currentLang === "ko") suffix = "초 Cupmat 보너스 활성화!";
+              else if (currentLang === "it") suffix = "s Bonus Cupmat Attivo!";
+              let label = "+" + totalBonus + suffix;
+              let periodLabel = currentLang === "tr" ? "periyot ödülü" :
+                                currentLang === "pt" ? "prêmio de período" :
+                                currentLang === "ar" ? "مكافأة الفترة" :
+                                currentLang === "ko" ? "기간 보상" :
+                                currentLang === "it" ? "premio periodo" : "period reward";
+              if (periodSecondsPerLevel > 0 && extraTimeSeconds > 0) {
+                label = "+" + extraTimeSeconds + "sn + " + periodSecondsPerLevel + "sn/tur " + periodLabel;
+              } else if (periodSecondsPerLevel > 0) {
+                label = "+" + periodSecondsPerLevel + "sn/tur (" + periodLabel + ")";
+              }
+              badgeEl.innerText = label;
+              badgeEl.style.display = "inline-flex";
+              if (rowEl) rowEl.style.display = "flex";
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load minmatEkSure:", err);
+      }
+
+      if (activeGameBoost) {
+        let label = "";
+        if (activeGameBoost === "time") {
+          label = currentLang === "tr" ? "⏱️ +10sn Ek Süre Aktif!" : "⏱️ +10s Extra Time Active!";
+        } else if (activeGameBoost === "life") {
+          label = currentLang === "tr" ? "❤️ +1 Ek Can Aktif!" : "❤️ +1 Extra Life Active!";
+        } else if (activeGameBoost === "score") {
+          label = currentLang === "tr" ? "⭐ +250 Başlangıç Puanı Aktif!" : "⭐ +250 Starting Score Active!";
+        }
+        
+        let badgeEl = document.getElementById("extraTimeBadge");
+        let rowEl = document.getElementById("extraTimeRow");
+        if (badgeEl) {
+          if (badgeEl.style.display === "inline-flex" && badgeEl.innerText) {
+            badgeEl.innerText = badgeEl.innerText + " | " + label;
+          } else {
+            badgeEl.innerText = label;
+            badgeEl.style.display = "inline-flex";
+            if (rowEl) rowEl.style.display = "flex";
+          }
+        }
+      }
+
+      if (hasShareBoost) {
+        let label = t("shareBonusActive");
+        let badgeEl = document.getElementById("extraTimeBadge");
+        let rowEl = document.getElementById("extraTimeRow");
+        if (badgeEl) {
+          if (badgeEl.style.display === "inline-flex" && badgeEl.innerText) {
+            badgeEl.innerText = badgeEl.innerText + " | " + label;
+          } else {
+            badgeEl.innerText = label;
+            badgeEl.style.display = "inline-flex";
+            if (rowEl) rowEl.style.display = "flex";
+          }
+        }
+      }
+
+      startLevel();
+      show("gameScreen");
+      updateModeButtons();
+    }
+
+    function startLevel() {
+      lock = false;
+      first = null;
+      matched = 0;
+
+      const previousTimeLeft = timeLeft;
+
+      createCards();
+      let pairs = totalPairs / 2;
+      let timePerPair = Math.max(8 - level * 0.5, 5);
+      let baseTime = Math.floor(pairs * timePerPair);
+
+      showEffect(t("round") + " " + level);
+
+      if (level === 1) {
+        timeLeft = 30;
+      } else {
+        const carryOver = Math.max(0, Math.floor(previousTimeLeft * 0.5));
+        let completionBonusSeconds = 5;
+        if (level >= 6) {
+          completionBonusSeconds = 5 + 2 * Math.floor((level - 3) / 3);
+        }
+        timeLeft = baseTime + carryOver + completionBonusSeconds;
+      }
+
+      if (extraTimeSeconds > 0) {
+        timeLeft += extraTimeSeconds;
+      }
+      if (periodSecondsPerLevel > 0) {
+        timeLeft += periodSecondsPerLevel;
+      }
+      if (badgeExtraTimeSeconds > 0) {
+        timeLeft += badgeExtraTimeSeconds;
+      }
+      if (activeGameBoost === "time") {
+        timeLeft += 10;
+      }
+
+      updateUI();
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        updateUI();
+
+        let timeEl = document.getElementById("time");
+        if (timeLeft <= 5) {
+          timeEl.classList.add("timeWarning");
+        } else {
+          timeEl.classList.remove("timeWarning");
+        }
+
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          timeLeft = 0;
+          updateUI();
+          gameOver();
+          return;
+        }
+      }, 1000);
+    }
+
+    function updateUI() {
+      document.getElementById("score").innerText = "⭐ " + score;
+      document.getElementById("levelLabel").innerText = t("round") + " " + level;
+      document.getElementById("time").innerText = "⏱️ " + timeLeft;
+      document.getElementById("combo").innerText = "🔥 " + combo;
+
+      let hearts = "";
+      for (let i = 0; i < lives; i++) hearts += "❤️";
+      document.getElementById("lives").innerText = hearts;
+    }
+
+    function createCards() {
+      let a, b, question, answer;
+      let pairCount = Math.min(18, level + 2); // Max 18 pairs (36 cards)
+      totalPairs = pairCount * 2;
+
+      let arr = [];
+      let used = new Set();
+
+      for (let i = 0; i < pairCount; i++) {
+        let currentMode = gameMode;
+        if (gameMode === "mix") {
+          let modes = ["add", "sub", "mul", "div"];
+          currentMode = modes[Math.floor(Math.random() * modes.length)];
+        }
+        let tries = 0;
+
+        do {
+          if (currentMode === "add") {
+            let max = level * 5;
+            if (max > 50) max = 50;
+            a = rand(1, max); b = rand(1, max);
+            question = a + " + " + b; answer = a + b;
+          }
+          else if (currentMode === "sub") {
+            a = rand(1, level * 5); b = rand(1, level * 5);
+            if (a < b) { let t = a; a = b; b = t; }
+            question = a + " - " + b; answer = a - b;
+          }
+          else if (currentMode === "mul") {
+            let mulMax = Math.min(3 + level * 2, 12);
+            a = rand(1, mulMax); b = rand(1, mulMax);
+            question = a + " × " + b; answer = a * b;
+          }
+          else if (currentMode === "div") {
+            let divMax = Math.min(3 + level, 12);
+            answer = rand(1, divMax); b = rand(1, divMax);
+            a = answer * b;
+            question = a + " / " + b;
+          }
+          tries++;
+        } while (used.has(answer) && tries < 50);
+
+        used.add(answer);
+        arr.push({ text: question, match: answer });
+        arr.push({ text: answer, match: question });
+      }
+
+      arr.sort(() => 0.5 - Math.random());
+
+      let grid = document.getElementById("grid");
+      grid.innerHTML = "";
+
+      let cols = Math.ceil(Math.sqrt(arr.length));
+      grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+      lock = false;
+      first = null;
+      arr.forEach(card => {
+        let div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <div class="inner">
+            <div class="front"></div>
+            <div class="back">${card.text}</div>
+          </div>
+        `;
+        div.onclick = () => flip(div, card);
+        grid.appendChild(div);
+      });
+    }
+
+    function flip(div, card) {
+      if (isGameOver || isPaused || lock || div.classList.contains("open")) return;
+      if (!isGameStarted) {
+        isGameStarted = true;
+        startTimer();
+      }
+
+      div.classList.add("open");
+
+      if (!first) {
+        first = { div, card };
+        return;
+      }
+
+      lock = true;
+      let match = String(first.card.match) === String(card.text) || String(card.match) === String(first.card.text);
+
+      if (match) {
+        combo++;
+        wrongCount = 0;
+        document.getElementById("wrongBar").innerText = "⚠️ 0/3";
+        
+        // Combo can/life recovery or can-overflow points bonus
+        if (combo === 4 || combo === 7 || combo === 9) {
+          if (lives < 5) {
+            lives++;
+            animateLives();
+          } else {
+            // Can max ise ekstra +123 Puan can bonusu ver
+            const lifeBonus = 123;
+            score += lifeBonus;
+            
+            let label = "❤️ CAN BONUSU: +123 PUAN!";
+            if (currentLang === "en") label = "❤️ LIFE BONUS: +123 POINTS!";
+            else if (currentLang === "de") label = "❤️ LEBENS-BONUS: +123 PUNKTE!";
+            else if (currentLang === "fr") label = "❤️ BONUS DE VIE: +123 POINTS!";
+            else if (currentLang === "es") label = "❤️ BONO DE VIDA: +123 PUNTOS!";
+            else if (currentLang === "pt") label = "❤️ BÔNUS DE VIDA: +123 PONTOS!";
+            else if (currentLang === "ar") label = "❤️ مكافأة الحياة: +123 نقطة!";
+            else if (currentLang === "ko") label = "❤️ 생명 보너스: +123 점!";
+            else if (currentLang === "it") label = "❤️ BONUS VITA: +123 PUNTI!";
+            showEffect(label);
+          }
+        }
+
+        if (combo >= 3) showEffect("🔥 KOMBO x" + combo);
+
+        totalLifetimeMatches++;
+        if (totalLifetimeMatches >= nextBonusTarget) {
+          let nextGap = 50;
+          if (bonusLevel === 1) nextGap = 30;
+          else if (bonusLevel === 2) nextGap = 38;
+          else if (bonusLevel === 3) nextGap = 44;
+          else if (bonusLevel === 4) nextGap = 48;
+          
+          nextBonusTarget += nextGap;
+          bonusLevel++;
+
+          if (lives >= 5) {
+            timeLeft += 10;
+            score += 1000;
+            updateTimeUI();
+            
+            let label = "🎁 USTA BONUSU: +10 SN & 1000 Puan!";
+            if (currentLang === "en") label = "🎁 MASTER BONUS: +10 SEC & 1000 Pts!";
+            showEffect(label);
+          } else {
+            lives++;
+            animateLives();
+            let label = "❤️ USTA BONUSU: +1 CAN!";
+            if (currentLang === "en") label = "❤️ MASTER BONUS: +1 LIFE!";
+            showEffect(label);
+          }
+        }
+
+        let baseScore = 10;
+        if (gameMode === "sub") baseScore = 11;
+        else if (gameMode === "mul") baseScore = 12;
+        else if (gameMode === "div") baseScore = 13;
+        else if (gameMode === "mix") baseScore = 15;
+
+        // Formula: MatchPoints = (baseScore + (level - 1) + Math.max(combo - 1, 0)) * 5
+        let matchPoints = (baseScore + (level - 1) + Math.max(combo - 1, 0)) * 5;
+        if (periodPointsPerLevel > 0) {
+          matchPoints += periodPointsPerLevel * 5;
+        }
+
+        // Apply badge score multiplier
+        if (badgeScoreMultiplier > 1.0) {
+          matchPoints = Math.round(matchPoints * badgeScoreMultiplier);
+        }
+
+        score += matchPoints;
+        matched += 2;
+        reset();
+
+        if (matched === totalPairs) {
+          clearInterval(timer);
+          
+          // Calculate bonuses
+          let completionBonus = 100 + (level - 1) * 50;
+          let timeBonus = timeLeft * 10;
+          
+          if (badgeScoreMultiplier > 1.0) {
+            completionBonus = Math.round(completionBonus * badgeScoreMultiplier);
+            timeBonus = Math.round(timeBonus * badgeScoreMultiplier);
+          }
+          score += completionBonus + timeBonus;
+          
+          // Show effect
+          let label = `🎉 +${completionBonus} Tur | +${timeBonus} Süre`;
+          if (currentLang === "en") label = `🎉 +${completionBonus} Round | +${timeBonus} Time`;
+          else if (currentLang === "de") label = `🎉 +${completionBonus} Runde | +${timeBonus} Zeit`;
+          else if (currentLang === "fr") label = `🎉 +${completionBonus} Tour | +${timeBonus} Temps`;
+          else if (currentLang === "es") label = `🎉 +${completionBonus} Ronda | +${timeBonus} Tiempo`;
+          else if (currentLang === "pt") label = `🎉 +${completionBonus} Rodada | +${timeBonus} Tempo`;
+          else if (currentLang === "ar") label = `🎉 +${completionBonus} جولة | +${timeBonus} وقت`;
+          else if (currentLang === "ko") label = `🎉 +${completionBonus} 라운드 | +${timeBonus} 시간`;
+          else if (currentLang === "it") label = `🎉 +${completionBonus} Turno | +${timeBonus} Tempo`;
+          
+          setTimeout(() => {
+            showEffect(label);
+          }, 100);
+
+          setTimeout(() => {
+            level++;
+            updateMaxLevel(gameMode, level);
+            showLevelEffect();
+            startLevel();
+          }, 800);
+        }
+      } else {
+        combo = 0;
+        wrongCount++;
+        document.getElementById("wrongBar").innerText = "⚠️ " + wrongCount + "/3";
+        if (wrongCount >= 3) {
+          lives--;
+          wrongCount = 0;
+          document.getElementById("wrongBar").innerText = "⚠️ 0/3";
+          animateLives();
+        }
+
+        setTimeout(() => {
+          div.classList.remove("open");
+          first.div.classList.remove("open");
+          if (lives <= 0) {
+            gameOver();
+            return;
+          }
+          reset();
+        }, 600);
+      }
+      updateUI();
+    }
+
+    function reset() {
+      first = null;
+      lock = false;
+    }
+
+    function gameOver() {
+      if (isGameOver) return;
+      isGameOver = true;
+      clearInterval(timer);
+      lock = true;
+
+      document.getElementById("gameOverTitle").innerText = t("gameOver");
+      let scoreRow = document.getElementById("finalScoreRow");
+      if (scoreRow) scoreRow.style.display = "block";
+
+      if (hasShareBoost) {
+        let originalScore = score;
+        score = Math.round(score * 1.20);
+        if (currentLang === "tr") {
+          document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + %20 Paylaşım Bonusu!)</span>`;
+        } else {
+          document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + 20% Share Bonus!)</span>`;
+        }
+      } else {
+        document.getElementById("finalScore").innerText = score;
+      }
+      
+      // Update Game Over badge display
+      const goBadgeContainer = document.getElementById("gameOverBadgeContainer");
+      if (goBadgeContainer) {
+        const tierInfo = getMinMatTier(getOverallMaxLevel());
+        if (tierInfo.tier > 0) {
+          let bonusDesc = "";
+          if (currentLang === "tr") {
+            bonusDesc = `Rozet Bonusu: +${tierInfo.extraSeconds}sn/tur | +%${Math.round((tierInfo.multiplier - 1) * 100)} Skor Çarpanı Aktif`;
+          } else {
+            bonusDesc = `Badge Bonus: +${tierInfo.extraSeconds}s/round | +${Math.round((tierInfo.multiplier - 1) * 100)}% Score Multiplier Active`;
+          }
+          goBadgeContainer.innerHTML = `
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-bottom: 8px;">
+              <span class="minmat-badge ${tierInfo.className}">${tierInfo.name}</span>
+              <span style="font-size:11px; font-weight:700; color:#cbd5e1;">${bonusDesc}</span>
+            </div>
+          `;
+          goBadgeContainer.style.display = "block";
+        } else {
+          goBadgeContainer.style.display = "none";
+        }
+      }
+
+      saveScore();
+
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById("gameOverScreen").classList.add("active");
+      
+      if (isGuestMode || !userSession.isAuthenticated) {
+        let authSaveContainer = document.getElementById("authSaveContainer");
+        if (authSaveContainer) {
+          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">⚠️ Misafir olarak oynadığınız için skorunuz global sıralamaya kaydedilemedi ve ödül kazanamazsınız! Kayıt olmak için giriş yapın.</div>`;
+        }
+      }
+    }
+
+    function showLeaderboardDirectly() {
+      clearInterval(timer);
+      isGameOver = true;
+
+      document.getElementById("gameOverTitle").innerText = t("puanTablosu");
+      let scoreRow = document.getElementById("finalScoreRow");
+      if (scoreRow) scoreRow.style.display = "none";
+
+      switchTab("scores");
+
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById("gameOverScreen").classList.add("active");
+    }
+
+    function checkGuestRestriction() {
+      if (isGuestMode || !userSession.isAuthenticated) {
+        return true;
+      }
+      return false;
+    }
+
+    function setMode(m) {
+      if (!isModeUnlocked(m)) {
+        let needed = { sub: "add", mul: "sub", div: "mul", mix: "div" };
+        alert(shortModeName(needed[m]) + " " + t("round") + " 4 ❗");
+        return;
+      }
+      gameMode = m;
+      updateModeButtons();
+      startGame();
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function updateLivesUI() {
+      let text = "";
+      for (let i = 0; i < lives; i++) text += "❤️";
+      document.getElementById("lives").innerText = text;
+    }
+
+    function showEffect(text) {
+      let e = document.createElement("div");
+      e.className = "effect";
+      e.style.whiteSpace = "pre-wrap";
+      e.style.textAlign = "center";
+      e.innerText = text;
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 800);
+    }
+
+    function animateLives() {
+      let el = document.getElementById("lives");
+      if (!el) return;
+      el.classList.add("heartPop");
+      setTimeout(() => el.classList.remove("heartPop"), 800);
+    }
+
+    function shortModeName(mode) {
+      if (mode === "add") return t("shortAdd");
+      if (mode === "sub") return t("shortSub");
+      if (mode === "mul") return t("shortMul");
+      if (mode === "div") return t("shortDiv");
+      if (mode === "mix") return t("shortMix");
+      return "-";
+    }
+
+    function modeName(mode) {
+      if (mode === "add") return t("modeAdd");
+      if (mode === "sub") return t("modeSub");
+      if (mode === "mul") return t("modeMul");
+      if (mode === "div") return t("modeDiv");
+      if (mode === "mix") return t("modeMix");
+      return "-";
+    }
+
+    function showLevelEffect() {
+      let e = document.getElementById("levelEffect");
+      e.innerText = t("round") + " " + level;
+      e.classList.remove("levelAnim");
+      void e.offsetWidth;
+      e.classList.add("levelAnim");
+    }
+
+    function togglePause() {
+      if (isGameOver) return;
+      isPaused = !isPaused;
+      let btn = document.getElementById("pauseBtn");
+      let overlay = document.getElementById("pauseOverlay");
+      if (isPaused) {
+        clearInterval(timer);
+        btn.innerText = "▶️";
+        if (overlay) overlay.style.display = "flex";
+      } else {
+        if (isGameStarted) startTimer();
+        btn.innerText = "⏸️";
+        if (overlay) overlay.style.display = "none";
+      }
+    }
+
+    function switchTab(tab) {
+      const tabS = document.getElementById("tabScores");
+      const tabR = document.getElementById("tabRewards");
+      
+      if (tab === "rewards" && checkGuestRestriction()) {
+        alert("Ödül tablosunu görmek için giriş yapmalısınız! Misafirler ödül kazanamaz ve ödül listelerine giremez.");
+        return;
+      }
+      
+      activeTab = tab;
+      
+      if (tab === "scores") {
+        document.getElementById("leaderboard").style.display = "";
+        document.getElementById("rewardBoard").style.display = "none";
+        document.getElementById("scoreFilters").style.display = "";
+        tabS.style.background = "rgba(16,185,129,0.2)";
+        tabS.style.color = "#6ee7b7";
+        tabR.style.background = "rgba(255,255,255,0.05)";
+        tabR.style.color = "#94a3b8";
+        renderLeaderboard();
+      } else {
+        document.getElementById("leaderboard").style.display = "none";
+        document.getElementById("rewardBoard").style.display = "";
+        document.getElementById("scoreFilters").style.display = "none";
+        tabR.style.background = "rgba(245,158,11,0.2)";
+        tabR.style.color = "#fbbf24";
+        tabS.style.background = "rgba(255,255,255,0.05)";
+        tabS.style.color = "#94a3b8";
+        renderRewardBoard();
+      }
+    }
+
+    /* ==========================================
+       UPDATED UPSTASH REDIS / NEXT.JS API CONNECTION
+       ========================================== */
+
+ async function saveScore() { 
+      const currentScore = score; 
+      const currentLevel = level; 
+      const currentMode = gameMode || 'mix'; 
+      
+      // Kategori dÃ¶nÃ¼ÅŸÃ¼mÃ¼: eski ad -> yeni ad
+      function mapCategory(oldCat) {
+        const map = {
+          "add": "topla",
+          "sub": "cikar",
+          "mul": "carp",
+          "div": "bol",
+          "mix": "karisik"
+        };
+        return map[oldCat] || "karisik";
+      }
+      
+      const mappedMode = mapCategory(currentMode);
+      
+      const payload = { 
+        score: currentScore,
+        highScore: currentScore,
+        puan: currentScore,
+        level: currentLevel,
+        tur: currentLevel,
+        mode: mappedMode,
+        mappedMode: mappedMode,
+        category: mappedMode,
+        kategori: mappedMode
+      };
+      
+      try { 
+          const timestamp = Date.now();
+          const token = await getClerkToken();
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) {
+              headers['Authorization'] = `Bearer ${token}`;
+          }
+          
+          let response = await fetch(`/api/minmat/scores?t=${timestamp}`, { 
+              method: 'POST', 
+              headers: headers, 
+              credentials: 'include',
+              body: JSON.stringify(payload) 
+          }); 
+          
+          console.log("[FRONTEND] /api/minmat/scores YanÄ±t Durumu:", response.status);
+          
+          const result = await response.json(); 
+          console.log("[FRONTEND] API YanÄ±tÄ±:", result);
+          
+          if (response.ok) { 
+              console.log("ğŸ† Puan BaÅŸarÄ±yla Kaydedildi!"); 
+              renderLeaderboard(); // Tabloyu anÄ±nda yenile 
+          } else { 
+              console.error("[FRONTEND] VeritabanÄ± HatasÄ±:", result.error || result.details || JSON.stringify(result)); 
+          } 
+      } catch (err) { 
+          console.error("[FRONTEND] AÄŸ HatasÄ±:", err); 
+      } 
+  } 
+
+    async function renderLeaderboard() {
+      console.log("=== [FRONTEND] renderLeaderboard çağrıldı ===");
+      let filterKey = "leaderAll";
+      if (leaderboardFilter === "add") filterKey = "leaderAdd";
+      else if (leaderboardFilter === "sub") filterKey = "leaderSub";
+      else if (leaderboardFilter === "mul") filterKey = "leaderMul";
+      else if (leaderboardFilter === "div") filterKey = "leaderDiv";
+      else if (leaderboardFilter === "mix") filterKey = "leaderMix";
+
+      // Highlight active filter button
+      const filterButtons = {
+        all: "btnFilterAll",
+        add: "btnFilterAdd",
+        sub: "btnFilterSub",
+        mul: "btnFilterMul",
+        div: "btnFilterDiv",
+        mix: "btnFilterMix"
+      };
+      Object.entries(filterButtons).forEach(([key, id]) => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          if (key === leaderboardFilter) {
+            btn.classList.add("modeActive");
+            btn.style.borderColor = "#22c55e";
+          } else {
+            btn.classList.remove("modeActive");
+            btn.style.borderColor = "";
+          }
+        }
+      });
+
+      console.log("[FRONTEND] Leaderboard filtresi:", leaderboardFilter);
+      document.getElementById("leaderboard").innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">⏳ Yükleniyor... / Loading...</div>`;
+
+      // Kategori dönüşümü: eski ad -> yeni ad
+      function mapCategory(oldCat) {
+        const map = {
+          "all": "hepsi",
+          "add": "topla",
+          "sub": "cikar",
+          "mul": "carp",
+          "div": "bol",
+          "mix": "karisik"
+        };
+        return map[oldCat] || "hepsi";
+      }
+
+      let scores = [];
+      try {
+        const apiFilter = mapCategory(leaderboardFilter);
+        const timestamp = Date.now();
+        console.log("[FRONTEND] API filtresi:", apiFilter);
+        
+        // Eski ve güvenilir route'u kullanalım: /api/minmat/scores
+        let response = await fetch(`/api/minmat/scores?filter=${apiFilter}&t=${timestamp}`, {
+          credentials: "include"
+        });
+        
+        console.log("[FRONTEND] /api/minmat/scores yanıt durumu:", response.status);
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log("[FRONTEND] API'den gelen ham veri:", data);
+          scores = Array.isArray(data) ? data : [];
+          
+          // Kategori dönüşümü: yeni ad -> eski ad (modeName için)
+          function mapCategoryReverse(newCat) {
+            const map = {
+              "topla": "add",
+              "cikar": "sub",
+              "carp": "mul",
+              "bol": "div",
+              "karisik": "mix"
+            };
+            return map[newCat] || "mix";
+          }
+
+          // Veriyi index.html'in beklediği formata çevir
+          scores = scores.map(entry => {
+            const mappedEntry = {
+              name: entry.nickname || "Kullanıcı",
+              score: entry.high_score,
+              level: entry.level != null ? entry.level : (entry.category === "karisik" ? Math.floor(Math.sqrt(entry.high_score / 10)) : Math.floor(entry.high_score / 10)),
+              mode: mapCategoryReverse(entry.category),
+              date: new Date(entry.updated_at).toLocaleDateString("tr-TR", {
+                hour: "2-digit",
+                minute: "2-digit"
+              }),
+              timestamp: new Date(entry.updated_at).getTime()
+            };
+            console.log("[FRONTEND] Map edilen entry:", mappedEntry);
+            return mappedEntry;
+          });
+          console.log("[FRONTEND] Hazırlanan skorlar:", scores);
+        } else {
+          try {
+            const errRes = await response.json();
+            console.error("[FRONTEND] API Hata Detayı:", errRes);
+          } catch (e) {
+            console.error("[FRONTEND] API Hata Kodu (status):", response.status);
+          }
+          scores = JSON.parse(localStorage.getItem("scores")) || [];
+        }
+      } catch (error) {
+        console.error("[FRONTEND] Veri çekilemedi:", error);
+        scores = JSON.parse(localStorage.getItem("scores")) || [];
+      }
+
+      let html = `
+        <h3 id="leaderboardTitle" style="text-align:center; color:#facc15; margin-bottom:12px;">${t(filterKey)}</h3>
+        <div class="scoreRow scoreHead">
+          <span>#</span>
+          <span>${t("colName")}</span>
+          <span>${t("colDate")}</span>
+          <span>${t("colCat")}</span>
+          <span>${t("colRound")}</span>
+          <span>${t("colScore")}</span>
+        </div>
+      `;
+
+      if (scores.length === 0) {
+        html += `<div style="text-align:center; padding:20px; color:#64748b;">Henüz skor kaydı bulunamadı.</div>`;
+      } else {
+        const top10 = scores.slice(0, 10);
+        
+        // Normalize names to handle potential badge emojis appended in the backend
+        const normPlayerName = (playerName || "").toLowerCase().trim();
+        const isMeFunc = (name) => {
+          if (!normPlayerName) return false;
+          const n = (name || "").toLowerCase().trim();
+          return n === normPlayerName || n.startsWith(normPlayerName + " ");
+        };
+        
+        let myTop10Index = top10.findIndex(s => isMeFunc(s.name));
+        
+        top10.forEach((s, i) => {
+          let medal = i + 1;
+          if (i === 0) medal = "🏆";
+          if (i === 1) medal = "⚡";
+          if (i === 2) medal = "🔥";
+
+          let cls = "";
+          if (i === 0) cls = "firstPlace";
+          if (i === 1) cls = "secondPlace";
+          if (i === 2) cls = "thirdPlace";
+
+          // If this is the current player, highlight their row
+          if (isMeFunc(s.name)) {
+            cls += " myScoreHighlight";
+          }
+
+          let displayDate = s.date;
+          if (s.timestamp) {
+            displayDate = new Date(s.timestamp).toLocaleDateString("tr-TR", {hour: '2-digit', minute:'2-digit'});
+          }
+
+          html += `
+            <div class="scoreRow ${cls}">
+              <span>${medal}</span>
+              <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHTML(s.name)}</span>
+              <span style="font-size:11px; color:#94a3b8;">${escapeHTML(displayDate)}</span>
+              <span>${modeName(s.mode)}</span>
+              <span>Lv${s.level}</span>
+              <span>⭐ ${s.score}</span>
+            </div>
+          `;
+        });
+
+        // If I am NOT in the top 10, check if I am in the top 100
+        if (myTop10Index === -1 && normPlayerName) {
+          const myOverallIndex = scores.findIndex(s => isMeFunc(s.name));
+          if (myOverallIndex !== -1) {
+            const myScoreObj = scores[myOverallIndex];
+            let displayDate = myScoreObj.date;
+            if (myScoreObj.timestamp) {
+              displayDate = new Date(myScoreObj.timestamp).toLocaleDateString("tr-TR", {hour: '2-digit', minute:'2-digit'});
+            }
+            
+            html += `
+              <div style="margin: 8px 0; border-top: 2px dashed rgba(255,255,255,0.15); height: 1px;"></div>
+              <div class="scoreRow myScoreHighlight">
+                <span>${myOverallIndex + 1}</span>
+                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHTML(myScoreObj.name)} <span style="font-size: 10px; color: #22c55e;">(Sen)</span></span>
+                <span style="font-size:11px; color:#94a3b8;">${escapeHTML(displayDate)}</span>
+                <span>${modeName(myScoreObj.mode)}</span>
+                <span>Lv${myScoreObj.level}</span>
+                <span>⭐ ${myScoreObj.score}</span>
+              </div>
+            `;
+          }
+        }
+      }
+
+      document.getElementById("leaderboard").innerHTML = html;
+    }
+
+    async function renderRewardBoard() {
+      const board = document.getElementById("rewardBoard");
+      board.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8;">⏳ Ödüller Hesaplanıyor...</div>`;
+
+      try {
+        const res = await fetch("/api/gamification");
+        const data = await res.json();
+        if (!data.success) throw new Error("API error");
+
+        const cupRewards = data.cupMatPodium72h || [];
+        const minPodium = data.minMatPodium72h || [];
+
+        let html = "";
+
+        html += `<div style="margin-bottom:24px;">`;
+        html += `<h3 style="text-align:center; color:#fbbf24; font-size:16px; margin-bottom:4px;">🏆 CupMat Ödül Sıralaması</h3>`;
+        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Bu periyot ilk 3 — ödüller bir sonraki 3 günlük periyotta aktif olur</p>`;
+        
+        if (cupRewards.length === 0) {
+          html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Henüz veri yok</div>`;
+        } else {
+          cupRewards.slice(0, 5).forEach(function(e) {
+            const medal = e.rank === 1 ? "🏆" : e.rank === 2 ? "⚡" : e.rank === 3 ? "🔥" : e.rank;
+            const bg = e.rank <= 3 ? "rgba(245,158,11,0.12)" : "rgba(255,255,255,0.04)";
+            html += `
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; margin:6px 0; border-radius:10px; background:${bg}; border:1px solid rgba(255,255,255,0.06);">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:14px; min-width:24px; text-align:center;">${medal}</span>
+                  <span style="color:#e2e8f0; font-size:13px; font-weight:600;">${escapeHTML(e.displayName)}</span>
+                </div>
+                <div style="text-align:right;">
+                  <span style="color:#fff; font-family:monospace; font-size:12px; font-weight:700;">${e.points || e.score} P</span>
+                </div>
+              </div>`;
+          });
+        }
+        html += `</div>`;
+
+        html += `<div>`;
+        html += `<h3 style="text-align:center; color:#a78bfa; font-size:16px; margin-bottom:4px;">🧮 MinMat Son 72 Saat Ödül Kürsüsü</h3>`;
+        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Son 72 saat — sadece aktif periyot ödülü olanlar (max 3 kürsü)</p>`;
+        
+        if (minPodium.length === 0) {
+          html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Son 72 saatte kayıtlı giriş yapan kullanıcı skoru yok</div>`;
+        } else {
+          minPodium.slice(0, 3).forEach(function(e, index) {
+            const icons = ["🏆", "⚡", "🔥"];
+            const bg = "rgba(167,139,250,0.12)";
+            const playerName = e.displayName || e.name || "Oyuncu";
+            const playerLevel = Number(e.level);
+            const levelText = Number.isFinite(playerLevel) && playerLevel > 0 ? playerLevel : 1;
+            const modeKey = e.mode || "mix";
+            html += `
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; margin:6px 0; border-radius:10px; background:${bg}; border:1px solid rgba(167,139,250,0.25);">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:14px; min-width:24px; text-align:center;">${icons[index] || e.rank}</span>
+                  <span style="color:#e2e8f0; font-size:13px; font-weight:600;">${escapeHTML(playerName)}</span>
+                </div>
+                <div style="text-align:right;">
+                  <span style="color:#fff; font-family:monospace; font-size:12px; font-weight:700;">${e.score} Puan</span>
+                  <div style="color:#a78bfa; font-size:10px; margin-top:2px;">Lv.${levelText} • ${shortModeName(modeKey)}</div>
+                </div>
+              </div>`;
+          });
+        }
+        html += `</div>`;
+
+        board.innerHTML = html;
+      } catch (err) {
+        console.error("Reward board fetch error:", err);
+        board.innerHTML = `<div style="text-align:center; padding:20px; color:#ef4444;">Ödül tablosu yüklenemedi</div>`;
+      }
+    }
+
+    function setLeaderboardFilter(mode) {
+      leaderboardFilter = mode;
+      renderLeaderboard();
+    }
+
+    function escapeHTML(str) {
+      if (!str) return "";
+      return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[tag] || tag));
+    }
+  </script>
+</body>
+</html>
