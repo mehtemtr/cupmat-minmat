@@ -9,5 +9,15 @@
         }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/cupmat-fetch",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/fetch-news",
+      "schedule": "30 4 * * *"
+    }
   ]
 }
