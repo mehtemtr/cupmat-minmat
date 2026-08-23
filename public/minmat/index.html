@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MinMat – Sayı Avı</title>
+  <title>MinMat â€“ SayÄ± AvÄ±</title>
   <link rel="icon" href="/icon.png" type="image/png">
 
   <!-- Google Analytics (GA4) -->
@@ -16,7 +16,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MinMat – Sayı Avı</title>
+  <title>MinMat â€“ SayÄ± AvÄ±</title>
   <link rel="icon" href="/icon.png" type="image/png">
 
   <!-- Google Analytics (GA4) -->
@@ -553,7 +553,7 @@
     }
 
     .modal-list li::before {
-      content: "•";
+      content: "â€¢";
       color: #22c55e;
     }
 
@@ -613,7 +613,7 @@
     }
 
     .modeLocked::after {
-      content: '🔒';
+      content: 'ğŸ”’';
       position: absolute;
       top: -6px;
       right: -6px;
@@ -986,21 +986,21 @@
       display: none;
     }
 
-    .minmat-badge-tier1 { /* Level 10 - Matematik Savaşçısı */
+    .minmat-badge-tier1 { /* Level 10 - Matematik SavaÅŸÃ§Ä±sÄ± */
       background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(205, 127, 50, 0.4));
       color: #cd7f32;
       border-color: rgba(205, 127, 50, 0.5);
       box-shadow: 0 0 8px rgba(205, 127, 50, 0.25);
     }
 
-    .minmat-badge-tier2 { /* Level 15 - Zihin Ustası */
+    .minmat-badge-tier2 { /* Level 15 - Zihin UstasÄ± */
       background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.45));
       color: #cbd5e1;
       border-color: rgba(148, 163, 184, 0.5);
       box-shadow: 0 0 10px rgba(148, 163, 184, 0.3);
     }
 
-    .minmat-badge-tier3 { /* Level 20 - Sayıların Efendisi */
+    .minmat-badge-tier3 { /* Level 20 - SayÄ±larÄ±n Efendisi */
       background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.45));
       color: #facc15;
       border-color: rgba(234, 179, 8, 0.5);
@@ -1061,41 +1061,41 @@
 
   <!-- Pause Overlay -->
   <div id="pauseOverlay" onclick="togglePause()">
-    <div class="pause-icon">▶️</div>
+    <div class="pause-icon">â–¶ï¸</div>
   </div>
 
-  <button type="button" class="cupmatWorldSwitch" id="btnCupmatSwitch" onclick="goToCupmat()">🏆 Cupmat'a Geç</button>
+  <button type="button" class="cupmatWorldSwitch" id="btnCupmatSwitch" onclick="goToCupmat()">ğŸ† Cupmat'a GeÃ§</button>
 
   <!-- Top Right Navigation Panel (Unified flexbox aligned to prevent mobile overlap) -->
   <div class="topRightNav" style="gap: 8px; z-index: 10000; align-items: center; display: flex; flex-direction: row-reverse;">
     <div id="minmatAuthPanel" style="display: flex; gap: 8px;"></div>
-    <button class="topRightBtn" onclick="openAbout()" id="btnAbout" title="Hakkında">ℹ️</button>
-    <button class="topRightBtn" onclick="openHelp()" id="btnHelp" title="Yardım">❓</button>
+    <button class="topRightBtn" onclick="openAbout()" id="btnAbout" title="HakkÄ±nda">â„¹ï¸</button>
+    <button class="topRightBtn" onclick="openHelp()" id="btnHelp" title="YardÄ±m">â“</button>
   </div>
 
-  <!-- MENU -->
-  <div id="menuScreen" class="screen active">
+  <!-- MENÃœ EKRANI (HÄ°DEN) -->
+  <div id="menuScreen" class="screen">
     <div class="menuCard">
       <div class="dropdown" id="menuLangDropdownContainer" style="margin-bottom: 20px;">
         <button class="dropdownBtn" onclick="toggleDropdown('menuLangDropdown')" id="menuLangDropdownBtn">
-          <span class="langFlagActive">🇹🇷</span> <span class="langLabelActive">Türkçe</span> <span class="dropdownArrow">▼</span>
+          <span class="langFlagActive">ğŸ‡¹ğŸ‡·</span> <span class="langLabelActive">TÃ¼rkÃ§e</span> <span class="dropdownArrow">â–¼</span>
         </button>
         <div class="dropdownContent" id="menuLangDropdown">
-          <a href="#" onclick="selectLang('tr', 'menuLangDropdown', event)">🇹🇷 Türkçe</a>
-          <a href="#" onclick="selectLang('en', 'menuLangDropdown', event)">🇬🇧 English</a>
-          <a href="#" onclick="selectLang('de', 'menuLangDropdown', event)">🇩🇪 Deutsch</a>
-          <a href="#" onclick="selectLang('fr', 'menuLangDropdown', event)">🇫🇷 Français</a>
-          <a href="#" onclick="selectLang('es', 'menuLangDropdown', event)">🇪🇸 Español</a>
-          <a href="#" onclick="selectLang('pt', 'menuLangDropdown', event)">🇧🇷 Português</a>
-          <a href="#" onclick="selectLang('ar', 'menuLangDropdown', event)">🇸🇦 العربية</a>
-          <a href="#" onclick="selectLang('ko', 'menuLangDropdown', event)">🇰🇷 한국어</a>
-          <a href="#" onclick="selectLang('it', 'menuLangDropdown', event)">🇮🇹 Italiano</a>
+          <a href="#" onclick="selectLang('tr', 'menuLangDropdown', event)">ğŸ‡¹ğŸ‡· TÃ¼rkÃ§e</a>
+          <a href="#" onclick="selectLang('en', 'menuLangDropdown', event)">ğŸ‡¬ğŸ‡§ English</a>
+          <a href="#" onclick="selectLang('de', 'menuLangDropdown', event)">ğŸ‡©ğŸ‡ª Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'menuLangDropdown', event)">ğŸ‡«ğŸ‡· FranÃ§ais</a>
+          <a href="#" onclick="selectLang('es', 'menuLangDropdown', event)">ğŸ‡ªğŸ‡¸ EspaÃ±ol</a>
+          <a href="#" onclick="selectLang('pt', 'menuLangDropdown', event)">ğŸ‡§ğŸ‡· PortuguÃªs</a>
+          <a href="#" onclick="selectLang('ar', 'menuLangDropdown', event)">ğŸ‡¸ğŸ‡¦ Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a>
+          <a href="#" onclick="selectLang('ko', 'menuLangDropdown', event)">ğŸ‡°ğŸ‡· í•œêµ­ì–´</a>
+          <a href="#" onclick="selectLang('it', 'menuLangDropdown', event)">ğŸ‡®ğŸ‡¹ Italiano</a>
         </div>
       </div>
       <div class="menuLogo">
         <img src="/minmat/icon.png" alt="MinMat">
       </div>
-      <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 16px;">MinMat — Sayı Avı</p>
+      <p class="menuSub" id="menuSub" style="font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 10px 0 16px;">MinMat â€” SayÄ± AvÄ±</p>
       
       <div id="authContainer" style="width: 100%; margin-bottom: 12px;"></div>
       <div id="minmatUserBadgeContainer" class="lobby-badge-wrapper" style="margin-bottom: 16px; display: none;"></div>
@@ -1103,20 +1103,20 @@
       <!-- Boost Selection Container -->
       <div id="boostSelectionContainer" style="display: none; width: 100%; margin-bottom: 16px; text-align: left; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 12px; box-sizing: border-box;">
         <div style="font-size: 11px; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-          <span id="boostBarTitle">⚡ Aktif Maç Hediyeleri</span>
+          <span id="boostBarTitle">âš¡ Aktif MaÃ§ Hediyeleri</span>
           <span id="boostExpiryLabel" style="font-size: 9px; color: #94a3b8; text-transform: none; font-weight: 600;"></span>
         </div>
         <div id="boostBarNoGifts" style="display: none; font-size: 11px; color: #94a3b8; text-align: center; padding: 8px 0;">
-          Aktif maç hediyeniz bulunmamaktadır.
+          Aktif maÃ§ hediyeniz bulunmamaktadÄ±r.
         </div>
         <div id="boostBarGiftsList" style="display: flex; flex-direction: column; gap: 8px;">
           <!-- Time Boost -->
           <div id="boostOpt-time" onclick="selectBoost('time')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">⏱️</span>
+              <span style="font-size: 16px;">â±ï¸</span>
               <div>
-                <div id="labelTimeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek Süre (+10sn)</div>
-                <div id="labelTimeDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 10 saniye fazladan başla</div>
+                <div id="labelTimeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek SÃ¼re (+10sn)</div>
+                <div id="labelTimeDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 10 saniye fazladan baÅŸla</div>
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -1127,10 +1127,10 @@
           <!-- Life Boost -->
           <div id="boostOpt-life" onclick="selectBoost('life')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">❤️</span>
+              <span style="font-size: 16px;">â¤ï¸</span>
               <div>
                 <div id="labelLifeTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Ek Can (+1 Can)</div>
-                <div id="labelLifeDesc" style="font-size: 9px; color: #94a3b8;">3 yerine 4 canla oyuna başla</div>
+                <div id="labelLifeDesc" style="font-size: 9px; color: #94a3b8;">3 yerine 4 canla oyuna baÅŸla</div>
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -1141,10 +1141,10 @@
           <!-- Score Boost -->
           <div id="boostOpt-score" onclick="selectBoost('score')" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; cursor: pointer; transition: all 0.2s;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">⭐</span>
+              <span style="font-size: 16px;">â­</span>
               <div>
-                <div id="labelScoreTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">Başlangıç Puanı (+250)</div>
-                <div id="labelScoreDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 250 puan önde başla</div>
+                <div id="labelScoreTitle" style="font-size: 12px; font-weight: 700; color: #f8fafc;">BaÅŸlangÄ±Ã§ PuanÄ± (+250)</div>
+                <div id="labelScoreDesc" style="font-size: 9px; color: #94a3b8;">Oyuna 250 puan Ã¶nde baÅŸla</div>
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -1155,75 +1155,75 @@
         </div>
       </div>
 
-      <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">🎮 Oyunu Başlat</button>
-      <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">👤 Misafir Olarak Devam Et</button>
-      <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">🔑 Giriş Yap / Kayıt Ol</button>
+      <button class="menuStartBtn" onclick="startGame()" id="btnStart" style="display: none;">ğŸ® Oyunu BaÅŸlat</button>
+      <button class="menuStartBtn" onclick="continueAsGuest()" id="btnGuest" style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 8px;">ğŸ‘¤ Misafir Olarak Devam Et</button>
+      <button class="menuStartBtn" onclick="redirectToLogin()" id="btnLoginMenu" style="background: linear-gradient(135deg, #22c55e, #16a34a);">ğŸ”‘ GiriÅŸ Yap / KayÄ±t Ol</button>
       <div id="playerInputContainer" style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
-        <input id="playerInput" type="text" maxlength="16" placeholder="İsmini yaz...">
+        <input id="playerInput" type="text" maxlength="16" placeholder="Ä°smini yaz...">
         <div id="playerInputStatus" style="font-size: 11px; font-weight: 700; margin-top: -10px; margin-bottom: 12px; text-align: center; min-height: 16px; display: none;"></div>
       </div>
-      <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>🏆 Puan Tablosu</button>
-      <button class="menuHomeBtn" onclick="if (window.self !== window.top) { window.top.location.href = '/'; } else { window.location.href = '/'; }" id="btnHome">🏠 Ana Sayfaya Dön</button>
+      <button class="menuLeaderboardBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardMenu" disabled>ğŸ† Puan Tablosu</button>
+      <button class="menuHomeBtn" onclick="if (window.self !== window.top) { window.top.location.href = '/'; } else { window.location.href = '/'; }" id="btnHome">ğŸ  Ana Sayfaya DÃ¶n</button>
     </div>
   </div>
 
   <!-- GAME -->
-  <div id="gameScreen" class="screen">
+  <div id="gameScreen" class="screen active">
     <div id="gameTitle">
-      <p id="gameSubtitle" style="font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px;">MinMat — Sayı Avı</p>
+      <p id="gameSubtitle" style="font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px;">MinMat â€” SayÄ± AvÄ±</p>
     </div>
     <div id="playerBar" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-      <span id="modeText">🎯 Topla</span>
+      <span id="modeText">ğŸ¯ Topla</span>
       <span id="gameHudBadge" class="minmat-badge minmat-badge-tier0" style="display: none;"></span>
     </div>
     <div id="topBar">
       <div class="topRow">
-        <span id="score">⭐ 0</span>
-        <span id="time">⏱️ 30</span>
+        <span id="score">â­ 0</span>
+        <span id="time">â±ï¸ 30</span>
         <span id="levelLabel">Tur 1</span>
-        <button id="pauseBtn" onclick="togglePause()">⏸️</button>
+        <button id="pauseBtn" onclick="togglePause()">â¸ï¸</button>
       </div>
       <div id="extraTimeRow" style="display: none; justify-content: center; margin: 4px 0; width: 100%;">
         <span id="extraTimeBadge" class="extraTimeActive" style="margin-left: 0;"></span>
       </div>
       <div class="topRow">
-        <span id="lives">❤️❤️❤️</span>
-        <span id="wrongBar">⚠️ 0/3</span>
-        <span id="combo">🔥 0</span>
+        <span id="lives">â¤ï¸â¤ï¸â¤ï¸</span>
+        <span id="wrongBar">âš ï¸ 0/3</span>
+        <span id="combo">ğŸ”¥ 0</span>
       </div>
     </div>
 
     <div id="modeBox">
-      <button id="modeBtn_add" onclick="setMode('add')">➕</button>
-      <button id="modeBtn_sub" onclick="setMode('sub')">➖</button>
-      <button id="modeBtn_mul" onclick="setMode('mul')">✖</button>
+      <button id="modeBtn_add" onclick="setMode('add')">â•</button>
+      <button id="modeBtn_sub" onclick="setMode('sub')">â–</button>
+      <button id="modeBtn_mul" onclick="setMode('mul')">âœ–</button>
       <button id="modeBtn_div" onclick="setMode('div')">/</button>
       <button id="modeBtn_mix" onclick="setMode('mix')" style="padding: 0;">
         <div class="mix-dice">
           <span>+</span><span>-</span>
-          <span>×</span><span>÷</span>
+          <span>Ã—</span><span>Ã·</span>
         </div>
       </button>
     </div>
 
     <div class="screenNav">
-      <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText">Menü</span></button>
-      <button class="navBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardGame">🏆 Puan Tablosu</button>
+      <button class="navBtn" onclick="if(window.self !== window.top) { window.parent.location.href = '/' } else { window.location.href = '/' }">ğŸ  <span id="navMenuText">MenÃ¼</span></button>
+      <button class="navBtn" onclick="showLeaderboardDirectly()" id="btnLeaderboardGame">ğŸ† Puan Tablosu</button>
       <div class="dropdown open-up" id="gameLangDropdownContainer">
         <button class="navBtn dropdownBtn" onclick="toggleDropdown('gameLangDropdown')">
-          <span class="langIcon">🌐</span>
-          <span id="gameLangLabel">TR</span> <span class="dropdownArrow">▼</span>
+          <span class="langIcon">ğŸŒ</span>
+          <span id="gameLangLabel">TR</span> <span class="dropdownArrow">â–¼</span>
         </button>
         <div class="dropdownContent" id="gameLangDropdown">
-          <a href="#" onclick="selectLang('tr', 'gameLangDropdown', event)">🇹🇷 Türkçe</a>
-          <a href="#" onclick="selectLang('en', 'gameLangDropdown', event)">🇬🇧 English</a>
-          <a href="#" onclick="selectLang('de', 'gameLangDropdown', event)">🇩🇪 Deutsch</a>
-          <a href="#" onclick="selectLang('fr', 'gameLangDropdown', event)">🇫🇷 Français</a>
-          <a href="#" onclick="selectLang('es', 'gameLangDropdown', event)">🇪🇸 Español</a>
-          <a href="#" onclick="selectLang('pt', 'gameLangDropdown', event)">🇧🇷 Português</a>
-          <a href="#" onclick="selectLang('ar', 'gameLangDropdown', event)">🇸🇦 العربية</a>
-          <a href="#" onclick="selectLang('ko', 'gameLangDropdown', event)">🇰🇷 한국어</a>
-          <a href="#" onclick="selectLang('it', 'gameLangDropdown', event)">🇮🇹 Italiano</a>
+          <a href="#" onclick="selectLang('tr', 'gameLangDropdown', event)">ğŸ‡¹ğŸ‡· TÃ¼rkÃ§e</a>
+          <a href="#" onclick="selectLang('en', 'gameLangDropdown', event)">ğŸ‡¬ğŸ‡§ English</a>
+          <a href="#" onclick="selectLang('de', 'gameLangDropdown', event)">ğŸ‡©ğŸ‡ª Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'gameLangDropdown', event)">ğŸ‡«ğŸ‡· FranÃ§ais</a>
+          <a href="#" onclick="selectLang('es', 'gameLangDropdown', event)">ğŸ‡ªğŸ‡¸ EspaÃ±ol</a>
+          <a href="#" onclick="selectLang('pt', 'gameLangDropdown', event)">ğŸ‡§ğŸ‡· PortuguÃªs</a>
+          <a href="#" onclick="selectLang('ar', 'gameLangDropdown', event)">ğŸ‡¸ğŸ‡¦ Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a>
+          <a href="#" onclick="selectLang('ko', 'gameLangDropdown', event)">ğŸ‡°ğŸ‡· í•œêµ­ì–´</a>
+          <a href="#" onclick="selectLang('it', 'gameLangDropdown', event)">ğŸ‡®ğŸ‡¹ Italiano</a>
         </div>
       </div>
     </div>
@@ -1239,20 +1239,20 @@
     <div id="gameOverBadgeContainer" style="margin-top: -6px; margin-bottom: 12px; display: none;"></div>
     <div id="authSaveContainer" style="width: 100%; max-width: 320px; margin: 0 auto;"></div>
     <div id="leaderboardTabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:12px;">
-      <button onclick="switchTab('scores')" id="tabScores" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(16,185,129,0.2); color:#6ee7b7; font-weight:700; font-size:13px; cursor:pointer;">🏆 Puan Tablosu</button>
-      <button onclick="switchTab('rewards')" id="tabRewards" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:13px; cursor:pointer;">🎁 Ödül Tablosu</button>
+      <button onclick="switchTab('scores')" id="tabScores" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(16,185,129,0.2); color:#6ee7b7; font-weight:700; font-size:13px; cursor:pointer;">ğŸ† Puan Tablosu</button>
+      <button onclick="switchTab('rewards')" id="tabRewards" style="padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:13px; cursor:pointer;">ğŸ Ã–dÃ¼l Tablosu</button>
     </div>
 
     <div id="scoreFilters" style="margin-bottom: 12px;">
       <button onclick="setLeaderboardFilter('all')" id="btnFilterAll">Hepsi</button>
-      <button onclick="setLeaderboardFilter('add')" id="btnFilterAdd">➕</button>
-      <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">➖</button>
-      <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">✖️</button>
+      <button onclick="setLeaderboardFilter('add')" id="btnFilterAdd">â•</button>
+      <button onclick="setLeaderboardFilter('sub')" id="btnFilterSub">â–</button>
+      <button onclick="setLeaderboardFilter('mul')" id="btnFilterMul">âœ–ï¸</button>
       <button onclick="setLeaderboardFilter('div')" id="btnFilterDiv">/</button>
       <button onclick="setLeaderboardFilter('mix')" id="btnFilterMix" style="padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center;">
         <div class="mix-dice small">
           <span>+</span><span>-</span>
-          <span>×</span><span>÷</span>
+          <span>Ã—</span><span>Ã·</span>
         </div>
       </button>
     </div>
@@ -1260,26 +1260,26 @@
     <div id="leaderboard"></div>
     <div id="rewardBoard" style="display:none; width:100%; max-width:480px; margin: 0 auto;"></div>
 
-    <button class="retryBtn" onclick="startGame()" id="btnRetry">🔄 Bir Daha</button>
-    <button class="shareScoreBtn" onclick="shareScore()" id="btnShareScore">🔗 <span id="btnShareScoreText">Skoru Paylaş (+%20 Bonus)</span></button>
+    <button class="retryBtn" onclick="startGame()" id="btnRetry">ğŸ”„ Bir Daha</button>
+    <button class="shareScoreBtn" onclick="shareScore()" id="btnShareScore">ğŸ”— <span id="btnShareScoreText">Skoru PaylaÅŸ (+%20 Bonus)</span></button>
 
     <div class="screenNav" style="margin-top:14px;margin-bottom:20px;">
-      <button class="navBtn" onclick="backToMenu()">🏠 <span id="navMenuText2">Menü</span></button>
+      <button class="navBtn" onclick="if(window.self !== window.top) { window.parent.location.href = '/' } else { window.location.href = '/' }">ğŸ  <span id="navMenuText2">MenÃ¼</span></button>
       <div class="dropdown open-up" id="goLangDropdownContainer">
         <button class="navBtn dropdownBtn" onclick="toggleDropdown('goLangDropdown')">
-          <span class="langIcon">🌐</span>
-          <span id="goLangLabel">TR</span> <span class="dropdownArrow">▼</span>
+          <span class="langIcon">ğŸŒ</span>
+          <span id="goLangLabel">TR</span> <span class="dropdownArrow">â–¼</span>
         </button>
         <div class="dropdownContent" id="goLangDropdown">
-          <a href="#" onclick="selectLang('tr', 'goLangDropdown', event)">🇹🇷 Türkçe</a>
-          <a href="#" onclick="selectLang('en', 'goLangDropdown', event)">🇬🇧 English</a>
-          <a href="#" onclick="selectLang('de', 'goLangDropdown', event)">🇩🇪 Deutsch</a>
-          <a href="#" onclick="selectLang('fr', 'goLangDropdown', event)">🇫🇷 Français</a>
-          <a href="#" onclick="selectLang('es', 'goLangDropdown', event)">🇪🇸 Español</a>
-          <a href="#" onclick="selectLang('pt', 'goLangDropdown', event)">🇧🇷 Português</a>
-          <a href="#" onclick="selectLang('ar', 'goLangDropdown', event)">🇸🇦 العربية</a>
-          <a href="#" onclick="selectLang('ko', 'goLangDropdown', event)">🇰🇷 한국어</a>
-          <a href="#" onclick="selectLang('it', 'goLangDropdown', event)">🇮🇹 Italiano</a>
+          <a href="#" onclick="selectLang('tr', 'goLangDropdown', event)">ğŸ‡¹ğŸ‡· TÃ¼rkÃ§e</a>
+          <a href="#" onclick="selectLang('en', 'goLangDropdown', event)">ğŸ‡¬ğŸ‡§ English</a>
+          <a href="#" onclick="selectLang('de', 'goLangDropdown', event)">ğŸ‡©ğŸ‡ª Deutsch</a>
+          <a href="#" onclick="selectLang('fr', 'goLangDropdown', event)">ğŸ‡«ğŸ‡· FranÃ§ais</a>
+          <a href="#" onclick="selectLang('es', 'goLangDropdown', event)">ğŸ‡ªğŸ‡¸ EspaÃ±ol</a>
+          <a href="#" onclick="selectLang('pt', 'goLangDropdown', event)">ğŸ‡§ğŸ‡· PortuguÃªs</a>
+          <a href="#" onclick="selectLang('ar', 'goLangDropdown', event)">ğŸ‡¸ğŸ‡¦ Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</a>
+          <a href="#" onclick="selectLang('ko', 'goLangDropdown', event)">ğŸ‡°ğŸ‡· í•œêµ­ì–´</a>
+          <a href="#" onclick="selectLang('it', 'goLangDropdown', event)">ğŸ‡®ğŸ‡¹ Italiano</a>
         </div>
       </div>
     </div>
@@ -1292,25 +1292,25 @@
         <h2 class="modal-title">StatMatik</h2>
       </div>
       <div class="modal-body">
-        <p id="aboutDesc">Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.</p>
-        <div class="modal-section-title" id="aboutStudioTitle">🚀 Yapımcı Stüdyo</div>
-        <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mahtem Yazılım Stüdyosu</p>
-        <div class="modal-section-title" id="aboutTeamTitle">💻 Geliştirici Ekibi</div>
+        <p id="aboutDesc">Bu oyun; zihinden iÅŸlem hÄ±zÄ±nÄ±, matematiksel zekayÄ± ve stratejik dÃ¼ÅŸÃ¼nmeyi eÄŸlenceli bir ÅŸekilde geliÅŸtirmek amacÄ±yla Cupmat & Minmat entegrasyonuyla hazÄ±rlanmÄ±ÅŸtÄ±r.</p>
+        <div class="modal-section-title" id="aboutStudioTitle">ğŸš€ YapÄ±mcÄ± StÃ¼dyo</div>
+        <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mahtem YazÄ±lÄ±m StÃ¼dyosu</p>
+        <div class="modal-section-title" id="aboutTeamTitle">ğŸ’» GeliÅŸtirici Ekibi</div>
         <p style="margin:0 0 10px 15px; font-weight:600; color:white;">Mehmet Ali Hayri Temizel & Mehtap Temizel & Harun Temizel</p>
-        <div class="modal-section-title" id="aboutVersionTitle">📌 Sürüm</div>
-        <p style="margin:0 0 10px 15px; color:#94a3b8;" id="aboutVersionVal">v1.0.0 (Mayıs 2026)</p>
+        <div class="modal-section-title" id="aboutVersionTitle">ğŸ“Œ SÃ¼rÃ¼m</div>
+        <p style="margin:0 0 10px 15px; color:#94a3b8;" id="aboutVersionVal">v1.0.0 (MayÄ±s 2026)</p>
         <div class="memorial-card">
-          <div class="memorial-title" id="aboutMemorialTitle">✨ Anılarına, Saygı Sevgi ve Rahmetle ✨</div>
+          <div class="memorial-title" id="aboutMemorialTitle">âœ¨ AnÄ±larÄ±na, SaygÄ± Sevgi ve Rahmetle âœ¨</div>
           <div class="memorial-names">
-            Mehmet Ali KILIÇ • Hayri TEMİZEL<br>
-            Lütfiye TEMİZEL • Hüseyin TEMİZEL<br>
-            Şükran TEMİZEL • Abdurrahman Hayri TEMİZEL
+            Mehmet Ali KILIÃ‡ â€¢ Hayri TEMÄ°ZEL<br>
+            LÃ¼tfiye TEMÄ°ZEL â€¢ HÃ¼seyin TEMÄ°ZEL<br>
+            ÅÃ¼kran TEMÄ°ZEL â€¢ Abdurrahman Hayri TEMÄ°ZEL
           </div>
-          <div class="memorial-footer" id="aboutMemorialFooter" style="margin-top:8px; font-size:12px; color:#fef08a;">Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.</div>
+          <div class="memorial-footer" id="aboutMemorialFooter" style="margin-top:8px; font-size:12px; color:#fef08a;">Aziz anÄ±larÄ±na ithaf edilmiÅŸtir. RuhlarÄ± ÅŸad olsun, isimleri hep yaÅŸasÄ±n.</div>
         </div>
       </div>
       <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
-        <button class="modal-close-btn" id="aboutModalCloseBtn" onclick="closeModal('aboutModal')">❌ Kapat</button>
+        <button class="modal-close-btn" id="aboutModalCloseBtn" onclick="closeModal('aboutModal')">âŒ Kapat</button>
       </div>
     </div>
   </div>
@@ -1319,18 +1319,18 @@
   <div id="helpModal" class="modal-backdrop" onclick="closeModal('helpModal')">
     <div class="modal-container" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h2 class="modal-title" id="helpModalTitle">Nasıl Oynanır?</h2>
+        <h2 class="modal-title" id="helpModalTitle">NasÄ±l OynanÄ±r?</h2>
       </div>
       <div class="modal-body">
         <ul class="modal-list">
-          <li id="helpSelectMode"><strong>Mod Seçimi:</strong> Oyun ekranından oynamak istediğiniz matematik modunu seçin.</li>
-          <li id="helpMatch"><strong>Eşleştirme:</strong> Gizlenen işlem kartı ile doğru sonuç kartını bulun.</li>
-          <li id="helpLevelUp"><strong>Seviye Atlama:</strong> Süre ve can bitmeden tüm eşleşmeleri tamamlayarak seviye atlayın.</li>
-          <li id="helpLevelLocks"><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!</li>
+          <li id="helpSelectMode"><strong>Mod SeÃ§imi:</strong> Oyun ekranÄ±ndan oynamak istediÄŸiniz matematik modunu seÃ§in.</li>
+          <li id="helpMatch"><strong>EÅŸleÅŸtirme:</strong> Gizlenen iÅŸlem kartÄ± ile doÄŸru sonuÃ§ kartÄ±nÄ± bulun.</li>
+          <li id="helpLevelUp"><strong>Seviye Atlama:</strong> SÃ¼re ve can bitmeden tÃ¼m eÅŸleÅŸmeleri tamamlayarak seviye atlayÄ±n.</li>
+          <li id="helpLevelLocks"><strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaÅŸtÄ±ÄŸÄ±nÄ±zda Ã‡Ä±karma modunun kilidi aÃ§Ä±lÄ±r!</li>
         </ul>
       </div>
       <div class="modal-footer-btn-container" style="display:flex; justify-content:flex-end;">
-        <button class="modal-close-btn" id="helpModalCloseBtn" onclick="closeModal('helpModal')">❌ Kapat</button>
+        <button class="modal-close-btn" id="helpModalCloseBtn" onclick="closeModal('helpModal')">âŒ Kapat</button>
       </div>
     </div>
   </div>
@@ -1341,326 +1341,326 @@
 
     const translations = {
       tr: {
-        shareScore: "🔗 Skoru Paylaş (+%20 Bonus)", shareBonusActive: "⚡ %20 Paylaşım Bonusu Aktif!",
-        placeholder: "İsmini yaz...", start: "Başla", home: "🏠 Ana Sayfaya Dön", puanTablosu: "🏆 Puan Tablosu",
-        gameOver: "Oyun Bitti", score: "Puan", again: "🔄 Bir Daha", leaderAll: "🏆 En İyi Puanlar",
-        leaderAdd: "🏆 Topla Puanları", leaderSub: "🏆 Çıkar Puanları", leaderMul: "🏆 Çarp Puanları",
-        leaderDiv: "🏆 Böl Puanları", leaderMix: "🏆 4 İşlem Puanları", colName: "Ad", colDate: "Tarih/Saat",
-        colCat: "Kategori", colRound: "Tur", colScore: "Puan", modeAdd: "Toplama", modeSub: "Çıkarma",
-        modeMul: "Çarpma", modeDiv: "Bölme", modeMix: "4 İşlem", shortAdd: "Topla", shortSub: "Çıkar",
-        shortMul: "Çarp", shortDiv: "Böl", shortMix: "4 İşlem", round: "Tur", nameErr: "İsim en az 3 karakter olmalı",
-        guest: "Misafir", menu: "Menü", subtitle: "MinMat — Sayı Avı", all: "Hepsi",
-        authWarn: "⚠️ Global sıralamaya girmek ve ödül kazanmak için giriş yapmalısınız.", authVerified: "✓ Doğrulanmış Hesap",
-        authLoginBtn: "🔑 Giriş Yap / Google ile Bağlan", authSaveWarn: "⚠️ Giriş yapmadığınız için skorunuz dünya genel sıralamasına kaydedilemedi.",
-        signout: "Çıkış Yap",
-        cupmatSwitch: "🏠 StatMatik'e Dön",
-        saving: "⏳ Kaydediliyor...", saved: "✓ Başarıyla kaydedildi!",
-        sysInfoTitle: "🔄 Süre Sistemi Güncellendi!",
-        sysInfoContent: "• MinMat süre birikme hatası giderilmiş ve <strong>Seviye 8 ve üzeri yanlış skorlar temizlenmiştir.</strong><br>• Ek süre kullanımı tek bir oyunda <strong>en fazla 10 saniye</strong> ile sınırlandırılmıştır.<br>• Yeni <strong>süre aktarımı (%50)</strong> ve artan süre bonuslarıyla artık Seviye 8 ve üzerine <strong>adil bir şekilde ulaşabilirsiniz!</strong>",
-        btnGuestText: "👤 Misafir Olarak Devam Et",
-        btnLoginMenuText: "🔑 Giriş Yap / Kayıt Ol",
-        guestMode: "👤 Misafir Modu:",
-        change: "Değiştir",
-        signin: "Giriş Yap",
-        about: "Hakkında",
-        help: "Yardım",
-        aboutDesc: "Bu oyun; zihinden işlem hızını, matematiksel zekayı ve stratejik düşünmeyi eğlenceli bir şekilde geliştirmek amacıyla Cupmat & Minmat entegrasyonuyla hazırlanmıştır.",
-        aboutStudio: "🚀 Yapımcı Stüdyo",
-        aboutTeam: "💻 Geliştirici Ekibi",
-        aboutVersion: "📌 Sürüm",
-        aboutVersionValue: "v1.0.0 (Mayıs 2026)",
-        aboutMemorialTitle: "✨ Anılarına, Saygı Sevgi ve Rahmetle ✨",
-        aboutMemorialFooter: "Aziz anılarına ithaf edilmiştir. Ruhları şad olsun, isimleri hep yaşasın.",
-        helpTitle: "Nasıl Oynanır?",
-        helpClose: "❌ Kapat",
-        helpSelectMode: "<strong>Mod Seçimi:</strong> Oyun ekranından oynamak istediğiniz matematik modunu seçin.",
-        helpMatch: "<strong>Eşleştirme:</strong> Gizlenen işlem kartı ile doğru sonuç kartını bulun.",
-        helpLevelUp: "<strong>Seviye Atlama:</strong> Süre ve can bitmeden tüm eşleşmeleri tamamlayarak seviye atlayın.",
-        helpLevelLocks: "<strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaştığınızda Çıkarma modunun kilidi açılır!"
+        shareScore: "ğŸ”— Skoru PaylaÅŸ (+%20 Bonus)", shareBonusActive: "âš¡ %20 PaylaÅŸÄ±m Bonusu Aktif!",
+        placeholder: "Ä°smini yaz...", start: "BaÅŸla", home: "ğŸ  Ana Sayfaya DÃ¶n", puanTablosu: "ğŸ† Puan Tablosu",
+        gameOver: "Oyun Bitti", score: "Puan", again: "ğŸ”„ Bir Daha", leaderAll: "ğŸ† En Ä°yi Puanlar",
+        leaderAdd: "ğŸ† Topla PuanlarÄ±", leaderSub: "ğŸ† Ã‡Ä±kar PuanlarÄ±", leaderMul: "ğŸ† Ã‡arp PuanlarÄ±",
+        leaderDiv: "ğŸ† BÃ¶l PuanlarÄ±", leaderMix: "ğŸ† 4 Ä°ÅŸlem PuanlarÄ±", colName: "Ad", colDate: "Tarih/Saat",
+        colCat: "Kategori", colRound: "Tur", colScore: "Puan", modeAdd: "Toplama", modeSub: "Ã‡Ä±karma",
+        modeMul: "Ã‡arpma", modeDiv: "BÃ¶lme", modeMix: "4 Ä°ÅŸlem", shortAdd: "Topla", shortSub: "Ã‡Ä±kar",
+        shortMul: "Ã‡arp", shortDiv: "BÃ¶l", shortMix: "4 Ä°ÅŸlem", round: "Tur", nameErr: "Ä°sim en az 3 karakter olmalÄ±",
+        guest: "Misafir", menu: "MenÃ¼", subtitle: "MinMat â€” SayÄ± AvÄ±", all: "Hepsi",
+        authWarn: "âš ï¸ Global sÄ±ralamaya girmek ve Ã¶dÃ¼l kazanmak iÃ§in giriÅŸ yapmalÄ±sÄ±nÄ±z.", authVerified: "âœ“ DoÄŸrulanmÄ±ÅŸ Hesap",
+        authLoginBtn: "ğŸ”‘ GiriÅŸ Yap / Google ile BaÄŸlan", authSaveWarn: "âš ï¸ GiriÅŸ yapmadÄ±ÄŸÄ±nÄ±z iÃ§in skorunuz dÃ¼nya genel sÄ±ralamasÄ±na kaydedilemedi.",
+        signout: "Ã‡Ä±kÄ±ÅŸ Yap",
+        cupmatSwitch: "ğŸ  StatMatik'e DÃ¶n",
+        saving: "â³ Kaydediliyor...", saved: "âœ“ BaÅŸarÄ±yla kaydedildi!",
+        sysInfoTitle: "ğŸ”„ SÃ¼re Sistemi GÃ¼ncellendi!",
+        sysInfoContent: "â€¢ MinMat sÃ¼re birikme hatasÄ± giderilmiÅŸ ve <strong>Seviye 8 ve Ã¼zeri yanlÄ±ÅŸ skorlar temizlenmiÅŸtir.</strong><br>â€¢ Ek sÃ¼re kullanÄ±mÄ± tek bir oyunda <strong>en fazla 10 saniye</strong> ile sÄ±nÄ±rlandÄ±rÄ±lmÄ±ÅŸtÄ±r.<br>â€¢ Yeni <strong>sÃ¼re aktarÄ±mÄ± (%50)</strong> ve artan sÃ¼re bonuslarÄ±yla artÄ±k Seviye 8 ve Ã¼zerine <strong>adil bir ÅŸekilde ulaÅŸabilirsiniz!</strong>",
+        btnGuestText: "ğŸ‘¤ Misafir Olarak Devam Et",
+        btnLoginMenuText: "ğŸ”‘ GiriÅŸ Yap / KayÄ±t Ol",
+        guestMode: "ğŸ‘¤ Misafir Modu:",
+        change: "DeÄŸiÅŸtir",
+        signin: "GiriÅŸ Yap",
+        about: "HakkÄ±nda",
+        help: "YardÄ±m",
+        aboutDesc: "Bu oyun; zihinden iÅŸlem hÄ±zÄ±nÄ±, matematiksel zekayÄ± ve stratejik dÃ¼ÅŸÃ¼nmeyi eÄŸlenceli bir ÅŸekilde geliÅŸtirmek amacÄ±yla Cupmat & Minmat entegrasyonuyla hazÄ±rlanmÄ±ÅŸtÄ±r.",
+        aboutStudio: "ğŸš€ YapÄ±mcÄ± StÃ¼dyo",
+        aboutTeam: "ğŸ’» GeliÅŸtirici Ekibi",
+        aboutVersion: "ğŸ“Œ SÃ¼rÃ¼m",
+        aboutVersionValue: "v1.0.0 (MayÄ±s 2026)",
+        aboutMemorialTitle: "âœ¨ AnÄ±larÄ±na, SaygÄ± Sevgi ve Rahmetle âœ¨",
+        aboutMemorialFooter: "Aziz anÄ±larÄ±na ithaf edilmiÅŸtir. RuhlarÄ± ÅŸad olsun, isimleri hep yaÅŸasÄ±n.",
+        helpTitle: "NasÄ±l OynanÄ±r?",
+        helpClose: "âŒ Kapat",
+        helpSelectMode: "<strong>Mod SeÃ§imi:</strong> Oyun ekranÄ±ndan oynamak istediÄŸiniz matematik modunu seÃ§in.",
+        helpMatch: "<strong>EÅŸleÅŸtirme:</strong> Gizlenen iÅŸlem kartÄ± ile doÄŸru sonuÃ§ kartÄ±nÄ± bulun.",
+        helpLevelUp: "<strong>Seviye Atlama:</strong> SÃ¼re ve can bitmeden tÃ¼m eÅŸleÅŸmeleri tamamlayarak seviye atlayÄ±n.",
+        helpLevelLocks: "<strong>Seviye Kilitleri:</strong> Toplama modunda 4. Seviyeye ulaÅŸtÄ±ÄŸÄ±nÄ±zda Ã‡Ä±karma modunun kilidi aÃ§Ä±lÄ±r!"
       },
       en: {
-        shareScore: "🔗 Share Score (+20% Bonus)", shareBonusActive: "⚡ 20% Share Bonus Active!",
-        placeholder: "Enter your name...", start: "Start", home: "🏠 Back to Home", puanTablosu: "🏆 Leaderboard",
-        gameOver: "Game Over", score: "Score", again: "🔄 Play Again", leaderAll: "🏆 Best Scores",
-        leaderAdd: "🏆 Addition Scores", leaderSub: "🏆 Subtraction Scores", leaderMul: "🏆 Multiplication Scores",
-        leaderDiv: "🏆 Division Scores", leaderMix: "🏆 Mixed Scores", colName: "Name", colDate: "Date/Time",
+        shareScore: "ğŸ”— Share Score (+20% Bonus)", shareBonusActive: "âš¡ 20% Share Bonus Active!",
+        placeholder: "Enter your name...", start: "Start", home: "ğŸ  Back to Home", puanTablosu: "ğŸ† Leaderboard",
+        gameOver: "Game Over", score: "Score", again: "ğŸ”„ Play Again", leaderAll: "ğŸ† Best Scores",
+        leaderAdd: "ğŸ† Addition Scores", leaderSub: "ğŸ† Subtraction Scores", leaderMul: "ğŸ† Multiplication Scores",
+        leaderDiv: "ğŸ† Division Scores", leaderMix: "ğŸ† Mixed Scores", colName: "Name", colDate: "Date/Time",
         colCat: "Category", colRound: "Round", colScore: "Score", modeAdd: "Addition", modeSub: "Subtraction",
         modeMul: "Multiplication", modeDiv: "Division", modeMix: "Mixed", shortAdd: "Add", shortSub: "Sub",
         shortMul: "Mul", shortDiv: "Div", shortMix: "Mixed", round: "Round", nameErr: "Name must be at least 3 characters",
-        guest: "Guest", menu: "Menu", subtitle: "MinMat — Brain & Math Game", all: "All",
-        authWarn: "⚠️ You must sign in to enter the global leaderboard and win prizes.", authVerified: "✓ Verified Account",
-        authLoginBtn: "🔑 Sign In / Connect with Google", authSaveWarn: "⚠️ Since you are not signed in, your score could not be saved to the global rankings.",
+        guest: "Guest", menu: "Home", subtitle: "MinMat â€” Brain & Math Game", all: "All",
+        authWarn: "âš ï¸ You must sign in to enter the global leaderboard and win prizes.", authVerified: "âœ“ Verified Account",
+        authLoginBtn: "ğŸ”‘ Sign In / Connect with Google", authSaveWarn: "âš ï¸ Since you are not signed in, your score could not be saved to the global rankings.",
         signout: "Sign Out",
-        cupmatSwitch: "🏠 Back to StatMatik",
-        saving: "⏳ Saving...", saved: "✓ Saved successfully!",
-        sysInfoTitle: "🔄 Time System Updated!",
-        sysInfoContent: "• MinMat time accumulation bug has been fixed and <strong>scores with Level 8+ have been cleaned up.</strong><br>• Extra time usage is limited to <strong>a maximum of 10 seconds</strong> per game.<br>• With the new <strong>time carry-over (50%)</strong> and scaling time bonuses, you can now <strong>fairly reach Level 8 and beyond!</strong>",
-        btnGuestText: "👤 Continue as Guest",
-        btnLoginMenuText: "🔑 Sign In / Sign Up",
-        guestMode: "👤 Guest Mode:",
+        cupmatSwitch: "ğŸ  Back to StatMatik",
+        saving: "â³ Saving...", saved: "âœ“ Saved successfully!",
+        sysInfoTitle: "ğŸ”„ Time System Updated!",
+        sysInfoContent: "â€¢ MinMat time accumulation bug has been fixed and <strong>scores with Level 8+ have been cleaned up.</strong><br>â€¢ Extra time usage is limited to <strong>a maximum of 10 seconds</strong> per game.<br>â€¢ With the new <strong>time carry-over (50%)</strong> and scaling time bonuses, you can now <strong>fairly reach Level 8 and beyond!</strong>",
+        btnGuestText: "ğŸ‘¤ Continue as Guest",
+        btnLoginMenuText: "ğŸ”‘ Sign In / Sign Up",
+        guestMode: "ğŸ‘¤ Guest Mode:",
         change: "Change",
         signin: "Sign In",
         about: "About",
         help: "Help",
         aboutDesc: "This game is designed to develop mental calculation speed, mathematical intelligence, and strategic thinking in a fun way through the integration of CupMat & MinMat.",
-        aboutStudio: "🚀 Production Studio",
-        aboutTeam: "💻 Developer Team",
-        aboutVersion: "📌 Version",
+        aboutStudio: "ğŸš€ Production Studio",
+        aboutTeam: "ğŸ’» Developer Team",
+        aboutVersion: "ğŸ“Œ Version",
         aboutVersionValue: "v1.0.0 (May 2026)",
-        aboutMemorialTitle: "✨ In Loving Memory, with Respect and Grace ✨",
+        aboutMemorialTitle: "âœ¨ In Loving Memory, with Respect and Grace âœ¨",
         aboutMemorialFooter: "Dedicated to their cherished memory. May their souls rest in peace, and their names live forever.",
         helpTitle: "How to Play?",
-        helpClose: "❌ Close",
+        helpClose: "âŒ Close",
         helpSelectMode: "<strong>Select Mode:</strong> Select the math mode you want to play on the game screen.",
         helpMatch: "<strong>Matching:</strong> Match the hidden operation card with the correct result card.",
         helpLevelUp: "<strong>Level Up:</strong> Complete all matches before your time or lives run out to level up.",
         helpLevelLocks: "<strong>Level Locks:</strong> Reaching Level 4 in Addition mode unlocks Subtraction mode!"
       },
       de: {
-        shareScore: "🔗 Ergebnis teilen (+20% Bonus)", shareBonusActive: "⚡ 20% Teilungsbonus aktiv!",
-        placeholder: "Name eingeben...", start: "Starten", home: "🏠 Zurück zur Startseite", puanTablosu: "🏆 Bestenliste",
-        gameOver: "Spiel Vorbei", score: "Punkte", again: "🔄 Nochmal", leaderAll: "🏆 Beste Punkte",
-        leaderAdd: "🏆 Addition Punkte", leaderSub: "🏆 Subtraktion Punkte", leaderMul: "🏆 Multiplikation Punkte",
-        leaderDiv: "🏆 Division Punkte", leaderMix: "🏆 Gemischt Punkte", colName: "Name", colDate: "Datum/Uhrzeit",
+        shareScore: "ğŸ”— Ergebnis teilen (+20% Bonus)", shareBonusActive: "âš¡ 20% Teilungsbonus aktiv!",
+        placeholder: "Name eingeben...", start: "Starten", home: "ğŸ  ZurÃ¼ck zur Startseite", puanTablosu: "ğŸ† Bestenliste",
+        gameOver: "Spiel Vorbei", score: "Punkte", again: "ğŸ”„ Nochmal", leaderAll: "ğŸ† Beste Punkte",
+        leaderAdd: "ğŸ† Addition Punkte", leaderSub: "ğŸ† Subtraktion Punkte", leaderMul: "ğŸ† Multiplikation Punkte",
+        leaderDiv: "ğŸ† Division Punkte", leaderMix: "ğŸ† Gemischt Punkte", colName: "Name", colDate: "Datum/Uhrzeit",
         colCat: "Kategorie", colRound: "Runde", colScore: "Punkte", modeAdd: "Addition", modeSub: "Subtraktion",
         modeMul: "Multiplikation", modeDiv: "Division", modeMix: "Gemischt", shortAdd: "Add", shortSub: "Sub",
         shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Runde", nameErr: "Name muss mindestens 3 Zeichen haben",
-        guest: "Gast", menu: "Menü", subtitle: "MinMat — Gehirn- & Mathe-Spiel", all: "Alle",
-        authWarn: "⚠️ Sie müssen sich anmelden, um an der globalen Bestenliste teilzunehmen.", authVerified: "✓ Verifiziertes Konto",
-        authLoginBtn: "🔑 Einloggen / Google-Verbindung", authSaveWarn: "⚠️ Da Sie nicht angemeldet sind, wurde Ihr Punktestand nicht in die globale Liste eingetragen.",
+        guest: "Gast", menu: "MenÃ¼", subtitle: "MinMat â€” Gehirn- & Mathe-Spiel", all: "Alle",
+        authWarn: "âš ï¸ Sie mÃ¼ssen sich anmelden, um an der globalen Bestenliste teilzunehmen.", authVerified: "âœ“ Verifiziertes Konto",
+        authLoginBtn: "ğŸ”‘ Einloggen / Google-Verbindung", authSaveWarn: "âš ï¸ Da Sie nicht angemeldet sind, wurde Ihr Punktestand nicht in die globale Liste eingetragen.",
         signout: "Abmelden",
-        cupmatSwitch: "🏆 Zu Cupmat (Neue Updates ansehen)",
-        saving: "⏳ Speichern...", saved: "✓ Erfolgreich gespeichert!",
-        sysInfoTitle: "🔄 System Aktualisiert!",
-        sysInfoContent: "• Neues <strong>E-Mail + Passwort</strong>-System ist aktiv<br>• <strong>Gäste</strong> können keine Belohnungen erhalten oder auf der Bestenliste erscheinen<br>• Die Sitzung wird zwischen <strong>MinMat &amp; CupMat</strong> geteilt<br>• Sie können die neuen Turnier-Updates auf CupMat ansehen!",
-        btnGuestText: "👤 Als Gast fortfahren",
-        btnLoginMenuText: "🔑 Einloggen / Registrieren",
-        guestMode: "👤 Gastmodus:",
-        change: "Ändern",
+        cupmatSwitch: "ğŸ† Zu Cupmat (Neue Updates ansehen)",
+        saving: "â³ Speichern...", saved: "âœ“ Erfolgreich gespeichert!",
+        sysInfoTitle: "ğŸ”„ System Aktualisiert!",
+        sysInfoContent: "â€¢ Neues <strong>E-Mail + Passwort</strong>-System ist aktiv<br>â€¢ <strong>GÃ¤ste</strong> kÃ¶nnen keine Belohnungen erhalten oder auf der Bestenliste erscheinen<br>â€¢ Die Sitzung wird zwischen <strong>MinMat &amp; CupMat</strong> geteilt<br>â€¢ Sie kÃ¶nnen die neuen Turnier-Updates auf CupMat ansehen!",
+        btnGuestText: "ğŸ‘¤ Als Gast fortfahren",
+        btnLoginMenuText: "ğŸ”‘ Einloggen / Registrieren",
+        guestMode: "ğŸ‘¤ Gastmodus:",
+        change: "Ã„ndern",
         signin: "Einloggen",
-        about: "Über",
+        about: "Ãœber",
         help: "Hilfe",
-        aboutDesc: "Dieses Spiel wurde entwickelt, um die mentale Rechengeschwindigkeit, die mathematische Intelligenz und das strategische Denken auf spielerische Weise durch die Integration von CupMat & MinMat zu fördern.",
-        aboutStudio: "🚀 Produktionsstudio",
-        aboutTeam: "💻 Entwicklerteam",
-        aboutVersion: "📌 Version",
+        aboutDesc: "Dieses Spiel wurde entwickelt, um die mentale Rechengeschwindigkeit, die mathematische Intelligenz und das strategische Denken auf spielerische Weise durch die Integration von CupMat & MinMat zu fÃ¶rdern.",
+        aboutStudio: "ğŸš€ Produktionsstudio",
+        aboutTeam: "ğŸ’» Entwicklerteam",
+        aboutVersion: "ğŸ“Œ Version",
         aboutVersionValue: "v1.0.0 (Mai 2026)",
-        aboutMemorialTitle: "✨ In liebevollem Gedenken, mit Respekt und Gnade ✨",
-        aboutMemorialFooter: "Ihrem geschätzten Andenken gewidmet. Mögen ihre Seelen in Frieden ruhen und ihre Namen ewig leben.",
+        aboutMemorialTitle: "âœ¨ In liebevollem Gedenken, mit Respekt und Gnade âœ¨",
+        aboutMemorialFooter: "Ihrem geschÃ¤tzten Andenken gewidmet. MÃ¶gen ihre Seelen in Frieden ruhen und ihre Namen ewig leben.",
         helpTitle: "Spielanleitung",
-        helpClose: "❌ Schließen",
-        helpSelectMode: "<strong>Modus wählen:</strong> Wählen Sie auf dem Spielbildschirm den gewünschten Mathe-Modus aus.",
+        helpClose: "âŒ SchlieÃŸen",
+        helpSelectMode: "<strong>Modus wÃ¤hlen:</strong> WÃ¤hlen Sie auf dem Spielbildschirm den gewÃ¼nschten Mathe-Modus aus.",
         helpMatch: "<strong>Zuordnung:</strong> Ordnen Sie die verdeckte Rechenkarte der richtigen Ergebniskarte zu.",
-        helpLevelUp: "<strong>Level-Up:</strong> Schließen Sie alle Zuordnungen ab, bevor die Zeit oder die Leben ablaufen, um das nächste Level zu erreichen.",
+        helpLevelUp: "<strong>Level-Up:</strong> SchlieÃŸen Sie alle Zuordnungen ab, bevor die Zeit oder die Leben ablaufen, um das nÃ¤chste Level zu erreichen.",
         helpLevelLocks: "<strong>Level-Sperren:</strong> Das Erreichen von Level 4 im Additionsmodus schaltet den Subtraktionsmodus frei!"
       },
       fr: {
-        shareScore: "🔗 Partager le score (+20% bonus)", shareBonusActive: "⚡ Bonus de partage de 20% actif !",
-        placeholder: "Entrez votre nom...", start: "Commencer", home: "🏠 Retour à l'accueil", puanTablosu: "🏆 Classement",
-        gameOver: "Jeu Terminé", score: "Score", again: "🔄 Rejouer", leaderAll: "🏆 Meilleurs Scores",
-        leaderAdd: "🏆 Scores Addition", leaderSub: "🏆 Scores Soustraction", leaderMul: "🏆 Scores Multiplication",
-        leaderDiv: "🏆 Scores Division", leaderMix: "🏆 Scores Mixte", colName: "Nom", colDate: "Date/Heure",
-        colCat: "Catégorie", colRound: "Tour", colScore: "Score", modeAdd: "Addition", modeSub: "Soustraction",
+        shareScore: "ğŸ”— Partager le score (+20% bonus)", shareBonusActive: "âš¡ Bonus de partage de 20% actif !",
+        placeholder: "Entrez votre nom...", start: "Commencer", home: "ğŸ  Retour Ã  l'accueil", puanTablosu: "ğŸ† Classement",
+        gameOver: "Jeu TerminÃ©", score: "Score", again: "ğŸ”„ Rejouer", leaderAll: "ğŸ† Meilleurs Scores",
+        leaderAdd: "ğŸ† Scores Addition", leaderSub: "ğŸ† Scores Soustraction", leaderMul: "ğŸ† Scores Multiplication",
+        leaderDiv: "ğŸ† Scores Division", leaderMix: "ğŸ† Scores Mixte", colName: "Nom", colDate: "Date/Heure",
+        colCat: "CatÃ©gorie", colRound: "Tour", colScore: "Score", modeAdd: "Addition", modeSub: "Soustraction",
         modeMul: "Multiplication", modeDiv: "Division", modeMix: "Mixte", shortAdd: "Add", shortSub: "Sub",
-        shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Tour", nameErr: "Le nom doit comporter au menos 3 caractères",
-        guest: "Invité", menu: "Menu", subtitle: "MinMat — Jeu de Cerveau & de Mathématiques", all: "Tous",
-        authWarn: "⚠️ Vous devez vous connecter pour figurer dans le classement mondial et gagner des prix.", authVerified: "✓ Compte Vérifié",
-        authLoginBtn: "🔑 Se connecter / Google", authSaveWarn: "⚠️ Comme vous n'êtes pas connecté, votre score n'a pas pu être enregistré.",
-        signout: "Déconnexion",
-        cupmatSwitch: "🏆 Aller à Cupmat (Voir les nouveautés)",
-        saving: "⏳ Enregistrement...", saved: "✓ Enregistré avec succès!",
-        sysInfoTitle: "🔄 Système Mis à Jour !",
-        sysInfoContent: "• Le nouveau système <strong>e-mail + mot de passe</strong> est actif<br>• Les <strong>invités</strong> ne peuvent pas gagner de récompenses ni figurer au classement<br>• La session est partagée entre <strong>MinMat &amp; CupMat</strong><br>• Vous pouvez consulter les nouvelles mises à jour du tournoi sur CupMat !",
-        btnGuestText: "👤 Continuer en tant qu'invité",
-        btnLoginMenuText: "🔑 Se connecter / S'inscrire",
-        guestMode: "👤 Mode invité :",
+        shortMul: "Mul", shortDiv: "Div", shortMix: "Mix", round: "Tour", nameErr: "Le nom doit comporter au menos 3 caractÃ¨res",
+        guest: "InvitÃ©", menu: "Home", subtitle: "MinMat â€” Jeu de Cerveau & de MathÃ©matiques", all: "Tous",
+        authWarn: "âš ï¸ Vous devez vous connecter pour figurer dans le classement mondial et gagner des prix.", authVerified: "âœ“ Compte VÃ©rifiÃ©",
+        authLoginBtn: "ğŸ”‘ Se connecter / Google", authSaveWarn: "âš ï¸ Comme vous n'Ãªtes pas connectÃ©, votre score n'a pas pu Ãªtre enregistrÃ©.",
+        signout: "DÃ©connexion",
+        cupmatSwitch: "ğŸ† Aller Ã  Cupmat (Voir les nouveautÃ©s)",
+        saving: "â³ Enregistrement...", saved: "âœ“ EnregistrÃ© avec succÃ¨s!",
+        sysInfoTitle: "ğŸ”„ SystÃ¨me Mis Ã  Jour !",
+        sysInfoContent: "â€¢ Le nouveau systÃ¨me <strong>e-mail + mot de passe</strong> est actif<br>â€¢ Les <strong>invitÃ©s</strong> ne peuvent pas gagner de rÃ©compenses ni figurer au classement<br>â€¢ La session est partagÃ©e entre <strong>MinMat &amp; CupMat</strong><br>â€¢ Vous pouvez consulter les nouvelles mises Ã  jour du tournoi sur CupMat !",
+        btnGuestText: "ğŸ‘¤ Continuer en tant qu'invitÃ©",
+        btnLoginMenuText: "ğŸ”‘ Se connecter / S'inscrire",
+        guestMode: "ğŸ‘¤ Mode invitÃ© :",
         change: "Modifier",
         signin: "Se connecter",
-        about: "À propos",
+        about: "Ã€ propos",
         help: "Aide",
-        aboutDesc: "Ce jeu est conçu pour développer la vitesse de calcul mental, l'intelligence mathématique et la pensée stratégique de manière ludique grâce à l'intégration de CupMat & MinMat.",
-        aboutStudio: "🚀 Studio de Production",
-        aboutTeam: "💻 Équipe de Développement",
-        aboutVersion: "📌 Version",
+        aboutDesc: "Ce jeu est conÃ§u pour dÃ©velopper la vitesse de calcul mental, l'intelligence mathÃ©matique et la pensÃ©e stratÃ©gique de maniÃ¨re ludique grÃ¢ce Ã  l'intÃ©gration de CupMat & MinMat.",
+        aboutStudio: "ğŸš€ Studio de Production",
+        aboutTeam: "ğŸ’» Ã‰quipe de DÃ©veloppement",
+        aboutVersion: "ğŸ“Œ Version",
         aboutVersionValue: "v1.0.0 (Mai 2026)",
-        aboutMemorialTitle: "✨ À leur mémoire, avec respect, amour et grâce ✨",
-        aboutMemorialFooter: "Dédié à leur précieuse mémoire. Que leurs âmes reposent en paix et que leurs noms vivent pour toujours.",
+        aboutMemorialTitle: "âœ¨ Ã€ leur mÃ©moire, avec respect, amour et grÃ¢ce âœ¨",
+        aboutMemorialFooter: "DÃ©diÃ© Ã  leur prÃ©cieuse mÃ©moire. Que leurs Ã¢mes reposent en paix et que leurs noms vivent pour toujours.",
         helpTitle: "Comment jouer ?",
-        helpClose: "❌ Fermer",
-        helpSelectMode: "<strong>Sélection du mode :</strong> Sélectionnez le mode mathématique auquel vous souhaitez jouer sur l'écran de jeu.",
-        helpMatch: "<strong>Association :</strong> Associez la carte d'opération cachée à la bonne carte de résultat.",
-        helpLevelUp: "<strong>Passage au niveau supérieur :</strong> Terminez toutes les associations avant de manquer de temps ou de vies pour passer au niveau supérieur.",
-        helpLevelLocks: "<strong>Verrouillage de niveau :</strong> Atteindre le niveau 4 en mode Addition déverrouille le mode Soustraction !"
+        helpClose: "âŒ Fermer",
+        helpSelectMode: "<strong>SÃ©lection du mode :</strong> SÃ©lectionnez le mode mathÃ©matique auquel vous souhaitez jouer sur l'Ã©cran de jeu.",
+        helpMatch: "<strong>Association :</strong> Associez la carte d'opÃ©ration cachÃ©e Ã  la bonne carte de rÃ©sultat.",
+        helpLevelUp: "<strong>Passage au niveau supÃ©rieur :</strong> Terminez toutes les associations avant de manquer de temps ou de vies pour passer au niveau supÃ©rieur.",
+        helpLevelLocks: "<strong>Verrouillage de niveau :</strong> Atteindre le niveau 4 en mode Addition dÃ©verrouille le mode Soustraction !"
       },
       es: {
-        shareScore: "🔗 Compartir puntuación (+20% bono)", shareBonusActive: "⚡ ¡Bono de compartir de 20% activo!",
-        placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "🏠 Ir al Inicio", puanTablosu: "🏆 Clasificación",
-        gameOver: "Juego Terminado", score: "Puntuación", again: "🔄 Jugar de Nuevo", leaderAll: "🏆 Mejores Puntuaciones",
-        leaderAdd: "🏆 Puntos Suma", leaderSub: "🏆 Puntos Resta", leaderMul: "🏆 Puntos Multiplikación",
-        leaderDiv: "🏆 Puntos División", leaderMix: "🏆 Puntos Mixto", colName: "Nombre", colDate: "Fecha/Hora",
-        colCat: "Categoría", colRound: "Ronda", colScore: "Puntos", modeAdd: "Suma", modeSub: "Resta",
-        modeMul: "Multiplikación", modeDiv: "División", modeMix: "Mixto", shortAdd: "Suma", shortSub: "Resta",
+        shareScore: "ğŸ”— Compartir puntuaciÃ³n (+20% bono)", shareBonusActive: "âš¡ Â¡Bono de compartir de 20% activo!",
+        placeholder: "Ingresa tu nombre...", start: "Comenzar", home: "ğŸ  Ir al Inicio", puanTablosu: "ğŸ† ClasificaciÃ³n",
+        gameOver: "Juego Terminado", score: "PuntuaciÃ³n", again: "ğŸ”„ Jugar de Nuevo", leaderAll: "ğŸ† Mejores Puntuaciones",
+        leaderAdd: "ğŸ† Puntos Suma", leaderSub: "ğŸ† Puntos Resta", leaderMul: "ğŸ† Puntos MultiplikaciÃ³n",
+        leaderDiv: "ğŸ† Puntos DivisiÃ³n", leaderMix: "ğŸ† Puntos Mixto", colName: "Nombre", colDate: "Fecha/Hora",
+        colCat: "CategorÃ­a", colRound: "Ronda", colScore: "Puntos", modeAdd: "Suma", modeSub: "Resta",
+        modeMul: "MultiplikaciÃ³n", modeDiv: "DivisiÃ³n", modeMix: "Mixto", shortAdd: "Suma", shortSub: "Resta",
         shortMul: "Mult", shortDiv: "Div", shortMix: "Mix", round: "Ronda", nameErr: "El nombre debe tener al menos 3 caracteres",
-        guest: "Invitado", menu: "Menü", subtitle: "MinMat — Juego de Cerebro y Matemáticas", all: "Todos",
-        authWarn: "⚠️ Debes iniciar sesión para ingresar a la tabla de classificação global y ganar premios.", authVerified: "✓ Cuenta Verificada",
-        authLoginBtn: "🔑 Iniciar Sesión / Google", authSaveWarn: "⚠️ Como no has iniciado sesión, tu puntuación no se pudo guardar la tabla global.",
+        guest: "Invitado", menu: "MenÃ¼", subtitle: "MinMat â€” Juego de Cerebro y MatemÃ¡ticas", all: "Todos",
+        authWarn: "âš ï¸ Debes iniciar sesiÃ³n para ingresar a la tabla de classificaÃ§Ã£o global y ganar premios.", authVerified: "âœ“ Cuenta Verificada",
+        authLoginBtn: "ğŸ”‘ Iniciar SesiÃ³n / Google", authSaveWarn: "âš ï¸ Como no has iniciado sesiÃ³n, tu puntuaciÃ³n no se pudo guardar la tabla global.",
         signout: "Sign Out",
-        cupmatSwitch: "🏆 Ir a Cupmat (Ver nuevas actualizaciones)",
-        saving: "⏳ Guardando...", saved: "✓ Guardado con éxito!",
-        sysInfoTitle: "🔄 ¡Sistema Actualizado!",
-        sysInfoContent: "• El nuevo sistema de <strong>correo electrónico + contraseña</strong> está activo<br>• Los <strong>invitados</strong> no pueden ganar recompenses ni aparecer en la tabla de clasificación<br>• La sesión se comparte entre <strong>MinMat y CupMat</strong><br>• ¡Puedes revisar las nuevas actualizaciones del torneo en CupMat!",
-        btnGuestText: "👤 Continuar como invitado",
-        btnLoginMenuText: "🔑 Iniciar sesión / Registrarse",
-        guestMode: "👤 Modo invitado:",
+        cupmatSwitch: "ğŸ† Ir a Cupmat (Ver nuevas actualizaciones)",
+        saving: "â³ Guardando...", saved: "âœ“ Guardado con Ã©xito!",
+        sysInfoTitle: "ğŸ”„ Â¡Sistema Actualizado!",
+        sysInfoContent: "â€¢ El nuevo sistema de <strong>correo electrÃ³nico + contraseÃ±a</strong> estÃ¡ activo<br>â€¢ Los <strong>invitados</strong> no pueden ganar recompenses ni aparecer en la tabla de clasificaciÃ³n<br>â€¢ La sesiÃ³n se comparte entre <strong>MinMat y CupMat</strong><br>â€¢ Â¡Puedes revisar las nuevas actualizaciones del torneo en CupMat!",
+        btnGuestText: "ğŸ‘¤ Continuar como invitado",
+        btnLoginMenuText: "ğŸ”‘ Iniciar sesiÃ³n / Registrarse",
+        guestMode: "ğŸ‘¤ Modo invitado:",
         change: "Cambiar",
-        signin: "Iniciar sesión",
+        signin: "Iniciar sesiÃ³n",
         about: "Acerca de",
         help: "Ayuda",
-        aboutDesc: "Este juego está diseñado para desarrollar la velocidad del cálculo mental, la inteligencia matemática y el pensamiento estratégico de una manera divertida a través de la integración de CupMat y MinMat.",
-        aboutStudio: "🚀 Estudio de Producción",
-        aboutTeam: "💻 Equipo de Desarrollo",
-        aboutVersion: "📌 Versión",
+        aboutDesc: "Este juego estÃ¡ diseÃ±ado para desarrollar la velocidad del cÃ¡lculo mental, la inteligencia matemÃ¡tica y el pensamiento estratÃ©gico de una manera divertida a travÃ©s de la integraciÃ³n de CupMat y MinMat.",
+        aboutStudio: "ğŸš€ Estudio de ProducciÃ³n",
+        aboutTeam: "ğŸ’» Equipo de Desarrollo",
+        aboutVersion: "ğŸ“Œ VersiÃ³n",
         aboutVersionValue: "v1.0.0 (Mayo 2026)",
-        aboutMemorialTitle: "✨ En memoria amorosa, con respeto y gracia ✨",
+        aboutMemorialTitle: "âœ¨ En memoria amorosa, con respeto y gracia âœ¨",
         aboutMemorialFooter: "Dedicado a su preciada memoria. Que sus almas descansen en paz y sus nombres vivan para siempre.",
-        helpTitle: "¿Cómo jugar?",
-        helpClose: "❌ Cerrar",
-        helpSelectMode: "<strong>Seleccionar modo:</strong> Selecciona el modo matemático que deseas jugar en la pantalla del juego.",
-        helpMatch: "<strong>Emparejamiento:</strong> Empareja la tarjeta de operación oculta con la tarjeta de resultado correcta.",
+        helpTitle: "Â¿CÃ³mo jugar?",
+        helpClose: "âŒ Cerrar",
+        helpSelectMode: "<strong>Seleccionar modo:</strong> Selecciona el modo matemÃ¡tico que deseas jugar en la pantalla del juego.",
+        helpMatch: "<strong>Emparejamiento:</strong> Empareja la tarjeta de operaciÃ³n oculta con la tarjeta de resultado correcta.",
         helpLevelUp: "<strong>Subir de nivel:</strong> Completa todos los emparejamientos antes de que se acabe el tiempo o las vidas para subir de nivel.",
-        helpLevelLocks: "<strong>Bloqueos de nivel:</strong> ¡Alcanzar el nivel 4 en el modo Suma desbloquea el modo Resta!"
+        helpLevelLocks: "<strong>Bloqueos de nivel:</strong> Â¡Alcanzar el nivel 4 en el modo Suma desbloquea el modo Resta!"
       },
       pt: {
-        shareScore: "🔗 Compartilhar pontuação (+20% bônus)", shareBonusActive: "⚡ Bônus de compartilhamento de 20% ativo!",
-        placeholder: "Digite seu nome...", start: "Iniciar", home: "🏠 Voltar ao Início", puanTablosu: "🏆 Classificação",
-        gameOver: "Fim de Jogo", score: "Pontos", again: "🔄 Jogar Novamente", leaderAll: "🏆 Melhores Pontuações",
-        leaderAdd: "🏆 Pontos de Soma", leaderSub: "🏆 Pontos de Subtração", leaderMul: "🏆 Pontos de Multiplicação",
-        leaderDiv: "🏆 Pontos de Divisão", leaderMix: "🏆 Pontos Mistos", colName: "Nome", colDate: "Data/Hora",
-        colCat: "Categoria", colRound: "Rodada", colScore: "Pontos", modeAdd: "Adição", modeSub: "Subtração",
-        modeMul: "Multiplicação", modeDiv: "Divisão", modeMix: "Misto", shortAdd: "Soma", shortSub: "Sub",
+        shareScore: "ğŸ”— Compartilhar pontuaÃ§Ã£o (+20% bÃ´nus)", shareBonusActive: "âš¡ BÃ´nus de compartilhamento de 20% ativo!",
+        placeholder: "Digite seu nome...", start: "Iniciar", home: "ğŸ  Voltar ao InÃ­cio", puanTablosu: "ğŸ† ClassificaÃ§Ã£o",
+        gameOver: "Fim de Jogo", score: "Pontos", again: "ğŸ”„ Jogar Novamente", leaderAll: "ğŸ† Melhores PontuaÃ§Ãµes",
+        leaderAdd: "ğŸ† Pontos de Soma", leaderSub: "ğŸ† Pontos de SubtraÃ§Ã£o", leaderMul: "ğŸ† Pontos de MultiplicaÃ§Ã£o",
+        leaderDiv: "ğŸ† Pontos de DivisÃ£o", leaderMix: "ğŸ† Pontos Mistos", colName: "Nome", colDate: "Data/Hora",
+        colCat: "Categoria", colRound: "Rodada", colScore: "Pontos", modeAdd: "AdiÃ§Ã£o", modeSub: "SubtraÃ§Ã£o",
+        modeMul: "MultiplicaÃ§Ã£o", modeDiv: "DivisÃ£o", modeMix: "Misto", shortAdd: "Soma", shortSub: "Sub",
         shortMul: "Mult", shortDiv: "Div", shortMix: "Misto", round: "Rodada", nameErr: "O nome deve ter pelo menos 3 caracteres",
-        guest: "Convidado", menu: "Menu", subtitle: "MinMat — Jogo de Cérebro e Matemática", all: "Todos",
-        authWarn: "⚠️ Você deve fazer login para entrar no ranking global e ganhar prêmios.", authVerified: "✓ Conta Verificada",
-        authLoginBtn: "🔑 Entrar / Conectar com o Google", authSaveWarn: "⚠️ Como você não está conectado, sua pontuação não pôde ser salva na classificação global.",
+        guest: "Convidado", menu: "Home", subtitle: "MinMat â€” Jogo de CÃ©rebro e MatemÃ¡tica", all: "Todos",
+        authWarn: "âš ï¸ VocÃª deve fazer login para entrar no ranking global e ganhar prÃªmios.", authVerified: "âœ“ Conta Verificada",
+        authLoginBtn: "ğŸ”‘ Entrar / Conectar com o Google", authSaveWarn: "âš ï¸ Como vocÃª nÃ£o estÃ¡ conectado, sua pontuaÃ§Ã£o nÃ£o pÃ´de ser salva na classificaÃ§Ã£o global.",
         signout: "Sair",
-        cupmatSwitch: "🏆 Ir para o Cupmat (Ver Novas Atualizações)",
-        saving: "⏳ Salvando...", saved: "✓ Salvo com sucesso!",
-        sysInfoTitle: "🔄 Sistema Atualizado!",
-        sysInfoContent: "• Novo sistema de <strong>e-mail + senha</strong> está ativo<br>• <strong>Convidados</strong> não podem ganhar recompensas ou aparecer no ranking<br>• A sessão é compartilhada entre <strong>MinMat e CupMat</strong><br>• Você pode revisar as novas updates no CupMat!",
-        btnGuestText: "👤 Continuar como convidado",
-        btnLoginMenuText: "🔑 Entrar / Cadastrar-se",
-        guestMode: "👤 Modo convidado:",
+        cupmatSwitch: "ğŸ† Ir para o Cupmat (Ver Novas AtualizaÃ§Ãµes)",
+        saving: "â³ Salvando...", saved: "âœ“ Salvo com sucesso!",
+        sysInfoTitle: "ğŸ”„ Sistema Atualizado!",
+        sysInfoContent: "â€¢ Novo sistema de <strong>e-mail + senha</strong> estÃ¡ ativo<br>â€¢ <strong>Convidados</strong> nÃ£o podem ganhar recompensas ou aparecer no ranking<br>â€¢ A sessÃ£o Ã© compartilhada entre <strong>MinMat e CupMat</strong><br>â€¢ VocÃª pode revisar as novas updates no CupMat!",
+        btnGuestText: "ğŸ‘¤ Continuar como convidado",
+        btnLoginMenuText: "ğŸ”‘ Entrar / Cadastrar-se",
+        guestMode: "ğŸ‘¤ Modo convidado:",
         change: "Alterar",
         signin: "Entrar",
         about: "Sobre",
         help: "Ajuda",
-        aboutDesc: "Este jogo foi projetado para desenvolver a velocidade do cálculo mental, a inteligência matemática e o pensamento estratégico de forma divertida por meio da integração do CupMat & MinMat.",
-        aboutStudio: "🚀 Estúdio de Produção",
-        aboutTeam: "💻 Equipe de Desenvolvimento",
-        aboutVersion: "📌 Versão",
+        aboutDesc: "Este jogo foi projetado para desenvolver a velocidade do cÃ¡lculo mental, a inteligÃªncia matemÃ¡tica e o pensamento estratÃ©gico de forma divertida por meio da integraÃ§Ã£o do CupMat & MinMat.",
+        aboutStudio: "ğŸš€ EstÃºdio de ProduÃ§Ã£o",
+        aboutTeam: "ğŸ’» Equipe de Desenvolvimento",
+        aboutVersion: "ğŸ“Œ VersÃ£o",
         aboutVersionValue: "v1.0.0 (Maio 2026)",
-        aboutMemorialTitle: "✨ Em memória amorosa, com respeito e graça ✨",
-        aboutMemorialFooter: "Dedicado à sua querida memória. Que suas almas descansem em paz e seus nomes vivam para sempre.",
+        aboutMemorialTitle: "âœ¨ Em memÃ³ria amorosa, com respeito e graÃ§a âœ¨",
+        aboutMemorialFooter: "Dedicado Ã  sua querida memÃ³ria. Que suas almas descansem em paz e seus nomes vivam para sempre.",
         helpTitle: "Como jogar?",
-        helpClose: "❌ Fechar",
-        helpSelectMode: "<strong>Selecionar Modo:</strong> Selecione o modo matemático que deseja jogar na tela do jogo.",
-        helpMatch: "<strong>Combinação:</strong> Combine a carta de operação oculta com a carta de resultado correta.",
-        helpLevelUp: "<strong>Subir de Nível:</strong> Complete todas as combinações antes que o tempo ou as vidas acabem para subir de nível.",
-        helpLevelLocks: "<strong>Bloqueios de Nível:</strong> Alcançar o Nível 4 no modo Adição desbloqueia o modo Subtração!"
+        helpClose: "âŒ Fechar",
+        helpSelectMode: "<strong>Selecionar Modo:</strong> Selecione o modo matemÃ¡tico que deseja jogar na tela do jogo.",
+        helpMatch: "<strong>CombinaÃ§Ã£o:</strong> Combine a carta de operaÃ§Ã£o oculta com a carta de resultado correta.",
+        helpLevelUp: "<strong>Subir de NÃ­vel:</strong> Complete todas as combinaÃ§Ãµes antes que o tempo ou as vidas acabem para subir de nÃ­vel.",
+        helpLevelLocks: "<strong>Bloqueios de NÃ­vel:</strong> AlcanÃ§ar o NÃ­vel 4 no modo AdiÃ§Ã£o desbloqueia o modo SubtraÃ§Ã£o!"
       },
       ar: {
-        shareScore: "🔗 مشاركة النتيجة (مكافأة +20%)", shareBonusActive: "⚡ مكافأة المشاركة 20% نشطة!",
-        placeholder: "أدخل اسمك...", start: "ابدأ", home: "🏠 العودة للرئيسية", puanTablosu: "🏆 جدول الترتيب",
-        gameOver: "انتهت اللعبة", score: "النقاط", again: "🔄 العب مجدداً", leaderAll: "🏆 أفضل النقاط",
-        leaderAdd: "🏆 نقاط الجمع", leaderSub: "🏆 نقاط الطرح", leaderMul: "🏆 نقاط الضرب",
-        leaderDiv: "🏆 نقاط القسمة", leaderMix: "🏆 النقاط المشتركة", colName: "الاسم", colDate: "التاريخ/الوقت",
-        colCat: "الفئة", colRound: "الجولة", colScore: "النقاط", modeAdd: "الجمع", modeSub: "الطرح",
-        modeMul: "الضرب", modeDiv: "القسمة", modeMix: "العمليات الأربع", shortAdd: "جمع", shortSub: "طرح",
-        shortMul: "ضرب", shortDiv: "قسمة", shortMix: "مشترك", round: "جولة", nameErr: "يجب أن يكون الاسم 3 أحرف على الأقل",
-        guest: "ضيف", menu: "القائمة", subtitle: "MinMat — لعبة الذكاء والرياضيات", all: "الكل",
-        authWarn: "⚠️ يجب عليك تسجيل الدخول للدخول في جدول الترتيب العالمي والفوز بالجوائز.", authVerified: "✓ حساب موثق",
-        authLoginBtn: "🔑 تسجيل الدخول / الربط مع Google", authSaveWarn: "⚠️ نظراً لعدم تسجيل دخولك، لم يتم حفظ نتيجتك في الترتيب العالمي.",
-        signout: "تسجيل الخروج",
-        cupmatSwitch: "🏆 الذهاب إلى Cupmat (تحقق من التحديثات الجديدة)",
-        saving: "⏳ جاري الحفظ...", saved: "✓ تم الحفظ بنجاح!",
-        sysInfoTitle: "🔄 تم تحديث النظام!",
-        sysInfoContent: "• نظام <strong>البريد الإلكتروني + كلمة المرور</strong> الجديد نشط<br>• لا يمكن <strong>للضيوف</strong> كسب مكافآت أو الظهور في جدول الترتيب<br>• الجلسة مشتركة بين <strong>MinMat و CupMat</strong><br>• يمكنك مراجعة تحديثات البطولة الجديدة على CupMat!",
-        btnGuestText: "👤 المتابعة كضيف",
-        btnLoginMenuText: "🔑 تسجيل الدخول / التسجيل",
-        guestMode: "👤 وضع الضيف:",
-        change: "تغيير",
-        signin: "تسجيل الدخول",
-        about: "حول",
-        help: "مساعدة",
-        aboutDesc: "تم تصميم هذه اللعبة لتطوير سرعة الحساب الذهني، والذكاء الرياضي، والتفكير الاستراتيجي بطريقة ممتعة من خلال التكامل بين CupMat و MinMat.",
-        aboutStudio: "🚀 استوديو الإنتاج",
-        aboutTeam: "💻 فريق التطوير",
-        aboutVersion: "📌 الإصدار",
-        aboutVersionValue: "v1.0.0 (مايو 2026)",
-        aboutMemorialTitle: "✨ في ذكرى محبة، مع الاحترام والرحمة ✨",
-        aboutMemorialFooter: "مكرس لذكراهم العزيزة. لتسترح أرواحهم بسلام، ولتعش أسماؤهم إلى الأبد.",
-        helpTitle: "كيف تلعب؟",
-        helpClose: "❌ إغلاق",
-        helpSelectMode: "<strong>اختيار الوضع:</strong> اختر وضع الرياضيات الذي تريد لعبه من شاشة اللعبة.",
-        helpMatch: "<strong>المطابقة:</strong> طابق بطاقة العملية الحسابية المخفية مع بطاقة النتيجة الصحيحة.",
-        helpLevelUp: "<strong>ترقية المستوى:</strong> أكمل جميع المطابقات قبل نفاد الوقت أو المحاولات لترقية المستوى.",
-        helpLevelLocks: "<strong>قفل المستويات:</strong> الوصول إلى المستوى 4 في وضع الجمع يفتح وضع الطرح!"
+        shareScore: "ğŸ”— Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ù„Ù†ØªÙŠØ¬Ø© (Ù…ÙƒØ§ÙØ£Ø© +20%)", shareBonusActive: "âš¡ Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ© 20% Ù†Ø´Ø·Ø©!",
+        placeholder: "Ø£Ø¯Ø®Ù„ Ø§Ø³Ù…Ùƒ...", start: "Ø§Ø¨Ø¯Ø£", home: "ğŸ  Ø§Ù„Ø¹ÙˆØ¯Ø© Ù„Ù„Ø±Ø¦ÙŠØ³ÙŠØ©", puanTablosu: "ğŸ† Ø¬Ø¯ÙˆÙ„ Ø§Ù„ØªØ±ØªÙŠØ¨",
+        gameOver: "Ø§Ù†ØªÙ‡Øª Ø§Ù„Ù„Ø¹Ø¨Ø©", score: "Ø§Ù„Ù†Ù‚Ø§Ø·", again: "ğŸ”„ Ø§Ù„Ø¹Ø¨ Ù…Ø¬Ø¯Ø¯Ø§Ù‹", leaderAll: "ğŸ† Ø£ÙØ¶Ù„ Ø§Ù„Ù†Ù‚Ø§Ø·",
+        leaderAdd: "ğŸ† Ù†Ù‚Ø§Ø· Ø§Ù„Ø¬Ù…Ø¹", leaderSub: "ğŸ† Ù†Ù‚Ø§Ø· Ø§Ù„Ø·Ø±Ø­", leaderMul: "ğŸ† Ù†Ù‚Ø§Ø· Ø§Ù„Ø¶Ø±Ø¨",
+        leaderDiv: "ğŸ† Ù†Ù‚Ø§Ø· Ø§Ù„Ù‚Ø³Ù…Ø©", leaderMix: "ğŸ† Ø§Ù„Ù†Ù‚Ø§Ø· Ø§Ù„Ù…Ø´ØªØ±ÙƒØ©", colName: "Ø§Ù„Ø§Ø³Ù…", colDate: "Ø§Ù„ØªØ§Ø±ÙŠØ®/Ø§Ù„ÙˆÙ‚Øª",
+        colCat: "Ø§Ù„ÙØ¦Ø©", colRound: "Ø§Ù„Ø¬ÙˆÙ„Ø©", colScore: "Ø§Ù„Ù†Ù‚Ø§Ø·", modeAdd: "Ø§Ù„Ø¬Ù…Ø¹", modeSub: "Ø§Ù„Ø·Ø±Ø­",
+        modeMul: "Ø§Ù„Ø¶Ø±Ø¨", modeDiv: "Ø§Ù„Ù‚Ø³Ù…Ø©", modeMix: "Ø§Ù„Ø¹Ù…Ù„ÙŠØ§Øª Ø§Ù„Ø£Ø±Ø¨Ø¹", shortAdd: "Ø¬Ù…Ø¹", shortSub: "Ø·Ø±Ø­",
+        shortMul: "Ø¶Ø±Ø¨", shortDiv: "Ù‚Ø³Ù…Ø©", shortMix: "Ù…Ø´ØªØ±Ùƒ", round: "Ø¬ÙˆÙ„Ø©", nameErr: "ÙŠØ¬Ø¨ Ø£Ù† ÙŠÙƒÙˆÙ† Ø§Ù„Ø§Ø³Ù… 3 Ø£Ø­Ø±Ù Ø¹Ù„Ù‰ Ø§Ù„Ø£Ù‚Ù„",
+        guest: "Ø¶ÙŠÙ", menu: "Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©", subtitle: "MinMat â€” Ù„Ø¹Ø¨Ø© Ø§Ù„Ø°ÙƒØ§Ø¡ ÙˆØ§Ù„Ø±ÙŠØ§Ø¶ÙŠØ§Øª", all: "Ø§Ù„ÙƒÙ„",
+        authWarn: "âš ï¸ ÙŠØ¬Ø¨ Ø¹Ù„ÙŠÙƒ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„ Ù„Ù„Ø¯Ø®ÙˆÙ„ ÙÙŠ Ø¬Ø¯ÙˆÙ„ Ø§Ù„ØªØ±ØªÙŠØ¨ Ø§Ù„Ø¹Ø§Ù„Ù…ÙŠ ÙˆØ§Ù„ÙÙˆØ² Ø¨Ø§Ù„Ø¬ÙˆØ§Ø¦Ø².", authVerified: "âœ“ Ø­Ø³Ø§Ø¨ Ù…ÙˆØ«Ù‚",
+        authLoginBtn: "ğŸ”‘ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„ / Ø§Ù„Ø±Ø¨Ø· Ù…Ø¹ Google", authSaveWarn: "âš ï¸ Ù†Ø¸Ø±Ø§Ù‹ Ù„Ø¹Ø¯Ù… ØªØ³Ø¬ÙŠÙ„ Ø¯Ø®ÙˆÙ„ÙƒØŒ Ù„Ù… ÙŠØªÙ… Ø­ÙØ¸ Ù†ØªÙŠØ¬ØªÙƒ ÙÙŠ Ø§Ù„ØªØ±ØªÙŠØ¨ Ø§Ù„Ø¹Ø§Ù„Ù…ÙŠ.",
+        signout: "ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬",
+        cupmatSwitch: "ğŸ† Ø§Ù„Ø°Ù‡Ø§Ø¨ Ø¥Ù„Ù‰ Cupmat (ØªØ­Ù‚Ù‚ Ù…Ù† Ø§Ù„ØªØ­Ø¯ÙŠØ«Ø§Øª Ø§Ù„Ø¬Ø¯ÙŠØ¯Ø©)",
+        saving: "â³ Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...", saved: "âœ“ ØªÙ… Ø§Ù„Ø­ÙØ¸ Ø¨Ù†Ø¬Ø§Ø­!",
+        sysInfoTitle: "ğŸ”„ ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù†Ø¸Ø§Ù…!",
+        sysInfoContent: "â€¢ Ù†Ø¸Ø§Ù… <strong>Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ + ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±</strong> Ø§Ù„Ø¬Ø¯ÙŠØ¯ Ù†Ø´Ø·<br>â€¢ Ù„Ø§ ÙŠÙ…ÙƒÙ† <strong>Ù„Ù„Ø¶ÙŠÙˆÙ</strong> ÙƒØ³Ø¨ Ù…ÙƒØ§ÙØ¢Øª Ø£Ùˆ Ø§Ù„Ø¸Ù‡ÙˆØ± ÙÙŠ Ø¬Ø¯ÙˆÙ„ Ø§Ù„ØªØ±ØªÙŠØ¨<br>â€¢ Ø§Ù„Ø¬Ù„Ø³Ø© Ù…Ø´ØªØ±ÙƒØ© Ø¨ÙŠÙ† <strong>MinMat Ùˆ CupMat</strong><br>â€¢ ÙŠÙ…ÙƒÙ†Ùƒ Ù…Ø±Ø§Ø¬Ø¹Ø© ØªØ­Ø¯ÙŠØ«Ø§Øª Ø§Ù„Ø¨Ø·ÙˆÙ„Ø© Ø§Ù„Ø¬Ø¯ÙŠØ¯Ø© Ø¹Ù„Ù‰ CupMat!",
+        btnGuestText: "ğŸ‘¤ Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø© ÙƒØ¶ÙŠÙ",
+        btnLoginMenuText: "ğŸ”‘ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„ / Ø§Ù„ØªØ³Ø¬ÙŠÙ„",
+        guestMode: "ğŸ‘¤ ÙˆØ¶Ø¹ Ø§Ù„Ø¶ÙŠÙ:",
+        change: "ØªØºÙŠÙŠØ±",
+        signin: "ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„",
+        about: "Ø­ÙˆÙ„",
+        help: "Ù…Ø³Ø§Ø¹Ø¯Ø©",
+        aboutDesc: "ØªÙ… ØªØµÙ…ÙŠÙ… Ù‡Ø°Ù‡ Ø§Ù„Ù„Ø¹Ø¨Ø© Ù„ØªØ·ÙˆÙŠØ± Ø³Ø±Ø¹Ø© Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø°Ù‡Ù†ÙŠØŒ ÙˆØ§Ù„Ø°ÙƒØ§Ø¡ Ø§Ù„Ø±ÙŠØ§Ø¶ÙŠØŒ ÙˆØ§Ù„ØªÙÙƒÙŠØ± Ø§Ù„Ø§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠ Ø¨Ø·Ø±ÙŠÙ‚Ø© Ù…Ù…ØªØ¹Ø© Ù…Ù† Ø®Ù„Ø§Ù„ Ø§Ù„ØªÙƒØ§Ù…Ù„ Ø¨ÙŠÙ† CupMat Ùˆ MinMat.",
+        aboutStudio: "ğŸš€ Ø§Ø³ØªÙˆØ¯ÙŠÙˆ Ø§Ù„Ø¥Ù†ØªØ§Ø¬",
+        aboutTeam: "ğŸ’» ÙØ±ÙŠÙ‚ Ø§Ù„ØªØ·ÙˆÙŠØ±",
+        aboutVersion: "ğŸ“Œ Ø§Ù„Ø¥ØµØ¯Ø§Ø±",
+        aboutVersionValue: "v1.0.0 (Ù…Ø§ÙŠÙˆ 2026)",
+        aboutMemorialTitle: "âœ¨ ÙÙŠ Ø°ÙƒØ±Ù‰ Ù…Ø­Ø¨Ø©ØŒ Ù…Ø¹ Ø§Ù„Ø§Ø­ØªØ±Ø§Ù… ÙˆØ§Ù„Ø±Ø­Ù…Ø© âœ¨",
+        aboutMemorialFooter: "Ù…ÙƒØ±Ø³ Ù„Ø°ÙƒØ±Ø§Ù‡Ù… Ø§Ù„Ø¹Ø²ÙŠØ²Ø©. Ù„ØªØ³ØªØ±Ø­ Ø£Ø±ÙˆØ§Ø­Ù‡Ù… Ø¨Ø³Ù„Ø§Ù…ØŒ ÙˆÙ„ØªØ¹Ø´ Ø£Ø³Ù…Ø§Ø¤Ù‡Ù… Ø¥Ù„Ù‰ Ø§Ù„Ø£Ø¨Ø¯.",
+        helpTitle: "ÙƒÙŠÙ ØªÙ„Ø¹Ø¨ØŸ",
+        helpClose: "âŒ Ø¥ØºÙ„Ø§Ù‚",
+        helpSelectMode: "<strong>Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„ÙˆØ¶Ø¹:</strong> Ø§Ø®ØªØ± ÙˆØ¶Ø¹ Ø§Ù„Ø±ÙŠØ§Ø¶ÙŠØ§Øª Ø§Ù„Ø°ÙŠ ØªØ±ÙŠØ¯ Ù„Ø¹Ø¨Ù‡ Ù…Ù† Ø´Ø§Ø´Ø© Ø§Ù„Ù„Ø¹Ø¨Ø©.",
+        helpMatch: "<strong>Ø§Ù„Ù…Ø·Ø§Ø¨Ù‚Ø©:</strong> Ø·Ø§Ø¨Ù‚ Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ø¹Ù…Ù„ÙŠØ© Ø§Ù„Ø­Ø³Ø§Ø¨ÙŠØ© Ø§Ù„Ù…Ø®ÙÙŠØ© Ù…Ø¹ Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù†ØªÙŠØ¬Ø© Ø§Ù„ØµØ­ÙŠØ­Ø©.",
+        helpLevelUp: "<strong>ØªØ±Ù‚ÙŠØ© Ø§Ù„Ù…Ø³ØªÙˆÙ‰:</strong> Ø£ÙƒÙ…Ù„ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ù…Ø·Ø§Ø¨Ù‚Ø§Øª Ù‚Ø¨Ù„ Ù†ÙØ§Ø¯ Ø§Ù„ÙˆÙ‚Øª Ø£Ùˆ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø§Øª Ù„ØªØ±Ù‚ÙŠØ© Ø§Ù„Ù…Ø³ØªÙˆÙ‰.",
+        helpLevelLocks: "<strong>Ù‚ÙÙ„ Ø§Ù„Ù…Ø³ØªÙˆÙŠØ§Øª:</strong> Ø§Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ø³ØªÙˆÙ‰ 4 ÙÙŠ ÙˆØ¶Ø¹ Ø§Ù„Ø¬Ù…Ø¹ ÙŠÙØªØ­ ÙˆØ¶Ø¹ Ø§Ù„Ø·Ø±Ø­!"
       },
       ko: {
-        shareScore: "🔗 점수 공유하기 (+20% 보너스)", shareBonusActive: "⚡ 20% 공유 보너스 활성화!",
-        placeholder: "이름을 입력하세요...", start: "시작", home: "🏠 홈으로 돌아가기", puanTablosu: "🏆 순위표",
-        gameOver: "게임 오버", score: "점수", again: "🔄 다시 하기", leaderAll: "🏆 최고 점수",
-        leaderAdd: "🏆 덧셈 점수", leaderSub: "🏆 뺄셈 점수", leaderMul: "🏆 곱셈 점수",
-        leaderDiv: "🏆 나눗셈 점수", leaderMix: "🏆 혼합 점수", colName: "이름", colDate: "날짜/시간",
-        colCat: "카테고리", colRound: "라운드", colScore: "점수", modeAdd: "덧셈", modeSub: "뺄셈",
-        modeMul: "곱셈", modeDiv: "나눗셈", modeMix: "혼합 계산", shortAdd: "더하기", shortSub: "빼기",
-        shortMul: "곱하기", shortDiv: "나누기", shortMix: "혼합", round: "라운드", nameErr: "이름은 최소 3글자 이상이어야 합니다",
-        guest: "게스트", menu: "메뉴", subtitle: "MinMat — 두뇌 & 수학 게임", all: "전체",
-        authWarn: "⚠️ 글로벌 순위표에 등록되고 상을 받으려면 로그인해야 합니다.", authVerified: "✓ 인증된 계정",
-        authLoginBtn: "🔑 로그인 / Google 계정 연결", authSaveWarn: "⚠️ 로그인하지 않았기 때문에 점수가 글로벌 순위표에 저장되지 않았습니다.",
-        signout: "로그아웃",
-        cupmatSwitch: "🏆 Cupmat으로 이동 (새 업데이트 확인)",
-        saving: "⏳ 저장 중...", saved: "✓ 성공적으로 저장되었습니다!",
-        sysInfoTitle: "🔄 시스템 업데이트 완료!",
-        sysInfoContent: "• 새로운 <strong>이메일 + 비밀번호</strong> 시스템 활성화<br>• <strong>게스트</strong>는 보상을 받거나 순위표에 표시되지 않습니다<br>• <strong>MinMat &amp; CupMat</strong> 간에 세션이 공유됩니다<br>• CupMat에서 새로운 토너먼트 업데이트를 확인하세요!",
-        btnGuestText: "👤 게스트로 계속하기",
-        btnLoginMenuText: "🔑 로그인 / 회원가입",
-        guestMode: "👤 게스트 모드:",
-        change: "변경",
-        signin: "로그인",
-        about: "정보",
-        help: "도움말",
-        aboutDesc: "이 게임은 CupMat 및 MinMat의 통합을 통해 재미있는 방식으로 암산 속도, 수학적 지능 및 전략적 사고를 개발하도록 설계되었습니다.",
-        aboutStudio: "🚀 제작 스튜디오",
-        aboutTeam: "💻 개발자 팀",
-        aboutVersion: "📌 버전",
-        aboutVersionValue: "v1.0.0 (2026년 5월)",
-        aboutMemorialTitle: "✨ 존경과 사랑, 은혜를 담아 그들의 기억을 기립니다 ✨",
-        aboutMemorialFooter: "그들의 소중한 기억에 바칩니다. 영혼이 평안히 쉬기를, 그리고 그들의 이름이 영원히 기억되기를.",
-        helpTitle: "게임 방법",
-        helpClose: "❌ 닫기",
-        helpSelectMode: "<strong>모드 선택:</strong> 게임 화면에서 플레이하려는 수학 모드를 선택하세요.",
-        helpMatch: "<strong>매칭:</strong> 숨겨진 연산 카드와 올바른 결과 카드를 매칭하세요.",
-        helpLevelUp: "<strong>레벨 업:</strong> 시간이나 하트가 소진되기 전에 모든 매칭을 완료하여 레벨을 올리세요.",
-        helpLevelLocks: "<strong>레벨 잠금:</strong> 덧셈 모드에서 4레벨에 도달하면 뺄셈 모드가 잠금 해제됩니다!"
+        shareScore: "ğŸ”— ì ìˆ˜ ê³µìœ í•˜ê¸° (+20% ë³´ë„ˆìŠ¤)", shareBonusActive: "âš¡ 20% ê³µìœ  ë³´ë„ˆìŠ¤ í™œì„±í™”!",
+        placeholder: "ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”...", start: "ì‹œì‘", home: "ğŸ  í™ˆìœ¼ë¡œ ëŒì•„ê°€ê¸°", puanTablosu: "ğŸ† ìˆœìœ„í‘œ",
+        gameOver: "ê²Œì„ ì˜¤ë²„", score: "ì ìˆ˜", again: "ğŸ”„ ë‹¤ì‹œ í•˜ê¸°", leaderAll: "ğŸ† ìµœê³  ì ìˆ˜",
+        leaderAdd: "ğŸ† ë§ì…ˆ ì ìˆ˜", leaderSub: "ğŸ† ëº„ì…ˆ ì ìˆ˜", leaderMul: "ğŸ† ê³±ì…ˆ ì ìˆ˜",
+        leaderDiv: "ğŸ† ë‚˜ëˆ—ì…ˆ ì ìˆ˜", leaderMix: "ğŸ† í˜¼í•© ì ìˆ˜", colName: "ì´ë¦„", colDate: "ë‚ ì§œ/ì‹œê°„",
+        colCat: "ì¹´í…Œê³ ë¦¬", colRound: "ë¼ìš´ë“œ", colScore: "ì ìˆ˜", modeAdd: "ë§ì…ˆ", modeSub: "ëº„ì…ˆ",
+        modeMul: "ê³±ì…ˆ", modeDiv: "ë‚˜ëˆ—ì…ˆ", modeMix: "í˜¼í•© ê³„ì‚°", shortAdd: "ë”í•˜ê¸°", shortSub: "ë¹¼ê¸°",
+        shortMul: "ê³±í•˜ê¸°", shortDiv: "ë‚˜ëˆ„ê¸°", shortMix: "í˜¼í•©", round: "ë¼ìš´ë“œ", nameErr: "ì´ë¦„ì€ ìµœì†Œ 3ê¸€ì ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤",
+        guest: "ê²ŒìŠ¤íŠ¸", menu: "ë©”ë‰´", subtitle: "MinMat â€” ë‘ë‡Œ & ìˆ˜í•™ ê²Œì„", all: "ì „ì²´",
+        authWarn: "âš ï¸ ê¸€ë¡œë²Œ ìˆœìœ„í‘œì— ë“±ë¡ë˜ê³  ìƒì„ ë°›ìœ¼ë ¤ë©´ ë¡œê·¸ì¸í•´ì•¼ í•©ë‹ˆë‹¤.", authVerified: "âœ“ ì¸ì¦ëœ ê³„ì •",
+        authLoginBtn: "ğŸ”‘ ë¡œê·¸ì¸ / Google ê³„ì • ì—°ê²°", authSaveWarn: "âš ï¸ ë¡œê·¸ì¸í•˜ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì— ì ìˆ˜ê°€ ê¸€ë¡œë²Œ ìˆœìœ„í‘œì— ì €ì¥ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.",
+        signout: "ë¡œê·¸ì•„ì›ƒ",
+        cupmatSwitch: "ğŸ† Cupmatìœ¼ë¡œ ì´ë™ (ìƒˆ ì—…ë°ì´íŠ¸ í™•ì¸)",
+        saving: "â³ ì €ì¥ ì¤‘...", saved: "âœ“ ì„±ê³µì ìœ¼ë¡œ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤!",
+        sysInfoTitle: "ğŸ”„ ì‹œìŠ¤í…œ ì—…ë°ì´íŠ¸ ì™„ë£Œ!",
+        sysInfoContent: "â€¢ ìƒˆë¡œìš´ <strong>ì´ë©”ì¼ + ë¹„ë°€ë²ˆí˜¸</strong> ì‹œìŠ¤í…œ í™œì„±í™”<br>â€¢ <strong>ê²ŒìŠ¤íŠ¸</strong>ëŠ” ë³´ìƒì„ ë°›ê±°ë‚˜ ìˆœìœ„í‘œì— í‘œì‹œë˜ì§€ ì•ŠìŠµë‹ˆë‹¤<br>â€¢ <strong>MinMat &amp; CupMat</strong> ê°„ì— ì„¸ì…˜ì´ ê³µìœ ë©ë‹ˆë‹¤<br>â€¢ CupMatì—ì„œ ìƒˆë¡œìš´ í† ë„ˆë¨¼íŠ¸ ì—…ë°ì´íŠ¸ë¥¼ í™•ì¸í•˜ì„¸ìš”!",
+        btnGuestText: "ğŸ‘¤ ê²ŒìŠ¤íŠ¸ë¡œ ê³„ì†í•˜ê¸°",
+        btnLoginMenuText: "ğŸ”‘ ë¡œê·¸ì¸ / íšŒì›ê°€ì…",
+        guestMode: "ğŸ‘¤ ê²ŒìŠ¤íŠ¸ ëª¨ë“œ:",
+        change: "ë³€ê²½",
+        signin: "ë¡œê·¸ì¸",
+        about: "ì •ë³´",
+        help: "ë„ì›€ë§",
+        aboutDesc: "ì´ ê²Œì„ì€ CupMat ë° MinMatì˜ í†µí•©ì„ í†µí•´ ì¬ë¯¸ìˆëŠ” ë°©ì‹ìœ¼ë¡œ ì•”ì‚° ì†ë„, ìˆ˜í•™ì  ì§€ëŠ¥ ë° ì „ëµì  ì‚¬ê³ ë¥¼ ê°œë°œí•˜ë„ë¡ ì„¤ê³„ë˜ì—ˆìŠµë‹ˆë‹¤.",
+        aboutStudio: "ğŸš€ ì œì‘ ìŠ¤íŠœë””ì˜¤",
+        aboutTeam: "ğŸ’» ê°œë°œì íŒ€",
+        aboutVersion: "ğŸ“Œ ë²„ì „",
+        aboutVersionValue: "v1.0.0 (2026ë…„ 5ì›”)",
+        aboutMemorialTitle: "âœ¨ ì¡´ê²½ê³¼ ì‚¬ë‘, ì€í˜œë¥¼ ë‹´ì•„ ê·¸ë“¤ì˜ ê¸°ì–µì„ ê¸°ë¦½ë‹ˆë‹¤ âœ¨",
+        aboutMemorialFooter: "ê·¸ë“¤ì˜ ì†Œì¤‘í•œ ê¸°ì–µì— ë°”ì¹©ë‹ˆë‹¤. ì˜í˜¼ì´ í‰ì•ˆíˆ ì‰¬ê¸°ë¥¼, ê·¸ë¦¬ê³  ê·¸ë“¤ì˜ ì´ë¦„ì´ ì˜ì›íˆ ê¸°ì–µë˜ê¸°ë¥¼.",
+        helpTitle: "ê²Œì„ ë°©ë²•",
+        helpClose: "âŒ ë‹«ê¸°",
+        helpSelectMode: "<strong>ëª¨ë“œ ì„ íƒ:</strong> ê²Œì„ í™”ë©´ì—ì„œ í”Œë ˆì´í•˜ë ¤ëŠ” ìˆ˜í•™ ëª¨ë“œë¥¼ ì„ íƒí•˜ì„¸ìš”.",
+        helpMatch: "<strong>ë§¤ì¹­:</strong> ìˆ¨ê²¨ì§„ ì—°ì‚° ì¹´ë“œì™€ ì˜¬ë°”ë¥¸ ê²°ê³¼ ì¹´ë“œë¥¼ ë§¤ì¹­í•˜ì„¸ìš”.",
+        helpLevelUp: "<strong>ë ˆë²¨ ì—…:</strong> ì‹œê°„ì´ë‚˜ í•˜íŠ¸ê°€ ì†Œì§„ë˜ê¸° ì „ì— ëª¨ë“  ë§¤ì¹­ì„ ì™„ë£Œí•˜ì—¬ ë ˆë²¨ì„ ì˜¬ë¦¬ì„¸ìš”.",
+        helpLevelLocks: "<strong>ë ˆë²¨ ì ê¸ˆ:</strong> ë§ì…ˆ ëª¨ë“œì—ì„œ 4ë ˆë²¨ì— ë„ë‹¬í•˜ë©´ ëº„ì…ˆ ëª¨ë“œê°€ ì ê¸ˆ í•´ì œë©ë‹ˆë‹¤!"
       },
       it: {
-        shareScore: "🔗 Condividi punteggio (+20% bonus)", shareBonusActive: "⚡ Bonus di condivisione del 20% attivo!",
-        placeholder: "Inserisci il tuo nome...", start: "Inizia", home: "🏠 Torna alla Home", puanTablosu: "🏆 Classifica",
-        gameOver: "Gioco Terminato", score: "Punteggio", again: "🔄 Gioca Ancora", leaderAll: "🏆 Migliori Punteggi",
-        leaderAdd: "🏆 Punteggi Addizione", leaderSub: "🏆 Punteggi Sottrazione", leaderMul: "🏆 Punteggi Moltiplicazione",
-        leaderDiv: "🏆 Punteggi Divisione", leaderMix: "🏆 Punteggi Misto", colName: "Nome", colDate: "Data/Ora",
+        shareScore: "ğŸ”— Condividi punteggio (+20% bonus)", shareBonusActive: "âš¡ Bonus di condivisione del 20% attivo!",
+        placeholder: "Inserisci il tuo nome...", start: "Inizia", home: "ğŸ  Torna alla Home", puanTablosu: "ğŸ† Classifica",
+        gameOver: "Gioco Terminato", score: "Punteggio", again: "ğŸ”„ Gioca Ancora", leaderAll: "ğŸ† Migliori Punteggi",
+        leaderAdd: "ğŸ† Punteggi Addizione", leaderSub: "ğŸ† Punteggi Sottrazione", leaderMul: "ğŸ† Punteggi Moltiplicazione",
+        leaderDiv: "ğŸ† Punteggi Divisione", leaderMix: "ğŸ† Punteggi Misto", colName: "Nome", colDate: "Data/Ora",
         colCat: "Categoria", colRound: "Turno", colScore: "Punteggio", modeAdd: "Addizione", modeSub: "Sottrazione",
         modeMul: "Moltiplicazione", modeDiv: "Divisione", modeMix: "Misto", shortAdd: "Add", shortSub: "Sot",
         shortMul: "Mol", shortDiv: "Div", shortMix: "Misto", round: "Turno", nameErr: "Il nome deve avere almeno 3 caratteri",
-        guest: "Ospite", menu: "Menu", subtitle: "MinMat — Gioco di Logica e Matematica", all: "Tutti",
-        authWarn: "⚠️ Devi accedere per entrare nella classifica globale e vincere premi.", authVerified: "✓ Account Verificato",
-        authLoginBtn: "🔑 Accedi / Connettiti con Google", authSaveWarn: "⚠️ Poiché non hai effettuato l'accesso, il tuo punteggio non è stato salvato nella classifica globale.",
+        guest: "Ospite", menu: "Home", subtitle: "MinMat â€” Gioco di Logica e Matematica", all: "Tutti",
+        authWarn: "âš ï¸ Devi accedere per entrare nella classifica globale e vincere premi.", authVerified: "âœ“ Account Verificato",
+        authLoginBtn: "ğŸ”‘ Accedi / Connettiti con Google", authSaveWarn: "âš ï¸ PoichÃ© non hai effettuato l'accesso, il tuo punteggio non Ã¨ stato salvato nella classifica globale.",
         signout: "Disconnetti",
-        cupmatSwitch: "🏆 Vai a Cupmat (Vedi Nuovi Aggiornamenti)",
-        saving: "⏳ Salvataggio...", saved: "✓ Salvato con successo!",
-        sysInfoTitle: "🔄 Sistema Aggiornato!",
-        sysInfoContent: "• Il nuovo sistema <strong>e-mail + password</strong> è attivo<br>• Gli <strong>ospiti</strong> non possono guadagnare premi o apparire in classifica<br>• La sessione è condivisa tra <strong>MinMat e CupMat</strong><br>• Puoi visualizzare i nuovi aggiornamenti del torneo su CupMat!"
+        cupmatSwitch: "ğŸ† Vai a Cupmat (Vedi Nuovi Aggiornamenti)",
+        saving: "â³ Salvataggio...", saved: "âœ“ Salvato con successo!",
+        sysInfoTitle: "ğŸ”„ Sistema Aggiornato!",
+        sysInfoContent: "â€¢ Il nuovo sistema <strong>e-mail + password</strong> Ã¨ attivo<br>â€¢ Gli <strong>ospiti</strong> non possono guadagnare premi o apparire in classifica<br>â€¢ La sessione Ã¨ condivisa tra <strong>MinMat e CupMat</strong><br>â€¢ Puoi visualizzare i nuovi aggiornamenti del torneo su CupMat!"
       }
     };
 
@@ -1772,35 +1772,35 @@
       let gs = document.getElementById("gameSubtitle");
       if (gs) gs.innerText = t("subtitle");
       let mt = document.getElementById("modeText");
-      if (mt) mt.innerText = "🎯 " + shortModeName(gameMode);
+      if (mt) mt.innerText = "ğŸ¯ " + shortModeName(gameMode);
 
       // Update dropdown button contents and active option classes
       const langNames = {
-        tr: "Türkçe",
+        tr: "TÃ¼rkÃ§e",
         en: "English",
         de: "Deutsch",
-        fr: "Français",
-        es: "Español",
-        pt: "Português",
-        ar: "العربية",
-        ko: "한국어",
+        fr: "FranÃ§ais",
+        es: "EspaÃ±ol",
+        pt: "PortuguÃªs",
+        ar: "Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©",
+        ko: "í•œêµ­ì–´",
         it: "Italiano"
       };
       const langFlags = {
-        tr: "🇹🇷",
-        en: "🇬🇧",
-        de: "🇩🇪",
-        fr: "🇫🇷",
-        es: "🇪🇸",
-        pt: "🇧🇷",
-        ar: "🇸🇦",
-        ko: "🇰🇷",
-        it: "🇮🇹"
+        tr: "ğŸ‡¹ğŸ‡·",
+        en: "ğŸ‡¬ğŸ‡§",
+        de: "ğŸ‡©ğŸ‡ª",
+        fr: "ğŸ‡«ğŸ‡·",
+        es: "ğŸ‡ªğŸ‡¸",
+        pt: "ğŸ‡§ğŸ‡·",
+        ar: "ğŸ‡¸ğŸ‡¦",
+        ko: "ğŸ‡°ğŸ‡·",
+        it: "ğŸ‡®ğŸ‡¹"
       };
 
       const menuBtn = document.getElementById("menuLangDropdownBtn");
       if (menuBtn) {
-        menuBtn.innerHTML = `<span class="langFlagActive">${langFlags[currentLang] || "🇹🇷"}</span> <span class="langLabelActive">${langNames[currentLang] || "Türkçe"}</span> <span class="dropdownArrow">▼</span>`;
+        menuBtn.innerHTML = `<span class="langFlagActive">${langFlags[currentLang] || "ğŸ‡¹ğŸ‡·"}</span> <span class="langLabelActive">${langNames[currentLang] || "TÃ¼rkÃ§e"}</span> <span class="dropdownArrow">â–¼</span>`;
       }
 
       const dropdowns = ["menuLangDropdown", "gameLangDropdown", "goLangDropdown"];
@@ -1884,15 +1884,15 @@
     }
 
     async function getClerkToken() {
-      console.log("=== getClerkToken TETİKLENDİ ===");
-      // 1. Eğer iframe içindeysek parent pencereden güncel token isteyelim (Oturum paylaşımı için en güvenilir yol)
+      console.log("=== getClerkToken TETÄ°KLENDÄ° ===");
+      // 1. EÄŸer iframe iÃ§indeysek parent pencereden gÃ¼ncel token isteyelim (Oturum paylaÅŸÄ±mÄ± iÃ§in en gÃ¼venilir yol)
       if (window.self !== window.top) {
         try {
           console.log("[IFRAME] Parent pencereden token talep ediliyor...");
           const tokenFromParent = await new Promise((resolve) => {
             const channel = new MessageChannel();
             const timeoutId = setTimeout(() => {
-              console.warn("[IFRAME] Parent token talebi zaman aşımına uğradı.");
+              console.warn("[IFRAME] Parent token talebi zaman aÅŸÄ±mÄ±na uÄŸradÄ±.");
               resolve(null);
             }, 2000);
             channel.port1.onmessage = (event) => {
@@ -1902,7 +1902,7 @@
             window.parent.postMessage({ type: "GET_CLERK_TOKEN" }, "*", [channel.port2]);
           });
           if (tokenFromParent) {
-            console.log("[IFRAME] Parent pencereden token başarıyla alındı.");
+            console.log("[IFRAME] Parent pencereden token baÅŸarÄ±yla alÄ±ndÄ±.");
             return tokenFromParent;
           }
         } catch (e) {
@@ -1910,7 +1910,7 @@
         }
       }
 
-      // 2. Yoksa (yerel test veya parent yanıt vermedi) kendi içindeki Clerk SDK'yı dene
+      // 2. Yoksa (yerel test veya parent yanÄ±t vermedi) kendi iÃ§indeki Clerk SDK'yÄ± dene
       try {
         if (window.Clerk && window.Clerk.session) {
           return await window.Clerk.session.getToken();
@@ -1941,7 +1941,7 @@
               isAuthenticated: true,
               ...data.userSession
             };
-            console.log("kullanıcı giriş yaptı: " + (userSession.displayName || userSession.username || userSession.email || "Adsız"));
+            console.log("kullanÄ±cÄ± giriÅŸ yaptÄ±: " + (userSession.displayName || userSession.username || userSession.email || "AdsÄ±z"));
             
             // Sync levels and unlocked states: merge local progress with database values
             let hasLocalUpdates = false;
@@ -1973,21 +1973,21 @@
             updateModeButtons();
 
             if (hasLocalUpdates) {
-              console.log("[IFRAME] Yerelde daha yüksek ilerleme tespit edildi, veritabanı güncelleniyor...");
+              console.log("[IFRAME] Yerelde daha yÃ¼ksek ilerleme tespit edildi, veritabanÄ± gÃ¼ncelleniyor...");
               submitProgressToDb();
             }
           } else {
             userSession = { isAuthenticated: false };
-            console.log("kullanıcı çıkış yaptı");
+            console.log("kullanÄ±cÄ± Ã§Ä±kÄ±ÅŸ yaptÄ±");
           }
         } else {
           userSession = { isAuthenticated: false };
-          console.log("kullanıcı çıkış yaptı");
+          console.log("kullanÄ±cÄ± Ã§Ä±kÄ±ÅŸ yaptÄ±");
         }
       } catch (e) {
         console.error("Error checking session:", e);
         userSession = { isAuthenticated: false };
-        console.log("kullanıcı çıkış yaptı");
+        console.log("kullanÄ±cÄ± Ã§Ä±kÄ±ÅŸ yaptÄ±");
       }
       updateAuthUI();
     }
@@ -2037,6 +2037,10 @@
     }
 
     function updateAuthUI() {
+      if (!initialStartDone) {
+        initialStartDone = true;
+        setTimeout(startGame, 100);
+      }
       let input = document.getElementById("playerInput");
       let authContainer = document.getElementById("authContainer");
       let authSaveContainer = document.getElementById("authSaveContainer");
@@ -2047,17 +2051,17 @@
       
       if (!input || !authContainer || !minmatAuthPanel) return;
 
-      // Sağ üst köşedeki auth panelini güncelle
+      // SaÄŸ Ã¼st kÃ¶ÅŸedeki auth panelini gÃ¼ncelle
       if (userSession.isAuthenticated) {
-        const displayName = userSession.displayName || userSession.username || "Kullanıcı";
+        const displayName = userSession.displayName || userSession.username || "KullanÄ±cÄ±";
         
-        // Clerk user ID'sini TÜM localStorage anahtarlarına kaydet!
+        // Clerk user ID'sini TÃœM localStorage anahtarlarÄ±na kaydet!
         if (userSession.userId) {
           localStorage.setItem('clerk_user_id', userSession.userId);
           localStorage.setItem('clerkUserId', userSession.userId);
           localStorage.setItem('userId', userSession.userId);
           localStorage.setItem('user_id', userSession.userId);
-          console.log("[FRONTEND updateAuthUI] Clerk user ID'si tüm localStorage anahtarlarına kaydedildi:", userSession.userId);
+          console.log("[FRONTEND updateAuthUI] Clerk user ID'si tÃ¼m localStorage anahtarlarÄ±na kaydedildi:", userSession.userId);
         }
         
         minmatAuthPanel.innerHTML = `
@@ -2069,7 +2073,7 @@
       } else {
         minmatAuthPanel.innerHTML = `
           <button onclick="openClerkSignIn()" style="display:flex; align-items:center; gap:6px; padding:8px 14px; background:linear-gradient(135deg, rgba(34,197,94,0.2), rgba(59,130,246,0.2)); border:1px solid rgba(74,222,128,0.4); color:white; border-radius:999px; font-size:13px; font-weight:800; cursor:pointer;">
-            <span>🔑</span>
+            <span>ğŸ”‘</span>
             <span>${t("signin")}</span>
           </button>
         `;
@@ -2191,7 +2195,7 @@
     }
 
     function redirectToSignOut() {
-      console.log("kullanıcı çıkış yaptı");
+      console.log("kullanÄ±cÄ± Ã§Ä±kÄ±ÅŸ yaptÄ±");
       const currentPath = (window.self !== window.top) ? "/minmat" : (window.location.pathname + window.location.search);
       if (window.self !== window.top) {
         window.top.location.href = `/auth-signout?redirect=${encodeURIComponent(currentPath)}`;
@@ -2222,25 +2226,25 @@
           localStorage.setItem("minmat_share_boost", "active");
           let activeMsg = "";
           if (currentLang === "tr") {
-            activeMsg = "🎉 Harika! Skor paylaşıldı. İlk oyununda geçerli olmak üzere %20 Ekstra Skor Bonusu aktif edildi!";
+            activeMsg = "ğŸ‰ Harika! Skor paylaÅŸÄ±ldÄ±. Ä°lk oyununda geÃ§erli olmak Ã¼zere %20 Ekstra Skor Bonusu aktif edildi!";
           } else if (currentLang === "en") {
-            activeMsg = "🎉 Awesome! Score shared. 20% Extra Score Bonus has been activated for your next game!";
+            activeMsg = "ğŸ‰ Awesome! Score shared. 20% Extra Score Bonus has been activated for your next game!";
           } else if (currentLang === "de") {
-            activeMsg = "🎉 Super! Ergebnis geteilt. 20% Extra-Punkte-Bonus wurde für dein nächstes Spiel aktiviert!";
+            activeMsg = "ğŸ‰ Super! Ergebnis geteilt. 20% Extra-Punkte-Bonus wurde fÃ¼r dein nÃ¤chstes Spiel aktiviert!";
           } else if (currentLang === "fr") {
-            activeMsg = "🎉 Super ! Score partagé. Un bonus de score supplémentaire de 20 % a été activé pour votre prochaine partie !";
+            activeMsg = "ğŸ‰ Super ! Score partagÃ©. Un bonus de score supplÃ©mentaire de 20 % a Ã©tÃ© activÃ© pour votre prochaine partie !";
           } else if (currentLang === "es") {
-            activeMsg = "🎉 ¡Genial! Puntuación compartida. ¡Se ha activado un bono de puntuación adicional del 20 % para tu próximo juego!";
+            activeMsg = "ğŸ‰ Â¡Genial! PuntuaciÃ³n compartida. Â¡Se ha activado un bono de puntuaciÃ³n adicional del 20 % para tu prÃ³ximo juego!";
           } else if (currentLang === "pt") {
-            activeMsg = "🎉 Incrível! Pontuação compartilhada. Um bônus de pontuação extra de 20% foi ativado para o seu próximo jogo!";
+            activeMsg = "ğŸ‰ IncrÃ­vel! PontuaÃ§Ã£o compartilhada. Um bÃ´nus de pontuaÃ§Ã£o extra de 20% foi ativado para o seu prÃ³ximo jogo!";
           } else if (currentLang === "it") {
-            activeMsg = "🎉 Fantastico! Punteggio condiviso. Un bonus del 20% sul punteggio extra è stato attivato per la tua prossima partita!";
+            activeMsg = "ğŸ‰ Fantastico! Punteggio condiviso. Un bonus del 20% sul punteggio extra Ã¨ stato attivato per la tua prossima partita!";
           } else if (currentLang === "ko") {
-            activeMsg = "🎉 멋집니다! 점수가 공유되었습니다. 다음 게임에 적용될 20% 추가 점수 보너스가 활성화되었습니다!";
+            activeMsg = "ğŸ‰ ë©‹ì§‘ë‹ˆë‹¤! ì ìˆ˜ê°€ ê³µìœ ë˜ì—ˆìŠµë‹ˆë‹¤. ë‹¤ìŒ ê²Œì„ì— ì ìš©ë  20% ì¶”ê°€ ì ìˆ˜ ë³´ë„ˆìŠ¤ê°€ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤!";
           } else if (currentLang === "ar") {
-            activeMsg = "🎉 رائع! تم مشاركة النتيجة. تم تفعيل مكافأة النقاط الإضافية بنسبة 20% للعبتك القادمة!";
+            activeMsg = "ğŸ‰ Ø±Ø§Ø¦Ø¹! ØªÙ… Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ù„Ù†ØªÙŠØ¬Ø©. ØªÙ… ØªÙØ¹ÙŠÙ„ Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„Ù†Ù‚Ø§Ø· Ø§Ù„Ø¥Ø¶Ø§ÙÙŠØ© Ø¨Ù†Ø³Ø¨Ø© 20% Ù„Ù„Ø¹Ø¨ØªÙƒ Ø§Ù„Ù‚Ø§Ø¯Ù…Ø©!";
           } else {
-            activeMsg = "🎉 Score shared! 20% Extra Score Bonus activated for your next game!";
+            activeMsg = "ğŸ‰ Score shared! 20% Extra Score Bonus activated for your next game!";
           }
           alert(activeMsg);
         }
@@ -2254,11 +2258,11 @@
         checkInput();
       }
       
-      // Eğer iframe içindeysek Clerk yüklemesini tamamen pas geçelim (Mükerrer ve sonsuz döngü engelleme)
+      // EÄŸer iframe iÃ§indeysek Clerk yÃ¼klemesini tamamen pas geÃ§elim (MÃ¼kerrer ve sonsuz dÃ¶ngÃ¼ engelleme)
       if (window.self !== window.top) {
-        console.log("[IFRAME] Iframe içindeyiz, Clerk SDK yüklenmesi pas geçiliyor. Oturum parent pencereden yönetilecek.");
+        console.log("[IFRAME] Iframe iÃ§indeyiz, Clerk SDK yÃ¼klenmesi pas geÃ§iliyor. Oturum parent pencereden yÃ¶netilecek.");
         
-        // Mükerrer butonları gizle (Hakkında, Yardım, Çıkış, Cupmat'a Geç)
+        // MÃ¼kerrer butonlarÄ± gizle (HakkÄ±nda, YardÄ±m, Ã‡Ä±kÄ±ÅŸ, Cupmat'a GeÃ§)
         const topRightNav = document.querySelector('.topRightNav');
         if (topRightNav) {
           topRightNav.style.display = 'none';
@@ -2268,7 +2272,7 @@
           switchBtn.style.display = 'none';
         }
         
-        // Mükerrer dil dropdownlarını gizle
+        // MÃ¼kerrer dil dropdownlarÄ±nÄ± gizle
         const menuLangDropdownContainer = document.getElementById('menuLangDropdownContainer');
         if (menuLangDropdownContainer) {
           menuLangDropdownContainer.style.display = 'none';
@@ -2287,7 +2291,7 @@
       }
       
       try {
-        // API'den Clerk anahtarını çek
+        // API'den Clerk anahtarÄ±nÄ± Ã§ek
         const clerkKeyRes = await fetch('/api/clerk-key');
         let publishableKey = null;
         
@@ -2297,44 +2301,44 @@
         }
         
         if (window.Clerk) {
-          // Eğer Clerk zaten yüklü ve aktifse load() çağırmayalım
+          // EÄŸer Clerk zaten yÃ¼klÃ¼ ve aktifse load() Ã§aÄŸÄ±rmayalÄ±m
           if (window.Clerk.loaded) {
-            console.log("[Clerk] Zaten yüklü ve aktif.");
+            console.log("[Clerk] Zaten yÃ¼klÃ¼ ve aktif.");
             checkAuthSession();
             if (window.Clerk.addListener) {
               window.Clerk.addListener((e) => {
-                console.log("[Clerk Listener] Oturum durumu değişti:", e);
+                console.log("[Clerk Listener] Oturum durumu deÄŸiÅŸti:", e);
                 checkAuthSession();
               });
             }
           } else if (publishableKey) {
-            console.log("[Clerk] Yükleniyor...", publishableKey);
+            console.log("[Clerk] YÃ¼kleniyor...", publishableKey);
             window.Clerk.publishableKey = publishableKey;
             window.Clerk.load({
               publishableKey
             }).then(() => {
-              console.log("[Clerk] Başarıyla yüklendi.");
+              console.log("[Clerk] BaÅŸarÄ±yla yÃ¼klendi.");
               checkAuthSession();
               if (window.Clerk.addListener) {
                 window.Clerk.addListener((e) => {
-                  console.log("[Clerk Listener] Oturum durumu değişti:", e);
+                  console.log("[Clerk Listener] Oturum durumu deÄŸiÅŸti:", e);
                   checkAuthSession();
                 });
               }
             }).catch((err) => {
-              console.error("[Clerk Load Hatası]:", err);
+              console.error("[Clerk Load HatasÄ±]:", err);
               checkAuthSession();
             });
           } else {
-            console.warn("[Clerk] Publishable key bulunamadı.");
+            console.warn("[Clerk] Publishable key bulunamadÄ±.");
             checkAuthSession();
           }
         } else {
-          console.warn("[Clerk] SDK SDK bulunamadı.");
+          console.warn("[Clerk] SDK SDK bulunamadÄ±.");
           checkAuthSession();
         }
       } catch (error) {
-        console.error("Clerk yükleme hatası:", error);
+        console.error("Clerk yÃ¼kleme hatasÄ±:", error);
         checkAuthSession();
       }
     });
@@ -2368,7 +2372,7 @@
       let overlay = document.getElementById("pauseOverlay");
       if (overlay) overlay.style.display = "none";
       let btn = document.getElementById("pauseBtn");
-      if (btn) btn.innerText = "⏸️";
+      if (btn) btn.innerText = "â¸ï¸";
       show("menuScreen");
     }
 
@@ -2451,18 +2455,18 @@
 
     const boostDict = {
       tr: {
-        title: "⚡ Aktif Maç Hediyeleri",
-        timeTitle: "Ek Süre (+10sn)",
-        timeDesc: "Oyuna 10 saniye fazladan başla",
+        title: "âš¡ Aktif MaÃ§ Hediyeleri",
+        timeTitle: "Ek SÃ¼re (+10sn)",
+        timeDesc: "Oyuna 10 saniye fazladan baÅŸla",
         lifeTitle: "Ek Can (+1 Can)",
-        lifeDesc: "3 yerine 4 canla oyuna başla",
-        scoreTitle: "Başlangıç Puanı (+250)",
-        scoreDesc: "Oyuna 250 puan önde başla",
-        expires: "Kalan Süre:",
-        noGifts: "Aktif maç hediyeniz bulunmamaktadır."
+        lifeDesc: "3 yerine 4 canla oyuna baÅŸla",
+        scoreTitle: "BaÅŸlangÄ±Ã§ PuanÄ± (+250)",
+        scoreDesc: "Oyuna 250 puan Ã¶nde baÅŸla",
+        expires: "Kalan SÃ¼re:",
+        noGifts: "Aktif maÃ§ hediyeniz bulunmamaktadÄ±r."
       },
       en: {
-        title: "⚡ Active Match Gifts",
+        title: "âš¡ Active Match Gifts",
         timeTitle: "Extra Time (+10s)",
         timeDesc: "Start the game with 10 extra seconds",
         lifeTitle: "Extra Life (+1 Life)",
@@ -2473,81 +2477,81 @@
         noGifts: "You have no active match gifts."
       },
       de: {
-        title: "⚡ Aktive Spielgeschenke",
-        timeTitle: "Zusätzliche Zeit (+10s)",
-        timeDesc: "Starte das Spiel mit 10 zusätzlichen Sekunden",
-        lifeTitle: "Zusätzliches Leben (+1)",
+        title: "âš¡ Aktive Spielgeschenke",
+        timeTitle: "ZusÃ¤tzliche Zeit (+10s)",
+        timeDesc: "Starte das Spiel mit 10 zusÃ¤tzlichen Sekunden",
+        lifeTitle: "ZusÃ¤tzliches Leben (+1)",
         lifeDesc: "Starte das Spiel mit 4 Leben statt 3",
         scoreTitle: "Startpunktzahl (+250)",
         scoreDesc: "Starte das Spiel mit 250 Extrapunkten",
-        expires: "Gültig bis:",
+        expires: "GÃ¼ltig bis:",
         noGifts: "Sie haben keine aktiven Spielgeschenke."
       },
       fr: {
-        title: "⚡ Cadeaux de Match Actifs",
-        timeTitle: "Temps Supplémentaire (+10s)",
-        timeDesc: "Commencez le jeu avec 10 secondes supplémentaires",
-        lifeTitle: "Vie Supplémentaire (+1)",
+        title: "âš¡ Cadeaux de Match Actifs",
+        timeTitle: "Temps SupplÃ©mentaire (+10s)",
+        timeDesc: "Commencez le jeu avec 10 secondes supplÃ©mentaires",
+        lifeTitle: "Vie SupplÃ©mentaire (+1)",
         lifeDesc: "Commencez le jeu avec 4 vies au lieu de 3",
-        scoreTitle: "Score de Départ (+250)",
+        scoreTitle: "Score de DÃ©part (+250)",
         scoreDesc: "Commencez le jeu avec 250 points d'avance",
         expires: "Expire le:",
         noGifts: "Vous n'avez pas de cadeaux de match actifs."
       },
       es: {
-        title: "⚡ Regalos de Partido Activos",
+        title: "âš¡ Regalos de Partido Activos",
         timeTitle: "Tiempo Extra (+10s)",
         timeDesc: "Comienza el juego con 10 segundos extra",
         lifeTitle: "Vida Extra (+1 Vida)",
         lifeDesc: "Comienza el juego con 4 vidas en lugar de 3",
-        scoreTitle: "Puntuación Inicial (+250)",
+        scoreTitle: "PuntuaciÃ³n Inicial (+250)",
         scoreDesc: "Comienza el juego con 250 puntos de ventaja",
         expires: "Vence el:",
         noGifts: "No tienes regalos de partido activos."
       },
       pt: {
-        title: "⚡ Presentes de Jogo Ativos",
+        title: "âš¡ Presentes de Jogo Ativos",
         timeTitle: "Tempo Extra (+10s)",
         timeDesc: "Comece o jogo com 10 segundos extras",
         lifeTitle: "Vida Extra (+1 Vida)",
         lifeDesc: "Comece o jogo com 4 vidas em vez de 3",
-        scoreTitle: "Pontuação Inicial (+250)",
+        scoreTitle: "PontuaÃ§Ã£o Inicial (+250)",
         scoreDesc: "Comece o jogo com 250 pontos extras",
         expires: "Expira em:",
-        noGifts: "Você não tem presentes de jogo ativos."
+        noGifts: "VocÃª nÃ£o tem presentes de jogo ativos."
       },
       it: {
-        title: "⚡ Regali Partita Attivi",
+        title: "âš¡ Regali Partita Attivi",
         timeTitle: "Tempo Extra (+10s)",
-        timeDesc: "Inizia il gioco con 10 secondi in più",
+        timeDesc: "Inizia il gioco con 10 secondi in piÃ¹",
         lifeTitle: "Vita Extra (+1 Vita)",
         lifeDesc: "Inizia il gioco con 4 vite invece di 3",
         scoreTitle: "Punteggio Iniziale (+250)",
-        scoreDesc: "Inizia il gioco con 250 punti in più",
+        scoreDesc: "Inizia il gioco con 250 punti in piÃ¹",
         expires: "Scade il:",
         noGifts: "Non hai regali partita attivi."
       },
       ko: {
-        title: "⚡ 활성 매치 선물",
-        timeTitle: "추가 시간 (+10초)",
-        timeDesc: "10초 추가 시간을 가지고 게임을 시작합니다",
-        lifeTitle: "추가 생명 (+1 목숨)",
-        lifeDesc: "목숨 3개 대신 4개로 게임을 시작합니다",
-        scoreTitle: "시작 점수 (+250점)",
-        scoreDesc: "250점을 획득한 상태로 게임을 시작합니다",
-        expires: "만료일:",
-        noGifts: "활성화된 매치 선물이 없습니다."
+        title: "âš¡ í™œì„± ë§¤ì¹˜ ì„ ë¬¼",
+        timeTitle: "ì¶”ê°€ ì‹œê°„ (+10ì´ˆ)",
+        timeDesc: "10ì´ˆ ì¶”ê°€ ì‹œê°„ì„ ê°€ì§€ê³  ê²Œì„ì„ ì‹œì‘í•©ë‹ˆë‹¤",
+        lifeTitle: "ì¶”ê°€ ìƒëª… (+1 ëª©ìˆ¨)",
+        lifeDesc: "ëª©ìˆ¨ 3ê°œ ëŒ€ì‹  4ê°œë¡œ ê²Œì„ì„ ì‹œì‘í•©ë‹ˆë‹¤",
+        scoreTitle: "ì‹œì‘ ì ìˆ˜ (+250ì )",
+        scoreDesc: "250ì ì„ íšë“í•œ ìƒíƒœë¡œ ê²Œì„ì„ ì‹œì‘í•©ë‹ˆë‹¤",
+        expires: "ë§Œë£Œì¼:",
+        noGifts: "í™œì„±í™”ëœ ë§¤ì¹˜ ì„ ë¬¼ì´ ì—†ìŠµë‹ˆë‹¤."
       },
       ar: {
-        title: "⚡ هدايا المباراة النشطة",
-        timeTitle: "وقت إضافي (+10 ثوانٍ)",
-        timeDesc: "ابدأ اللعبة مع 10 ثوانٍ إضافية",
-        lifeTitle: "حياة إضافية (+1 حياة)",
-        lifeDesc: "ابدأ اللعبة بـ 4 أرواح بدلاً من 3",
-        scoreTitle: "نقاط البدء (+250)",
-        scoreDesc: "ابدأ اللعبة بـ 250 نقطة إضافية",
-        expires: "تنتهي الصلاحية:",
-        noGifts: "ليس لديك هدايا مباراة نشطة."
+        title: "âš¡ Ù‡Ø¯Ø§ÙŠØ§ Ø§Ù„Ù…Ø¨Ø§Ø±Ø§Ø© Ø§Ù„Ù†Ø´Ø·Ø©",
+        timeTitle: "ÙˆÙ‚Øª Ø¥Ø¶Ø§ÙÙŠ (+10 Ø«ÙˆØ§Ù†Ù)",
+        timeDesc: "Ø§Ø¨Ø¯Ø£ Ø§Ù„Ù„Ø¹Ø¨Ø© Ù…Ø¹ 10 Ø«ÙˆØ§Ù†Ù Ø¥Ø¶Ø§ÙÙŠØ©",
+        lifeTitle: "Ø­ÙŠØ§Ø© Ø¥Ø¶Ø§ÙÙŠØ© (+1 Ø­ÙŠØ§Ø©)",
+        lifeDesc: "Ø§Ø¨Ø¯Ø£ Ø§Ù„Ù„Ø¹Ø¨Ø© Ø¨Ù€ 4 Ø£Ø±ÙˆØ§Ø­ Ø¨Ø¯Ù„Ø§Ù‹ Ù…Ù† 3",
+        scoreTitle: "Ù†Ù‚Ø§Ø· Ø§Ù„Ø¨Ø¯Ø¡ (+250)",
+        scoreDesc: "Ø§Ø¨Ø¯Ø£ Ø§Ù„Ù„Ø¹Ø¨Ø© Ø¨Ù€ 250 Ù†Ù‚Ø·Ø© Ø¥Ø¶Ø§ÙÙŠØ©",
+        expires: "ØªÙ†ØªÙ‡ÙŠ Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ©:",
+        noGifts: "Ù„ÙŠØ³ Ù„Ø¯ÙŠÙƒ Ù‡Ø¯Ø§ÙŠØ§ Ù…Ø¨Ø§Ø±Ø§Ø© Ù†Ø´Ø·Ø©."
       }
     };
 
@@ -2717,7 +2721,9 @@
     let bonusLevel = 1;
     let isGameOver = false;
     let isGameOverSaved = false;
-    let playerName = "Adsız";
+    let isGameStarted = false;
+    let initialStartDone = false;
+    let playerName = "AdsÄ±z";
     let isPaused = false;
     let extraTimeSeconds = 0;
     let periodSecondsPerLevel = 0;
@@ -2741,7 +2747,7 @@
       if (maxLevel >= 25) {
         return {
           tier: 4,
-          name: currentLang === "tr" ? "💎 Zeka Efsanesi" : "💎 Math Legend",
+          name: currentLang === "tr" ? "ğŸ’ Zeka Efsanesi" : "ğŸ’ Math Legend",
           extraSeconds: 6,
           multiplier: 1.25,
           className: "minmat-badge-tier4"
@@ -2749,7 +2755,7 @@
       } else if (maxLevel >= 20) {
         return {
           tier: 3,
-          name: currentLang === "tr" ? "🥇 Sayıların Efendisi" : "🥇 Lord of Numbers",
+          name: currentLang === "tr" ? "ğŸ¥‡ SayÄ±larÄ±n Efendisi" : "ğŸ¥‡ Lord of Numbers",
           extraSeconds: 4,
           multiplier: 1.15,
           className: "minmat-badge-tier3"
@@ -2757,7 +2763,7 @@
       } else if (maxLevel >= 15) {
         return {
           tier: 2,
-          name: currentLang === "tr" ? "🥈 Zihin Ustası" : "🥈 Mind Master",
+          name: currentLang === "tr" ? "ğŸ¥ˆ Zihin UstasÄ±" : "ğŸ¥ˆ Mind Master",
           extraSeconds: 2,
           multiplier: 1.10,
           className: "minmat-badge-tier2"
@@ -2765,7 +2771,7 @@
       } else if (maxLevel >= 10) {
         return {
           tier: 1,
-          name: currentLang === "tr" ? "🥉 Matematik Savaşçısı" : "🥉 Math Warrior",
+          name: currentLang === "tr" ? "ğŸ¥‰ Matematik SavaÅŸÃ§Ä±sÄ±" : "ğŸ¥‰ Math Warrior",
           extraSeconds: 1,
           multiplier: 1.05,
           className: "minmat-badge-tier1"
@@ -2816,7 +2822,7 @@
       if (lvl > current) {
         localStorage.setItem("minmat_maxLevel_" + mode, lvl);
         
-        // Seviye 4 veya üzerine ulaşıldığında bir sonraki kategorinin kilidini aç
+        // Seviye 4 veya Ã¼zerine ulaÅŸÄ±ldÄ±ÄŸÄ±nda bir sonraki kategorinin kilidini aÃ§
         if (mode === "add" && lvl >= 4) localStorage.setItem("minmat_unlocked_sub", "true");
         if (mode === "sub" && lvl >= 4) localStorage.setItem("minmat_unlocked_mul", "true");
         if (mode === "mul" && lvl >= 4) localStorage.setItem("minmat_unlocked_div", "true");
@@ -2832,10 +2838,10 @@
     function isModeUnlocked(mode) {
       if (mode === "add") return true;
 
-      // Öncelikle yerel kilit açılma bayrağına bak
+      // Ã–ncelikle yerel kilit aÃ§Ä±lma bayraÄŸÄ±na bak
       if (localStorage.getItem("minmat_unlocked_" + mode) === "true") return true;
 
-      // Yedek seviye sınırı kontrolü
+      // Yedek seviye sÄ±nÄ±rÄ± kontrolÃ¼
       if (mode === "sub") return getMaxLevel("add") >= 4;
       if (mode === "mul") return getMaxLevel("sub") >= 4;
       if (mode === "div") return getMaxLevel("mul") >= 4;
@@ -2872,20 +2878,17 @@
       let inputVal = document.getElementById("playerInput") ? document.getElementById("playerInput").value.trim() : "";
       
       if (userSession.isAuthenticated) {
-        playerName = userSession.displayName || userSession.username || "Kullanıcı";
+        playerName = userSession.displayName || userSession.username || "KullanÄ±cÄ±";
       } else if (isGuestMode && guestUsername) {
         playerName = guestUsername;
       } else {
-        playerName = inputVal;
+        playerName = inputVal || (currentLang === "en" ? "Guest" : "Misafir");
       }
 
-      if (playerName.length < 3 && !userSession.isAuthenticated) {
-        alert(t("nameErr"));
-        return;
-      }
       localStorage.setItem("minmat_last_name", playerName);
       isGameOver = false;
       isGameOverSaved = false;
+      isGameStarted = false;
       isPaused = false;
 
       // Consume share boost if active
@@ -2898,7 +2901,7 @@
       let overlay = document.getElementById("pauseOverlay");
       if (overlay) overlay.style.display = "none";
       let pauseBtn = document.getElementById("pauseBtn");
-      if (pauseBtn) pauseBtn.innerText = "⏸️";
+      if (pauseBtn) pauseBtn.innerText = "â¸ï¸";
 
       activeGameBoost = null;
       if (selectedBoost && userSession.isAuthenticated) {
@@ -2923,9 +2926,9 @@
       bonusLevel = 1;
       const playerTextEl = document.getElementById("playerText");
       if (playerTextEl) {
-        playerTextEl.innerText = "👤 " + playerName;
+        playerTextEl.innerText = "ğŸ‘¤ " + playerName;
       }
-      document.getElementById("modeText").innerText = "🎯 " + shortModeName(gameMode);
+      document.getElementById("modeText").innerText = "ğŸ¯ " + shortModeName(gameMode);
 
       // Initialize badge bonuses based on overall max level achieved
       const maxLvl = getOverallMaxLevel();
@@ -3002,16 +3005,16 @@
               if (currentLang === "en") suffix = "s Cupmat Bonus Active!";
               else if (currentLang === "de") suffix = "s Cupmat-Bonus Aktiv!";
               else if (currentLang === "fr") suffix = "s Bonus Cupmat Actif!";
-              else if (currentLang === "es") suffix = "s ¡Bono Cupmat Activo!";
-              else if (currentLang === "pt") suffix = "s Bônus Cupmat Ativo!";
-              else if (currentLang === "ar") suffix = " ثوانٍ مكافأة Cupmat نشطة!";
-              else if (currentLang === "ko") suffix = "초 Cupmat 보너스 활성화!";
+              else if (currentLang === "es") suffix = "s Â¡Bono Cupmat Activo!";
+              else if (currentLang === "pt") suffix = "s BÃ´nus Cupmat Ativo!";
+              else if (currentLang === "ar") suffix = " Ø«ÙˆØ§Ù†Ù Ù…ÙƒØ§ÙØ£Ø© Cupmat Ù†Ø´Ø·Ø©!";
+              else if (currentLang === "ko") suffix = "ì´ˆ Cupmat ë³´ë„ˆìŠ¤ í™œì„±í™”!";
               else if (currentLang === "it") suffix = "s Bonus Cupmat Attivo!";
               let label = "+" + totalBonus + suffix;
-              let periodLabel = currentLang === "tr" ? "periyot ödülü" :
-                                currentLang === "pt" ? "prêmio de período" :
-                                currentLang === "ar" ? "مكافأة الفترة" :
-                                currentLang === "ko" ? "기간 보상" :
+              let periodLabel = currentLang === "tr" ? "periyot Ã¶dÃ¼lÃ¼" :
+                                currentLang === "pt" ? "prÃªmio de perÃ­odo" :
+                                currentLang === "ar" ? "Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„ÙØªØ±Ø©" :
+                                currentLang === "ko" ? "ê¸°ê°„ ë³´ìƒ" :
                                 currentLang === "it" ? "premio periodo" : "period reward";
               if (periodSecondsPerLevel > 0 && extraTimeSeconds > 0) {
                 label = "+" + extraTimeSeconds + "sn + " + periodSecondsPerLevel + "sn/tur " + periodLabel;
@@ -3031,11 +3034,11 @@
       if (activeGameBoost) {
         let label = "";
         if (activeGameBoost === "time") {
-          label = currentLang === "tr" ? "⏱️ +10sn Ek Süre Aktif!" : "⏱️ +10s Extra Time Active!";
+          label = currentLang === "tr" ? "â±ï¸ +10sn Ek SÃ¼re Aktif!" : "â±ï¸ +10s Extra Time Active!";
         } else if (activeGameBoost === "life") {
-          label = currentLang === "tr" ? "❤️ +1 Ek Can Aktif!" : "❤️ +1 Extra Life Active!";
+          label = currentLang === "tr" ? "â¤ï¸ +1 Ek Can Aktif!" : "â¤ï¸ +1 Extra Life Active!";
         } else if (activeGameBoost === "score") {
-          label = currentLang === "tr" ? "⭐ +250 Başlangıç Puanı Aktif!" : "⭐ +250 Starting Score Active!";
+          label = currentLang === "tr" ? "â­ +250 BaÅŸlangÄ±Ã§ PuanÄ± Aktif!" : "â­ +250 Starting Score Active!";
         }
         
         let badgeEl = document.getElementById("extraTimeBadge");
@@ -3110,7 +3113,7 @@
       }
 
       updateUI();
-      startTimer();
+      // startTimer() removed: timer starts on first card click
     }
 
     function startTimer() {
@@ -3137,13 +3140,13 @@
     }
 
     function updateUI() {
-      document.getElementById("score").innerText = "⭐ " + score;
+      document.getElementById("score").innerText = "â­ " + score;
       document.getElementById("levelLabel").innerText = t("round") + " " + level;
-      document.getElementById("time").innerText = "⏱️ " + timeLeft;
-      document.getElementById("combo").innerText = "🔥 " + combo;
+      document.getElementById("time").innerText = "â±ï¸ " + timeLeft;
+      document.getElementById("combo").innerText = "ğŸ”¥ " + combo;
 
       let hearts = "";
-      for (let i = 0; i < lives; i++) hearts += "❤️";
+      for (let i = 0; i < lives; i++) hearts += "â¤ï¸";
       document.getElementById("lives").innerText = hearts;
     }
 
@@ -3178,7 +3181,7 @@
           else if (currentMode === "mul") {
             let mulMax = Math.min(3 + level * 2, 12);
             a = rand(1, mulMax); b = rand(1, mulMax);
-            question = a + " × " + b; answer = a * b;
+            question = a + " Ã— " + b; answer = a * b;
           }
           else if (currentMode === "div") {
             let divMax = Math.min(3 + level, 12);
@@ -3220,6 +3223,10 @@
 
     function flip(div, card) {
       if (isGameOver || isPaused || lock || div.classList.contains("open")) return;
+      if (!isGameStarted) {
+        isGameStarted = true;
+        startTimer();
+      }
 
       div.classList.add("open");
 
@@ -3234,7 +3241,7 @@
       if (match) {
         combo++;
         wrongCount = 0;
-        document.getElementById("wrongBar").innerText = "⚠️ 0/3";
+        document.getElementById("wrongBar").innerText = "âš ï¸ 0/3";
         
         // Combo can/life recovery or can-overflow points bonus
         if (combo === 4 || combo === 7 || combo === 9) {
@@ -3246,20 +3253,20 @@
             const lifeBonus = 123;
             score += lifeBonus;
             
-            let label = "❤️ CAN BONUSU: +123 PUAN!";
-            if (currentLang === "en") label = "❤️ LIFE BONUS: +123 POINTS!";
-            else if (currentLang === "de") label = "❤️ LEBENS-BONUS: +123 PUNKTE!";
-            else if (currentLang === "fr") label = "❤️ BONUS DE VIE: +123 POINTS!";
-            else if (currentLang === "es") label = "❤️ BONO DE VIDA: +123 PUNTOS!";
-            else if (currentLang === "pt") label = "❤️ BÔNUS DE VIDA: +123 PONTOS!";
-            else if (currentLang === "ar") label = "❤️ مكافأة الحياة: +123 نقطة!";
-            else if (currentLang === "ko") label = "❤️ 생명 보너스: +123 점!";
-            else if (currentLang === "it") label = "❤️ BONUS VITA: +123 PUNTI!";
+            let label = "â¤ï¸ CAN BONUSU: +123 PUAN!";
+            if (currentLang === "en") label = "â¤ï¸ LIFE BONUS: +123 POINTS!";
+            else if (currentLang === "de") label = "â¤ï¸ LEBENS-BONUS: +123 PUNKTE!";
+            else if (currentLang === "fr") label = "â¤ï¸ BONUS DE VIE: +123 POINTS!";
+            else if (currentLang === "es") label = "â¤ï¸ BONO DE VIDA: +123 PUNTOS!";
+            else if (currentLang === "pt") label = "â¤ï¸ BÃ”NUS DE VIDA: +123 PONTOS!";
+            else if (currentLang === "ar") label = "â¤ï¸ Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„Ø­ÙŠØ§Ø©: +123 Ù†Ù‚Ø·Ø©!";
+            else if (currentLang === "ko") label = "â¤ï¸ ìƒëª… ë³´ë„ˆìŠ¤: +123 ì !";
+            else if (currentLang === "it") label = "â¤ï¸ BONUS VITA: +123 PUNTI!";
             showEffect(label);
           }
         }
 
-        if (combo >= 3) showEffect("🔥 KOMBO x" + combo);
+        if (combo >= 3) showEffect("ğŸ”¥ KOMBO x" + combo);
 
         totalLifetimeMatches++;
         if (totalLifetimeMatches >= nextBonusTarget) {
@@ -3277,14 +3284,14 @@
             score += 1000;
             updateTimeUI();
             
-            let label = "🎁 USTA BONUSU: +10 SN & 1000 Puan!";
-            if (currentLang === "en") label = "🎁 MASTER BONUS: +10 SEC & 1000 Pts!";
+            let label = "ğŸ USTA BONUSU: +10 SN & 1000 Puan!";
+            if (currentLang === "en") label = "ğŸ MASTER BONUS: +10 SEC & 1000 Pts!";
             showEffect(label);
           } else {
             lives++;
             animateLives();
-            let label = "❤️ USTA BONUSU: +1 CAN!";
-            if (currentLang === "en") label = "❤️ MASTER BONUS: +1 LIFE!";
+            let label = "â¤ï¸ USTA BONUSU: +1 CAN!";
+            if (currentLang === "en") label = "â¤ï¸ MASTER BONUS: +1 LIFE!";
             showEffect(label);
           }
         }
@@ -3324,15 +3331,15 @@
           score += completionBonus + timeBonus;
           
           // Show effect
-          let label = `🎉 +${completionBonus} Tur | +${timeBonus} Süre`;
-          if (currentLang === "en") label = `🎉 +${completionBonus} Round | +${timeBonus} Time`;
-          else if (currentLang === "de") label = `🎉 +${completionBonus} Runde | +${timeBonus} Zeit`;
-          else if (currentLang === "fr") label = `🎉 +${completionBonus} Tour | +${timeBonus} Temps`;
-          else if (currentLang === "es") label = `🎉 +${completionBonus} Ronda | +${timeBonus} Tiempo`;
-          else if (currentLang === "pt") label = `🎉 +${completionBonus} Rodada | +${timeBonus} Tempo`;
-          else if (currentLang === "ar") label = `🎉 +${completionBonus} جولة | +${timeBonus} وقت`;
-          else if (currentLang === "ko") label = `🎉 +${completionBonus} 라운드 | +${timeBonus} 시간`;
-          else if (currentLang === "it") label = `🎉 +${completionBonus} Turno | +${timeBonus} Tempo`;
+          let label = `ğŸ‰ +${completionBonus} Tur | +${timeBonus} SÃ¼re`;
+          if (currentLang === "en") label = `ğŸ‰ +${completionBonus} Round | +${timeBonus} Time`;
+          else if (currentLang === "de") label = `ğŸ‰ +${completionBonus} Runde | +${timeBonus} Zeit`;
+          else if (currentLang === "fr") label = `ğŸ‰ +${completionBonus} Tour | +${timeBonus} Temps`;
+          else if (currentLang === "es") label = `ğŸ‰ +${completionBonus} Ronda | +${timeBonus} Tiempo`;
+          else if (currentLang === "pt") label = `ğŸ‰ +${completionBonus} Rodada | +${timeBonus} Tempo`;
+          else if (currentLang === "ar") label = `ğŸ‰ +${completionBonus} Ø¬ÙˆÙ„Ø© | +${timeBonus} ÙˆÙ‚Øª`;
+          else if (currentLang === "ko") label = `ğŸ‰ +${completionBonus} ë¼ìš´ë“œ | +${timeBonus} ì‹œê°„`;
+          else if (currentLang === "it") label = `ğŸ‰ +${completionBonus} Turno | +${timeBonus} Tempo`;
           
           setTimeout(() => {
             showEffect(label);
@@ -3348,11 +3355,11 @@
       } else {
         combo = 0;
         wrongCount++;
-        document.getElementById("wrongBar").innerText = "⚠️ " + wrongCount + "/3";
+        document.getElementById("wrongBar").innerText = "âš ï¸ " + wrongCount + "/3";
         if (wrongCount >= 3) {
           lives--;
           wrongCount = 0;
-          document.getElementById("wrongBar").innerText = "⚠️ 0/3";
+          document.getElementById("wrongBar").innerText = "âš ï¸ 0/3";
           animateLives();
         }
 
@@ -3388,7 +3395,7 @@
         let originalScore = score;
         score = Math.round(score * 1.20);
         if (currentLang === "tr") {
-          document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + %20 Paylaşım Bonusu!)</span>`;
+          document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + %20 PaylaÅŸÄ±m Bonusu!)</span>`;
         } else {
           document.getElementById("finalScore").innerHTML = `${score} <span style="font-size:14px; color:#facc15; font-weight:800;">(${originalScore} + 20% Share Bonus!)</span>`;
         }
@@ -3403,7 +3410,7 @@
         if (tierInfo.tier > 0) {
           let bonusDesc = "";
           if (currentLang === "tr") {
-            bonusDesc = `Rozet Bonusu: +${tierInfo.extraSeconds}sn/tur | +%${Math.round((tierInfo.multiplier - 1) * 100)} Skor Çarpanı Aktif`;
+            bonusDesc = `Rozet Bonusu: +${tierInfo.extraSeconds}sn/tur | +%${Math.round((tierInfo.multiplier - 1) * 100)} Skor Ã‡arpanÄ± Aktif`;
           } else {
             bonusDesc = `Badge Bonus: +${tierInfo.extraSeconds}s/round | +${Math.round((tierInfo.multiplier - 1) * 100)}% Score Multiplier Active`;
           }
@@ -3427,7 +3434,7 @@
       if (isGuestMode || !userSession.isAuthenticated) {
         let authSaveContainer = document.getElementById("authSaveContainer");
         if (authSaveContainer) {
-          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">⚠️ Misafir olarak oynadığınız için skorunuz global sıralamaya kaydedilemedi ve ödül kazanamazsınız! Kayıt olmak için giriş yapın.</div>`;
+          authSaveContainer.innerHTML = `<div class="authSaveWarnBanner">âš ï¸ Misafir olarak oynadÄ±ÄŸÄ±nÄ±z iÃ§in skorunuz global sÄ±ralamaya kaydedilemedi ve Ã¶dÃ¼l kazanamazsÄ±nÄ±z! KayÄ±t olmak iÃ§in giriÅŸ yapÄ±n.</div>`;
         }
       }
     }
@@ -3456,7 +3463,7 @@
     function setMode(m) {
       if (!isModeUnlocked(m)) {
         let needed = { sub: "add", mul: "sub", div: "mul", mix: "div" };
-        alert(shortModeName(needed[m]) + " " + t("round") + " 4 ❗");
+        alert(shortModeName(needed[m]) + " " + t("round") + " 4 â—");
         return;
       }
       gameMode = m;
@@ -3470,7 +3477,7 @@
 
     function updateLivesUI() {
       let text = "";
-      for (let i = 0; i < lives; i++) text += "❤️";
+      for (let i = 0; i < lives; i++) text += "â¤ï¸";
       document.getElementById("lives").innerText = text;
     }
 
@@ -3524,11 +3531,11 @@
       let overlay = document.getElementById("pauseOverlay");
       if (isPaused) {
         clearInterval(timer);
-        btn.innerText = "▶️";
+        btn.innerText = "â–¶ï¸";
         if (overlay) overlay.style.display = "flex";
       } else {
-        startTimer();
-        btn.innerText = "⏸️";
+        if (isGameStarted) startTimer();
+        btn.innerText = "â¸ï¸";
         if (overlay) overlay.style.display = "none";
       }
     }
@@ -3538,7 +3545,7 @@
       const tabR = document.getElementById("tabRewards");
       
       if (tab === "rewards" && checkGuestRestriction()) {
-        alert("Ödül tablosunu görmek için giriş yapmalısınız! Misafirler ödül kazanamaz ve ödül listelerine giremez.");
+        alert("Ã–dÃ¼l tablosunu gÃ¶rmek iÃ§in giriÅŸ yapmalÄ±sÄ±nÄ±z! Misafirler Ã¶dÃ¼l kazanamaz ve Ã¶dÃ¼l listelerine giremez.");
         return;
       }
       
@@ -3574,7 +3581,7 @@
       const currentLevel = level; 
       const currentMode = gameMode || 'mix'; 
       
-      // Kategori dÃ¶nÃ¼ÅŸÃ¼mÃ¼: eski ad -> yeni ad
+      // Kategori dÃƒÂ¶nÃƒÂ¼Ã…Å¸ÃƒÂ¼mÃƒÂ¼: eski ad -> yeni ad
       function mapCategory(oldCat) {
         const map = {
           "add": "topla",
@@ -3615,24 +3622,24 @@
               body: JSON.stringify(payload) 
           }); 
           
-          console.log("[FRONTEND] /api/minmat/scores YanÄ±t Durumu:", response.status);
+          console.log("[FRONTEND] /api/minmat/scores YanÃ„Â±t Durumu:", response.status);
           
           const result = await response.json(); 
-          console.log("[FRONTEND] API YanÄ±tÄ±:", result);
+          console.log("[FRONTEND] API YanÃ„Â±tÃ„Â±:", result);
           
           if (response.ok) { 
-              console.log("ğŸ† Puan BaÅŸarÄ±yla Kaydedildi!"); 
-              renderLeaderboard(); // Tabloyu anÄ±nda yenile 
+              console.log("ÄŸÅ¸Ââ€  Puan BaÃ…Å¸arÃ„Â±yla Kaydedildi!"); 
+              renderLeaderboard(); // Tabloyu anÃ„Â±nda yenile 
           } else { 
-              console.error("[FRONTEND] VeritabanÄ± HatasÄ±:", result.error || result.details || JSON.stringify(result)); 
+              console.error("[FRONTEND] VeritabanÃ„Â± HatasÃ„Â±:", result.error || result.details || JSON.stringify(result)); 
           } 
       } catch (err) { 
-          console.error("[FRONTEND] AÄŸ HatasÄ±:", err); 
+          console.error("[FRONTEND] AÃ„Å¸ HatasÃ„Â±:", err); 
       } 
   } 
 
     async function renderLeaderboard() {
-      console.log("=== [FRONTEND] renderLeaderboard çağrıldı ===");
+      console.log("=== [FRONTEND] renderLeaderboard Ã§aÄŸrÄ±ldÄ± ===");
       let filterKey = "leaderAll";
       if (leaderboardFilter === "add") filterKey = "leaderAdd";
       else if (leaderboardFilter === "sub") filterKey = "leaderSub";
@@ -3663,9 +3670,9 @@
       });
 
       console.log("[FRONTEND] Leaderboard filtresi:", leaderboardFilter);
-      document.getElementById("leaderboard").innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">⏳ Yükleniyor... / Loading...</div>`;
+      document.getElementById("leaderboard").innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8;">â³ YÃ¼kleniyor... / Loading...</div>`;
 
-      // Kategori dönüşümü: eski ad -> yeni ad
+      // Kategori dÃ¶nÃ¼ÅŸÃ¼mÃ¼: eski ad -> yeni ad
       function mapCategory(oldCat) {
         const map = {
           "all": "hepsi",
@@ -3684,19 +3691,19 @@
         const timestamp = Date.now();
         console.log("[FRONTEND] API filtresi:", apiFilter);
         
-        // Eski ve güvenilir route'u kullanalım: /api/minmat/scores
+        // Eski ve gÃ¼venilir route'u kullanalÄ±m: /api/minmat/scores
         let response = await fetch(`/api/minmat/scores?filter=${apiFilter}&t=${timestamp}`, {
           credentials: "include"
         });
         
-        console.log("[FRONTEND] /api/minmat/scores yanıt durumu:", response.status);
+        console.log("[FRONTEND] /api/minmat/scores yanÄ±t durumu:", response.status);
         
         if (response.ok) {
           const data = await response.json();
           console.log("[FRONTEND] API'den gelen ham veri:", data);
           scores = Array.isArray(data) ? data : [];
           
-          // Kategori dönüşümü: yeni ad -> eski ad (modeName için)
+          // Kategori dÃ¶nÃ¼ÅŸÃ¼mÃ¼: yeni ad -> eski ad (modeName iÃ§in)
           function mapCategoryReverse(newCat) {
             const map = {
               "topla": "add",
@@ -3708,10 +3715,10 @@
             return map[newCat] || "mix";
           }
 
-          // Veriyi index.html'in beklediği formata çevir
+          // Veriyi index.html'in beklediÄŸi formata Ã§evir
           scores = scores.map(entry => {
             const mappedEntry = {
-              name: entry.nickname || "Kullanıcı",
+              name: entry.nickname || "KullanÄ±cÄ±",
               score: entry.high_score,
               level: entry.level != null ? entry.level : (entry.category === "karisik" ? Math.floor(Math.sqrt(entry.high_score / 10)) : Math.floor(entry.high_score / 10)),
               mode: mapCategoryReverse(entry.category),
@@ -3724,18 +3731,18 @@
             console.log("[FRONTEND] Map edilen entry:", mappedEntry);
             return mappedEntry;
           });
-          console.log("[FRONTEND] Hazırlanan skorlar:", scores);
+          console.log("[FRONTEND] HazÄ±rlanan skorlar:", scores);
         } else {
           try {
             const errRes = await response.json();
-            console.error("[FRONTEND] API Hata Detayı:", errRes);
+            console.error("[FRONTEND] API Hata DetayÄ±:", errRes);
           } catch (e) {
             console.error("[FRONTEND] API Hata Kodu (status):", response.status);
           }
           scores = JSON.parse(localStorage.getItem("scores")) || [];
         }
       } catch (error) {
-        console.error("[FRONTEND] Veri çekilemedi:", error);
+        console.error("[FRONTEND] Veri Ã§ekilemedi:", error);
         scores = JSON.parse(localStorage.getItem("scores")) || [];
       }
 
@@ -3752,7 +3759,7 @@
       `;
 
       if (scores.length === 0) {
-        html += `<div style="text-align:center; padding:20px; color:#64748b;">Henüz skor kaydı bulunamadı.</div>`;
+        html += `<div style="text-align:center; padding:20px; color:#64748b;">HenÃ¼z skor kaydÄ± bulunamadÄ±.</div>`;
       } else {
         const top10 = scores.slice(0, 10);
         
@@ -3768,9 +3775,9 @@
         
         top10.forEach((s, i) => {
           let medal = i + 1;
-          if (i === 0) medal = "🏆";
-          if (i === 1) medal = "⚡";
-          if (i === 2) medal = "🔥";
+          if (i === 0) medal = "ğŸ†";
+          if (i === 1) medal = "âš¡";
+          if (i === 2) medal = "ğŸ”¥";
 
           let cls = "";
           if (i === 0) cls = "firstPlace";
@@ -3794,7 +3801,7 @@
               <span style="font-size:11px; color:#94a3b8;">${escapeHTML(displayDate)}</span>
               <span>${modeName(s.mode)}</span>
               <span>Lv${s.level}</span>
-              <span>⭐ ${s.score}</span>
+              <span>â­ ${s.score}</span>
             </div>
           `;
         });
@@ -3817,7 +3824,7 @@
                 <span style="font-size:11px; color:#94a3b8;">${escapeHTML(displayDate)}</span>
                 <span>${modeName(myScoreObj.mode)}</span>
                 <span>Lv${myScoreObj.level}</span>
-                <span>⭐ ${myScoreObj.score}</span>
+                <span>â­ ${myScoreObj.score}</span>
               </div>
             `;
           }
@@ -3829,7 +3836,7 @@
 
     async function renderRewardBoard() {
       const board = document.getElementById("rewardBoard");
-      board.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8;">⏳ Ödüller Hesaplanıyor...</div>`;
+      board.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8;">â³ Ã–dÃ¼ller HesaplanÄ±yor...</div>`;
 
       try {
         const res = await fetch("/api/gamification");
@@ -3842,14 +3849,14 @@
         let html = "";
 
         html += `<div style="margin-bottom:24px;">`;
-        html += `<h3 style="text-align:center; color:#fbbf24; font-size:16px; margin-bottom:4px;">🏆 CupMat Ödül Sıralaması</h3>`;
-        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Bu periyot ilk 3 — ödüller bir sonraki 3 günlük periyotta aktif olur</p>`;
+        html += `<h3 style="text-align:center; color:#fbbf24; font-size:16px; margin-bottom:4px;">ğŸ† CupMat Ã–dÃ¼l SÄ±ralamasÄ±</h3>`;
+        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Bu periyot ilk 3 â€” Ã¶dÃ¼ller bir sonraki 3 gÃ¼nlÃ¼k periyotta aktif olur</p>`;
         
         if (cupRewards.length === 0) {
-          html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Henüz veri yok</div>`;
+          html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">HenÃ¼z veri yok</div>`;
         } else {
           cupRewards.slice(0, 5).forEach(function(e) {
-            const medal = e.rank === 1 ? "🏆" : e.rank === 2 ? "⚡" : e.rank === 3 ? "🔥" : e.rank;
+            const medal = e.rank === 1 ? "ğŸ†" : e.rank === 2 ? "âš¡" : e.rank === 3 ? "ğŸ”¥" : e.rank;
             const bg = e.rank <= 3 ? "rgba(245,158,11,0.12)" : "rgba(255,255,255,0.04)";
             html += `
               <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; margin:6px 0; border-radius:10px; background:${bg}; border:1px solid rgba(255,255,255,0.06);">
@@ -3866,14 +3873,14 @@
         html += `</div>`;
 
         html += `<div>`;
-        html += `<h3 style="text-align:center; color:#a78bfa; font-size:16px; margin-bottom:4px;">🧮 MinMat Son 72 Saat Ödül Kürsüsü</h3>`;
-        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Son 72 saat — sadece aktif periyot ödülü olanlar (max 3 kürsü)</p>`;
+        html += `<h3 style="text-align:center; color:#a78bfa; font-size:16px; margin-bottom:4px;">ğŸ§® MinMat Son 72 Saat Ã–dÃ¼l KÃ¼rsÃ¼sÃ¼</h3>`;
+        html += `<p style="text-align:center; color:#94a3b8; font-size:11px; margin-bottom:12px;">Son 72 saat â€” sadece aktif periyot Ã¶dÃ¼lÃ¼ olanlar (max 3 kÃ¼rsÃ¼)</p>`;
         
         if (minPodium.length === 0) {
-          html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Son 72 saatte kayıtlı giriş yapan kullanıcı skoru yok</div>`;
+          html += `<div style="text-align:center; padding:12px; color:#64748b; font-size:13px;">Son 72 saatte kayÄ±tlÄ± giriÅŸ yapan kullanÄ±cÄ± skoru yok</div>`;
         } else {
           minPodium.slice(0, 3).forEach(function(e, index) {
-            const icons = ["🏆", "⚡", "🔥"];
+            const icons = ["ğŸ†", "âš¡", "ğŸ”¥"];
             const bg = "rgba(167,139,250,0.12)";
             const playerName = e.displayName || e.name || "Oyuncu";
             const playerLevel = Number(e.level);
@@ -3887,7 +3894,7 @@
                 </div>
                 <div style="text-align:right;">
                   <span style="color:#fff; font-family:monospace; font-size:12px; font-weight:700;">${e.score} Puan</span>
-                  <div style="color:#a78bfa; font-size:10px; margin-top:2px;">Lv.${levelText} • ${shortModeName(modeKey)}</div>
+                  <div style="color:#a78bfa; font-size:10px; margin-top:2px;">Lv.${levelText} â€¢ ${shortModeName(modeKey)}</div>
                 </div>
               </div>`;
           });
@@ -3897,7 +3904,7 @@
         board.innerHTML = html;
       } catch (err) {
         console.error("Reward board fetch error:", err);
-        board.innerHTML = `<div style="text-align:center; padding:20px; color:#ef4444;">Ödül tablosu yüklenemedi</div>`;
+        board.innerHTML = `<div style="text-align:center; padding:20px; color:#ef4444;">Ã–dÃ¼l tablosu yÃ¼klenemedi</div>`;
       }
     }
 
@@ -3915,3 +3922,6 @@
   </script>
 </body>
 </html>
+
+
+
