@@ -688,17 +688,17 @@ export async function fetchAndStoreNews(): Promise<NewsFetchResult> {
       }
     }
 
-    // 4. Cleanup old news (older than 7 days)
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    // 4. Cleanup old news (older than 24 hours)
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const { error: cleanupError, count: deletedCount } = await supabaseAdmin
       .from("news")
       .delete({ count: "exact" })
-      .lt("published_at", sevenDaysAgo);
+      .lt("published_at", oneDayAgo);
 
     if (cleanupError) {
       logs.push(`[NewsFetcher] Warning: Failed to cleanup old news: ${cleanupError.message}`);
     } else {
-      logs.push(`[NewsFetcher] Cleanup: Deleted ${deletedCount || 0} news older than 7 days.`);
+      logs.push(`[NewsFetcher] Cleanup: Deleted ${deletedCount || 0} news older than 24 hours.`);
     }
 
     // 5. Log execution run in news_fetch_logs

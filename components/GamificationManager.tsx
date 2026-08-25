@@ -82,18 +82,7 @@ export function GamificationManager() {
       return null;
     }
 
-    // Underlying detail pages (10 seconds, +1 point)
-    const isDetail =
-      (path.startsWith("/futbolcular/") && path !== "/futbolcular") ||
-      (path.startsWith("/ulkeler/") && path !== "/ulkeler") ||
-      (path.startsWith("/stadyumlar/") && path !== "/stadyumlar") ||
-      (path.startsWith("/hakemler/") && path !== "/hakemler");
-
-    if (isDetail) {
-      return { duration: 10, points: 1, category: "detail" };
-    }
-
-    // All other main pages (30 seconds, +10 points)
+    // Active pages (30 seconds, +10 points)
     return { duration: 30, points: 10, category: "hub" };
   };
 

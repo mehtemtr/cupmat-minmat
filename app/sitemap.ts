@@ -1,90 +1,71 @@
 import { MetadataRoute } from "next";
-import { TEAMS, getAllPlayers } from "@/data/teams";
-import { STADIUMS } from "@/data/stadiums";
-import { REFEREES } from "@/data/referees";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://statmatik.com";
+  const supportedLocales = ["tr", "en", "es", "fr", "de", "it", "pt", "ar", "ko"];
 
-  // Static routes
-  const staticRoutes = [
+  const buildLanguageAlternates = (path: string) => {
+    const languages: Record<string, string> = {
+      "x-default": `${baseUrl}${path}`,
+      tr: `${baseUrl}${path}`,
+    };
+    for (const loc of supportedLocales) {
+      if (loc !== "tr") {
+        languages[loc] = `${baseUrl}${path}?lang=${loc}`;
+      }
+    }
+    return languages;
+  };
+
+  // Active routes of the project
+  const routes: { path: string; changeFrequency: "always" | "hourly" | "daily" | "weekly"; priority: number }[] = [
     {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily" as const,
+      path: "",
+      changeFrequency: "always",
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/tahminler`,
-      lastModified: new Date(),
-      changeFrequency: "daily" as const,
-      priority: 1.0,
+      path: "/haberler",
+      changeFrequency: "daily",
+      priority: 0.9,
     },
     {
-      url: `${baseUrl}/leaderboard`,
-      lastModified: new Date(),
-      changeFrequency: "daily" as const,
+      path: "/cupmat",
+      changeFrequency: "daily",
+      priority: 0.85,
+    },
+    {
+      path: "/minmat",
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/groups`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.7,
+      path: "/minlan",
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
-      url: `${baseUrl}/teams`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.7,
+      path: "/leaderboard",
+      changeFrequency: "daily",
+      priority: 0.75,
     },
     {
-      url: `${baseUrl}/venues`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
+      path: "/ajtran",
+      changeFrequency: "weekly",
       priority: 0.7,
     },
   ];
 
-  // Dynamic countries: /ulkeler/[id]
-  const countryRoutes = TEAMS.map((team) => ({
-    url: `${baseUrl}/ulkeler/${team.id}`,
+  return routes.map((r) => ({
+    url: `${baseUrl}${r.path}`,
     lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
+    changeFrequency: r.changeFrequency,
+    priority: r.priority,
+    alternates: {
+      languages: buildLanguageAlternates(r.path),
+    },
   }));
-
-  // Dynamic stadiums: /stadyumlar/[id]
-  const stadiumRoutes = STADIUMS.map((stadium) => ({
-    url: `${baseUrl}/stadyumlar/${stadium.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
-  // Dynamic referees: /hakemler/[id]
-  const refereeRoutes = REFEREES.map((referee) => ({
-    url: `${baseUrl}/hakemler/${referee.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
-  // Dynamic players: /futbolcular/[id]
-  const playerRoutes = getAllPlayers().map((player) => ({
-    url: `${baseUrl}/futbolcular/${player.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
-  return [
-    ...staticRoutes,
-    ...countryRoutes,
-    ...stadiumRoutes,
-    ...refereeRoutes,
-    ...playerRoutes,
-  ];
 }
+

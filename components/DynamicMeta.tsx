@@ -20,12 +20,23 @@ export function DynamicMeta() {
       el.setAttribute("content", value);
     };
 
+    // Ensure Canonical link is dynamically set to https://statmatik.com
+    let canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (!canonicalEl) {
+      canonicalEl = document.createElement("link");
+      canonicalEl.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalEl);
+    }
+    canonicalEl.setAttribute("href", "https://statmatik.com");
+
     setMeta("name", "description", meta.description);
     setMeta("property", "og:title", meta.ogTitle);
     setMeta("property", "og:description", meta.ogDescription);
-    setMeta("property", "og:locale", locale === "tr" ? "tr_TR" : "en_US");
+    setMeta("property", "og:url", "https://statmatik.com");
+    setMeta("property", "og:locale", locale === "tr" ? "tr_TR" : `${locale}_${locale.toUpperCase()}`);
     document.documentElement.lang = locale;
   }, [dictionary, locale]);
 
   return null;
 }
+

@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://worldcup2026.example.com";
+const siteUrl = "https://statmatik.com";
 
 async function getInitialLocale(): Promise<Locale> {
   const cookieStore = await cookies();
@@ -54,21 +54,22 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: "/icon-192.png",
     },
     keywords: [
-      "2026 World Championship",
-      "World Championship",
-      "USA",
-      "Canada",
-      "Mexico",
-      "football",
-      "soccer",
+      "StatMatik",
+      "Canlı Skor",
+      "Futbol İstatistikleri",
+      "Maç Sonuçları",
+      "Puan Durumu",
+      "2026 World Cup",
+      "Live Football Scores",
+      "Soccer Stats",
     ],
     authors: [{ name: "Statmatik" }],
     openGraph: {
       type: "website",
-      locale: locale === "tr" ? "tr_TR" : "en_US",
-      alternateLocale: locale === "tr" ? ["en_US"] : ["tr_TR"],
+      locale: locale === "tr" ? "tr_TR" : `${locale}_${locale.toUpperCase()}`,
+      alternateLocale: locales.filter((l) => l !== locale).map((l) => `${l}_${l.toUpperCase()}`),
       url: siteUrl,
-      siteName: "StatMatik — 2026 World Championship & Math Playground",
+      siteName: "StatMatik — Canlı Skorlar, Futbol İstatistikleri & Oyunlar",
       title: dict.meta.ogTitle,
       description: dict.meta.ogDescription,
       images: [
@@ -89,6 +90,13 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
     verification: {
       google: "I7hQyzR4Viaqgrq3wltVNw7jbb06W46X6LmbYlOM7do",
@@ -96,8 +104,16 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: siteUrl,
       languages: {
-        en: siteUrl,
+        "x-default": siteUrl,
         tr: siteUrl,
+        en: `${siteUrl}?lang=en`,
+        es: `${siteUrl}?lang=es`,
+        fr: `${siteUrl}?lang=fr`,
+        de: `${siteUrl}?lang=de`,
+        it: `${siteUrl}?lang=it`,
+        pt: `${siteUrl}?lang=pt`,
+        ar: `${siteUrl}?lang=ar`,
+        ko: `${siteUrl}?lang=ko`,
       },
     },
   };
