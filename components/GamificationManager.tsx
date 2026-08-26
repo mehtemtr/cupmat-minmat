@@ -154,31 +154,64 @@ export function GamificationManager() {
     const config = getPageConfig(pathname);
     if (!config) return;
 
-    // Check if page stay is restricted globally (limit reached, claimed, or in cooldown)
-    const restriction = getPageStayRestriction(pathname, config.duration);
-    if (restriction.restricted) {
-      // Don't show the timer or start countdown if user is in cooldown, has reached daily limit, or already claimed
+    // 1. First check local restriction
+    const localRestriction = getPageStayRestriction(pathname, config.duration);
+    if (localRestriction.restricted) {
       return;
     }
 
-    // Setup active timer
-    setSecondsLeft(config.duration);
-    setIsRewarded(false);
-    setShowWidget(true);
+    let isMounted = true;
 
-    timerRef.current = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev === null) return null;
-        if (prev <= 1) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          claimPoints(pathname, config.points, config.duration);
-          return 0;
+    // 2. Fetch fresh profile from server to guarantee refresh doesn't show timer if cooldown/claimed
+    const verifyAndStartTimer = async () => {
+      try {
+        const res = await fetch(`/api/gamification?userId=${encodeURIComponent(user.id)}&light=true`, { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.profile?.pageStayHistory && typeof window !== "undefined") {
+            localStorage.setItem(
+              "wc2026-gamification-state",
+              JSON.stringify({
+                pageStayHistory: data.profile.pageStayHistory,
+                lastSyncDate: new Date().toISOString().split("T")[0],
+              })
+            );
+
+            // Re-check restriction with updated server data
+            const freshRestriction = getPageStayRestriction(pathname, config.duration);
+            if (freshRestriction.restricted || !isMounted) {
+              return;
+            }
+          }
         }
-        return prev - 1;
-      });
-    }, 1000);
+      } catch (err) {
+        console.warn("Could not sync server gamification restriction:", err);
+      }
+
+      if (!isMounted) return;
+
+      // Setup active timer
+      setSecondsLeft(config.duration);
+      setIsRewarded(false);
+      setShowWidget(true);
+
+      timerRef.current = setInterval(() => {
+        setSecondsLeft((prev) => {
+          if (prev === null) return null;
+          if (prev <= 1) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            claimPoints(pathname, config.points, config.duration);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    };
+
+    verifyAndStartTimer();
 
     return () => {
+      isMounted = false;
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
@@ -230,12 +263,12 @@ export function GamificationManager() {
           icon: points === 10 ? "🌟" : "⚡",
         });
 
-        // Hide floating timer card after 4 seconds
+        // Hide floating timer card after 3 seconds
         setTimeout(() => {
           if (currentPathRef.current === path) {
             setShowWidget(false);
           }
-        }, 4000);
+        }, 3000);
       } else {
         // If server rejected the claim (e.g. cooldown or limit), update localStorage with returned profile if available
         if (data.profile && typeof window !== "undefined") {
@@ -259,7 +292,7 @@ export function GamificationManager() {
           if (currentPathRef.current === path) {
             setShowWidget(false);
           }
-        }, 4000);
+        }, 3000);
       }
     } catch (error) {
       console.error("Error claiming page stay points:", error);
@@ -306,67 +339,62 @@ export function GamificationManager() {
       {toast && (
         <div
           key={toast.id}
-          className="fixed bottom-32 left-1/2 z-[99999] flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-emerald-500/30 bg-[#060b14]/95 px-6 py-4 text-emerald-400 shadow-2xl shadow-emerald-500/30 backdrop-blur-xl animate-float-up-smooth"
+          className="fixed bottom-24 sm:bottom-32 left-1/2 z-[99999] flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-emerald-500/30 bg-[#060b14]/95 px-5 py-3 sm:px-6 sm:py-4 text-emerald-400 shadow-2xl shadow-emerald-500/30 backdrop-blur-xl animate-float-up-smooth max-w-[90vw]"
         >
-          <span className="text-2xl animate-bounce">{toast.icon}</span>
-          <span className="text-sm sm:text-base font-black tracking-wide bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-transparent">
+          <span className="text-xl sm:text-2xl animate-bounce">{toast.icon}</span>
+          <span className="text-xs sm:text-base font-black tracking-wide bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-transparent truncate">
             {toast.text}
           </span>
         </div>
       )}
 
-      {/* Floating Keşif Sayacı (Discovery Timer) Widget */}
+      {/* Floating Keşif Sayacı (Discovery Timer) Widget - Compact & In Bottom-Right / Right Corner */}
       {showWidget && secondsLeft !== null && (
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[9999] rounded-3xl border border-zinc-800 bg-[#060b14]/90 p-4 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center text-center w-36 select-none animate-fadeIn border-t-emerald-500/20">
-          <span className="text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider block mb-2.5">
-            ⏱️ {dict.timerTitle}
-          </span>
-
-          <div className="relative w-20 h-20 flex items-center justify-center">
+        <div className="fixed bottom-20 right-3 sm:bottom-6 sm:right-6 z-[9999] rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#060b14]/90 p-2 sm:p-3 backdrop-blur-xl shadow-xl flex items-center gap-2 sm:gap-3 select-none animate-fadeIn border-t-emerald-500/30 hover:scale-105 transition-transform">
+          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
             <svg className="w-full h-full transform -rotate-90">
               <circle
-                cx="40"
-                cy="40"
-                r="34"
-                strokeWidth="4.5"
+                cx="24"
+                cy="24"
+                r="18"
+                strokeWidth="3.5"
                 stroke="currentColor"
                 className="text-zinc-900"
                 fill="transparent"
               />
               {!isRewarded && (
                 <circle
-                  cx="40"
-                  cy="40"
-                  r="34"
-                  strokeWidth="4.5"
-                  strokeDasharray="214"
-                  strokeDashoffset={214 - (214 * (totalDuration - secondsLeft)) / totalDuration}
+                  cx="24"
+                  cy="24"
+                  r="18"
+                  strokeWidth="3.5"
+                  strokeDasharray="113"
+                  strokeDashoffset={113 - (113 * (totalDuration - secondsLeft)) / totalDuration}
                   strokeLinecap="round"
                   stroke="currentColor"
-                  className="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)] transition-all duration-1000"
+                  className="text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.4)] transition-all duration-1000"
                   fill="transparent"
                 />
               )}
             </svg>
             <div className="absolute flex flex-col items-center">
               {isRewarded ? (
-                <>
-                  <span className="text-xl">🌟</span>
-                  <span className="text-[9px] text-emerald-400 font-black uppercase tracking-wider mt-0.5 animate-pulse">
-                    {dict.discovered}
-                  </span>
-                </>
+                <span className="text-sm sm:text-base animate-bounce">🌟</span>
               ) : (
-                <>
-                  <span className="text-lg font-black text-white">
-                    {secondsLeft}s
-                  </span>
-                  <span className="text-[7px] text-zinc-500 uppercase tracking-widest mt-0.5">
-                    {dict.counting}
-                  </span>
-                </>
+                <span className="text-[11px] sm:text-xs font-black text-white font-mono">
+                  {secondsLeft}s
+                </span>
               )}
             </div>
+          </div>
+
+          <div className="flex flex-col text-left pr-1 sm:pr-2">
+            <span className="text-[9px] sm:text-[10px] text-zinc-400 font-extrabold uppercase tracking-wider">
+              {dict.timerTitle}
+            </span>
+            <span className="text-[10px] sm:text-xs font-black text-emerald-400">
+              {isRewarded ? dict.discovered : dict.counting}
+            </span>
           </div>
         </div>
       )}
