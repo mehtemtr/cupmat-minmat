@@ -9,6 +9,7 @@
     "pages:build": "npx opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
+    "backup": "node scripts/backup-db.js",
     "validate:teams": "npx tsx scripts/validate-teams.ts"
   },
   "dependencies": {

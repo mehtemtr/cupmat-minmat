@@ -2009,7 +2009,7 @@
             }
           } catch(e) {}
         }
-        setTimeout(startGame, 100);
+        
       }
       let input = document.getElementById("playerInput");
       let authContainer = document.getElementById("authContainer");
@@ -3083,6 +3083,9 @@
       }
 
       updateUI();
+      if (isGameStarted) {
+        startTimer();
+      }
     }
 
     function startTimer() {
