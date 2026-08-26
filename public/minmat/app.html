@@ -2859,7 +2859,7 @@
       localStorage.setItem("minmat_last_name", playerName);
       isGameOver = false;
       isGameOverSaved = false;
-      isGameStarted = false;
+      isGameStarted = true;
       isPaused = false;
 
       // Consume share boost if active
@@ -3084,9 +3084,7 @@
       }
 
       updateUI();
-      if (isGameStarted && level > 1) {
-        startTimer();
-      }
+      startTimer();
     }
 
     function startTimer() {
@@ -3198,7 +3196,6 @@
       if (isGameOver || isPaused || lock || div.classList.contains("open")) return;
       if (!isGameStarted) {
         isGameStarted = true;
-        startTimer();
       }
 
       div.classList.add("open");
