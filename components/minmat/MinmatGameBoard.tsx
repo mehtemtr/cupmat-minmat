@@ -433,26 +433,49 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
       ) : (
         /* Cards Grid */
         <div
-          className="w-full grid gap-2 sm:gap-3 my-2"
+          className="w-full grid gap-2 sm:gap-2.5 my-2 max-w-xl mx-auto"
           style={{ gridTemplateColumns: "repeat(" + cols + ", minmax(0, 1fr))" }}
         >
           {cards.map((card) => {
             const isFlipped = card.isFlipped || card.isMatched;
+            // Dinamik font boyutu: Az kart varken büyük font, kart sayısı çoğaldıkça orantılı font
+            const totalCards = cards.length;
+            const fontClass =
+              totalCards <= 10
+                ? "text-base sm:text-xl md:text-2xl font-black"
+                : totalCards <= 18
+                ? "text-sm sm:text-lg md:text-xl font-extrabold"
+                : totalCards <= 26
+                ? "text-xs sm:text-base md:text-lg font-bold"
+                : "text-[11px] sm:text-sm md:text-base font-bold";
+
             return (
               <div
                 key={card.id}
                 onClick={() => handleCardClick(card)}
-                className={"aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 transform select-none p-1 text-center " + (
+                className={"aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 transform select-none p-1 text-center relative overflow-hidden " + (
                   card.isMatched
-                    ? "bg-emerald-500/20 border-2 border-emerald-500/60 text-emerald-300 opacity-60 scale-95 pointer-events-none font-bold"
+                    ? "bg-emerald-500/20 border-2 border-emerald-500/60 text-emerald-300 opacity-60 scale-95 pointer-events-none"
                     : isFlipped
-                    ? "bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-cyan-400 text-white font-black shadow-lg shadow-cyan-500/20 scale-100"
-                    : "bg-slate-900/90 border border-slate-700/80 hover:border-emerald-500/50 hover:bg-slate-800 hover:scale-105 active:scale-95 text-transparent shadow-md"
+                    ? "bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-cyan-400 text-white shadow-lg shadow-cyan-500/20 scale-100"
+                    : "bg-slate-900/90 border border-slate-700/80 hover:border-emerald-500/60 hover:bg-slate-800 hover:scale-105 active:scale-95 shadow-md group"
                 )}
               >
-                <span className={"text-xs sm:text-sm md:text-base tracking-tight leading-tight " + (!isFlipped ? "invisible" : "")}>
-                  {card.text}
-                </span>
+                {!isFlipped ? (
+                  /* Kartın arkası: MinMat Logosu */
+                  <div className="w-full h-full flex items-center justify-center p-2 opacity-85 group-hover:opacity-100 transition-opacity">
+                    <img
+                      src="/minmat/icon.png"
+                      alt="MinMat"
+                      className="w-full h-full object-contain pointer-events-none drop-shadow"
+                    />
+                  </div>
+                ) : (
+                  /* Kartın önü: Soru veya Sayı */
+                  <span className={"tracking-tight leading-tight px-0.5 " + fontClass}>
+                    {card.text}
+                  </span>
+                )}
               </div>
             );
           })}
