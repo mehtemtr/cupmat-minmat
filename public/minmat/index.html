@@ -1997,6 +1997,7 @@
     }
 
     async function updateAuthUI() {
+      if (isGameStarted && !isGameOver) return;
       if (!initialStartDone) {
         initialStartDone = true;
         if (!userSession.isAuthenticated) {
@@ -3083,13 +3084,13 @@
       }
 
       updateUI();
-      if (isGameStarted) {
+      if (isGameStarted && level > 1) {
         startTimer();
       }
     }
 
     function startTimer() {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
       timer = setInterval(() => {
         timeLeft--;
         updateUI();
