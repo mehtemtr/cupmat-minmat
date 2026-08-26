@@ -1,126 +1,59 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
-import { useEffect } from "react";
+import React, { useState } from "react";
+import { MinmatHeader } from "@/components/minmat/MinmatHeader";
+import { MinmatGameBoard } from "@/components/minmat/MinmatGameBoard";
+import { MinmatLeaderboardModal } from "@/components/minmat/MinmatLeaderboardModal";
 import { useLocale } from "@/contexts/LocaleContext";
+import { SignInButton, useAuth } from "@clerk/nextjs";
 
 export default function MinMatPage() {
-  const { getToken } = useAuth();
+  const { isLoaded, userId } = useAuth();
   const { locale } = useLocale();
+  const currentLang = locale || "tr";
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    const iframe = document.querySelector("iframe");
-    if (iframe && iframe.contentWindow) {
-      console.log("[PARENT] Sending LOCALE_CHANGED to iframe:", locale);
-      iframe.contentWindow.postMessage({ type: "LOCALE_CHANGED", locale }, "*");
-    }
-  }, [locale]);
-  useEffect(() => {
-    const handleMessage = async (event: MessageEvent) => {
-      if (!event.data) return;
+  return (
+    <div className="min-h-screen bg-[#04080e] text-white pt-20 pb-28 px-4 sm:px-6 lg:px-8">
+      {/* Background Glows */}
+      <div className="fixed top-20 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed bottom-20 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      // Sadece kendi origin'imizden gelen taleplere yanıt verelim
-      if (event.data.type === "GET_CLERK_TOKEN") {
-        try {
-          const freshToken = await getToken();
-          console.log("[PARENT] Iframe için Clerk tokenı başarıyla alındı.");
-          if (event.ports && event.ports[0]) {
-            event.ports[0].postMessage({ token: freshToken });
-          }
-        } catch (err) {
-          console.error("[PARENT] Clerk tokenı alınamadı:", err);
-          if (event.ports && event.ports[0]) {
-            event.ports[0].postMessage({ token: null });
-          }
-        }
-      }
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Unified Card Container matching MinLan */}
+        <div className="w-full max-w-2xl mx-auto bg-[#060b14] border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl flex flex-col items-center select-none">
+          {/* Header */}
+          <MinmatHeader lang={currentLang} />
 
-      if (event.data.type === "SHARE_SCORE") {
-        const { score, mode, name, lang } = event.data;
-        const currentLang = (lang || "tr").toLowerCase();
-        
-        const shareTexts: Record<string, string> = {
-          tr: "MinMat - Sayı Avı oyununda {score} puan yaptım! Rekorumu geçebilir misin? 🏆",
-          en: "I scored {score} in MinMat Brain & Math Game! Can you beat my record? 🏆",
-          de: "Ich habe {score} Punkte im MinMat-Mathespiel erreicht! Kannst du meinen Rekord schlagen? 🏆",
-          fr: "J'ai obtenu {score} points au jeu de maths MinMat ! Peux-tu battre mon record ? 🏆",
-          es: "¡Conseguí {score} puntos en el juego matemático MinMat! ¿Puedes vencer mi récord? 🏆",
-          pt: "Fiz {score} pontos no jogo de matemática MinMat! Consegue superar o meu recorde? 🏆",
-          it: "Ho fatto {score} punti nel gioco matematico MinMat! Riesci a battere il mio record? 🏆",
-          ko: "MinMat 두뇌 수학 게임에서 {score}점을 기록했습니다! 제 기록을 깨보시겠어요? 🏆",
-          ar: "لقد سجلت {score} نقطة في لعبة الذكاء والرياضيات MinMat! هل يمكنك تحطيم رقمي القياسي؟ 🏆",
-        };
+          {/* Auth Banner for Unauthenticated Users */}
+          {isLoaded && !userId && (
+            <div className="w-full bg-slate-900 border border-emerald-500/30 text-emerald-200 text-xs p-3 rounded-2xl mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg shadow-emerald-500/5">
+              <span className="text-center sm:text-left leading-relaxed">
+                Puan tablosunda yer almak ve rekorlarınızı kaydetmek için giriş yapabilirsiniz.
+              </span>
+              <SignInButton mode="modal">
+                <button className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-1.5 px-4 rounded-xl transition-all whitespace-nowrap">
+                  Giriş Yap
+                </button>
+              </SignInButton>
+            </div>
+          )}
 
-        const copySuccessAlerts: Record<string, string> = {
-          tr: "Paylaşım bağlantısı panoya kopyalandı!",
-          en: "Sharing link copied to clipboard!",
-          de: "Teilungslink in die Zwischenablage kopiert!",
-          fr: "Lien de partage copié dans le presse-papiers !",
-          es: "¡Enlace para compartir copiado al portapapeles!",
-          pt: "Link de compartilhamento copiado para a área de transferência!",
-          it: "Link di condivisione copiato negli appunti!",
-          ko: "공유 링크가 클립보드에 복사되었습니다!",
-          ar: "تم نسخ رابط المشاركة إلى الحافظة!",
-        };
+          {/* Interactive Game Board */}
+          <MinmatGameBoard
+            lang={currentLang}
+            onOpenLeaderboard={() => setIsLeaderboardOpen(true)}
+          />
+        </div>
 
-        const textTemplate = shareTexts[currentLang] || shareTexts.en;
-        const text = textTemplate.replace("{score}", String(score));
-        const shareUrl = `${window.location.origin}/minmat/share?score=${score}&mode=${mode}&name=${encodeURIComponent(name)}&lang=${currentLang}`;
-
-        const handleSuccess = () => {
-          const iframe = document.querySelector("iframe");
-          if (iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage({ type: "SHARE_SUCCESS" }, "*");
-          }
-        };
-
-        if (navigator.share) {
-          navigator.share({
-            title: "MinMat",
-            text: text,
-            url: shareUrl,
-          })
-          .then(() => {
-            console.log("[PARENT] Native share completed successfully.");
-            handleSuccess();
-          })
-          .catch((err) => {
-            console.log("[PARENT] Native share failed or was cancelled:", err);
-          });
-        } else {
-          // Clipboard fallback
-          try {
-            navigator.clipboard.writeText(`${text} ${shareUrl}`)
-            .then(() => {
-              const alertMsg = copySuccessAlerts[currentLang] || copySuccessAlerts.en;
-              alert(alertMsg);
-              handleSuccess();
-            })
-            .catch((clipErr) => {
-              console.error("[PARENT] Clipboard copy failed:", clipErr);
-            });
-          } catch (fallbackErr) {
-            console.error("[PARENT] Fallback sharing error:", fallbackErr);
-          }
-        }
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, [getToken]);
-    return (
-    <div className="fixed inset-x-0 top-0 bottom-16 md:top-16 md:bottom-0 bg-[#060b14] overflow-hidden flex flex-col">
-      <div className="w-full flex-1 overflow-hidden">
-        <iframe 
-          src={`/minmat/app.html?v=${Date.now()}`}
-          className="w-full h-full border-0 block"
-          title="MinMat Oyunu"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"
+        {/* Leaderboard Modal */}
+        <MinmatLeaderboardModal
+          isOpen={isLeaderboardOpen}
+          onClose={() => setIsLeaderboardOpen(false)}
+          lang={currentLang}
         />
       </div>
     </div>
   );
 }
+

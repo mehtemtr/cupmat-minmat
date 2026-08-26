@@ -1,0 +1,1989 @@
+{
+  "createdAt": "2026-08-26T17:53:59.799Z",
+  "tables": {
+    "minmat_leaderboard": [
+      {
+        "id": 2101,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 12171,
+        "level": 10,
+        "mode": "carp",
+        "date": "09.08.2026 17:11",
+        "timestamp": 1786295460908,
+        "created_at": "2026-08-09T17:11:00.998994+00:00"
+      },
+      {
+        "id": 2102,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 5158,
+        "level": 6,
+        "mode": "carp",
+        "date": "10.08.2026 15:49",
+        "timestamp": 1786376988993,
+        "created_at": "2026-08-10T15:49:49.274845+00:00"
+      },
+      {
+        "id": 2103,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 11355,
+        "level": 10,
+        "mode": "carp",
+        "date": "10.08.2026 18:00",
+        "timestamp": 1786384831294,
+        "created_at": "2026-08-10T18:00:31.398385+00:00"
+      },
+      {
+        "id": 2104,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 9493,
+        "level": 9,
+        "mode": "carp",
+        "date": "11.08.2026 05:10",
+        "timestamp": 1786425051427,
+        "created_at": "2026-08-11T05:10:51.738992+00:00"
+      },
+      {
+        "id": 2105,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 12570,
+        "level": 10,
+        "mode": "carp",
+        "date": "11.08.2026 14:14",
+        "timestamp": 1786457645232,
+        "created_at": "2026-08-11T14:14:05.33548+00:00"
+      },
+      {
+        "id": 2106,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 9303,
+        "level": 9,
+        "mode": "carp",
+        "date": "11.08.2026 14:20",
+        "timestamp": 1786458019043,
+        "created_at": "2026-08-11T14:20:19.319655+00:00"
+      },
+      {
+        "id": 2107,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 9214,
+        "level": 9,
+        "mode": "carp",
+        "date": "12.08.2026 17:13",
+        "timestamp": 1786554809025,
+        "created_at": "2026-08-12T17:13:29.102793+00:00"
+      },
+      {
+        "id": 2108,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 14038,
+        "level": 11,
+        "mode": "carp",
+        "date": "13.08.2026 13:27",
+        "timestamp": 1786627633462,
+        "created_at": "2026-08-13T13:27:13.54298+00:00"
+      },
+      {
+        "id": 2109,
+        "name": "Eagle_1927",
+        "email": "beyza.ackgz01@gmail.com",
+        "score": 2605,
+        "level": 5,
+        "mode": "topla",
+        "date": "13.08.2026 23:17",
+        "timestamp": 1786663077774,
+        "created_at": "2026-08-13T23:17:58.03882+00:00"
+      },
+      {
+        "id": 2110,
+        "name": "Eagle_1927",
+        "email": "beyza.ackgz01@gmail.com",
+        "score": 0,
+        "level": 1,
+        "mode": "topla",
+        "date": "13.08.2026 23:18",
+        "timestamp": 1786663122454,
+        "created_at": "2026-08-13T23:18:42.525344+00:00"
+      },
+      {
+        "id": 2111,
+        "name": "Eagle_1927",
+        "email": "beyza.ackgz01@gmail.com",
+        "score": 2380,
+        "level": 4,
+        "mode": "topla",
+        "date": "13.08.2026 23:20",
+        "timestamp": 1786663254723,
+        "created_at": "2026-08-13T23:20:54.980472+00:00"
+      },
+      {
+        "id": 2112,
+        "name": "Eagle_1927",
+        "email": "beyza.ackgz01@gmail.com",
+        "score": 415,
+        "level": 2,
+        "mode": "topla",
+        "date": "14.08.2026 08:30",
+        "timestamp": 1786696218861,
+        "created_at": "2026-08-14T08:30:19.130925+00:00"
+      },
+      {
+        "id": 2113,
+        "name": "Harun",
+        "email": "hamemaht@gmail.com",
+        "score": 3334,
+        "level": 5,
+        "mode": "carp",
+        "date": "14.08.2026 13:35",
+        "timestamp": 1786714550787,
+        "created_at": "2026-08-14T13:35:51.05128+00:00"
+      },
+      {
+        "id": 2114,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 11440,
+        "level": 10,
+        "mode": "carp",
+        "date": "15.08.2026 06:00",
+        "timestamp": 1786773618698,
+        "created_at": "2026-08-15T06:00:18.768096+00:00"
+      },
+      {
+        "id": 2115,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 12794,
+        "level": 11,
+        "mode": "carp",
+        "date": "15.08.2026 14:07",
+        "timestamp": 1786802841742,
+        "created_at": "2026-08-15T14:07:22.020781+00:00"
+      },
+      {
+        "id": 2116,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 4085,
+        "level": 6,
+        "mode": "carp",
+        "date": "16.08.2026 19:27",
+        "timestamp": 1786908423589,
+        "created_at": "2026-08-16T19:27:03.876175+00:00"
+      },
+      {
+        "id": 2117,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 10629,
+        "level": 9,
+        "mode": "carp",
+        "date": "18.08.2026 14:48",
+        "timestamp": 1787064512040,
+        "created_at": "2026-08-18T14:48:32.320211+00:00"
+      },
+      {
+        "id": 2118,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 11466,
+        "level": 10,
+        "mode": "carp",
+        "date": "18.08.2026 18:21",
+        "timestamp": 1787077290856,
+        "created_at": "2026-08-18T18:21:30.97846+00:00"
+      },
+      {
+        "id": 2119,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 14249,
+        "level": 11,
+        "mode": "carp",
+        "date": "20.08.2026 13:05",
+        "timestamp": 1787231118032,
+        "created_at": "2026-08-20T13:05:18.293288+00:00"
+      },
+      {
+        "id": 2120,
+        "name": "YükselG",
+        "email": "yuksel436@gmail.com",
+        "score": 7543,
+        "level": 8,
+        "mode": "carp",
+        "date": "23.08.2026 07:17",
+        "timestamp": 1787469425518,
+        "created_at": "2026-08-23T07:17:05.801333+00:00"
+      }
+    ],
+    "minlan_leaderboard": [
+      {
+        "id": "5277b462-823f-43a1-9974-92dee2ab43c4",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 875,
+        "matches_count": 0,
+        "created_at": "2026-08-09T17:42:08.981548+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "53ba02e1-9cb2-4ff6-911b-fc388ec93dc5",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "de",
+        "score": 880,
+        "matches_count": 0,
+        "created_at": "2026-08-09T18:19:36.462725+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "73259962-618a-4264-b47b-5bebdd3f8a49",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2070,
+        "matches_count": 0,
+        "created_at": "2026-08-09T17:37:29.743847+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "7aef3df3-a099-46e5-95ed-bf84630a3b07",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "de",
+        "score": 880,
+        "matches_count": 0,
+        "created_at": "2026-08-09T18:19:36.553133+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "cddc732d-0d10-425a-9dbd-1cb0f198a0da",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2095,
+        "matches_count": 0,
+        "created_at": "2026-08-09T17:39:08.302149+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "b2d6c84e-0181-4c80-92f4-fb4543978253",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 4570,
+        "matches_count": 0,
+        "created_at": "2026-08-09T18:43:51.774494+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "2c8a973d-d4ac-4f6e-9c2c-beb3bef3cf9a",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1565,
+        "matches_count": 0,
+        "created_at": "2026-08-09T18:50:58.870926+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "2dc7dcae-7b19-4666-9591-e8a59b5ec8d3",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 895,
+        "matches_count": 0,
+        "created_at": "2026-08-09T18:52:18.72833+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "7e707da2-5d47-4dac-95c8-f7958d64f72b",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ko",
+        "score": 930,
+        "matches_count": 0,
+        "created_at": "2026-08-09T18:53:29.150416+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "97ed4fa3-c141-419a-a642-f4925af641f0",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 5615,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:05:55.217424+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "5c7ad395-8341-444c-b95a-ccd012950369",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 4380,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:12:59.208596+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "ba98cdd2-dca3-402e-9db3-c024a60f5c7b",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2325,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:28:47.405886+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "c34dbecd-7337-40bc-b336-9b47a0ad98aa",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "fr",
+        "score": 765,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:30:02.682062+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "8f40db97-24bc-4308-b594-f1231cc4e187",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1730,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:51:44.06771+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "114605af-3d3d-4142-94e5-c07e0400bbaf",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 660,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:52:48.352632+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "6e7b3ce8-24da-4104-887b-5e8a097409e1",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1175,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:53:36.538943+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "888586f8-77f8-495a-9b0e-39d6e6127d14",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "es",
+        "score": 965,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:53:42.309541+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "1b82f135-dac9-4a70-9ac2-cc9a3aed0d84",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 655,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:54:23.465258+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "04c02a07-f35e-4dc8-98e9-37fd21cd56d0",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 1795,
+        "matches_count": 0,
+        "created_at": "2026-08-09T19:54:26.096226+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "5e0077eb-a1ed-4d9c-b8b3-3b3e5698ce2c",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1660,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:11:16.413077+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "b875ded5-df8e-49c8-bf11-c9281c44a3c5",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 4870,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:14:20.760624+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "2af51355-b90d-4cbc-a1ca-ad0857870d18",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1510,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:18:59.216052+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "85ca7a3d-d9ab-492c-96db-5a69a2902d26",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 555,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:24:15.492384+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "3181dec9-f8d5-47f3-a194-954164a98b48",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1185,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:37:42.375111+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "5347cce8-4b61-482c-be21-7da87f5e91f5",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 4490,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:39:23.164789+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "3f895806-c9ba-496d-b5c8-f727eb2112c9",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 1040,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:41:50.861057+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "2fee5415-6373-446f-bf14-baff8f49146f",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 3475,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:42:43.236837+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "e8aa0c00-8324-473f-8dc6-1b07383dff02",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "fr",
+        "score": 1815,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:44:02.1556+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "3e6cd739-5de6-4c37-8b1e-03e228f41d2a",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ko",
+        "score": 1990,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:44:57.159766+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "96a0eef0-1cf8-45b2-a040-8e4b40333263",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 965,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:45:33.523221+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "d5993692-9bea-4996-ab2a-bf1e2825891e",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 1195,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:46:05.808863+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "0103b7b0-06e5-48f5-80be-dabb48b0577f",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "de",
+        "score": 600,
+        "matches_count": 0,
+        "created_at": "2026-08-09T20:49:01.941329+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "bea8965a-b93a-4dbe-82e8-3949f85a94fd",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2205,
+        "matches_count": 0,
+        "created_at": "2026-08-10T05:21:18.04602+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "83e2b3d3-2468-4abf-98d8-11e9390e9683",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 1665,
+        "matches_count": 0,
+        "created_at": "2026-08-10T05:52:32.658077+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "4d2021e8-0ff4-4fcc-9d7c-d82bee56df25",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "it",
+        "score": 930,
+        "matches_count": 0,
+        "created_at": "2026-08-10T05:53:52.304989+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "caafd454-232f-4699-8632-f9689fe59b03",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "pt",
+        "score": 1735,
+        "matches_count": 0,
+        "created_at": "2026-08-10T05:54:35.482512+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "7157f113-5618-4058-ab62-df61fee8dc19",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "it",
+        "score": 760,
+        "matches_count": 0,
+        "created_at": "2026-08-10T07:14:42.508355+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "b70ef0a1-511b-409d-9256-55af0cbf80e2",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 945,
+        "matches_count": 0,
+        "created_at": "2026-08-10T07:18:53.309147+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "8428f89c-e6b1-499a-b49d-b91a2c00e092",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "fr",
+        "score": 1835,
+        "matches_count": 0,
+        "created_at": "2026-08-10T07:19:43.1566+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "90c552c3-5039-4bd7-aacc-347ad16e0e4d",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "de",
+        "target_lang": "en",
+        "score": 585,
+        "matches_count": 0,
+        "created_at": "2026-08-10T07:19:55.465982+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "09dd44ac-2fba-40cb-9cf0-2dc5c6c6431f",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1900,
+        "matches_count": 0,
+        "created_at": "2026-08-10T13:46:55.66603+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "13190305-4bb8-49fb-8c11-79944f7b98e0",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2045,
+        "matches_count": 0,
+        "created_at": "2026-08-10T13:47:52.166016+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "d59a255b-a514-4f78-bdc5-f9faf87b3b22",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3215,
+        "matches_count": 0,
+        "created_at": "2026-08-10T13:49:24.438839+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "3ae85d88-ad53-48f3-b076-fbcadf6a899a",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 5075,
+        "matches_count": 0,
+        "created_at": "2026-08-10T13:51:09.395938+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "0d18c989-8218-48b3-b3ac-082ff4b5eb0e",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 7480,
+        "matches_count": 0,
+        "created_at": "2026-08-10T14:42:04.370545+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "02d178d6-7d2f-4f8a-910d-c89167906dec",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2175,
+        "matches_count": 0,
+        "created_at": "2026-08-10T14:55:33.918689+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "4907c21c-78e6-4b2c-b6f4-52245461c456",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3065,
+        "matches_count": 0,
+        "created_at": "2026-08-10T14:57:58.343564+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "403ceb49-f213-4c84-bb84-5f49eda2e87a",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3160,
+        "matches_count": 0,
+        "created_at": "2026-08-10T14:59:59.321421+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "817f4bc7-4140-4103-ad6c-d22ffba5e909",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1405,
+        "matches_count": 0,
+        "created_at": "2026-08-10T15:01:18.633039+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "142f6cfd-82f9-4d3c-a018-0b96f03622df",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2050,
+        "matches_count": 0,
+        "created_at": "2026-08-10T15:02:16.239451+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "3ffa3d6b-f0d2-4138-a3b0-b80a41186d27",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1625,
+        "matches_count": 0,
+        "created_at": "2026-08-10T15:03:14.37484+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "db9d739f-0b5a-404c-ad17-08f4617095b4",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2225,
+        "matches_count": 0,
+        "created_at": "2026-08-10T15:04:15.493622+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "053814a6-3398-4e30-9304-56c6a4c2fe6e",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2245,
+        "matches_count": 0,
+        "created_at": "2026-08-10T15:06:06.597878+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "7188384e-8f1a-4294-8711-14fe6141cafa",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3005,
+        "matches_count": 0,
+        "created_at": "2026-08-10T15:07:28.290288+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "6f676ead-596a-4082-8595-50072245230b",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1480,
+        "matches_count": 0,
+        "created_at": "2026-08-10T16:27:00.132844+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "875166e5-4221-48f2-a90d-11521af8a82f",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1055,
+        "matches_count": 0,
+        "created_at": "2026-08-10T17:52:19.971265+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "2578a04d-d881-4891-bdc1-4b624539bed8",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 4520,
+        "matches_count": 0,
+        "created_at": "2026-08-10T17:53:47.523156+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "578fbf87-95a0-4775-8fc3-353d606e35ec",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3400,
+        "matches_count": 0,
+        "created_at": "2026-08-10T18:59:06.339485+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "e96edfec-2edb-4a9e-8702-d31f7305423e",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 845,
+        "matches_count": 0,
+        "created_at": "2026-08-10T19:00:25.936426+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "6979dcbc-10e2-47b0-b4e1-e8eeb11e8008",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2120,
+        "matches_count": 0,
+        "created_at": "2026-08-10T22:30:14.971124+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "82a4761f-9ca1-4d8a-a717-954888127e59",
+        "user_id": 42,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2845,
+        "matches_count": 0,
+        "created_at": "2026-08-10T22:31:48.188087+00:00",
+        "username": "Temomar",
+        "round_reached": 1
+      },
+      {
+        "id": "c37a850b-d1db-461b-a62d-fb2a4324c7b8",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1665,
+        "matches_count": 0,
+        "created_at": "2026-08-11T05:06:18.499709+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "edce222a-36b0-4b1e-a793-e1f26b0adc19",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3070,
+        "matches_count": 0,
+        "created_at": "2026-08-11T14:02:46.845237+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "2415a3a5-f44c-47bd-9885-b35adc432c04",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2645,
+        "matches_count": 0,
+        "created_at": "2026-08-11T14:08:02.299487+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "92fdcfff-31e1-4633-b0c9-270faf570a35",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1655,
+        "matches_count": 0,
+        "created_at": "2026-08-11T17:34:41.342583+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "6a9d2b72-c6d2-4406-858b-596bb873500b",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 1630,
+        "matches_count": 0,
+        "created_at": "2026-08-11T17:36:07.697231+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "cdea6c79-6ed8-40cf-890c-a488d21678f8",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "fr",
+        "score": 750,
+        "matches_count": 0,
+        "created_at": "2026-08-11T17:37:04.401333+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "e14aaded-c398-49ab-b3e5-15fb009dce37",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3535,
+        "matches_count": 0,
+        "created_at": "2026-08-12T17:04:03.216614+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "1c40942c-ec10-418a-a314-3edc8ddf8127",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1950,
+        "matches_count": 0,
+        "created_at": "2026-08-13T04:59:54.664221+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "3d5c3e15-09d8-450b-b382-1377c2e164b0",
+        "user_id": 8,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 910,
+        "matches_count": 0,
+        "created_at": "2026-08-13T07:08:30.887533+00:00",
+        "username": "Mehtap",
+        "round_reached": 1
+      },
+      {
+        "id": "948ad99c-c56b-4fca-a7da-d4f1a7bd8611",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 890,
+        "matches_count": 0,
+        "created_at": "2026-08-13T11:02:12.646474+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "bcfe6cc6-cfa5-4413-9a1a-d9f206de152c",
+        "user_id": 51,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "ar",
+        "score": 1635,
+        "matches_count": 0,
+        "created_at": "2026-08-13T11:03:26.380834+00:00",
+        "username": "Furtuna",
+        "round_reached": 1
+      },
+      {
+        "id": "4f81d295-ee84-45b3-a53d-1863942cffb8",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 5425,
+        "matches_count": 0,
+        "created_at": "2026-08-13T13:20:22.080224+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "c686b52d-f5c2-420f-84f7-0b5683bcb930",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 4305,
+        "matches_count": 0,
+        "created_at": "2026-08-13T14:49:04.657855+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "f4dbf02a-f9bd-44e2-8781-dc08e28d340a",
+        "user_id": 76,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 5205,
+        "matches_count": 0,
+        "created_at": "2026-08-13T23:22:45.607829+00:00",
+        "username": "Eagle_1927",
+        "round_reached": 1
+      },
+      {
+        "id": "3b024144-eb24-4d86-b05a-b2251b8141d1",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "ar",
+        "target_lang": "ko",
+        "score": 375,
+        "matches_count": 0,
+        "created_at": "2026-08-14T13:51:22.806582+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "5e3dd8b5-5f47-4e97-a130-8cd749ea887d",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3815,
+        "matches_count": 0,
+        "created_at": "2026-08-14T13:54:02.05207+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "04e6e202-e8e0-422b-9e69-947910566c71",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 8000,
+        "matches_count": 0,
+        "created_at": "2026-08-15T05:54:46.63626+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "148b0f27-f4b7-4c9d-a8ee-a9fbabf755c5",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1925,
+        "matches_count": 0,
+        "created_at": "2026-08-15T11:45:33.957553+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "56772386-29a4-4b3c-a51d-29f02382f126",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3665,
+        "matches_count": 0,
+        "created_at": "2026-08-15T11:47:12.706306+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "0d62efa4-8446-40a2-9f4e-2a94c3e3313a",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2595,
+        "matches_count": 0,
+        "created_at": "2026-08-15T11:48:54.843494+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "752d9c34-b8b2-47b7-9fac-2fd158bc8298",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2640,
+        "matches_count": 0,
+        "created_at": "2026-08-15T11:49:48.830507+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "cb39864b-d174-4447-af54-ee9b3d8a90e1",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2395,
+        "matches_count": 0,
+        "created_at": "2026-08-15T12:43:41.638254+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "11da92dd-0397-4950-927c-d1e77b39ca00",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1920,
+        "matches_count": 0,
+        "created_at": "2026-08-15T13:10:59.818014+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "6d2420bf-c2ef-4140-bdc4-258a00aa9295",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 6195,
+        "matches_count": 0,
+        "created_at": "2026-08-15T14:09:34.973586+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "d73ef235-622b-4bef-aa8e-7c868255f7b3",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3925,
+        "matches_count": 0,
+        "created_at": "2026-08-15T14:11:43.10223+00:00",
+        "username": "YükselG",
+        "round_reached": 1
+      },
+      {
+        "id": "a95f3422-b3fb-4b53-87b2-802cc9bd759d",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 5115,
+        "matches_count": 0,
+        "created_at": "2026-08-16T09:34:11.988792+00:00",
+        "username": "Harun",
+        "round_reached": 1
+      },
+      {
+        "id": "44b86bf4-a8b3-4e43-8d82-18e911399ad6",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3660,
+        "matches_count": 0,
+        "created_at": "2026-08-16T10:40:22.102107+00:00",
+        "username": "Harun",
+        "round_reached": 4
+      },
+      {
+        "id": "b8e9d8ef-2184-4007-977e-9acb9e295d8c",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3685,
+        "matches_count": 0,
+        "created_at": "2026-08-16T10:41:49.632683+00:00",
+        "username": "Harun",
+        "round_reached": 4
+      },
+      {
+        "id": "18b2b209-a440-4324-b8fb-0fa08884130b",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 5465,
+        "matches_count": 0,
+        "created_at": "2026-08-16T13:54:39.163736+00:00",
+        "username": "Harun",
+        "round_reached": 4
+      },
+      {
+        "id": "b589e2da-f56c-454d-8e4c-f05320d3026e",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 1670,
+        "matches_count": 0,
+        "created_at": "2026-08-16T13:55:49.37931+00:00",
+        "username": "Harun",
+        "round_reached": 3
+      },
+      {
+        "id": "750e43fa-448e-42a9-91bb-c49ca7956b0a",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3530,
+        "matches_count": 0,
+        "created_at": "2026-08-16T13:57:15.961881+00:00",
+        "username": "Harun",
+        "round_reached": 4
+      },
+      {
+        "id": "81dda17b-647c-4e23-b47b-bbb14a568fde",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 7530,
+        "matches_count": 0,
+        "created_at": "2026-08-16T13:59:14.820131+00:00",
+        "username": "Harun",
+        "round_reached": 5
+      },
+      {
+        "id": "694c435b-f339-4e26-8bc8-3af9517dbc92",
+        "user_id": 6,
+        "category_id": "cat-3",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2635,
+        "matches_count": 0,
+        "created_at": "2026-08-16T14:00:47.903717+00:00",
+        "username": "Harun",
+        "round_reached": 3
+      },
+      {
+        "id": "fa3db197-96e8-4d10-ba2d-81a569ee4bc4",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3735,
+        "matches_count": 0,
+        "created_at": "2026-08-18T14:42:58.289532+00:00",
+        "username": "YükselG",
+        "round_reached": 4
+      },
+      {
+        "id": "d6a26379-aa0d-47e9-8380-00dc3cca6203",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 9445,
+        "matches_count": 0,
+        "created_at": "2026-08-20T13:07:58.170839+00:00",
+        "username": "YükselG",
+        "round_reached": 6
+      },
+      {
+        "id": "014ba350-671a-4c9c-8d0a-6ee35b91ce67",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 3670,
+        "matches_count": 0,
+        "created_at": "2026-08-21T18:23:35.10913+00:00",
+        "username": "YükselG",
+        "round_reached": 4
+      },
+      {
+        "id": "4f632e55-dde8-4a94-a8a2-5ad4013d52b2",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 2305,
+        "matches_count": 0,
+        "created_at": "2026-08-23T07:18:22.751477+00:00",
+        "username": "YükselG",
+        "round_reached": 3
+      },
+      {
+        "id": "32be4490-3402-468b-b4c9-dca632cb5cf2",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 7500,
+        "matches_count": 0,
+        "created_at": "2026-08-23T10:37:52.908238+00:00",
+        "username": "Harun",
+        "round_reached": 5
+      },
+      {
+        "id": "1b0196f1-f4e0-47da-899c-839b7d22d4a9",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 7320,
+        "matches_count": 0,
+        "created_at": "2026-08-23T10:40:09.295444+00:00",
+        "username": "Harun",
+        "round_reached": 5
+      },
+      {
+        "id": "e668da64-73b7-434e-9c60-3919eb61e9c9",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 11575,
+        "matches_count": 0,
+        "created_at": "2026-08-23T12:51:06.758308+00:00",
+        "username": "Harun",
+        "round_reached": 6
+      },
+      {
+        "id": "b4afcec4-b291-40b0-82ca-29fd91c1b83e",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 10220,
+        "matches_count": 0,
+        "created_at": "2026-08-24T21:42:18.55334+00:00",
+        "username": "Harun",
+        "round_reached": 6
+      },
+      {
+        "id": "ce335f1a-5d51-4ede-85ff-e9936061e1b9",
+        "user_id": 6,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 14070,
+        "matches_count": 0,
+        "created_at": "2026-08-24T21:46:53.734666+00:00",
+        "username": "Harun",
+        "round_reached": 7
+      },
+      {
+        "id": "a6b16aba-58cf-4788-9df7-c2a6ad68a588",
+        "user_id": 6,
+        "category_id": "cat-2",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 6720,
+        "matches_count": 0,
+        "created_at": "2026-08-25T11:56:40.402553+00:00",
+        "username": "Harun",
+        "round_reached": 5
+      },
+      {
+        "id": "754c1149-b046-4b1a-b5da-1356f86c2d5f",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 18605,
+        "matches_count": 0,
+        "created_at": "2026-08-25T13:27:23.999339+00:00",
+        "username": "YükselG",
+        "round_reached": 8
+      },
+      {
+        "id": "75bdf59e-365f-4abf-ba83-864caabb8e28",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 10845,
+        "matches_count": 0,
+        "created_at": "2026-08-25T13:33:19.489459+00:00",
+        "username": "YükselG",
+        "round_reached": 6
+      },
+      {
+        "id": "aa983ea5-36e3-49cf-bb28-3e265d42433c",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 16335,
+        "matches_count": 0,
+        "created_at": "2026-08-26T14:17:53.274169+00:00",
+        "username": "YükselG",
+        "round_reached": 7
+      },
+      {
+        "id": "91f55959-d543-40ad-ac16-696dd7e73a4e",
+        "user_id": 3,
+        "category_id": "cat-1",
+        "native_lang": "tr",
+        "target_lang": "en",
+        "score": 12770,
+        "matches_count": 0,
+        "created_at": "2026-08-26T15:28:59.085678+00:00",
+        "username": "YükselG",
+        "round_reached": 7
+      }
+    ],
+    "cupmat_leaderboard": [],
+    "profiles": [
+      {
+        "id": 40,
+        "created_at": "2026-06-01T20:55:48.462272+00:00",
+        "user_id": "user_3ESNNBS9DXg1WmPevB7cdvXFyWj",
+        "nickname": "Fatmab",
+        "email": "fatmabaskayavia@gmail.com"
+      },
+      {
+        "id": 2,
+        "created_at": "2026-05-27T15:25:09.205855+00:00",
+        "user_id": "user_3EBPcQKjN7fmwETYT9d8kEkDXa1",
+        "nickname": "Kartal1903",
+        "email": "mehtem2016@gmail.com"
+      },
+      {
+        "id": 45,
+        "created_at": "2026-06-07T10:18:15.030701+00:00",
+        "user_id": "user_3Enud8gh1lSWiu9RDSjzyXJJz2U",
+        "nickname": "Eagle_1924",
+        "email": "playtest@statmatik.com"
+      },
+      {
+        "id": 3,
+        "created_at": "2026-05-27T17:33:23.55817+00:00",
+        "user_id": "user_3EJiZoD4WQb2lFsxWeOTFNbCGN0",
+        "nickname": "YükselG",
+        "email": "yuksel436@gmail.com"
+      },
+      {
+        "id": 4,
+        "created_at": "2026-05-29T14:12:50.577697+00:00",
+        "user_id": "user_3EOyWI355VlOau18PtPSJugbm6p",
+        "nickname": "46Dedee",
+        "email": "ahmet46dede@gmail.com"
+      },
+      {
+        "id": 6,
+        "created_at": "2026-05-30T20:25:24.546119+00:00",
+        "user_id": "user_3ESNNI2nIvZXozuY8hdqFnLi5y7",
+        "nickname": "Harun",
+        "email": "hamemaht@gmail.com"
+      },
+      {
+        "id": 8,
+        "created_at": "2026-05-31T14:24:07.065353+00:00",
+        "user_id": "user_3EUeBuIz7wuK3XxmOp8IWf1AxeO",
+        "nickname": "Mehtap",
+        "email": "meht2016bjk@gmail.com"
+      },
+      {
+        "id": 9,
+        "created_at": "2026-05-31T18:17:34.792515+00:00",
+        "user_id": "user_mock_1",
+        "nickname": "FanteziKoçu_1",
+        "email": "mock_user_1@statmatik-test.com"
+      },
+      {
+        "id": 10,
+        "created_at": "2026-05-31T18:17:35.012386+00:00",
+        "user_id": "user_mock_2",
+        "nickname": "FanteziKoçu_2",
+        "email": "mock_user_2@statmatik-test.com"
+      },
+      {
+        "id": 11,
+        "created_at": "2026-05-31T18:17:35.223386+00:00",
+        "user_id": "user_mock_3",
+        "nickname": "FanteziKoçu_3",
+        "email": "mock_user_3@statmatik-test.com"
+      },
+      {
+        "id": 12,
+        "created_at": "2026-05-31T18:17:35.436971+00:00",
+        "user_id": "user_mock_4",
+        "nickname": "FanteziKoçu_4",
+        "email": "mock_user_4@statmatik-test.com"
+      },
+      {
+        "id": 13,
+        "created_at": "2026-05-31T18:17:35.641105+00:00",
+        "user_id": "user_mock_5",
+        "nickname": "FanteziKoçu_5",
+        "email": "mock_user_5@statmatik-test.com"
+      },
+      {
+        "id": 14,
+        "created_at": "2026-05-31T18:17:35.850492+00:00",
+        "user_id": "user_mock_6",
+        "nickname": "FanteziKoçu_6",
+        "email": "mock_user_6@statmatik-test.com"
+      },
+      {
+        "id": 15,
+        "created_at": "2026-05-31T18:17:36.061245+00:00",
+        "user_id": "user_mock_7",
+        "nickname": "FanteziKoçu_7",
+        "email": "mock_user_7@statmatik-test.com"
+      },
+      {
+        "id": 16,
+        "created_at": "2026-05-31T18:17:36.272797+00:00",
+        "user_id": "user_mock_8",
+        "nickname": "FanteziKoçu_8",
+        "email": "mock_user_8@statmatik-test.com"
+      },
+      {
+        "id": 17,
+        "created_at": "2026-05-31T18:17:36.481637+00:00",
+        "user_id": "user_mock_9",
+        "nickname": "FanteziKoçu_9",
+        "email": "mock_user_9@statmatik-test.com"
+      },
+      {
+        "id": 18,
+        "created_at": "2026-05-31T18:17:36.692572+00:00",
+        "user_id": "user_mock_10",
+        "nickname": "FanteziKoçu_10",
+        "email": "mock_user_10@statmatik-test.com"
+      },
+      {
+        "id": 19,
+        "created_at": "2026-05-31T18:17:36.906443+00:00",
+        "user_id": "user_mock_11",
+        "nickname": "FanteziKoçu_11",
+        "email": "mock_user_11@statmatik-test.com"
+      },
+      {
+        "id": 20,
+        "created_at": "2026-05-31T18:17:37.123328+00:00",
+        "user_id": "user_mock_12",
+        "nickname": "FanteziKoçu_12",
+        "email": "mock_user_12@statmatik-test.com"
+      },
+      {
+        "id": 21,
+        "created_at": "2026-05-31T18:17:37.337928+00:00",
+        "user_id": "user_mock_13",
+        "nickname": "FanteziKoçu_13",
+        "email": "mock_user_13@statmatik-test.com"
+      },
+      {
+        "id": 22,
+        "created_at": "2026-05-31T18:17:37.552712+00:00",
+        "user_id": "user_mock_14",
+        "nickname": "FanteziKoçu_14",
+        "email": "mock_user_14@statmatik-test.com"
+      },
+      {
+        "id": 23,
+        "created_at": "2026-05-31T18:17:37.765348+00:00",
+        "user_id": "user_mock_15",
+        "nickname": "FanteziKoçu_15",
+        "email": "mock_user_15@statmatik-test.com"
+      },
+      {
+        "id": 24,
+        "created_at": "2026-05-31T18:17:37.978869+00:00",
+        "user_id": "user_mock_16",
+        "nickname": "FanteziKoçu_16",
+        "email": "mock_user_16@statmatik-test.com"
+      },
+      {
+        "id": 25,
+        "created_at": "2026-05-31T18:17:38.188251+00:00",
+        "user_id": "user_mock_17",
+        "nickname": "FanteziKoçu_17",
+        "email": "mock_user_17@statmatik-test.com"
+      },
+      {
+        "id": 26,
+        "created_at": "2026-05-31T18:17:38.400687+00:00",
+        "user_id": "user_mock_18",
+        "nickname": "FanteziKoçu_18",
+        "email": "mock_user_18@statmatik-test.com"
+      },
+      {
+        "id": 27,
+        "created_at": "2026-05-31T18:17:38.61111+00:00",
+        "user_id": "user_mock_19",
+        "nickname": "FanteziKoçu_19",
+        "email": "mock_user_19@statmatik-test.com"
+      },
+      {
+        "id": 28,
+        "created_at": "2026-05-31T18:17:38.818076+00:00",
+        "user_id": "user_mock_20",
+        "nickname": "FanteziKoçu_20",
+        "email": "mock_user_20@statmatik-test.com"
+      },
+      {
+        "id": 29,
+        "created_at": "2026-05-31T18:17:39.027562+00:00",
+        "user_id": "user_mock_21",
+        "nickname": "FanteziKoçu_21",
+        "email": "mock_user_21@statmatik-test.com"
+      },
+      {
+        "id": 30,
+        "created_at": "2026-05-31T18:17:39.235901+00:00",
+        "user_id": "user_mock_22",
+        "nickname": "FanteziKoçu_22",
+        "email": "mock_user_22@statmatik-test.com"
+      },
+      {
+        "id": 31,
+        "created_at": "2026-05-31T18:17:39.447412+00:00",
+        "user_id": "user_mock_23",
+        "nickname": "FanteziKoçu_23",
+        "email": "mock_user_23@statmatik-test.com"
+      },
+      {
+        "id": 32,
+        "created_at": "2026-05-31T18:17:39.655829+00:00",
+        "user_id": "user_mock_24",
+        "nickname": "FanteziKoçu_24",
+        "email": "mock_user_24@statmatik-test.com"
+      },
+      {
+        "id": 33,
+        "created_at": "2026-05-31T18:17:39.865379+00:00",
+        "user_id": "user_mock_25",
+        "nickname": "FanteziKoçu_25",
+        "email": "mock_user_25@statmatik-test.com"
+      },
+      {
+        "id": 34,
+        "created_at": "2026-05-31T18:17:40.079389+00:00",
+        "user_id": "user_mock_26",
+        "nickname": "FanteziKoçu_26",
+        "email": "mock_user_26@statmatik-test.com"
+      },
+      {
+        "id": 35,
+        "created_at": "2026-05-31T18:17:40.285492+00:00",
+        "user_id": "user_mock_27",
+        "nickname": "FanteziKoçu_27",
+        "email": "mock_user_27@statmatik-test.com"
+      },
+      {
+        "id": 36,
+        "created_at": "2026-05-31T18:17:40.499156+00:00",
+        "user_id": "user_mock_28",
+        "nickname": "FanteziKoçu_28",
+        "email": "mock_user_28@statmatik-test.com"
+      },
+      {
+        "id": 37,
+        "created_at": "2026-05-31T18:17:40.712209+00:00",
+        "user_id": "user_mock_29",
+        "nickname": "FanteziKoçu_29",
+        "email": "mock_user_29@statmatik-test.com"
+      },
+      {
+        "id": 38,
+        "created_at": "2026-05-31T18:17:40.933296+00:00",
+        "user_id": "user_mock_30",
+        "nickname": "FanteziKoçu_30",
+        "email": "mock_user_30@statmatik-test.com"
+      },
+      {
+        "id": 39,
+        "created_at": "2026-05-31T18:17:41.142767+00:00",
+        "user_id": "user_mock_31",
+        "nickname": "FanteziKoçu_31",
+        "email": "mock_user_31@statmatik-test.com"
+      },
+      {
+        "id": 48,
+        "created_at": "2026-06-07T18:23:48.706227+00:00",
+        "user_id": "user_3ESNNYSDS1yiHjikzMrcgFGROp2",
+        "nickname": "Hsyntmzl",
+        "email": "hsyntmzl12@gmail.com"
+      },
+      {
+        "id": 41,
+        "created_at": "2026-06-03T14:02:14.37508+00:00",
+        "user_id": "user_3Ed4r9eLLfHPm3GEiLlKzgBMy7z",
+        "nickname": "Mehmet",
+        "email": "mehmet.temizel.gadirli@gmail.com"
+      },
+      {
+        "id": 49,
+        "created_at": "2026-06-07T18:58:41.728592+00:00",
+        "user_id": "user_3ESNNmmNbGD6D4JdmQvyJpIe4Zc",
+        "nickname": "Tem199513",
+        "email": "tem199513@gmail.com"
+      },
+      {
+        "id": 42,
+        "created_at": "2026-06-03T14:59:50.598299+00:00",
+        "user_id": "user_3ESNMeG0f7JZ2teYdv2CJIT9aQr",
+        "nickname": "Temomar",
+        "email": "omartemizel@gmail.com"
+      },
+      {
+        "id": 43,
+        "created_at": "2026-06-03T19:19:25.534964+00:00",
+        "user_id": "user_3ESNNKu9vX64gQNhOGebQHVEGz5",
+        "nickname": "FurkanB",
+        "email": "fbaskaya07@gmail.com"
+      },
+      {
+        "id": 7,
+        "created_at": "2026-05-30T21:06:44.153532+00:00",
+        "user_id": "user_3ESNMt3VVkj9ixjcPx2fH4gdRDp",
+        "nickname": "ismail_toptas",
+        "email": "ismail.huzursokagi@gmail.com"
+      },
+      {
+        "id": 50,
+        "created_at": "2026-06-07T18:58:41.813727+00:00",
+        "user_id": "user_3ESNNc14FhPTkeU9HuSEm4ZoSNB",
+        "nickname": "MehmetT",
+        "email": "mehtemizel1903@gmail.com"
+      },
+      {
+        "id": 51,
+        "created_at": "2026-06-07T18:58:41.892446+00:00",
+        "user_id": "user_3ESNMyyOEUiQOVlrGZ9oF6Jk6X8",
+        "nickname": "Furtuna",
+        "email": "eskicephatt@gmail.com"
+      },
+      {
+        "id": 52,
+        "created_at": "2026-06-07T18:58:41.970433+00:00",
+        "user_id": "user_3ESNMmgMs6K0bUA7lKiCzNlHNl0",
+        "nickname": "MetinK",
+        "email": "kilicmetin838@gmail.com"
+      },
+      {
+        "id": 46,
+        "created_at": "2026-06-07T11:52:04.933331+00:00",
+        "user_id": "user_3Eo7PBZiHQaKC8eNaHOhZVTWsoU",
+        "nickname": "Hsynlc",
+        "email": "hsynlc.46@yandex.com"
+      },
+      {
+        "id": 53,
+        "created_at": "2026-06-09T07:21:56.549393+00:00",
+        "user_id": "user_3EtEvPgMWfFyHwI0RUEQrNK2gF4",
+        "nickname": "Rüm",
+        "email": "rumeysatemizel004@gmail.com"
+      },
+      {
+        "id": 76,
+        "created_at": "2026-08-13T23:15:06.936457+00:00",
+        "user_id": "user_3HshtlYnMufD9LiqEAiDDh7jPQj",
+        "nickname": "Eagle_1927",
+        "email": "beyza.ackgz01@gmail.com"
+      },
+      {
+        "id": 47,
+        "created_at": "2026-06-07T17:30:20.478944+00:00",
+        "user_id": "user_3EomhMXUBX5IkzjDbLHYlq8u6kP",
+        "nickname": "Statmatik_Test",
+        "email": "info.mahtemyazilim@gmail.com"
+      },
+      {
+        "id": 69,
+        "created_at": "2026-06-12T11:22:47.870328+00:00",
+        "user_id": "user_3F2AwhjvqtvgrQRjEdZZQ4H2VWo",
+        "nickname": "Eagle_1925",
+        "email": "batu.tem010@gmail.com"
+      },
+      {
+        "id": 44,
+        "created_at": "2026-06-06T20:18:31.288325+00:00",
+        "user_id": "user_3ESNN9uOWCm5ul0SbT2nDjfdEaL",
+        "nickname": "rbk",
+        "email": "rbaskaya11@gmail.com"
+      },
+      {
+        "id": 72,
+        "created_at": "2026-06-28T11:02:39.755251+00:00",
+        "user_id": "user_3FlL9MVjkutjLALWR0RgXkUpfMN",
+        "nickname": "Eagle_1923",
+        "email": "haticeosmanalic@hotmail.com"
+      },
+      {
+        "id": 73,
+        "created_at": "2026-06-29T09:08:50.310226+00:00",
+        "user_id": "user_3FnwQim9DU2E0EobXGMorJVNADd",
+        "nickname": "Sinan",
+        "email": "sinan14532220@gmail.com"
+      },
+      {
+        "id": 74,
+        "created_at": "2026-07-01T11:25:28.36583+00:00",
+        "user_id": "user_3FtrI52GTmeqQQ7utbYQH2uzf3n",
+        "nickname": "Eagle_1926",
+        "email": "eneskosan21@gmail.com"
+      },
+      {
+        "id": 75,
+        "created_at": "2026-07-23T18:00:12.867323+00:00",
+        "user_id": "user_3Gum0nh8ETzzknFSBOXYye2O1pa",
+        "nickname": "Dodurga",
+        "email": "dodurga-66@hotmail.com"
+      }
+    ],
+    "private_leagues": [
+      {
+        "id": "6e27cd13-03f4-4f5e-86bc-1530075807ee",
+        "name": "Furtuna Ligi",
+        "created_by": "user_3ESNMyyOEUiQOVlrGZ9oF6Jk6X8",
+        "join_code": "BX7JGG",
+        "created_at": "2026-06-13T17:16:33.739474+00:00"
+      },
+      {
+        "id": "c135e922-d9a3-4dd2-a6ea-e8a0ff62b155",
+        "name": "Furtuna ligi",
+        "created_by": "user_3ESNMyyOEUiQOVlrGZ9oF6Jk6X8",
+        "join_code": "VJMCEL",
+        "created_at": "2026-06-17T20:27:11.824999+00:00"
+      },
+      {
+        "id": "d4f20155-3049-4122-8780-07198b7c45fd",
+        "name": "Kadirli Süper Ligi",
+        "created_by": "user_3ESNNI2nIvZXozuY8hdqFnLi5y7",
+        "join_code": "RPEQLC",
+        "created_at": "2026-06-21T18:11:23.217724+00:00"
+      },
+      {
+        "id": "15791161-01a3-46aa-a793-c563b64b9806",
+        "name": "Kadirli imparatoru",
+        "created_by": "user_3EJiZoD4WQb2lFsxWeOTFNbCGN0",
+        "join_code": "VLJJAA",
+        "created_at": "2026-06-25T19:51:02.772685+00:00"
+      }
+    ],
+    "private_league_members": [
+      {
+        "id": "be81353c-7221-4b58-92dc-0e57393bc8f3",
+        "league_id": "6e27cd13-03f4-4f5e-86bc-1530075807ee",
+        "user_id": "user_3ESNMyyOEUiQOVlrGZ9oF6Jk6X8",
+        "joined_at": "2026-06-13T17:16:33.850871+00:00"
+      },
+      {
+        "id": "430d9a41-d0e5-4731-a6af-537c68e00bdc",
+        "league_id": "c135e922-d9a3-4dd2-a6ea-e8a0ff62b155",
+        "user_id": "user_3ESNMyyOEUiQOVlrGZ9oF6Jk6X8",
+        "joined_at": "2026-06-17T20:27:11.942415+00:00"
+      },
+      {
+        "id": "71f22ed5-a7d3-4233-837e-cfc9b9944172",
+        "league_id": "d4f20155-3049-4122-8780-07198b7c45fd",
+        "user_id": "user_3ESNNI2nIvZXozuY8hdqFnLi5y7",
+        "joined_at": "2026-06-21T18:11:23.340358+00:00"
+      },
+      {
+        "id": "f262574c-0a7e-4f42-a8e5-7745d5eeb551",
+        "league_id": "d4f20155-3049-4122-8780-07198b7c45fd",
+        "user_id": "user_3EBPcQKjN7fmwETYT9d8kEkDXa1",
+        "joined_at": "2026-06-21T18:13:07.258513+00:00"
+      },
+      {
+        "id": "eaa45b28-36bb-472e-8181-fea2385ba5c3",
+        "league_id": "15791161-01a3-46aa-a793-c563b64b9806",
+        "user_id": "user_3EJiZoD4WQb2lFsxWeOTFNbCGN0",
+        "joined_at": "2026-06-25T19:51:03.09831+00:00"
+      }
+    ]
+  }
+}
