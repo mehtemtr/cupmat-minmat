@@ -28,6 +28,8 @@ export const MINMAT_TRANSLATIONS: Record<string, any> = {
     date: "Tarih",
     category: "Kategori",
     unlockedMsg: "Tebrikler! 4. tura ulaştığınız için bir sonraki kategorinin kilidi açıldı!",
+    pausedTitle: "Oyun Duraklatıldı",
+    resumeText: "Devam Et",
   },
   en: {
     title: "MinMat — Number Hunt",
@@ -58,6 +60,8 @@ export const MINMAT_TRANSLATIONS: Record<string, any> = {
     date: "Date",
     category: "Category",
     unlockedMsg: "Congrats! You unlocked the next category by reaching round 4!",
+    pausedTitle: "Game Paused",
+    resumeText: "Resume",
   }
 };
 

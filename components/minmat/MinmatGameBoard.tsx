@@ -363,7 +363,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
           )}
         </div>
 
-        {/* Score & Time */}
+        {/* Score & Time & Pause */}
         <div className="flex items-center gap-3">
           <div className="text-right">
             <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Puan</div>
@@ -375,6 +375,19 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
               ⏱️ {timeLeft}s
             </div>
           </div>
+          {(gameState === "playing" || gameState === "paused") && (
+            <button
+              onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
+              className="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl text-slate-300 transition-all"
+              title={gameState === "paused" ? (t.resumeText || "Devam Et") : "Duraklat"}
+            >
+              {gameState === "paused" ? (
+                <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" />
+              ) : (
+                <Pause className="w-4 h-4 text-cyan-400" />
+              )}
+            </button>
+          )}
         </div>
       </div>
 
@@ -393,6 +406,23 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
             className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-2xl shadow-lg shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider transform hover:scale-105 active:scale-95"
           >
             Oyuna Başla 🚀
+          </button>
+        </div>
+      ) : gameState === "paused" ? (
+        <div className="w-full py-16 flex flex-col items-center justify-center text-center bg-slate-950/70 border border-slate-800/80 rounded-3xl my-4 shadow-xl">
+          <div className="w-16 h-16 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 shadow-xl shadow-cyan-500/10 animate-pulse">
+            <Pause className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-black text-white mb-2">{t.pausedTitle || "Oyun Duraklatıldı"}</h2>
+          <p className="text-xs text-slate-400 max-w-sm mb-6">
+            Oyun duraklatıldı. Kartlar gizlendi. Hazır olduğunda devam edebilirsin.
+          </p>
+          <button
+            onClick={() => setGameState("playing")}
+            className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-2xl shadow-lg shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider transform hover:scale-105 active:scale-95 flex items-center gap-2"
+          >
+            <Play className="w-4 h-4 fill-slate-950" />
+            <span>{t.resumeText || "Devam Et"}</span>
           </button>
         </div>
       ) : gameState === "game_over" ? (
@@ -492,12 +522,22 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
           <span>{t.puanTablosu}</span>
         </button>
 
-        {gameState === "playing" && (
+        {(gameState === "playing" || gameState === "paused") && (
           <button
             onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
-            className="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 rounded-xl transition-all"
+            className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 rounded-xl transition-all flex items-center gap-1.5 text-xs font-bold"
           >
-            {gameState === "paused" ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+            {gameState === "paused" ? (
+              <>
+                <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" />
+                <span className="text-emerald-400">{t.resumeText || "Devam Et"}</span>
+              </>
+            ) : (
+              <>
+                <Pause className="w-4 h-4 text-slate-300" />
+                <span>Duraklat</span>
+              </>
+            )}
           </button>
         )}
       </div>

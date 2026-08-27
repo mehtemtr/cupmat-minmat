@@ -50,11 +50,28 @@ type MatchType = {
   tournament_id: string;
   season: number;
   round: string;
+  date: string;
   dateStr: string;
   time: string;
   status: string;
-  team1: { name: string; countryCode: string; score: number | null; isWinner: boolean; firstLegScore?: number };
-  team2: { name: string; countryCode: string; score: number | null; isWinner: boolean; firstLegScore?: number };
+  isSecondLeg?: boolean;
+  isTieFinished?: boolean;
+  team1: { 
+    name: string; 
+    countryCode: string; 
+    score: number | null; 
+    isWinner: boolean; 
+    firstLegScore?: number;
+    isTieWinner?: boolean;
+  };
+  team2: { 
+    name: string; 
+    countryCode: string; 
+    score: number | null; 
+    isWinner: boolean; 
+    firstLegScore?: number;
+    isTieWinner?: boolean;
+  };
   aggregateScore?: { team1: number; team2: number };
   tournament_api_id: number;
   tournament_name: string;
@@ -95,14 +112,12 @@ export default function CupMatMatchCenter() {
       }
 
       if (data) {
-        const formattedMatches: MatchType[] = data.map((item: any) => {
+        const rawMatches: MatchType[] = data.map((item: any) => {
           const matchDate = new Date(item.date);
           const dateStr = matchDate.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
           const timeStr = matchDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
           let cleanRound = item.round || 'Normal Sezon';
-          // Temizleme: Veritabanında kalan bozuk Türkçe karakterleri düzelt (Örn: "3. n Eleme Turu" -> "3. Ön Eleme Turu")
-          // "3. n Eleme Turu" gibi olası bozuk karakterleri temizler
           cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
 
           const homeCountry = item.home_team_country_code === "TBD" ? "" : (item.home_team_country_code || "");
@@ -117,6 +132,7 @@ export default function CupMatMatchCenter() {
             region: item.cupmat_tournaments.region || 'world',
             season: item.season,
             round: cleanRound,
+            date: item.date,
             dateStr: dateStr,
             time: timeStr,
             status: item.status,
@@ -134,10 +150,82 @@ export default function CupMatMatchCenter() {
               isWinner: item.away_is_winner,
               firstLegScore: item.first_leg_away_score
             },
-            aggregateScore: item.aggregate_home_score !== null ? {
+            aggregateScore: item.aggregate_home_score !== null && item.aggregate_away_score !== null ? {
               team1: item.aggregate_home_score,
               team2: item.aggregate_away_score
             } : undefined
+          };
+        });
+
+        // Pair 1st and 2nd leg matches to calculate aggregate scores and determine who qualified
+        const formattedMatches: MatchType[] = rawMatches.map((m2) => {
+          // Find if there is an earlier 1st leg match with reversed home/away
+          const m1 = rawMatches.find((m) => 
+            m.tournament_id === m2.tournament_id &&
+            m.round === m2.round &&
+            m.team1.name === m2.team2.name &&
+            m.team2.name === m2.team1.name &&
+            new Date(m.date).getTime() < new Date(m2.date).getTime()
+          );
+
+          const isSecondLeg = !!m1;
+          const firstLegTeam1Score = m1 ? m1.team2.score : m2.team1.firstLegScore;
+          const firstLegTeam2Score = m1 ? m1.team1.score : m2.team2.firstLegScore;
+
+          let aggScore = m2.aggregateScore;
+          if (m1 && m1.team1.score !== null && m1.team2.score !== null && m2.team1.score !== null && m2.team2.score !== null) {
+            aggScore = {
+              team1: Number(m2.team1.score) + Number(m1.team2.score),
+              team2: Number(m2.team2.score) + Number(m1.team1.score)
+            };
+          }
+
+          const isMatchFinished = ["FT", "AET", "PEN"].includes(m2.status);
+          let isTieFinished = false;
+          let team1TieWinner = false;
+          let team2TieWinner = false;
+
+          if (isSecondLeg && isMatchFinished && aggScore) {
+            isTieFinished = true;
+            if (aggScore.team1 > aggScore.team2) {
+              team1TieWinner = true;
+            } else if (aggScore.team2 > aggScore.team1) {
+              team2TieWinner = true;
+            } else {
+              // Tie in aggregate score: check match penalty/winner flags
+              if (m2.team1.isWinner) team1TieWinner = true;
+              else if (m2.team2.isWinner) team2TieWinner = true;
+              else if (m2.team1.score !== null && m2.team2.score !== null) {
+                if (m2.team1.score > m2.team2.score) team1TieWinner = true;
+                else if (m2.team2.score > m2.team1.score) team2TieWinner = true;
+              }
+            }
+          } else if (!isSecondLeg && isMatchFinished && (m2.round.toLowerCase().includes("final") || m2.team1.isWinner || m2.team2.isWinner)) {
+            // Single match knockout or final
+            if (m2.team1.isWinner) {
+              isTieFinished = true;
+              team1TieWinner = true;
+            } else if (m2.team2.isWinner) {
+              isTieFinished = true;
+              team2TieWinner = true;
+            }
+          }
+
+          return {
+            ...m2,
+            isSecondLeg,
+            isTieFinished,
+            team1: {
+              ...m2.team1,
+              firstLegScore: firstLegTeam1Score ?? undefined,
+              isTieWinner: team1TieWinner
+            },
+            team2: {
+              ...m2.team2,
+              firstLegScore: firstLegTeam2Score ?? undefined,
+              isTieWinner: team2TieWinner
+            },
+            aggregateScore: aggScore
           };
         });
         
@@ -369,29 +457,58 @@ export default function CupMatMatchCenter() {
                             {/* O Tarihteki Maçlar */}
                             <div className="space-y-2">
                               {matchesByDate[dateStr].map(match => {
-                                const tieDecided = match.team1.isWinner || match.team2.isWinner;
+                                const tieDecided = match.isTieFinished;
+                                const isTeam1Advancing = tieDecided && match.team1.isTieWinner;
+                                const isTeam2Advancing = tieDecided && match.team2.isTieWinner;
+                                const isTeam1Eliminated = tieDecided && !match.team1.isTieWinner;
+                                const isTeam2Eliminated = tieDecided && !match.team2.isTieWinner;
+
                                 return (
                                 <div 
                                   key={match.id}
                                   onClick={() => setSelectedMatch(match)}
                                   className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-transparent hover:border-indigo-500/30"
                                 >
-                                  <div className={`flex items-center justify-end gap-2 text-right ${match.team1.isWinner ? 'text-white' : (tieDecided ? 'text-slate-400 opacity-60' : (match.status === 'FT' ? 'text-slate-300' : 'text-slate-200'))}`}>
+                                  {/* EV SAHİBİ TAKIM */}
+                                  <div className={`flex items-center justify-end gap-2 text-right transition-all ${
+                                    isTeam1Advancing
+                                      ? 'text-white'
+                                      : isTeam1Eliminated
+                                      ? 'text-slate-500 opacity-40'
+                                      : match.team1.isWinner
+                                      ? 'text-white'
+                                      : match.status === 'FT'
+                                      ? 'text-slate-300'
+                                      : 'text-slate-200'
+                                  }`}>
                                     <span className="text-[10px] sm:text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors hidden sm:inline-block">
                                       {match.team1.countryCode}
                                     </span>
-                                    <span className={`text-sm sm:text-base ${match.team1.isWinner ? 'font-black' : (tieDecided ? 'font-normal' : 'font-semibold')}`}>
+                                    <span className={`text-sm sm:text-base ${
+                                      isTeam1Advancing
+                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+                                        : isTeam1Eliminated
+                                        ? 'font-normal text-slate-500'
+                                        : match.team1.isWinner
+                                        ? 'font-black'
+                                        : 'font-semibold'
+                                    }`}>
                                       {match.team1.name}
                                     </span>
+                                    {isTeam1Advancing && (
+                                      <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
+                                        ✓
+                                      </span>
+                                    )}
                                   </div>
 
                                   {/* SKOR / SAAT */}
                                   <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
                                     {["FT", "AET", "PEN"].includes(match.status) ? (
                                       <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
-                                        <span className={`text-sm sm:text-lg tabular-nums ${match.team1.isWinner ? 'font-black text-indigo-400' : 'font-bold text-slate-300'}`}>{match.team1.score}</span>
+                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam1Advancing ? 'font-black text-emerald-400' : match.team1.isWinner ? 'font-black text-indigo-400' : 'font-bold text-slate-300'}`}>{match.team1.score}</span>
                                         <span className="text-slate-500">-</span>
-                                        <span className={`text-sm sm:text-lg tabular-nums ${match.team2.isWinner ? 'font-black text-indigo-400' : 'font-bold text-slate-300'}`}>{match.team2.score}</span>
+                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam2Advancing ? 'font-black text-emerald-400' : match.team2.isWinner ? 'font-black text-indigo-400' : 'font-bold text-slate-300'}`}>{match.team2.score}</span>
                                       </div>
                                     ) : (
                                       <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">
@@ -399,15 +516,39 @@ export default function CupMatMatchCenter() {
                                       </div>
                                     )}
                                     {/* Toplam Skor (Aggregate) */}
-                                    {match.aggregateScore && match.status === "FT" && (
-                                      <span className="text-[9px] sm:text-[10px] font-bold text-slate-500 mt-1">
-                                        ({match.aggregateScore.team1} - {match.aggregateScore.team2})
+                                    {match.aggregateScore && ["FT", "AET", "PEN"].includes(match.status) && (
+                                      <span className="text-[9px] sm:text-[10px] font-bold text-indigo-300 bg-indigo-950/80 border border-indigo-500/30 px-1.5 py-0.2 rounded mt-1 shadow-sm">
+                                        Top: {match.aggregateScore.team1} - {match.aggregateScore.team2}
                                       </span>
                                     )}
                                   </div>
 
-                                  <div className={`flex items-center justify-start gap-2 text-left ${match.team2.isWinner ? 'text-white' : (tieDecided ? 'text-slate-400 opacity-60' : (match.status === 'FT' ? 'text-slate-300' : 'text-slate-200'))}`}>
-                                    <span className={`text-sm sm:text-base ${match.team2.isWinner ? 'font-black' : (tieDecided ? 'font-normal' : 'font-semibold')}`}>
+                                  {/* DEPLASMAN TAKIM */}
+                                  <div className={`flex items-center justify-start gap-2 text-left transition-all ${
+                                    isTeam2Advancing
+                                      ? 'text-white'
+                                      : isTeam2Eliminated
+                                      ? 'text-slate-500 opacity-40'
+                                      : match.team2.isWinner
+                                      ? 'text-white'
+                                      : match.status === 'FT'
+                                      ? 'text-slate-300'
+                                      : 'text-slate-200'
+                                  }`}>
+                                    {isTeam2Advancing && (
+                                      <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
+                                        ✓
+                                      </span>
+                                    )}
+                                    <span className={`text-sm sm:text-base ${
+                                      isTeam2Advancing
+                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+                                        : isTeam2Eliminated
+                                        ? 'font-normal text-slate-500'
+                                        : match.team2.isWinner
+                                        ? 'font-black'
+                                        : 'font-semibold'
+                                    }`}>
                                       {match.team2.name}
                                     </span>
                                     <span className="text-[10px] sm:text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors hidden sm:inline-block">
@@ -465,9 +606,32 @@ export default function CupMatMatchCenter() {
 
                 <div className="flex items-center justify-between gap-4">
                   {/* Ev Sahibi Zoom */}
-                  <div className={`flex-1 flex flex-col items-center gap-2 ${selectedMatch.team1.isWinner ? 'text-white' : 'text-slate-400'}`}>
+                  <div className={`flex-1 flex flex-col items-center gap-2 transition-all ${
+                    selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner
+                      ? 'text-white'
+                      : selectedMatch.isTieFinished && !selectedMatch.team1.isTieWinner
+                      ? 'text-slate-500 opacity-40'
+                      : selectedMatch.team1.isWinner
+                      ? 'text-white'
+                      : 'text-slate-400'
+                  }`}>
                     <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">{selectedMatch.team1.countryCode}</span>
-                    <span className={`text-2xl sm:text-3xl ${selectedMatch.team1.isWinner ? 'font-black' : 'font-bold'}`}>{selectedMatch.team1.name}</span>
+                    <span className={`text-2xl sm:text-3xl ${
+                      selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner
+                        ? 'font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                        : selectedMatch.isTieFinished && !selectedMatch.team1.isTieWinner
+                        ? 'font-normal text-slate-500'
+                        : selectedMatch.team1.isWinner
+                        ? 'font-black'
+                        : 'font-bold'
+                    }`}>
+                      {selectedMatch.team1.name}
+                    </span>
+                    {selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner && (
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 mt-1 shadow-md">
+                        ✓ Turu Geçti
+                      </span>
+                    )}
                   </div>
 
                   {/* Dev Skor */}
@@ -485,9 +649,32 @@ export default function CupMatMatchCenter() {
                   </div>
 
                   {/* Deplasman Zoom */}
-                  <div className={`flex-1 flex flex-col items-center gap-2 ${selectedMatch.team2.isWinner ? 'text-white' : 'text-slate-400'}`}>
+                  <div className={`flex-1 flex flex-col items-center gap-2 transition-all ${
+                    selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner
+                      ? 'text-white'
+                      : selectedMatch.isTieFinished && !selectedMatch.team2.isTieWinner
+                      ? 'text-slate-500 opacity-40'
+                      : selectedMatch.team2.isWinner
+                      ? 'text-white'
+                      : 'text-slate-400'
+                  }`}>
                     <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">{selectedMatch.team2.countryCode}</span>
-                    <span className={`text-2xl sm:text-3xl ${selectedMatch.team2.isWinner ? 'font-black' : 'font-bold'}`}>{selectedMatch.team2.name}</span>
+                    <span className={`text-2xl sm:text-3xl ${
+                      selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner
+                        ? 'font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                        : selectedMatch.isTieFinished && !selectedMatch.team2.isTieWinner
+                        ? 'font-normal text-slate-500'
+                        : selectedMatch.team2.isWinner
+                        ? 'font-black'
+                        : 'font-bold'
+                    }`}>
+                      {selectedMatch.team2.name}
+                    </span>
+                    {selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner && (
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 mt-1 shadow-md">
+                        ✓ Turu Geçti
+                      </span>
+                    )}
                   </div>
                 </div>
 

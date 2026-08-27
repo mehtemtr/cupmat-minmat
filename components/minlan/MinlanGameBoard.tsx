@@ -482,14 +482,16 @@ export function MinlanGameBoard({
           {t.roundText} {roundLevel}
         </div>
 
-        {/* Pause Button */}
-        <button
-          onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
-          className="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-all cursor-pointer"
-          title={gameState === "paused" ? "Devam Et" : "Duraklat"}
-        >
-          {gameState === "paused" ? <Play className="w-4 h-4 text-emerald-400" /> : <Pause className="w-4 h-4 text-cyan-400" />}
-        </button>
+        {/* Pause Button (Only during game or pause) */}
+        {(gameState === "playing" || gameState === "paused") && (
+          <button
+            onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
+            className="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-all cursor-pointer"
+            title={gameState === "paused" ? t.resumeText : "Duraklat"}
+          >
+            {gameState === "paused" ? <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" /> : <Pause className="w-4 h-4 text-cyan-400" />}
+          </button>
+        )}
 
         {/* Hearts / Lives (Max 5 Hearts) */}
         <div className="flex items-center gap-1">
@@ -540,14 +542,20 @@ export function MinlanGameBoard({
           </button>
         </div>
       ) : gameState === "paused" ? (
-        <div className="py-16 text-center text-slate-400">
-          <Pause className="w-12 h-12 mx-auto mb-3 text-cyan-400 animate-pulse" />
-          <p className="text-lg font-bold text-white">{t.pausedTitle}</p>
+        <div className="py-16 text-center text-slate-400 bg-slate-950/70 border border-slate-800/80 rounded-3xl w-full max-w-sm mx-auto my-4 shadow-xl">
+          <div className="w-16 h-16 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto mb-4 shadow-xl shadow-cyan-500/10 animate-pulse">
+            <Pause className="w-8 h-8" />
+          </div>
+          <p className="text-lg font-black text-white mb-2">{t.pausedTitle}</p>
+          <p className="text-xs text-slate-400 max-w-xs mx-auto mb-6">
+            Oyun duraklatıldı. Kartlar gizlendi. Hazır olduğunda devam edebilirsin.
+          </p>
           <button
             onClick={() => setGameState("playing")}
-            className="mt-4 px-6 py-2.5 bg-cyan-500 text-slate-950 font-black rounded-xl cursor-pointer"
+            className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-2xl shadow-lg shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider transform hover:scale-105 active:scale-95 cursor-pointer inline-flex items-center gap-2"
           >
-            {t.resumeText}
+            <Play className="w-4 h-4 fill-slate-950" />
+            <span>{t.resumeText}</span>
           </button>
         </div>
       ) : loading ? (
