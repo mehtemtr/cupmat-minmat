@@ -318,6 +318,12 @@ export default function EntryPage() {
 
       const banners: string[] = [];
 
+      if (year === 2026 && month === 7) { // 7 = August (0-indexed)
+        if (date === 30) {
+          banners.push("30agustos");
+        }
+      }
+
       if (year === 2026 && month === 4) {
         if (date === 19) {
           banners.push("19mayis");
@@ -656,6 +662,67 @@ export default function EntryPage() {
                   </p>
                   <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
                     {locale === "tr" ? "— FATİH SULTAN MEHMET" : "— SULTAN MEHMED THE CONQUEROR"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
+        {activeBanners.includes("30agustos") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/30 bg-gradient-to-r from-red-950/30 via-[#060b14]/90 to-zinc-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(220,38,38,0.15)] transition duration-500 hover:border-red-500/50">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 via-amber-600 to-red-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[4/3] max-w-[420px] rounded-2xl overflow-hidden border border-red-500/30 shadow-[0_0_35px_rgba(239,68,68,0.3)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <picture>
+                    <source media="(max-width: 640px)" srcSet="/30-agustos-9x16.jpeg" />
+                    <img
+                      src="/30-agustos.jpeg"
+                      alt="30 Ağustos Zafer Bayramı"
+                      className="w-full h-full object-cover select-none pointer-events-none"
+                    />
+                  </picture>
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3.5 py-1 text-xs font-black text-red-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇹🇷 30 AĞUSTOS ZAFER BAYRAMI"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`30 Ağustos Zafer Bayramımız`}<br /><span className="text-red-500">{`Kutlu Olsun!` }</span></>
+                  ) : (
+                    <>{`Happy August 30`}<br /><span className="text-red-500">{`Victory Day!` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Büyük Taarruz'un 104. yılında; başta Gazi Mustafa Kemal Atatürk ve silah arkadaşları olmak üzere, bu toprakları bize vatan kılan tüm kahramanlarımızı saygı, rahmet ve minnetle anıyoruz."
+                  ) : (
+                    "On the 104th anniversary of the Great Offensive, we remember with respect, mercy, and gratitude all our heroes, especially Gazi Mustafa Kemal Atatürk and his comrades in arms."
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-amber-500/70 pl-4 py-2 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-amber-200 leading-snug">
+                    {locale === "tr" ? (
+                      "\"Zafer, 'Zafer benimdir' diyebilenindir. Başarı ise, 'Başaracağım' diye başlayarak sonunda 'Başardım' diyebilenindir.\""
+                    ) : (
+                      "\"Victory is for those who can say 'Victory is mine'. Success belongs to those who start saying 'I will succeed' and end up saying 'I succeeded'.\""
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— MUSTAFA KEMAL ATATÜRK"}
                   </span>
                 </div>
               </div>
