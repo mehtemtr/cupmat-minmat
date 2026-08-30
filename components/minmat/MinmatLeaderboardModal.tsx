@@ -46,16 +46,21 @@ export function MinmatLeaderboardModal({
             const mapped: MinmatLeaderboardScore[] = data.map((entry: any) => {
               const reverseMap: Record<string, MinmatMode> = {
                 topla: "add",
+                add: "add",
                 cikar: "sub",
+                sub: "sub",
                 carp: "mul",
+                mul: "mul",
                 bol: "div",
+                div: "div",
                 karisik: "mix",
+                mix: "mix",
               };
               return {
                 name: entry.nickname || entry.name || "Kullanıcı",
                 score: entry.high_score ?? entry.score ?? 0,
                 level: entry.level ?? (Math.floor((entry.high_score || 0) / 10)),
-                mode: reverseMap[entry.category] || "mix",
+                mode: reverseMap[entry.category] || (reverseMap[entry.mode] || "mix"),
                 date: new Date(entry.updated_at || Date.now()).toLocaleDateString("tr-TR", {
                   hour: "2-digit",
                   minute: "2-digit",

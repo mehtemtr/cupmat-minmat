@@ -9,12 +9,26 @@ export async function GET(request: Request) {
   try {
     console.log("=== [API GET] MinMat scores isteği alındı ===");
     const { searchParams } = new URL(request.url);
-    const filter = (searchParams.get("filter") || "hepsi") as Category;
-    console.log("[API GET] Filtre:", filter);
+    const rawParam = searchParams.get("filter") || searchParams.get("category") || searchParams.get("mode") || "hepsi";
+    console.log("[API GET] Gelen Parametre:", rawParam);
 
-    if (!CATEGORIES.includes(filter)) {
-      return NextResponse.json({ error: "Geçersiz kategori" }, { status: 400 });
-    }
+    const normalizeFilter: Record<string, Category> = {
+      all: "hepsi",
+      hepsi: "hepsi",
+      add: "topla",
+      topla: "topla",
+      sub: "cikar",
+      cikar: "cikar",
+      mul: "carp",
+      carp: "carp",
+      div: "bol",
+      bol: "bol",
+      mix: "karisik",
+      karisik: "karisik"
+    };
+
+    const filter: Category = normalizeFilter[rawParam.toLowerCase()] || "hepsi";
+    console.log("[API GET] Normalize Edilen Filtre:", filter);
 
     let query = supabaseAdmin.from("minmat_leaderboard").select("*");
     if (filter !== "hepsi") {
