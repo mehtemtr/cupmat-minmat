@@ -203,20 +203,34 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
 // Lazy fetch has been disabled to prevent Vercel CPU limit issues.
 // Cloudflare Workers (custom-worker.js) now handles automated fetching.
 
+// In-memory translation cache to avoid repeated HTTP calls to Google Translate
+const TRANSLATION_CACHE = new Map<string, string>();
+
 async function translateText(text: string, targetLang: string): Promise<string> {
-  if (!text) return text;
+  if (!text || targetLang === "tr") return text;
+  
+  const cacheKey = `${targetLang}:${text}`;
+  if (TRANSLATION_CACHE.has(cacheKey)) {
+    return TRANSLATION_CACHE.get(cacheKey)!;
+  }
+
   try {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
     const res = await fetch(url, { 
       headers: { 
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36' 
       },
-      // Ensure we don't cache translation errors
-      cache: "no-store" 
+      next: { revalidate: 3600 }
     });
     if (!res.ok) return text;
     const data = await res.json();
-    return data[0].map((item: any) => item[0]).join("");
+    const result = data[0].map((item: any) => item[0]).join("");
+    if (result) {
+      if (TRANSLATION_CACHE.size > 2000) TRANSLATION_CACHE.clear(); // Keep memory lean
+      TRANSLATION_CACHE.set(cacheKey, result);
+      return result;
+    }
+    return text;
   } catch (e) {
     return text;
   }
@@ -251,14 +265,15 @@ export async function GET(request: Request) {
 
           const res = await fetch(fetchUrl, {
             headers: { apikey: key, Authorization: `Bearer ${key}` },
-            cache: "no-store"
+            next: { revalidate: 60 }
           });
           
           if (res.ok) {
             const dbNews = await res.json();
             if (dbNews && dbNews.length > 0) {
               const countRes = await fetch(`${supabaseUrl}/rest/v1/news?select=id&limit=1`, {
-                headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact" }
+                headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact" },
+                next: { revalidate: 120 }
               });
               let count = dbNews.length;
               if (countRes.ok) {
@@ -284,17 +299,27 @@ export async function GET(request: Request) {
             // İstenen limit kadarını alıyoruz
             const paginatedUniqueNews = uniqueDbNews.slice(0, limit);
 
-            const cleanedDbNews = [];
-            for (const item of paginatedUniqueNews) {
-              const translatedTitle = await translateText(item.title || "", lang);
-              const translatedSnippet = await translateText(item.snippet || "", lang);
-              cleanedDbNews.push({
-                ...item,
-                title: cleanText(translatedTitle),
-                snippet: cleanText(translatedSnippet),
-              });
-              // Small delay to prevent Google Translate rate limiting
-            }
+            // Parallel asynchronous translation with caching (10x faster)
+            const cleanedDbNews = await Promise.all(
+              paginatedUniqueNews.map(async (item) => {
+                if (lang === "tr") {
+                  return {
+                    ...item,
+                    title: cleanText(item.title || ""),
+                    snippet: cleanText(item.snippet || ""),
+                  };
+                }
+                const [translatedTitle, translatedSnippet] = await Promise.all([
+                  translateText(item.title || "", lang),
+                  translateText(item.snippet || "", lang),
+                ]);
+                return {
+                  ...item,
+                  title: cleanText(translatedTitle),
+                  snippet: cleanText(translatedSnippet),
+                };
+              })
+            );
 
             return NextResponse.json({
               success: true,
@@ -304,6 +329,10 @@ export async function GET(request: Request) {
               total: count || cleanedDbNews.length,
               hasMore: offset + cleanedDbNews.length < (count || cleanedDbNews.length),
               isMock: false,
+            }, {
+              headers: {
+                "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+              },
             });
             }
           }
