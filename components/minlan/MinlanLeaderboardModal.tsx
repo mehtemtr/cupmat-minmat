@@ -115,8 +115,8 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="w-full bg-slate-900 text-amber-300 text-xs font-bold px-3 py-2 rounded-xl border border-amber-500/40 focus:border-amber-400 focus:outline-none"
             >
-              <option value="all">✨ Tüm Kategoriler</option>
-              {MOCK_MINLAN_CATEGORIES.map((c) => (
+              <option value="all">✨ Tüm Kategoriler (İlk 6 Kategori)</option>
+              {MOCK_MINLAN_CATEGORIES.filter((c, idx) => (c.display_order ? c.display_order <= 6 : idx < 6)).map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.icon} {c.name_tr}
                 </option>

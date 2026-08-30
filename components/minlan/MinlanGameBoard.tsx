@@ -264,12 +264,21 @@ export function MinlanGameBoard({
             setTimeout(() => setRewardToast(null), 2000);
           }
 
-          const basePoint = 100 + (roundLevel * 10);
-          const bonusScore = basePoint + newStreak * 20 + timeLeft * 5;
-          setScore((s) => s + bonusScore);
+          // Progressive Score Formula matching Minmat:
+          // 1. Kategori: 10 puan, 2. Kategori: 11 puan, 3. Kategori: 12 puan, 4. Kategori: 13 puan, 5. Kategori: 14 puan, 6. Kategori: 15 puan...
+          const currentCatIdx = categories.findIndex((c) => c.id === categoryId);
+          const categoryNumber = currentCatIdx >= 0 ? currentCatIdx + 1 : 1;
+          const baseScore = 9 + categoryNumber; // 1. kategori -> 10, 2. kategori -> 11, 3. kategori -> 12...
+
+          const matchPoints = (baseScore + (roundLevel - 1) + Math.max(newStreak - 1, 0)) * 5;
+          setScore((s) => s + matchPoints);
 
           if (newMatchedCount >= pairCount) {
-            onRecordProgress(pairCount, bonusScore * pairCount);
+            const completionBonus = 100 + (roundLevel - 1) * 50;
+            const timeBonus = timeLeft * 10;
+            setScore((s) => s + completionBonus + timeBonus);
+
+            onRecordProgress(pairCount, matchPoints * pairCount + completionBonus + timeBonus);
             setShowRoundSuccess(true);
 
             if (roundLevel >= 4) {

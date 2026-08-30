@@ -26,6 +26,8 @@ export async function GET(request: Request) {
       .order("created_at", { ascending: false })
       .limit(50);
 
+    const allowedCategoryIds = MOCK_MINLAN_CATEGORIES.slice(0, 6).map((c) => c.id);
+
     if (nativeLang !== "all") {
       query = query.eq("native_lang", nativeLang);
     }
@@ -33,7 +35,13 @@ export async function GET(request: Request) {
       query = query.eq("target_lang", targetLang);
     }
     if (categoryId !== "all") {
-      query = query.eq("category_id", categoryId);
+      if (allowedCategoryIds.includes(categoryId)) {
+        query = query.eq("category_id", categoryId);
+      } else {
+        query = query.eq("category_id", "none");
+      }
+    } else {
+      query = query.in("category_id", allowedCategoryIds);
     }
 
     const { data, error } = await query;
