@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-video-matematik",
+    category: "Science",
+    source: "YouTube",
+    link: "https://www.youtube.com/watch?v=C6epOnQk2gk",
+    published_at: new Date().toISOString(),
+    translations: {
+      tr: {
+        title: "Matematiğin Bir Şeyi Yok",
+        snippet: "StatMatik, hayatın ve verilerin arkasındaki mantığı eğlenceli ve vizyoner bir ekosisteme dönüştürüyor.",
+      },
+      en: {
+        title: "Math Has Nothing to Fear",
+        snippet: "StatMatik transforms the logic behind life and data into a fun and visionary ecosystem.",
+      },
+      de: {
+        title: "Mathematik ist keine Hexerei",
+        snippet: "StatMatik verwandelt die Logik hinter Leben und Daten in ein unterhaltsames und visionäres Ökosystem.",
+      },
+      fr: {
+        title: "Les Mathématiques n'ont Rien de Sorcier",
+        snippet: "StatMatik transforme la logique derrière la vie et les données en un écosystème amusant et visionnaire.",
+      },
+      es: {
+        title: "Las Matemáticas No Tienen Misterio",
+        snippet: "StatMatik transforma la lógica detrás de la vida y los datos en un ecosistema divertido y visionario.",
+      },
+      it: {
+        title: "La Matematica Non Ha Segreti",
+        snippet: "StatMatik trasforma la logica dietro la vita e i dati in un ecosistema divertente e visionario.",
+      },
+      pt: {
+        title: "A Matemática Não Tem Segredo",
+        snippet: "StatMatik transforma a lógica por trás da vida e dos dados em um ecossistema divertido e visionário.",
+      },
+      ar: {
+        title: "الرياضيات لا تعقيد فيها",
+        snippet: "يحول StatMatik المنطق الكامن وراء الحياة والبيانات إلى منظومة ممتعة ورؤيوية.",
+      },
+      ko: {
+        title: "수학은 두려울 것이 없습니다",
+        snippet: "StatMatik은 삶과 데이터 이면의 논리를 재미있고 비전 있는 생태계로 변환합니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-1",
     category: "Science",
     source: "NASA / Deep Space Mission",
