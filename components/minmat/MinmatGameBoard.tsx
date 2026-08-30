@@ -12,6 +12,21 @@ interface MinmatGameBoardProps {
   onOpenLeaderboard: () => void;
 }
 
+const MINMAT_MODE_SCORE_TABLE: Record<MinmatMode, {
+  basePoint: number;
+  roundMultiplier: number;
+  streakMultiplier: number;
+  timeMultiplier: number;
+  streakBonuses: Record<number, number>;
+  masterBonuses: Record<number, number>;
+}> = {
+  add: { basePoint: 110, roundMultiplier: 11, streakMultiplier: 21, timeMultiplier: 5, streakBonuses: { 4: 410, 7: 510, 9: 710 }, masterBonuses: { 4: 915, 7: 1120, 9: 1430 } },
+  sub: { basePoint: 130, roundMultiplier: 13, streakMultiplier: 23, timeMultiplier: 6, streakBonuses: { 4: 430, 7: 530, 9: 730 }, masterBonuses: { 4: 945, 7: 1160, 9: 1490 } },
+  mul: { basePoint: 150, roundMultiplier: 15, streakMultiplier: 25, timeMultiplier: 7, streakBonuses: { 4: 450, 7: 550, 9: 750 }, masterBonuses: { 4: 975, 7: 1200, 9: 1550 } },
+  div: { basePoint: 180, roundMultiplier: 19, streakMultiplier: 28, timeMultiplier: 8, streakBonuses: { 4: 470, 7: 570, 9: 770 }, masterBonuses: { 4: 1005, 7: 1240, 9: 1610 } },
+  mix: { basePoint: 210, roundMultiplier: 23, streakMultiplier: 30, timeMultiplier: 9, streakBonuses: { 4: 490, 7: 590, 9: 790 }, masterBonuses: { 4: 1035, 7: 1280, 9: 1670 } },
+};
+
 export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBoardProps) {
   const { getToken, userId } = useAuth();
   const { user } = useUser();
@@ -129,21 +144,24 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
         setCombo(newCombo);
         setWrongCount(0);
 
-        // Score calculation matching original exact formula
-        let baseScore = 10;
-        if (gameMode === "sub") baseScore = 11;
-        else if (gameMode === "mul") baseScore = 12;
-        else if (gameMode === "div") baseScore = 13;
-        else if (gameMode === "mix") baseScore = 15;
+        // Score calculation matching progressive 2-4-6-8-10 curve
+        const scoreConfig = MINMAT_MODE_SCORE_TABLE[gameMode] || MINMAT_MODE_SCORE_TABLE.add;
 
-        const matchPoints = (baseScore + (level - 1) + Math.max(newCombo - 1, 0)) * 5;
-        setScore((prev) => prev + matchPoints);
-
-        // Life recovery on combo 4, 7, 9
+        // Life recovery or point bonus on combo 4, 7, 9
         if (newCombo === 4 || newCombo === 7 || newCombo === 9) {
-          setLives((prev) => Math.min(5, prev + 1));
-          showToast("❤️ +1 Can Bonusu!");
+          const streakPoints = scoreConfig.streakBonuses[newCombo] || 500;
+          if (lives >= 5) {
+            setTimeLeft((tVal) => tVal + 5);
+            setScore((s) => s + streakPoints);
+            showToast(`🔥 Seri ${newCombo}: +5 Sn & +${streakPoints} Puan!`);
+          } else {
+            setLives((prev) => Math.min(5, prev + 1));
+            showToast("❤️ +1 Can Bonusu!");
+          }
         }
+
+        const matchPoints = scoreConfig.basePoint + (level * scoreConfig.roundMultiplier) + (newCombo * scoreConfig.streakMultiplier) + (timeLeft * scoreConfig.timeMultiplier);
+        setScore((prev) => prev + matchPoints);
 
         setTimeout(() => {
           setCards((prev) =>

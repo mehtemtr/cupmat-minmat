@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { LanguageCode, MinlanCard, SUPPORTED_LANGUAGES, MinlanCategory, MinlanCommunityStats } from "@/lib/minlan/types";
 import { getMinlanTranslation } from "@/lib/minlan/i18n";
-import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe, LogOut, BrainCircuit } from "lucide-react";
+import { Trophy, RotateCcw, CheckCircle2, Pause, Play, Heart, AlertTriangle, Flame, Home, Globe, LogOut, BrainCircuit, Share2, Sparkles } from "lucide-react";
 
 const ROUND_TIMER_TABLE: Record<number, number> = {
   1: 27, 2: 36, 3: 45, 4: 54, 5: 63,
@@ -88,6 +88,30 @@ export function MinlanGameBoard({
   const [loading, setLoading] = useState<boolean>(false);
   const [showRoundSuccess, setShowRoundSuccess] = useState<boolean>(false);
   const [rewardToast, setRewardToast] = useState<string | null>(null);
+  const [hasShareBoost, setHasShareBoost] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("minlan_share_boost") === "true";
+    }
+    return false;
+  });
+
+  const handleShare = () => {
+    const text = `MinLan - Dil Eşleştirme oyununda ${score} puan yaptım! Rekorumu geçebilir misin? 🏆`;
+    const url = typeof window !== "undefined" ? window.location.origin + "/minlan" : "https://statmatik.com/minlan";
+    if (navigator.share) {
+      navigator.share({ title: "MinLan", text, url }).then(() => {
+        setHasShareBoost(true);
+        if (typeof window !== "undefined") localStorage.setItem("minlan_share_boost", "true");
+        alert("Skor paylaşıldı! Bir sonraki oyununuzda %20 ekstra puan bonusu aktif! 🚀");
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(text + " " + url).then(() => {
+        setHasShareBoost(true);
+        if (typeof window !== "undefined") localStorage.setItem("minlan_share_boost", "true");
+        alert("Skor kopyalandı! Bir sonraki oyununuzda %20 ekstra puan bonusu aktif! 🚀");
+      });
+    }
+  };
 
   // Permanently unlocked category IDs stored in localStorage as a dictionary of language pairs
   const [unlockedCategoryDict, setUnlockedCategoryDict] = useState<Record<string, string[]>>(() => {
@@ -174,7 +198,8 @@ export function MinlanGameBoard({
           if (prev <= 1) {
             setGameState("game_over");
             if (score > 0) {
-              onRecordProgress(0, 0, score, roundLevel);
+              const finalScore = hasShareBoost ? Math.round(score * 1.20) : score;
+              onRecordProgress(0, 0, finalScore, roundLevel);
             }
             return 0;
           }
@@ -183,11 +208,12 @@ export function MinlanGameBoard({
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [gameState, timeLeft, score, onRecordProgress]);
+  }, [gameState, timeLeft, score, hasShareBoost, onRecordProgress]);
 
   const resetEntireGame = () => {
     if (score > 0 && gameState === "playing") {
-      onRecordProgress(0, 0, score, roundLevel);
+      const finalScore = hasShareBoost ? Math.round(score * 1.20) : score;
+      onRecordProgress(0, 0, finalScore, roundLevel);
     }
     setGameState("idle");
     setRoundLevel(1);
@@ -686,30 +712,40 @@ export function MinlanGameBoard({
             <p className="text-sm text-slate-400 mb-6">
               {t.roundText} {roundLevel}. {t.totalScoreText}: <span className="text-amber-400 font-bold">{score}</span>
             </p>
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full">
               <button
-                onClick={resetEntireGame}
-                className="w-full py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                onClick={handleShare}
+                className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black rounded-2xl border border-emerald-400/30 flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg shadow-emerald-500/20 text-sm"
               >
-                <RotateCcw className="w-5 h-5 text-cyan-400" />
-                <span>{t.playAgainText}</span>
+                <Share2 className="w-4 h-4 text-white" />
+                <span>Skoru Paylaş (+%20 Bonus)</span>
               </button>
 
-              <button
-                onClick={onOpenMistakes}
-                className="w-full py-4 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold rounded-2xl border border-purple-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all"
-              >
-                <BrainCircuit className="w-5 h-5 text-purple-400" />
-                <span>Hatalarım</span>
-              </button>
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+                <button
+                  onClick={resetEntireGame}
+                  className="w-full py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 flex items-center justify-center gap-2 cursor-pointer transition-all text-xs"
+                >
+                  <RotateCcw className="w-4 h-4 text-cyan-400" />
+                  <span>{t.playAgainText}</span>
+                </button>
 
-              <button
-                onClick={onOpenLeaderboard}
-                className="w-full py-4 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold rounded-2xl border border-amber-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all"
-              >
-                <Trophy className="w-5 h-5 text-amber-400" />
-                <span>{t.scoreTableText}</span>
-              </button>
+                <button
+                  onClick={onOpenMistakes}
+                  className="w-full py-3.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold rounded-2xl border border-purple-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all text-xs"
+                >
+                  <BrainCircuit className="w-4 h-4 text-purple-400" />
+                  <span>Hatalarım</span>
+                </button>
+
+                <button
+                  onClick={onOpenLeaderboard}
+                  className="w-full py-3.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold rounded-2xl border border-amber-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all text-xs"
+                >
+                  <Trophy className="w-4 h-4 text-amber-400" />
+                  <span>{t.scoreTableText}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
