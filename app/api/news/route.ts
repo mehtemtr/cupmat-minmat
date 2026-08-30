@@ -207,7 +207,7 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
 const TRANSLATION_CACHE = new Map<string, string>();
 
 async function translateText(text: string, targetLang: string): Promise<string> {
-  if (!text || targetLang === "tr") return text;
+  if (!text) return text;
   
   const cacheKey = `${targetLang}:${text}`;
   if (TRANSLATION_CACHE.has(cacheKey)) {
@@ -299,16 +299,9 @@ export async function GET(request: Request) {
             // İstenen limit kadarını alıyoruz
             const paginatedUniqueNews = uniqueDbNews.slice(0, limit);
 
-            // Parallel asynchronous translation with caching (10x faster)
+            // Parallel asynchronous translation with caching (super fast & translates international news)
             const cleanedDbNews = await Promise.all(
               paginatedUniqueNews.map(async (item) => {
-                if (lang === "tr") {
-                  return {
-                    ...item,
-                    title: cleanText(item.title || ""),
-                    snippet: cleanText(item.snippet || ""),
-                  };
-                }
                 const [translatedTitle, translatedSnippet] = await Promise.all([
                   translateText(item.title || "", lang),
                   translateText(item.snippet || "", lang),
