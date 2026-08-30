@@ -19,51 +19,6 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
-    id: "newsglo-statmatik-update",
-    category: "Technology",
-    source: "StatMatik Platform",
-    link: "/minmat",
-    published_at: new Date().toISOString(),
-    translations: {
-      tr: {
-        title: "StatMatik'ten Büyük Güncelleme: Oyunlarda Yeni Dönem Başladı!",
-        snippet: "MinMat ve MinLan büyük bir güncelleme aldı. Menüleri kaldıran yeni 'Tek Ekran' tasarımı ve ekranı aşağı kaydırmanıza gerek bırakmayan akıllı oyun tahtası ile oyunlar artık çok daha akıcı. Yenilenen dengelemelerle daha ileri turlara ulaşın ve yeni rekorlar kırın!"
-      },
-      en: {
-        title: "Major Update from StatMatik: A New Era in Games Begins!",
-        snippet: "MinMat and MinLan received a major update! With the new 'Single Screen' design bypassing menus and a smart board that eliminates the need to scroll down, gameplay is smoother than ever. Reach higher rounds and set new records!"
-      },
-      de: {
-        title: "Großes Update von StatMatik: Eine neue Ära beginnt!",
-        snippet: "MinMat und MinLan haben ein Update erhalten! Mit dem neuen 'Single Screen'-Design ohne Menüs und einem intelligenten Spielfeld, das lästiges Scrollen überflüssig macht, läuft das Spiel flüssiger denn je. Erreichen Sie höhere Runden!"
-      },
-      fr: {
-        title: "Mise à jour majeure de StatMatik : Une nouvelle ère commence !",
-        snippet: "MinMat et MinLan ont reçu une mise à jour ! Avec un design 'Écran Unique' sans menu et un plateau intelligent qui élimine le besoin de faire défiler l'écran, le jeu est plus fluide. Atteignez des niveaux supérieurs et battez des records !"
-      },
-      es: {
-        title: "Gran actualización de StatMatik: ¡Comienza una nueva era!",
-        snippet: "¡MinMat y MinLan han recibido una gran actualización! Con un diseño de 'Pantalla Única' sin menús y un tablero inteligente que elimina la necesidad de desplazarse hacia abajo, el juego es más fluido. ¡Alcanza rondas más altas y establece récords!"
-      },
-      pt: {
-        title: "Grande Atualização do StatMatik: Uma Nova Era Começa!",
-        snippet: "MinMat e MinLan receberam uma atualização! Com o novo design de 'Tela Única' sem menus e um tabuleiro inteligente que elimina a necessidade de rolar a página, a jogabilidade está mais fluida. Alcance rodadas mais altas e bata novos recordes!"
-      },
-      it: {
-        title: "Grande Aggiornamento da StatMatik: Inizia una Nuova Era!",
-        snippet: "MinMat e MinLan hanno ricevuto un aggiornamento! Con il nuovo design 'Schermo Singolo' senza menu e un tabellone intelligente che elimina la necessità di scorrere verso il basso, il gioco è più fluido. Raggiungi round più alti!"
-      },
-      ar: {
-        title: "تحديث كبير من StatMatik: حقبة جديدة في الألعاب تبدأ!",
-        snippet: "حصلت MinMat و MinLan على تحديث كبير! مع تصميم 'الشاشة الواحدة' الذي يتخطى القوائم ولوحة ذكية تلغي الحاجة إلى التمرير لأسفل، أصبحت اللعبة أكثر سلاسة. صل إلى جولات أعلى وحقق أرقاماً قياسية جديدة!"
-      },
-      ko: {
-        title: "StatMatik의 대규모 업데이트: 게임의 새로운 시대가 시작됩니다!",
-        snippet: "MinMat과 MinLan이 대대적으로 업데이트되었습니다! 메뉴를 생략한 '단일 화면' 디자인과 스크롤할 필요가 없는 스마트 보드 덕분에 게임 플레이가 훨씬 부드러워졌습니다. 더 높은 라운드에 도달하고 새로운 기록을 세우세요!"
-      }
-    }
-  },
-  {
     id: "newsglo-1",
     category: "Science",
     source: "NASA / Deep Space Mission",
@@ -294,24 +249,6 @@ export async function GET(request: Request) {
                 snippet: cleanText(translatedSnippet),
               });
               // Small delay to prevent Google Translate rate limiting
-            }
-
-            // INJECT STATMATIK UPDATE AT THE TOP (IF FIRST PAGE)
-            if (page === 1) {
-              const statMatikUpdate = MULTILINGUAL_NEWS_DATASET.find(n => n.id === "newsglo-statmatik-update");
-              if (statMatikUpdate) {
-                const smTrans = statMatikUpdate.translations[lang] || statMatikUpdate.translations["en"];
-                cleanedDbNews.unshift({
-                  id: statMatikUpdate.id,
-                  category: statMatikUpdate.category,
-                  source: statMatikUpdate.source,
-                  link: statMatikUpdate.link,
-                  published_at: statMatikUpdate.published_at,
-                  title: smTrans.title,
-                  snippet: smTrans.snippet,
-                  image_url: null,
-                });
-              }
             }
 
             return NextResponse.json({

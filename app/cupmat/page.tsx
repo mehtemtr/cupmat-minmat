@@ -168,6 +168,16 @@ export default function CupMatMatchCenter() {
             new Date(m.date).getTime() < new Date(m2.date).getTime()
           );
 
+          // Find if there is a later 2nd leg match with reversed home/away
+          const futureLeg = rawMatches.find((m) =>
+            m.tournament_id === m2.tournament_id &&
+            m.round === m2.round &&
+            m.team1.name === m2.team2.name &&
+            m.team2.name === m2.team1.name &&
+            new Date(m.date).getTime() > new Date(m2.date).getTime()
+          );
+
+          const isTwoLeggedTie = !!m1 || !!futureLeg;
           const isSecondLeg = !!m1;
           const firstLegTeam1Score = m1 ? m1.team2.score : m2.team1.firstLegScore;
           const firstLegTeam2Score = m1 ? m1.team1.score : m2.team2.firstLegScore;
@@ -185,6 +195,7 @@ export default function CupMatMatchCenter() {
           let team1TieWinner = false;
           let team2TieWinner = false;
 
+          // Only determine tie qualification on the 2nd leg when finished, OR on single-match knockout finals
           if (isSecondLeg && isMatchFinished && aggScore) {
             isTieFinished = true;
             if (aggScore.team1 > aggScore.team2) {
@@ -200,8 +211,8 @@ export default function CupMatMatchCenter() {
                 else if (m2.team2.score > m2.team1.score) team2TieWinner = true;
               }
             }
-          } else if (!isSecondLeg && isMatchFinished && (m2.round.toLowerCase().includes("final") || m2.team1.isWinner || m2.team2.isWinner)) {
-            // Single match knockout or final
+          } else if (!isTwoLeggedTie && isMatchFinished && (m2.round.toLowerCase().includes("final") || m2.round.toLowerCase().includes("super cup"))) {
+            // Single-match knockout final
             if (m2.team1.isWinner) {
               isTieFinished = true;
               team1TieWinner = true;
@@ -231,11 +242,13 @@ export default function CupMatMatchCenter() {
         
         setMatches(formattedMatches);
         
-        // Auto-expand the first available round of the active tournament
-        const activeMatches = formattedMatches.filter(m => m.tournament_api_id === activeTournament);
-        if (activeMatches.length > 0) {
-           setExpandedRounds({ [activeMatches[0].round]: true });
-        }
+        // Auto-expand all rounds by default so user sees every round & first leg matches immediately
+        const allRoundsMap: Record<string, boolean> = {};
+        formattedMatches.forEach(m => {
+          allRoundsMap[m.round] = true;
+          allRoundsMap[`${m.tournament_name} - ${m.round}`] = true;
+        });
+        setExpandedRounds(allRoundsMap);
       }
     } catch (err) {
       console.error(err);
@@ -475,23 +488,17 @@ export default function CupMatMatchCenter() {
                                       ? 'text-white'
                                       : isTeam1Eliminated
                                       ? 'text-slate-500 opacity-40'
-                                      : match.team1.isWinner
-                                      ? 'text-white'
-                                      : match.status === 'FT'
-                                      ? 'text-slate-300'
-                                      : 'text-slate-200'
+                                      : 'text-slate-100'
                                   }`}>
-                                    <span className="text-[10px] sm:text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors hidden sm:inline-block">
+                                    <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
                                       {match.team1.countryCode}
                                     </span>
                                     <span className={`text-sm sm:text-base ${
                                       isTeam1Advancing
-                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
                                         : isTeam1Eliminated
                                         ? 'font-normal text-slate-500'
-                                        : match.team1.isWinner
-                                        ? 'font-black'
-                                        : 'font-semibold'
+                                        : 'font-bold text-slate-100'
                                     }`}>
                                       {match.team1.name}
                                     </span>
@@ -506,9 +513,9 @@ export default function CupMatMatchCenter() {
                                   <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
                                     {["FT", "AET", "PEN"].includes(match.status) ? (
                                       <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
-                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam1Advancing ? 'font-black text-emerald-400' : match.team1.isWinner ? 'font-black text-indigo-400' : 'font-bold text-slate-300'}`}>{match.team1.score}</span>
+                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam1Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team1.score}</span>
                                         <span className="text-slate-500">-</span>
-                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam2Advancing ? 'font-black text-emerald-400' : match.team2.isWinner ? 'font-black text-indigo-400' : 'font-bold text-slate-300'}`}>{match.team2.score}</span>
+                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam2Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team2.score}</span>
                                       </div>
                                     ) : (
                                       <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">
@@ -529,11 +536,7 @@ export default function CupMatMatchCenter() {
                                       ? 'text-white'
                                       : isTeam2Eliminated
                                       ? 'text-slate-500 opacity-40'
-                                      : match.team2.isWinner
-                                      ? 'text-white'
-                                      : match.status === 'FT'
-                                      ? 'text-slate-300'
-                                      : 'text-slate-200'
+                                      : 'text-slate-100'
                                   }`}>
                                     {isTeam2Advancing && (
                                       <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
@@ -542,16 +545,14 @@ export default function CupMatMatchCenter() {
                                     )}
                                     <span className={`text-sm sm:text-base ${
                                       isTeam2Advancing
-                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
                                         : isTeam2Eliminated
                                         ? 'font-normal text-slate-500'
-                                        : match.team2.isWinner
-                                        ? 'font-black'
-                                        : 'font-semibold'
+                                        : 'font-bold text-slate-100'
                                     }`}>
                                       {match.team2.name}
                                     </span>
-                                    <span className="text-[10px] sm:text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors hidden sm:inline-block">
+                                    <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
                                       {match.team2.countryCode}
                                     </span>
                                   </div>
@@ -611,19 +612,15 @@ export default function CupMatMatchCenter() {
                       ? 'text-white'
                       : selectedMatch.isTieFinished && !selectedMatch.team1.isTieWinner
                       ? 'text-slate-500 opacity-40'
-                      : selectedMatch.team1.isWinner
-                      ? 'text-white'
-                      : 'text-slate-400'
+                      : 'text-slate-100'
                   }`}>
-                    <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">{selectedMatch.team1.countryCode}</span>
+                    <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">{selectedMatch.team1.countryCode}</span>
                     <span className={`text-2xl sm:text-3xl ${
                       selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner
                         ? 'font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                         : selectedMatch.isTieFinished && !selectedMatch.team1.isTieWinner
                         ? 'font-normal text-slate-500'
-                        : selectedMatch.team1.isWinner
-                        ? 'font-black'
-                        : 'font-bold'
+                        : 'font-bold text-slate-100'
                     }`}>
                       {selectedMatch.team1.name}
                     </span>
@@ -654,19 +651,15 @@ export default function CupMatMatchCenter() {
                       ? 'text-white'
                       : selectedMatch.isTieFinished && !selectedMatch.team2.isTieWinner
                       ? 'text-slate-500 opacity-40'
-                      : selectedMatch.team2.isWinner
-                      ? 'text-white'
-                      : 'text-slate-400'
+                      : 'text-slate-100'
                   }`}>
-                    <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">{selectedMatch.team2.countryCode}</span>
+                    <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">{selectedMatch.team2.countryCode}</span>
                     <span className={`text-2xl sm:text-3xl ${
                       selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner
                         ? 'font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                         : selectedMatch.isTieFinished && !selectedMatch.team2.isTieWinner
                         ? 'font-normal text-slate-500'
-                        : selectedMatch.team2.isWinner
-                        ? 'font-black'
-                        : 'font-bold'
+                        : 'font-bold text-slate-100'
                     }`}>
                       {selectedMatch.team2.name}
                     </span>

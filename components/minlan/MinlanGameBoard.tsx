@@ -463,60 +463,80 @@ export function MinlanGameBoard({
         </button>
       </div>
 
-      {/* 3. MinMat Exact Stats Row: Score, Timer, Round, Pause, Hearts, Mistakes, Combo */}
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 bg-slate-950/80 border border-slate-800 px-4 sm:px-6 py-3 rounded-2xl mb-5 w-full max-w-xl">
-        {/* Score */}
-        <div className="flex items-center gap-1.5 font-mono font-black text-amber-400 text-lg">
-          <span>⭐</span>
-          <span>{score}</span>
+      {/* 3. MinLan Stats Row: Left (Score, Round, Combo), Center (Timer), Right (Hearts, Mistakes, Pause) */}
+      <div className="flex items-center justify-between gap-2 sm:gap-4 bg-slate-950/80 border border-slate-800 px-3 sm:px-5 py-2.5 rounded-2xl mb-5 w-full max-w-xl">
+        {/* Left: Score & Round & Combo */}
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          {/* Score */}
+          <div className="flex items-center gap-1 font-mono font-black text-amber-400 text-base sm:text-lg">
+            <span>⭐</span>
+            <span>{score}</span>
+          </div>
+
+          {/* Round Level */}
+          <div className="text-xs sm:text-sm font-extrabold text-white whitespace-nowrap bg-slate-900/90 px-2 sm:px-2.5 py-1 rounded-xl border border-slate-800">
+            {t.roundText} {roundLevel}
+          </div>
+
+          {/* Combo Streak */}
+          {streak > 1 && (
+            <div className="hidden sm:flex items-center gap-1 text-xs font-bold text-orange-400 bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded-xl">
+              <Flame className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
+              <span>{streak}x</span>
+            </div>
+          )}
         </div>
 
-        {/* Timer */}
-        <div className="flex items-center gap-1.5 font-mono font-black text-cyan-300 text-lg">
-          <span>⏱️</span>
-          <span>{timeLeft}</span>
-        </div>
-
-        {/* Round Level */}
-        <div className="text-sm font-extrabold text-white">
-          {t.roundText} {roundLevel}
-        </div>
-
-        {/* Pause Button (Only during game or pause) */}
-        {(gameState === "playing" || gameState === "paused") && (
-          <button
-            onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
-            className="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-all cursor-pointer"
-            title={gameState === "paused" ? t.resumeText : "Duraklat"}
+        {/* Center: Timer (Highlighted in center) */}
+        <div className="flex items-center justify-center">
+          <div
+            className={`flex items-center gap-1.5 font-mono font-black text-base sm:text-lg px-3 py-1 rounded-xl border transition-all ${
+              timeLeft <= 5 && gameState === "playing"
+                ? "bg-rose-500/20 border-rose-500/50 text-rose-400 animate-pulse"
+                : "bg-slate-900/90 border-cyan-500/30 text-cyan-300 shadow-sm shadow-cyan-500/10"
+            }`}
           >
-            {gameState === "paused" ? <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" /> : <Pause className="w-4 h-4 text-cyan-400" />}
-          </button>
-        )}
-
-        {/* Hearts / Lives (Max 5 Hearts) */}
-        <div className="flex items-center gap-1">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Heart
-              key={i}
-              className={`w-4 h-4 transition-all ${
-                i < lives
-                  ? "text-rose-500 fill-rose-500 scale-100"
-                  : "text-slate-800 fill-slate-900 opacity-40"
-              }`}
-            />
-          ))}
+            <span>⏱️</span>
+            <span>{timeLeft}s</span>
+          </div>
         </div>
 
-        {/* Mistake Counter */}
-        <div className="flex items-center gap-1 text-xs font-bold text-amber-400">
-          <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-          <span>{mistakes}/3</span>
-        </div>
+        {/* Right: Hearts, Mistakes & Pause Button on the edge */}
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 justify-end">
+          {/* Hearts / Lives (Max 5 Hearts) */}
+          <div className="flex items-center gap-0.5 sm:gap-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Heart
+                key={i}
+                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-all ${
+                  i < lives
+                    ? "text-rose-500 fill-rose-500 scale-100"
+                    : "text-slate-800 fill-slate-900 opacity-40"
+                }`}
+              />
+            ))}
+          </div>
 
-        {/* Combo Streak */}
-        <div className="flex items-center gap-1 text-xs font-bold text-orange-400">
-          <Flame className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
-          <span>{streak}</span>
+          {/* Mistake Counter */}
+          <div className="hidden sm:flex items-center gap-1 text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded-lg">
+            <AlertTriangle className="w-3 h-3 text-amber-400" />
+            <span>{mistakes}/3</span>
+          </div>
+
+          {/* Pause Button (On the edge) */}
+          {(gameState === "playing" || gameState === "paused") && (
+            <button
+              onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
+              className="p-1.5 sm:p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl text-slate-300 transition-all cursor-pointer hover:border-cyan-500/40"
+              title={gameState === "paused" ? t.resumeText : "Duraklat"}
+            >
+              {gameState === "paused" ? (
+                <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" />
+              ) : (
+                <Pause className="w-4 h-4 text-cyan-400" />
+              )}
+            </button>
+          )}
         </div>
       </div>
 
