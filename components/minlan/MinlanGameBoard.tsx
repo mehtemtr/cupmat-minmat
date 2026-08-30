@@ -14,6 +14,26 @@ const ROUND_TIMER_TABLE: Record<number, number> = {
   21: 85, 22: 82, 23: 79, 24: 73, 25: 70
 };
 
+const MINLAN_CATEGORY_SCORE_TABLE: Record<number, {
+  basePoint: number;
+  roundMultiplier: number;
+  streakMultiplier: number;
+  timeMultiplier: number;
+  streakBonuses: Record<number, number>;
+  masterBonuses: Record<number, number>;
+}> = {
+  1: { basePoint: 100, roundMultiplier: 10, streakMultiplier: 20, timeMultiplier: 5, streakBonuses: { 4: 400, 7: 500, 9: 700 }, masterBonuses: { 4: 900, 7: 1100, 9: 1400 } },
+  2: { basePoint: 110, roundMultiplier: 11, streakMultiplier: 21, timeMultiplier: 5, streakBonuses: { 4: 410, 7: 510, 9: 710 }, masterBonuses: { 4: 915, 7: 1120, 9: 1430 } },
+  3: { basePoint: 120, roundMultiplier: 12, streakMultiplier: 22, timeMultiplier: 6, streakBonuses: { 4: 420, 7: 520, 9: 720 }, masterBonuses: { 4: 930, 7: 1140, 9: 1460 } },
+  4: { basePoint: 130, roundMultiplier: 13, streakMultiplier: 23, timeMultiplier: 6, streakBonuses: { 4: 430, 7: 530, 9: 730 }, masterBonuses: { 4: 945, 7: 1160, 9: 1490 } },
+  5: { basePoint: 140, roundMultiplier: 14, streakMultiplier: 24, timeMultiplier: 7, streakBonuses: { 4: 440, 7: 540, 9: 740 }, masterBonuses: { 4: 960, 7: 1180, 9: 1520 } },
+  6: { basePoint: 150, roundMultiplier: 15, streakMultiplier: 25, timeMultiplier: 7, streakBonuses: { 4: 450, 7: 550, 9: 750 }, masterBonuses: { 4: 975, 7: 1200, 9: 1550 } },
+  7: { basePoint: 165, roundMultiplier: 17, streakMultiplier: 27, timeMultiplier: 8, streakBonuses: { 4: 460, 7: 560, 9: 760 }, masterBonuses: { 4: 990, 7: 1220, 9: 1580 } },
+  8: { basePoint: 180, roundMultiplier: 19, streakMultiplier: 28, timeMultiplier: 8, streakBonuses: { 4: 470, 7: 570, 9: 770 }, masterBonuses: { 4: 1005, 7: 1240, 9: 1610 } },
+  9: { basePoint: 195, roundMultiplier: 21, streakMultiplier: 29, timeMultiplier: 9, streakBonuses: { 4: 480, 7: 580, 9: 780 }, masterBonuses: { 4: 1020, 7: 1260, 9: 1640 } },
+  10: { basePoint: 210, roundMultiplier: 23, streakMultiplier: 30, timeMultiplier: 9, streakBonuses: { 4: 490, 7: 590, 9: 790 }, masterBonuses: { 4: 1035, 7: 1280, 9: 1670 } },
+};
+
 function getTimerSecondsForRound(round: number): number {
   if (ROUND_TIMER_TABLE[round]) {
     return ROUND_TIMER_TABLE[round];
@@ -222,6 +242,10 @@ export function MinlanGameBoard({
           const newTotalMatches = totalLifetimeMatches + 1;
           setTotalLifetimeMatches(newTotalMatches);
 
+          const currentCatIdx = categories.findIndex((c) => c.id === categoryId);
+          const categoryNumber = currentCatIdx >= 0 ? currentCatIdx + 1 : 1;
+          const scoreConfig = MINLAN_CATEGORY_SCORE_TABLE[categoryNumber] || MINLAN_CATEGORY_SCORE_TABLE[1];
+
           if (newTotalMatches >= nextBonusTarget) {
             let nextGap = 50;
             if (bonusLevel === 1) nextGap = 30;
@@ -232,11 +256,12 @@ export function MinlanGameBoard({
             setNextBonusTarget(nextBonusTarget + nextGap);
             setBonusLevel((prev) => prev + 1);
 
+            const masterPoints = scoreConfig.masterBonuses[9] || 1000;
             setLives((currLives) => {
               if (currLives >= 5) {
                 setTimeLeft((tVal) => tVal + 10);
-                setScore((s) => s + 1000);
-                setRewardToast("Usta Bonusu: +10 Saniye & +1000 Puan! 🎁");
+                setScore((s) => s + masterPoints);
+                setRewardToast(`Usta Bonusu: +10 Saniye & +${masterPoints} Puan! 🎁`);
                 return 5;
               } else {
                 setRewardToast("Usta Bonusu: +1 Can! ❤️");
@@ -246,15 +271,16 @@ export function MinlanGameBoard({
             setTimeout(() => setRewardToast(null), 3000);
           }
 
-          // MinMat Consecutive Match Streak Life Reward Rule:
+          // MinMat / MinLan Consecutive Match Streak Life Reward Rule:
           // 4, 7, 9 consecutive matches give +1 Life (max 5)
-          // If already 5/5 max lives -> Give +5s Time Bonus & +500 Points Score Bonus!
+          // If already 5/5 max lives -> Give +5s Time Bonus & Category Streak Score Bonus!
           if (newStreak === 4 || newStreak === 7 || newStreak === 9) {
+            const streakPoints = scoreConfig.streakBonuses[newStreak] || 500;
             setLives((currLives) => {
               if (currLives >= 5) {
                 setTimeLeft((tVal) => tVal + 5);
-                setScore((s) => s + 500);
-                setRewardToast(t.maxLifeReward);
+                setScore((s) => s + streakPoints);
+                setRewardToast(`Seri ${newStreak} Bonusu: +5 Sn & +${streakPoints} Puan! 🔥`);
                 return 5;
               } else {
                 setRewardToast(t.streakLifeReward.replace("{streak}", String(newStreak)));
@@ -264,21 +290,13 @@ export function MinlanGameBoard({
             setTimeout(() => setRewardToast(null), 2000);
           }
 
-          // Progressive Score Formula matching Minmat:
-          // 1. Kategori: 10 puan, 2. Kategori: 11 puan, 3. Kategori: 12 puan, 4. Kategori: 13 puan, 5. Kategori: 14 puan, 6. Kategori: 15 puan...
-          const currentCatIdx = categories.findIndex((c) => c.id === categoryId);
-          const categoryNumber = currentCatIdx >= 0 ? currentCatIdx + 1 : 1;
-          const baseScore = 9 + categoryNumber; // 1. kategori -> 10, 2. kategori -> 11, 3. kategori -> 12...
-
-          const matchPoints = (baseScore + (roundLevel - 1) + Math.max(newStreak - 1, 0)) * 5;
+          // Exact Category-Progressive Scoring Formula:
+          // Taban Puan + (Tur × Tur Katsayısı) + (Seri × Seri Katsayısı) + (Kalan Süre × Süre Katsayısı)
+          const matchPoints = scoreConfig.basePoint + (roundLevel * scoreConfig.roundMultiplier) + (newStreak * scoreConfig.streakMultiplier) + (timeLeft * scoreConfig.timeMultiplier);
           setScore((s) => s + matchPoints);
 
           if (newMatchedCount >= pairCount) {
-            const completionBonus = 100 + (roundLevel - 1) * 50;
-            const timeBonus = timeLeft * 10;
-            setScore((s) => s + completionBonus + timeBonus);
-
-            onRecordProgress(pairCount, matchPoints * pairCount + completionBonus + timeBonus);
+            onRecordProgress(pairCount, matchPoints * pairCount);
             setShowRoundSuccess(true);
 
             if (roundLevel >= 4) {
