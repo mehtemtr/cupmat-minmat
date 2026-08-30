@@ -120,8 +120,8 @@ export default function CupMatMatchCenter() {
           let cleanRound = item.round || 'Normal Sezon';
           cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
 
-          const homeCountry = item.home_team_country_code === "TBD" ? "" : (item.home_team_country_code || "");
-          const awayCountry = item.away_team_country_code === "TBD" ? "" : (item.away_team_country_code || "");
+          const homeCountry = (!item.home_team_country_code || item.home_team_country_code === "TBD" || item.home_team_country_code === "UNK") ? "" : item.home_team_country_code;
+          const awayCountry = (!item.away_team_country_code || item.away_team_country_code === "TBD" || item.away_team_country_code === "UNK") ? "" : item.away_team_country_code;
 
           return {
             id: item.id,

@@ -59,7 +59,7 @@ function getTeamCountryCode(teamName: string): string {
     "Braga": "POR", "Benfica": "POR", "Porto": "POR",
     "Molde": "NOR", "Lugano": "İSV", "Kralove": "ÇEK"
   };
-  return dict[teamName] || "UNK";
+  return dict[teamName] || "";
 }
 
 export async function fetchAndStoreDailyMatches(dateStr?: string) {
