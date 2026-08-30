@@ -44,6 +44,112 @@ const TOURNAMENTS = {
   ]
 };
 
+const TEAM_COUNTRIES: Record<string, string> = {
+  // Türkiye
+  'Fenerbahçe': 'TÜR', 'Beşiktaş': 'TÜR', 'Galatasaray': 'TÜR', 'Trabzonspor': 'TÜR', 'Başakşehir': 'TÜR',
+  // İskoçya
+  'Celtic': 'İSK', 'Rangers': 'İSK', 'Hearts': 'İSK', 'Heart Of Midlothian': 'İSK', 'Kilmarnock': 'İSK', 'St. Mirren': 'İSK',
+  // Avusturya
+  'Lask Linz': 'AVU', 'LASK': 'AVU', 'Red Bull Salzburg': 'AVU', 'Salzburg': 'AVU', 'Sturm Graz': 'AVU', 'Rapid Wien': 'AVU', 'Rapid Vienna': 'AVU', 'Austria Wien': 'AVU', 'Austria Vienna': 'AVU',
+  // Hollanda
+  'NEC Nijmegen': 'HOL', 'Ajax': 'HOL', 'PSV': 'HOL', 'Feyenoord': 'HOL', 'Twente': 'HOL', 'AZ Alkmaar': 'HOL', 'Go Ahead Eagles': 'HOL',
+  // Norveç
+  'Bodo/Glimt': 'NOR', 'Bodø/Glimt': 'NOR', 'Viking': 'NOR', 'Brann': 'NOR', 'Molde': 'NOR', 'Tromsö': 'NOR', 'Tromso': 'NOR', 'Lillestrom': 'NOR',
+  // İsrail
+  'Hapoel Beer Sheva': 'İSR', 'HB Sheva': 'İSR', 'Maccabi Tel Aviv': 'İSR', 'M. Tel Aviv': 'İSR', 'Maccabi Haifa': 'İSR', 'Beitar': 'İSR', 'Hapoel Jerusalem': 'İSR',
+  // Azerbaycan
+  'Sabah FA': 'AZE', 'Sabah': 'AZE', 'Karabağ': 'AZE', 'Qarabag': 'AZE', 'Neftçi PFK': 'AZE', 'Neftchi': 'AZE', 'Zira': 'AZE', 'Sumqayit': 'AZE',
+  // Slovakya
+  'Slovan Bratislava': 'SVK', 'S. Bratislava': 'SVK', 'Spartak Trnava': 'SVK', 'S. Trnava': 'SVK', 'DAC Dunajska Streda': 'SVK', 'Dunajska S.': 'SVK', 'MSK Zilina': 'SVK', 'Ruzomberok': 'SVK',
+  // Slovenya
+  'Celje': 'SVN', 'NK Celje': 'SVN', 'Maribor': 'SVN', 'Olimpija': 'SVN', 'Bravo': 'SVN', 'Aluminij': 'SVN',
+  // Fransa
+  'Lyon': 'FRA', 'PSG': 'FRA', 'Lille': 'FRA', 'Monaco': 'FRA', 'Marseille': 'FRA', 'Nice': 'FRA', 'Lens': 'FRA', 'Rennes': 'FRA', 'Brest': 'FRA',
+  // Yunanistan
+  'AEK Athens FC': 'YUN', 'AEK Athens': 'YUN', 'Olympiakos': 'YUN', 'PAOK': 'YUN', 'Panathinaikos': 'YUN', 'Aris': 'YUN', 'OFI': 'YUN',
+  // Bulgaristan
+  'Levski Sofia': 'BUL', 'Levski Sofya': 'BUL', 'Ludogorets': 'BUL', 'CSKA Sofia': 'BUL', 'CSKA Sofya': 'BUL', 'CSKA 1948': 'BUL', 'Botev Plovdiv': 'BUL', 'Cherno More': 'BUL',
+  // Hırvatistan
+  'Dinamo Zagreb': 'HIR', 'D. Zagreb': 'HIR', 'Hajduk Split': 'HIR', 'Rijeka': 'HIR', 'Osijek': 'HIR',
+  // Çekya
+  'Sparta Prag': 'ÇEK', 'Slavia Prag': 'ÇEK', 'Viktoria Plzen': 'ÇEK', 'Plzen': 'ÇEK', 'Mlada Boleslav': 'ÇEK', 'H. Kralove': 'ÇEK', 'Banik Ostrava': 'ÇEK',
+  // Polonya
+  'Jagiellonia': 'POL', 'J. Bialystok': 'POL', 'Lech Poznan': 'POL', 'Legia Varşova': 'POL', 'Legia': 'POL', 'Slask Wroclaw': 'POL', 'Gornik Zabrze': 'POL', 'Wisla Krakow': 'POL',
+  // İsviçre
+  'Young Boys': 'İSV', 'Servette': 'İSV', 'Lugano': 'İSV', 'FC Lugano': 'İSV', 'St. Gallen': 'İSV', 'Thun': 'İSV', 'FC Thun': 'İSV', 'Zurich': 'İSV',
+  // Belçika
+  'Club Brugge': 'BEL', 'Union SG': 'BEL', 'Anderlecht': 'BEL', 'Gent': 'BEL', 'Cercle Brugge': 'BEL', 'Antwerp': 'BEL', 'Genk': 'BEL', 'St. Truiden': 'BEL',
+  // Portekiz
+  'Sporting CP': 'POR', 'Benfica': 'POR', 'Porto': 'POR', 'Braga': 'POR', 'Vitoria Guimaraes': 'POR', 'Santa Clara': 'POR',
+  // İspanya
+  'Real Madrid': 'İSP', 'Barcelona': 'İSP', 'Atlético Madrid': 'İSP', 'Real Sociedad': 'İSP', 'Athletic Bilbao': 'İSP', 'Girona': 'İSP', 'Real Betis': 'İSP', 'Sevilla': 'İSP', 'Villarreal': 'İSP',
+  // İngiltere
+  'Man City': 'İNG', 'Arsenal': 'İNG', 'Liverpool': 'İNG', 'Aston Villa': 'İNG', 'Tottenham': 'İNG', 'Chelsea': 'İNG', 'Man United': 'İNG', 'Newcastle': 'İNG', 'West Ham': 'İNG',
+  // Almanya
+  'Bayer Leverkusen': 'ALM', 'Bayern Munich': 'ALM', 'Stuttgart': 'ALM', 'RB Leipzig': 'ALM', 'Borussia Dortmund': 'ALM', 'Eintracht Frankfurt': 'ALM', 'Hoffenheim': 'ALM', 'Heidenheim': 'ALM',
+  // İtalya
+  'Inter': 'İTA', 'Inter Milan': 'İTA', 'AC Milan': 'İTA', 'Juventus': 'İTA', 'Atalanta': 'İTA', 'Bologna': 'İTA', 'Roma': 'İTA', 'Lazio': 'İTA', 'Napoli': 'İTA', 'Fiorentina': 'İTA',
+  // Danimarka
+  'FC Midtjylland': 'DAN', 'Midtjylland': 'DAN', 'Brondby': 'DAN', 'FC Copenhagen': 'DAN', 'Kopenhag': 'DAN', 'FC Nordsjaelland': 'DAN', 'Silkeborg': 'DAN', 'Aarhus': 'DAN',
+  // İsveç
+  'Malmö FF': 'İSVE', 'Malmo': 'İSVE', 'Elfsborg': 'İSVE', 'BK Häcken': 'İSVE', 'Hacken': 'İSVE', 'Djurgarden': 'İSVE', 'Hammarby': 'İSVE', 'Mjallby': 'İSVE', 'Mjallby AIF': 'İSVE', 'Göteborg': 'İSVE',
+  // Sırbistan
+  'Kızılyıldız': 'SIR', 'FK Crvena Zvezda': 'SIR', 'Partizan': 'SIR', 'FK Vojvodina': 'SIR', 'TSC Backa Topola': 'SIR', 'Radnicki 1923': 'SIR',
+  // Romanya
+  'FCSB': 'ROM', 'CFR Cluj': 'ROM', 'Univ. Craiova': 'ROM', 'Universitatea Craiova': 'ROM', 'U. Cluj': 'ROM', 'Corvinul Hunedoara': 'ROM',
+  // Macaristan
+  'Ferencvaros': 'MAC', 'Ferencvarosi TC': 'MAC', 'Paks': 'MAC', 'Fehervar': 'MAC', 'Puskas Akademia': 'MAC', 'Gyor': 'MAC',
+  // Ukrayna
+  'Shakhtar Donetsk': 'UKR', 'Dinamo Kiev': 'UKR', 'Kryvbas': 'UKR', 'Dnipro-1': 'UKR', 'Polissya': 'UKR', 'Polessya': 'UKR',
+  // Kıbrıs Rum Kesimi
+  'APOEL': 'KIB', 'AEK Larnaca': 'KIB', 'Omonia': 'KIB', 'Omonia Nicosia': 'KIB', 'Pafos': 'KIB', 'Apollon L.': 'KIB', 'Aris Limassol': 'KIB',
+  // Gürcistan
+  'Dinamo Batumi': 'GÜR', 'Dinamo Tiflis': 'GÜR', 'FC Iberia 1999': 'GÜR', 'Iberia': 'GÜR', 'Torpedo Kutaisi': 'GÜR', 'Dila Gori': 'GÜR',
+  // Kazakistan
+  'Ordabasy': 'KAZ', 'Astana': 'KAZ', 'Aktobe': 'KAZ', 'Tobol': 'KAZ', 'Kairat Almaty': 'KAZ', 'K. Almaty': 'KAZ',
+  // Arnavutluk
+  'Egnatia': 'ARN', 'Egnatia Rrogozhinë': 'ARN', 'Partizani': 'ARN', 'Vllaznia': 'ARN', 'KF Vllaznia': 'ARN', 'Skenderbeu': 'ARN', 'Dinamo Tirana': 'ARN', 'AF Elbasani': 'ARN',
+  // Bosna Hersek
+  'Borac Banja Luka': 'BOS', 'Banja Luka': 'BOS', 'Zrinjski': 'BOS', 'Velez Mostar': 'BOS', 'Sarajevo': 'BOS',
+  // Kosova
+  'Ballkani': 'KOS', 'Llapi': 'KOS', 'Drita': 'KOS', 'Malisheva': 'KOS', 'Dukagjini': 'KOS',
+  // Ermenistan
+  'Pyunik': 'ERM', 'Noah': 'ERM', 'Ararat-Armenia': 'ERM', 'Urartu': 'ERM', 'Alashkert': 'ERM',
+  // İrlanda / Kuzey İrlanda
+  'Shamrock Rovers': 'İRL', 'Shamrock R.': 'İRL', 'Derry City': 'İRL', 'Shelbourne': 'İRL', 'St Patrick\'s': 'İRL', 'Larne': 'K.İR', 'Linfield': 'K.İR', 'Cliftonville': 'K.İR', 'Crusaders': 'K.İR', 'Coleraine': 'K.İR',
+  // Galler
+  'The New Saints': 'GAL', 'Connah\'s': 'GAL', 'Bala Town': 'GAL', 'Caernarfon': 'GAL',
+  // Finlandiya
+  'HJK Helsinki': 'FİN', 'KuPS': 'FİN', 'Kuopion': 'FİN', 'Ilves': 'FİN', 'VPS': 'FİN', 'SJK': 'FİN',
+  // İzlanda
+  'Vikingur Reykjavik': 'İZL', 'Vikingur R.': 'İZL', 'Valur': 'İZL', 'Stjarnan': 'İZL', 'Breidablik': 'İZL', 'KR Reykjavik': 'İZL', 'IF Vestri': 'İZL',
+  // Lüksemburg / Malta / Andorra / San Marino / Faroe / Cebelitarık / Moldova / Estonya / Letonya / Litvanya
+  'Differdange': 'LÜK', 'F91 Dudelange': 'LÜK', 'Progres Niederkorn': 'LÜK', 'Strassen': 'LÜK', 'Atert': 'LÜK',
+  'Hamrun Spartans': 'MLT', 'Floriana': 'MLT', 'Sliema Wanderers': 'MLT', 'Marsaxlokk': 'MLT',
+  'UE Santa Coloma': 'AND', 'Inter Club d\'Escaldes': 'AND', 'Inter Escaldes': 'AND', 'AC Escaldes': 'AND',
+  'Virtus': 'SMR', 'La Fiorita': 'SMR', 'Tre Penne': 'SMR', 'Tre Fiori': 'SMR',
+  'KI Klaksvik': 'FAR', 'Klaksvik': 'FAR', 'HB Torshavn': 'FAR', 'B36 Torshavn': 'FAR', 'Vikingur Gota': 'FAR',
+  'Lincoln Red Imps': 'CEB', 'Lincoln Red': 'CEB', 'St Joseph\'s': 'CEB', 'Bruno\'s Magpies': 'CEB', 'Europa FC': 'CEB',
+  'Sheriff Tiraspol': 'MOL', 'Sheriff': 'MOL', 'Petrocub': 'MOL', 'Milsami': 'MOL', 'Zimbru': 'MOL',
+  'Flora Tallinn': 'EST', 'Flora T.': 'EST', 'Levadia': 'EST', 'Paide Linnameeskond': 'EST', 'Paide Flora': 'EST', 'Nomme Kalju': 'EST',
+  'RFS': 'LET', 'Riga FC': 'LET', 'Riga': 'LET', 'FK Auda': 'LET', 'Liepaja': 'LET', 'FK Liepaja': 'LET', 'FK Jelgava': 'LET',
+  'FK Panevezys': 'LİT', 'Zalgiris': 'LİT', 'Kauno Zalgiris': 'LİT', 'Kauno Žalgiris': 'LİT', 'Hegelmann': 'LİT', 'FA Siauliai': 'LİT',
+  'Dinamo Minsk': 'BLR', 'BATE Borisov': 'BLR', 'Torpedo-BelAZ': 'BLR', 'Neman Grodno': 'BLR', 'ML Rogachev': 'BLR',
+  'FK Decic': 'KRD', 'Buducnost': 'KRD', 'Mornar': 'KRD', 'Sutjeska': 'KRD',
+  'Struga': 'K.MK', 'Shkendija': 'K.MK', 'Tikves': 'K.MK', 'Vardar': 'K.MK',
+  // Güney Amerika
+  'Boca Juniors': 'ARG', 'River Plate': 'ARG', 'Estudiantes': 'ARG', 'Estudiantes L.P.': 'ARG', 'Rosario C.': 'ARG', 'Rosario Central': 'ARG', 'Argentinos Jr.': 'ARG', 'Atl Lanus': 'ARG', 'Platense': 'ARG', 'Ind. Mendoza': 'ARG', 'Tigre': 'ARG',
+  'Flamengo': 'BRA', 'Palmeiras': 'BRA', 'Corinthians': 'BRA', 'Fluminense': 'BRA', 'Botafogo': 'BRA', 'Botafogo RJ': 'BRA', 'Cruzeiro': 'BRA', 'Cruzeiro MG': 'BRA', 'Atletico-MG': 'BRA', 'Bahia BA': 'BRA', 'Mirassol SP': 'BRA', 'Santos': 'BRA', 'Vasco DA Gama': 'BRA', 'Vitoria': 'BRA', 'RB Bragantino': 'BRA', 'Internacional': 'BRA', 'Gremio': 'BRA',
+  'Bolivar': 'BOL', 'Bolívar': 'BOL', 'The Strongest': 'BOL', 'Always Ready': 'BOL', 'Nacional Potosi': 'BOL',
+  'Colo Colo': 'ŞİL', 'Coquimbo U.': 'ŞİL', 'Coquimbo Unido': 'ŞİL', 'Huachipato': 'ŞİL', 'O\'Higgins': 'ŞİL', 'Palestino': 'ŞİL',
+  'Medellin': 'KOL', 'Santa Fe': 'KOL', 'Dep. Tolima': 'KOL', 'Deportes Tolima': 'KOL', 'Atl. Junior': 'KOL',
+  'LDU Quito': 'EKV', 'Ind. del Valle': 'EKV', 'Independiente del Valle': 'EKV', 'Barcelona SC': 'EKV', 'U. Catolica': 'EKV', 'Uni. Catolica': 'EKV',
+  'Cerro Porteno': 'PAR', 'Libertad': 'PAR', 'Club Guarani': 'PAR', 'CS 2 de Mayo': 'PAR', 'Olimpia': 'PAR',
+  'Alianza Lima': 'PER', 'U. Deportes': 'PER', 'S. Cristal': 'PER', 'Cusco': 'PER', 'Cienciano': 'PER',
+  'Nacional': 'URU', 'CA Penarol': 'URU', 'Liverpool M.': 'URU', 'CA Juventud': 'URU', 'Atletico Torque': 'URU',
+  'Dep. Tachira': 'VEN', 'Carabobo': 'VEN', 'Dep. La Guaira': 'VEN', 'UCV': 'VEN'
+};
+
 type MatchType = {
   id: string;
   api_id: number;
@@ -120,8 +226,12 @@ export default function CupMatMatchCenter() {
           let cleanRound = item.round || 'Normal Sezon';
           cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
 
-          const homeCountry = (!item.home_team_country_code || item.home_team_country_code === "TBD" || item.home_team_country_code === "UNK") ? "" : item.home_team_country_code;
-          const awayCountry = (!item.away_team_country_code || item.away_team_country_code === "TBD" || item.away_team_country_code === "UNK") ? "" : item.away_team_country_code;
+          const homeCountry = (item.home_team_country_code && item.home_team_country_code !== "TBD" && item.home_team_country_code !== "UNK")
+            ? item.home_team_country_code 
+            : (TEAM_COUNTRIES[item.home_team_name] || "");
+          const awayCountry = (item.away_team_country_code && item.away_team_country_code !== "TBD" && item.away_team_country_code !== "UNK")
+            ? item.away_team_country_code 
+            : (TEAM_COUNTRIES[item.away_team_name] || "");
 
           return {
             id: item.id,
