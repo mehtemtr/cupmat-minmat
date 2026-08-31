@@ -3,7 +3,7 @@
     {
       "id": "cat-1",
       "slug": "gunluk-yasam",
-      "name_tr": "Günlük Yaşam",
+      "name_tr": "Günlük Yaşam & Ev",
       "name_en": "Daily Life",
       "name_de": "Alltag & Leben",
       "name_fr": "Vie Quotidienne",
@@ -21,7 +21,7 @@
     {
       "id": "cat-2",
       "slug": "yiyecek",
-      "name_tr": "Yiyecek",
+      "name_tr": "Yiyecek & İçecek",
       "name_en": "Food & Drinks",
       "name_de": "Essen & Trinken",
       "name_fr": "Nourriture",
@@ -30,7 +30,7 @@
       "name_pt": "Comida e Bebidas",
       "name_ar": "الطعام والشراب",
       "name_ko": "음식과 음료",
-      "icon": "🍎",
+      "icon": "🍽️",
       "tier": 1,
       "unlock_requirement_level": 2,
       "display_order": 2,
@@ -39,7 +39,7 @@
     {
       "id": "cat-3",
       "slug": "seyahat",
-      "name_tr": "Seyahat",
+      "name_tr": "Seyahat & Doğa",
       "name_en": "Travel & Nature",
       "name_de": "Reisen & Natur",
       "name_fr": "Voyages & Nature",
@@ -57,7 +57,7 @@
     {
       "id": "cat-4",
       "slug": "saglik",
-      "name_tr": "Sağlık",
+      "name_tr": "Sağlık & Vücut",
       "name_en": "Health & Body",
       "name_de": "Gesundheit & Körper",
       "name_fr": "Santé & Corps",
@@ -75,7 +75,7 @@
     {
       "id": "cat-5",
       "slug": "meslek",
-      "name_tr": "Meslek",
+      "name_tr": "Meslekler & Toplum",
       "name_en": "Professions & Jobs",
       "name_de": "Berufe & Gesellschaft",
       "name_fr": "Professions",
@@ -93,7 +93,7 @@
     {
       "id": "cat-6",
       "slug": "alisveris",
-      "name_tr": "Alışveriş",
+      "name_tr": "Alışveriş & Finans",
       "name_en": "Shopping & Finance",
       "name_de": "Einkaufen & Finanzen",
       "name_fr": "Achats & Finances",
@@ -102,7 +102,7 @@
       "name_pt": "Compras e Finanças",
       "name_ar": "التسوق والمالية",
       "name_ko": "쇼핑과 금융",
-      "icon": "💰",
+      "icon": "🛒",
       "tier": 1,
       "unlock_requirement_level": 6,
       "display_order": 6,
@@ -111,7 +111,7 @@
     {
       "id": "cat-7",
       "slug": "duygular",
-      "name_tr": "Duygular",
+      "name_tr": "Duygular & Kişilik",
       "name_en": "Emotions & Feelings",
       "name_de": "Gefühle & Emotionen",
       "name_fr": "Émotions",
@@ -129,7 +129,7 @@
     {
       "id": "cat-8",
       "slug": "sanat",
-      "name_tr": "Sanat",
+      "name_tr": "Sanat & Spor",
       "name_en": "Art, Sports & Fun",
       "name_de": "Kunst & Sport",
       "name_fr": "Art & Sport",
@@ -147,7 +147,7 @@
     {
       "id": "cat-9",
       "slug": "teknoloji",
-      "name_tr": "Teknoloji",
+      "name_tr": "Teknoloji & Medya",
       "name_en": "Technology & Media",
       "name_de": "Technologie & Medien",
       "name_fr": "Technologie",

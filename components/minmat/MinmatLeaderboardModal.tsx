@@ -103,7 +103,7 @@ export function MinmatLeaderboardModal({
             </div>
             <div>
               <h3 className="text-lg font-black text-white">{t.puanTablosu}</h3>
-              <p className="text-xs text-slate-400">MinMat Şampiyonları Sıralaması</p>
+              <p className="text-xs text-slate-400">Top 15 Şampiyonlar Sıralaması</p>
             </div>
           </div>
           <button

@@ -24,9 +24,9 @@ export async function GET(request: Request) {
       `)
       .order("score", { ascending: false })
       .order("created_at", { ascending: false })
-      .limit(50);
+      .limit(15);
 
-    const allowedCategoryIds = MOCK_MINLAN_CATEGORIES.slice(0, 6).map((c) => c.id);
+    const allowedCategoryIds = MOCK_MINLAN_CATEGORIES.map((c) => c.id);
 
     if (nativeLang !== "all") {
       query = query.eq("native_lang", nativeLang);

@@ -404,12 +404,15 @@ export function MinlanGameBoard({
   };
 
   const selectorItems = [
-    { id: "cat-1", icon: "🏠", label: getCatLabel("cat-1", "Günlük Yaşam"), isUnlocked: true, lockReason: "" },
-    { id: "cat-2", icon: "💻", label: getCatLabel("cat-2", "Teknoloji"), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-3", icon: "🔬", label: getCatLabel("cat-3", "Bilim"), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-4", icon: "🩺", label: getCatLabel("cat-4", "Sağlık"), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
-    { id: "cat-5", icon: "🌿", label: getCatLabel("cat-5", "Çevre & İklim"), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
-    { id: "cat-6", icon: "📈", label: getCatLabel("cat-6", "Ekonomi & Finans"), isUnlocked: false, lockReason: "🔒 Yakında Açılacak" },
+    { id: "cat-1", icon: "🏠", label: getCatLabel("cat-1", "Günlük Yaşam & Ev"), isUnlocked: true, lockReason: "" },
+    { id: "cat-2", icon: "🍽️", label: getCatLabel("cat-2", "Yiyecek & İçecek"), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-3", icon: "✈️", label: getCatLabel("cat-3", "Seyahat & Doğa"), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-4", icon: "🩺", label: getCatLabel("cat-4", "Sağlık & Vücut"), isUnlocked: unlockedCategoryIds.includes("cat-4"), lockReason: "🔒 3. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-5", icon: "💼", label: getCatLabel("cat-5", "Meslekler & Toplum"), isUnlocked: unlockedCategoryIds.includes("cat-5"), lockReason: "🔒 4. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-6", icon: "🛒", label: getCatLabel("cat-6", "Alışveriş & Finans"), isUnlocked: unlockedCategoryIds.includes("cat-6"), lockReason: "🔒 5. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-7", icon: "😊", label: getCatLabel("cat-7", "Duygular & Kişilik"), isUnlocked: unlockedCategoryIds.includes("cat-7"), lockReason: "🔒 6. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-8", icon: "🎨", label: getCatLabel("cat-8", "Sanat & Spor"), isUnlocked: unlockedCategoryIds.includes("cat-8"), lockReason: "🔒 7. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-9", icon: "💻", label: getCatLabel("cat-9", "Teknoloji & Medya"), isUnlocked: unlockedCategoryIds.includes("cat-9"), lockReason: "🔒 8. Kategoride Tur 4'ü Bitir" },
   ];
 
   return (
@@ -653,9 +656,13 @@ export function MinlanGameBoard({
               }`}
             >
               {card.isFlipped || card.isMatched ? (
-                /* Flipped Card: Clean Large Word Text ONLY */
-                <div className="w-full h-full flex items-center justify-center p-1 sm:p-2 animate-fadeIn">
-                  <span className={`${cards.length > 16 ? "text-[10px] leading-tight sm:text-xs" : "text-sm sm:text-base"} font-black text-white leading-tight break-words px-1`}>
+                /* Flipped Card: Clean Large Word Text with Flag/Language indicator */
+                <div className="w-full h-full flex flex-col items-center justify-center p-1 sm:p-2 animate-fadeIn relative">
+                  <div className="absolute top-1 right-1.5 flex items-center gap-0.5 text-[9px] font-bold text-slate-400 opacity-80 select-none pointer-events-none">
+                    <span>{SUPPORTED_LANGUAGES.find((l) => l.code === card.language)?.flag || ""}</span>
+                    <span className="uppercase text-[8px] font-mono">{card.language}</span>
+                  </div>
+                  <span className={`${cards.length > 16 ? "text-[10px] leading-tight sm:text-xs" : "text-sm sm:text-base"} font-black text-white leading-tight break-words px-1 mt-1`}>
                     {card.text}
                   </span>
                 </div>
