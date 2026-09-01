@@ -127,9 +127,15 @@ export function MinlanGameBoard({
   });
 
   const currentPairKey = `${nativeLang}-${targetLang}`;
-  const unlockedCategoryIds = unlockedCategoryDict[currentPairKey] || ["cat-1"];
+  const rawUnlockedList = unlockedCategoryDict[currentPairKey] || ["cat-1"];
+  // Only cat-1, cat-2, cat-3 can ever be unlocked for now
+  const unlockedCategoryIds = rawUnlockedList.filter((id) => ["cat-1", "cat-2", "cat-3"].includes(id));
 
   const unlockNextCategoryPermanent = (nextCatId: string) => {
+    // Only allow unlocking up to cat-3 (cat-4, 5, 6 are hard-locked for now)
+    if (!["cat-1", "cat-2", "cat-3"].includes(nextCatId)) {
+      return;
+    }
     setUnlockedCategoryDict((prev) => {
       const currentList = prev[currentPairKey] || ["cat-1"];
       if (!currentList.includes(nextCatId)) {
@@ -407,12 +413,9 @@ export function MinlanGameBoard({
     { id: "cat-1", icon: "🏠", label: getCatLabel("cat-1", "Günlük Yaşam & Ev"), isUnlocked: true, lockReason: "" },
     { id: "cat-2", icon: "🍽️", label: getCatLabel("cat-2", "Yiyecek & İçecek"), isUnlocked: unlockedCategoryIds.includes("cat-2"), lockReason: "🔒 1. Kategoride Tur 4'ü Bitir" },
     { id: "cat-3", icon: "✈️", label: getCatLabel("cat-3", "Seyahat & Doğa"), isUnlocked: unlockedCategoryIds.includes("cat-3"), lockReason: "🔒 2. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-4", icon: "🩺", label: getCatLabel("cat-4", "Sağlık & Vücut"), isUnlocked: unlockedCategoryIds.includes("cat-4"), lockReason: "🔒 3. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-5", icon: "💼", label: getCatLabel("cat-5", "Meslekler & Toplum"), isUnlocked: unlockedCategoryIds.includes("cat-5"), lockReason: "🔒 4. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-6", icon: "🛒", label: getCatLabel("cat-6", "Alışveriş & Finans"), isUnlocked: unlockedCategoryIds.includes("cat-6"), lockReason: "🔒 5. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-7", icon: "😊", label: getCatLabel("cat-7", "Duygular & Kişilik"), isUnlocked: unlockedCategoryIds.includes("cat-7"), lockReason: "🔒 6. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-8", icon: "🎨", label: getCatLabel("cat-8", "Sanat & Spor"), isUnlocked: unlockedCategoryIds.includes("cat-8"), lockReason: "🔒 7. Kategoride Tur 4'ü Bitir" },
-    { id: "cat-9", icon: "💻", label: getCatLabel("cat-9", "Teknoloji & Medya"), isUnlocked: unlockedCategoryIds.includes("cat-9"), lockReason: "🔒 8. Kategoride Tur 4'ü Bitir" },
+    { id: "cat-4", icon: "🩺", label: getCatLabel("cat-4", "Sağlık & Vücut"), isUnlocked: false, lockReason: "🔒 Yakında Aktif Olacak" },
+    { id: "cat-5", icon: "💼", label: getCatLabel("cat-5", "Meslekler & Toplum"), isUnlocked: false, lockReason: "🔒 Yakında Aktif Olacak" },
+    { id: "cat-6", icon: "🛒", label: getCatLabel("cat-6", "Alışveriş & Finans"), isUnlocked: false, lockReason: "🔒 Yakında Aktif Olacak" },
   ];
 
   return (
@@ -444,7 +447,7 @@ export function MinlanGameBoard({
       </div>
 
 
-      {/* 4. Category Selector Icons (MinMat '+' '-' 'x' '/' style directly on top of board) */}
+      {/* 4. Category Selector Icons (Exact 6 Categories in a single clean row) */}
       <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-5 flex-wrap">
         {selectorItems.map((item) => {
           const isCurrent = item.id === categoryId;
@@ -519,47 +522,11 @@ export function MinlanGameBoard({
         </button>
       </div>
 
-      {/* 3. MinLan Stats Row: Left (Score, Round, Combo), Center (Timer), Right (Hearts, Mistakes, Pause) */}
-      <div className="flex items-center justify-between gap-2 sm:gap-4 bg-slate-950/80 border border-slate-800 px-3 sm:px-5 py-2.5 rounded-2xl mb-5 w-full max-w-xl">
-        {/* Left: Score & Round & Combo */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          {/* Score */}
-          <div className="flex items-center gap-1 font-mono font-black text-amber-400 text-base sm:text-lg">
-            <span>⭐</span>
-            <span>{score}</span>
-          </div>
-
-          {/* Round Level */}
-          <div className="text-xs sm:text-sm font-extrabold text-white whitespace-nowrap bg-slate-900/90 px-2 sm:px-2.5 py-1 rounded-xl border border-slate-800">
-            {t.roundText} {roundLevel}
-          </div>
-
-          {/* Combo Streak */}
-          {streak > 1 && (
-            <div className="hidden sm:flex items-center gap-1 text-xs font-bold text-orange-400 bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded-xl">
-              <Flame className="w-3.5 h-3.5 text-orange-400 animate-pulse" />
-              <span>{streak}x</span>
-            </div>
-          )}
-        </div>
-
-        {/* Center: Timer (Highlighted in center) */}
-        <div className="flex items-center justify-center">
-          <div
-            className={`flex items-center gap-1.5 font-mono font-black text-base sm:text-lg px-3 py-1 rounded-xl border transition-all ${
-              timeLeft <= 5 && gameState === "playing"
-                ? "bg-rose-500/20 border-rose-500/50 text-rose-400 animate-pulse"
-                : "bg-slate-900/90 border-cyan-500/30 text-cyan-300 shadow-sm shadow-cyan-500/10"
-            }`}
-          >
-            <span>⏱️</span>
-            <span>{timeLeft}s</span>
-          </div>
-        </div>
-
-        {/* Right: Hearts, Mistakes & Pause Button on the edge */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0 justify-end">
-          {/* Hearts / Lives (Max 5 Hearts) */}
+      {/* 3. MinLan Stats Bar: Left (Hearts & Mistake Counter), Center (Timer & Streak), Right (Score, Round, Pause) */}
+      <div className="flex items-center justify-between gap-1.5 sm:gap-3 bg-slate-950/90 border border-slate-800 px-3 sm:px-4 py-2.5 rounded-2xl mb-5 w-full max-w-xl shadow-lg">
+        {/* Sol: Canlar (5 Kalp) & Arka arkaya Yanlış Sayacı */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Canlar (5 Kalp) */}
           <div className="flex items-center gap-0.5 sm:gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <Heart
@@ -573,13 +540,55 @@ export function MinlanGameBoard({
             ))}
           </div>
 
-          {/* Mistake Counter */}
-          <div className="hidden sm:flex items-center gap-1 text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded-lg">
+          {/* Arka arkaya Yanlış Sayacı (HER ZAMAN GÖRÜNÜR) */}
+          <div className="flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-xs font-mono font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-1.5 py-0.5 rounded-lg whitespace-nowrap" title="Arka arkaya yapılan yanlış sayısı (3 yanlış = 1 can)">
             <AlertTriangle className="w-3 h-3 text-amber-400" />
             <span>{mistakes}/3</span>
           </div>
+        </div>
 
-          {/* Pause Button (On the edge) */}
+        {/* Orta: Süre (ORTADA) & Seri Sayacı */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Süre */}
+          <div
+            className={`flex items-center gap-1 font-mono font-black text-xs sm:text-sm px-2 py-0.5 rounded-lg border transition-all whitespace-nowrap ${
+              timeLeft <= 5 && gameState === "playing"
+                ? "bg-rose-500/20 border-rose-500/50 text-rose-400 animate-pulse"
+                : "bg-slate-900 border-cyan-500/30 text-cyan-300 shadow-sm shadow-cyan-500/10"
+            }`}
+          >
+            <span>⏱️</span>
+            <span>{timeLeft}s</span>
+          </div>
+
+          {/* Seri Sayacı (HER ZAMAN GÖRÜNÜR) */}
+          <div
+            className={`flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-xs font-mono font-black px-1.5 py-0.5 rounded-lg border transition-all whitespace-nowrap ${
+              streak > 0
+                ? "text-orange-400 bg-orange-500/15 border-orange-500/40 shadow-sm shadow-orange-500/20 animate-pulse"
+                : "text-slate-500 bg-slate-900/60 border-slate-800"
+            }`}
+            title="Arka arkaya doğru eşleştirme serisi"
+          >
+            <Flame className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${streak > 0 ? "text-orange-400 fill-orange-400" : "text-slate-600"}`} />
+            <span>{streak}x</span>
+          </div>
+        </div>
+
+        {/* Sağ: Puan, Tur & Duraklat Butonu */}
+        <div className="flex items-center gap-1.5 sm:gap-3 justify-end">
+          {/* Puan */}
+          <div className="flex items-center gap-0.5 sm:gap-1 font-mono font-black text-amber-400 text-xs sm:text-sm whitespace-nowrap">
+            <span>⭐</span>
+            <span>{score}</span>
+          </div>
+
+          {/* Tur */}
+          <div className="text-[11px] sm:text-xs font-extrabold text-white whitespace-nowrap bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-800">
+            {t.roundText} {roundLevel}
+          </div>
+
+          {/* Duraklat / Devam Butonu */}
           {(gameState === "playing" || gameState === "paused") && (
             <button
               onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
@@ -587,9 +596,9 @@ export function MinlanGameBoard({
               title={gameState === "paused" ? t.resumeText : "Duraklat"}
             >
               {gameState === "paused" ? (
-                <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" />
+                <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 fill-emerald-400" />
               ) : (
-                <Pause className="w-4 h-4 text-cyan-400" />
+                <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
               )}
             </button>
           )}
