@@ -439,7 +439,7 @@ export default function CupMatMatchCenter() {
         <div className="mb-10 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-2 flex items-center gap-3 justify-center sm:justify-start">
-              <Activity className="w-8 h-8 text-indigo-400" />
+              <img src="/logo_s_clean.png" alt="CupMat Logo" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
               {t("CupMat")}
             </h1>
             <p className="text-slate-400 text-lg">{t("Uluslararası Kupa Maçları")}</p>
