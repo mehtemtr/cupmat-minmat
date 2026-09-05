@@ -295,7 +295,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
 
   // Share score
   const handleShare = () => {
-    const text = "MinMat - Sayı Avı oyununda " + score + " puan yaptım! Rekorumu geçebilir misin? 🏆";
+    const text = (t.shareText || "MinMat - Sayı Avı oyununda {score} puan yaptım! Rekorumu geçebilir misin? 🏆").replace("{score}", String(score));
     const url = window.location.origin + "/minmat?score=" + score + "&mode=" + gameMode;
     if (navigator.share) {
       navigator.share({ title: "MinMat", text, url }).then(() => {
@@ -371,7 +371,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
         {/* Level & Combo */}
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-slate-300 px-2.5 py-1 bg-slate-900 rounded-xl border border-slate-800">
-            Tur {level}
+            {t.round} {level}
           </span>
           {combo > 1 && (
             <span className="text-xs font-black text-amber-400 flex items-center gap-0.5 bg-amber-500/10 px-2 py-0.5 rounded-xl border border-amber-500/30 animate-pulse">
@@ -384,11 +384,11 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
         {/* Score & Time & Pause */}
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Puan</div>
+            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">{t.score}</div>
             <div className="text-sm sm:text-base font-black text-emerald-400 font-mono">⭐ {score}</div>
           </div>
           <div className="text-right">
-            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Süre</div>
+            <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">{t.time}</div>
             <div className={"text-sm sm:text-base font-black font-mono " + (timeLeft <= 5 ? "text-rose-400 animate-ping" : "text-cyan-400")}>
               ⏱️ {timeLeft}s
             </div>
@@ -397,7 +397,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
             <button
               onClick={() => setGameState(gameState === "paused" ? "playing" : "paused")}
               className="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl text-slate-300 transition-all"
-              title={gameState === "paused" ? (t.resumeText || "Devam Et") : "Duraklat"}
+              title={gameState === "paused" ? (t.resumeText || "Devam Et") : (t.pauseText || "Duraklat")}
             >
               {gameState === "paused" ? (
                 <Play className="w-4 h-4 text-emerald-400 fill-emerald-400" />
@@ -417,13 +417,13 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
           </div>
           <h2 className="text-xl font-black text-white mb-2">{t.title}</h2>
           <p className="text-xs text-slate-400 max-w-sm mb-6">
-            Hızlı matematiksel işlemlerle kartları eşleştir, turları tamamla ve liderlik tablosunda yerini al!
+            {t.idleDesc}
           </p>
           <button
             onClick={() => startGame(gameMode)}
             className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-2xl shadow-lg shadow-emerald-500/25 transition-all text-sm uppercase tracking-wider transform hover:scale-105 active:scale-95"
           >
-            Oyuna Başla 🚀
+            {t.startGame}
           </button>
         </div>
       ) : gameState === "paused" ? (
@@ -433,7 +433,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
           </div>
           <h2 className="text-xl font-black text-white mb-2">{t.pausedTitle || "Oyun Duraklatıldı"}</h2>
           <p className="text-xs text-slate-400 max-w-sm mb-6">
-            Oyun duraklatıldı. Kartlar gizlendi. Hazır olduğunda devam edebilirsin.
+            {t.pausedDesc}
           </p>
           <button
             onClick={() => setGameState("playing")}
@@ -449,10 +449,10 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
             <AlertTriangle className="w-7 h-7" />
           </div>
           <h2 className="text-2xl font-black text-white mb-1">{t.gameOver}</h2>
-          <p className="text-xs text-slate-400 mb-4">Ulaşılan Tur: <span className="text-emerald-400 font-bold">Lv{level}</span></p>
+          <p className="text-xs text-slate-400 mb-4">{t.roundReached}: <span className="text-emerald-400 font-bold">Lv{level}</span></p>
 
           <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 w-full max-w-xs mb-5">
-            <div className="text-xs text-slate-400 mb-1">Toplam Skor</div>
+            <div className="text-xs text-slate-400 mb-1">{t.totalScore}</div>
             <div className="text-3xl font-black text-emerald-400 font-mono">⭐ {score}</div>
           </div>
 
@@ -475,7 +475,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
             onClick={onOpenLeaderboard}
             className="mt-3 text-xs text-slate-400 hover:text-emerald-400 font-bold transition-all underline"
           >
-            🏆 Liderlik Tablosunu Gör
+            {t.viewLeaderboard}
           </button>
         </div>
       ) : (
@@ -553,7 +553,7 @@ export function MinmatGameBoard({ lang = "tr", onOpenLeaderboard }: MinmatGameBo
             ) : (
               <>
                 <Pause className="w-4 h-4 text-slate-300" />
-                <span>Duraklat</span>
+                <span>{t.pauseText || "Duraklat"}</span>
               </>
             )}
           </button>

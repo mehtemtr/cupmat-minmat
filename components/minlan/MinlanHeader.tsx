@@ -33,7 +33,7 @@ export function MinlanHeader({
           />
         </div>
         <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white mb-0.5">
-          MinLan — Dil Avı
+          MinLan — {t.gameTitle}
         </h1>
         <p className="text-xs text-slate-400 font-medium italic">
           {t.slogan}

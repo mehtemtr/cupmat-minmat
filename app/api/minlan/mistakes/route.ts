@@ -26,9 +26,35 @@ export async function POST(request: Request) {
       }
     }
 
-    // If user is not logged in, we cannot track their personal mistakes
+    // If user is not logged in, resolve or assign the Misafir/guest profile
     if (!internalUserId) {
-      return NextResponse.json({ success: true, note: "User not logged in, mistake not tracked." });
+      const { data: guestProfile } = await supabaseAdmin
+        .from("profiles")
+        .select("id")
+        .eq("user_id", "guest")
+        .maybeSingle();
+
+      if (guestProfile) {
+        internalUserId = guestProfile.id;
+      } else {
+        // Fallback: create guest profile if it doesn't exist yet
+        const { data: newGuest } = await supabaseAdmin
+          .from("profiles")
+          .insert({
+            user_id: "guest",
+            nickname: "Misafir",
+            email: "guest@statmatik.local"
+          })
+          .select("id")
+          .maybeSingle();
+        if (newGuest) {
+          internalUserId = newGuest.id;
+        }
+      }
+    }
+
+    if (!internalUserId) {
+      return NextResponse.json({ success: false, error: "Failed to resolve guest profile" }, { status: 500 });
     }
 
     const { error } = await supabaseAdmin

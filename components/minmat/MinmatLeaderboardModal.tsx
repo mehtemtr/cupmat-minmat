@@ -103,7 +103,7 @@ export function MinmatLeaderboardModal({
             </div>
             <div>
               <h3 className="text-lg font-black text-white">{t.puanTablosu}</h3>
-              <p className="text-xs text-slate-400">Top 15 Şampiyonlar Sıralaması</p>
+              <p className="text-xs text-slate-400">{t.leaderboardSubtitle}</p>
             </div>
           </div>
           <button
@@ -141,11 +141,11 @@ export function MinmatLeaderboardModal({
           {loading ? (
             <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-2">
               <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-              <span className="text-xs font-semibold">Skorlar yükleniyor...</span>
+              <span className="text-xs font-semibold">{t.scoresLoading}</span>
             </div>
           ) : scores.length === 0 ? (
             <div className="text-center py-12 text-slate-500 text-xs font-medium">
-              Bu kategoride henüz skor kaydı bulunamadı.
+              {t.noScores}
             </div>
           ) : (
             scores.map((s, idx) => {
@@ -175,7 +175,7 @@ export function MinmatLeaderboardModal({
 
                   <div className="flex items-center gap-3 font-mono">
                     <span className="text-[11px] text-slate-400 px-2 py-0.5 bg-slate-900 rounded-lg border border-slate-800">
-                      Tur {s.level}
+                      {t.round} {s.level}
                     </span>
                     <span className="text-[11px] text-slate-400 px-2 py-0.5 bg-slate-900 rounded-lg border border-slate-800">
                       {modeLabels[s.mode] || s.mode}

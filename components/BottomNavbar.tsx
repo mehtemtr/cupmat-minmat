@@ -60,11 +60,117 @@ export default function BottomNavbar() {
   const activeBgColor = isMinMatTheme ? "bg-blue-500/10 text-blue-400" : "bg-emerald-500/10 text-emerald-400";
   const borderGradientClass = isMinMatTheme ? "via-blue-400/50" : "via-emerald-400/50";
 
-  // Translate auxiliary drawer text
-  const menuLabel = locale === "tr" ? "Menü" : "Menu";
-  const moreLabel = locale === "tr" ? "Daha Fazla" : "More";
-  const closeLabel = locale === "tr" ? "Kapat" : "Close";
-  const accountLabel = locale === "tr" ? "Hesap ve Takma Ad" : "Account & Nickname";
+  // 9-Language Dictionary for Bottom Navigation Bar
+  const BOTTOM_NAV_I18N: Record<string, {
+    home: string;
+    menu: string;
+    more: string;
+    close: string;
+    account: string;
+    appLanguage: string;
+    about: string;
+    help: string;
+  }> = {
+    tr: {
+      home: "Ana Sayfa",
+      menu: "Menü",
+      more: "Daha Fazla",
+      close: "Kapat",
+      account: "Hesap ve Takma Ad",
+      appLanguage: "Uygulama Dili",
+      about: "Hakkında",
+      help: "Yardım",
+    },
+    en: {
+      home: "Home",
+      menu: "Menu",
+      more: "More",
+      close: "Close",
+      account: "Account & Nickname",
+      appLanguage: "App Language",
+      about: "About",
+      help: "Help",
+    },
+    de: {
+      home: "Startseite",
+      menu: "Menü",
+      more: "Mehr",
+      close: "Schließen",
+      account: "Konto & Spitzname",
+      appLanguage: "App-Sprache",
+      about: "Über uns",
+      help: "Hilfe",
+    },
+    fr: {
+      home: "Accueil",
+      menu: "Menu",
+      more: "Plus",
+      close: "Fermer",
+      account: "Compte & Pseudo",
+      appLanguage: "Langue de l'application",
+      about: "À propos",
+      help: "Aide",
+    },
+    es: {
+      home: "Inicio",
+      menu: "Menú",
+      more: "Más",
+      close: "Cerrar",
+      account: "Cuenta y Apodo",
+      appLanguage: "Idioma de la aplicación",
+      about: "Acerca de",
+      help: "Ayuda",
+    },
+    it: {
+      home: "Home",
+      menu: "Menu",
+      more: "Altro",
+      close: "Chiudi",
+      account: "Account & Nickname",
+      appLanguage: "Lingua dell'app",
+      about: "Informazioni",
+      help: "Aiuto",
+    },
+    pt: {
+      home: "Início",
+      menu: "Menu",
+      more: "Mais",
+      close: "Fechar",
+      account: "Conta e Apelido",
+      appLanguage: "Idioma do aplicativo",
+      about: "Sobre",
+      help: "Ajuda",
+    },
+    ar: {
+      home: "الرئيسية",
+      menu: "القائمة",
+      more: "المزيد",
+      close: "إغلاق",
+      account: "الحساب والاسم المستعار",
+      appLanguage: "لغة التطبيق",
+      about: "حول",
+      help: "مساعدة",
+    },
+    ko: {
+      home: "홈",
+      menu: "메뉴",
+      more: "더보기",
+      close: "닫기",
+      account: "계정 및 닉네임",
+      appLanguage: "앱 언어",
+      about: "정보",
+      help: "도움말",
+    },
+  };
+
+  const navI18n = BOTTOM_NAV_I18N[locale] || BOTTOM_NAV_I18N.tr;
+  const menuLabel = navI18n.menu;
+  const moreLabel = navI18n.more;
+  const closeLabel = navI18n.close;
+  const accountLabel = navI18n.account;
+  const appLanguageLabel = navI18n.appLanguage;
+  const aboutLabel = navI18n.about;
+  const helpLabel = navI18n.help;
 
   const triggerAbout = () => {
     setDrawerOpen(false);
@@ -86,7 +192,7 @@ export default function BottomNavbar() {
 
   const navItems = [
     {
-      label: locale === "tr" ? "Ana Sayfa" : "Home",
+      label: navI18n.home,
       href: process.env.NODE_ENV === "development" ? "/" : "https://statmatik.com",
       icon: Home,
       isActive: pathname === "/",
@@ -255,7 +361,7 @@ export default function BottomNavbar() {
           <div className="pt-4 border-t border-white/5 flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-400">
-                {locale === "tr" ? "Uygulama Dili" : "App Language"}
+                {appLanguageLabel}
               </span>
               <LanguageDropdown showFullLabelOnDesktop />
             </div>
@@ -267,7 +373,7 @@ export default function BottomNavbar() {
                 className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] text-zinc-300 text-xs font-bold transition"
               >
                 <Info className="h-4 w-4 text-sky-400" />
-                <span>{locale === "tr" ? "Hakkında" : "About"}</span>
+                <span>{aboutLabel}</span>
               </button>
               <button
                 type="button"
@@ -275,7 +381,7 @@ export default function BottomNavbar() {
                 className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] text-zinc-300 text-xs font-bold transition"
               >
                 <HelpCircle className="h-4 w-4 text-sky-400" />
-                <span>{locale === "tr" ? "Yardım" : "Help"}</span>
+                <span>{helpLabel}</span>
               </button>
             </div>
           </div>

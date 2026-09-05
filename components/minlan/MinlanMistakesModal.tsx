@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { LanguageCode, SUPPORTED_LANGUAGES } from "@/lib/minlan/types";
+import { getMinlanTranslation } from "@/lib/minlan/i18n";
 import { X, BrainCircuit, AlertCircle, RefreshCw } from "lucide-react";
 
 interface MinlanMistakesModalProps {
@@ -17,6 +18,7 @@ export function MinlanMistakesModal({
   nativeLang,
   targetLang,
 }: MinlanMistakesModalProps) {
+  const t = getMinlanTranslation(nativeLang);
   const [mistakes, setMistakes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [timeframe, setTimeframe] = useState<"3days" | "all">("3days");
@@ -61,8 +63,8 @@ export function MinlanMistakesModal({
               <BrainCircuit className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-xl font-black text-white">Hata Analizi</h3>
-              <p className="text-xs text-slate-400">En çok karıştırılan kelimeler</p>
+              <h3 className="text-xl font-black text-white">{t.mistakesModalTitle}</h3>
+              <p className="text-xs text-slate-400">{t.mistakesModalSubtitle}</p>
             </div>
           </div>
           <button
@@ -86,7 +88,7 @@ export function MinlanMistakesModal({
                 timeframe === "3days" ? "bg-purple-500/20 text-purple-400" : "text-slate-400 hover:text-white"
               }`}
             >
-              Son 3 Gün
+              {t.mistakesTab3Days}
             </button>
             <button
               onClick={() => setTimeframe("all")}
@@ -94,25 +96,25 @@ export function MinlanMistakesModal({
                 timeframe === "all" ? "bg-purple-500/20 text-purple-400" : "text-slate-400 hover:text-white"
               }`}
             >
-              Tüm Zamanlar
+              {t.mistakesTabAll}
             </button>
           </div>
 
           {loading ? (
             <div className="py-8 text-center text-slate-500 flex flex-col items-center gap-2">
               <RefreshCw className="w-6 h-6 animate-spin text-purple-500/50" />
-              <span>Veriler analiz ediliyor...</span>
+              <span>{t.cardsLoadingText}</span>
             </div>
           ) : mistakes.length === 0 ? (
             <div className="py-8 text-center text-slate-400 flex flex-col items-center gap-2">
               <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mb-2 border border-emerald-500/20">
                 <span className="text-2xl">🎉</span>
               </div>
-              <span className="font-bold text-emerald-400">Harika iş çıkarıyorsun!</span>
+              <span className="font-bold text-emerald-400">{t.mistakesEmptyTitle}</span>
               <span className="text-sm">
                 {timeframe === "3days" 
-                  ? "Son 3 günde kayıtlı hatan bulunmuyor." 
-                  : "Hiç kayıtlı hatan bulunmuyor."}
+                  ? t.mistakesEmpty3Days 
+                  : t.mistakesEmptyAll}
               </span>
             </div>
           ) : (
@@ -128,7 +130,9 @@ export function MinlanMistakesModal({
                   </div>
                   <div className="flex items-center gap-1.5 bg-red-500/10 px-2.5 py-1 rounded-lg border border-red-500/20">
                     <AlertCircle className="w-3.5 h-3.5 text-red-400" />
-                    <span className="text-xs font-black text-red-400">{m.count} Hata</span>
+                    <span className="text-xs font-black text-red-400">
+                      {t.mistakesCountBadge.replace("{count}", String(m.count))}
+                    </span>
                   </div>
                 </div>
               ))}

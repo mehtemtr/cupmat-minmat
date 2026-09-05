@@ -8,9 +8,11 @@ import { Trophy, X, Filter, Medal, Award } from "lucide-react";
 interface MinlanLeaderboardModalProps {
   isOpen: boolean;
   onClose: () => void;
+  nativeLang?: LanguageCode;
 }
 
-export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardModalProps) {
+export function MinlanLeaderboardModal({ isOpen, onClose, nativeLang = "tr" }: MinlanLeaderboardModalProps) {
+  const t = getMinlanTranslation(nativeLang);
   const [nativeFilter, setNativeFilter] = useState<string>("all");
   const [targetFilter, setTargetFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
@@ -58,8 +60,8 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
               />
             </div>
             <div>
-              <h3 className="text-xl font-black text-white">MinLan Liderlik Tablosu</h3>
-              <p className="text-xs text-slate-400">3 Filtreli Top 15 Şampiyonlar Sıralaması</p>
+              <h3 className="text-xl font-black text-white">{t.leaderboardModalTitle}</h3>
+              <p className="text-xs text-slate-400">{t.leaderboardModalSubtitle}</p>
             </div>
           </div>
 
@@ -75,13 +77,13 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-5 bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80">
           {/* Filter 1: Native Lang */}
           <div>
-            <label className="text-[11px] font-bold text-slate-400 block mb-1 uppercase">1. Dil (Kaynak):</label>
+            <label className="text-[11px] font-bold text-slate-400 block mb-1 uppercase">{t.filterNativeLang}</label>
             <select
               value={nativeFilter}
               onChange={(e) => setNativeFilter(e.target.value)}
               className="w-full bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl border border-slate-700 focus:border-cyan-500 focus:outline-none"
             >
-              <option value="all">🌐 Tüm Diller</option>
+              <option value="all">🌐 {t.allOption}</option>
               {SUPPORTED_LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code}>
                   {l.flag} {l.name}
@@ -92,13 +94,13 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
 
           {/* Filter 2: Target Lang */}
           <div>
-            <label className="text-[11px] font-bold text-slate-400 block mb-1 uppercase">2. Dil (Hedef):</label>
+            <label className="text-[11px] font-bold text-slate-400 block mb-1 uppercase">{t.filterTargetLang}</label>
             <select
               value={targetFilter}
               onChange={(e) => setTargetFilter(e.target.value)}
               className="w-full bg-slate-900 text-cyan-400 text-xs font-bold px-3 py-2 rounded-xl border border-cyan-500/40 focus:border-cyan-400 focus:outline-none"
             >
-              <option value="all">🌐 Tüm Hedef Diller</option>
+              <option value="all">🌐 {t.allOption}</option>
               {SUPPORTED_LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code}>
                   {l.flag} {l.name}
@@ -109,16 +111,16 @@ export function MinlanLeaderboardModal({ isOpen, onClose }: MinlanLeaderboardMod
 
           {/* Filter 3: Category */}
           <div>
-            <label className="text-[11px] font-bold text-slate-400 block mb-1 uppercase">Kategori:</label>
+            <label className="text-[11px] font-bold text-slate-400 block mb-1 uppercase">{t.filterCategory}</label>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="w-full bg-slate-900 text-amber-300 text-xs font-bold px-3 py-2 rounded-xl border border-amber-500/40 focus:border-amber-400 focus:outline-none"
             >
-              <option value="all">✨ Tüm Kategoriler</option>
+              <option value="all">✨ {t.allOption}</option>
               {MOCK_MINLAN_CATEGORIES.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.icon} {c.name_tr}
+                  {c.icon} {(c as any)[`name_${nativeLang}`] || c.name_tr}
                 </option>
               ))}
             </select>

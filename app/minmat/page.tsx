@@ -29,11 +29,11 @@ export default function MinMatPage() {
           {isLoaded && !userId && (
             <div className="w-full bg-slate-900 border border-emerald-500/30 text-emerald-200 text-xs p-3 rounded-2xl mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg shadow-emerald-500/5">
               <span className="text-center sm:text-left leading-relaxed">
-                Puan tablosunda yer almak ve rekorlarınızı kaydetmek için giriş yapabilirsiniz.
+                {getMinmatTranslation(currentLang).authBannerText}
               </span>
               <SignInButton mode="modal">
                 <button className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-1.5 px-4 rounded-xl transition-all whitespace-nowrap">
-                  Giriş Yap
+                  {getMinmatTranslation(currentLang).signInText}
                 </button>
               </SignInButton>
             </div>

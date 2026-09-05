@@ -502,7 +502,7 @@ export function MinlanGameBoard({
           className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs rounded-xl flex items-center gap-2 transition-all cursor-pointer"
         >
           {gameState === "idle" ? <LogOut className="w-4 h-4 text-cyan-400" /> : <Home className="w-4 h-4 text-cyan-400" />}
-          <span>{gameState === "idle" ? "Ana Sayfa" : t.menuText}</span>
+          <span>{gameState === "idle" ? t.homeText : t.menuText}</span>
         </button>
 
         <button
@@ -510,7 +510,7 @@ export function MinlanGameBoard({
           className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 border border-purple-500/30 text-purple-400 font-bold rounded-xl text-xs hover:bg-purple-500/20 transition-all cursor-pointer"
         >
           <BrainCircuit className="w-4 h-4" />
-          Hatalarım
+          <span>{t.myMistakesText}</span>
         </button>
 
         <button
@@ -615,7 +615,7 @@ export function MinlanGameBoard({
               className="w-full h-full object-contain"
             />
           </div>
-          <h3 className="text-xl font-black text-white mb-1">MinLan — Dil Avı</h3>
+          <h3 className="text-xl font-black text-white mb-1">MinLan — {t.gameTitle}</h3>
           <p className="text-xs text-slate-400 mb-6 italic">
             {t.slogan}
           </p>
@@ -633,7 +633,7 @@ export function MinlanGameBoard({
           </div>
           <p className="text-lg font-black text-white mb-2">{t.pausedTitle}</p>
           <p className="text-xs text-slate-400 max-w-xs mx-auto mb-6">
-            Oyun duraklatıldı. Kartlar gizlendi. Hazır olduğunda devam edebilirsin.
+            {t.pausedDesc}
           </p>
           <button
             onClick={() => setGameState("playing")}
@@ -734,7 +734,7 @@ export function MinlanGameBoard({
                 className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black rounded-2xl border border-emerald-400/30 flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg shadow-emerald-500/20 text-sm"
               >
                 <Share2 className="w-4 h-4 text-white" />
-                <span>Skoru Paylaş (+%20 Bonus)</span>
+                <span>{t.shareScoreText}</span>
               </button>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
@@ -751,7 +751,7 @@ export function MinlanGameBoard({
                   className="w-full py-3.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold rounded-2xl border border-purple-500/30 flex items-center justify-center gap-2 cursor-pointer transition-all text-xs"
                 >
                   <BrainCircuit className="w-4 h-4 text-purple-400" />
-                  <span>Hatalarım</span>
+                  <span>{t.myMistakesText}</span>
                 </button>
 
                 <button

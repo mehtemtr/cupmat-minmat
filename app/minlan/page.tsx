@@ -129,6 +129,7 @@ export default function MinlanPage() {
         <MinlanLeaderboardModal
           isOpen={isLeaderboardOpen}
           onClose={() => setIsLeaderboardOpen(false)}
+          nativeLang={nativeLang}
         />
 
         {/* 5. Mistakes Analysis Modal */}
