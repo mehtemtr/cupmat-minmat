@@ -55,6 +55,10 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     keywords: [
       "StatMatik",
+      "Labor Day",
+      "Happy Labor Day",
+      "Labor Day 2026",
+      "İşçi Bayramı",
       "Canlı Skor",
       "Futbol İstatistikleri",
       "Maç Sonuçları",

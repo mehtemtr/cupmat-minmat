@@ -318,6 +318,15 @@ export default function EntryPage() {
 
       const banners: string[] = [];
 
+      // Labor Day (ABD & Kanada): 7 Eylül 2026 07:00 (TR Saati / UTC+3) - 8 Eylül 2026 06:59:59 (TR Saati / UTC+3)
+      const nowTime = now.getTime();
+      const laborDayStart = new Date("2026-09-07T07:00:00+03:00").getTime();
+      const laborDayEnd = new Date("2026-09-08T06:59:59+03:00").getTime();
+
+      if (nowTime >= laborDayStart && nowTime <= laborDayEnd) {
+        banners.push("laborday");
+      }
+
       if (year === 2026 && month === 7) { // 7 = August (0-indexed)
         if (date === 30) {
           banners.push("30agustos");
@@ -436,6 +445,64 @@ export default function EntryPage() {
         {/* Minlan Countdown Section */}
 
         {/* Dynamic Celebrations Section */}
+        {activeBanners.includes("laborday") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/30 bg-gradient-to-r from-blue-950/30 via-[#060b14]/90 to-red-950/30 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(59,130,246,0.15)] transition duration-500 hover:border-blue-500/50">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-600 via-red-600 to-blue-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[4/3] max-w-[420px] rounded-2xl overflow-hidden border border-blue-500/30 shadow-[0_0_35px_rgba(59,130,246,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/labor_day.jpg"
+                    alt="Happy Labor Day - USA & Canada"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/30 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 px-3.5 py-1 text-xs font-black text-blue-400 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇺🇸 🇨🇦 LABOR DAY 2026"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`Labor Day (İşçi Bayramı)`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-red-400">{`Kutlu Olsun! 🛠️` }</span></>
+                  ) : (
+                    <>{`Happy Labor Day!`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-red-400">{`Honoring All Workers 🛠️` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "ABD ve Kanada başta olmak üzere, azmi ve emeğiyle geleceği inşa eden, üreten ve değer katan tüm çalışanların Labor Day (İşçi Bayramı) gününü kutluyoruz. Alın teri ve özveriyle dünyayı güzelleştiren herkese saygıyla!"
+                  ) : (
+                    "Wishing a Happy Labor Day to all hardworking individuals across the United States, Canada, and around the world! Today, we honor the passion, dedication, and resilience of workers who build our communities and shape the future."
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-amber-500/70 pl-4 py-2 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-amber-200 leading-snug">
+                    {locale === "tr" ? (
+                      "\"Hiçbir başarı tesadüf değildir; her büyük eserin arkasında sarsılmaz bir emek ve özveri yatar.\""
+                    ) : (
+                      "\"No great achievement comes by chance; behind every triumph lies dedicated labor, resilience, and passion.\""
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— STATMATIK"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
         {activeBanners.includes("psg") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/20 bg-gradient-to-r from-blue-950/20 via-[#060b14]/80 to-zinc-950/40 p-6 sm:p-8 backdrop-blur-md shadow-2xl transition duration-500 hover:border-blue-500/30">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-650 to-red-650 opacity-10 blur transition duration-500 group-hover:opacity-15" />
