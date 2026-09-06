@@ -47,7 +47,7 @@ export default function MinlanPage() {
     loadData();
   }, []);
 
-  const selectedCategory = categories.find((c) => c.id === selectedCategoryId) || categories[0];
+  const selectedCategory = categories.find((c) => c.id === selectedCategoryId) || categories[0] || MOCK_MINLAN_CATEGORIES[0];
 
   // Callback when a game round is completed to record match progress & update local community bar
   const handleRecordProgress = async (matches: number, score: number, sessionScore?: number, roundReached?: number) => {
@@ -112,7 +112,7 @@ export default function MinlanPage() {
           <MinlanGameBoard
             key={`${selectedCategoryId}-${nativeLang}-${targetLang}`}
             categoryId={selectedCategoryId}
-            categoryName={selectedCategory.name_tr}
+            categoryName={selectedCategory?.name_tr || ""}
             categories={categories}
             nativeLang={nativeLang}
             targetLang={targetLang}

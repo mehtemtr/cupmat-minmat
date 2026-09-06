@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { LanguageCode, SUPPORTED_LANGUAGES } from "@/lib/minlan/types";
+import { getMinlanTranslation } from "@/lib/minlan/i18n";
 import { MOCK_MINLAN_CATEGORIES } from "@/lib/minlan/mock-data";
 import { Trophy, X, Filter, Medal, Award } from "lucide-react";
 
