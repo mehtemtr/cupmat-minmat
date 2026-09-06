@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Trophy, RefreshCw, Shield, Award, CheckCircle2, Flame } from "lucide-react";
@@ -165,8 +165,16 @@ export function CupMatStandings() {
                 </tr>
               ) : standings.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="py-16 text-center text-slate-500">
-                    Kayıtlı veri bulunamadı.
+                  <td colSpan={10} className="py-20 text-center text-slate-400">
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl shadow-inner">
+                        ⚽
+                      </div>
+                      <span className="font-extrabold text-white text-sm sm:text-base">Grup Kuraları & Puan Tablosu Güncelleniyor</span>
+                      <span className="text-xs text-slate-500 max-w-sm">
+                        Lig aşaması resmi takım listeleri ve fikstür eşleşmeleri çok yakında eklenecektir.
+                      </span>
+                    </div>
                   </td>
                 </tr>
               ) : (
