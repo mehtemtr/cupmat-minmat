@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchAndStoreDailyMatches, fetchAndStoreTournamentSeasonMatches } from "@/lib/api-football-cupmat";
+import { fetchAndStoreDailyMatches } from "@/lib/api-football-cupmat";
 import { Redis } from "@upstash/redis";
 
 const redis = Redis.fromEnv();
@@ -12,16 +12,12 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const dateParam = searchParams.get("date"); // format: YYYY-MM-DD
-    const leagueParam = searchParams.get("league"); // e.g. 2, 3, 848
-    const seasonParam = searchParams.get("season") ? parseInt(searchParams.get("season")!, 10) : 2026;
 
-    console.log(`[Cron:CupMat] Starting match sync... League: ${leagueParam || "all"}, Season: ${seasonParam}, Date: ${dateParam || "Today"}`);
+    console.log(`[Cron:CupMat] Starting match sync... Date: ${dateParam || "Today"}`);
     
-    // Call bulk season sync if league parameter is provided
+    // Call the unified sync function
     let result;
-    if (leagueParam) {
-      result = await fetchAndStoreTournamentSeasonMatches(parseInt(leagueParam, 10), seasonParam);
-    } else if (dateParam) {
+    if (dateParam) {
       result = await fetchAndStoreDailyMatches(dateParam);
     } else {
       // Fetch today
