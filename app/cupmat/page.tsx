@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Calendar, Activity, MapPin, Trophy, Award, BarChart3, ChevronRight, ChevronDown, X, RefreshCw } from "lucide-react";
 import { useTranslation } from "@/contexts/LocaleContext";
 import { createClient } from "@supabase/supabase-js";
+import { CupMatStandings } from "@/components/cupmat/CupMatStandings";
 
 // Supabase client initialization (Client-side)
 const supabase = createClient(
@@ -684,7 +685,7 @@ export default function CupMatMatchCenter() {
         )}
 
         {mainView === "stats" && <div className="text-center py-20 text-slate-400">{t("İstatistikler çok yakında eklenecek.")}</div>}
-        {mainView === "standings" && <div className="text-center py-20 text-slate-400">{t("Puan tablosu çok yakında eklenecek.")}</div>}
+        {mainView === "standings" && <CupMatStandings />}
         {mainView === "sm_standings" && <div className="text-center py-20 text-slate-400">{t("StatMatik Endeks tablosu çok yakında eklenecek.")}</div>}
 
       </div>

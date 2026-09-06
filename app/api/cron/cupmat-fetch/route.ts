@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchAndStoreDailyMatches } from "@/lib/api-football-cupmat";
+import { fetchAndStoreDailyMatches, fetchAndStoreTournamentSeasonMatches } from "@/lib/api-football-cupmat";
 import { Redis } from "@upstash/redis";
 
 const redis = Redis.fromEnv();
@@ -10,26 +10,18 @@ export const dynamic = "force-dynamic";
 // It can also be protected by checking an Authorization header.
 export async function GET(req: Request) {
   try {
-    // Basic authorization to prevent public abuse
-    const authHeader = req.headers.get("authorization");
-    /* GEÇİCİ OLARAK KAPATILDI (Yerel test için)
-    if (
-      process.env.CRON_SECRET &&
-      authHeader !== `Bearer ${process.env.CRON_SECRET}`
-    ) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    */
-
-    // You can optionally pass a date parameter for backfilling
     const { searchParams } = new URL(req.url);
     const dateParam = searchParams.get("date"); // format: YYYY-MM-DD
+    const leagueParam = searchParams.get("league"); // e.g. 2, 3, 848
+    const seasonParam = searchParams.get("season") || "2024";
 
-    console.log(`[Cron:CupMat] Starting match sync... Date: ${dateParam || "Today"}`);
+    console.log(`[Cron:CupMat] Starting match sync... League: ${leagueParam || "all"}, Date: ${dateParam || "Today"}`);
     
-    // Call the unified sync function
+    // Call bulk season sync if league parameter is provided
     let result;
-    if (dateParam) {
+    if (leagueParam) {
+      result = await fetchAndStoreTournamentSeasonMatches(parseInt(leagueParam, 10), parseInt(seasonParam, 10));
+    } else if (dateParam) {
       result = await fetchAndStoreDailyMatches(dateParam);
     } else {
       // Fetch today
