@@ -252,7 +252,7 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
   }
 }
 
-export async function fetchAndStoreTournamentSeasonMatches(leagueId: number, season: number = 2024) {
+export async function fetchAndStoreTournamentSeasonMatches(leagueId: number, requestedSeason?: number) {
   const logs: string[] = [];
   
   if (!API_FOOTBALL_KEY) {
@@ -260,33 +260,40 @@ export async function fetchAndStoreTournamentSeasonMatches(leagueId: number, sea
     return { success: false, logs };
   }
 
-  logs.push(`[API-Football] Fetching all season fixtures for League: ${leagueId}, Season: ${season}`);
+  const seasonsToTry = requestedSeason ? [requestedSeason, 2026, 2025, 2024] : [2026, 2025, 2024];
+  const uniqueSeasons = Array.from(new Set(seasonsToTry));
+
+  let allFixtures: any[] = [];
+  let matchedSeason = requestedSeason || 2026;
+
+  for (const s of uniqueSeasons) {
+    logs.push(`[API-Football] Trying to fetch season fixtures for League: ${leagueId}, Season: ${s}...`);
+    try {
+      const response = await fetch(`${API_URL}/fixtures?league=${leagueId}&season=${s}`, {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "v3.football.api-sports.io",
+          "x-rapidapi-key": API_FOOTBALL_KEY,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.response && data.response.length > 0) {
+          allFixtures = data.response;
+          matchedSeason = s;
+          logs.push(`[API-Football] Found ${allFixtures.length} fixtures in season ${s}!`);
+          break;
+        }
+      }
+    } catch (e: any) {
+      logs.push(`[API-Football] Season ${s} fetch error: ${e.message}`);
+    }
+  }
 
   try {
-    const response = await fetch(`${API_URL}/fixtures?league=${leagueId}&season=${season}`, {
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": API_FOOTBALL_KEY,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}`);
-    }
-
-    const data = await response.json();
-    
-    if (data.errors && Object.keys(data.errors).length > 0) {
-      logs.push(`[API-Football] API Error: ${JSON.stringify(data.errors)}`);
-      return { success: false, logs };
-    }
-
-    const allFixtures = data.response || [];
-    logs.push(`[API-Football] Total season fixtures returned: ${allFixtures.length}`);
-
     if (allFixtures.length === 0) {
-      return { success: true, message: "No fixtures found for this tournament season.", logs };
+      return { success: true, message: "No fixtures found for this tournament season across 2026/2025/2024.", logs };
     }
 
     let inserted = 0;
