@@ -703,6 +703,7 @@ export default function CupMatMatchCenter() {
                           const currentDateTime = new Date(`${y}-${m}-${d}`).getTime();
                           const diffDays = (currentDateTime - firstDateTime) / (1000 * 60 * 60 * 24);
                           const isSecondLeg = diffDays > 3;
+                          const isLeagueStage = /lig\s*aşaması|league\s*stage|hafta/i.test(round);
                           
                           return (
                             <div key={dateStr} className="space-y-3">
@@ -711,9 +712,11 @@ export default function CupMatMatchCenter() {
                                 <h4 className="text-sm font-semibold text-slate-400">
                                   {dateStr}
                                 </h4>
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                                  {isSecondLeg ? "Rövanş Maçları" : "İlk Maçlar"}
-                                </span>
+                                {!isLeagueStage && (
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                                    {isSecondLeg ? t("Rövanş Maçları") : t("İlk Maçlar")}
+                                  </span>
+                                )}
                               </div>
                             
                             {/* O Tarihteki Maçlar */}
