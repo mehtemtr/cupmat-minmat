@@ -89,7 +89,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // Almanya
   'Bayer Leverkusen': 'ALM', 'Bayern Munich': 'ALM', 'Stuttgart': 'ALM', 'RB Leipzig': 'ALM', 'Borussia Dortmund': 'ALM', 'Eintracht Frankfurt': 'ALM', 'Hoffenheim': 'ALM', 'Heidenheim': 'ALM',
   // İtalya
-  'Inter': 'İTA', 'Inter Milan': 'İTA', 'AC Milan': 'İTA', 'Juventus': 'İTA', 'Atalanta': 'İTA', 'Bologna': 'İTA', 'Roma': 'İTA', 'Lazio': 'İTA', 'Napoli': 'İTA', 'Fiorentina': 'İTA',
+  'Inter': 'İTA', 'Inter Milan': 'İTA', 'AC Milan': 'İTA', 'Juventus': 'İTA', 'Atalanta': 'İTA', 'Bologna': 'İTA', 'Roma': 'İTA', 'Lazio': 'İTA', 'Napoli': 'İTA', 'Fiorentina': 'İTA', 'Como': 'İTA',
   // Danimarka
   'FC Midtjylland': 'DAN', 'Midtjylland': 'DAN', 'Brondby': 'DAN', 'FC Copenhagen': 'DAN', 'Kopenhag': 'DAN', 'FC Nordsjaelland': 'DAN', 'Silkeborg': 'DAN', 'Aarhus': 'DAN',
   // İsveç
