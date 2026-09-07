@@ -186,7 +186,8 @@ type MatchType = {
 };
 
 export default function CupMatMatchCenter() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+  const currentLocale = locale || "tr";
   
   // States
   const [mainView, setMainView] = useState<"matches" | "stats" | "standings" | "sm_standings">("matches");
@@ -407,6 +408,51 @@ export default function CupMatMatchCenter() {
     return 4;
   };
 
+  // Dinamik Aktif Hafta Tespiti (Maçların başlamasına 5 gün kala aktif haftaya geçiş)
+  const getActiveMatchWeek = (roundGroupMap: Record<string, MatchType[]>) => {
+    const now = Date.now();
+    const fiveDaysMs = 5 * 24 * 60 * 60 * 1000;
+    
+    // Her haftanın en erken maç tarihini bul
+    const weekDates: Record<number, number> = {};
+    Object.entries(roundGroupMap).forEach(([rKey, mList]) => {
+      const matchWeek = rKey.match(/(\d+)\.\s*Hafta/i) || rKey.match(/Hafta\s*(\d+)/i) || rKey.match(/Matchday\s*(\d+)/i);
+      if (matchWeek && mList.length > 0) {
+        const w = parseInt(matchWeek[1], 10);
+        const earliest = Math.min(...mList.map(m => new Date(m.date).getTime()));
+        weekDates[w] = earliest;
+      }
+    });
+
+    // 8'den 1'e kadar kontrol et: Maçına <= 5 gün kalan veya sürmekte olan en son hafta aktif haftadır
+    for (let w = 8; w >= 1; w--) {
+      if (weekDates[w] && now >= (weekDates[w] - fiveDaysMs)) {
+        return w;
+      }
+    }
+    return 1;
+  };
+
+  const activeWeek = getActiveMatchWeek(groupedByRound);
+
+  const getRoundSortWeight = (roundKey: string) => {
+    const matchWeek = roundKey.match(/(\d+)\.\s*Hafta/i) || roundKey.match(/Hafta\s*(\d+)/i) || roundKey.match(/Matchday\s*(\d+)/i);
+    if (matchWeek) {
+      const w = parseInt(matchWeek[1], 10);
+      if (w >= activeWeek) {
+        return w - activeWeek; // 0, 1, 2...
+      } else {
+        return 8 + w; // 9, 10... (Örn: 2. hafta aktifken 1. hafta 8'den sonra listelenir)
+      }
+    }
+    if (/play-?off/i.test(roundKey)) return 100;
+    if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundKey)) return 101;
+    if (/2\.\s*(?:ön\s*)?eleme|2\.\s*eleme|2nd\s*qualifying/i.test(roundKey)) return 102;
+    if (/1\.\s*(?:ön\s*)?eleme|1\.\s*eleme|1st\s*qualifying/i.test(roundKey)) return 103;
+    if (/ön\s*eleme|preliminary/i.test(roundKey)) return 104;
+    return 200;
+  };
+
   const sortedRoundKeys = Object.keys(groupedByRound).sort((a, b) => {
     const weightA = getTournamentWeight(a);
     const weightB = getTournamentWeight(b);
@@ -415,9 +461,101 @@ export default function CupMatMatchCenter() {
       return weightA - weightB;
     }
     
-    // Aynı turnuvaysa tur adına göre ters sıralama (Örn: 3. Ön Eleme, 2. Ön Eleme)
-    return b.localeCompare(a);
+    const rWeightA = getRoundSortWeight(a);
+    const rWeightB = getRoundSortWeight(b);
+    if (rWeightA !== rWeightB) {
+      return rWeightA - rWeightB;
+    }
+    return a.localeCompare(b);
   });
+
+  // Çok Dilli Tur İsimlendirme Fonksiyonu
+  const getLocalizedRoundName = (roundKey: string, lang: string = "tr") => {
+    let prefix = "";
+    let roundName = roundKey;
+    if (roundKey.includes(" - ")) {
+      const parts = roundKey.split(" - ");
+      if (parts.length > 2) {
+        prefix = parts.slice(0, -1).join(" - ") + " - ";
+        roundName = parts[parts.length - 1];
+      } else if (parts[0].includes("League") || parts[0].includes("Ligi") || parts[0].includes("Cup") || parts[0].includes("UEFA")) {
+        prefix = parts[0] + " - ";
+        roundName = parts[1];
+      }
+    }
+
+    const weekMatch = roundName.match(/(\d+)\.\s*Hafta/i) || roundName.match(/Hafta\s*(\d+)/i) || roundName.match(/Matchday\s*(\d+)/i);
+    if (weekMatch) {
+      const w = weekMatch[1];
+      let localizedRound = `Lig Aşaması - ${w}. Hafta`;
+      switch (lang) {
+        case "en": localizedRound = `League Stage - Matchday ${w}`; break;
+        case "de": localizedRound = `Ligaphase - Spieltag ${w}`; break;
+        case "fr": localizedRound = `Phase de Ligue - Journée ${w}`; break;
+        case "es": localizedRound = `Fase de Liga - Jornada ${w}`; break;
+        case "pt": localizedRound = `Fase de Liga - Rodada ${w}`; break;
+        case "it": localizedRound = `Fase Campionato - Giornata ${w}`; break;
+        case "ko": localizedRound = `리그 페이즈 - ${w}주차`; break;
+        case "ar": localizedRound = `مرحلة الدوري - الجولة ${w}`; break;
+        default: localizedRound = `Lig Aşaması - ${w}. Hafta`; break;
+      }
+      return prefix ? `${prefix}${localizedRound}` : localizedRound;
+    }
+
+    if (/play-?off/i.test(roundName)) {
+      return prefix ? `${prefix}Play-offs` : "Play-offs";
+    }
+
+    if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundName)) {
+      let localizedRound = "3. Ön Eleme";
+      switch (lang) {
+        case "en": localizedRound = "3rd Qualifying Round"; break;
+        case "de": localizedRound = "3. Qualifikationsrunde"; break;
+        case "fr": localizedRound = "3e tour de qualification"; break;
+        case "es": localizedRound = "3ª Ronda de Clasificación"; break;
+        case "pt": localizedRound = "3ª Rodada de Qualificação"; break;
+        case "it": localizedRound = "3° Turno di Qualificazione"; break;
+        case "ko": localizedRound = "3차 예선"; break;
+        case "ar": localizedRound = "الدور التأهيلي الثالث"; break;
+        default: localizedRound = "3. Ön Eleme"; break;
+      }
+      return prefix ? `${prefix}${localizedRound}` : localizedRound;
+    }
+
+    if (/2\.\s*(?:ön\s*)?eleme|2\.\s*eleme|2nd\s*qualifying/i.test(roundName)) {
+      let localizedRound = "2. Ön Eleme";
+      switch (lang) {
+        case "en": localizedRound = "2nd Qualifying Round"; break;
+        case "de": localizedRound = "2. Qualifikationsrunde"; break;
+        case "fr": localizedRound = "2e tour de qualification"; break;
+        case "es": localizedRound = "2ª Ronda de Clasificación"; break;
+        case "pt": localizedRound = "2ª Rodada de Qualificação"; break;
+        case "it": localizedRound = "2° Turno di Qualificazione"; break;
+        case "ko": localizedRound = "2차 예선"; break;
+        case "ar": localizedRound = "الدور التأهيلي الثاني"; break;
+        default: localizedRound = "2. Ön Eleme"; break;
+      }
+      return prefix ? `${prefix}${localizedRound}` : localizedRound;
+    }
+
+    if (/1\.\s*(?:ön\s*)?eleme|1\.\s*eleme|1st\s*qualifying/i.test(roundName)) {
+      let localizedRound = "1. Ön Eleme";
+      switch (lang) {
+        case "en": localizedRound = "1st Qualifying Round"; break;
+        case "de": localizedRound = "1. Qualifikationsrunde"; break;
+        case "fr": localizedRound = "1er tour de qualification"; break;
+        case "es": localizedRound = "1ª Ronda de Clasificación"; break;
+        case "pt": localizedRound = "1ª Rodada de Qualificação"; break;
+        case "it": localizedRound = "1° Turno di Qualificazione"; break;
+        case "ko": localizedRound = "1차 예선"; break;
+        case "ar": localizedRound = "الدور التأهيلي الأول"; break;
+        default: localizedRound = "1. Ön Eleme"; break;
+      }
+      return prefix ? `${prefix}${localizedRound}` : localizedRound;
+    }
+
+    return roundKey;
+  };
 
   // Modal kapandığında scroll'u aç
   useEffect(() => {
@@ -553,7 +691,7 @@ export default function CupMatMatchCenter() {
                       onClick={() => toggleRound(round)}
                       className="w-full flex items-center justify-between p-4 sm:px-6 bg-slate-800/20 hover:bg-slate-800/40 transition-colors"
                     >
-                      <h3 className="text-lg font-bold text-white">{t(round)}</h3>
+                      <h3 className="text-lg font-bold text-white">{getLocalizedRoundName(round, currentLocale)}</h3>
                       {isOpen ? <ChevronDown className="w-5 h-5 text-slate-400" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
                     </button>
 
@@ -713,7 +851,7 @@ export default function CupMatMatchCenter() {
               
               <div className="relative z-10">
                 <div className="inline-block px-4 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 mb-8 uppercase tracking-widest">
-                  {t(selectedMatch.round)} • {selectedMatch.dateStr}
+                  {getLocalizedRoundName(selectedMatch.round, currentLocale)} • {selectedMatch.dateStr}
                 </div>
 
                 <div className="flex items-center justify-between gap-4">
