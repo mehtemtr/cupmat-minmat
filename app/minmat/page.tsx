@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MinmatHeader } from "@/components/minmat/MinmatHeader";
 import { MinmatGameBoard } from "@/components/minmat/MinmatGameBoard";
 import { MinmatLeaderboardModal } from "@/components/minmat/MinmatLeaderboardModal";
+import { getMinmatTranslation } from "@/lib/minmat/i18n";
 import { useLocale } from "@/contexts/LocaleContext";
 import { SignInButton, useAuth } from "@clerk/nextjs";
 
