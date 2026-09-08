@@ -439,10 +439,16 @@ export default function CupMatMatchCenter() {
     const matchWeek = roundKey.match(/(\d+)\.\s*Hafta/i) || roundKey.match(/Hafta\s*(\d+)/i) || roundKey.match(/Matchday\s*(\d+)/i);
     if (matchWeek) {
       const w = parseInt(matchWeek[1], 10);
+      let leagueSubWeight = 0;
+      if (roundKey.includes("Lig A")) leagueSubWeight = 0.1;
+      else if (roundKey.includes("Lig B")) leagueSubWeight = 0.2;
+      else if (roundKey.includes("Lig C")) leagueSubWeight = 0.3;
+      else if (roundKey.includes("Lig D")) leagueSubWeight = 0.4;
+
       if (w >= activeWeek) {
-        return w - activeWeek; // 0, 1, 2...
+        return (w - activeWeek) + leagueSubWeight;
       } else {
-        return 8 + w; // 9, 10... (Örn: 2. hafta aktifken 1. hafta 8'den sonra listelenir)
+        return (8 + w) + leagueSubWeight;
       }
     }
     if (/play-?off/i.test(roundKey)) return 100;
@@ -475,12 +481,29 @@ export default function CupMatMatchCenter() {
     let roundName = roundKey;
     if (roundKey.includes(" - ")) {
       const parts = roundKey.split(" - ");
-      if (parts.length > 2) {
+      if (parts.length > 2 && !roundKey.startsWith("Lig ")) {
         prefix = parts.slice(0, -1).join(" - ") + " - ";
         roundName = parts[parts.length - 1];
       } else if (parts[0].includes("League") || parts[0].includes("Ligi") || parts[0].includes("Cup") || parts[0].includes("UEFA")) {
         prefix = parts[0] + " - ";
         roundName = parts[1];
+      }
+    }
+
+    // Uluslar Ligi Formatı: "Lig A - 1. Grup - 1. Hafta"
+    const unlMatch = roundKey.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Grup\s*-\s*(\d+)\.\s*Hafta/i);
+    if (unlMatch) {
+      const [_, leagueLetter, grpNum, weekNum] = unlMatch;
+      switch (lang) {
+        case "en": return `League ${leagueLetter} - Group ${grpNum} - Matchday ${weekNum}`;
+        case "de": return `Liga ${leagueLetter} - Gruppe ${grpNum} - Spieltag ${weekNum}`;
+        case "fr": return `Ligue ${leagueLetter} - Groupe ${grpNum} - Journée ${weekNum}`;
+        case "es": return `Liga ${leagueLetter} - Grupo ${grpNum} - Jornada ${weekNum}`;
+        case "pt": return `Liga ${leagueLetter} - Grupo ${grpNum} - Rodada ${weekNum}`;
+        case "it": return `Lega ${leagueLetter} - Gruppo ${grpNum} - Giornata ${weekNum}`;
+        case "ko": return `리그 ${leagueLetter} - ${grpNum}조 - ${weekNum}주차`;
+        case "ar": return `الدوري ${leagueLetter} - المجموعة ${grpNum} - الجولة ${weekNum}`;
+        default: return `Lig ${leagueLetter} - ${grpNum}. Grup - ${weekNum}. Hafta`;
       }
     }
 
