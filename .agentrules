@@ -27,5 +27,10 @@ Proje 4 ana ayaktan oluşur ve `app/page.tsx` üzerindeki 2x2 ızgara (grid) yap
 - **Oyunlaştırma (Gamification):** Kullanıcı etkileşimlerini artırmak için (Hakkında menüsünde kalma süresi, yardım okuma, maç takip etme vb.) "Taraftar Puanı" sistemi devrededir ve her eklemeye bu oyunlaştırma kurgusu entegre edilmelidir.
 - **Görsel Kalite:** Animasyonlar, geçişler, renk paletleri ve modern cam efekti (glassmorphism) gibi tasarım standartları korunmalıdır.
 
-## 5. Uygulama Talimatı
+## 5. CupMat Veri ve Takım Adı / Çoklu Dil Standartları
+- **Global Takım İsimleri:** CupMat ve maç fikstürlerinde takımlar kaydedilirken daima global/evrensel resmi İngilizce karşılıkları (API-Football standartları, örn: "Ajax", "Sporting Braga", "FK Jablonec", "Red Star Belgrade", "AC Milan", "Bayer Leverkusen", "Celta Vigo" vb.) ve resmi API-Football ID & logoları kullanılır.
+- **Çoklu Dil Desteği:** Fikstürler, tur/hafta başlıkları (`getLocalizedRoundName`) ve maç kartları tüm 9 dilde (`tr`, `en`, `de`, `fr`, `es`, `pt`, `it`, `ko`, `ar`) eksiksiz ve otomatik olarak yerelleştirilir.
+- **Ülke Kodları:** 3 harfli ülke kodları (`TÜR`, `İNG`, `İSP`, `ALM`, `FRA`, `İTA`, `POR`, `HOL`, `BEL`, `AVU`, `POL`, `ÇEK`, `DAN`, `İSVE`, `İSV`, `NOR`, `SIR`, `ROM`, `YUN`, `BUL` vb.) tam eşlenir.
+
+## 6. Uygulama Talimatı
 **Ey Yapay Zeka Ajanı:** Herhangi bir görev verildiğinde ilk iş olarak bu kurallara aykırı bir adım atmadığından emin ol. Cloudflare sistemine yük bindirecek ağır AI komutlarını ve veritabanı kilitlenmelerini engelleyecek optimizasyonlarla hareket et. Kullanıcının dil ve tasarım kuralları kırmızı çizgidir.
