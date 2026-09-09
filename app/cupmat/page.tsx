@@ -214,6 +214,18 @@ export default function CupMatMatchCenter() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
 
+  // Uluslar Ligi (Nations League) Custom Hierarchy States
+  const [unlOpenLeagues, setUnlOpenLeagues] = useState<Record<string, boolean>>({ "Lig A": true });
+  const [unlOpenGroups, setUnlOpenGroups] = useState<Record<string, boolean>>({ "Lig A - 1. Grup": true });
+
+  const toggleUnlLeague = (leagueKey: string) => {
+    setUnlOpenLeagues(prev => ({ ...prev, [leagueKey]: !prev[leagueKey] }));
+  };
+
+  const toggleUnlGroup = (groupKey: string) => {
+    setUnlOpenGroups(prev => ({ ...prev, [groupKey]: !prev[groupKey] }));
+  };
+
   // Fetch real matches from Supabase
   const fetchMatches = async () => {
     setIsLoading(true);
@@ -742,13 +754,167 @@ export default function CupMatMatchCenter() {
               <div className="flex items-center justify-center py-20">
                 <RefreshCw className="w-8 h-8 text-indigo-500 animate-spin" />
               </div>
-            ) : sortedRoundKeys.length === 0 ? (
+            ) : filteredMatches.length === 0 ? (
               <div className="text-center py-20 bg-slate-900/40 border border-slate-700/50 rounded-2xl">
                 <div className="text-5xl mb-4">⚽</div>
                 <h3 className="text-xl font-bold text-white mb-2">{t("Henüz Maç Takvimi Bulunmuyor")}</h3>
                 <p className="text-slate-400">{t("Seçili turnuva için fikstür verileri güncelleniyor.")}</p>
               </div>
+            ) : activeTournament === 5 ? (
+              /* ========================================================================= */
+              /* ÖZEL ULUSLAR LİGİ GÖRÜNÜMÜ: Lig A/B/C/D -> Gruplar -> Tüm Grup Maçları    */
+              /* ========================================================================= */
+              <div className="space-y-4">
+                {["Lig A", "Lig B", "Lig C", "Lig D"].map(leagueKey => {
+                  const isLeagueOpen = unlOpenLeagues[leagueKey];
+                  const leagueLetter = leagueKey.replace("Lig ", "").trim();
+                  
+                  // Lig D'de 2 grup var, diğerlerinde 4 grup var
+                  const groupsInLeague = (leagueLetter === "D") 
+                    ? ["1. Grup", "2. Grup"] 
+                    : ["1. Grup", "2. Grup", "3. Grup", "4. Grup"];
+
+                  return (
+                    <div key={leagueKey} className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden shadow-sm">
+                      {/* 1. SEVİYE: Lig Başlığı (Lig A, Lig B, Lig C, Lig D) */}
+                      <button
+                        onClick={() => toggleUnlLeague(leagueKey)}
+                        className="w-full flex items-center justify-between p-4 sm:px-6 bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer border-b border-slate-800/40"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="w-7 h-7 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-black text-sm flex items-center justify-center">
+                            {leagueLetter}
+                          </span>
+                          <h3 className="text-lg font-bold text-white">{leagueKey}</h3>
+                        </div>
+                        {isLeagueOpen ? <ChevronDown className="w-5 h-5 text-slate-400" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+                      </button>
+
+                      {/* 2. SEVİYE: Gruplar */}
+                      {isLeagueOpen && (
+                        <div className="p-3 sm:p-5 space-y-3 bg-slate-950/30">
+                          {groupsInLeague.map(groupName => {
+                            const groupFullKey = `${leagueKey} - ${groupName}`;
+                            const isGroupOpen = unlOpenGroups[groupFullKey];
+
+                            // Bu lig ve gruba ait maçları filtrele
+                            const groupMatches = filteredMatches.filter(m => {
+                              const r = m.round || "";
+                              return r.includes(leagueKey) && r.includes(groupName);
+                            });
+
+                            // Maçları hafta (1..6) ve tarihe göre sırala
+                            const sortedGroupMatches = [...groupMatches].sort((a, b) => {
+                              const getWeek = (r: string) => {
+                                const match = r.match(/(\d+)\.\s*Hafta/i);
+                                return match ? parseInt(match[1], 10) : 99;
+                              };
+                              const wA = getWeek(a.round);
+                              const wB = getWeek(b.round);
+                              if (wA !== wB) return wA - wB;
+                              return new Date(a.date).getTime() - new Date(b.date).getTime();
+                            });
+
+                            return (
+                              <div key={groupFullKey} className="bg-slate-900/60 border border-slate-800/80 rounded-xl overflow-hidden">
+                                {/* Grup Başlığı */}
+                                <button
+                                  onClick={() => toggleUnlGroup(groupFullKey)}
+                                  className="w-full flex items-center justify-between p-3.5 sm:px-5 bg-slate-800/20 hover:bg-slate-800/40 transition-colors cursor-pointer"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-bold text-indigo-400 bg-indigo-950/60 border border-indigo-500/20 px-2 py-0.5 rounded">
+                                      {leagueKey}
+                                    </span>
+                                    <h4 className="text-base font-bold text-slate-100">{groupName}</h4>
+                                    <span className="text-xs text-slate-400">({sortedGroupMatches.length} maç)</span>
+                                  </div>
+                                  {isGroupOpen ? <ChevronDown className="w-4 h-4 text-slate-400" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
+                                </button>
+
+                                {/* 3. SEVİYE: Tüm Grup Maçları Listesi (Direkt, açılan buton olmadan) */}
+                                {isGroupOpen && (
+                                  <div className="p-3 sm:p-4 space-y-2 border-t border-slate-800/60">
+                                    {sortedGroupMatches.length === 0 ? (
+                                      <p className="text-xs text-slate-400 py-3 text-center">{t("Bu grupta henüz maç bulunmuyor.")}</p>
+                                    ) : (
+                                      sortedGroupMatches.map(match => {
+                                        // Hafta bilgisini ayıkla (Örn: 1. Hafta)
+                                        const weekMatch = match.round.match(/(\d+)\.\s*Hafta/i);
+                                        const weekNum = weekMatch ? `${weekMatch[1]}. Hafta` : "";
+
+                                        return (
+                                          <div
+                                            key={match.id}
+                                            onClick={() => setSelectedMatch(match)}
+                                            className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-slate-800/40 hover:border-indigo-500/30"
+                                          >
+                                            {/* EV SAHİBİ TAKIM */}
+                                            <div className="flex items-center justify-end gap-2 text-right">
+                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                                {match.team1.countryCode}
+                                              </span>
+                                              <span className="text-sm sm:text-base font-bold text-slate-100">
+                                                {match.team1.name}
+                                              </span>
+                                            </div>
+
+                                            {/* ORTA: HAFTA ROZETİ, TARİH, SKOR / SAAT */}
+                                            <div className="flex flex-col items-center justify-center min-w-[90px] sm:min-w-[120px] gap-1">
+                                              {/* Hafta Rozeti & Tarih */}
+                                              <div className="flex items-center gap-1.5">
+                                                {weekNum && (
+                                                  <span className="text-[10px] font-black text-indigo-300 bg-indigo-950/90 border border-indigo-500/30 px-2 py-0.5 rounded">
+                                                    {weekNum}
+                                                  </span>
+                                                )}
+                                                <span className="text-[10px] font-medium text-slate-400">
+                                                  {match.dateStr}
+                                                </span>
+                                              </div>
+
+                                              {/* Skor veya Saat */}
+                                              {["FT", "AET", "PEN"].includes(match.status) ? (
+                                                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/90 rounded-md border border-slate-700">
+                                                  <span className="text-sm sm:text-base font-black text-emerald-400 tabular-nums">{match.team1.score}</span>
+                                                  <span className="text-slate-500">-</span>
+                                                  <span className="text-sm sm:text-base font-black text-emerald-400 tabular-nums">{match.team2.score}</span>
+                                                </div>
+                                              ) : (
+                                                <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-md border border-amber-500/20">
+                                                  {match.time}
+                                                </div>
+                                              )}
+                                            </div>
+
+                                            {/* DEPLASMAN TAKIM */}
+                                            <div className="flex items-center justify-start gap-2 text-left">
+                                              <span className="text-sm sm:text-base font-bold text-slate-100">
+                                                {match.team2.name}
+                                              </span>
+                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                                {match.team2.countryCode}
+                                              </span>
+                                            </div>
+                                          </div>
+                                        );
+                                      })
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
+              /* ========================================================================= */
+              /* STANDART KULÜP TURNUVALARI GÖRÜNÜMÜ (Şampiyonlar Ligi, Avrupa Ligi vb.)   */
+              /* ========================================================================= */
               <div className="space-y-4">
                 {sortedRoundKeys.map(round => {
                   const isOpen = expandedRounds[round];
@@ -778,7 +944,7 @@ export default function CupMatMatchCenter() {
                     {/* Accordion Başlığı */}
                     <button 
                       onClick={() => toggleRound(round)}
-                      className="w-full flex items-center justify-between p-4 sm:px-6 bg-slate-800/20 hover:bg-slate-800/40 transition-colors"
+                      className="w-full flex items-center justify-between p-4 sm:px-6 bg-slate-800/20 hover:bg-slate-800/40 transition-colors cursor-pointer"
                     >
                       <h3 className="text-lg font-bold text-white">{getLocalizedRoundName(round, currentLocale)}</h3>
                       {isOpen ? <ChevronDown className="w-5 h-5 text-slate-400" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
@@ -869,19 +1035,6 @@ export default function CupMatMatchCenter() {
                                         Top: {match.aggregateScore.team1} - {match.aggregateScore.team2}
                                       </span>
                                     )}
-
-                                    {/* Uluslar Ligi Grup Bilgisi Rozeti */}
-                                    {(() => {
-                                      const unlGrp = match.round.match(/(\d+)\.\s*Grup/i) || match.round.match(/Grup\s*(\d+)/i);
-                                      if (unlGrp) {
-                                        return (
-                                          <span className="text-[9px] sm:text-[10px] font-black text-purple-300 bg-purple-950/90 border border-purple-500/40 px-2 py-0.5 rounded-full mt-1 shadow-sm">
-                                            {unlGrp[1]}. Grup
-                                          </span>
-                                        );
-                                      }
-                                      return null;
-                                    })()}
                                   </div>
 
                                   {/* DEPLASMAN TAKIM */}
