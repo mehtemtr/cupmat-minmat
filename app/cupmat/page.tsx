@@ -427,9 +427,22 @@ export default function CupMatMatchCenter() {
     return m.tournament_api_id === activeTournament;
   });
 
+  const getMatchRoundKey = (match: MatchType) => {
+    let r = match.round || "Normal Sezon";
+    // Uluslar Ligi: "Lig A - 1. Grup - 1. Hafta" -> "1. Hafta - Lig A" (8 maçlık bloklar)
+    const unlMatch = r.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Grup\s*-\s*(\d+)\.\s*Hafta/i) || r.match(/Lig\s+([A-D]).*?(\d+)\.\s*Hafta/i);
+    if (unlMatch) {
+      const leagueLetter = unlMatch[1];
+      const weekNum = unlMatch[3] || unlMatch[2];
+      return `${weekNum}. Hafta - Lig ${leagueLetter}`;
+    }
+    return r;
+  };
+
   // Maçları Turlara göre grupla
   const groupedByRound = filteredMatches.reduce((acc, match) => {
-    const roundKey = activeContinent === "all" ? `${match.tournament_name} - ${match.round}` : match.round;
+    const rawRound = getMatchRoundKey(match);
+    const roundKey = activeContinent === "all" ? `${match.tournament_name} - ${rawRound}` : rawRound;
     if (!acc[roundKey]) acc[roundKey] = [];
     acc[roundKey].push(match);
     return acc;
@@ -440,7 +453,8 @@ export default function CupMatMatchCenter() {
     if (roundName.includes("Şampiyonlar Ligi")) return 1;
     if (roundName.includes("Avrupa Ligi")) return 2;
     if (roundName.includes("Konferans Ligi")) return 3;
-    return 4;
+    if (roundName.includes("Milli")) return 4;
+    return 5;
   };
 
   // En yakın oynanan veya oynanacak olan maçları en üste getiren akıllı mesafe puanlama
@@ -459,8 +473,15 @@ export default function CupMatMatchCenter() {
       const isRecentOrUpcoming = matchTime >= (now - 48 * 60 * 60 * 1000);
       const score = isRecentOrUpcoming ? diffMs : diffMs + (14 * 24 * 60 * 60 * 1000);
 
-      if (score < minScore) {
-        minScore = score;
+      // Lig A > Lig B > Lig C > Lig D sıralama alt ağırlığı
+      let unlSubWeight = 0;
+      if (roundKey.includes("Lig A")) unlSubWeight = 100;
+      else if (roundKey.includes("Lig B")) unlSubWeight = 200;
+      else if (roundKey.includes("Lig C")) unlSubWeight = 300;
+      else if (roundKey.includes("Lig D")) unlSubWeight = 400;
+
+      if (score + unlSubWeight < minScore) {
+        minScore = score + unlSubWeight;
       }
     }
     return minScore;
@@ -492,29 +513,31 @@ export default function CupMatMatchCenter() {
     let roundName = roundKey;
     if (roundKey.includes(" - ")) {
       const parts = roundKey.split(" - ");
-      if (parts.length > 2 && !roundKey.startsWith("Lig ")) {
+      if (parts.length > 2 && !roundKey.startsWith("Lig ") && !roundKey.includes(". Hafta - Lig")) {
         prefix = parts.slice(0, -1).join(" - ") + " - ";
         roundName = parts[parts.length - 1];
-      } else if (parts[0].includes("League") || parts[0].includes("Ligi") || parts[0].includes("Cup") || parts[0].includes("UEFA")) {
+      } else if (parts[0].includes("League") || parts[0].includes("Ligi") || parts[0].includes("Cup") || parts[0].includes("UEFA") || parts[0].includes("Milli")) {
         prefix = parts[0] + " - ";
-        roundName = parts[1];
+        roundName = parts.slice(1).join(" - ");
       }
     }
 
-    // Uluslar Ligi Formatı: "Lig A - 1. Grup - 1. Hafta"
-    const unlMatch = roundKey.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Grup\s*-\s*(\d+)\.\s*Hafta/i);
+    // Uluslar Ligi Formatı: "1. Hafta - Lig A"
+    const unlMatch = roundName.match(/(\d+)\.\s*Hafta\s*-\s*Lig\s+([A-D])/i) || roundName.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Hafta/i);
     if (unlMatch) {
-      const [_, leagueLetter, grpNum, weekNum] = unlMatch;
+      const isFormat1 = /^\d/i.test(unlMatch[0]);
+      const weekNum = isFormat1 ? unlMatch[1] : unlMatch[2];
+      const leagueLetter = isFormat1 ? unlMatch[2] : unlMatch[1];
       switch (lang) {
-        case "en": return `League ${leagueLetter} - Group ${grpNum} - Matchday ${weekNum}`;
-        case "de": return `Liga ${leagueLetter} - Gruppe ${grpNum} - Spieltag ${weekNum}`;
-        case "fr": return `Ligue ${leagueLetter} - Groupe ${grpNum} - Journée ${weekNum}`;
-        case "es": return `Liga ${leagueLetter} - Grupo ${grpNum} - Jornada ${weekNum}`;
-        case "pt": return `Liga ${leagueLetter} - Grupo ${grpNum} - Rodada ${weekNum}`;
-        case "it": return `Lega ${leagueLetter} - Gruppo ${grpNum} - Giornata ${weekNum}`;
-        case "ko": return `리그 ${leagueLetter} - ${grpNum}조 - ${weekNum}주차`;
-        case "ar": return `الدوري ${leagueLetter} - المجموعة ${grpNum} - الجولة ${weekNum}`;
-        default: return `Lig ${leagueLetter} - ${grpNum}. Grup - ${weekNum}. Hafta`;
+        case "en": return `${prefix}Matchday ${weekNum} - League ${leagueLetter}`;
+        case "de": return `${prefix}Spieltag ${weekNum} - Liga ${leagueLetter}`;
+        case "fr": return `${prefix}Journée ${weekNum} - Ligue ${leagueLetter}`;
+        case "es": return `${prefix}Jornada ${weekNum} - Liga ${leagueLetter}`;
+        case "pt": return `${prefix}Rodada ${weekNum} - Liga ${leagueLetter}`;
+        case "it": return `${prefix}Giornata ${weekNum} - Lega ${leagueLetter}`;
+        case "ko": return `${prefix}${weekNum}주차 - 리그 ${leagueLetter}`;
+        case "ar": return `${prefix}الجولة ${weekNum} - الدوري ${leagueLetter}`;
+        default: return `${prefix}${weekNum}. Hafta - Lig ${leagueLetter}`;
       }
     }
 
@@ -836,6 +859,19 @@ export default function CupMatMatchCenter() {
                                         Top: {match.aggregateScore.team1} - {match.aggregateScore.team2}
                                       </span>
                                     )}
+
+                                    {/* Uluslar Ligi Grup Bilgisi Rozeti */}
+                                    {(() => {
+                                      const unlGrp = match.round.match(/(\d+)\.\s*Grup/i) || match.round.match(/Grup\s*(\d+)/i);
+                                      if (unlGrp) {
+                                        return (
+                                          <span className="text-[9px] sm:text-[10px] font-black text-purple-300 bg-purple-950/90 border border-purple-500/40 px-2 py-0.5 rounded-full mt-1 shadow-sm">
+                                            {unlGrp[1]}. Grup
+                                          </span>
+                                        );
+                                      }
+                                      return null;
+                                    })()}
                                   </div>
 
                                   {/* DEPLASMAN TAKIM */}
