@@ -429,13 +429,16 @@ export default function CupMatMatchCenter() {
 
   const getMatchRoundKey = (match: MatchType) => {
     let r = match.round || "Normal Sezon";
-    // Uluslar Ligi: "Lig A - 1. Grup - 1. Hafta" -> "1. Hafta - Lig A" (8 maçlık bloklar)
-    const unlMatch = r.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Grup\s*-\s*(\d+)\.\s*Hafta/i) || r.match(/Lig\s+([A-D]).*?(\d+)\.\s*Hafta/i);
-    if (unlMatch) {
-      const leagueLetter = unlMatch[1];
-      const weekNum = unlMatch[3] || unlMatch[2];
-      return `${weekNum}. Hafta - Lig ${leagueLetter}`;
+    // YALNIZCA Uluslar Ligi (tournament_api_id === 5) için: "Lig A - 1. Grup - 1. Hafta" -> "1. Hafta - Lig A"
+    if (match.tournament_api_id === 5) {
+      const unlMatch = r.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Grup\s*-\s*(\d+)\.\s*Hafta/i);
+      if (unlMatch) {
+        const leagueLetter = unlMatch[1].toUpperCase();
+        const weekNum = unlMatch[3];
+        return `${weekNum}. Hafta - Lig ${leagueLetter}`;
+      }
     }
+    // Şampiyonlar Ligi, Avrupa Ligi ve Konferans Ligi için temiz format ("1. Hafta", "2. Hafta", "Play-offs" vb.)
     return r;
   };
 
@@ -448,61 +451,63 @@ export default function CupMatMatchCenter() {
     return acc;
   }, {} as Record<string, MatchType[]>);
 
-  // Accordion'ların Sıralanması (Şampiyonlar Ligi > Avrupa Ligi > Konferans Ligi)
+  // Accordion'ların Sıralanması (Şampiyonlar Ligi > Avrupa Ligi > Konferans Ligi > Uluslar Ligi)
   const getTournamentWeight = (roundName: string) => {
     if (roundName.includes("Şampiyonlar Ligi")) return 1;
     if (roundName.includes("Avrupa Ligi")) return 2;
     if (roundName.includes("Konferans Ligi")) return 3;
-    if (roundName.includes("Milli")) return 4;
+    if (roundName.includes("Milli") || roundName.includes("Nations")) return 4;
     return 5;
   };
 
-  // En yakın oynanan veya oynanacak olan maçları en üste getiren akıllı mesafe puanlama
-  const getRoundProximityScore = (roundKey: string) => {
-    const rMatches = groupedByRound[roundKey] || [];
-    if (rMatches.length === 0) return Infinity;
-
-    const now = Date.now();
-    let minScore = Infinity;
-
-    for (const m of rMatches) {
-      const matchTime = new Date(m.date).getTime();
-      const diffMs = Math.abs(matchTime - now);
-      
-      // Oynanmakta olan veya son 48 saatte biten / gelecek maçlara öncelik ver
-      const isRecentOrUpcoming = matchTime >= (now - 48 * 60 * 60 * 1000);
-      const score = isRecentOrUpcoming ? diffMs : diffMs + (14 * 24 * 60 * 60 * 1000);
-
-      // Lig A > Lig B > Lig C > Lig D sıralama alt ağırlığı
-      let unlSubWeight = 0;
-      if (roundKey.includes("Lig A")) unlSubWeight = 100;
-      else if (roundKey.includes("Lig B")) unlSubWeight = 200;
-      else if (roundKey.includes("Lig C")) unlSubWeight = 300;
-      else if (roundKey.includes("Lig D")) unlSubWeight = 400;
-
-      if (score + unlSubWeight < minScore) {
-        minScore = score + unlSubWeight;
-      }
+  // Turları mantıksal ve kronolojik sıraya dizen ağırlık fonksiyonu
+  const getRoundSortOrder = (roundKey: string) => {
+    // 1. Uluslar Ligi: "1. Hafta - Lig A", "1. Hafta - Lig B" ... "6. Hafta - Lig D"
+    const unlMatch = roundKey.match(/(\d+)\.\s*Hafta\s*-\s*Lig\s+([A-D])/i);
+    if (unlMatch) {
+      const weekNum = parseInt(unlMatch[1], 10);
+      const letter = unlMatch[2].toUpperCase();
+      const letterWeight: Record<string, number> = { A: 0.1, B: 0.2, C: 0.3, D: 0.4 };
+      return weekNum + (letterWeight[letter] || 0.5);
     }
-    return minScore;
+
+    // 2. Kulüp Kupaları Lig Aşaması: "1. Hafta", "2. Hafta" ... "8. Hafta"
+    const weekMatch = roundKey.match(/(\d+)\.\s*Hafta/i) || roundKey.match(/Matchday\s*(\d+)/i);
+    if (weekMatch) {
+      return parseInt(weekMatch[1], 10);
+    }
+
+    // 3. Eleme ve Eleme Sonrası Turlar
+    if (/final/i.test(roundKey) && !/yarı|çeyrek|ön/i.test(roundKey)) return 50;
+    if (/yarı\s*final|semi/i.test(roundKey)) return 51;
+    if (/çeyrek\s*final|quarter/i.test(roundKey)) return 52;
+    if (/son\s*16|round\s*of\s*16/i.test(roundKey)) return 53;
+
+    // 4. Ön Elemeler ve Play-off'lar (Lig aşamasından sonra gösterilir)
+    if (/play-?off/i.test(roundKey)) return 100;
+    if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundKey)) return 101;
+    if (/2\.\s*(?:ön\s*)?eleme|2nd\s*qualifying/i.test(roundKey)) return 102;
+    if (/1\.\s*(?:ön\s*)?eleme|1st\s*qualifying/i.test(roundKey)) return 103;
+    if (/ön\s*eleme|preliminary/i.test(roundKey)) return 104;
+
+    return 200;
   };
 
   const sortedRoundKeys = Object.keys(groupedByRound).sort((a, b) => {
-    const proxA = getRoundProximityScore(a);
-    const proxB = getRoundProximityScore(b);
-
-    // Eğer tüm kıtalar seçiliyse ve tarihler birbirine çok yakınsa turnuva ağırlığına bak
+    // "Tümünü Gör" seçiliyse önce turnuvaya göre diz
     if (activeContinent === "all") {
       const weightA = getTournamentWeight(a);
       const weightB = getTournamentWeight(b);
-      const dayDiff = Math.abs(proxA - proxB) / (1000 * 60 * 60 * 24);
-      if (dayDiff <= 2 && weightA !== weightB) {
+      if (weightA !== weightB) {
         return weightA - weightB;
       }
     }
 
-    if (proxA !== proxB) {
-      return proxA - proxB;
+    const orderA = getRoundSortOrder(a);
+    const orderB = getRoundSortOrder(b);
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
     }
     return a.localeCompare(b);
   });
@@ -513,21 +518,17 @@ export default function CupMatMatchCenter() {
     let roundName = roundKey;
     if (roundKey.includes(" - ")) {
       const parts = roundKey.split(" - ");
-      if (parts.length > 2 && !roundKey.startsWith("Lig ") && !roundKey.includes(". Hafta - Lig")) {
-        prefix = parts.slice(0, -1).join(" - ") + " - ";
-        roundName = parts[parts.length - 1];
-      } else if (parts[0].includes("League") || parts[0].includes("Ligi") || parts[0].includes("Cup") || parts[0].includes("UEFA") || parts[0].includes("Milli")) {
+      if (parts[0].includes("League") || parts[0].includes("Ligi") || parts[0].includes("Cup") || parts[0].includes("UEFA") || parts[0].includes("Milli")) {
         prefix = parts[0] + " - ";
         roundName = parts.slice(1).join(" - ");
       }
     }
 
     // Uluslar Ligi Formatı: "1. Hafta - Lig A"
-    const unlMatch = roundName.match(/(\d+)\.\s*Hafta\s*-\s*Lig\s+([A-D])/i) || roundName.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Hafta/i);
+    const unlMatch = roundName.match(/(\d+)\.\s*Hafta\s*-\s*Lig\s+([A-D])/i);
     if (unlMatch) {
-      const isFormat1 = /^\d/i.test(unlMatch[0]);
-      const weekNum = isFormat1 ? unlMatch[1] : unlMatch[2];
-      const leagueLetter = isFormat1 ? unlMatch[2] : unlMatch[1];
+      const weekNum = unlMatch[1];
+      const leagueLetter = unlMatch[2].toUpperCase();
       switch (lang) {
         case "en": return `${prefix}Matchday ${weekNum} - League ${leagueLetter}`;
         case "de": return `${prefix}Spieltag ${weekNum} - Liga ${leagueLetter}`;
@@ -541,42 +542,51 @@ export default function CupMatMatchCenter() {
       }
     }
 
-    const weekMatch = roundName.match(/(\d+)\.\s*Hafta/i) || roundName.match(/Hafta\s*(\d+)/i) || roundName.match(/Matchday\s*(\d+)/i);
+    const weekMatch = roundName.match(/(\d+)\.\s*Hafta/i) || roundName.match(/Matchday\s*(\d+)/i);
     if (weekMatch) {
       const w = weekMatch[1];
-      let localizedRound = `Lig Aşaması - ${w}. Hafta`;
       switch (lang) {
-        case "en": localizedRound = `League Stage - Matchday ${w}`; break;
-        case "de": localizedRound = `Ligaphase - Spieltag ${w}`; break;
-        case "fr": localizedRound = `Phase de Ligue - Journée ${w}`; break;
-        case "es": localizedRound = `Fase de Liga - Jornada ${w}`; break;
-        case "pt": localizedRound = `Fase de Liga - Rodada ${w}`; break;
-        case "it": localizedRound = `Fase Campionato - Giornata ${w}`; break;
-        case "ko": localizedRound = `리그 페이즈 - ${w}주차`; break;
-        case "ar": localizedRound = `مرحلة الدوري - الجولة ${w}`; break;
-        default: localizedRound = `Lig Aşaması - ${w}. Hafta`; break;
+        case "en": return `${prefix}League Stage - Matchday ${w}`;
+        case "de": return `${prefix}Ligaphase - Spieltag ${w}`;
+        case "fr": return `${prefix}Phase de Ligue - Journée ${w}`;
+        case "es": return `${prefix}Fase de Liga - Jornada ${w}`;
+        case "pt": return `${prefix}Fase de Liga - Rodada ${w}`;
+        case "it": return `${prefix}Fase Campionato - Giornata ${w}`;
+        case "ko": return `${prefix}리그 페이즈 - ${w}주차`;
+        case "ar": return `${prefix}مرحلة الدوري - الجولة ${w}`;
+        default: return `${prefix}Lig Aşaması - ${w}. Hafta`;
       }
-      return prefix ? `${prefix}${localizedRound}` : localizedRound;
     }
 
     if (/play-?off/i.test(roundName)) {
-      return prefix ? `${prefix}Play-offs` : "Play-offs";
+      return `${prefix}Play-offs`;
     }
 
     if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundName)) {
-      let localizedRound = "3. Ön Eleme";
       switch (lang) {
-        case "en": localizedRound = "3rd Qualifying Round"; break;
-        case "de": localizedRound = "3. Qualifikationsrunde"; break;
-        case "fr": localizedRound = "3e tour de qualification"; break;
-        case "es": localizedRound = "3ª Ronda de Clasificación"; break;
-        case "pt": localizedRound = "3ª Rodada de Qualificação"; break;
-        case "it": localizedRound = "3° Turno di Qualificazione"; break;
-        case "ko": localizedRound = "3차 예선"; break;
-        case "ar": localizedRound = "الدور التأهيلي الثالث"; break;
-        default: localizedRound = "3. Ön Eleme"; break;
+        case "en": return `${prefix}3rd Qualifying Round`;
+        case "de": return `${prefix}3. Qualifikationsrunde`;
+        case "fr": return `${prefix}3e tour de qualification`;
+        default: return `${prefix}3. Ön Eleme`;
       }
-      return prefix ? `${prefix}${localizedRound}` : localizedRound;
+    }
+
+    if (/2\.\s*(?:ön\s*)?eleme|2nd\s*qualifying/i.test(roundName)) {
+      switch (lang) {
+        case "en": return `${prefix}2nd Qualifying Round`;
+        case "de": return `${prefix}2. Qualifikationsrunde`;
+        case "fr": return `${prefix}2e tour de qualification`;
+        default: return `${prefix}2. Ön Eleme`;
+      }
+    }
+
+    if (/1\.\s*(?:ön\s*)?eleme|1st\s*qualifying/i.test(roundName)) {
+      switch (lang) {
+        case "en": return `${prefix}1st Qualifying Round`;
+        case "de": return `${prefix}1. Qualifikationsrunde`;
+        case "fr": return `${prefix}1er tour de qualification`;
+        default: return `${prefix}1. Ön Eleme`;
+      }
     }
 
     if (/2\.\s*(?:ön\s*)?eleme|2\.\s*eleme|2nd\s*qualifying/i.test(roundName)) {
