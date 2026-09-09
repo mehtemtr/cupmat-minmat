@@ -125,7 +125,7 @@ export async function GET(request: Request) {
     // 4. Build team map
     const teamsMap: Record<string, any> = {};
 
-    function ensureTeam(name: string, logo?: string, countryId?: string, teamId?: number) {
+    function ensureTeam(name: string, logo?: string, countryId?: string, teamId?: number, league?: string, group?: string) {
       const cleanName = normalizeTeam(name);
       if (!cleanName) return;
       if (!teamsMap[cleanName]) {
@@ -134,6 +134,8 @@ export async function GET(request: Request) {
           teamId: teamId || null,
           logo: logo || null,
           country: countryId || "",
+          league: league || "",
+          group: group || "",
           played: 0,
           win: 0,
           draw: 0,
@@ -147,13 +149,24 @@ export async function GET(request: Request) {
       } else {
         if (logo && !teamsMap[cleanName].logo) teamsMap[cleanName].logo = logo;
         if (countryId && !teamsMap[cleanName].country) teamsMap[cleanName].country = countryId;
+        if (league && !teamsMap[cleanName].league) teamsMap[cleanName].league = league;
+        if (group && !teamsMap[cleanName].group) teamsMap[cleanName].group = group;
       }
     }
 
     // Register all teams that participate in these matches
     targetMatches.forEach(m => {
-      ensureTeam(m.home_team_name, m.home_team_logo, m.home_team_country_code, m.home_team_id);
-      ensureTeam(m.away_team_name, m.away_team_logo, m.away_team_country_code, m.away_team_id);
+      let league = "";
+      let group = "";
+      if (tournamentId === 5) {
+        const parsed = (m.round || "").match(/(Lig\s+[A-D])\s*-\s*(\d+\.\s*Grup)/i);
+        if (parsed) {
+          league = parsed[1].trim(); // "Lig A"
+          group = parsed[2].trim();  // "1. Grup"
+        }
+      }
+      ensureTeam(m.home_team_name, m.home_team_logo, m.home_team_country_code, m.home_team_id, league, group);
+      ensureTeam(m.away_team_name, m.away_team_logo, m.away_team_country_code, m.away_team_id, league, group);
     });
 
     // 5. Deduplicate finished matches
