@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, Activity, MapPin, Trophy, Award, BarChart3, ChevronRight, ChevronDown, X, RefreshCw } from "lucide-react";
 import { useTranslation } from "@/contexts/LocaleContext";
+import { useUser } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js";
 import { CupMatStandings } from "@/components/cupmat/CupMatStandings";
 
@@ -31,7 +32,8 @@ const TOURNAMENTS = {
     { id: 5, name: "Milli Maçlar (Nations League)" },
   ],
   "asia": [
-    { id: 17, name: "AFC Şampiyonlar Ligi" },
+    { id: 17, name: "AFC Şampiyonlar Ligi Elite" },
+    { id: 18, name: "AFC Şampiyonlar Ligi 2" },
   ],
   "america": [
     { id: 13, name: "Copa Libertadores" },
@@ -41,6 +43,7 @@ const TOURNAMENTS = {
   ],
   "africa": [
     { id: 12, name: "CAF Şampiyonlar Ligi" },
+    { id: 20, name: "CAF Konfederasyon Kupası" },
     { id: 32, name: "Milli Elemeler (AFCON)" },
   ]
 };
@@ -188,6 +191,15 @@ type MatchType = {
 export default function CupMatMatchCenter() {
   const { t, locale } = useTranslation();
   const currentLocale = locale || "tr";
+  const { user, isSignedIn } = useUser();
+  
+  // Only hamemaht@gmail.com is authorized to see the manual sync button
+  const isAdmin = Boolean(
+    isSignedIn && (
+      user?.primaryEmailAddress?.emailAddress?.toLowerCase() === "hamemaht@gmail.com" ||
+      user?.emailAddresses?.some(e => e.emailAddress?.toLowerCase() === "hamemaht@gmail.com")
+    )
+  );
   
   // States
   const [mainView, setMainView] = useState<"matches" | "stats" | "standings" | "sm_standings">("matches");
@@ -199,6 +211,8 @@ export default function CupMatMatchCenter() {
   // Real Data States
   const [matches, setMatches] = useState<MatchType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncMessage, setSyncMessage] = useState<string | null>(null);
 
   // Fetch real matches from Supabase
   const fetchMatches = async () => {
@@ -368,6 +382,27 @@ export default function CupMatMatchCenter() {
     setIsLoading(false);
   };
 
+  const handleManualSync = async () => {
+    setIsSyncing(true);
+    setSyncMessage(null);
+    try {
+      const res = await fetch("/api/cron/cupmat-fetch", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        setSyncMessage(`✓ Başarılı: ${data.updated || 0} maç güncellendi, ${data.inserted || 0} yeni eklendi.`);
+      } else {
+        setSyncMessage("✓ Güncelleme tamamlandı.");
+      }
+      await fetchMatches();
+    } catch (e) {
+      console.error("Sync error:", e);
+      setSyncMessage("Bağlantı hatası oluştu.");
+    } finally {
+      setIsSyncing(false);
+      setTimeout(() => setSyncMessage(null), 5000);
+    }
+  };
+
   useEffect(() => {
     fetchMatches();
   }, []);
@@ -408,69 +443,45 @@ export default function CupMatMatchCenter() {
     return 4;
   };
 
-  // Dinamik Aktif Hafta Tespiti (Maçların başlamasına 5 gün kala aktif haftaya geçiş)
-  const getActiveMatchWeek = (roundGroupMap: Record<string, MatchType[]>) => {
+  // En yakın oynanan veya oynanacak olan maçları en üste getiren akıllı mesafe puanlama
+  const getRoundProximityScore = (roundKey: string) => {
+    const rMatches = groupedByRound[roundKey] || [];
+    if (rMatches.length === 0) return Infinity;
+
     const now = Date.now();
-    const fiveDaysMs = 5 * 24 * 60 * 60 * 1000;
-    
-    // Her haftanın en erken maç tarihini bul
-    const weekDates: Record<number, number> = {};
-    Object.entries(roundGroupMap).forEach(([rKey, mList]) => {
-      const matchWeek = rKey.match(/(\d+)\.\s*Hafta/i) || rKey.match(/Hafta\s*(\d+)/i) || rKey.match(/Matchday\s*(\d+)/i);
-      if (matchWeek && mList.length > 0) {
-        const w = parseInt(matchWeek[1], 10);
-        const earliest = Math.min(...mList.map(m => new Date(m.date).getTime()));
-        weekDates[w] = earliest;
-      }
-    });
+    let minScore = Infinity;
 
-    // 8'den 1'e kadar kontrol et: Maçına <= 5 gün kalan veya sürmekte olan en son hafta aktif haftadır
-    for (let w = 8; w >= 1; w--) {
-      if (weekDates[w] && now >= (weekDates[w] - fiveDaysMs)) {
-        return w;
+    for (const m of rMatches) {
+      const matchTime = new Date(m.date).getTime();
+      const diffMs = Math.abs(matchTime - now);
+      
+      // Oynanmakta olan veya son 48 saatte biten / gelecek maçlara öncelik ver
+      const isRecentOrUpcoming = matchTime >= (now - 48 * 60 * 60 * 1000);
+      const score = isRecentOrUpcoming ? diffMs : diffMs + (14 * 24 * 60 * 60 * 1000);
+
+      if (score < minScore) {
+        minScore = score;
       }
     }
-    return 1;
-  };
-
-  const activeWeek = getActiveMatchWeek(groupedByRound);
-
-  const getRoundSortWeight = (roundKey: string) => {
-    const matchWeek = roundKey.match(/(\d+)\.\s*Hafta/i) || roundKey.match(/Hafta\s*(\d+)/i) || roundKey.match(/Matchday\s*(\d+)/i);
-    if (matchWeek) {
-      const w = parseInt(matchWeek[1], 10);
-      let leagueSubWeight = 0;
-      if (roundKey.includes("Lig A")) leagueSubWeight = 0.1;
-      else if (roundKey.includes("Lig B")) leagueSubWeight = 0.2;
-      else if (roundKey.includes("Lig C")) leagueSubWeight = 0.3;
-      else if (roundKey.includes("Lig D")) leagueSubWeight = 0.4;
-
-      if (w >= activeWeek) {
-        return (w - activeWeek) + leagueSubWeight;
-      } else {
-        return (8 + w) + leagueSubWeight;
-      }
-    }
-    if (/play-?off/i.test(roundKey)) return 100;
-    if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundKey)) return 101;
-    if (/2\.\s*(?:ön\s*)?eleme|2\.\s*eleme|2nd\s*qualifying/i.test(roundKey)) return 102;
-    if (/1\.\s*(?:ön\s*)?eleme|1\.\s*eleme|1st\s*qualifying/i.test(roundKey)) return 103;
-    if (/ön\s*eleme|preliminary/i.test(roundKey)) return 104;
-    return 200;
+    return minScore;
   };
 
   const sortedRoundKeys = Object.keys(groupedByRound).sort((a, b) => {
-    const weightA = getTournamentWeight(a);
-    const weightB = getTournamentWeight(b);
-    
-    if (weightA !== weightB) {
-      return weightA - weightB;
+    const proxA = getRoundProximityScore(a);
+    const proxB = getRoundProximityScore(b);
+
+    // Eğer tüm kıtalar seçiliyse ve tarihler birbirine çok yakınsa turnuva ağırlığına bak
+    if (activeContinent === "all") {
+      const weightA = getTournamentWeight(a);
+      const weightB = getTournamentWeight(b);
+      const dayDiff = Math.abs(proxA - proxB) / (1000 * 60 * 60 * 24);
+      if (dayDiff <= 2 && weightA !== weightB) {
+        return weightA - weightB;
+      }
     }
-    
-    const rWeightA = getRoundSortWeight(a);
-    const rWeightB = getRoundSortWeight(b);
-    if (rWeightA !== rWeightB) {
-      return rWeightA - rWeightB;
+
+    if (proxA !== proxB) {
+      return proxA - proxB;
     }
     return a.localeCompare(b);
   });
@@ -606,9 +617,27 @@ export default function CupMatMatchCenter() {
             </h1>
             <p className="text-slate-400 text-lg">{t("Uluslararası Kupa Maçları")}</p>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-950/50 border border-indigo-500/20 text-indigo-300 text-sm font-medium shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            {t("Canlı Veri Akışı")}
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            {isAdmin && syncMessage && (
+              <span className="text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-500/30 px-3 py-1.5 rounded-xl animate-fade-in font-medium">
+                {syncMessage}
+              </span>
+            )}
+            {isAdmin && (
+              <button
+                onClick={handleManualSync}
+                disabled={isSyncing}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white text-xs sm:text-sm font-bold transition-all shadow-lg shadow-indigo-600/30 active:scale-95 cursor-pointer"
+                title="Sadece Admin (hamemaht@gmail.com)"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? "animate-spin" : ""}`} />
+                {isSyncing ? t("Güncelleniyor...") : t("Sonuçları Güncelle")}
+              </button>
+            )}
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-950/50 border border-indigo-500/20 text-indigo-300 text-xs sm:text-sm font-medium shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              {t("Canlı Veri Akışı")}
+            </div>
           </div>
         </div>
 
@@ -676,11 +705,15 @@ export default function CupMatMatchCenter() {
             )}
 
             {/* 3. SEVİYE: Turlar (Accordion) ve Maçlar */}
-            {activeContinent !== "all" && activeContinent !== "europe" ? (
+            {isLoading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 text-indigo-500 animate-spin" />
+              </div>
+            ) : sortedRoundKeys.length === 0 ? (
               <div className="text-center py-20 bg-slate-900/40 border border-slate-700/50 rounded-2xl">
-                <div className="text-5xl mb-4">🚧</div>
-                <h3 className="text-xl font-bold text-white mb-2">{t("Yapım Aşamasında")}</h3>
-                <p className="text-slate-400">{t("Bu kıtaya ait maç verileri çok yakında eklenecek!")}</p>
+                <div className="text-5xl mb-4">⚽</div>
+                <h3 className="text-xl font-bold text-white mb-2">{t("Henüz Maç Takvimi Bulunmuyor")}</h3>
+                <p className="text-slate-400">{t("Seçili turnuva için fikstür verileri güncelleniyor.")}</p>
               </div>
             ) : (
               <div className="space-y-4">

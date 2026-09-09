@@ -1,104 +1,65 @@
 import { NextResponse } from "next/server";
-import { fetchAndStoreDailyMatches } from "@/lib/api-football-cupmat";
+import { syncCupMatAll } from "@/lib/api-football-cupmat";
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+let redis: Redis | null = null;
+try {
+  redis = Redis.fromEnv();
+} catch (e) {
+  // Redis not configured or local environment
+}
 
 export const dynamic = "force-dynamic";
 
-// This route should be called by a CRON job (e.g., Vercel Cron or Cloudflare Workers)
-// It can also be protected by checking an Authorization header.
-export async function GET(req: Request) {
+async function handleSync(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const dateParam = searchParams.get("date"); // format: YYYY-MM-DD
+    const dateParam = searchParams.get("date") || undefined; // format: YYYY-MM-DD
 
-    console.log(`[Cron:CupMat] Starting match sync... Date: ${dateParam || "Today"}`);
+    console.log(`[Cron:CupMat] Starting unified match sync... Date: ${dateParam || "Auto (Yesterday/Today/Tomorrow + Season Schedulers)"}`);
     
-    // Call the unified sync function
-    let result;
-    if (dateParam) {
-      result = await fetchAndStoreDailyMatches(dateParam);
-    } else {
-      // Fetch today
-      const today = new Date().toISOString().split("T")[0];
-      const resToday = await fetchAndStoreDailyMatches(today);
-      
-      // Fetch yesterday
-      const yesterdayDate = new Date();
-      yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-      const yesterday = yesterdayDate.toISOString().split("T")[0];
-      const resYesterday = await fetchAndStoreDailyMatches(yesterday);
-      
-      // Günde sadece 1 kez (Örn: UTC 04:00) gelecek 7 günün maçlarını çek (100 API limitini aşmamak için)
-      const currentHour = new Date().getUTCHours();
-      let futureInserted = 0;
-      let futureUpdated = 0;
-      const futureLogs: string[] = [];
+    // Call unified master sync
+    const result = await syncCupMatAll(dateParam);
 
-      if (currentHour === 4) {
-        futureLogs.push("[Cron:CupMat] Scheduled daily pull for upcoming 7 days...");
-        for (let i = 1; i <= 7; i++) {
-          const futureDateObj = new Date();
-          futureDateObj.setDate(futureDateObj.getDate() + i);
-          const futureDateStr = futureDateObj.toISOString().split("T")[0];
-          const resFuture = await fetchAndStoreDailyMatches(futureDateStr);
-          futureInserted += resFuture.inserted || 0;
-          futureUpdated += resFuture.updated || 0;
-          if (resFuture.logs) futureLogs.push(...resFuture.logs);
-        }
-      }
-      
-      result = {
-        success: resToday.success && resYesterday.success,
-        inserted: (resToday.inserted || 0) + (resYesterday.inserted || 0) + futureInserted,
-        updated: (resToday.updated || 0) + (resYesterday.updated || 0) + futureUpdated,
-        logs: [...(resToday.logs || []), ...(resYesterday.logs || []), ...futureLogs]
-      };
-    }
-
-    // Log to Redis for the secret page
-    const logEntry = {
-      timestamp: new Date().toISOString(),
-      success: result ? result.success : false,
-      inserted: result ? result.inserted : 0,
-      updated: result ? result.updated : 0,
-      logs: result ? result.logs : ["Failed entirely or no result object"]
-    };
-    try {
-      await redis.lpush("cupmat:cron_logs", JSON.stringify(logEntry));
-      await redis.ltrim("cupmat:cron_logs", 0, 49); // Keep last 50 logs
-    } catch(e) {
-      console.error("Redis logging failed:", e);
-    }
-
-    if (result && result.success) {
-      return NextResponse.json({
-        success: true,
-        message: "Match sync completed successfully.",
+    // Log to Redis if available
+    if (redis) {
+      const logEntry = {
+        timestamp: new Date().toISOString(),
+        success: result.success,
         inserted: result.inserted,
         updated: result.updated,
         logs: result.logs
-      }, { status: 200 });
-    } else {
-      return NextResponse.json({
-        success: false,
-        error: "Failed to sync matches.",
-        logs: result ? result.logs : []
-      }, { status: 500 });
+      };
+      try {
+        await redis.lpush("cupmat:cron_logs", JSON.stringify(logEntry));
+        await redis.ltrim("cupmat:cron_logs", 0, 49); // Keep last 50 logs
+      } catch(e) {
+        console.error("Redis logging failed:", e);
+      }
     }
+
+    return NextResponse.json({
+      success: result.success,
+      message: "CupMat sync completed successfully.",
+      inserted: result.inserted,
+      updated: result.updated,
+      logs: result.logs
+    }, { status: result.success ? 200 : 500 });
+
   } catch (error: any) {
     console.error("[Cron:CupMat] Fatal error:", error);
-    try {
-      await redis.lpush("cupmat:cron_logs", JSON.stringify({
-        timestamp: new Date().toISOString(),
-        success: false,
-        inserted: 0,
-        updated: 0,
-        logs: [`[FATAL ERROR] ${error.message}`]
-      }));
-      await redis.ltrim("cupmat:cron_logs", 0, 49);
-    } catch(e) {}
+    if (redis) {
+      try {
+        await redis.lpush("cupmat:cron_logs", JSON.stringify({
+          timestamp: new Date().toISOString(),
+          success: false,
+          inserted: 0,
+          updated: 0,
+          logs: [`[FATAL ERROR] ${error.message}`]
+        }));
+        await redis.ltrim("cupmat:cron_logs", 0, 49);
+      } catch(e) {}
+    }
     
     return NextResponse.json(
       { success: false, error: error.message },
@@ -106,3 +67,12 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function GET(req: Request) {
+  return handleSync(req);
+}
+
+export async function POST(req: Request) {
+  return handleSync(req);
+}
+
