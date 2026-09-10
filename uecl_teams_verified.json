@@ -1,0 +1,218 @@
+{
+  "AGF": {
+    "id": 393,
+    "name": "AGF Aarhus",
+    "logo": "https://media.api-sports.io/football/teams/393.png",
+    "country_code": "DAN"
+  },
+  "Ajax": {
+    "id": 194,
+    "name": "Ajax",
+    "logo": "https://media.api-sports.io/football/teams/194.png",
+    "country_code": "HOL"
+  },
+  "Atalanta": {
+    "id": 499,
+    "name": "Atalanta",
+    "logo": "https://media.api-sports.io/football/teams/499.png",
+    "country_code": "İTA"
+  },
+  "Borac Banja Luka": {
+    "id": 4388,
+    "name": "Borac Banja Luka",
+    "logo": "https://media.api-sports.io/football/teams/4388.png",
+    "country_code": "BOS"
+  },
+  "Braga": {
+    "id": 217,
+    "name": "Sporting Braga",
+    "logo": "https://media.api-sports.io/football/teams/217.png",
+    "country_code": "POR"
+  },
+  "Brann": {
+    "id": 319,
+    "name": "SK Brann",
+    "logo": "https://media.api-sports.io/football/teams/319.png",
+    "country_code": "NOR"
+  },
+  "Brighton": {
+    "id": 51,
+    "name": "Brighton & Hove Albion",
+    "logo": "https://media.api-sports.io/football/teams/51.png",
+    "country_code": "İNG"
+  },
+  "CS U Craiova": {
+    "id": 588,
+    "name": "Universitatea Craiova",
+    "logo": "https://media.api-sports.io/football/teams/588.png",
+    "country_code": "ROM"
+  },
+  "Egnatia": {
+    "id": 8555,
+    "name": "Egnatia Rrogozhinë",
+    "logo": "https://media.api-sports.io/football/teams/8555.png",
+    "country_code": "ARN"
+  },
+  "Freiburg": {
+    "id": 160,
+    "name": "SC Freiburg",
+    "logo": "https://media.api-sports.io/football/teams/160.png",
+    "country_code": "ALM"
+  },
+  "Gent": {
+    "id": 631,
+    "name": "KAA Gent",
+    "logo": "https://media.api-sports.io/football/teams/631.png",
+    "country_code": "BEL"
+  },
+  "Getafe": {
+    "id": 546,
+    "name": "Getafe",
+    "logo": "https://media.api-sports.io/football/teams/546.png",
+    "country_code": "İSP"
+  },
+  "Hajduk Split": {
+    "id": 622,
+    "name": "Hajduk Split",
+    "logo": "https://media.api-sports.io/football/teams/622.png",
+    "country_code": "HIR"
+  },
+  "Hearts": {
+    "id": 254,
+    "name": "Heart of Midlothian",
+    "logo": "https://media.api-sports.io/football/teams/254.png",
+    "country_code": "İSK"
+  },
+  "Inter Club": {
+    "id": 7847,
+    "name": "Inter Club d'Escaldes",
+    "logo": "https://media.api-sports.io/football/teams/7847.png",
+    "country_code": "AND"
+  },
+  "Jablonec": {
+    "id": 593,
+    "name": "FK Jablonec",
+    "logo": "https://media.api-sports.io/football/teams/593.png",
+    "country_code": "ÇEK"
+  },
+  "Kairat": {
+    "id": 563,
+    "name": "Kairat Almaty",
+    "logo": "https://media.api-sports.io/football/teams/563.png",
+    "country_code": "KAZ"
+  },
+  "Kauno Žalgiris": {
+    "id": 1058,
+    "name": "Kauno Žalgiris",
+    "logo": "https://media.api-sports.io/football/teams/1058.png",
+    "country_code": "LİT"
+  },
+  "Kopenhag": {
+    "id": 400,
+    "name": "FC Copenhagen",
+    "logo": "https://media.api-sports.io/football/teams/400.png",
+    "country_code": "DAN"
+  },
+  "KuPS": {
+    "id": 1184,
+    "name": "KuPS",
+    "logo": "https://media.api-sports.io/football/teams/1184.png",
+    "country_code": "FİN"
+  },
+  "Kızılyıldız": {
+    "id": 597,
+    "name": "Red Star Belgrade",
+    "logo": "https://media.api-sports.io/football/teams/597.png",
+    "country_code": "SIR"
+  },
+  "Lincoln": {
+    "id": 4381,
+    "name": "Lincoln Red Imps",
+    "logo": "https://media.api-sports.io/football/teams/4381.png",
+    "country_code": "CEB"
+  },
+  "Lugano": {
+    "id": 580,
+    "name": "FC Lugano",
+    "logo": "https://media.api-sports.io/football/teams/580.png",
+    "country_code": "İSV"
+  },
+  "Midtjylland": {
+    "id": 399,
+    "name": "FC Midtjylland",
+    "logo": "https://media.api-sports.io/football/teams/399.png",
+    "country_code": "DAN"
+  },
+  "Mjällby": {
+    "id": 374,
+    "name": "Mjällby AIF",
+    "logo": "https://media.api-sports.io/football/teams/374.png",
+    "country_code": "İSVE"
+  },
+  "Monaco": {
+    "id": 91,
+    "name": "AS Monaco",
+    "logo": "https://media.api-sports.io/football/teams/91.png",
+    "country_code": "FRA"
+  },
+  "Nordsjælland": {
+    "id": 396,
+    "name": "FC Nordsjælland",
+    "logo": "https://media.api-sports.io/football/teams/396.png",
+    "country_code": "DAN"
+  },
+  "Pafos": {
+    "id": 4872,
+    "name": "Pafos FC",
+    "logo": "https://media.api-sports.io/football/teams/4872.png",
+    "country_code": "KIB"
+  },
+  "Panathinaikos": {
+    "id": 557,
+    "name": "Panathinaikos",
+    "logo": "https://media.api-sports.io/football/teams/557.png",
+    "country_code": "YUN"
+  },
+  "Riga FC": {
+    "id": 3656,
+    "name": "Riga FC",
+    "logo": "https://media.api-sports.io/football/teams/3656.png",
+    "country_code": "LET"
+  },
+  "STVV": {
+    "id": 736,
+    "name": "Sint-Truidense VV",
+    "logo": "https://media.api-sports.io/football/teams/736.png",
+    "country_code": "BEL"
+  },
+  "Saburtalo": {
+    "id": 4386,
+    "name": "FC Iberia 1999",
+    "logo": "https://media.api-sports.io/football/teams/4386.png",
+    "country_code": "GÜR"
+  },
+  "Thun": {
+    "id": 635,
+    "name": "FC Thun",
+    "logo": "https://media.api-sports.io/football/teams/635.png",
+    "country_code": "İSV"
+  },
+  "Trabzonspor": {
+    "id": 998,
+    "name": "Trabzonspor",
+    "logo": "https://media.api-sports.io/football/teams/998.png",
+    "country_code": "TÜR"
+  },
+  "Twente": {
+    "id": 195,
+    "name": "FC Twente",
+    "logo": "https://media.api-sports.io/football/teams/195.png",
+    "country_code": "HOL"
+  },
+  "ÇSKA Sofya": {
+    "id": 565,
+    "name": "CSKA Sofia",
+    "logo": "https://media.api-sports.io/football/teams/565.png",
+    "country_code": "BUL"
+  }
+}

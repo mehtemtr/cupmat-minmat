@@ -1,0 +1,56 @@
+{
+  "AZ": {
+    "id": 201,
+    "name": "AZ Alkmaar",
+    "logo": "https://media.api-sports.io/football/teams/201.png",
+    "country": "Netherlands"
+  },
+  "Anderlecht": {
+    "id": 554,
+    "name": "Anderlecht",
+    "logo": "https://media.api-sports.io/football/teams/554.png",
+    "country": "Belgium"
+  },
+  "Benfica": {
+    "id": 211,
+    "name": "Benfica",
+    "logo": "https://media.api-sports.io/football/teams/211.png",
+    "country": "Portugal"
+  },
+  "Beşiktaş": {
+    "id": 549,
+    "name": "Beşiktaş",
+    "logo": "https://media.api-sports.io/football/teams/549.png",
+    "country": "Turkey"
+  },
+  "Bournemouth": {
+    "id": 35,
+    "name": "Bournemouth",
+    "logo": "https://media.api-sports.io/football/teams/35.png",
+    "country": "England"
+  },
+  "Celje": {
+    "id": 4360,
+    "name": "Celje",
+    "logo": "https://media.api-sports.io/football/teams/4360.png",
+    "country": "Slovenia"
+  },
+  "Celta": {
+    "id": 538,
+    "name": "Celta Vigo",
+    "logo": "https://media.api-sports.io/football/teams/538.png",
+    "country": "Spain"
+  },
+  "Celtic": {
+    "id": 247,
+    "name": "Celtic",
+    "logo": "https://media.api-sports.io/football/teams/247.png",
+    "country": "Scotland"
+  },
+  "Crystal Palace": {
+    "id": 52,
+    "name": "Crystal Palace",
+    "logo": "https://media.api-sports.io/football/teams/52.png",
+    "country": "England"
+  }
+}
