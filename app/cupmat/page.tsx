@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Calendar, Activity, MapPin, Trophy, Award, BarChart3, ChevronRight, ChevronDown, X, RefreshCw } from "lucide-react";
+import { Calendar, Activity, MapPin, Trophy, Award, BarChart3, ChevronRight, ChevronDown, X, RefreshCw, Globe } from "lucide-react";
 import { useTranslation } from "@/contexts/LocaleContext";
 import { useUser } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js";
