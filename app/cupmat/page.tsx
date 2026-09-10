@@ -257,6 +257,7 @@ export default function CupMatMatchCenter() {
 
           let cleanRound = item.round || 'Normal Sezon';
           cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
+          cleanRound = cleanRound.replace(/(\d+)\.\s*Eleme\s*Turu/i, "$1. Ön Eleme");
 
           const homeCountry = (item.home_team_country_code && item.home_team_country_code !== "TBD" && item.home_team_country_code !== "UNK")
             ? item.home_team_country_code 
