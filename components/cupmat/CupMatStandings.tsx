@@ -459,3 +459,409 @@ export function CupMatStandings() {
   );
 }
 
+// ==========================================
+// 🌍 ÜLKE PERFORMANS / PUAN TABLOSU (MBP - Maç Başına Puan)
+// ==========================================
+interface MatchTeam {
+  name: string;
+  countryCode: string;
+  score: number | null;
+}
+
+interface MatchItem {
+  id: string;
+  tournament_name: string;
+  tournament_api_id: number;
+  status: string;
+  team1: MatchTeam;
+  team2: MatchTeam;
+}
+
+interface CountryStats {
+  countryCode: string;
+  countryName: string;
+  flag: string;
+  played: number;
+  win: number;
+  draw: number;
+  loss: number;
+  gf: number;
+  ga: number;
+  gd: number;
+  pts: number;
+  ppg: number;
+  teams: Record<string, {
+    played: number;
+    win: number;
+    draw: number;
+    loss: number;
+    pts: number;
+    gf: number;
+    ga: number;
+  }>;
+}
+
+const COUNTRY_NAMES: Record<string, { name: string; flag: string }> = {
+  TÜR: { name: "Türkiye", flag: "🇹🇷" },
+  İNG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+  İSP: { name: "İspanya", flag: "🇪🇸" },
+  ALM: { name: "Almanya", flag: "🇩🇪" },
+  İTA: { name: "İtalya", flag: "🇮🇹" },
+  FRA: { name: "Fransa", flag: "🇫🇷" },
+  POR: { name: "Portekiz", flag: "🇵🇹" },
+  HOL: { name: "Hollanda", flag: "🇳🇱" },
+  BEL: { name: "Belçika", flag: "🇧🇪" },
+  ÇEK: { name: "Çekya", flag: "🇨🇿" },
+  İSV: { name: "İsviçre", flag: "🇨🇭" },
+  AVU: { name: "Avusturya", flag: "🇦🇹" },
+  İSK: { name: "İskoçya", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
+  YUN: { name: "Yunanistan", flag: "🇬🇷" },
+  NOR: { name: "Norveç", flag: "🇳🇴" },
+  DAN: { name: "Danimarka", flag: "🇩🇰" },
+  POL: { name: "Polonya", flag: "🇵🇱" },
+  HIR: { name: "Hırvatistan", flag: "🇭🇷" },
+  İSVE: { name: "İsveç", flag: "🇸🇪" },
+  KIB: { name: "Kıbrıs", flag: "🇨🇾" },
+  SIR: { name: "Sırbistan", flag: "🇷🇸" },
+  ROM: { name: "Romanya", flag: "🇷🇴" },
+  MAC: { name: "Macaristan", flag: "🇭🇺" },
+  UKR: { name: "Ukrayna", flag: "🇺🇦" },
+  AZE: { name: "Azerbaycan", flag: "🇦🇿" },
+  BUL: { name: "Bulgaristan", flag: "🇧🇬" },
+  SVK: { name: "Slovakya", flag: "🇸🇰" },
+  SVN: { name: "Slovenya", flag: "🇸🇮" },
+  KOS: { name: "Kosova", flag: "🇽🇰" },
+  KAZ: { name: "Kazakistan", flag: "🇰🇿" },
+  ERM: { name: "Ermenistan", flag: "🇦🇲" },
+  BOS: { name: "Bosna Hersek", flag: "🇧🇦" },
+  ARN: { name: "Arnavutluk", flag: "🇦🇱" },
+  GÜR: { name: "Gürcistan", flag: "🇬🇪" },
+  FİN: { name: "Finlandiya", flag: "🇫🇮" },
+  İZL: { name: "İzlanda", flag: "🇮🇸" },
+  İRL: { name: "İrlanda", flag: "🇮🇪" },
+  "K.İR": { name: "Kuzey İrlanda", flag: "🇬🇧" },
+  GAL: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
+  LÜK: { name: "Lüksemburg", flag: "🇱🇺" },
+  LİT: { name: "Litvanya", flag: "🇱🇹" },
+  LET: { name: "Letonya", flag: "🇱🇻" },
+  EST: { name: "Estonya", flag: "🇪🇪" },
+  MOL: { name: "Moldova", flag: "🇲🇩" },
+  FAR: { name: "Faroe Adaları", flag: "🇫🇴" },
+  MLT: { name: "Malta", flag: "🇲🇹" },
+  AND: { name: "Andorra", flag: "🇦🇩" },
+  CEB: { name: "Cebelitarık", flag: "🇬🇮" },
+  BLR: { name: "Belarus", flag: "🇧🇾" },
+  KRD: { name: "Karadağ", flag: "🇲🇪" },
+  "K.MK": { name: "Kuzey Makedonya", flag: "🇲🇰" },
+  SMR: { name: "San Marino", flag: "🇸🇲" },
+  İSR: { name: "İsrail", flag: "🇮🇱" },
+  BRA: { name: "Brezilya", flag: "🇧🇷" },
+  ARG: { name: "Arjantin", flag: "🇦🇷" },
+  KOL: { name: "Kolombiya", flag: "🇨🇴" },
+  ŞİL: { name: "Şili", flag: "🇨🇱" },
+  EKV: { name: "Ekvador", flag: "🇪🇨" },
+  URU: { name: "Uruguay", flag: "🇺🇾" },
+  PAR: { name: "Paraguay", flag: "🇵🇾" },
+  PER: { name: "Peru", flag: "🇵🇪" },
+  BOL: { name: "Bolivya", flag: "🇧🇴" },
+  VEN: { name: "Venezuela", flag: "🇻🇪" },
+};
+
+export function CupMatCountryRankings({ matches }: { matches: MatchItem[] }) {
+  const { t } = useTranslation();
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [minMatchesFilter, setMinMatchesFilter] = useState<number>(1);
+  const [tournamentFilter, setTournamentFilter] = useState<string>("all");
+
+  const countryRankings = React.useMemo(() => {
+    const stats: Record<string, CountryStats> = {};
+
+    const finishedMatches = matches.filter(m => {
+      const isFinished = ["FT", "AET", "PEN"].includes(m.status);
+      if (!isFinished) return false;
+      if (tournamentFilter !== "all" && m.tournament_api_id.toString() !== tournamentFilter) return false;
+      return true;
+    });
+
+    finishedMatches.forEach(m => {
+      const s1 = m.team1.score;
+      const s2 = m.team2.score;
+      if (s1 === null || s2 === null) return;
+
+      const c1 = m.team1.countryCode;
+      const c2 = m.team2.countryCode;
+
+      const addTeamStats = (countryCode: string, teamName: string, myScore: number, oppScore: number) => {
+        if (!countryCode || countryCode === "UNK" || countryCode === "TBD") return;
+
+        if (!stats[countryCode]) {
+          const info = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: "🌍" };
+          stats[countryCode] = {
+            countryCode,
+            countryName: info.name,
+            flag: info.flag,
+            played: 0,
+            win: 0,
+            draw: 0,
+            loss: 0,
+            gf: 0,
+            ga: 0,
+            gd: 0,
+            pts: 0,
+            ppg: 0,
+            teams: {}
+          };
+        }
+
+        const c = stats[countryCode];
+        c.played += 1;
+        c.gf += myScore;
+        c.ga += oppScore;
+        c.gd = c.gf - c.ga;
+
+        let matchPts = 0;
+        let isWin = false;
+        let isDraw = false;
+        let isLoss = false;
+
+        if (myScore > oppScore) {
+          c.win += 1;
+          matchPts = 3;
+          isWin = true;
+        } else if (myScore === oppScore) {
+          c.draw += 1;
+          matchPts = 1;
+          isDraw = true;
+        } else {
+          c.loss += 1;
+          isLoss = true;
+        }
+
+        c.pts += matchPts;
+        c.ppg = c.played > 0 ? Number((c.pts / c.played).toFixed(2)) : 0;
+
+        if (!c.teams[teamName]) {
+          c.teams[teamName] = { played: 0, win: 0, draw: 0, loss: 0, pts: 0, gf: 0, ga: 0 };
+        }
+        const tStat = c.teams[teamName];
+        tStat.played += 1;
+        tStat.gf += myScore;
+        tStat.ga += oppScore;
+        if (isWin) tStat.win += 1;
+        if (isDraw) tStat.draw += 1;
+        if (isLoss) tStat.loss += 1;
+        tStat.pts += matchPts;
+      };
+
+      addTeamStats(c1, m.team1.name, s1, s2);
+      addTeamStats(c2, m.team2.name, s2, s1);
+    });
+
+    return Object.values(stats)
+      .filter(c => c.played >= minMatchesFilter)
+      .sort((a, b) => {
+        if (b.ppg !== a.ppg) return b.ppg - a.ppg;
+        if (b.pts !== a.pts) return b.pts - a.pts;
+        if (b.gd !== a.gd) return b.gd - a.gd;
+        return b.gf - a.gf;
+      });
+  }, [matches, minMatchesFilter, tournamentFilter]);
+
+  return (
+    <div className="space-y-6 animate-in fade-in-50 duration-200">
+      
+      {/* BILGI KARTI */}
+      <div className="bg-gradient-to-r from-indigo-950/70 via-slate-900/80 to-blue-950/70 border border-indigo-500/30 p-5 sm:p-6 rounded-2xl shadow-lg relative overflow-hidden">
+        <div className="absolute right-0 top-0 -mt-4 -mr-4 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative z-10">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="text-2xl">🌍</span>
+              <h2 className="text-xl sm:text-2xl font-black text-white">{t("Ülke Performans Sıralaması")}</h2>
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+                {t("Maç Başına Puan")} (MBP)
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+              Kulüplerin kupalarda oynadığı tüm maçların puan ortalamasıdır (G: 3P, B: 1P). Çok maç yapan ülkelerin haksız avantajını engellemek için sıralama <strong>Maç Başına Kazanılan Ortalama Puan (MBP)</strong> üzerinden yapılır.
+            </p>
+          </div>
+
+          {/* Filtreler */}
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <select
+              value={tournamentFilter}
+              onChange={e => setTournamentFilter(e.target.value)}
+              className="bg-slate-900/90 border border-slate-700 text-xs sm:text-sm text-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500 cursor-pointer"
+            >
+              <option value="all">{t("Tüm Turnuvalar")}</option>
+              <option value="2">Şampiyonlar Ligi</option>
+              <option value="3">Avrupa Ligi</option>
+              <option value="848">Konferans Ligi</option>
+              <option value="13">Copa Libertadores</option>
+              <option value="11">Copa Sudamericana</option>
+            </select>
+
+            <select
+              value={minMatchesFilter}
+              onChange={e => setMinMatchesFilter(Number(e.target.value))}
+              className="bg-slate-900/90 border border-slate-700 text-xs sm:text-sm text-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500 cursor-pointer"
+            >
+              <option value="1">{t("Min. 1 Maç")}</option>
+              <option value="2">{t("Min. 2 Maç")}</option>
+              <option value="4">{t("Min. 4 Maç")}</option>
+              <option value="6">{t("Min. 6 Maç")}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* SIRALAMA TABLOSU */}
+      <div className="bg-slate-900/50 border border-slate-700/60 rounded-2xl overflow-hidden shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-800/40 text-slate-400 text-xs font-semibold border-b border-slate-800 uppercase tracking-wider">
+                <th className="py-3.5 px-3 sm:px-4 text-center w-12">#</th>
+                <th className="py-3.5 px-4">{t("Ülke")}</th>
+                <th className="py-3.5 px-3 text-center">{t("OM")}</th>
+                <th className="py-3.5 px-3 text-center text-emerald-400 font-bold">{t("G")}</th>
+                <th className="py-3.5 px-3 text-center text-slate-300 font-bold">{t("B")}</th>
+                <th className="py-3.5 px-3 text-center text-rose-400 font-bold">{t("M")}</th>
+                <th className="py-3.5 px-3 text-center hidden sm:table-cell">{t("Gol")}</th>
+                <th className="py-3.5 px-3 text-center hidden sm:table-cell">{t("Av.")}</th>
+                <th className="py-3.5 px-3 text-center">{t("Toplam P")}</th>
+                <th className="py-3.5 px-4 text-center text-indigo-400 font-black bg-indigo-950/30">
+                  {t("MBP (Ort.)")}
+                </th>
+                <th className="py-3.5 px-3 text-center w-10"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/50 text-sm">
+              {countryRankings.length === 0 ? (
+                <tr>
+                  <td colSpan={11} className="py-12 text-center text-slate-500">
+                    {t("Bu filtre için oynanmış maç bulunmuyor.")}
+                  </td>
+                </tr>
+              ) : (
+                countryRankings.map((c, index) => {
+                  const isTop3 = index < 3;
+                  const isTurkey = c.countryCode === "TÜR";
+                  const isOpen = selectedCountry === c.countryCode;
+                  const teamNames = Object.keys(c.teams);
+
+                  return (
+                    <React.Fragment key={c.countryCode}>
+                      <tr
+                        onClick={() => setSelectedCountry(isOpen ? null : c.countryCode)}
+                        className={`transition-colors cursor-pointer group ${
+                          isTurkey
+                            ? "bg-red-950/20 hover:bg-red-950/35 border-l-4 border-l-red-500"
+                            : isTop3
+                            ? "bg-slate-900/30 hover:bg-slate-800/50"
+                            : "hover:bg-slate-800/40"
+                        }`}
+                      >
+                        {/* SIRA */}
+                        <td className="py-3.5 px-3 sm:px-4 text-center font-black">
+                          {index === 0 ? (
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs">🥇 1</span>
+                          ) : index === 1 ? (
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-300/20 text-slate-200 border border-slate-300/40 text-xs">🥈 2</span>
+                          ) : index === 2 ? (
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-700/20 text-amber-600 border border-amber-700/40 text-xs">🥉 3</span>
+                          ) : (
+                            <span className="text-slate-400">{index + 1}</span>
+                          )}
+                        </td>
+
+                        {/* ÜLKE */}
+                        <td className="py-3.5 px-4 font-bold text-slate-100">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-lg">{c.flag}</span>
+                            <span className={`${isTurkey ? "text-red-300 font-black" : ""}`}>{c.countryName}</span>
+                            <span className="text-[11px] font-medium text-slate-400 bg-slate-800/70 px-1.5 py-0.5 rounded border border-slate-700/50">
+                              {teamNames.length} {t("takım")}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* OM */}
+                        <td className="py-3.5 px-3 text-center text-slate-300 font-semibold">{c.played}</td>
+                        {/* G */}
+                        <td className="py-3.5 px-3 text-center text-emerald-400 font-bold">{c.win}</td>
+                        {/* B */}
+                        <td className="py-3.5 px-3 text-center text-slate-400">{c.draw}</td>
+                        {/* M */}
+                        <td className="py-3.5 px-3 text-center text-rose-400/80">{c.loss}</td>
+                        {/* GOL */}
+                        <td className="py-3.5 px-3 text-center text-slate-400 text-xs hidden sm:table-cell">
+                          {c.gf}:{c.ga}
+                        </td>
+                        {/* AV */}
+                        <td className={`py-3.5 px-3 text-center text-xs font-bold hidden sm:table-cell ${
+                          c.gd > 0 ? "text-emerald-400" : c.gd < 0 ? "text-rose-400" : "text-slate-400"
+                        }`}>
+                          {c.gd > 0 ? `+${c.gd}` : c.gd}
+                        </td>
+                        {/* TOPLAM PUAN */}
+                        <td className="py-3.5 px-3 text-center text-slate-200 font-bold">{c.pts}</td>
+                        {/* MAÇ BAŞINA PUAN (MBP) */}
+                        <td className="py-3.5 px-4 text-center bg-indigo-950/20 font-black text-indigo-300 text-base">
+                          {c.ppg.toFixed(2)}
+                        </td>
+                        {/* OK İKONU */}
+                        <td className="py-3.5 px-3 text-center text-slate-500">
+                          {isOpen ? <ChevronDown className="w-4 h-4 text-indigo-400" /> : <ChevronRight className="w-4 h-4" />}
+                        </td>
+                      </tr>
+
+                      {/* TAKIM DETAYLARI (AÇILIR SATIR) */}
+                      {isOpen && (
+                        <tr className="bg-slate-950/60 border-y border-slate-800">
+                          <td colSpan={11} className="p-4 sm:px-8">
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                <span>{c.flag} {c.countryName} {t("Kulüplerinin Katkısı")}</span>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {teamNames.map(tName => {
+                                  const tInfo = c.teams[tName];
+                                  const tPpg = (tInfo.pts / tInfo.played).toFixed(2);
+                                  return (
+                                    <div
+                                      key={tName}
+                                      className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between"
+                                    >
+                                      <div>
+                                        <h5 className="font-bold text-white text-sm">{tName}</h5>
+                                        <p className="text-xs text-slate-400 mt-0.5">
+                                          {tInfo.played} {t("maç")} • {tInfo.win}G {tInfo.draw}B {tInfo.loss}M ({tInfo.gf}:{tInfo.ga})
+                                        </p>
+                                      </div>
+                                      <div className="text-right">
+                                        <div className="text-sm font-black text-indigo-400">{tInfo.pts} Puan</div>
+                                        <div className="text-[10px] text-slate-400 font-semibold">{tPpg} MBP</div>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+

@@ -5,7 +5,7 @@ import { Calendar, Activity, MapPin, Trophy, Award, BarChart3, ChevronRight, Che
 import { useTranslation } from "@/contexts/LocaleContext";
 import { useUser } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js";
-import { CupMatStandings } from "@/components/cupmat/CupMatStandings";
+import { CupMatStandings, CupMatCountryRankings } from "@/components/cupmat/CupMatStandings";
 
 // Supabase client initialization (Client-side)
 const supabase = createClient(
@@ -202,7 +202,7 @@ export default function CupMatMatchCenter() {
   );
   
   // States
-  const [mainView, setMainView] = useState<"matches" | "stats" | "standings" | "sm_standings">("matches");
+  const [mainView, setMainView] = useState<"matches" | "stats" | "standings" | "sm_standings" | "country_rankings">("matches");
   const [activeContinent, setActiveContinent] = useState<string>("europe");
   const [activeTournament, setActiveTournament] = useState<number>(2);
   const [expandedRounds, setExpandedRounds] = useState<Record<string, boolean>>({});
@@ -745,12 +745,13 @@ export default function CupMatMatchCenter() {
           </div>
         </div>
 
-        {/* 4 Ana Sayfa (View Switcher) */}
+        {/* 5 Ana Sayfa (View Switcher) */}
         <div className="flex bg-slate-900/60 p-1.5 rounded-2xl border border-slate-700/50 w-full sm:w-fit mb-8 overflow-x-auto hide-scrollbar">
           {[
             { id: "matches", label: "Maçlar", icon: Calendar },
             { id: "stats", label: "İstatistikler", icon: BarChart3 },
             { id: "standings", label: "Puan Tablosu", icon: Trophy },
+            { id: "country_rankings", label: "Ülke Puanı", icon: Globe },
             { id: "sm_standings", label: "StatMatik Tablo", icon: Award }
           ].map(view => (
             <button
@@ -1407,6 +1408,7 @@ export default function CupMatMatchCenter() {
 
         {mainView === "stats" && <div className="text-center py-20 text-slate-400">{t("İstatistikler çok yakında eklenecek.")}</div>}
         {mainView === "standings" && <CupMatStandings />}
+        {mainView === "country_rankings" && <CupMatCountryRankings matches={matches} />}
         {mainView === "sm_standings" && <div className="text-center py-20 text-slate-400">{t("StatMatik Endeks tablosu çok yakında eklenecek.")}</div>}
 
       </div>
