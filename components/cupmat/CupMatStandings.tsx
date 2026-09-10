@@ -567,7 +567,7 @@ const COUNTRY_NAMES: Record<string, { name: string; flag: string }> = {
   VEN: { name: "Venezuela", flag: "🇻🇪" },
 };
 
-export function CupMatCountryRankings({ matches }: { matches: MatchItem[] }) {
+export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] }) {
   const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [minMatchesFilter, setMinMatchesFilter] = useState<number>(1);
@@ -576,20 +576,25 @@ export function CupMatCountryRankings({ matches }: { matches: MatchItem[] }) {
   const countryRankings = React.useMemo(() => {
     const stats: Record<string, CountryStats> = {};
 
+    if (!Array.isArray(matches)) return [];
+
     const finishedMatches = matches.filter(m => {
+      if (!m || !m.team1 || !m.team2) return false;
       const isFinished = ["FT", "AET", "PEN"].includes(m.status);
       if (!isFinished) return false;
-      if (tournamentFilter !== "all" && m.tournament_api_id.toString() !== tournamentFilter) return false;
+      if (tournamentFilter !== "all" && String(m.tournament_api_id || "") !== tournamentFilter) return false;
       return true;
     });
 
     finishedMatches.forEach(m => {
-      const s1 = m.team1.score;
-      const s2 = m.team2.score;
-      if (s1 === null || s2 === null) return;
+      const s1 = m.team1?.score;
+      const s2 = m.team2?.score;
+      if (s1 === null || s1 === undefined || s2 === null || s2 === undefined) return;
 
-      const c1 = m.team1.countryCode;
-      const c2 = m.team2.countryCode;
+      const c1 = m.team1?.countryCode || "";
+      const c2 = m.team2?.countryCode || "";
+      const t1Name = m.team1?.name || "Bilinmeyen";
+      const t2Name = m.team2?.name || "Bilinmeyen";
 
       const addTeamStats = (countryCode: string, teamName: string, myScore: number, oppScore: number) => {
         if (!countryCode || countryCode === "UNK" || countryCode === "TBD") return;
@@ -598,8 +603,8 @@ export function CupMatCountryRankings({ matches }: { matches: MatchItem[] }) {
           const info = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: "🌍" };
           stats[countryCode] = {
             countryCode,
-            countryName: info.name,
-            flag: info.flag,
+            countryName: info.name || countryCode,
+            flag: info.flag || "🌍",
             played: 0,
             win: 0,
             draw: 0,
