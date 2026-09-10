@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Trophy, RefreshCw, Shield, Award, CheckCircle2, Flame, Globe } from "lucide-react";
+import { Trophy, RefreshCw, Shield, Award, CheckCircle2, Flame, Globe, ChevronRight, ChevronDown } from "lucide-react";
 import { useTranslation } from "@/contexts/LocaleContext";
 
 interface StandingTeam {
