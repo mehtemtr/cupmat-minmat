@@ -218,6 +218,11 @@ export default function CupMatMatchCenter() {
   const [unlOpenLeagues, setUnlOpenLeagues] = useState<Record<string, boolean>>({ "Lig A": true });
   const [unlOpenGroups, setUnlOpenGroups] = useState<Record<string, boolean>>({ "Lig A - 1. Grup": true });
 
+  // 2-Seviyeli Seçim State'leri (Şampiyonlar, Avrupa, Konferans Ligi için)
+  const [euroStage, setEuroStage] = useState<"league" | "knockout" | "all">("league");
+  const [selectedWeek, setSelectedWeek] = useState<string>("1. Hafta");
+  const [selectedKnockoutRound, setSelectedKnockoutRound] = useState<string>("all");
+
   const toggleUnlLeague = (leagueKey: string) => {
     setUnlOpenLeagues(prev => ({ ...prev, [leagueKey]: !prev[leagueKey] }));
   };
@@ -440,7 +445,24 @@ export default function CupMatMatchCenter() {
   });
 
   const getMatchRoundKey = (match: MatchType) => {
-    let r = match.round || "Normal Sezon";
+    let r = (match.round || "Normal Sezon").trim();
+
+    // League Stage - 1 / Regular Season - 1 / Group Stage - 1 -> 1. Hafta
+    const leagueStageMatch = r.match(/(?:League\s+Stage|Regular\s+Season|Group\s+Stage)\s*-\s*(\d+)/i);
+    if (leagueStageMatch) {
+      r = `${leagueStageMatch[1]}. Hafta`;
+    } else {
+      const matchdayMatch = r.match(/Matchday\s*(\d+)/i) || r.match(/(\d+)\.\s*Matchday/i);
+      if (matchdayMatch) {
+        r = `${matchdayMatch[1]}. Hafta`;
+      } else {
+        const ligAsamasiMatch = r.match(/Lig\s+Aşaması\s*-\s*(\d+)\.\s*Hafta/i);
+        if (ligAsamasiMatch) {
+          r = `${ligAsamasiMatch[1]}. Hafta`;
+        }
+      }
+    }
+
     // YALNIZCA Uluslar Ligi (tournament_api_id === 5) için: "Lig A - 1. Grup - 1. Hafta" -> "1. Hafta - Lig A"
     if (match.tournament_api_id === 5) {
       const unlMatch = r.match(/Lig\s+([A-D])\s*-\s*(\d+)\.\s*Grup\s*-\s*(\d+)\.\s*Hafta/i);
@@ -450,7 +472,7 @@ export default function CupMatMatchCenter() {
         return `${weekNum}. Hafta - Lig ${leagueLetter}`;
       }
     }
-    // Şampiyonlar Ligi, Avrupa Ligi ve Konferans Ligi için temiz format ("1. Hafta", "2. Hafta", "Play-offs" vb.)
+
     return r;
   };
 
@@ -523,6 +545,43 @@ export default function CupMatMatchCenter() {
     }
     return a.localeCompare(b);
   });
+
+  // Şampiyonlar, Avrupa ve Konferans Ligi için Lig Aşaması haftaları ve Eleme turları
+  const isEuroClubTournament = [2, 3, 848].includes(activeTournament) && activeContinent !== "all";
+
+  const availableWeeks = useMemo(() => {
+    const weekSet = new Set<string>();
+    filteredMatches.forEach(m => {
+      const rawRound = getMatchRoundKey(m);
+      const match = rawRound.match(/(\d+)\.\s*Hafta/i);
+      if (match) {
+        weekSet.add(`${match[1]}. Hafta`);
+      }
+    });
+    return Array.from(weekSet).sort((a, b) => {
+      const numA = parseInt(a.replace(/\D/g, ""), 10);
+      const numB = parseInt(b.replace(/\D/g, ""), 10);
+      return numA - numB;
+    });
+  }, [filteredMatches]);
+
+  const availableKnockoutRounds = useMemo(() => {
+    const roundSet = new Set<string>();
+    filteredMatches.forEach(m => {
+      const rawRound = getMatchRoundKey(m);
+      if (!/hafta|matchday/i.test(rawRound)) {
+        roundSet.add(rawRound);
+      }
+    });
+    return Array.from(roundSet).sort((a, b) => getRoundSortOrder(a) - getRoundSortOrder(b));
+  }, [filteredMatches]);
+
+  // Turnuva değiştiğinde haftayı otomatik geçerli haftaya çek
+  useEffect(() => {
+    if (availableWeeks.length > 0 && !availableWeeks.includes(selectedWeek) && selectedWeek !== "all") {
+      setSelectedWeek(availableWeeks[0]);
+    }
+  }, [activeTournament, availableWeeks]);
 
   // Çok Dilli Tur İsimlendirme Fonksiyonu
   const getLocalizedRoundName = (roundKey: string, lang: string = "tr") => {
@@ -911,9 +970,514 @@ export default function CupMatMatchCenter() {
                   );
                 })}
               </div>
+            ) : isEuroClubTournament ? (
+              /* ========================================================================= */
+              /* 🌟 2-SEVİYELİ SEÇİM: ŞAMPİYONLAR, AVRUPA & KONFERANS LİGİ                */
+              /* ========================================================================= */
+              <div className="space-y-6">
+                
+                {/* 1. SEVİYE: AŞAMA SEÇİMİ (Lig Aşaması, Eleme & Play-off, Tüm Turlar) */}
+                <div className="flex flex-wrap items-center gap-2 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80 w-full sm:w-fit">
+                  <button
+                    onClick={() => setEuroStage("league")}
+                    className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                      euroStage === "league"
+                        ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
+                        : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                    }`}
+                  >
+                    🏆 {t("Lig Aşaması")}
+                  </button>
+                  {availableKnockoutRounds.length > 0 && (
+                    <button
+                      onClick={() => setEuroStage("knockout")}
+                      className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                        euroStage === "knockout"
+                          ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
+                          : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                      }`}
+                    >
+                      ⚔️ {t("Eleme & Play-off")}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setEuroStage("all")}
+                    className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                      euroStage === "all"
+                        ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
+                        : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                    }`}
+                  >
+                    📋 {t("Tüm Turlar")}
+                  </button>
+                </div>
+
+                {/* 2. SEVİYE: LİG AŞAMASI HAFTA SEÇİM BUTONLARI (1. Hafta, 2. Hafta, ... 8. Hafta) */}
+                {euroStage === "league" && (
+                  <div className="space-y-6">
+                    {availableWeeks.length > 0 && (
+                      <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-1">
+                        {availableWeeks.map(week => (
+                          <button
+                            key={week}
+                            onClick={() => setSelectedWeek(week)}
+                            className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap border cursor-pointer ${
+                              selectedWeek === week
+                                ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30 scale-105"
+                                : "bg-slate-900/70 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200"
+                            }`}
+                          >
+                            {week}
+                          </button>
+                        ))}
+                        <button
+                          onClick={() => setSelectedWeek("all")}
+                          className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap border cursor-pointer ${
+                            selectedWeek === "all"
+                              ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30 scale-105"
+                              : "bg-slate-900/70 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200"
+                          }`}
+                        >
+                          {t("Tüm Haftalar")}
+                        </button>
+                      </div>
+                    )}
+
+                    {/* SEÇİLİ HAFTANIN MAÇLARI */}
+                    {selectedWeek !== "all" ? (
+                      (() => {
+                        const targetMatches = filteredMatches.filter(m => getMatchRoundKey(m) === selectedWeek);
+                        
+                        const matchesByDate = targetMatches.reduce((acc, match) => {
+                          if (!acc[match.dateStr]) acc[match.dateStr] = [];
+                          acc[match.dateStr].push(match);
+                          return acc;
+                        }, {} as Record<string, MatchType[]>);
+
+                        const sortedDates = Object.keys(matchesByDate).sort((a, b) => {
+                          const [d1, m1, y1] = a.split('.');
+                          const [d2, m2, y2] = b.split('.');
+                          return new Date(`${y1}-${m1}-${d1}`).getTime() - new Date(`${y2}-${m2}-${d2}`).getTime();
+                        });
+
+                        return (
+                          <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden p-4 sm:p-6 space-y-6 animate-in fade-in-50 duration-200">
+                            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                              <div className="flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-black text-sm">
+                                  {selectedWeek.replace(/\D/g, "") || "1"}
+                                </span>
+                                <h3 className="text-xl font-black text-white">{selectedWeek}</h3>
+                              </div>
+                              <span className="text-xs text-slate-400 font-medium bg-slate-800/80 px-3 py-1 rounded-full border border-slate-700/60">
+                                {targetMatches.length} {t("Maç")}
+                              </span>
+                            </div>
+
+                            {targetMatches.length === 0 ? (
+                              <p className="text-sm text-slate-400 text-center py-8">{t("Bu hafta için henüz maç planı bulunmuyor.")}</p>
+                            ) : (
+                              sortedDates.map(dateStr => (
+                                <div key={dateStr} className="space-y-3">
+                                  <div className="flex items-center gap-2 border-b border-slate-800/80 pb-2">
+                                    <h4 className="text-sm font-semibold text-slate-400">{dateStr}</h4>
+                                  </div>
+                                  <div className="space-y-2">
+                                    {matchesByDate[dateStr].map(match => (
+                                      <div
+                                        key={match.id}
+                                        onClick={() => setSelectedMatch(match)}
+                                        className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-transparent hover:border-indigo-500/30"
+                                      >
+                                        {/* EV SAHİBİ TAKIM */}
+                                        <div className="flex items-center justify-end gap-2 text-right">
+                                          <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                            {match.team1.countryCode}
+                                          </span>
+                                          <span className="text-sm sm:text-base font-bold text-slate-100">
+                                            {match.team1.name}
+                                          </span>
+                                        </div>
+
+                                        {/* SKOR / SAAT */}
+                                        <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
+                                          {["FT", "AET", "PEN"].includes(match.status) ? (
+                                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
+                                              <span className="text-sm sm:text-lg tabular-nums font-black text-emerald-400">{match.team1.score}</span>
+                                              <span className="text-slate-500">-</span>
+                                              <span className="text-sm sm:text-lg tabular-nums font-black text-emerald-400">{match.team2.score}</span>
+                                            </div>
+                                          ) : (
+                                            <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">
+                                              {match.time}
+                                            </div>
+                                          )}
+                                        </div>
+
+                                        {/* DEPLASMAN TAKIM */}
+                                        <div className="flex items-center justify-start gap-2 text-left">
+                                          <span className="text-sm sm:text-base font-bold text-slate-100">
+                                            {match.team2.name}
+                                          </span>
+                                          <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                            {match.team2.countryCode}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        );
+                      })()
+                    ) : (
+                      /* TÜM HAFTALAR ACCORDION GÖRÜNÜMÜ */
+                      <div className="space-y-4">
+                        {availableWeeks.map(week => {
+                          const isOpen = expandedRounds[week] !== false;
+                          const weekMatches = filteredMatches.filter(m => getMatchRoundKey(m) === week);
+                          
+                          const matchesByDate = weekMatches.reduce((acc, match) => {
+                            if (!acc[match.dateStr]) acc[match.dateStr] = [];
+                            acc[match.dateStr].push(match);
+                            return acc;
+                          }, {} as Record<string, MatchType[]>);
+
+                          const sortedDates = Object.keys(matchesByDate).sort((a, b) => {
+                            const [d1, m1, y1] = a.split('.');
+                            const [d2, m2, y2] = b.split('.');
+                            return new Date(`${y1}-${m1}-${d1}`).getTime() - new Date(`${y2}-${m2}-${d2}`).getTime();
+                          });
+
+                          return (
+                            <div key={week} className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden">
+                              <button 
+                                onClick={() => toggleRound(week)}
+                                className="w-full flex items-center justify-between p-4 sm:px-6 bg-slate-800/20 hover:bg-slate-800/40 transition-colors cursor-pointer"
+                              >
+                                <h3 className="text-lg font-bold text-white">{week}</h3>
+                                {isOpen ? <ChevronDown className="w-5 h-5 text-slate-400" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+                              </button>
+
+                              {isOpen && (
+                                <div className="p-4 sm:p-6 space-y-6">
+                                  {sortedDates.map(dateStr => (
+                                    <div key={dateStr} className="space-y-3">
+                                      <div className="flex items-center gap-2 border-b border-slate-800/80 pb-2">
+                                        <h4 className="text-sm font-semibold text-slate-400">{dateStr}</h4>
+                                      </div>
+                                      <div className="space-y-2">
+                                        {matchesByDate[dateStr].map(match => (
+                                          <div
+                                            key={match.id}
+                                            onClick={() => setSelectedMatch(match)}
+                                            className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-transparent hover:border-indigo-500/30"
+                                          >
+                                            <div className="flex items-center justify-end gap-2 text-right">
+                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                                {match.team1.countryCode}
+                                              </span>
+                                              <span className="text-sm sm:text-base font-bold text-slate-100">{match.team1.name}</span>
+                                            </div>
+
+                                            <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
+                                              {["FT", "AET", "PEN"].includes(match.status) ? (
+                                                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
+                                                  <span className="text-sm sm:text-lg tabular-nums font-black text-emerald-400">{match.team1.score}</span>
+                                                  <span className="text-slate-500">-</span>
+                                                  <span className="text-sm sm:text-lg tabular-nums font-black text-emerald-400">{match.team2.score}</span>
+                                                </div>
+                                              ) : (
+                                                <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">{match.time}</div>
+                                              )}
+                                            </div>
+
+                                            <div className="flex items-center justify-start gap-2 text-left">
+                                              <span className="text-sm sm:text-base font-bold text-slate-100">{match.team2.name}</span>
+                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                                {match.team2.countryCode}
+                                              </span>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 2. SEVİYE: ELEME & PLAY-OFF SEÇİMİ */}
+                {euroStage === "knockout" && (
+                  <div className="space-y-6">
+                    {availableKnockoutRounds.length > 0 && (
+                      <div className="flex overflow-x-auto hide-scrollbar gap-2 pb-1">
+                        <button
+                          onClick={() => setSelectedKnockoutRound("all")}
+                          className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap border cursor-pointer ${
+                            selectedKnockoutRound === "all"
+                              ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30 scale-105"
+                              : "bg-slate-900/70 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200"
+                          }`}
+                        >
+                          {t("Tüm Elemeler")}
+                        </button>
+                        {availableKnockoutRounds.map(rName => (
+                          <button
+                            key={rName}
+                            onClick={() => setSelectedKnockoutRound(rName)}
+                            className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap border cursor-pointer ${
+                              selectedKnockoutRound === rName
+                                ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30 scale-105"
+                                : "bg-slate-900/70 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200"
+                            }`}
+                          >
+                            {getLocalizedRoundName(rName, currentLocale)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* ELEME MAÇLARI LİSTESİ */}
+                    <div className="space-y-4">
+                      {(selectedKnockoutRound === "all" ? availableKnockoutRounds : [selectedKnockoutRound]).map(rName => {
+                        const rMatches = filteredMatches.filter(m => getMatchRoundKey(m) === rName);
+                        if (rMatches.length === 0) return null;
+
+                        const matchesByDate = rMatches.reduce((acc, match) => {
+                          if (!acc[match.dateStr]) acc[match.dateStr] = [];
+                          acc[match.dateStr].push(match);
+                          return acc;
+                        }, {} as Record<string, MatchType[]>);
+
+                        const sortedDates = Object.keys(matchesByDate).sort((a, b) => {
+                          const [d1, m1, y1] = a.split('.');
+                          const [d2, m2, y2] = b.split('.');
+                          return new Date(`${y1}-${m1}-${d1}`).getTime() - new Date(`${y2}-${m2}-${d2}`).getTime();
+                        });
+
+                        const firstDateStr = sortedDates[0];
+                        const [fd, fm, fy] = (firstDateStr || "01.01.2026").split('.');
+                        const firstDateTime = new Date(`${fy}-${fm}-${fd}`).getTime();
+
+                        return (
+                          <div key={rName} className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden p-4 sm:p-6 space-y-6">
+                            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                              <h3 className="text-lg sm:text-xl font-bold text-white">{getLocalizedRoundName(rName, currentLocale)}</h3>
+                              <span className="text-xs text-slate-400 font-medium bg-slate-800/80 px-3 py-1 rounded-full border border-slate-700/60">
+                                {rMatches.length} {t("Maç")}
+                              </span>
+                            </div>
+
+                            {sortedDates.map(dateStr => {
+                              const [d, m, y] = dateStr.split('.');
+                              const currentDateTime = new Date(`${y}-${m}-${d}`).getTime();
+                              const diffDays = (currentDateTime - firstDateTime) / (1000 * 60 * 60 * 24);
+                              const isSecondLeg = diffDays > 3;
+
+                              return (
+                                <div key={dateStr} className="space-y-3">
+                                  <div className="flex items-center gap-2 border-b border-slate-800/80 pb-2">
+                                    <h4 className="text-sm font-semibold text-slate-400">{dateStr}</h4>
+                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                                      {isSecondLeg ? t("Rövanş Maçları") : t("İlk Maçlar")}
+                                    </span>
+                                  </div>
+
+                                  <div className="space-y-2">
+                                    {matchesByDate[dateStr].map(match => {
+                                      const tieDecided = match.isTieFinished;
+                                      const isTeam1Advancing = tieDecided && match.team1.isTieWinner;
+                                      const isTeam2Advancing = tieDecided && match.team2.isTieWinner;
+                                      const isTeam1Eliminated = tieDecided && !match.team1.isTieWinner;
+                                      const isTeam2Eliminated = tieDecided && !match.team2.isTieWinner;
+
+                                      return (
+                                        <div
+                                          key={match.id}
+                                          onClick={() => setSelectedMatch(match)}
+                                          className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-transparent hover:border-indigo-500/30"
+                                        >
+                                          {/* EV SAHİBİ */}
+                                          <div className={`flex items-center justify-end gap-2 text-right transition-all ${
+                                            isTeam1Advancing ? 'text-white' : isTeam1Eliminated ? 'text-slate-500 opacity-40' : 'text-slate-100'
+                                          }`}>
+                                            <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                              {match.team1.countryCode}
+                                            </span>
+                                            <span className={`text-sm sm:text-base ${
+                                              isTeam1Advancing ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]' : isTeam1Eliminated ? 'font-normal text-slate-500' : 'font-bold text-slate-100'
+                                            }`}>
+                                              {match.team1.name}
+                                            </span>
+                                            {isTeam1Advancing && (
+                                              <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
+                                                ✓
+                                              </span>
+                                            )}
+                                          </div>
+
+                                          {/* SKOR / SAAT */}
+                                          <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
+                                            {["FT", "AET", "PEN"].includes(match.status) ? (
+                                              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
+                                                <span className={`text-sm sm:text-lg tabular-nums ${isTeam1Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team1.score}</span>
+                                                <span className="text-slate-500">-</span>
+                                                <span className={`text-sm sm:text-lg tabular-nums ${isTeam2Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team2.score}</span>
+                                              </div>
+                                            ) : (
+                                              <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">{match.time}</div>
+                                            )}
+                                            {match.aggregateScore && ["FT", "AET", "PEN"].includes(match.status) && (
+                                              <span className="text-[9px] sm:text-[10px] font-bold text-indigo-300 bg-indigo-950/80 border border-indigo-500/30 px-1.5 py-0.2 rounded mt-1 shadow-sm">
+                                                Top: {match.aggregateScore.team1} - {match.aggregateScore.team2}
+                                              </span>
+                                            )}
+                                          </div>
+
+                                          {/* DEPLASMAN */}
+                                          <div className={`flex items-center justify-start gap-2 text-left transition-all ${
+                                            isTeam2Advancing ? 'text-white' : isTeam2Eliminated ? 'text-slate-500 opacity-40' : 'text-slate-100'
+                                          }`}>
+                                            {isTeam2Advancing && (
+                                              <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
+                                                ✓
+                                              </span>
+                                            )}
+                                            <span className={`text-sm sm:text-base ${
+                                              isTeam2Advancing ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]' : isTeam2Eliminated ? 'font-normal text-slate-500' : 'font-bold text-slate-100'
+                                            }`}>
+                                              {match.team2.name}
+                                            </span>
+                                            <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                              {match.team2.countryCode}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* TÜM TURLAR (ACCORDION GÖRÜNÜMÜ) */}
+                {euroStage === "all" && (
+                  <div className="space-y-4">
+                    {sortedRoundKeys.map(round => {
+                      const isOpen = expandedRounds[round] !== false;
+                      const matches = groupedByRound[round];
+                      
+                      const matchesByDate = matches.reduce((acc, match) => {
+                        if (!acc[match.dateStr]) acc[match.dateStr] = [];
+                        acc[match.dateStr].push(match);
+                        return acc;
+                      }, {} as Record<string, MatchType[]>);
+
+                      const sortedDates = Object.keys(matchesByDate).sort((a, b) => {
+                        const [d1, m1, y1] = a.split('.');
+                        const [d2, m2, y2] = b.split('.');
+                        return new Date(`${y1}-${m1}-${d1}`).getTime() - new Date(`${y2}-${m2}-${d2}`).getTime();
+                      });
+                      
+                      const firstDateStr = sortedDates[0];
+                      const [fd, fm, fy] = (firstDateStr || "01.01.2026").split('.');
+                      const firstDateTime = new Date(`${fy}-${fm}-${fd}`).getTime();
+
+                      return (
+                        <div key={round} className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden">
+                          <button 
+                            onClick={() => toggleRound(round)}
+                            className="w-full flex items-center justify-between p-4 sm:px-6 bg-slate-800/20 hover:bg-slate-800/40 transition-colors cursor-pointer"
+                          >
+                            <h3 className="text-lg font-bold text-white">{getLocalizedRoundName(round, currentLocale)}</h3>
+                            {isOpen ? <ChevronDown className="w-5 h-5 text-slate-400" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+                          </button>
+
+                          {isOpen && (
+                            <div className="p-4 sm:p-6 space-y-6">
+                              {sortedDates.map(dateStr => {
+                                const [d, m, y] = dateStr.split('.');
+                                const currentDateTime = new Date(`${y}-${m}-${d}`).getTime();
+                                const diffDays = (currentDateTime - firstDateTime) / (1000 * 60 * 60 * 24);
+                                const isSecondLeg = diffDays > 3;
+                                const isLeagueStage = /lig\s*aşaması|league\s*stage|hafta/i.test(round);
+                                
+                                return (
+                                  <div key={dateStr} className="space-y-3">
+                                    <div className="flex items-center gap-2 border-b border-slate-800/80 pb-2">
+                                      <h4 className="text-sm font-semibold text-slate-400">{dateStr}</h4>
+                                      {!isLeagueStage && (
+                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                                          {isSecondLeg ? t("Rövanş Maçları") : t("İlk Maçlar")}
+                                        </span>
+                                      )}
+                                    </div>
+                                  
+                                    <div className="space-y-2">
+                                      {matchesByDate[dateStr].map(match => (
+                                        <div 
+                                          key={match.id}
+                                          onClick={() => setSelectedMatch(match)}
+                                          className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-transparent hover:border-indigo-500/30"
+                                        >
+                                          <div className="flex items-center justify-end gap-2 text-right">
+                                            <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                              {match.team1.countryCode}
+                                            </span>
+                                            <span className="text-sm sm:text-base font-bold text-slate-100">{match.team1.name}</span>
+                                          </div>
+
+                                          <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
+                                            {["FT", "AET", "PEN"].includes(match.status) ? (
+                                              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
+                                                <span className="text-sm sm:text-lg tabular-nums font-black text-emerald-400">{match.team1.score}</span>
+                                                <span className="text-slate-500">-</span>
+                                                <span className="text-sm sm:text-lg tabular-nums font-black text-emerald-400">{match.team2.score}</span>
+                                              </div>
+                                            ) : (
+                                              <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">{match.time}</div>
+                                            )}
+                                          </div>
+
+                                          <div className="flex items-center justify-start gap-2 text-left">
+                                            <span className="text-sm sm:text-base font-bold text-slate-100">{match.team2.name}</span>
+                                            <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                              {match.team2.countryCode}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+              </div>
             ) : (
               /* ========================================================================= */
-              /* STANDART KULÜP TURNUVALARI GÖRÜNÜMÜ (Şampiyonlar Ligi, Avrupa Ligi vb.)   */
+              /* DİĞER TÜM TURNUVALAR (Copa Libertadores, Sudamericana vb.)                 */
               /* ========================================================================= */
               <div className="space-y-4">
                 {sortedRoundKeys.map(round => {
@@ -934,9 +1498,8 @@ export default function CupMatMatchCenter() {
                     return new Date(`${y1}-${m1}-${d1}`).getTime() - new Date(`${y2}-${m2}-${d2}`).getTime();
                   });
                   
-                  // İlk tarihten en az 4 gün sonrası rövanştır (genelde 1 hafta olur)
                   const firstDateStr = sortedDates[0];
-                  const [fd, fm, fy] = firstDateStr.split('.');
+                  const [fd, fm, fy] = (firstDateStr || "01.01.2026").split('.');
                   const firstDateTime = new Date(`${fy}-${fm}-${fd}`).getTime();
 
                   return (

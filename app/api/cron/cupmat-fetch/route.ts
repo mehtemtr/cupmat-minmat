@@ -10,6 +10,7 @@ try {
 }
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 300; // 5 minutes timeout for cron sync
 
 async function handleSync(req: Request) {
   try {
