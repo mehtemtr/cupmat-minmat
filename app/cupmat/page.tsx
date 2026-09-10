@@ -259,12 +259,16 @@ export default function CupMatMatchCenter() {
           cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
           cleanRound = cleanRound.replace(/(\d+)\.\s*Eleme\s*Turu/i, "$1. Ön Eleme");
 
-          const homeCountry = (item.home_team_country_code && item.home_team_country_code !== "TBD" && item.home_team_country_code !== "UNK")
-            ? item.home_team_country_code 
-            : (TEAM_COUNTRIES[item.home_team_name] || "");
-          const awayCountry = (item.away_team_country_code && item.away_team_country_code !== "TBD" && item.away_team_country_code !== "UNK")
-            ? item.away_team_country_code 
-            : (TEAM_COUNTRIES[item.away_team_name] || "");
+          // Ülke Kodu Çözümleme (Önce Takım Adı Sözlüğü, Sonra Veritabanı Kodu)
+          let homeCountry = TEAM_COUNTRIES[item.home_team_name] || "";
+          if (!homeCountry && item.home_team_country_code && item.home_team_country_code !== "TBD" && item.home_team_country_code !== "UNK") {
+            homeCountry = item.home_team_country_code;
+          }
+
+          let awayCountry = TEAM_COUNTRIES[item.away_team_name] || "";
+          if (!awayCountry && item.away_team_country_code && item.away_team_country_code !== "TBD" && item.away_team_country_code !== "UNK") {
+            awayCountry = item.away_team_country_code;
+          }
 
           return {
             id: item.id,

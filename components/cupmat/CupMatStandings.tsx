@@ -502,6 +502,7 @@ interface CountryStats {
 }
 
 const COUNTRY_NAMES: Record<string, { name: string; flag: string }> = {
+  // Türkçe Kodlar
   TÜR: { name: "Türkiye", flag: "🇹🇷" },
   İNG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
   İSP: { name: "İspanya", flag: "🇪🇸" },
@@ -565,6 +566,81 @@ const COUNTRY_NAMES: Record<string, { name: string; flag: string }> = {
   PER: { name: "Peru", flag: "🇵🇪" },
   BOL: { name: "Bolivya", flag: "🇧🇴" },
   VEN: { name: "Venezuela", flag: "🇻🇪" },
+
+  // Uluslararası / ISO-3 & TLA Eşleşmeleri
+  TUR: { name: "Türkiye", flag: "🇹🇷" },
+  ENG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+  ESP: { name: "İspanya", flag: "🇪🇸" },
+  GER: { name: "Almanya", flag: "🇩🇪" },
+  DEU: { name: "Almanya", flag: "🇩🇪" },
+  DE: { name: "Almanya", flag: "🇩🇪" },
+  ITA: { name: "İtalya", flag: "🇮🇹" },
+  FRA: { name: "Fransa", flag: "🇫🇷" },
+  PRT: { name: "Portekiz", flag: "🇵🇹" },
+  NED: { name: "Hollanda", flag: "🇳🇱" },
+  NLD: { name: "Hollanda", flag: "🇳🇱" },
+  BEL: { name: "Belçika", flag: "🇧🇪" },
+  CZE: { name: "Çekya", flag: "🇨🇿" },
+  CHE: { name: "İsviçre", flag: "🇨🇭" },
+  SUI: { name: "İsviçre", flag: "🇨🇭" },
+  AUT: { name: "Avusturya", flag: "🇦🇹" },
+  SCO: { name: "İskoçya", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
+  GRC: { name: "Yunanistan", flag: "🇬🇷" },
+  GRE: { name: "Yunanistan", flag: "🇬🇷" },
+  NOR: { name: "Norveç", flag: "🇳🇴" },
+  DNK: { name: "Danimarka", flag: "🇩🇰" },
+  DEN: { name: "Danimarka", flag: "🇩🇰" },
+  POL: { name: "Polonya", flag: "🇵🇱" },
+  HRV: { name: "Hırvatistan", flag: "🇭🇷" },
+  CRO: { name: "Hırvatistan", flag: "🇭🇷" },
+  SWE: { name: "İsveç", flag: "🇸🇪" },
+  CYP: { name: "Kıbrıs", flag: "🇨🇾" },
+  SRB: { name: "Sırbistan", flag: "🇷🇸" },
+  ROU: { name: "Romanya", flag: "🇷🇴" },
+  HUN: { name: "Macaristan", flag: "🇭🇺" },
+  UKR: { name: "Ukrayna", flag: "🇺🇦" },
+  AZE: { name: "Azerbaycan", flag: "🇦🇿" },
+  BGR: { name: "Bulgaristan", flag: "🇧🇬" },
+  BUL: { name: "Bulgaristan", flag: "🇧🇬" },
+  SVK: { name: "Slovakya", flag: "🇸🇰" },
+  SVN: { name: "Slovenya", flag: "🇸🇮" },
+  SLO: { name: "Slovenya", flag: "🇸🇮" },
+  KOS: { name: "Kosova", flag: "🇽🇰" },
+  KAZ: { name: "Kazakistan", flag: "🇰🇿" },
+  ARM: { name: "Ermenistan", flag: "🇦🇲" },
+  BIH: { name: "Bosna Hersek", flag: "🇧🇦" },
+  ALB: { name: "Arnavutluk", flag: "🇦🇱" },
+  GEO: { name: "Gürcistan", flag: "🇬🇪" },
+  FIN: { name: "Finlandiya", flag: "🇫🇮" },
+  ISL: { name: "İzlanda", flag: "🇮🇸" },
+  IRL: { name: "İrlanda", flag: "🇮🇪" },
+  NIR: { name: "Kuzey İrlanda", flag: "🇬🇧" },
+  WAL: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
+  WLS: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
+  LUX: { name: "Lüksemburg", flag: "🇱🇺" },
+  LTU: { name: "Litvanya", flag: "🇱🇹" },
+  LVA: { name: "Letonya", flag: "🇱🇻" },
+  EST: { name: "Estonya", flag: "🇪🇪" },
+  MDA: { name: "Moldova", flag: "🇲🇩" },
+  FRO: { name: "Faroe Adaları", flag: "🇫🇴" },
+  MLT: { name: "Malta", flag: "🇲🇹" },
+  AND: { name: "Andorra", flag: "🇦🇩" },
+  GIB: { name: "Cebelitarık", flag: "🇬🇮" },
+  BLR: { name: "Belarus", flag: "🇧🇾" },
+  MNE: { name: "Karadağ", flag: "🇲🇪" },
+  MKD: { name: "Kuzey Makedonya", flag: "🇲🇰" },
+  SMR: { name: "San Marino", flag: "🇸🇲" },
+  ISR: { name: "İsrail", flag: "🇮🇱" },
+  BRA: { name: "Brezilya", flag: "🇧🇷" },
+  ARG: { name: "Arjantin", flag: "🇦🇷" },
+  COL: { name: "Kolombiya", flag: "🇨🇴" },
+  CHL: { name: "Şili", flag: "🇨🇱" },
+  ECU: { name: "Ekvador", flag: "🇪🇨" },
+  URY: { name: "Uruguay", flag: "🇺🇾" },
+  PRY: { name: "Paraguay", flag: "🇵🇾" },
+  PER: { name: "Peru", flag: "🇵🇪" },
+  BOL: { name: "Bolivya", flag: "🇧🇴" },
+  VEN: { name: "Venezuela", flag: "🇻🇪" },
 };
 
 export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] }) {
@@ -599,9 +675,11 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
       const addTeamStats = (countryCode: string, teamName: string, myScore: number, oppScore: number) => {
         if (!countryCode || countryCode === "UNK" || countryCode === "TBD") return;
 
-        if (!stats[countryCode]) {
-          const info = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: "🌍" };
-          stats[countryCode] = {
+        const info = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: "🌍" };
+        const canonicalKey = info.name || countryCode;
+
+        if (!stats[canonicalKey]) {
+          stats[canonicalKey] = {
             countryCode,
             countryName: info.name || countryCode,
             flag: info.flag || "🌍",
@@ -618,7 +696,7 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
           };
         }
 
-        const c = stats[countryCode];
+        const c = stats[canonicalKey];
         c.played += 1;
         c.gf += myScore;
         c.ga += oppScore;
