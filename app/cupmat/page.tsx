@@ -142,16 +142,18 @@ const TEAM_COUNTRIES: Record<string, string> = {
   'FK Decic': 'KRD', 'Buducnost': 'KRD', 'Mornar': 'KRD', 'Sutjeska': 'KRD',
   'Struga': 'K.MK', 'Shkendija': 'K.MK', 'Tikves': 'K.MK', 'Vardar': 'K.MK',
   // Güney Amerika
-  'Boca Juniors': 'ARG', 'River Plate': 'ARG', 'Estudiantes': 'ARG', 'Estudiantes L.P.': 'ARG', 'Rosario C.': 'ARG', 'Rosario Central': 'ARG', 'Argentinos Jr.': 'ARG', 'Atl Lanus': 'ARG', 'Platense': 'ARG', 'Ind. Mendoza': 'ARG', 'Tigre': 'ARG',
-  'Flamengo': 'BRA', 'Palmeiras': 'BRA', 'Corinthians': 'BRA', 'Fluminense': 'BRA', 'Botafogo': 'BRA', 'Botafogo RJ': 'BRA', 'Cruzeiro': 'BRA', 'Cruzeiro MG': 'BRA', 'Atletico-MG': 'BRA', 'Bahia BA': 'BRA', 'Mirassol SP': 'BRA', 'Santos': 'BRA', 'Vasco DA Gama': 'BRA', 'Vitoria': 'BRA', 'RB Bragantino': 'BRA', 'Internacional': 'BRA', 'Gremio': 'BRA',
-  'Bolivar': 'BOL', 'Bolívar': 'BOL', 'The Strongest': 'BOL', 'Always Ready': 'BOL', 'Nacional Potosi': 'BOL',
-  'Colo Colo': 'ŞİL', 'Coquimbo U.': 'ŞİL', 'Coquimbo Unido': 'ŞİL', 'Huachipato': 'ŞİL', 'O\'Higgins': 'ŞİL', 'Palestino': 'ŞİL',
-  'Medellin': 'KOL', 'Santa Fe': 'KOL', 'Dep. Tolima': 'KOL', 'Deportes Tolima': 'KOL', 'Atl. Junior': 'KOL',
-  'LDU Quito': 'EKV', 'Ind. del Valle': 'EKV', 'Independiente del Valle': 'EKV', 'Barcelona SC': 'EKV', 'U. Catolica': 'EKV', 'Uni. Catolica': 'EKV',
-  'Cerro Porteno': 'PAR', 'Libertad': 'PAR', 'Club Guarani': 'PAR', 'CS 2 de Mayo': 'PAR', 'Olimpia': 'PAR',
-  'Alianza Lima': 'PER', 'U. Deportes': 'PER', 'S. Cristal': 'PER', 'Cusco': 'PER', 'Cienciano': 'PER',
-  'Nacional': 'URU', 'CA Penarol': 'URU', 'Liverpool M.': 'URU', 'CA Juventud': 'URU', 'Atletico Torque': 'URU',
-  'Dep. Tachira': 'VEN', 'Carabobo': 'VEN', 'Dep. La Guaira': 'VEN', 'UCV': 'VEN'
+  'Boca Juniors': 'ARG', 'River Plate': 'ARG', 'Estudiantes': 'ARG', 'Estudiantes L.P.': 'ARG', 'Rosario C.': 'ARG', 'Rosario Central': 'ARG', 'ROS': 'ARG', 'Argentinos Jr.': 'ARG', 'Atl Lanus': 'ARG', 'Platense': 'ARG', 'Ind. Mendoza': 'ARG', 'Tigre': 'ARG', 'Talleres': 'ARG', 'Racing Club': 'ARG', 'San Lorenzo': 'ARG', 'Godoy Cruz': 'ARG', 'Defensa': 'ARG', 'Velez Sarsfield': 'ARG', 'Huracan': 'ARG', 'Lanus': 'ARG',
+  'Flamengo': 'BRA', 'Palmeiras': 'BRA', 'Corinthians': 'BRA', 'Fluminense': 'BRA', 'Botafogo': 'BRA', 'Botafogo RJ': 'BRA', 'Cruzeiro': 'BRA', 'Cruzeiro MG': 'BRA', 'Atletico-MG': 'BRA', 'Bahia BA': 'BRA', 'Mirassol SP': 'BRA', 'Santos': 'BRA', 'Vasco DA Gama': 'BRA', 'Vitoria': 'BRA', 'RB Bragantino': 'BRA', 'Internacional': 'BRA', 'Gremio': 'BRA', 'Sao Paulo': 'BRA', 'Athletico-PR': 'BRA', 'Fortaleza': 'BRA', 'Cuiaba': 'BRA', 'Juventude': 'BRA', 'Atletico GO': 'BRA',
+  'Bolivar': 'BOL', 'Bolívar': 'BOL', 'The Strongest': 'BOL', 'Always Ready': 'BOL', 'Nacional Potosi': 'BOL', 'Jorge Wilstermann': 'BOL', 'Oriente Petrolero': 'BOL', 'Blooming': 'BOL', 'San Antonio Bulo Bulo': 'BOL',
+  'Colo Colo': 'ŞİL', 'Coquimbo U.': 'ŞİL', 'Coquimbo Unido': 'ŞİL', 'Huachipato': 'ŞİL', 'O\'Higgins': 'ŞİL', 'Palestino': 'ŞİL', 'Universidad de Chile': 'ŞİL', 'Universidad Catolica': 'ŞİL', 'Cobresal': 'ŞİL', 'Union Espanola': 'ŞİL', 'Iquique': 'ŞİL',
+  'Medellin': 'KOL', 'Independiente Medellin': 'KOL', 'Santa Fe': 'KOL', 'Independiente Santa Fe': 'KOL', 'Dep. Tolima': 'KOL', 'Deportes Tolima': 'KOL', 'TOL': 'KOL', 'Atl. Junior': 'KOL', 'Junior': 'KOL', 'Millonarios': 'KOL', 'Atletico Nacional': 'KOL', 'America de Cali': 'KOL', 'Deportivo Cali': 'KOL', 'Once Caldas': 'KOL', 'Aguilas Doradas': 'KOL', 'Deportivo Pereira': 'KOL', 'La Equidad': 'KOL', 'Bucaramanga': 'KOL',
+  'LDU Quito': 'EKV', 'Ind. del Valle': 'EKV', 'Independiente del Valle': 'EKV', 'Barcelona SC': 'EKV', 'U. Catolica': 'EKV', 'Uni. Catolica': 'EKV', 'CAT': 'EKV', 'Universidad Catolica del Ecuador': 'EKV', 'Emelec': 'EKV', 'El Nacional': 'EKV', 'Aucas': 'EKV', 'Delfin': 'EKV', 'Macara': 'EKV', 'Deportivo Cuenca': 'EKV',
+  'Cerro Porteno': 'PAR', 'Cerro Porteño': 'PAR', 'Libertad': 'PAR', 'Club Guarani': 'PAR', 'Guarani': 'PAR', 'CS 2 de Mayo': 'PAR', '2 de Mayo': 'PAR', 'Olimpia': 'PAR', 'Olimpia Asuncion': 'PAR', 'Nacional Asuncion': 'PAR', 'Sportivo Luqueno': 'PAR', 'Sportivo Ameliano': 'PAR', 'Tacuary': 'PAR', 'General Caballero': 'PAR',
+  'Alianza Lima': 'PER', 'U. Deportes': 'PER', 'Universitario': 'PER', 'S. Cristal': 'PER', 'Sporting Cristal': 'PER', 'Cusco': 'PER', 'Cienciano': 'PER', 'Melgar': 'PER', 'FBC Melgar': 'PER', 'ADT Tarma': 'PER', 'Los Chankas': 'PER', 'Cesar Vallejo': 'PER', 'Sport Huancayo': 'PER',
+  'Nacional': 'URU', 'Club Nacional': 'URU', 'CA Penarol': 'URU', 'Penarol': 'URU', 'Peñarol': 'URU', 'Liverpool M.': 'URU', 'Liverpool Montevideo': 'URU', 'CA Juventud': 'URU', 'Juventud': 'URU', 'Atletico Torque': 'URU', 'Montevideo City Torque': 'URU', 'Defensor Sporting': 'URU', 'Danubio': 'URU', 'Boston River': 'URU', 'Cerro Largo': 'URU', 'Racing Montevideo': 'URU', 'Wanderers': 'URU',
+  'Dep. Tachira': 'VEN', 'Deportivo Tachira': 'VEN', 'Carabobo': 'VEN', 'Dep. La Guaira': 'VEN', 'Deportivo La Guaira': 'VEN', 'UCV': 'VEN', 'Academia Puerto Cabello': 'VEN', 'Puerto Cabello': 'VEN', 'Metropolitanos': 'VEN', 'Caracas': 'VEN', 'Monagas': 'VEN', 'Portuguesa': 'VEN',
+  // Portekiz / Diğer
+  'FCP': 'POR', 'FC Porto': 'POR', 'Porto': 'POR', 'SL Benfica': 'POR', 'Sporting': 'POR', 'Sporting CP': 'POR'
 };
 
 type MatchType = {
@@ -257,18 +259,23 @@ export default function CupMatMatchCenter() {
 
           let cleanRound = item.round || 'Normal Sezon';
           cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
-          cleanRound = cleanRound.replace(/(\d+)\.\s*Eleme\s*Turu/i, "$1. Ön Eleme");
+          const resolveCountry = (teamName: string, dbCode?: string) => {
+            if (!teamName) return "";
+            if (TEAM_COUNTRIES[teamName]) return TEAM_COUNTRIES[teamName];
+            
+            const lower = teamName.toLowerCase().trim();
+            for (const [tKey, cCode] of Object.entries(TEAM_COUNTRIES)) {
+              const kLower = tKey.toLowerCase();
+              if (lower === kLower || lower.includes(kLower) || kLower.includes(lower)) {
+                return cCode;
+              }
+            }
+            if (dbCode && dbCode !== "TBD" && dbCode !== "UNK") return dbCode;
+            return "";
+          };
 
-          // Ülke Kodu Çözümleme (Önce Takım Adı Sözlüğü, Sonra Veritabanı Kodu)
-          let homeCountry = TEAM_COUNTRIES[item.home_team_name] || "";
-          if (!homeCountry && item.home_team_country_code && item.home_team_country_code !== "TBD" && item.home_team_country_code !== "UNK") {
-            homeCountry = item.home_team_country_code;
-          }
-
-          let awayCountry = TEAM_COUNTRIES[item.away_team_name] || "";
-          if (!awayCountry && item.away_team_country_code && item.away_team_country_code !== "TBD" && item.away_team_country_code !== "UNK") {
-            awayCountry = item.away_team_country_code;
-          }
+          const homeCountry = resolveCountry(item.home_team_name, item.home_team_country_code);
+          const awayCountry = resolveCountry(item.away_team_name, item.away_team_country_code);
 
           return {
             id: item.id,
