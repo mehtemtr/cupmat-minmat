@@ -13,7 +13,7 @@
   "crons": [
     {
       "path": "/api/cron/cupmat-fetch",
-      "schedule": "0 */3 * * *"
+      "schedule": "0 3 * * *"
     },
     {
       "path": "/api/cron/fetch-news",
