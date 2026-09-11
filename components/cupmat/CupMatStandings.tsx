@@ -481,6 +481,7 @@ interface CountryStats {
   countryCode: string;
   countryName: string;
   flag: string;
+  continent: string;
   played: number;
   win: number;
   draw: number;
@@ -501,150 +502,205 @@ interface CountryStats {
   }>;
 }
 
-const COUNTRY_NAMES: Record<string, { name: string; flag: string }> = {
-  // Türkçe Kodlar
-  TÜR: { name: "Türkiye", flag: "🇹🇷" },
-  İNG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-  İSP: { name: "İspanya", flag: "🇪🇸" },
-  ALM: { name: "Almanya", flag: "🇩🇪" },
-  İTA: { name: "İtalya", flag: "🇮🇹" },
-  FRA: { name: "Fransa", flag: "🇫🇷" },
-  POR: { name: "Portekiz", flag: "🇵🇹" },
-  HOL: { name: "Hollanda", flag: "🇳🇱" },
-  BEL: { name: "Belçika", flag: "🇧🇪" },
-  ÇEK: { name: "Çekya", flag: "🇨🇿" },
-  İSV: { name: "İsviçre", flag: "🇨🇭" },
-  AVU: { name: "Avusturya", flag: "🇦🇹" },
-  İSK: { name: "İskoçya", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
-  YUN: { name: "Yunanistan", flag: "🇬🇷" },
-  NOR: { name: "Norveç", flag: "🇳🇴" },
-  DAN: { name: "Danimarka", flag: "🇩🇰" },
-  POL: { name: "Polonya", flag: "🇵🇱" },
-  HIR: { name: "Hırvatistan", flag: "🇭🇷" },
-  İSVE: { name: "İsveç", flag: "🇸🇪" },
-  KIB: { name: "Kıbrıs", flag: "🇨🇾" },
-  SIR: { name: "Sırbistan", flag: "🇷🇸" },
-  ROM: { name: "Romanya", flag: "🇷🇴" },
-  MAC: { name: "Macaristan", flag: "🇭🇺" },
-  UKR: { name: "Ukrayna", flag: "🇺🇦" },
-  AZE: { name: "Azerbaycan", flag: "🇦🇿" },
-  BUL: { name: "Bulgaristan", flag: "🇧🇬" },
-  SVK: { name: "Slovakya", flag: "🇸🇰" },
-  SVN: { name: "Slovenya", flag: "🇸🇮" },
-  KOS: { name: "Kosova", flag: "🇽🇰" },
-  KAZ: { name: "Kazakistan", flag: "🇰🇿" },
-  ERM: { name: "Ermenistan", flag: "🇦🇲" },
-  BOS: { name: "Bosna Hersek", flag: "🇧🇦" },
-  ARN: { name: "Arnavutluk", flag: "🇦🇱" },
-  GÜR: { name: "Gürcistan", flag: "🇬🇪" },
-  FİN: { name: "Finlandiya", flag: "🇫🇮" },
-  İZL: { name: "İzlanda", flag: "🇮🇸" },
-  İRL: { name: "İrlanda", flag: "🇮🇪" },
-  "K.İR": { name: "Kuzey İrlanda", flag: "🇬🇧" },
-  GAL: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
-  LÜK: { name: "Lüksemburg", flag: "🇱🇺" },
-  LİT: { name: "Litvanya", flag: "🇱🇹" },
-  LET: { name: "Letonya", flag: "🇱🇻" },
-  EST: { name: "Estonya", flag: "🇪🇪" },
-  MOL: { name: "Moldova", flag: "🇲🇩" },
-  FAR: { name: "Faroe Adaları", flag: "🇫🇴" },
-  MLT: { name: "Malta", flag: "🇲🇹" },
-  AND: { name: "Andorra", flag: "🇦🇩" },
-  CEB: { name: "Cebelitarık", flag: "🇬🇮" },
-  BLR: { name: "Belarus", flag: "🇧🇾" },
-  KRD: { name: "Karadağ", flag: "🇲🇪" },
-  "K.MK": { name: "Kuzey Makedonya", flag: "🇲🇰" },
-  SMR: { name: "San Marino", flag: "🇸🇲" },
-  İSR: { name: "İsrail", flag: "🇮🇱" },
-  BRA: { name: "Brezilya", flag: "🇧🇷" },
-  ARG: { name: "Arjantin", flag: "🇦🇷" },
-  KOL: { name: "Kolombiya", flag: "🇨🇴" },
-  ŞİL: { name: "Şili", flag: "🇨🇱" },
-  EKV: { name: "Ekvador", flag: "🇪🇨" },
-  URU: { name: "Uruguay", flag: "🇺🇾" },
-  PAR: { name: "Paraguay", flag: "🇵🇾" },
-  PER: { name: "Peru", flag: "🇵🇪" },
-  BOL: { name: "Bolivya", flag: "🇧🇴" },
-  VEN: { name: "Venezuela", flag: "🇻🇪" },
+const COUNTRY_NAMES: Record<string, { name: string; flag: string; continent: string }> = {
+  // Türkçe Kodlar - Avrupa (UEFA)
+  TÜR: { name: "Türkiye", flag: "🇹🇷", continent: "europe" },
+  İNG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", continent: "europe" },
+  İSP: { name: "İspanya", flag: "🇪🇸", continent: "europe" },
+  ALM: { name: "Almanya", flag: "🇩🇪", continent: "europe" },
+  İTA: { name: "İtalya", flag: "🇮🇹", continent: "europe" },
+  FRA: { name: "Fransa", flag: "🇫🇷", continent: "europe" },
+  POR: { name: "Portekiz", flag: "🇵🇹", continent: "europe" },
+  HOL: { name: "Hollanda", flag: "🇳🇱", continent: "europe" },
+  BEL: { name: "Belçika", flag: "🇧🇪", continent: "europe" },
+  ÇEK: { name: "Çekya", flag: "🇨🇿", continent: "europe" },
+  İSV: { name: "İsviçre", flag: "🇨🇭", continent: "europe" },
+  AVU: { name: "Avusturya", flag: "🇦🇹", continent: "europe" },
+  İSK: { name: "İskoçya", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", continent: "europe" },
+  YUN: { name: "Yunanistan", flag: "🇬🇷", continent: "europe" },
+  NOR: { name: "Norveç", flag: "🇳🇴", continent: "europe" },
+  DAN: { name: "Danimarka", flag: "🇩🇰", continent: "europe" },
+  POL: { name: "Polonya", flag: "🇵🇱", continent: "europe" },
+  HIR: { name: "Hırvatistan", flag: "🇭🇷", continent: "europe" },
+  İSVE: { name: "İsveç", flag: "🇸🇪", continent: "europe" },
+  KIB: { name: "Kıbrıs", flag: "🇨🇾", continent: "europe" },
+  SIR: { name: "Sırbistan", flag: "🇷🇸", continent: "europe" },
+  ROM: { name: "Romanya", flag: "🇷🇴", continent: "europe" },
+  MAC: { name: "Macaristan", flag: "🇭🇺", continent: "europe" },
+  UKR: { name: "Ukrayna", flag: "🇺🇦", continent: "europe" },
+  AZE: { name: "Azerbaycan", flag: "🇦🇿", continent: "europe" },
+  BUL: { name: "Bulgaristan", flag: "🇧🇬", continent: "europe" },
+  SVK: { name: "Slovakya", flag: "🇸🇰", continent: "europe" },
+  SVN: { name: "Slovenya", flag: "🇸🇮", continent: "europe" },
+  KOS: { name: "Kosova", flag: "🇽🇰", continent: "europe" },
+  KAZ: { name: "Kazakistan", flag: "🇰🇿", continent: "europe" },
+  ERM: { name: "Ermenistan", flag: "🇦🇲", continent: "europe" },
+  BOS: { name: "Bosna Hersek", flag: "🇧🇦", continent: "europe" },
+  ARN: { name: "Arnavutluk", flag: "🇦🇱", continent: "europe" },
+  GÜR: { name: "Gürcistan", flag: "🇬🇪", continent: "europe" },
+  FİN: { name: "Finlandiya", flag: "🇫🇮", continent: "europe" },
+  İZL: { name: "İzlanda", flag: "🇮🇸", continent: "europe" },
+  İRL: { name: "İrlanda", flag: "🇮🇪", continent: "europe" },
+  "K.İR": { name: "Kuzey İrlanda", flag: "🇬🇧", continent: "europe" },
+  GAL: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", continent: "europe" },
+  LÜK: { name: "Lüksemburg", flag: "🇱🇺", continent: "europe" },
+  LİT: { name: "Litvanya", flag: "🇱🇹", continent: "europe" },
+  LET: { name: "Letonya", flag: "🇱🇻", continent: "europe" },
+  EST: { name: "Estonya", flag: "🇪🇪", continent: "europe" },
+  MOL: { name: "Moldova", flag: "🇲🇩", continent: "europe" },
+  FAR: { name: "Faroe Adaları", flag: "🇫🇴", continent: "europe" },
+  MLT: { name: "Malta", flag: "🇲🇹", continent: "europe" },
+  AND: { name: "Andorra", flag: "🇦🇩", continent: "europe" },
+  CEB: { name: "Cebelitarık", flag: "🇬🇮", continent: "europe" },
+  BLR: { name: "Belarus", flag: "🇧🇾", continent: "europe" },
+  KRD: { name: "Karadağ", flag: "🇲🇪", continent: "europe" },
+  "K.MK": { name: "Kuzey Makedonya", flag: "🇲🇰", continent: "europe" },
+  SMR: { name: "San Marino", flag: "🇸🇲", continent: "europe" },
+  İSR: { name: "İsrail", flag: "🇮🇱", continent: "europe" },
+
+  // Amerika (CONMEBOL / CONCACAF)
+  BRA: { name: "Brezilya", flag: "🇧🇷", continent: "america" },
+  ARG: { name: "Arjantin", flag: "🇦🇷", continent: "america" },
+  KOL: { name: "Kolombiya", flag: "🇨🇴", continent: "america" },
+  ŞİL: { name: "Şili", flag: "🇨🇱", continent: "america" },
+  EKV: { name: "Ekvador", flag: "🇪🇨", continent: "america" },
+  URU: { name: "Uruguay", flag: "🇺🇾", continent: "america" },
+  PAR: { name: "Paraguay", flag: "🇵🇾", continent: "america" },
+  PER: { name: "Peru", flag: "🇵🇪", continent: "america" },
+  BOL: { name: "Bolivya", flag: "🇧🇴", continent: "america" },
+  VEN: { name: "Venezuela", flag: "🇻🇪", continent: "america" },
+  USA: { name: "ABD", flag: "🇺🇸", continent: "america" },
+  MEX: { name: "Meksika", flag: "🇲🇽", continent: "america" },
+  CAN: { name: "Kanada", flag: "🇨🇦", continent: "america" },
+  CRC: { name: "Kosta Rika", flag: "🇨🇷", continent: "america" },
+  PAN: { name: "Panama", flag: "🇵🇦", continent: "america" },
+  JAM: { name: "Jamaika", flag: "🇯🇲", continent: "america" },
+
+  // Asya (AFC)
+  JAP: { name: "Japonya", flag: "🇯🇵", continent: "asia" },
+  JPN: { name: "Japonya", flag: "🇯🇵", continent: "asia" },
+  KOR: { name: "Güney Kore", flag: "🇰🇷", continent: "asia" },
+  KSA: { name: "Suudi Arabistan", flag: "🇸🇦", continent: "asia" },
+  SAU: { name: "Suudi Arabistan", flag: "🇸🇦", continent: "asia" },
+  QAT: { name: "Katar", flag: "🇶🇦", continent: "asia" },
+  UAE: { name: "BAE", flag: "🇦🇪", continent: "asia" },
+  IRN: { name: "İran", flag: "🇮🇷", continent: "asia" },
+  AUS: { name: "Avustralya", flag: "🇦🇺", continent: "asia" },
+  CHN: { name: "Çin", flag: "🇨🇳", continent: "asia" },
+  UZB: { name: "Özbekistan", flag: "🇺🇿", continent: "asia" },
+  IRQ: { name: "Irak", flag: "🇮🇶", continent: "asia" },
+  PHI: { name: "Filipinler", flag: "🇵🇭", continent: "asia" },
+  IDN: { name: "Endonezya", flag: "🇮🇩", continent: "asia" },
+  THA: { name: "Tayland", flag: "🇹🇭", continent: "asia" },
+  VIE: { name: "Vietnam", flag: "🇻🇳", continent: "asia" },
+  MAS: { name: "Malezya", flag: "🇲🇾", continent: "asia" },
+  IND: { name: "Hindistan", flag: "🇮🇳", continent: "asia" },
+
+  // Afrika (CAF)
+  MAR: { name: "Fas", flag: "🇲🇦", continent: "africa" },
+  EGY: { name: "Mısır", flag: "🇪🇬", continent: "africa" },
+  SEN: { name: "Senegal", flag: "🇸🇳", continent: "africa" },
+  NGA: { name: "Nijerya", flag: "🇳🇬", continent: "africa" },
+  ALG: { name: "Cezayir", flag: "🇩🇿", continent: "africa" },
+  TUN: { name: "Tunus", flag: "🇹🇳", continent: "africa" },
+  CIV: { name: "Fildişi Sahili", flag: "🇨🇮", continent: "africa" },
+  CMR: { name: "Kamerun", flag: "🇨🇲", continent: "africa" },
+  GHA: { name: "Gana", flag: "🇬🇭", continent: "africa" },
+  MLI: { name: "Mali", flag: "🇲🇱", continent: "africa" },
+  RSA: { name: "Güney Afrika", flag: "🇿🇦", continent: "africa" },
+  COD: { name: "Kongo DC", flag: "🇨🇩", continent: "africa" },
+  BFA: { name: "Burkina Faso", flag: "🇧🇫", continent: "africa" },
+  GUI: { name: "Gine", flag: "🇬🇳", continent: "africa" },
+  GAB: { name: "Gabon", flag: "🇬🇦", continent: "africa" },
+  ZAM: { name: "Zambiya", flag: "🇿🇲", continent: "africa" },
+  UGA: { name: "Uganda", flag: "🇺🇬", continent: "africa" },
+  ANG: { name: "Angola", flag: "🇦🇴", continent: "africa" },
+  NAM: { name: "Namibya", flag: "🇳🇦", continent: "africa" },
+  BDI: { name: "Burundi", flag: "🇧🇮", continent: "africa" },
+  SDN: { name: "Sudan", flag: "🇸🇩", continent: "africa" },
 
   // Uluslararası / ISO-3 & TLA Eşleşmeleri
-  TUR: { name: "Türkiye", flag: "🇹🇷" },
-  ENG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-  ESP: { name: "İspanya", flag: "🇪🇸" },
-  GER: { name: "Almanya", flag: "🇩🇪" },
-  DEU: { name: "Almanya", flag: "🇩🇪" },
-  DE: { name: "Almanya", flag: "🇩🇪" },
-  ITA: { name: "İtalya", flag: "🇮🇹" },
-  FRA: { name: "Fransa", flag: "🇫🇷" },
-  PRT: { name: "Portekiz", flag: "🇵🇹" },
-  NED: { name: "Hollanda", flag: "🇳🇱" },
-  NLD: { name: "Hollanda", flag: "🇳🇱" },
-  BEL: { name: "Belçika", flag: "🇧🇪" },
-  CZE: { name: "Çekya", flag: "🇨🇿" },
-  CHE: { name: "İsviçre", flag: "🇨🇭" },
-  SUI: { name: "İsviçre", flag: "🇨🇭" },
-  AUT: { name: "Avusturya", flag: "🇦🇹" },
-  SCO: { name: "İskoçya", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
-  GRC: { name: "Yunanistan", flag: "🇬🇷" },
-  GRE: { name: "Yunanistan", flag: "🇬🇷" },
-  NOR: { name: "Norveç", flag: "🇳🇴" },
-  DNK: { name: "Danimarka", flag: "🇩🇰" },
-  DEN: { name: "Danimarka", flag: "🇩🇰" },
-  POL: { name: "Polonya", flag: "🇵🇱" },
-  HRV: { name: "Hırvatistan", flag: "🇭🇷" },
-  CRO: { name: "Hırvatistan", flag: "🇭🇷" },
-  SWE: { name: "İsveç", flag: "🇸🇪" },
-  CYP: { name: "Kıbrıs", flag: "🇨🇾" },
-  SRB: { name: "Sırbistan", flag: "🇷🇸" },
-  ROU: { name: "Romanya", flag: "🇷🇴" },
-  HUN: { name: "Macaristan", flag: "🇭🇺" },
-  UKR: { name: "Ukrayna", flag: "🇺🇦" },
-  AZE: { name: "Azerbaycan", flag: "🇦🇿" },
-  BGR: { name: "Bulgaristan", flag: "🇧🇬" },
-  BUL: { name: "Bulgaristan", flag: "🇧🇬" },
-  SVK: { name: "Slovakya", flag: "🇸🇰" },
-  SVN: { name: "Slovenya", flag: "🇸🇮" },
-  SLO: { name: "Slovenya", flag: "🇸🇮" },
-  KOS: { name: "Kosova", flag: "🇽🇰" },
-  KAZ: { name: "Kazakistan", flag: "🇰🇿" },
-  ARM: { name: "Ermenistan", flag: "🇦🇲" },
-  BIH: { name: "Bosna Hersek", flag: "🇧🇦" },
-  ALB: { name: "Arnavutluk", flag: "🇦🇱" },
-  GEO: { name: "Gürcistan", flag: "🇬🇪" },
-  FIN: { name: "Finlandiya", flag: "🇫🇮" },
-  ISL: { name: "İzlanda", flag: "🇮🇸" },
-  IRL: { name: "İrlanda", flag: "🇮🇪" },
-  NIR: { name: "Kuzey İrlanda", flag: "🇬🇧" },
-  WAL: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
-  WLS: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
-  LUX: { name: "Lüksemburg", flag: "🇱🇺" },
-  LTU: { name: "Litvanya", flag: "🇱🇹" },
-  LVA: { name: "Letonya", flag: "🇱🇻" },
-  EST: { name: "Estonya", flag: "🇪🇪" },
-  MDA: { name: "Moldova", flag: "🇲🇩" },
-  FRO: { name: "Faroe Adaları", flag: "🇫🇴" },
-  MLT: { name: "Malta", flag: "🇲🇹" },
-  AND: { name: "Andorra", flag: "🇦🇩" },
-  GIB: { name: "Cebelitarık", flag: "🇬🇮" },
-  BLR: { name: "Belarus", flag: "🇧🇾" },
-  MNE: { name: "Karadağ", flag: "🇲🇪" },
-  MKD: { name: "Kuzey Makedonya", flag: "🇲🇰" },
-  SMR: { name: "San Marino", flag: "🇸🇲" },
-  ISR: { name: "İsrail", flag: "🇮🇱" },
-  BRA: { name: "Brezilya", flag: "🇧🇷" },
-  ARG: { name: "Arjantin", flag: "🇦🇷" },
-  COL: { name: "Kolombiya", flag: "🇨🇴" },
-  CHL: { name: "Şili", flag: "🇨🇱" },
-  ECU: { name: "Ekvador", flag: "🇪🇨" },
-  URY: { name: "Uruguay", flag: "🇺🇾" },
-  PRY: { name: "Paraguay", flag: "🇵🇾" },
-  PER: { name: "Peru", flag: "🇵🇪" },
-  BOL: { name: "Bolivya", flag: "🇧🇴" },
-  VEN: { name: "Venezuela", flag: "🇻🇪" },
+  TUR: { name: "Türkiye", flag: "🇹🇷", continent: "europe" },
+  ENG: { name: "İngiltere", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", continent: "europe" },
+  ESP: { name: "İspanya", flag: "🇪🇸", continent: "europe" },
+  GER: { name: "Almanya", flag: "🇩🇪", continent: "europe" },
+  DEU: { name: "Almanya", flag: "🇩🇪", continent: "europe" },
+  DE: { name: "Almanya", flag: "🇩🇪", continent: "europe" },
+  ITA: { name: "İtalya", flag: "🇮🇹", continent: "europe" },
+  FRA: { name: "Fransa", flag: "🇫🇷", continent: "europe" },
+  PRT: { name: "Portekiz", flag: "🇵🇹", continent: "europe" },
+  NED: { name: "Hollanda", flag: "🇳🇱", continent: "europe" },
+  NLD: { name: "Hollanda", flag: "🇳🇱", continent: "europe" },
+  BEL: { name: "Belçika", flag: "🇧🇪", continent: "europe" },
+  CZE: { name: "Çekya", flag: "🇨🇿", continent: "europe" },
+  CHE: { name: "İsviçre", flag: "🇨🇭", continent: "europe" },
+  SUI: { name: "İsviçre", flag: "🇨🇭", continent: "europe" },
+  AUT: { name: "Avusturya", flag: "🇦🇹", continent: "europe" },
+  SCO: { name: "İskoçya", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", continent: "europe" },
+  GRC: { name: "Yunanistan", flag: "🇬🇷", continent: "europe" },
+  GRE: { name: "Yunanistan", flag: "🇬🇷", continent: "europe" },
+  NOR: { name: "Norveç", flag: "🇳🇴", continent: "europe" },
+  DNK: { name: "Danimarka", flag: "🇩🇰", continent: "europe" },
+  DEN: { name: "Danimarka", flag: "🇩🇰", continent: "europe" },
+  POL: { name: "Polonya", flag: "🇵🇱", continent: "europe" },
+  HRV: { name: "Hırvatistan", flag: "🇭🇷", continent: "europe" },
+  CRO: { name: "Hırvatistan", flag: "🇭🇷", continent: "europe" },
+  SWE: { name: "İsveç", flag: "🇸🇪", continent: "europe" },
+  CYP: { name: "Kıbrıs", flag: "🇨🇾", continent: "europe" },
+  SRB: { name: "Sırbistan", flag: "🇷🇸", continent: "europe" },
+  ROU: { name: "Romanya", flag: "🇷🇴", continent: "europe" },
+  HUN: { name: "Macaristan", flag: "🇭🇺", continent: "europe" },
+  UKR: { name: "Ukrayna", flag: "🇺🇦", continent: "europe" },
+  AZE: { name: "Azerbaycan", flag: "🇦🇿", continent: "europe" },
+  BGR: { name: "Bulgaristan", flag: "🇧🇬", continent: "europe" },
+  BUL: { name: "Bulgaristan", flag: "🇧🇬", continent: "europe" },
+  SVK: { name: "Slovakya", flag: "🇸🇰", continent: "europe" },
+  SVN: { name: "Slovenya", flag: "🇸🇮", continent: "europe" },
+  SLO: { name: "Slovenya", flag: "🇸🇮", continent: "europe" },
+  KOS: { name: "Kosova", flag: "🇽🇰", continent: "europe" },
+  KAZ: { name: "Kazakistan", flag: "🇰🇿", continent: "europe" },
+  ARM: { name: "Ermenistan", flag: "🇦🇲", continent: "europe" },
+  BIH: { name: "Bosna Hersek", flag: "🇧🇦", continent: "europe" },
+  ALB: { name: "Arnavutluk", flag: "🇦🇱", continent: "europe" },
+  GEO: { name: "Gürcistan", flag: "🇬🇪", continent: "europe" },
+  FIN: { name: "Finlandiya", flag: "🇫🇮", continent: "europe" },
+  ISL: { name: "İzlanda", flag: "🇮🇸", continent: "europe" },
+  IRL: { name: "İrlanda", flag: "🇮🇪", continent: "europe" },
+  NIR: { name: "Kuzey İrlanda", flag: "🇬🇧", continent: "europe" },
+  WAL: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", continent: "europe" },
+  WLS: { name: "Galler", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", continent: "europe" },
+  LUX: { name: "Lüksemburg", flag: "🇱🇺", continent: "europe" },
+  LTU: { name: "Litvanya", flag: "🇱🇹", continent: "europe" },
+  LVA: { name: "Letonya", flag: "🇱🇻", continent: "europe" },
+  EST: { name: "Estonya", flag: "🇪🇪", continent: "europe" },
+  MDA: { name: "Moldova", flag: "🇲🇩", continent: "europe" },
+  FRO: { name: "Faroe Adaları", flag: "🇫🇴", continent: "europe" },
+  MLT: { name: "Malta", flag: "🇲🇹", continent: "europe" },
+  AND: { name: "Andorra", flag: "🇦🇩", continent: "europe" },
+  GIB: { name: "Cebelitarık", flag: "🇬🇮", continent: "europe" },
+  BLR: { name: "Belarus", flag: "🇧🇾", continent: "europe" },
+  MNE: { name: "Karadağ", flag: "🇲🇪", continent: "europe" },
+  MKD: { name: "Kuzey Makedonya", flag: "🇲🇰", continent: "europe" },
+  SMR: { name: "San Marino", flag: "🇸🇲", continent: "europe" },
+  ISR: { name: "İsrail", flag: "🇮🇱", continent: "europe" },
+  COL: { name: "Kolombiya", flag: "🇨🇴", continent: "america" },
+  CHL: { name: "Şili", flag: "🇨🇱", continent: "america" },
+  ECU: { name: "Ekvador", flag: "🇪🇨", continent: "america" },
+  URY: { name: "Uruguay", flag: "🇺🇾", continent: "america" },
+  PRY: { name: "Paraguay", flag: "🇵🇾", continent: "america" },
 };
+
+const CONTINENT_TABS = [
+  { id: "all", label: "Tümü", icon: "🌐", confederation: "Tüm Kıtalar" },
+  { id: "europe", label: "Avrupa", icon: "🇪🇺", confederation: "UEFA" },
+  { id: "america", label: "Amerika", icon: "🌎", confederation: "CONMEBOL / CONCACAF" },
+  { id: "asia", label: "Asya", icon: "🌏", confederation: "AFC" },
+  { id: "africa", label: "Afrika", icon: "🌍", confederation: "CAF" },
+];
 
 export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] }) {
   const { t } = useTranslation();
+  const [selectedContinent, setSelectedContinent] = useState<string>("all");
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [minMatchesFilter, setMinMatchesFilter] = useState<number>(1);
   const [tournamentFilter, setTournamentFilter] = useState<string>("all");
@@ -675,7 +731,7 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
       const addTeamStats = (countryCode: string, teamName: string, myScore: number, oppScore: number) => {
         if (!countryCode || countryCode === "UNK" || countryCode === "TBD") return;
 
-        const info = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: "🌍" };
+        const info = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: "🌍", continent: "europe" };
         const canonicalKey = info.name || countryCode;
 
         if (!stats[canonicalKey]) {
@@ -683,6 +739,7 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
             countryCode,
             countryName: info.name || countryCode,
             flag: info.flag || "🌍",
+            continent: info.continent || "europe",
             played: 0,
             win: 0,
             draw: 0,
@@ -707,13 +764,14 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
         let isDraw = false;
         let isLoss = false;
 
+        // Puanlar 1000 ile çarpılarak hesaplanır: Galibiyet 3.000, Beraberlik 1.000
         if (myScore > oppScore) {
           c.win += 1;
-          matchPts = 3;
+          matchPts = 3000;
           isWin = true;
         } else if (myScore === oppScore) {
           c.draw += 1;
-          matchPts = 1;
+          matchPts = 1000;
           isDraw = true;
         } else {
           c.loss += 1;
@@ -721,7 +779,7 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
         }
 
         c.pts += matchPts;
-        c.ppg = c.played > 0 ? Number((c.pts / c.played).toFixed(2)) : 0;
+        c.ppg = c.played > 0 ? Math.round(c.pts / c.played) : 0;
 
         if (!c.teams[teamName]) {
           c.teams[teamName] = { played: 0, win: 0, draw: 0, loss: 0, pts: 0, gf: 0, ga: 0 };
@@ -741,19 +799,49 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
     });
 
     return Object.values(stats)
-      .filter(c => c.played >= minMatchesFilter)
+      .filter(c => {
+        if (c.played < minMatchesFilter) return false;
+        if (selectedContinent !== "all" && c.continent !== selectedContinent) return false;
+        return true;
+      })
       .sort((a, b) => {
         if (b.ppg !== a.ppg) return b.ppg - a.ppg;
         if (b.pts !== a.pts) return b.pts - a.pts;
         if (b.gd !== a.gd) return b.gd - a.gd;
         return b.gf - a.gf;
       });
-  }, [matches, minMatchesFilter, tournamentFilter]);
+  }, [matches, minMatchesFilter, tournamentFilter, selectedContinent]);
 
   return (
     <div className="space-y-6 animate-in fade-in-50 duration-200">
       
-      {/* BILGI KARTI */}
+      {/* 🌍 1. KITA / KONFEDERASYON ALT SEKMELERİ (UEFA, CONMEBOL, AFC, CAF) */}
+      <div className="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 gap-1.5 overflow-x-auto hide-scrollbar shadow-lg">
+        {CONTINENT_TABS.map((tab) => {
+          const isSelected = selectedContinent === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setSelectedContinent(tab.id)}
+              className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer border ${
+                isSelected
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 border-indigo-400 scale-[1.02]"
+                  : "bg-slate-950/40 border-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-800/60"
+              }`}
+            >
+              <span className="text-base">{tab.icon}</span>
+              <span>{t(tab.label)}</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-bold ${
+                isSelected ? "bg-white/20 text-white" : "bg-slate-800 text-slate-400"
+              }`}>
+                {tab.confederation}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* BİLGİ KARTI */}
       <div className="bg-gradient-to-r from-indigo-950/70 via-slate-900/80 to-blue-950/70 border border-indigo-500/30 p-5 sm:p-6 rounded-2xl shadow-lg relative overflow-hidden">
         <div className="absolute right-0 top-0 -mt-4 -mr-4 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative z-10">
@@ -762,11 +850,11 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
               <span className="text-2xl">🌍</span>
               <h2 className="text-xl sm:text-2xl font-black text-white">{t("Ülke Performans Sıralaması")}</h2>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
-                {t("Maç Başına Puan")} (MBP)
+                {t("Maç Başına Puan")} (MBP × 1000)
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Kulüplerin kupalarda oynadığı tüm maçların puan ortalamasıdır (G: 3P, B: 1P). Çok maç yapan ülkelerin haksız avantajını engellemek için sıralama <strong>Maç Başına Kazanılan Ortalama Puan (MBP)</strong> üzerinden yapılır.
+              Kulüplerin kupalarda oynadığı tüm maçların puan ortalamasıdır (G: 3.000 P, B: 1.000 P). Çok maç yapan ülkelerin haksız avantajını engellemek için sıralama <strong>Maç Başına Kazanılan Ortalama Puan (MBP)</strong> üzerinden yapılır.
             </p>
           </div>
 
@@ -783,6 +871,9 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
               <option value="848">Konferans Ligi</option>
               <option value="13">Copa Libertadores</option>
               <option value="11">Copa Sudamericana</option>
+              <option value="17">AFC Şampiyonlar Ligi Elite</option>
+              <option value="18">AFC Şampiyonlar Ligi 2</option>
+              <option value="12">CAF Şampiyonlar Ligi</option>
             </select>
 
             <select
@@ -888,11 +979,13 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
                         }`}>
                           {c.gd > 0 ? `+${c.gd}` : c.gd}
                         </td>
-                        {/* TOPLAM PUAN */}
-                        <td className="py-3.5 px-3 text-center text-slate-200 font-bold">{c.pts}</td>
-                        {/* MAÇ BAŞINA PUAN (MBP) */}
-                        <td className="py-3.5 px-4 text-center bg-indigo-950/20 font-black text-indigo-300 text-base">
-                          {c.ppg.toFixed(2)}
+                        {/* TOPLAM PUAN (1000 İLE ÇARPILMIŞ) */}
+                        <td className="py-3.5 px-3 text-center text-slate-200 font-black font-mono">
+                          {c.pts.toLocaleString("tr-TR")}
+                        </td>
+                        {/* MAÇ BAŞINA PUAN (MBP × 1000) */}
+                        <td className="py-3.5 px-4 text-center bg-indigo-950/20 font-black text-indigo-300 text-base font-mono">
+                          {c.ppg.toLocaleString("tr-TR")}
                         </td>
                         {/* OK İKONU */}
                         <td className="py-3.5 px-3 text-center text-slate-500">
@@ -911,7 +1004,7 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
                               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                 {teamNames.map(tName => {
                                   const tInfo = c.teams[tName];
-                                  const tPpg = (tInfo.pts / tInfo.played).toFixed(2);
+                                  const tPpg = Math.round(tInfo.pts / tInfo.played);
                                   return (
                                     <div
                                       key={tName}
@@ -924,8 +1017,8 @@ export function CupMatCountryRankings({ matches = [] }: { matches?: MatchItem[] 
                                         </p>
                                       </div>
                                       <div className="text-right">
-                                        <div className="text-sm font-black text-indigo-400">{tInfo.pts} Puan</div>
-                                        <div className="text-[10px] text-slate-400 font-semibold">{tPpg} MBP</div>
+                                        <div className="text-sm font-black text-indigo-400 font-mono">{tInfo.pts.toLocaleString("tr-TR")} Puan</div>
+                                        <div className="text-[10px] text-slate-400 font-bold font-mono">{tPpg.toLocaleString("tr-TR")} MBP</div>
                                       </div>
                                     </div>
                                   );

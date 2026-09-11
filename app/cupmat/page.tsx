@@ -62,7 +62,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // İsrail
   'Hapoel Beer Sheva': 'İSR', 'HB Sheva': 'İSR', 'Maccabi Tel Aviv': 'İSR', 'M. Tel Aviv': 'İSR', 'Maccabi Haifa': 'İSR', 'Beitar': 'İSR', 'Hapoel Jerusalem': 'İSR',
   // Azerbaycan
-  'Sabah FA': 'AZE', 'Sabah': 'AZE', 'Karabağ': 'AZE', 'Qarabag': 'AZE', 'Neftçi PFK': 'AZE', 'Neftchi': 'AZE', 'Zira': 'AZE', 'Sumqayit': 'AZE',
+  'Sabah FA': 'AZE', 'Sabah': 'AZE', 'Sabah FK': 'AZE', 'Karabağ': 'AZE', 'Qarabag': 'AZE', 'Neftçi PFK': 'AZE', 'Neftchi': 'AZE', 'Zira': 'AZE', 'Sumqayit': 'AZE',
   // Slovakya
   'Slovan Bratislava': 'SVK', 'S. Bratislava': 'SVK', 'Spartak Trnava': 'SVK', 'S. Trnava': 'SVK', 'DAC Dunajska Streda': 'SVK', 'Dunajska S.': 'SVK', 'MSK Zilina': 'SVK', 'Ruzomberok': 'SVK',
   // Slovenya
@@ -88,11 +88,11 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // İspanya
   'Real Madrid': 'İSP', 'Barcelona': 'İSP', 'Atlético Madrid': 'İSP', 'Real Sociedad': 'İSP', 'Athletic Bilbao': 'İSP', 'Girona': 'İSP', 'Real Betis': 'İSP', 'Sevilla': 'İSP', 'Villarreal': 'İSP',
   // İngiltere
-  'Man City': 'İNG', 'Arsenal': 'İNG', 'Liverpool': 'İNG', 'Aston Villa': 'İNG', 'Tottenham': 'İNG', 'Chelsea': 'İNG', 'Man United': 'İNG', 'Newcastle': 'İNG', 'West Ham': 'İNG',
+  'Man City': 'İNG', 'Manchester City': 'İNG', 'Arsenal': 'İNG', 'Liverpool': 'İNG', 'Aston Villa': 'İNG', 'Tottenham': 'İNG', 'Chelsea': 'İNG', 'Man United': 'İNG', 'Manchester United': 'İNG', 'Newcastle': 'İNG', 'West Ham': 'İNG',
   // Almanya
   'Bayer Leverkusen': 'ALM', 'Bayern Munich': 'ALM', 'Stuttgart': 'ALM', 'RB Leipzig': 'ALM', 'Borussia Dortmund': 'ALM', 'Eintracht Frankfurt': 'ALM', 'Hoffenheim': 'ALM', 'Heidenheim': 'ALM',
   // İtalya
-  'Inter': 'İTA', 'Inter Milan': 'İTA', 'AC Milan': 'İTA', 'Juventus': 'İTA', 'Atalanta': 'İTA', 'Bologna': 'İTA', 'Roma': 'İTA', 'Lazio': 'İTA', 'Napoli': 'İTA', 'Fiorentina': 'İTA', 'Como': 'İTA',
+  'Inter': 'İTA', 'Inter Milan': 'İTA', 'AC Milan': 'İTA', 'Juventus': 'İTA', 'Atalanta': 'İTA', 'Bologna': 'İTA', 'Roma': 'İTA', 'Lazio': 'İTA', 'Napoli': 'İTA', 'Fiorentina': 'İTA', 'Como': 'İTA', 'Como 1907': 'İTA',
   // Danimarka
   'FC Midtjylland': 'DAN', 'Midtjylland': 'DAN', 'Brondby': 'DAN', 'FC Copenhagen': 'DAN', 'Kopenhag': 'DAN', 'FC Nordsjaelland': 'DAN', 'Silkeborg': 'DAN', 'Aarhus': 'DAN',
   // İsveç
@@ -243,7 +243,8 @@ export default function CupMatMatchCenter() {
           *,
           cupmat_tournaments!inner(api_id, region, name)
         `)
-        .order('date', { ascending: false });
+        .order('date', { ascending: false })
+        .limit(5000);
 
       if (error) {
         console.error("Error fetching matches:", error);
