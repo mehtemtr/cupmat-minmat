@@ -195,7 +195,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   'Green Mamba': 'SWZ', 'Nsingizini Hotspurs': 'SWZ', 'Mbabane Swallows': 'SWZ', 'Mbabane Highlanders': 'SWZ', 'Royal Leopards': 'SWZ',
   'Hafia': 'GUI', 'Horoya': 'GUI', 'Horoya AC': 'GUI', 'Milo FC': 'GUI', 'Milo': 'GUI', 'CI Kamsar': 'GUI',
   'Heegan': 'SOM', 'Mogadishu City': 'SOM', 'Dekedaha': 'SOM', 'Gaadiidka': 'SOM',
-  'JS Saoura': 'ALG', 'MC Alger': 'ALG', 'JSK': 'ALG', 'JS Kabylie': 'ALG', 'CR Belouizdad': 'ALG', 'CRB': 'ALG', 'USM Alger': 'ALG', 'ES Setif': 'ALG',
+  'JS Saoura': 'ALG', 'MC Alger': 'ALG', 'JSK': 'ALG', 'JS Kabylie': 'ALG', 'Jeunesse Sportive de Kabylie': 'ALG', 'CR Belouizdad': 'ALG', 'CRB': 'ALG', 'USM Alger': 'ALG', 'ES Setif': 'ALG',
   'KMKM': 'TAN', 'Simba': 'TAN', 'Simba SC': 'TAN', 'Young Africans': 'TAN', 'Yanga': 'TAN', 'Azam FC': 'TAN',
   'Kitara': 'UGA', 'Vipers': 'UGA', 'Vipers SC': 'UGA', 'KCCA FC': 'UGA', 'SC Villa': 'UGA',
   'Lijabatho': 'LES', 'Matlama': 'LES', 'Bantu FC': 'LES', 'Lioli FC': 'LES',
