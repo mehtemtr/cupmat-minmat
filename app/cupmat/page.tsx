@@ -70,7 +70,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // Azerbaycan
   'Sabah FA': 'AZE', 'Sabah': 'AZE', 'Sabah FK': 'AZE', 'Karabağ': 'AZE', 'Qarabag': 'AZE', 'Neftçi PFK': 'AZE', 'Neftchi': 'AZE', 'Zira': 'AZE', 'Sumqayit': 'AZE',
   // Slovakya
-  'Slovan Bratislava': 'SVK', 'S. Bratislava': 'SVK', 'Spartak Trnava': 'SVK', 'S. Trnava': 'SVK', 'DAC Dunajska Streda': 'SVK', 'Dunajska S.': 'SVK', 'MSK Zilina': 'SVK', 'Ruzomberok': 'SVK',
+  'Slovan Bratislava': 'SVK', 'S. Bratislava': 'SVK', 'ŠK Slovan Bratislava': 'SVK', 'SK Slovan Bratislava': 'SVK', 'Spartak Trnava': 'SVK', 'S. Trnava': 'SVK', 'DAC Dunajska Streda': 'SVK', 'Dunajska S.': 'SVK', 'MSK Zilina': 'SVK', 'Ruzomberok': 'SVK',
   // Slovenya
   'Celje': 'SVN', 'NK Celje': 'SVN', 'Maribor': 'SVN', 'Olimpija': 'SVN', 'Bravo': 'SVN', 'Aluminij': 'SVN',
   // Fransa
@@ -88,7 +88,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // Hırvatistan
   'Dinamo Zagreb': 'HIR', 'D. Zagreb': 'HIR', 'Hajduk Split': 'HIR', 'HNK Hajduk Split': 'HIR', 'Rijeka': 'HIR', 'Osijek': 'HIR', 'VSN Varazdin': 'HIR', 'Varazdin': 'HIR',
   // Çekya
-  'Sparta Prag': 'ÇEK', 'Slavia Prag': 'ÇEK', 'Viktoria Plzen': 'ÇEK', 'Plzen': 'ÇEK', 'Mlada Boleslav': 'ÇEK', 'H. Kralove': 'ÇEK', 'Banik Ostrava': 'ÇEK', 'Jablonec': 'ÇEK', 'FK Jablonec': 'ÇEK',
+  'Sparta Prag': 'ÇEK', 'Sparta Praha': 'ÇEK', 'AC Sparta Praha': 'ÇEK', 'Slavia Prag': 'ÇEK', 'Slavia Praha': 'ÇEK', 'SK Slavia Praha': 'ÇEK', 'Viktoria Plzen': 'ÇEK', 'Plzen': 'ÇEK', 'Mlada Boleslav': 'ÇEK', 'H. Kralove': 'ÇEK', 'Banik Ostrava': 'ÇEK', 'Jablonec': 'ÇEK', 'FK Jablonec': 'ÇEK',
   // Polonya
   'Jagiellonia': 'POL', 'J. Bialystok': 'POL', 'Jagiellonia Białystok': 'POL', 'Lech Poznan': 'POL', 'Legia Varşova': 'POL', 'Legia': 'POL', 'Slask Wroclaw': 'POL', 'Gornik Zabrze': 'POL', 'Wisla Krakow': 'POL', 'Raków Częstochowa': 'POL', 'Rakow': 'POL', 'Katowice': 'POL', 'GKS Katowice': 'POL',
   // İsviçre
@@ -116,7 +116,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // Macaristan
   'Ferencvaros': 'MAC', 'Ferencvarosi TC': 'MAC', 'Paks': 'MAC', 'Fehervar': 'MAC', 'Puskas Akademia': 'MAC', 'Gyor': 'MAC',
   // Ukrayna
-  'Shakhtar Donetsk': 'UKR', 'Dinamo Kiev': 'UKR', 'Kryvbas': 'UKR', 'Dnipro-1': 'UKR', 'Polissya': 'UKR', 'Polessya': 'UKR',
+  'Shakhtar Donetsk': 'UKR', 'Shakhtar': 'UKR', 'Shaktar': 'UKR', 'Dinamo Kiev': 'UKR', 'Dynamo Kyiv': 'UKR', 'Kryvbas': 'UKR', 'Dnipro-1': 'UKR', 'Polissya': 'UKR', 'Polessya': 'UKR',
   // Kıbrıs Rum Kesimi
   'APOEL': 'KIB', 'AEK Larnaca': 'KIB', 'Omonia': 'KIB', 'Omonia Nicosia': 'KIB', 'Pafos': 'KIB', 'Apollon L.': 'KIB', 'Aris Limassol': 'KIB',
   // Gürcistan

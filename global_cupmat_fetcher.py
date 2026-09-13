@@ -72,14 +72,15 @@ TEAM_COUNTRY_CODES = {
     "Celtic": "İSK", "Rangers": "İSK", "İskoçya": "İSK", "Scotland": "İSK",
     "Club Brugge": "BEL", "Union SG": "BEL", "Anderlecht": "BEL", "Gent": "BEL", "Belçika": "BEL", "Belgium": "BEL",
     "Salzburg": "AVU", "Red Bull Salzburg": "AVU", "Sturm Graz": "AVU", "LASK": "AVU", "Avusturya": "AVU", "Austria": "AVU",
-    "Sparta Prag": "ÇEK", "Slavia Prag": "ÇEK", "Viktoria Plzen": "ÇEK", "Çekya": "ÇEK", "Czech Republic": "ÇEK",
+    "Sparta Prag": "ÇEK", "Sparta Praha": "ÇEK", "AC Sparta Praha": "ÇEK", "Slavia Prag": "ÇEK", "Slavia Praha": "ÇEK", "SK Slavia Praha": "ÇEK", "Viktoria Plzen": "ÇEK", "Çekya": "ÇEK", "Czech Republic": "ÇEK",
+    "Slovan Bratislava": "SVK", "ŠK Slovan Bratislava": "SVK", "SK Slovan Bratislava": "SVK", "Spartak Trnava": "SVK", "Slovakya": "SVK", "Slovakia": "SVK",
     "Dinamo Zagreb": "HIR", "Hajduk Split": "HIR", "Rijeka": "HIR", "Hırvatistan": "HIR", "Croatia": "HIR",
     "Kızılyıldız": "SIR", "Crvena Zvezda": "SIR", "Partizan": "SIR", "Sırbistan": "SIR", "Serbia": "SIR",
     "Young Boys": "İSV", "Lugano": "İSV", "Servette": "İSV", "İsviçre": "İSV", "Switzerland": "İSV",
     "Bodø/Glimt": "NOR", "Molde": "NOR", "Viking": "NOR", "Norveç": "NOR", "Norway": "NOR",
     "Malmö FF": "İSVE", "Elfsborg": "İSVE", "Djurgården": "İSVE", "İsveç": "İSVE", "Sweden": "İSVE",
     "FC Copenhagen": "DAN", "Midtjylland": "DAN", "Brøndby": "DAN", "Danimarka": "DAN", "Denmark": "DAN",
-    "Shakhtar Donetsk": "UKR", "Dinamo Kiev": "UKR", "Ukrayna": "UKR", "Ukraine": "UKR",
+    "Shakhtar Donetsk": "UKR", "Shakhtar": "UKR", "Shaktar": "UKR", "Dinamo Kiev": "UKR", "Dynamo Kyiv": "UKR", "Ukrayna": "UKR", "Ukraine": "UKR",
     "Qarabag": "AZE", "Karabağ": "AZE", "Sabah": "AZE", "Azerbaycan": "AZE", "Azerbaijan": "AZE",
     "Olympiakos": "YUN", "PAOK": "YUN", "Panathinaikos": "YUN", "AEK": "YUN", "Yunanistan": "YUN", "Greece": "YUN",
 
@@ -375,8 +376,12 @@ def fetch_api_football_leagues(tournament_map):
     """API-Football üzerinden Asya, Afrika, Amerika ve diğer kıta maçlarını çeker."""
     print("\n--- API-FOOTBALL KITASAL MAÇLAR ÇEKİLİYOR ---")
     
-    # Çekilecek kıtasal ligler ve sezonları
+    # Çekilecek tüm kıtasal ligler ve sezonları (Tüm ön elemeler ve ana turlar dahil)
     leagues_to_sync = [
+        {"api_id": 2, "season": 2024, "name": "UEFA Şampiyonlar Ligi (Ön Elemeler Dahil)"},
+        {"api_id": 3, "season": 2024, "name": "UEFA Avrupa Ligi (Ön Elemeler Dahil)"},
+        {"api_id": 848, "season": 2024, "name": "UEFA Konferans Ligi (Ön Elemeler Dahil)"},
+        {"api_id": 5, "season": 2024, "name": "UEFA Uluslar Ligi"},
         {"api_id": 17, "season": 2024, "name": "AFC Şampiyonlar Ligi Elite"},
         {"api_id": 18, "season": 2024, "name": "AFC Şampiyonlar Ligi Two"},
         {"api_id": 12, "season": 2024, "name": "CAF Şampiyonlar Ligi"},
