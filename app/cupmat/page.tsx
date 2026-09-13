@@ -19,9 +19,10 @@ const supabase = createClient(
 const CONTINENTS = [
   { id: "all", name: "Tümünü Gör" },
   { id: "europe", name: "Avrupa" },
-  { id: "asia", name: "Asya" },
   { id: "america", name: "Amerika" },
+  { id: "asia", name: "Asya" },
   { id: "africa", name: "Afrika" },
+  { id: "world", name: "Dünya" },
 ];
 
 const TOURNAMENTS = {
@@ -29,22 +30,27 @@ const TOURNAMENTS = {
     { id: 2, name: "Şampiyonlar Ligi" },
     { id: 3, name: "Avrupa Ligi" },
     { id: 848, name: "Konferans Ligi" },
-    { id: 5, name: "Milli Maçlar (Nations League)" },
-  ],
-  "asia": [
-    { id: 17, name: "AFC Şampiyonlar Ligi Elite" },
-    { id: 18, name: "AFC Şampiyonlar Ligi 2" },
+    { id: 5, name: "UEFA Uluslar Ligi" },
   ],
   "america": [
     { id: 13, name: "Copa Libertadores" },
     { id: 11, name: "Copa Sudamericana" },
-    { id: 16, name: "CONCACAF Champions" },
-    { id: 34, name: "Milli Elemeler" },
+    { id: 16, name: "CONCACAF Şampiyonlar" },
+    { id: 34, name: "Dünya Kupası Elemeleri (CONMEBOL)" },
+  ],
+  "asia": [
+    { id: 17, name: "AFC Şampiyonlar Ligi Elite" },
+    { id: 18, name: "AFC Şampiyonlar Ligi Two" },
+    { id: 7, name: "AFC Asya Kupası & Elemeleri" },
   ],
   "africa": [
     { id: 12, name: "CAF Şampiyonlar Ligi" },
     { id: 20, name: "CAF Konfederasyon Kupası" },
-    { id: 32, name: "Milli Elemeler (AFCON)" },
+    { id: 32, name: "AFCON Elemeleri" },
+  ],
+  "world": [
+    { id: 15, name: "FIFA Kulüpler Dünya Kupası" },
+    { id: 1, name: "FIFA Dünya Kupası 2026" },
   ]
 };
 
@@ -211,7 +217,7 @@ const TEAM_COUNTRIES: Record<string, string> = {
   // Asya (AFC)
   'Persib Bandung': 'IDN', 'Persib': 'IDN', 'Port': 'THA', 'Port FC': 'THA', 'Manila Digger': 'PHI',
   // Portekiz / Diğer
-  'FCP': 'POR', 'FC Porto': 'POR', 'Porto': 'POR', 'SL Benfica': 'POR', 'Sporting': 'POR', 'Sporting CP': 'POR'
+  'FCP': 'POR', 'FC Porto': 'POR', 'SL Benfica': 'POR', 'Sporting': 'POR'
 };
 
 type MatchType = {
@@ -233,6 +239,7 @@ type MatchType = {
     isWinner: boolean; 
     firstLegScore?: number;
     isTieWinner?: boolean;
+    logo?: string;
   };
   team2: { 
     name: string; 
@@ -241,6 +248,7 @@ type MatchType = {
     isWinner: boolean; 
     firstLegScore?: number;
     isTieWinner?: boolean;
+    logo?: string;
   };
   aggregateScore?: { team1: number; team2: number };
   tournament_api_id: number;
@@ -977,52 +985,39 @@ export default function CupMatMatchCenter() {
                                           <div
                                             key={match.id}
                                             onClick={() => setSelectedMatch(match)}
-                                            className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-slate-800/40 hover:border-indigo-500/30"
+                                            className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3 py-1.5 px-3 rounded-lg bg-slate-900/50 hover:bg-slate-800/80 transition-all cursor-pointer group border border-slate-800/60 hover:border-indigo-500/40"
                                           >
                                             {/* EV SAHİBİ TAKIM */}
-                                            <div className="flex items-center justify-end gap-2 text-right">
-                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                            <div className="flex items-center justify-end gap-1.5 text-right min-w-0">
+                                              <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block">
                                                 {match.team1.countryCode}
                                               </span>
-                                              <span className="text-sm sm:text-base font-bold text-slate-100">
+                                              <span className="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white truncate">
                                                 {match.team1.name}
                                               </span>
                                             </div>
 
-                                            {/* ORTA: HAFTA ROZETİ, TARİH, SKOR / SAAT */}
-                                            <div className="flex flex-col items-center justify-center min-w-[90px] sm:min-w-[120px] gap-1">
-                                              {/* Hafta Rozeti & Tarih */}
-                                              <div className="flex items-center gap-1.5">
-                                                {weekNum && (
-                                                  <span className="text-[10px] font-black text-indigo-300 bg-indigo-950/90 border border-indigo-500/30 px-2 py-0.5 rounded">
-                                                    {weekNum}
-                                                  </span>
-                                                )}
-                                                <span className="text-[10px] font-medium text-slate-400">
-                                                  {match.dateStr}
-                                                </span>
-                                              </div>
-
-                                              {/* Skor veya Saat */}
+                                            {/* ORTA: SKOR / SAAT */}
+                                            <div className="flex items-center justify-center min-w-[75px] sm:min-w-[90px]">
                                               {["FT", "AET", "PEN"].includes(match.status) ? (
-                                                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/90 rounded-md border border-slate-700">
-                                                  <span className="text-sm sm:text-base font-black text-emerald-400 tabular-nums">{match.team1.score}</span>
-                                                  <span className="text-slate-500">-</span>
-                                                  <span className="text-sm sm:text-base font-black text-emerald-400 tabular-nums">{match.team2.score}</span>
+                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-950/90 rounded border border-slate-700 shadow-sm">
+                                                  <span className="text-xs sm:text-sm font-bold text-emerald-400 tabular-nums">{match.team1.score}</span>
+                                                  <span className="text-slate-500 text-xs">-</span>
+                                                  <span className="text-xs sm:text-sm font-bold text-emerald-400 tabular-nums">{match.team2.score}</span>
                                                 </div>
                                               ) : (
-                                                <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-md border border-amber-500/20">
+                                                <div className="text-[11px] sm:text-xs font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                                                   {match.time}
                                                 </div>
                                               )}
                                             </div>
 
                                             {/* DEPLASMAN TAKIM */}
-                                            <div className="flex items-center justify-start gap-2 text-left">
-                                              <span className="text-sm sm:text-base font-bold text-slate-100">
+                                            <div className="flex items-center justify-start gap-1.5 text-left min-w-0">
+                                              <span className="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white truncate">
                                                 {match.team2.name}
                                               </span>
-                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                              <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block">
                                                 {match.team2.countryCode}
                                               </span>
                                             </div>
@@ -1122,39 +1117,39 @@ export default function CupMatMatchCenter() {
                                           <div
                                             key={match.id}
                                             onClick={() => setSelectedMatch(match)}
-                                            className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-slate-800/40 hover:border-indigo-500/30"
+                                            className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3 py-1.5 px-3 rounded-lg bg-slate-900/50 hover:bg-slate-800/80 transition-all cursor-pointer group border border-slate-800/60 hover:border-indigo-500/40"
                                           >
                                             {/* EV SAHİBİ */}
-                                            <div className="flex items-center justify-end gap-2 text-right">
-                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                            <div className="flex items-center justify-end gap-1.5 text-right min-w-0">
+                                              <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block">
                                                 {match.team1.countryCode}
                                               </span>
-                                              <span className="text-sm sm:text-base font-bold text-slate-100">
+                                              <span className="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white truncate">
                                                 {match.team1.name}
                                               </span>
                                             </div>
 
                                             {/* SKOR / SAAT */}
-                                            <div className="flex flex-col items-center justify-center min-w-[70px] sm:min-w-[90px]">
+                                            <div className="flex items-center justify-center min-w-[75px] sm:min-w-[90px]">
                                               {["FT", "AET", "PEN"].includes(match.status) ? (
-                                                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/90 rounded-md border border-slate-700">
-                                                  <span className="text-sm sm:text-base font-black text-emerald-400 tabular-nums">{match.team1.score}</span>
-                                                  <span className="text-slate-500">-</span>
-                                                  <span className="text-sm sm:text-base font-black text-emerald-400 tabular-nums">{match.team2.score}</span>
+                                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-950/90 rounded border border-slate-700 shadow-sm">
+                                                  <span className="text-xs sm:text-sm font-bold text-emerald-400 tabular-nums">{match.team1.score}</span>
+                                                  <span className="text-slate-500 text-xs">-</span>
+                                                  <span className="text-xs sm:text-sm font-bold text-emerald-400 tabular-nums">{match.team2.score}</span>
                                                 </div>
                                               ) : (
-                                                <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-md border border-amber-500/20">
+                                                <div className="text-[11px] sm:text-xs font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                                                   {match.time}
                                                 </div>
                                               )}
                                             </div>
 
                                             {/* DEPLASMAN */}
-                                            <div className="flex items-center justify-start gap-2 text-left">
-                                              <span className="text-sm sm:text-base font-bold text-slate-100">
+                                            <div className="flex items-center justify-start gap-1.5 text-left min-w-0">
+                                              <span className="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white truncate">
                                                 {match.team2.name}
                                               </span>
-                                              <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                              <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block">
                                                 {match.team2.countryCode}
                                               </span>
                                             </div>
@@ -1371,7 +1366,7 @@ export default function CupMatMatchCenter() {
                               </div>
                             
                             {/* O Tarihteki Maçlar */}
-                            <div className="space-y-2">
+                            <div className="space-y-1.5">
                               {matchesByDate[dateStr].map(match => {
                                 const tieDecided = match.isTieFinished;
                                 const isTeam1Advancing = tieDecided && match.team1.isTieWinner;
@@ -1383,79 +1378,79 @@ export default function CupMatMatchCenter() {
                                 <div 
                                   key={match.id}
                                   onClick={() => setSelectedMatch(match)}
-                                  className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-4 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/60 transition-colors cursor-pointer group border border-transparent hover:border-indigo-500/30"
+                                  className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3 py-1.5 px-3 rounded-lg bg-slate-900/50 hover:bg-slate-800/80 transition-all cursor-pointer group border border-slate-800/60 hover:border-indigo-500/40"
                                 >
                                   {/* EV SAHİBİ TAKIM */}
-                                  <div className={`flex items-center justify-end gap-2 text-right transition-all ${
+                                  <div className={`flex items-center justify-end gap-1.5 text-right min-w-0 transition-all ${
                                     isTeam1Advancing
                                       ? 'text-white'
                                       : isTeam1Eliminated
-                                      ? 'text-slate-500 opacity-40'
-                                      : 'text-slate-100'
+                                      ? 'text-slate-500 opacity-50'
+                                      : 'text-slate-200'
                                   }`}>
-                                    <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                    <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block">
                                       {match.team1.countryCode}
                                     </span>
-                                    <span className={`text-sm sm:text-base ${
+                                    <span className={`text-xs sm:text-sm truncate ${
                                       isTeam1Advancing
-                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
+                                        ? 'font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
                                         : isTeam1Eliminated
                                         ? 'font-normal text-slate-500'
-                                        : 'font-bold text-slate-100'
+                                        : 'font-semibold text-slate-200 group-hover:text-white'
                                     }`}>
                                       {match.team1.name}
                                     </span>
                                     {isTeam1Advancing && (
-                                      <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
+                                      <span className="inline-flex items-center justify-center px-1 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-black border border-emerald-500/40" title="Turu Geçti">
                                         ✓
                                       </span>
                                     )}
                                   </div>
 
                                   {/* SKOR / SAAT */}
-                                  <div className="flex flex-col items-center justify-center min-w-[60px] sm:min-w-[80px]">
+                                  <div className="flex flex-col items-center justify-center min-w-[75px] sm:min-w-[90px]">
                                     {["FT", "AET", "PEN"].includes(match.status) ? (
-                                      <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-900/80 rounded-md border border-slate-700">
-                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam1Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team1.score}</span>
-                                        <span className="text-slate-500">-</span>
-                                        <span className={`text-sm sm:text-lg tabular-nums ${isTeam2Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team2.score}</span>
+                                      <div className="flex items-center gap-1.5 px-2 py-0.5 bg-slate-950/90 rounded border border-slate-700 shadow-sm">
+                                        <span className={`text-xs sm:text-sm tabular-nums ${isTeam1Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team1.score}</span>
+                                        <span className="text-slate-500 text-xs">-</span>
+                                        <span className={`text-xs sm:text-sm tabular-nums ${isTeam2Advancing ? 'font-black text-emerald-400' : 'font-bold text-slate-100'}`}>{match.team2.score}</span>
                                       </div>
                                     ) : (
-                                      <div className="text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/20">
+                                      <div className="text-[11px] sm:text-xs font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                                         {match.time}
                                       </div>
                                     )}
                                     {/* Toplam Skor (Aggregate) */}
                                     {match.aggregateScore && ["FT", "AET", "PEN"].includes(match.status) && (
-                                      <span className="text-[9px] sm:text-[10px] font-bold text-indigo-300 bg-indigo-950/80 border border-indigo-500/30 px-1.5 py-0.2 rounded mt-1 shadow-sm">
-                                        Top: {match.aggregateScore.team1} - {match.aggregateScore.team2}
+                                      <span className="text-[9px] font-bold text-indigo-300 bg-indigo-950/90 border border-indigo-500/30 px-1 py-0.2 rounded mt-0.5">
+                                        Top: {match.aggregateScore.team1}-{match.aggregateScore.team2}
                                       </span>
                                     )}
                                   </div>
 
                                   {/* DEPLASMAN TAKIM */}
-                                  <div className={`flex items-center justify-start gap-2 text-left transition-all ${
+                                  <div className={`flex items-center justify-start gap-1.5 text-left min-w-0 transition-all ${
                                     isTeam2Advancing
                                       ? 'text-white'
                                       : isTeam2Eliminated
-                                      ? 'text-slate-500 opacity-40'
-                                      : 'text-slate-100'
+                                      ? 'text-slate-500 opacity-50'
+                                      : 'text-slate-200'
                                   }`}>
                                     {isTeam2Advancing && (
-                                      <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-black border border-emerald-500/40 shadow-sm" title="Turu Geçti">
+                                      <span className="inline-flex items-center justify-center px-1 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-black border border-emerald-500/40" title="Turu Geçti">
                                         ✓
                                       </span>
                                     )}
-                                    <span className={`text-sm sm:text-base ${
+                                    <span className={`text-xs sm:text-sm truncate ${
                                       isTeam2Advancing
-                                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
+                                        ? 'font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
                                         : isTeam2Eliminated
                                         ? 'font-normal text-slate-500'
-                                        : 'font-bold text-slate-100'
+                                        : 'font-semibold text-slate-200 group-hover:text-white'
                                     }`}>
                                       {match.team2.name}
                                     </span>
-                                    <span className="text-[10px] sm:text-xs font-medium text-slate-400 group-hover:text-slate-300 transition-colors hidden sm:inline-block">
+                                    <span className="text-[10px] font-bold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block">
                                       {match.team2.countryCode}
                                     </span>
                                   </div>
@@ -1487,41 +1482,55 @@ export default function CupMatMatchCenter() {
       {/* 📱 MAÇ DETAY KARTI (ZOOM MODAL) */}
       {/* ========================================== */}
       {selectedMatch && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-all" onClick={() => setSelectedMatch(null)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md transition-all" onClick={() => setSelectedMatch(null)}>
           <div 
-            className="bg-[#0b1121] border border-slate-700/80 rounded-3xl w-full max-w-lg shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden relative animate-in zoom-in-95 duration-200"
-            onClick={e => e.stopPropagation()} // Dışarı tıklamayı engelleme
+            className="bg-[#0b1121] border border-slate-700/90 rounded-3xl w-full max-w-lg shadow-[0_0_60px_rgba(0,0,0,0.8)] overflow-hidden relative animate-in zoom-in-95 duration-200"
+            onClick={e => e.stopPropagation()}
           >
             {/* Kapatma Tuşu */}
             <button 
               onClick={(e) => { e.stopPropagation(); setSelectedMatch(null); }}
-              className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors z-50 cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/70 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors z-50 cursor-pointer"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
 
-            <div className="p-8 text-center relative overflow-hidden">
+            <div className="p-6 sm:p-8 text-center relative overflow-hidden">
               {/* Arka Plan Glow */}
-              <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/10 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/15 via-transparent to-transparent pointer-events-none" />
               
-              <div className="relative z-10">
-                <div className="inline-block px-4 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 mb-8 uppercase tracking-widest">
-                  {getLocalizedRoundName(selectedMatch.round, currentLocale)} • {selectedMatch.dateStr}
+              <div className="relative z-10 space-y-6">
+                {/* Üst Rozet: Turnuva & Tur Bilgisi */}
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/90 border border-slate-700/80 text-xs font-bold text-slate-300 shadow-sm">
+                  <span className="text-indigo-400">🏆</span>
+                  <span>{selectedMatch.tournament_name || "Turnuva"}</span>
+                  <span className="text-slate-500">•</span>
+                  <span className="text-slate-300">{getLocalizedRoundName(selectedMatch.round, currentLocale)}</span>
                 </div>
 
-                <div className="flex items-center justify-between gap-4">
-                  {/* Ev Sahibi Zoom */}
+                {/* Karşılaşma ve Skor Alanı */}
+                <div className="flex items-center justify-between gap-4 pt-2">
+                  {/* Ev Sahibi Takım */}
                   <div className={`flex-1 flex flex-col items-center gap-2 transition-all ${
                     selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner
                       ? 'text-white'
                       : selectedMatch.isTieFinished && !selectedMatch.team1.isTieWinner
-                      ? 'text-slate-500 opacity-40'
+                      ? 'text-slate-500 opacity-50'
                       : 'text-slate-100'
                   }`}>
-                    <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">{selectedMatch.team1.countryCode}</span>
-                    <span className={`text-2xl sm:text-3xl ${
+                    {selectedMatch.team1.logo ? (
+                      <img src={selectedMatch.team1.logo} alt={selectedMatch.team1.name} className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-md" />
+                    ) : (
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-xl font-bold text-slate-400">
+                        {selectedMatch.team1.name.slice(0, 2).toUpperCase()}
+                      </div>
+                    )}
+                    <span className="text-xs font-bold text-slate-400 bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700/60 uppercase tracking-wider">
+                      {selectedMatch.team1.countryCode}
+                    </span>
+                    <span className={`text-base sm:text-lg text-center leading-tight ${
                       selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner
-                        ? 'font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
                         : selectedMatch.isTieFinished && !selectedMatch.team1.isTieWinner
                         ? 'font-normal text-slate-500'
                         : 'font-bold text-slate-100'
@@ -1529,38 +1538,49 @@ export default function CupMatMatchCenter() {
                       {selectedMatch.team1.name}
                     </span>
                     {selectedMatch.isTieFinished && selectedMatch.team1.isTieWinner && (
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 mt-1 shadow-md">
-                        ✓ Turu Geçti
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 shadow-sm">
+                        ✓ Kazandı
                       </span>
                     )}
                   </div>
 
-                  {/* Dev Skor */}
-                  <div className="shrink-0 flex flex-col items-center">
+                  {/* Dev Skor / Durum */}
+                  <div className="shrink-0 flex flex-col items-center px-2">
                     {["FT", "AET", "PEN"].includes(selectedMatch.status) ? (
-                      <div className="text-5xl sm:text-6xl font-black tabular-nums tracking-tighter text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.3)]">
+                      <div className="text-4xl sm:text-5xl font-black tabular-nums tracking-tighter text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.3)]">
                         {selectedMatch.team1.score} <span className="text-slate-600 font-light mx-1">-</span> {selectedMatch.team2.score}
                       </div>
                     ) : (
-                      <div className="text-3xl sm:text-4xl font-black text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                      <div className="text-2xl sm:text-3xl font-black text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.3)] bg-amber-500/10 px-4 py-2 rounded-2xl border border-amber-500/30">
                         {selectedMatch.time}
                       </div>
                     )}
-                    <span className="text-sm font-bold text-slate-500 mt-4 uppercase tracking-[0.2em]">{selectedMatch.status}</span>
+                    <span className="text-[11px] font-bold text-slate-400 mt-2 px-2.5 py-0.5 rounded-full bg-slate-800/80 border border-slate-700 uppercase tracking-widest">
+                      {selectedMatch.status === "FT" ? "Tamamlandı" : selectedMatch.status === "NS" ? selectedMatch.dateStr : selectedMatch.status}
+                    </span>
                   </div>
 
-                  {/* Deplasman Zoom */}
+                  {/* Deplasman Takımı */}
                   <div className={`flex-1 flex flex-col items-center gap-2 transition-all ${
                     selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner
                       ? 'text-white'
                       : selectedMatch.isTieFinished && !selectedMatch.team2.isTieWinner
-                      ? 'text-slate-500 opacity-40'
+                      ? 'text-slate-500 opacity-50'
                       : 'text-slate-100'
                   }`}>
-                    <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">{selectedMatch.team2.countryCode}</span>
-                    <span className={`text-2xl sm:text-3xl ${
+                    {selectedMatch.team2.logo ? (
+                      <img src={selectedMatch.team2.logo} alt={selectedMatch.team2.name} className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-md" />
+                    ) : (
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-xl font-bold text-slate-400">
+                        {selectedMatch.team2.name.slice(0, 2).toUpperCase()}
+                      </div>
+                    )}
+                    <span className="text-xs font-bold text-slate-400 bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700/60 uppercase tracking-wider">
+                      {selectedMatch.team2.countryCode}
+                    </span>
+                    <span className={`text-base sm:text-lg text-center leading-tight ${
                       selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner
-                        ? 'font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                        ? 'font-black text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]'
                         : selectedMatch.isTieFinished && !selectedMatch.team2.isTieWinner
                         ? 'font-normal text-slate-500'
                         : 'font-bold text-slate-100'
@@ -1568,30 +1588,32 @@ export default function CupMatMatchCenter() {
                       {selectedMatch.team2.name}
                     </span>
                     {selectedMatch.isTieFinished && selectedMatch.team2.isTieWinner && (
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 mt-1 shadow-md">
-                        ✓ Turu Geçti
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 shadow-sm">
+                        ✓ Kazandı
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Toplam Skor Detayı (Eğer Varsa) */}
-                {(selectedMatch.aggregateScore || selectedMatch.team1.firstLegScore != null) && (
-                  <div className="mt-10 p-4 rounded-2xl bg-slate-800/40 border border-slate-700/50 flex flex-col gap-2 text-sm">
-                    {selectedMatch.team1.firstLegScore != null && (
-                      <div className="flex justify-between text-slate-400">
-                        <span>İlk Maç:</span>
-                        <span className="font-bold">{selectedMatch.team1.firstLegScore} - {selectedMatch.team2.firstLegScore}</span>
-                      </div>
-                    )}
-                    {selectedMatch.aggregateScore && (
-                      <div className="flex justify-between text-indigo-300 font-bold border-t border-slate-700/50 pt-2 mt-1">
-                        <span>Toplam Skor:</span>
-                        <span>{selectedMatch.aggregateScore.team1} - {selectedMatch.aggregateScore.team2}</span>
-                      </div>
-                    )}
+                {/* Alt Detay Kutusu (Tarih & Toplam Skor) */}
+                <div className="p-3.5 rounded-2xl bg-slate-800/40 border border-slate-700/60 text-xs text-slate-300 space-y-2 text-left">
+                  <div className="flex justify-between items-center text-slate-400">
+                    <span>📅 Karşılaşma Tarihi:</span>
+                    <span className="font-semibold text-slate-200">{selectedMatch.dateStr} • {selectedMatch.time}</span>
                   </div>
-                )}
+                  {selectedMatch.team1.firstLegScore != null && (
+                    <div className="flex justify-between items-center text-slate-400 border-t border-slate-700/40 pt-1.5">
+                      <span>İlk Maç Skoru:</span>
+                      <span className="font-bold text-slate-200">{selectedMatch.team1.firstLegScore} - {selectedMatch.team2.firstLegScore}</span>
+                    </div>
+                  )}
+                  {selectedMatch.aggregateScore && (
+                    <div className="flex justify-between items-center text-indigo-300 font-bold border-t border-slate-700/40 pt-1.5">
+                      <span>Toplam Skor (Aggregate):</span>
+                      <span className="bg-indigo-950/80 px-2 py-0.5 rounded border border-indigo-500/40">{selectedMatch.aggregateScore.team1} - {selectedMatch.aggregateScore.team2}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
