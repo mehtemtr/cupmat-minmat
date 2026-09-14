@@ -157,18 +157,19 @@ export function MinlanGameBoard({
   }, [currentPairKey, categoryId, unlockedCategoryIds, onSelectCategory]);
 
   // Round progression: Round 1 = 3 pairs (6 cards). Every round adds 2 cards (+1 pair). Max 12 pairs (24 cards) at round 10.
-  const pairCount = Math.min(12, 3 + (roundLevel - 1));
-  const maxTimerSeconds = getTimerSecondsForRound(roundLevel);
-
-  // Fetch cards for current round
-  const loadRoundCards = useCallback(async () => {
+  // Start a specific round (fetch cards, set timer, reset flipped/matched)
+  const startRoundLevel = useCallback(async (lvl: number, prevRemainingTime: number = 0) => {
     setLoading(true);
     setFlippedCards([]);
     setMatchedPairsCount(0);
 
+    const calculatedPairs = Math.min(12, 3 + (lvl - 1));
+    const roundTimer = getTimerSecondsForRound(lvl);
+    const carry = lvl === 1 ? 0 : Math.floor(prevRemainingTime / 2);
+
     try {
       const res = await fetch(
-        `/api/minlan/words?categoryId=${categoryId}&nativeLang=${nativeLang}&targetLang=${targetLang}&pairCount=${pairCount}&roundLevel=${roundLevel}`
+        `/api/minlan/words?categoryId=${categoryId}&nativeLang=${nativeLang}&targetLang=${targetLang}&pairCount=${calculatedPairs}&roundLevel=${lvl}`
       );
       const data = await res.json();
 
@@ -179,21 +180,19 @@ export function MinlanGameBoard({
       console.error("Failed to load cards:", err);
     } finally {
       setLoading(false);
+      setTimeLeft(roundTimer + carry);
+      setCarryOverTime(carry);
     }
-  }, [categoryId, nativeLang, targetLang, pairCount, roundLevel]);
-
-  useEffect(() => {
-    if (gameState === "playing") {
-      setTimeLeft(maxTimerSeconds + carryOverTime);
-      loadRoundCards();
-    }
-  }, [roundLevel, categoryId, nativeLang, targetLang, gameState, loadRoundCards, maxTimerSeconds, carryOverTime]);
+  }, [categoryId, nativeLang, targetLang]);
 
   const startRound = () => {
     setGameState("playing");
-    setCarryOverTime(0);
-    setTimeLeft(maxTimerSeconds);
-    loadRoundCards();
+    setRoundLevel(1);
+    setScore(0);
+    setLives(3);
+    setMistakes(0);
+    setStreak(0);
+    startRoundLevel(1, 0);
   };
 
   useEffect(() => {
@@ -327,8 +326,9 @@ export function MinlanGameBoard({
           const matchPoints = scoreConfig.basePoint + (roundLevel * scoreConfig.roundMultiplier) + (newStreak * scoreConfig.streakMultiplier) + (timeLeft * scoreConfig.timeMultiplier);
           setScore((s) => s + matchPoints);
 
-          if (newMatchedCount >= pairCount) {
-            onRecordProgress(pairCount, matchPoints * pairCount);
+          const currentRoundPairs = Math.min(12, 3 + (roundLevel - 1));
+          if (newMatchedCount >= currentRoundPairs) {
+            onRecordProgress(currentRoundPairs, matchPoints * currentRoundPairs);
             setShowRoundSuccess(true);
 
             if (roundLevel >= 4) {
@@ -339,10 +339,12 @@ export function MinlanGameBoard({
               }
             }
 
+            const nextLvl = roundLevel + 1;
+            const currentTime = timeLeft;
             setTimeout(() => {
               setShowRoundSuccess(false);
-              setCarryOverTime(Math.floor(timeLeft / 2));
-              setRoundLevel((prev) => prev + 1);
+              setRoundLevel(nextLvl);
+              startRoundLevel(nextLvl, currentTime);
             }, 800);
           }
         }, 350);
