@@ -325,7 +325,13 @@ export default function CupMatMatchCenter() {
           const timeStr = matchDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
           let cleanRound = item.round || 'Normal Sezon';
-          cleanRound = cleanRound.replace(/[^0-9\. ]*n Eleme/g, "Ön Eleme").replace(/\s+/g, " ");
+          // Tur isimlerini standartlaştır
+          cleanRound = cleanRound
+            .replace(/1st Qualifying Round|1\.\s*(?:Ön\s*)?Eleme(?:\s*Turu)?/gi, "1. Eleme Turu")
+            .replace(/2nd Qualifying Round|2\.\s*(?:Ön\s*)?Eleme(?:\s*Turu)?/gi, "2. Eleme Turu")
+            .replace(/3rd Qualifying Round|3\.\s*(?:Ön\s*)?Eleme(?:\s*Turu)?/gi, "3. Eleme Turu")
+            .replace(/Play-offs/gi, "Play-off")
+            .replace(/\s+/g, " ");
           const resolveCountry = (teamName: string, dbCode?: string) => {
             if (!teamName) return "";
             if (TEAM_COUNTRIES[teamName]) return TEAM_COUNTRIES[teamName];
@@ -589,18 +595,18 @@ export default function CupMatMatchCenter() {
       return parseInt(weekMatch[1], 10);
     }
 
-    // 3. Eleme ve Eleme Sonrası Turlar
-    if (/final/i.test(roundKey) && !/yarı|çeyrek|ön/i.test(roundKey)) return 50;
-    if (/yarı\s*final|semi/i.test(roundKey)) return 51;
-    if (/çeyrek\s*final|quarter/i.test(roundKey)) return 52;
-    if (/son\s*16|round\s*of\s*16/i.test(roundKey)) return 53;
-
-    // 4. Ön Elemeler ve Play-off'lar (Lig aşamasından sonra gösterilir)
+    // 3. Eleme ve Eleme Sonrası Turlar (Play-off ve Ön Elemeler)
     if (/play-?off/i.test(roundKey)) return 100;
-    if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundKey)) return 101;
-    if (/2\.\s*(?:ön\s*)?eleme|2nd\s*qualifying/i.test(roundKey)) return 102;
-    if (/1\.\s*(?:ön\s*)?eleme|1st\s*qualifying/i.test(roundKey)) return 103;
+    if (/3\.\s*(?:ön\s*)?eleme/i.test(roundKey)) return 101;
+    if (/2\.\s*(?:ön\s*)?eleme/i.test(roundKey)) return 102;
+    if (/1\.\s*(?:ön\s*)?eleme/i.test(roundKey)) return 103;
     if (/ön\s*eleme|preliminary/i.test(roundKey)) return 104;
+
+    // 4. Son 16, Çeyrek, Yarı, Final
+    if (/son\s*16|round\s*of\s*16/i.test(roundKey)) return 110;
+    if (/çeyrek\s*final|quarter/i.test(roundKey)) return 111;
+    if (/yarı\s*final|semi/i.test(roundKey)) return 112;
+    if (/final/i.test(roundKey)) return 113;
 
     return 200;
   };
@@ -708,66 +714,52 @@ export default function CupMatMatchCenter() {
     }
 
     if (/play-?off/i.test(roundName)) {
-      return `${prefix}Play-offs`;
+      switch (lang) {
+        case "tr": return `${prefix}Play-off`;
+        default: return `${prefix}Play-offs`;
+      }
     }
 
-    if (/3\.\s*(?:ön\s*)?eleme|3rd\s*qualifying/i.test(roundName)) {
+    if (/3\.\s*(?:ön\s*)?eleme/i.test(roundName)) {
       switch (lang) {
         case "en": return `${prefix}3rd Qualifying Round`;
         case "de": return `${prefix}3. Qualifikationsrunde`;
         case "fr": return `${prefix}3e tour de qualification`;
-        default: return `${prefix}3. Ön Eleme`;
+        case "es": return `${prefix}3ª Ronda de Clasificación`;
+        case "pt": return `${prefix}3ª Rodada de Qualificação`;
+        case "it": return `${prefix}3° Turno di Qualificazione`;
+        case "ko": return `${prefix}3차 예선`;
+        case "ar": return `${prefix}الدور التأهيلي الثالث`;
+        default: return `${prefix}3. Eleme Turu`;
       }
     }
 
-    if (/2\.\s*(?:ön\s*)?eleme|2nd\s*qualifying/i.test(roundName)) {
+    if (/2\.\s*(?:ön\s*)?eleme/i.test(roundName)) {
       switch (lang) {
         case "en": return `${prefix}2nd Qualifying Round`;
         case "de": return `${prefix}2. Qualifikationsrunde`;
         case "fr": return `${prefix}2e tour de qualification`;
-        default: return `${prefix}2. Ön Eleme`;
+        case "es": return `${prefix}2ª Ronda de Clasificación`;
+        case "pt": return `${prefix}2ª Rodada de Qualificação`;
+        case "it": return `${prefix}2° Turno di Qualificazione`;
+        case "ko": return `${prefix}2차 예선`;
+        case "ar": return `${prefix}الدور التأهيلي الثاني`;
+        default: return `${prefix}2. Eleme Turu`;
       }
     }
 
-    if (/1\.\s*(?:ön\s*)?eleme|1st\s*qualifying/i.test(roundName)) {
+    if (/1\.\s*(?:ön\s*)?eleme/i.test(roundName)) {
       switch (lang) {
         case "en": return `${prefix}1st Qualifying Round`;
         case "de": return `${prefix}1. Qualifikationsrunde`;
         case "fr": return `${prefix}1er tour de qualification`;
-        default: return `${prefix}1. Ön Eleme`;
+        case "es": return `${prefix}1ª Ronda de Clasificación`;
+        case "pt": return `${prefix}1ª Rodada de Qualificação`;
+        case "it": return `${prefix}1° Turno di Qualificazione`;
+        case "ko": return `${prefix}1차 예선`;
+        case "ar": return `${prefix}الدور التأهيلي الأول`;
+        default: return `${prefix}1. Eleme Turu`;
       }
-    }
-
-    if (/2\.\s*(?:ön\s*)?eleme|2\.\s*eleme|2nd\s*qualifying/i.test(roundName)) {
-      let localizedRound = "2. Ön Eleme";
-      switch (lang) {
-        case "en": localizedRound = "2nd Qualifying Round"; break;
-        case "de": localizedRound = "2. Qualifikationsrunde"; break;
-        case "fr": localizedRound = "2e tour de qualification"; break;
-        case "es": localizedRound = "2ª Ronda de Clasificación"; break;
-        case "pt": localizedRound = "2ª Rodada de Qualificação"; break;
-        case "it": localizedRound = "2° Turno di Qualificazione"; break;
-        case "ko": localizedRound = "2차 예선"; break;
-        case "ar": localizedRound = "الدور التأهيلي الثاني"; break;
-        default: localizedRound = "2. Ön Eleme"; break;
-      }
-      return prefix ? `${prefix}${localizedRound}` : localizedRound;
-    }
-
-    if (/1\.\s*(?:ön\s*)?eleme|1\.\s*eleme|1st\s*qualifying/i.test(roundName)) {
-      let localizedRound = "1. Ön Eleme";
-      switch (lang) {
-        case "en": localizedRound = "1st Qualifying Round"; break;
-        case "de": localizedRound = "1. Qualifikationsrunde"; break;
-        case "fr": localizedRound = "1er tour de qualification"; break;
-        case "es": localizedRound = "1ª Ronda de Clasificación"; break;
-        case "pt": localizedRound = "1ª Rodada de Qualificação"; break;
-        case "it": localizedRound = "1° Turno di Qualificazione"; break;
-        case "ko": localizedRound = "1차 예선"; break;
-        case "ar": localizedRound = "الدور التأهيلي الأول"; break;
-        default: localizedRound = "1. Ön Eleme"; break;
-      }
-      return prefix ? `${prefix}${localizedRound}` : localizedRound;
     }
 
     return roundKey;
