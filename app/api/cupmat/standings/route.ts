@@ -73,6 +73,32 @@ const TEAM_ALIASES: Record<string, string> = {
   "1899 Hoffenheim": "Hoffenheim", "TSG Hoffenheim": "Hoffenheim"
 };
 
+const TOURNAMENT_CONTINENTS: Record<number, string> = {
+  2: "europe",    // Champions League
+  3: "europe",    // Europa League
+  848: "europe",  // Conference League
+  5: "europe",    // Nations League
+  4: "europe",    // EURO
+  13: "america",  // Copa Libertadores
+  14: "america",  // Copa Sudamericana
+  11: "america",  // CONMEBOL Sudamericana
+  16: "america",  // CONCACAF Champions
+  22: "america",  // CONCACAF Nations
+  34: "america",  // CONMEBOL Qualifiers
+  73: "america",  // Copa Do Brasil
+  9: "america",   // Copa America
+  17: "asia",     // AFC Champions League Elite
+  18: "asia",     // AFC Champions League Two
+  7: "asia",      // AFC Asian Cup
+  12: "africa",   // CAF Champions League
+  20: "africa",   // CAF Confederation
+  32: "africa",   // AFCON Qualifiers
+  6: "africa",    // AFCON
+  1: "world",     // FIFA World Cup
+  15: "world",    // FIFA Club World Cup
+  68: "europe",   // National 2
+};
+
 function normalizeTeam(name: string): string {
   if (!name) return "";
   const trimmed = name.trim();
@@ -82,7 +108,171 @@ function normalizeTeam(name: string): string {
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const tournamentId = parseInt(searchParams.get("tournament") || "2", 10);
+    const view = searchParams.get("view") || "";
+    const continentFilter = (searchParams.get("continent") || "all").toLowerCase();
+    const tournamentParam = searchParams.get("tournament");
+    const isGlobalView = view === "global_ppg" || tournamentParam === "all" || tournamentParam === "0";
+
+    // =========================================================================
+    // 🌍 1. GLOBAL / CONTINENTAL CLUB MBP (x1000) LEADERBOARD
+    // =========================================================================
+    if (isGlobalView) {
+      const { data: tourneys } = await supabaseAdmin.from("cupmat_tournaments").select("*");
+      const tourneyMap: Record<string, any> = {};
+      (tourneys || []).forEach(t => {
+        tourneyMap[t.id] = {
+          ...t,
+          continent: TOURNAMENT_CONTINENTS[t.api_id] || "europe"
+        };
+      });
+
+      const { data: matches, error: mErr } = await supabaseAdmin
+        .from("cupmat_matches")
+        .select("tournament_id, home_team_name, away_team_name, home_score, away_score, status, date, home_team_logo, away_team_logo, home_team_country_code, away_team_country_code, round")
+        .limit(10000);
+
+      if (mErr || !matches || matches.length === 0) {
+        return NextResponse.json({
+          success: true,
+          view: "global_ppg",
+          standings: [],
+          message: "Henüz maç verisi bulunamadı."
+        });
+      }
+
+      // Deduplicate finished matches
+      const finishedMatches = matches.filter(m =>
+        ["FT", "AET", "PEN"].includes(m.status) &&
+        m.home_score !== null &&
+        m.away_score !== null
+      );
+
+      const processedMatchKeys = new Set<string>();
+      const uniqueFinishedMatches = [];
+
+      for (const m of finishedMatches) {
+        const h = normalizeTeam(m.home_team_name);
+        const a = normalizeTeam(m.away_team_name);
+        const d = m.date ? m.date.split("T")[0] : "";
+        const key = `${h}_vs_${a}_${d}`;
+        if (!processedMatchKeys.has(key)) {
+          processedMatchKeys.add(key);
+          uniqueFinishedMatches.push(m);
+        }
+      }
+
+      const teamsMap: Record<string, any> = {};
+
+      uniqueFinishedMatches.forEach(m => {
+        const tInfo = tourneyMap[m.tournament_id] || { name: "Uluslararası Kupa", continent: "europe", api_id: 0 };
+        const homeName = normalizeTeam(m.home_team_name);
+        const awayName = normalizeTeam(m.away_team_name);
+
+        if (!homeName || !awayName) return;
+
+        [
+          { name: homeName, logo: m.home_team_logo, country: m.home_team_country_code },
+          { name: awayName, logo: m.away_team_logo, country: m.away_team_country_code }
+        ].forEach(item => {
+          if (!teamsMap[item.name]) {
+            teamsMap[item.name] = {
+              team: item.name,
+              logo: item.logo || null,
+              country: item.country || "",
+              continent: tInfo.continent || "europe",
+              tournaments: new Set<string>(),
+              played: 0,
+              win: 0,
+              draw: 0,
+              lose: 0,
+              gf: 0,
+              ga: 0,
+              gd: 0,
+              pts: 0,
+              ppg: 0,
+              ppg1000: 0,
+            };
+          }
+          if (item.logo && !teamsMap[item.name].logo) teamsMap[item.name].logo = item.logo;
+          if (item.country && !teamsMap[item.name].country) teamsMap[item.name].country = item.country;
+          if (tInfo.name) teamsMap[item.name].tournaments.add(tInfo.name);
+        });
+
+        const home = teamsMap[homeName];
+        const away = teamsMap[awayName];
+        if (!home || !away) return;
+
+        const hs = Number(m.home_score);
+        const as = Number(m.away_score);
+
+        home.played += 1;
+        away.played += 1;
+        home.gf += hs;
+        home.ga += as;
+        away.gf += as;
+        away.ga += hs;
+
+        if (hs > as) {
+          home.win += 1;
+          home.pts += 3;
+          away.lose += 1;
+        } else if (as > hs) {
+          away.win += 1;
+          away.pts += 3;
+          home.lose += 1;
+        } else {
+          home.draw += 1;
+          home.pts += 1;
+          away.draw += 1;
+          away.pts += 1;
+        }
+      });
+
+      // Format & calculate MBP x1000
+      let allTeams = Object.values(teamsMap)
+        .filter(t => t.played > 0)
+        .map(t => {
+          t.gd = t.gf - t.ga;
+          t.ppg = t.played > 0 ? Number((t.pts / t.played).toFixed(3)) : 0;
+          t.ppg1000 = t.played > 0 ? Math.round((t.pts / t.played) * 1000) : 0;
+          t.tournaments = Array.from(t.tournaments);
+          return t;
+        });
+
+      // Filter by continent if specified
+      if (continentFilter !== "all") {
+        allTeams = allTeams.filter(t => t.continent === continentFilter);
+      }
+
+      // Sort by MBP (x1000) desc -> Pts desc -> GD desc -> GF desc -> Played desc
+      allTeams.sort((a, b) => {
+        if (b.ppg1000 !== a.ppg1000) return b.ppg1000 - a.ppg1000;
+        if (b.pts !== a.pts) return b.pts - a.pts;
+        if (b.gd !== a.gd) return b.gd - a.gd;
+        if (b.gf !== a.gf) return b.gf - a.gf;
+        return b.played - a.played;
+      });
+
+      const rankedTeams = allTeams.map((t, idx) => ({
+        rank: idx + 1,
+        ...t
+      }));
+
+      return NextResponse.json({
+        success: true,
+        view: "global_ppg",
+        continent: continentFilter,
+        standings: rankedTeams,
+        totalTeams: rankedTeams.length,
+        totalMatchesPlayed: uniqueFinishedMatches.length,
+        message: "Kıtalararası Uluslararası Kulüpler MBP (×1000) Sıralaması"
+      });
+    }
+
+    // =========================================================================
+    // 🏆 2. TOURNAMENT SPECIFIC LEAGUE / GROUP STAGE STANDINGS
+    // =========================================================================
+    const tournamentId = parseInt(tournamentParam || "2", 10);
 
     // 1. Get tournament ID from Supabase
     const { data: tournaments } = await supabaseAdmin
@@ -94,7 +284,12 @@ export async function GET(request: Request) {
 
     if (!tournament) {
       const fallbackMap = standingsDataFallback as Record<string, any>;
-      const fallbackStandings = fallbackMap[tournamentId.toString()] || [];
+      const fallbackStandings = (fallbackMap[tournamentId.toString()] || []).map((t: any, i: number) => ({
+        ...t,
+        rank: t.rank || i + 1,
+        ppg: t.played > 0 ? Number((t.pts / t.played).toFixed(3)) : 0,
+        ppg1000: t.played > 0 ? Math.round((t.pts / t.played) * 1000) : 0,
+      }));
       return NextResponse.json({
         success: true,
         tournamentId,
@@ -112,7 +307,12 @@ export async function GET(request: Request) {
 
     if (mErr || !matches || matches.length === 0) {
       const fallbackMap = standingsDataFallback as Record<string, any>;
-      const fallbackStandings = fallbackMap[tournamentId.toString()] || [];
+      const fallbackStandings = (fallbackMap[tournamentId.toString()] || []).map((t: any, i: number) => ({
+        ...t,
+        rank: t.rank || i + 1,
+        ppg: t.played > 0 ? Number((t.pts / t.played).toFixed(3)) : 0,
+        ppg1000: t.played > 0 ? Math.round((t.pts / t.played) * 1000) : 0,
+      }));
       return NextResponse.json({
         success: true,
         tournamentId,
@@ -183,6 +383,8 @@ export async function GET(request: Request) {
           ga: 0,
           gd: 0,
           pts: 0,
+          ppg: 0,
+          ppg1000: 0,
           form: []
         };
       } else {
@@ -269,10 +471,12 @@ export async function GET(request: Request) {
       }
     });
 
-    // 7. Sort standings by points, GD, GF, Wins, Name
+    // 7. Sort standings by points, GD, GF, Wins, Name & compute MBP x1000
     const standings = Object.values(teamsMap)
       .map(t => {
         t.gd = t.gf - t.ga;
+        t.ppg = t.played > 0 ? Number((t.pts / t.played).toFixed(3)) : 0;
+        t.ppg1000 = t.played > 0 ? Math.round((t.pts / t.played) * 1000) : 0;
         return t;
       })
       .sort((a, b) => {
