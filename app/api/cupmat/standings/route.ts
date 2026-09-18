@@ -24,7 +24,7 @@ const TEAM_ALIASES: Record<string, string> = {
   "Juventus": "Juventus", "Juventus FC": "Juventus",
   "Napoli": "Napoli", "SSC Napoli": "Napoli",
   "Roma": "Roma", "AS Roma": "Roma",
-  "PSG": "PSG", "Paris Saint Germain": "PSG", "Paris Saint-Germain": "PSG", "Paris Saint-Germain FC": "PSG",
+  "PSG": "PSG", "Paris Saint Germain": "PSG", "Paris Saint-Germain": "PSG", "Paris Saint-Germain FC": "PSG", "Paris": "PSG",
   "Lille": "Lille", "LOSC Lille": "Lille",
   "Lyon": "Lyon", "Olympique Lyonnais": "Lyon",
   "Monaco": "Monaco", "AS Monaco": "Monaco", "AS Monaco FC": "Monaco",
@@ -37,7 +37,7 @@ const TEAM_ALIASES: Record<string, string> = {
   "Benfica": "Benfica", "SL Benfica": "Benfica",
   "Porto": "Porto", "FC Porto": "Porto",
   "Club Brugge": "Club Brugge", "Club Brugge KV": "Club Brugge",
-  "Union SG": "Union SG", "Royale Union Saint-Gilloise": "Union SG",
+  "Union SG": "Union SG", "Royale Union Saint-Gilloise": "Union SG", "Union St. Gilloise": "Union SG",
   "Celtic": "Celtic", "Celtic FC": "Celtic",
   "Rangers": "Rangers", "Rangers FC": "Rangers",
   "Salzburg": "Salzburg", "Red Bull Salzburg": "Salzburg", "FC Red Bull Salzburg": "Salzburg",
@@ -48,7 +48,7 @@ const TEAM_ALIASES: Record<string, string> = {
   "Young Boys": "Young Boys", "BSC Young Boys": "Young Boys",
   "Sparta Prag": "Sparta Prag", "AC Sparta Praha": "Sparta Prag", "Sparta Praha": "Sparta Prag",
   "Slavia Prag": "Slavia Prag", "SK Slavia Praha": "Slavia Prag", "Slavia Praha": "Slavia Prag",
-  "Viktoria Plzen": "Viktoria Plzen", "FC Viktoria Plzeň": "Viktoria Plzen",
+  "Viktoria Plzen": "Viktoria Plzen", "FC Viktoria Plzeň": "Viktoria Plzen", "Plzen": "Viktoria Plzen",
   "Bodø/Glimt": "Bodø/Glimt", "Bodo/Glimt": "Bodø/Glimt", "FK Bodø/Glimt": "Bodø/Glimt",
   "Viking": "Viking", "Viking FK": "Viking",
   "Shakhtar Donetsk": "Shakhtar Donetsk", "FC Shakhtar Donetsk": "Shakhtar Donetsk", "Shaktar": "Shakhtar Donetsk",
@@ -56,10 +56,21 @@ const TEAM_ALIASES: Record<string, string> = {
   "AEK Athens": "AEK Athens", "AEK Athens FC": "AEK Athens", "PAE AEK": "AEK Athens",
   "Galatasaray": "Galatasaray", "Galatasaray SK": "Galatasaray",
   "Fenerbahçe": "Fenerbahçe", "Fenerbahce SK": "Fenerbahçe",
+  "Beşiktaş": "Beşiktaş", "Besiktas JK": "Beşiktaş", "Besiktas": "Beşiktaş",
+  "Başakşehir": "Başakşehir", "Basaksehir": "Başakşehir", "Istanbul Basaksehir": "Başakşehir",
   "Stuttgart": "Stuttgart", "VfB Stuttgart": "Stuttgart",
   "RB Leipzig": "RB Leipzig", "RasenBallsport Leipzig": "RB Leipzig",
   "Sabah": "Sabah", "Sabah FA": "Sabah", "Sabah FK": "Sabah",
-  "Como": "Como", "Como 1907": "Como"
+  "Como": "Como", "Como 1907": "Como",
+  "Bayer Leverkusen": "Bayer Leverkusen", "Leverkusen": "Bayer Leverkusen",
+  "Athletic Club": "Athletic Bilbao", "Athletic Bilbao": "Athletic Bilbao",
+  "Eintracht Frankfurt": "Eintracht Frankfurt", "Frankfurt": "Eintracht Frankfurt",
+  "Olympiakos Piraeus": "Olympiakos", "Olympiakos": "Olympiakos", "Olympiacos": "Olympiakos",
+  "Vitória SC": "Vitoria Guimaraes", "Vitoria SC": "Vitoria Guimaraes",
+  "Legia Warszawa": "Legia Varşova", "Legia Warsaw": "Legia Varşova",
+  "Djurgardens IF": "Djurgarden", "Djurgårdens IF": "Djurgarden",
+  "1. FC Heidenheim": "Heidenheim", "Heidenheim": "Heidenheim",
+  "1899 Hoffenheim": "Hoffenheim", "TSG Hoffenheim": "Hoffenheim"
 };
 
 function normalizeTeam(name: string): string {
@@ -110,13 +121,41 @@ export async function GET(request: Request) {
       });
     }
 
-    // 3. For 36-team UEFA leagues (CL:2, EL:3, ECL:848), filter to League Stage matches
+    // 3. For 36-team UEFA leagues (CL:2, EL:3, ECL:848), filter strictly to League Stage matches
     const isLeagueStageTourney = [2, 3, 848].includes(tournamentId);
     let targetMatches = matches;
 
     if (isLeagueStageTourney) {
-      const isLeagueRound = (r: string) => /hafta|matchday|lig aşaması|league stage/i.test(r || "");
-      const lm = matches.filter(m => isLeagueRound(m.round));
+      const maxWeeks = tournamentId === 848 ? 6 : 8;
+      const hasLeagueStageMatches = matches.some(m => /^League Stage\s*-\s*\d+$/i.test((m.round || "").trim()));
+      
+      const isLeagueRound = (r: string) => {
+        if (!r || r.startsWith("{")) return false;
+        const leagueStageMatch = r.match(/^League Stage\s*-\s*(\d+)$/i);
+        if (leagueStageMatch) {
+          const week = parseInt(leagueStageMatch[1], 10);
+          return week >= 1 && week <= maxWeeks;
+        }
+        const haftaMatch = r.match(/^(\d+)\.\s*Hafta$/i);
+        if (haftaMatch) {
+          const week = parseInt(haftaMatch[1], 10);
+          return week >= 1 && week <= maxWeeks;
+        }
+        const mdMatch = r.match(/^Matchday\s*(\d+)$/i);
+        if (mdMatch) {
+          const week = parseInt(mdMatch[1], 10);
+          return week >= 1 && week <= maxWeeks;
+        }
+        return false;
+      };
+
+      const lm = matches.filter(m => {
+        if (hasLeagueStageMatches) {
+          return /^League Stage\s*-\s*\d+$/i.test((m.round || "").trim());
+        }
+        return isLeagueRound(m.round);
+      });
+
       if (lm.length > 0) {
         targetMatches = lm;
       }
