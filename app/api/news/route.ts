@@ -19,6 +19,96 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-chuseok-midautumn-2026",
+    category: "General",
+    source: "Global Cultural News / Yonhap / Xinhua",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Doğu Asya'da Dolunay ve Hasat Coşkusu: Chuseok ve Güz Ortası Festivalleri Kutlanıyor",
+        snippet: "Güney Kore'de Chuseok, Çin, Tayvan, Vietnam ve Hong Kong'da Güz Ortası Festivali ile Japonya'da Tsukimi dolunay gelenekleri milyonlarca aileyi bir araya getiriyor. Birlik, bereket ve şükran dolu asırlık gelenekler kutlanıyor.",
+      },
+      en: {
+        title: "East Asia Celebrates Harvest Full Moon: Chuseok and Mid-Autumn Festivals in Full Bloom",
+        snippet: "Chuseok in South Korea, the Mid-Autumn Festival across China, Taiwan, Vietnam, Hong Kong, and Tsukimi in Japan bring millions together under the harvest full moon to celebrate heritage, family unity, and gratitude.",
+      },
+      ko: {
+        title: "보름달 아래 하나 되는 한가위: 한국 추석 및 동아시아 중추절 맞이 축제",
+        snippet: "온 가족이 모여 풍요와 감사를 나누는 한국의 대명절 추석과 중국, 베트남 등의 중추절, 일본의 쓰키미가 시작되며 동아시아 전역이 풍성한 명절 분위기로 물들고 있습니다.",
+      },
+      de: {
+        title: "Ostasien feiert das Ernte-Vollmondfest: Chuseok und Mondfest im Mittelpunkt",
+        snippet: "Millionen von Familien in Südkorea (Chuseok), China, Taiwan, Vietnam und Japan (Tsukimi) versammeln sich unter dem leuchtenden Herbstvollmond, um Ernte, Verbundenheit und Dankbarkeit zu feiern.",
+      },
+      fr: {
+        title: "L'Asie de l'Est célèbre la pleine lune des récoltes : Chuseok et la fête de la mi-automne",
+        snippet: "Chuseok en Corée du Sud, la fête de la mi-automne en Chine et au Vietnam, et Tsukimi au Japon réunissent des millions de familles sous la pleine lune pour célébrer la générosité des récoltes et l'unité.",
+      },
+      es: {
+        title: "Asia Oriental celebra la luna llena de la cosecha: Festivales de Chuseok y Medio Otoño",
+        snippet: "Chuseok en Corea del Sur, el Festival del Medio Otoño en China, Taiwán y Vietnam, y Tsukimi en Japón reúnen a millones de familias bajo la luna llena para conmemorar la gratitud y la abundancia.",
+      },
+      it: {
+        title: "L'Asia orientale festeggia la luna d'autunno: Chuseok e la Festa di Metà Autunno",
+        snippet: "Il Chuseok in Corea del Sud, la Festa di Metà Autunno in Cina e Vietnam e lo Tsukimi in Giappone uniscono milioni di persone sotto la luna piena per celebrare il raccolto e la famiglia.",
+      },
+      pt: {
+        title: "Ásia Oriental celebra a lua cheia da colheita: Festivais de Chuseok e Meio do Outono",
+        snippet: "O Chuseok na Coreia do Sul, o Festival do Meio do Outono na China e Vietnã, e o Tsukimi no Japão reúnem milhões de pessoas para celebrar a colheita, a união familiar e a prosperidade.",
+      },
+      ar: {
+        title: "شرق آسيا يحتفل باكتمال قمر الحصاد: انطلاق مهرجانات تشوسوك ومنتصف الخريف",
+        snippet: "يحتفل الملايين في كوريا الجنوبية بمهرجان تشوسوك، وفي الصين وفيتنام بمهرجان منتصف الخريف، وفي اليابان بمهرجان تسوكيمي، حيث يجتمع الأهل تحت ضوء البدر للاحتفاء بالبركة والامتنان.",
+      },
+    },
+  },
+  {
+    id: "newsglo-tsukimi-mooncake-tradition",
+    category: "General",
+    source: "Asian Heritage Digest",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Ay Çöreği ve Songpyeon: Asırlık Lezzetler Dolunay Altında Paylaşılıyor",
+        snippet: "Güz Ortası Festivali'nin simgesi meşhur Ay Çörekleri (Mooncakes) ile Chuseok bayramının vazgeçilmezi Songpyeon pirinç tatlıları, bereket ve sevgi simgesi olarak sofraları süslüyor.",
+      },
+      en: {
+        title: "Mooncakes and Songpyeon: Ancient Delicacies Shared Under the Autumn Moon",
+        snippet: "Traditional Mooncakes representing unity and Chuseok's half-moon Songpyeon rice cakes filled with sweet sesame and chestnuts take center stage in festive harvest culinary traditions.",
+      },
+      ko: {
+        title: "달콤한 송편과 월병: 보름달 아래 나누는 오랜 명절의 맛과 정",
+        snippet: "추석의 대표 음식인 정성 어린 송편과 중추절의 상징인 월병(Mooncake)이 가족 간의 정과 풍요를 기원하는 식탁을 가득 채우고 있습니다.",
+      },
+      de: {
+        title: "Mondkuchen und Songpyeon: Jahrhundertealte Festtagstraditionen geteilt",
+        snippet: "Traditionelle Mondkuchen für Vollkommenheit und koreanische Songpyeon-Reiskuchen schmücken die Festtafeln während der herbstlichen Vollmondfeiertage in ganz Asien.",
+      },
+      fr: {
+        title: "Gâteaux de lune et Songpyeon : Des délices ancestraux partagés sous la lune",
+        snippet: "Les célèbres gâteaux de lune chinois et les Songpyeon coréens célèbrent le partage et l'abondance lors des grandes festivités d'automne.",
+      },
+      es: {
+        title: "Pasteles de luna y Songpyeon: Tradición y dulzura bajo la luna de otoño",
+        snippet: "Los emblemáticos pasteles de luna y los Songpyeon coreanos representan la unión familiar y la prosperidad en las mesas festivas de toda Asia.",
+      },
+      it: {
+        title: "Dolci della luna e Songpyeon: Tradizioni millenarie sotto la luna d'autunno",
+        snippet: "I tradizionali Mooncakes e i dolci di riso Songpyeon simboleggiano armonia e prosperità nelle celebrazioni del raccolto in tutta l'Asia.",
+      },
+      pt: {
+        title: "Bolos da Lua e Songpyeon: Iguarias ancestrais sob a luz da lua de outono",
+        snippet: "Os famosos bolos da lua e os doces de arroz Songpyeon enchem as mesas festivas simbolizando a harmonia, a união e a partilha.",
+      },
+      ar: {
+        title: "كعك القمر وسونغبيون: أطباق تراثية متوارثة تُزين موائد مهرجانات الخريف",
+        snippet: "يُزين كعك القمر الشهير وحلوى السونغبيون الكورية الموائد الاحتفالية كرمز للمحبة والوئام والبركة تحت ضوء البدر الساطع.",
+      },
+    },
+  },
+  {
     id: "newsglo-video-matematik",
     category: "Science",
     source: "YouTube",

@@ -327,6 +327,12 @@ export default function EntryPage() {
         banners.push("laborday");
       }
 
+      if (year === 2026 && month === 8) { // 8 = September (0-indexed)
+        if (date >= 24 && date <= 27) {
+          banners.push("midautumn");
+        }
+      }
+
       if (year === 2026 && month === 7) { // 7 = August (0-indexed)
         if (date === 30) {
           banners.push("30agustos");
@@ -445,6 +451,70 @@ export default function EntryPage() {
         {/* Minlan Countdown Section */}
 
         {/* Dynamic Celebrations Section */}
+        {activeBanners.includes("midautumn") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/30 bg-gradient-to-r from-amber-950/30 via-[#060b14]/90 to-indigo-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(245,158,11,0.18)] transition duration-500 hover:border-amber-500/50">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-600 via-yellow-500 to-indigo-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[4/3] max-w-[420px] rounded-2xl overflow-hidden border border-amber-500/40 shadow-[0_0_35px_rgba(245,158,11,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/mid_autumn_festival.jpg"
+                    alt="Chuseok, Mid-Autumn Festival & Tsukimi Celebration"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/30 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🌕 CHUSEOK • MID-AUTUMN • TSUKIMI 2026"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "ko" ? (
+                    <>{`풍요롭고 행복한`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400">{`한가위 추석 되세요! 🌕🌾` }</span></>
+                  ) : locale === "tr" ? (
+                    <>{`Chuseok, Güz Ortası & Tsukimi`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400">{`Hasat ve Dolunay Bayramı Kutlu Olsun! 🌕🌾` }</span></>
+                  ) : (
+                    <>{`Happy Chuseok, Mid-Autumn & Tsukimi!`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-orange-400">{`Full Moon & Harvest Festival 🌕🌾` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "ko" ? (
+                    "한가위 보름달처럼 마음까지 풍성하고 넉넉한 추석 명절 보내시길 바랍니다. 소중한 가족, 친지들과 함께 따뜻한 온정을 나누는 뜻깊은 시간 되시기를 진심으로 기원합니다."
+                  ) : locale === "tr" ? (
+                    "Güney Kore (Chuseok), Çin, Tayvan, Vietnam, Hong Kong (Güz Ortası Festivali) ve Japonya'da (Tsukimi) aynı gökyüzündeki parlak dolunay altında kutlanan bu kadim hasat, birlik ve şükran bayramını kutluyoruz. Tüm insanlığa bereket, sağlık ve huzur getirmesini dileriz."
+                  ) : (
+                    "Wishing a joyful and prosperous harvest festival to everyone celebrating Chuseok (Korea), the Mid-Autumn Festival (China, Taiwan, Vietnam, Hong Kong), and Tsukimi (Japan)! Under the glowing harvest full moon, may this season bring peace, health, and abundance to you and your loved ones."
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-amber-500/70 pl-4 py-2 bg-amber-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-amber-200 leading-snug">
+                    {locale === "ko" ? (
+                      "\"더도 말고 덜도 말고 한가위만 같아라. 둥근 보름달처럼 여러분의 꿈과 희망도 가득 차오르길 소망합니다.\""
+                    ) : locale === "tr" ? (
+                      "\"Dolunayın ışığı karanlığı nasıl aydınlatıyorsa; paylaşmanın, aile bağlarının ve sevginin bereketi de tüm haneleri öyle aydınlatsın.\""
+                    ) : (
+                      "\"May the glowing light of the harvest full moon bring warmth, togetherness, and infinite blessings to your home.\""
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— STATMATIK"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
         {activeBanners.includes("laborday") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/30 bg-gradient-to-r from-blue-950/30 via-[#060b14]/90 to-red-950/30 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(59,130,246,0.15)] transition duration-500 hover:border-blue-500/50">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-600 via-red-600 to-blue-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />

@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /sign-in
+Disallow: /sign-up
+Disallow: /auth-redirect
+Disallow: /auth-signout
 
 Sitemap: https://statmatik.com/sitemap.xml
