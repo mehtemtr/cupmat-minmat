@@ -331,6 +331,9 @@ export default function EntryPage() {
         if (date >= 24 && date <= 27) {
           banners.push("midautumn");
         }
+        if (date === 27 || date === 28) {
+          banners.push("turkmenistan");
+        }
       }
 
       if (year === 2026 && month === 7) { // 7 = August (0-indexed)
@@ -451,6 +454,60 @@ export default function EntryPage() {
         {/* Minlan Countdown Section */}
 
         {/* Dynamic Celebrations Section */}
+        {activeBanners.includes("turkmenistan") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-[#060b14]/90 to-amber-950/30 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(16,185,129,0.18)] transition duration-500 hover:border-emerald-500/50">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_35px_rgba(16,185,129,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/turkmenistan_independence.jpg"
+                    alt="Türkmenistan Bağımsızlık Günü - Turkmenistan Independence Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/30 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1 text-xs font-black text-emerald-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇹🇲 27 SENTYABR • TÜRKMENISTANYŇ GARAŞSYZLYK GÜNI"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`Kardeş Türkmenistan'ın`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-emerald-200 to-amber-300">{`27 Eylül Bağımsızlık Günü Kutlu Olsun! 🇹🇲✨` }</span></>
+                  ) : (
+                    <>{`Happy Independence Day,`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-emerald-200 to-amber-300">{`Brotherly Turkmenistan! 🇹🇲✨` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Dost ve kardeş Türkmenistan'ın bağımsızlığının yıl dönümünü en içten dileklerimizle kutluyor; kadim Türkmen halkına barış, huzur, refah ve aydınlık bir gelecek diliyoruz. Mukaddes Garaşsyzlyk günüňiz gutly bolsun!"
+                  ) : (
+                    "Warmest congratulations to the brotherly people of Turkmenistan on the anniversary of Independence Day! Wishing enduring peace, sovereignty, prosperity, and continuous success. Mukaddes Garaşsyzlygyňyz gutly bolsun!"
+                  )}
+                </p>
+
+                {/* Quote Block */}
+                <div className="relative border-l-2 border-emerald-500/70 pl-4 py-2 bg-emerald-500/5 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-medium italic text-emerald-200 leading-snug">
+                    {"\"Bir suprada tayyn kylynsa ashlar, / Goteriler ol bagtly bashlar, / Bir bolup basanda barlykly dashlar, / Daglar yranmaz, gopmaz bolar ilimiz.\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-emerald-400 uppercase mt-2">
+                    {"— MAGTYMGULY PYRAGY (MAHTUMKULU FİRÂKÎ) • STATMATIK"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
         {activeBanners.includes("midautumn") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/30 bg-gradient-to-r from-amber-950/30 via-[#060b14]/90 to-indigo-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(245,158,11,0.18)] transition duration-500 hover:border-amber-500/50">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-600 via-yellow-500 to-indigo-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />
