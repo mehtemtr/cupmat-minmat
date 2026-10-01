@@ -327,6 +327,16 @@ export default function EntryPage() {
         banners.push("laborday");
       }
 
+      // China National Day / 国庆节 (1-2 Ekim 2026)
+      if (year === 2026 && month === 9) { // 9 = October (0-indexed)
+        if (date >= 1 && date <= 2) {
+          banners.push("chinanationalday");
+        }
+        if (date === 3 || date === 4) {
+          banners.push("germanunityday");
+        }
+      }
+
       if (year === 2026 && month === 8) { // 8 = September (0-indexed)
         if (date >= 24 && date <= 27) {
           banners.push("midautumn");
@@ -454,6 +464,119 @@ export default function EntryPage() {
         {/* Minlan Countdown Section */}
 
         {/* Dynamic Celebrations Section */}
+        {activeBanners.includes("chinanationalday") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/40 bg-gradient-to-r from-red-950/50 via-[#060b14]/90 to-amber-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(239,68,68,0.2)] transition duration-500 hover:border-red-500/60">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 via-amber-500 to-red-600 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-red-500/50 shadow-[0_0_35px_rgba(239,68,68,0.3)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/china_national_day.jpg"
+                    alt="Çin Ulusal Günü - China National Day • 国庆节"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇨🇳 1 YUÈ 10 RÌ • 庆祝中华人民共和国国庆节"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`Çin Halk Cumhuriyeti'nin`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-red-400">{`1 Ekim Ulusal Günü Kutlu Olsun! 🇨🇳✨` }</span></>
+                  ) : (
+                    <>{`Happy National Day,`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-red-400">{`People's Republic of China! 🇨🇳✨` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Statmatik ailesi olarak tüm Çin halkının, sporcularının ve iş ortaklarımızın 1 Ekim Ulusal Günü'nü ve Altın Hafta tatilini en içten dileklerimizle kutlar; barış, refah, esenlik ve spor dolu günler dileriz!"
+                  ) : (
+                    "Wishing a very Happy National Day and a joyous Golden Week holiday to all our Chinese friends, partners, athletes, and community! May this season bring prosperity, harmony, and continued success."
+                  )}
+                </p>
+
+                {/* Dual-language & Chinese greeting box */}
+                <div className="relative border-l-2 border-amber-500/80 pl-4 py-2 bg-amber-500/10 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-amber-200 leading-snug">
+                    {"\"热烈庆祝中华人民共和国国庆节！祝愿大家节日快乐，阖家幸福，万事如意！\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— STATMATIK • DÜNYA KUPASI 2026 PLATFORMU"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
+        {/* German Unity Day Celebration Banner */}
+        {activeBanners.includes("germanunityday") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/40 bg-gradient-to-r from-zinc-950/90 via-[#060b14]/90 to-red-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(245,158,11,0.2)] transition duration-500 hover:border-amber-500/60">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-zinc-700 via-red-600 to-amber-500 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-amber-500/40 shadow-[0_0_35px_rgba(245,158,11,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/german_unity_day.jpg"
+                    alt="Alman Birlik Günü - German Unity Day • Tag der Deutschen Einheit"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇩🇪 3. OKTOBER • TAG DER DEUTSCHEN EINHEIT"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "de" ? (
+                    <>{`Alles Gute zum`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-red-400 to-amber-300">{`Tag der Deutschen Einheit! 🇩🇪✨` }</span></>
+                  ) : locale === "tr" ? (
+                    <>{`Almanya'nın`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-red-400 to-amber-300">{`3 Ekim Birlik Günü Kutlu Olsun! 🇩🇪✨` }</span></>
+                  ) : (
+                    <>{`Happy German Unity Day,`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-red-400 to-amber-300">{`Tag der Deutschen Einheit! 🇩🇪✨` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "de" ? (
+                    "Wir feiern Einheit, Freiheit und Zusammenhalt. Alles Gute zum Tag der Deutschen Einheit an alle unsere Partner, Sportler und die gesamte Fußball-Community!"
+                  ) : locale === "tr" ? (
+                    "Almanya'nın yeniden birleşmesinin ve beraberliğinin simgesi olan 3 Ekim Alman Birlik Günü'nü (Tag der Deutschen Einheit) en içten dileklerimizle kutlar; barış, dayanışma ve spor dolu yarınlar dileriz!"
+                  ) : (
+                    "Celebrating unity, freedom, and togetherness. Warmest congratulations on the Day of German Unity to all our German partners, athletes, and football fans worldwide!"
+                  )}
+                </p>
+
+                {/* German quote / motto box */}
+                <div className="relative border-l-2 border-amber-500/80 pl-4 py-2 bg-amber-500/10 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-amber-200 leading-snug">
+                    {"\"Einigkeit und Recht und Freiheit für das deutsche Vaterland!\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— STATMATIK • DÜNYA KUPASI 2026 PLATFORMU"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
         {activeBanners.includes("turkmenistan") && (
           <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-[#060b14]/90 to-amber-950/30 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(16,185,129,0.18)] transition duration-500 hover:border-emerald-500/50">
             <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 opacity-15 blur transition duration-500 group-hover:opacity-25" />
