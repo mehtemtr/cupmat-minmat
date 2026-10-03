@@ -327,12 +327,12 @@ export default function EntryPage() {
         banners.push("laborday");
       }
 
-      // Turkmenistan National Day of Remembrance and Mourning / Hatyra Güni (4-7 Ekim 2026)
+      // Turkmenistan National Day of Remembrance and Mourning / Hatyra Güni (6-7 Ekim 2026)
       if (year === 2026 && month === 9) { // 9 = October (0-indexed)
         if (date >= 1 && date <= 2) {
           banners.push("chinanationalday");
         }
-        if (date >= 4 && date <= 7) {
+        if (date === 6 || date === 7) {
           banners.push("turkmenistanhatyra");
         }
       }
