@@ -327,13 +327,13 @@ export default function EntryPage() {
         banners.push("laborday");
       }
 
-      // China National Day / 国庆节 (1-2 Ekim 2026)
+      // Turkmenistan National Day of Remembrance and Mourning / Hatyra Güni (5-7 Ekim 2026)
       if (year === 2026 && month === 9) { // 9 = October (0-indexed)
         if (date >= 1 && date <= 2) {
           banners.push("chinanationalday");
         }
-        if (date === 3 || date === 4) {
-          banners.push("germanunityday");
+        if (date >= 5 && date <= 7) {
+          banners.push("turkmenistanhatyra");
         }
       }
 
@@ -518,56 +518,52 @@ export default function EntryPage() {
           </div>
         )}
 
-        {/* German Unity Day Celebration Banner */}
-        {activeBanners.includes("germanunityday") && (
-          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/40 bg-gradient-to-r from-zinc-950/90 via-[#060b14]/90 to-red-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(245,158,11,0.2)] transition duration-500 hover:border-amber-500/60">
-            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-zinc-700 via-red-600 to-amber-500 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+        {/* Turkmenistan Remembrance and Mourning Day Banner (Hatyra Güni) */}
+        {activeBanners.includes("turkmenistanhatyra") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/40 bg-gradient-to-r from-[#03150e]/95 via-[#060b14]/95 to-emerald-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(16,185,129,0.18)] transition duration-500 hover:border-emerald-500/60">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-700 via-teal-800 to-emerald-900 opacity-20 blur transition duration-500 group-hover:opacity-30" />
             <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
               
-              {/* Celebration Image */}
+              {/* Memorial Image */}
               <div className="w-full md:w-[45%] flex justify-center relative">
-                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-amber-500/40 shadow-[0_0_35px_rgba(245,158,11,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_35px_rgba(16,185,129,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
                   <img
-                    src="/german_unity_day.jpg"
-                    alt="Alman Birlik Günü - German Unity Day • Tag der Deutschen Einheit"
+                    src="/turkmenistan_hatyra_guni.jpg"
+                    alt="Türkmenistan Anma ve Yas Günü - National Day of Remembrance and Mourning • Hatyra Güni"
                     className="w-full h-full object-cover select-none pointer-events-none"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#02100a]/50 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
 
-              {/* Celebration Message */}
+              {/* Memorial Message */}
               <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
-                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
-                  {"🇩🇪 3. OKTOBER • TAG DER DEUTSCHEN EINHEIT"}
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1 text-xs font-black text-emerald-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🇹🇲 6 OKTÝABR • MILLI HATYRA GÜNI"}
                 </span>
                 
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
-                  {locale === "de" ? (
-                    <>{`Alles Gute zum`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-red-400 to-amber-300">{`Tag der Deutschen Einheit! 🇩🇪✨` }</span></>
-                  ) : locale === "tr" ? (
-                    <>{`Almanya'nın`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-red-400 to-amber-300">{`3 Ekim Birlik Günü Kutlu Olsun! 🇩🇪✨` }</span></>
+                  {locale === "tr" ? (
+                    <>{`Dost ve Kardeş Türkmenistan'ın`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400">{`6 Ekim Anma ve Yas Günü (Hatyra Güni) 🇹🇲🕊️` }</span></>
                   ) : (
-                    <>{`Happy German Unity Day,`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 via-red-400 to-amber-300">{`Tag der Deutschen Einheit! 🇩🇪✨` }</span></>
+                    <>{`Turkmenistan's National Day of`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400">{`Remembrance and Mourning (Hatyra Güni) 🇹🇲🕊️` }</span></>
                   )}
                 </h2>
 
                 <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
-                  {locale === "de" ? (
-                    "Wir feiern Einheit, Freiheit und Zusammenhalt. Alles Gute zum Tag der Deutschen Einheit an alle unsere Partner, Sportler und die gesamte Fußball-Community!"
-                  ) : locale === "tr" ? (
-                    "Almanya'nın yeniden birleşmesinin ve beraberliğinin simgesi olan 3 Ekim Alman Birlik Günü'nü (Tag der Deutschen Einheit) en içten dileklerimizle kutlar; barış, dayanışma ve spor dolu yarınlar dileriz!"
+                  {locale === "tr" ? (
+                    "1948 Aşkabat Depremi'nde ve vatan müdafaasında hayatını kaybeden tüm kahramanları ve aziz şehitleri rahmet, hürmet ve derin saygıyla anıyoruz. Ruhları şad, mekanları cennet olsun."
                   ) : (
-                    "Celebrating unity, freedom, and togetherness. Warmest congratulations on the Day of German Unity to all our German partners, athletes, and football fans worldwide!"
+                    "On this National Day of Remembrance and Mourning, we pay solemn and deepest tribute to all the victims of the 1948 Ashgabat earthquake and all fallen heroes who sacrificed their lives for the motherland. May their souls rest in eternal peace."
                   )}
                 </p>
 
-                {/* German quote / motto box */}
-                <div className="relative border-l-2 border-amber-500/80 pl-4 py-2 bg-amber-500/10 rounded-r-xl max-w-[580px] text-left">
-                  <p className="text-xs sm:text-sm font-semibold text-amber-200 leading-snug">
-                    {"\"Einigkeit und Recht und Freiheit für das deutsche Vaterland!\""}
+                {/* Poetic Turkmen tribute box */}
+                <div className="relative border-l-2 border-emerald-500/80 pl-4 py-2 bg-emerald-500/10 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-emerald-200 leading-snug">
+                    {"\"Watan ugrunda gurban bolanlaryň we pajygaly ýertitremesiniň pidalarynyň ýagty ýadygärligi ebedi ýüregimizde ýaşar.\""}
                   </p>
-                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                  <span className="block text-[10px] font-black tracking-widest text-emerald-400 uppercase mt-2">
                     {"— STATMATIK • DÜNYA KUPASI 2026 PLATFORMU"}
                   </span>
                 </div>
