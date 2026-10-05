@@ -337,6 +337,7 @@ export default function EntryPage() {
         }
         if (date === 6 || date === 7) {
           banners.push("turkmenistanhatyra");
+          banners.push("turkmenistan");
         }
       }
 
