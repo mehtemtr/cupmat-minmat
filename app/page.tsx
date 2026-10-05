@@ -332,6 +332,9 @@ export default function EntryPage() {
         if (date >= 1 && date <= 2) {
           banners.push("chinanationalday");
         }
+        if (date === 5) {
+          banners.push("teachersday");
+        }
         if (date === 6 || date === 7) {
           banners.push("turkmenistanhatyra");
         }
@@ -510,6 +513,65 @@ export default function EntryPage() {
                   </p>
                   <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
                     {"— STATMATIK • DÜNYA KUPASI 2026 PLATFORMU"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
+
+        {/* 5 Ekim Dünya Öğretmenler Günü (World Teachers' Day) Banner */}
+        {activeBanners.includes("teachersday") && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/40 bg-gradient-to-r from-[#0d1728]/95 via-[#060b14]/95 to-amber-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_45px_rgba(245,158,11,0.2)] transition duration-500 hover:border-amber-500/60">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-blue-700 via-amber-600 to-blue-800 opacity-25 blur transition duration-500 group-hover:opacity-35" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Banner Image */}
+              <div className="w-full md:w-[48%] flex justify-center relative">
+                <div className="relative w-full aspect-[16/9] md:aspect-video rounded-2xl overflow-hidden border border-amber-500/40 shadow-[0_0_35px_rgba(245,158,11,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/ogretmenler_gunu.jpg"
+                    alt="5 Ekim Dünya Öğretmenler Günü - World Teachers' Day - Statmatik"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="w-full md:w-[52%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {"🌍 5 EKİM • DÜNYA ÖĞRETMENLER GÜNÜ"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`Geleceğe Işık Tutan Öğretmenlerimizin`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400">{`Dünya Öğretmenler Günü Kutlu Olsun! 📚✨` }</span></>
+                  ) : (
+                    <>{`Empowering Minds, Shaping the Future`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400">{`Happy World Teachers' Day! 📚✨` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Fikri hür, vicdanı hür, irfanı hür nesiller yetiştirerek geleceğe ışık tutan; fedakârlığı, sabrı ve emeğiyle dünyayı daha aydınlık bir yer haline getiren tüm öğretmenlerimizin 5 Ekim Dünya Öğretmenler Günü'nü minnetle kutlarız."
+                  ) : (
+                    "Celebrating the dedication, passion, and wisdom of educators worldwide who inspire young minds and build a brighter tomorrow. Happy World Teachers' Day to all dedicated teachers!"
+                  )}
+                </p>
+
+                {/* Atatürk quote box */}
+                <div className="relative border-l-2 border-amber-500/80 pl-4 py-2.5 bg-amber-500/10 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-amber-200 italic leading-snug">
+                    {locale === "tr" ? (
+                      "\"Milletleri kurtaranlar yalnız ve ancak öğretmenlerdir. Öğretmenden, eğiticiden mahrum bir millet, henüz bir millet adını alma yeteneğini kazanamamıştır.\""
+                    ) : (
+                      "\"Teachers are the one and only people who save nations. A nation lacking educators and teachers has not yet acquired the competence to be called a nation.\""
+                    )}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— GAZİ MUSTAFA KEMAL ATATÜRK • BAŞÖĞRETMEN"}
                   </span>
                 </div>
               </div>
