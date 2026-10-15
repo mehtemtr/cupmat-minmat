@@ -339,6 +339,9 @@ export default function EntryPage() {
           banners.push("turkmenistanhatyra");
           banners.push("turkmenistan");
         }
+        if (date === 15) {
+          banners.push("tunisia_evacuation");
+        }
       }
 
       if (year === 2026 && month === 8) { // 8 = September (0-indexed)
@@ -466,6 +469,80 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* Tunus 15 Ekim Tahliye Günü (Tunisia Evacuation Day / Eid al-Jala') Banner */}
+        {(activeBanners.includes("tunisia_evacuation") || activeBanners.includes("tunus") || activeBanners.includes("tunisia")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/40 bg-gradient-to-r from-red-950/50 via-[#060b14]/95 to-rose-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(239,68,68,0.2)] transition duration-500 hover:border-red-500/60">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 via-rose-500 to-amber-600 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-red-500/40 shadow-[0_0_35px_rgba(239,68,68,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/tunisia_evacuation_day.jpg"
+                    alt="Tunus 15 Ekim Tahliye Günü - Tunisia Evacuation Day • عيد الجلاء"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3.5 py-1 text-xs font-black text-rose-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "ar"
+                    ? "🇹🇳 15 أكتوبر • عيد الجلاء المجيد للجمهورية التونسية"
+                    : locale === "fr"
+                    ? "🇹🇳 15 OCTOBRE • FÊTE DE L'ÉVACUATION DE TUNISIE"
+                    : "🇹🇳 15 EKİM • TUNUS TAHLİYE GÜNÜ (EID AL-JALA')"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`Dost ve Kardeş Tunus'un`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-red-200 to-amber-200">{`15 Ekim Tahliye Günü (Evacuation Day) Kutlu Olsun! 🇹🇳🕊️` }</span></>
+                  ) : locale === "ar" ? (
+                    <>{`هنيئاً للشعب التونسي الشقيق`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-red-200 to-amber-200">{`الذكرى الخالدة لعيد الجلاء المجيد! 🇹🇳🕊️` }</span></>
+                  ) : locale === "fr" ? (
+                    <>{`À la Tunisie Fraternelle,`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-red-200 to-amber-200">{`Joyeuse Fête de l'Évacuation ! 🇹🇳🕊️` }</span></>
+                  ) : (
+                    <>{`Happy Evacuation Day,`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-red-200 to-amber-200">{`Republic of Tunisia! 🇹🇳🕊️` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "15 Ekim 1963'te son yabancı askeri birliğin Bizerte'den çekilmesiyle kazanılan tam bağımsızlığı ve Tunus'un sarsılmaz egemenliğini simgeleyen Tahliye Günü'nü (Eid al-Jala') en içten dileklerimizle kutluyor; vatanı ve hürriyeti uğruna can veren tüm şehitleri saygı ve rahmetle anıyoruz."
+                  ) : locale === "ar" ? (
+                    "نرفع أسمى آيات التهاني والتبريكات إلى الشعب التونسي الشقيق بمناسبة عيد الجلاء (15 أكتوبر 1963)، ذكرى جلاء آخر جندي أجنبي عن بنزرت واستكمال السيادة الوطنية الكاملة، مستذكرين بفخر واعتزاز تضحيات الشهداء الأبرار من أجل حرية الوطن وعزته."
+                  ) : locale === "fr" ? (
+                    "À l'occasion du 15 octobre, marquant l'évacuation du dernier soldat étranger de Bizerte en 1963 et le parachèvement de la souveraineté nationale, nous adressons nos vœux les plus chaleureux au peuple tunisien frère et rendons un vibrant hommage aux martyrs de la patrie."
+                  ) : (
+                    "Commemorating the historic departure of the last foreign troops from Bizerte on October 15, 1963, marking the triumph of full sovereignty, territorial integrity, and freedom. Warmest congratulations to the brotherly people of Tunisia on Evacuation Day (Eid al-Jala')!"
+                  )}
+                </p>
+
+                {/* Tunisian Anthem & Poetic Quote Block */}
+                <div className="relative border-l-2 border-red-500/80 pl-4 py-2 bg-red-500/10 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-rose-200 leading-snug">
+                    {"\"إذا الشَّعْبُ يَوْمَاً أَرَادَ الْحَيَاةَ • فَلا بُدَّ أَنْ يَسْتَجِيبَ الْقَدَر\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-400 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Eğer bir millet bir gün yaşamayı dilerse, muhakkak kader ona boyun eğer.\""
+                      : locale === "fr"
+                      ? "\"Lorsqu'un jour le peuple veut vivre, le destin doit nécessairement lui répondre.\""
+                      : "\"If a people one day wills to live, destiny must inevitably respond.\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— ABOUL-QACEM ECHEBBI • TUNUS MİLLİ MARŞI (HUMAT AL-HIMA) • STATMATIK"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
 
         {/* Dynamic Celebrations Section */}
         {activeBanners.includes("chinanationalday") && (

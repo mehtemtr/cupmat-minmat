@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-tunisia-evacuation-day-2026",
+    category: "General",
+    source: "Statmatik News / TAP / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Tunus'ta 15 Ekim Tahliye Günü Coşkusu: 63 Yıllık Tam Bağımsızlık ve Hürriyet Anılıyor",
+        snippet: "15 Ekim 1963'te son yabancı askeri birliğin Bizerte'den çekilmesiyle kazanılan tam bağımsızlığın simgesi 'Tahliye Günü' (Eid al-Jala') Tunus'ta ve dünyada gururla kutlanıyor.",
+      },
+      en: {
+        title: "Tunisia Marks Evacuation Day: Commemorating 63 Years of Complete Sovereignty and Freedom",
+        snippet: "Tunisia commemorates the 15 October 1963 evacuation of foreign troops from Bizerte, celebrating the historic milestone of full territorial sovereignty, freedom, and national pride.",
+      },
+      ar: {
+        title: "تونس تحتفل بالذكرى المجيدة لعيد الجلاء: استكمال السيادة الوطنية واستقلال بنزرت",
+        snippet: "يحتفل الشعب التونسي بالذكرى التاريخية لعيد الجلاء (15 أكتوبر 1963)، خروج آخر جندي أجنبي من أرض الوطن وتتويج نضال التونسيين من أجل السيادة والحرية الكاملة.",
+      },
+      fr: {
+        title: "La Tunisie célèbre la Fête de l'Évacuation : Commémoration de la souveraineté nationale retrouvée",
+        snippet: "Le 15 octobre 1963, l'évacuation des dernières troupes étrangères de Bizerte consacrait l'indépendance totale et l'intégrité territoriale de la République Tunisienne.",
+      },
+      de: {
+        title: "Tunesien feiert den Tag der Evakuierung: Gedenken an die volle nationale Souveränität",
+        snippet: "Am 15. Oktober 1963 verließen die letzten ausländischen Truppen Bizerte – ein historischer Meilenstein für die vollständige Souveränität und Freiheit Tunesiens.",
+      },
+      es: {
+        title: "Túnez conmemora el Día de la Evacuación: Celebración de la plena soberanía nacional",
+        snippet: "El 15 de octubre marca la retirada de las últimas tropas extranjeras de Bizerta en 1963, sellando la independencia total y la libertad del pueblo tunecino.",
+      },
+      it: {
+        title: "La Tunisia celebra la Festa dell'Evacuazione: Omaggio alla piena sovranità nazionale",
+        snippet: "Il 15 ottobre si commemora l'evacuazione delle ultime truppe straniere da Biserta nel 1963, simbolo imperituro di indipendenza, pace e unità tunisina.",
+      },
+      pt: {
+        title: "Tunísia celebra o Dia da Evacuação: Homenagem à plena soberania e liberdade",
+        snippet: "O dia 15 de outubro de 1963 marcou a retirada das últimas tropas estrangeiras de Bizerte, consagrando a total soberania e integridade da Tunísia.",
+      },
+      ko: {
+        title: "튀니지 10월 15일 철수 기념일(Evacuation Day): 완전한 주권과 자유를 기리며",
+        snippet: "1963년 10월 15일 비제르테에서 마지막 외국 군대가 철수하며 완성된 튀니지의 완전한 독립과 주권 회복을 기념하는 뜻깊은 날을 맞이했습니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-chuseok-midautumn-2026",
     category: "General",
     source: "Global Cultural News / Yonhap / Xinhua",
