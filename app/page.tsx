@@ -342,6 +342,9 @@ export default function EntryPage() {
         if (date === 15) {
           banners.push("tunisia_evacuation");
         }
+        if (date === 20) {
+          banners.push("kenya_mashujaa");
+        }
       }
 
       if (year === 2026 && month === 8) { // 8 = September (0-indexed)
@@ -469,6 +472,124 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* Kenya 20 Ekim Mashujaa Day (Kahramanlar Günü / Heroes' Day) Banner */}
+        {(activeBanners.includes("kenya_mashujaa") || activeBanners.includes("kenya") || activeBanners.includes("mashujaa")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-500/40 bg-gradient-to-r from-emerald-950/50 via-[#060b14]/95 to-red-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_40px_rgba(16,185,129,0.2)] transition duration-500 hover:border-emerald-500/60">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-emerald-600 via-red-600 to-amber-500 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_35px_rgba(16,185,129,0.25)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/kenya_mashujaa_day.jpg"
+                    alt="Kenya 20 Ekim Mashujaa Günü (Kahramanlar Günü) - Kenya Mashujaa Day (Heroes' Day) • Siku ya Mashujaa"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1 text-xs font-black text-emerald-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "ar"
+                    ? "🇰🇪 20 أكتوبر • يوم الأبطال في كينيا (MASHUJAA DAY)"
+                    : locale === "fr"
+                    ? "🇰🇪 20 OCTOBRE • JOURNÉE DES HÉROS DU KENYA (MASHUJAA DAY)"
+                    : locale === "es"
+                    ? "🇰🇪 20 DE OCTUBRE • DÍA DE LOS HÉROES DE KENIA (MASHUJAA DAY)"
+                    : locale === "de"
+                    ? "🇰🇪 20. OKTOBER • HELDENTAG IN KENIA (MASHUJAA DAY)"
+                    : locale === "pt"
+                    ? "🇰🇪 20 DE OUTUBRO • DIA DOS HERÓIS DO QUÊNIA (MASHUJAA DAY)"
+                    : locale === "it"
+                    ? "🇰🇪 20 OTTOBRE • GIORNATA DEGLI EROI DEL KENYA (MASHUJAA DAY)"
+                    : locale === "ko"
+                    ? "🇰🇪 10월 20일 • 케냐 영웅의 날 (MASHUJAA DAY)"
+                    : locale === "tr"
+                    ? "🇰🇪 20 EKİM • KENYA MASHUJAA GÜNÜ (KAHRAMANLAR GÜNÜ)"
+                    : "🇰🇪 OCTOBER 20 • KENYA MASHUJAA DAY (HEROES' DAY)"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>{`Dost Ülke Kenya'nın`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`20 Ekim Mashujaa Günü (Kahramanlar Günü) Kutlu Olsun! 🇰🇪🛡️` }</span></>
+                  ) : locale === "ar" ? (
+                    <>{`تهانينا الحارة لجمهورية كينيا الصديقة`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`بمناسبة يوم الأبطال (Mashujaa Day)! 🇰🇪🛡️` }</span></>
+                  ) : locale === "fr" ? (
+                    <>{`Joyeuse Journée des Héros (Mashujaa Day),`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`République du Kenya ! 🇰🇪🛡️` }</span></>
+                  ) : locale === "es" ? (
+                    <>{`¡Feliz Día de los Héroes (Mashujaa Day),`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`República de Kenia! 🇰🇪🛡️` }</span></>
+                  ) : locale === "de" ? (
+                    <>{`Alles Gute zum Mashujaa Day (Heldentag),`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`Republik Kenia! 🇰🇪🛡️` }</span></>
+                  ) : locale === "pt" ? (
+                    <>{`Feliz Dia dos Heróis (Mashujaa Day),`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`República do Quênia! 🇰🇪🛡️` }</span></>
+                  ) : locale === "it" ? (
+                    <>{`Felice Giornata degli Eroi (Mashujaa Day),`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`Repubblica del Kenya! 🇰🇪🛡️` }</span></>
+                  ) : locale === "ko" ? (
+                    <>{`케냐 공화국의 자랑스러운`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`영웅의 날 (Mashujaa Day)을 축하합니다! 🇰🇪🛡️` }</span></>
+                  ) : (
+                    <>{`Happy Mashujaa Day (Heroes' Day),`}<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-amber-200 to-red-400">{`Republic of Kenya! 🇰🇪🛡️` }</span></>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-4 max-w-[580px]">
+                  {locale === "tr" ? (
+                    "Kenya'nın bağımsızlık mücadelesinde fedakârlıklarıyla tarih yazan özgürlük kahramanlarını (Mashujaa) ve ülkenin birliğine, gelişimine, sporuna ve kültürüne değer katan tüm öncülerini saygıyla anıyor; dost Kenya halkının 20 Ekim Mashujaa Günü'nü (Kahramanlar Günü) en içten dileklerimizle kutluyoruz. Heri ya Siku ya Mashujaa!"
+                  ) : locale === "ar" ? (
+                    "نستذكر بكل فخر واعتزاز أبطال الحرية والاستقلال في كينيا (Mashujaa) وجميع الرواد الذين ساهموا في نهضة البلاد ووحدتها وتألقها الرياضي والثقافي، ونتقدم بأصدق التهاني للشعب الكيني الصديق بمناسبة يوم الأبطال (20 أكتوبر). Heri ya Siku ya Mashujaa!"
+                  ) : locale === "fr" ? (
+                    "Nous rendons un vibrant hommage aux héros de l'indépendance du Kenya (Mashujaa) ainsi qu'à toutes les figures qui ont façonné l'unité, le progrès et le rayonnement sportif et culturel de la nation. Excellente fête de Mashujaa Day au peuple kényan ami ! Heri ya Siku ya Mashujaa!"
+                  ) : locale === "es" ? (
+                    "Rendimos un solemne homenaje a los héroes de la independencia de Kenia (Mashujaa) y a todos los pioneros que han forjado la unidad, el progreso y la grandeza deportiva y cultural de la nación. ¡Feliz Mashujaa Day al pueblo hermano de Kenia! Heri ya Siku ya Mashujaa!"
+                  ) : locale === "de" ? (
+                    "Wir ehren die Freiheitshelden Kenias (Mashujaa) sowie alle Pioniere, die zur Einheit, Entwicklung und zum sportlichen wie kulturellen Glanz des Landes beigetragen haben, und wünschen dem kenianischen Volk einen stolzen und feierlichen Mashujaa Day! Heri ya Siku ya Mashujaa!"
+                  ) : locale === "pt" ? (
+                    "Prestando uma calorosa homenagem aos heróis da independência do Quênia (Mashujaa) e a todos aqueles que contribuíram para a união, o desenvolvimento e a grandeza esportiva e cultural da nação. Feliz Mashujaa Day ao povo queniano! Heri ya Siku ya Mashujaa!"
+                  ) : locale === "it" ? (
+                    "Rendiamo omaggio agli eroi dell'indipendenza del Kenya (Mashujaa) e a tutti i pionieri che hanno contribuito all'unità, al progresso e ai trionfi sportivi e culturali della nazione. Felice Mashujaa Day al popolo keniota! Heri ya Siku ya Mashujaa!"
+                  ) : locale === "ko" ? (
+                    "케냐의 독립을 위해 헌신한 자유의 영웅들(Mashujaa)과 국가의 단결, 발전, 스포츠 및 문화적 위상을 높인 모든 선구자들에게 깊은 경의를 표하며, 케냐 국민들에게 따뜻한 축하의 인사를 전합니다. Heri ya Siku ya Mashujaa!"
+                  ) : (
+                    "Honoring the courageous freedom fighters and national heroes (Mashujaa) who sacrificed for Kenya's independence, as well as the everyday champions shaping the nation's unity, progress, and sporting legacy. Warmest wishes to the people of Kenya on Mashujaa Day! Heri ya Siku ya Mashujaa!"
+                  )}
+                </p>
+
+                {/* Kenyan National Anthem & Harambee Quote Block */}
+                <div className="relative border-l-2 border-emerald-500/80 pl-4 py-2 bg-emerald-500/10 rounded-r-xl max-w-[580px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold text-emerald-200 leading-snug">
+                    {"\"Natujenge taifa letu, Ee, ndio wajibu wetu, Kenya istahili heshima, Tuungane mikono Pamoja kazini!\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-400 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Milletimizi birlikte inşa edelim, bu bizim en kutsal görevimizdir; Kenya her türlü onura layıktır, el ele verip birlik içinde çalışalım!\""
+                      : locale === "fr"
+                      ? "\"Bâtissons notre nation, oui, c'est notre devoir ; le Kenya mérite tout l'honneur, unissons nos mains et travaillons ensemble !\""
+                      : locale === "es"
+                      ? "\"¡Construyamos nuestra nación, sí, es nuestro deber; Kenia merece todo el honor, unamos nuestras manos trabajando juntos!\""
+                      : locale === "de"
+                      ? "\"Lasst uns unsere Nation aufbauen, ja, das ist unsere Pflicht; Kenia verdient alle Ehre, lasst uns Hand in Hand zusammenarbeiten!\""
+                      : locale === "pt"
+                      ? "\"Construamos a nossa nação, sim, é o nosso dever; o Quênia merece toda a honra, demos as mãos trabalhando juntos!\""
+                      : locale === "it"
+                      ? "\"Costruiamo la nostra nazione, sì, è il nostro dovere; il Kenya merita ogni onore, uniamo le mani lavorando insieme!\""
+                      : locale === "ko"
+                      ? "\"우리의 조국을 함께 건설하자, 그것이 우리의 의무이니. 케냐는 존경받아 마땅하며, 모두 손을 맞잡고 하나 되어 일하자!\""
+                      : locale === "ar"
+                      ? "\"فلنبنِ وطننا معاً، نعم، هذا هو واجبنا المقدس؛ كينيا تستحق كل المجد والكرامة، فلنتكاتف يداً بيد في العمل!\""
+                      : "\"Let one and all arise with hearts both strong and true; service be our earnest endeavor, and our homeland of Kenya, heritage of splendor, firm may we stand to defend!\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— KENYA MİLLİ MARŞI (EE MUNGU NGUVU YETU) • HARAMBEE • STATMATIK"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
 
         {/* Tunus 15 Ekim Tahliye Günü (Tunisia Evacuation Day / Eid al-Jala') Banner */}
         {(activeBanners.includes("tunisia_evacuation") || activeBanners.includes("tunus") || activeBanners.includes("tunisia")) && (

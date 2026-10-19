@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-kenya-mashujaa-day-2026",
+    category: "General",
+    source: "Statmatik News / KBC / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Kenya'da 20 Ekim Mashujaa Day (Kahramanlar Günü) Coşkusu: Özgürlük ve Birlik Kahramanları Anılıyor",
+        snippet: "Kenya Cumhuriyeti, bağımsızlık mücadelesinin öncülerini ve ülkenin kalkınmasına, kültürüne ve birliğine değer katan tüm kahramanlarını (Mashujaa) 20 Ekim Kahramanlar Günü'nde büyük bir gururla selamlıyor.",
+      },
+      en: {
+        title: "Kenya Celebrates Mashujaa Day (Heroes' Day): Honoring Champions of Freedom, Unity, and Progress",
+        snippet: "Across Kenya and the world, 20 October marks Mashujaa Day—a proud national tribute to the heroes of independence and the visionary men and women shaping Kenya's bright future.",
+      },
+      ar: {
+        title: "كينيا تحتفل بيوم المشوجا (يوم الأبطال): تكريم رواد الحرية والوحدة والتقدم الوطني",
+        snippet: "تحتفل جمهورية كينيا في 20 أكتوبر بيوم الأبطال الوطني (Mashujaa Day) تخليداً لذكرى أبطال الاستقلال وكل من ساهم في بناء الوطن وازدهاره.",
+      },
+      fr: {
+        title: "Le Kenya célèbre le Mashujaa Day (Journée des Héros) : Hommage aux bâtisseurs de la liberté et de l'unité",
+        snippet: "En ce 20 octobre, le peuple kényan honore avec fierté les héros de l'indépendance ainsi que toutes les figures qui contribuent au progrès et au rayonnement de la nation.",
+      },
+      de: {
+        title: "Kenia feiert den Mashujaa Day (Heldengedenktag): Würdigung der Helden von Freiheit und Einheit",
+        snippet: "Am 20. Oktober ehrt die Republik Kenia am Mashujaa Day die Wegbereiter der Unabhängigkeit sowie alle Bürgerinnen und Bürger, die den Fortschritt des Landes prägen.",
+      },
+      es: {
+        title: "Kenia conmemora el Mashujaa Day (Día de los Héroes): Homenaje a los forjadores de la libertad y la unidad",
+        snippet: "El 20 de octubre, Kenia celebra con orgullo a los héroes de su independencia y a quienes impulsan el desarrollo, la cultura y la paz de la nación.",
+      },
+      it: {
+        title: "Il Kenya celebra il Mashujaa Day (Giorno degli Eroi): Omaggio ai custodi della libertà e dell'unità",
+        snippet: "Il 20 ottobre la Repubblica del Kenya rende onore agli eroi dell'indipendenza e a tutti i cittadini che contribuiscono alla crescita e alla prosperità del Paese.",
+      },
+      pt: {
+        title: "Quênia celebra o Mashujaa Day (Dia dos Heróis): Homenagem aos campeões da liberdade e da união",
+        snippet: "Em 20 de outubro, o Quênia celebra com orgulho os heróis da independência e todos aqueles que dedicam suas vidas ao progresso e à paz da nação.",
+      },
+      ko: {
+        title: "케냐 10월 20일 마슈자 데이(영웅의 날) 기념: 자유와 단결의 영웅들을 기리며",
+        snippet: "케냐 공화국은 10월 20일 마슈자 데이(Mashujaa Day)를 맞아 독립운동의 선구자들과 국가 발전 및 평화에 헌신한 모든 영웅들을 자랑스럽게 기립니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-tunisia-evacuation-day-2026",
     category: "General",
     source: "Statmatik News / TAP / Global Heritage",
