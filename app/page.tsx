@@ -327,6 +327,13 @@ export default function EntryPage() {
         banners.push("laborday");
       }
 
+      // 29 Ekim Cumhuriyet Bayramı: 28 Ekim 2026 00:00:00 (TR Saati / UTC+3) - 30 Ekim 2026 00:00:00 (TR Saati / UTC+3)
+      const cumhuriyetStart = new Date("2026-10-28T00:00:00+03:00").getTime();
+      const cumhuriyetEnd = new Date("2026-10-30T00:00:00+03:00").getTime();
+      if (nowTime >= cumhuriyetStart && nowTime < cumhuriyetEnd && !banners.includes("29ekim")) {
+        banners.push("29ekim");
+      }
+
       // Turkmenistan National Day of Remembrance and Mourning / Hatyra Güni (6-7 Ekim 2026)
       if (year === 2026 && month === 9) { // 9 = October (0-indexed)
         if (date >= 1 && date <= 2) {
@@ -344,6 +351,9 @@ export default function EntryPage() {
         }
         if (date === 20) {
           banners.push("kenya_mashujaa");
+        }
+        if (date === 28 || date === 29) {
+          banners.push("29ekim");
         }
       }
 
@@ -472,6 +482,81 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 28-29 Ekim Cumhuriyet Bayramı (Republic Day of Turkey - 103. Yıl) Banner */}
+        {(activeBanners.includes("29ekim") || activeBanners.includes("cumhuriyet") || activeBanners.includes("29_ekim")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-red-500/50 bg-gradient-to-r from-red-950/60 via-[#060b14]/95 to-amber-950/40 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_50px_rgba(227,10,23,0.28)] transition duration-500 hover:border-red-500/70">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600 via-amber-500 to-red-700 opacity-25 blur transition duration-500 group-hover:opacity-35" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Atatürk & Republic Day Portrait */}
+              <div className="w-full md:w-[44%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border-2 border-red-500/50 shadow-[0_0_40px_rgba(227,10,23,0.35)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/29_ekim_cumhuriyet.jpg"
+                    alt="29 Ekim Cumhuriyet Bayramı - Gazi Mustafa Kemal Atatürk"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-950/30 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Celebration & Social/Sports Integrity Message */}
+              <div className="w-full md:w-[56%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-red-500/50 bg-red-500/15 px-3.5 py-1 text-xs font-black text-red-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇹🇷 29 EKİM CUMHURİYET BAYRAMI • 103. YIL"
+                    : "🇹🇷 OCTOBER 29 • REPUBLIC DAY OF TURKEY (103RD ANNIVERSARY)"}
+                </span>
+                
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Cumhuriyetimizin 103. Yılı Kutlu Olsun!`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-200 to-red-500">
+                        {`Emanete Sadakat ve Adalet İradesiyle! 🇹🇷✨`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Happy 103rd Anniversary of the Republic of Turkey!`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-200 to-red-500">
+                        {`Standing Firm for Integrity, Justice & Fair Play! 🇹🇷✨`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <div className="space-y-3 text-base sm:text-lg text-zinc-100 font-medium leading-relaxed mb-4 max-w-[600px]">
+                  {locale === "tr" ? (
+                    <p>
+                      Cumhuriyet, şahsi menfaat odaklarının veya saha arkasında dönen kirli oyunların parçası olamayacak kadar büyüktür. Sporda, adalette ve hayatın her alanında temiz bir gelecek inşa etme kararlılığımızla <span className="text-red-400 font-black">Atatürk&apos;ün askerleriyiz.</span> Emanetine sadakatle, 29 Ekim Cumhuriyet Bayramımız kutlu olsun!
+                    </p>
+                  ) : (
+                    <p>
+                      The Republic is far too great to be a part of self-serving interest groups or dirty behind-the-scenes games. With our determination to build a clean future in sports, justice, and every sphere of life, <span className="text-red-400 font-black">we are the soldiers of Atatürk.</span> With unwavering loyalty to his legacy, Happy October 29 Republic Day!
+                    </p>
+                  )}
+                </div>
+
+                {/* Atatürk Quote Block */}
+                <div className="relative border-l-2 border-amber-500/80 pl-4 py-2.5 bg-red-950/35 rounded-r-xl max-w-[600px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-200 leading-snug">
+                    {locale === "tr"
+                      ? "\"Ey Türk istikbalinin evladı! İşte, bu ahval ve şerait içinde dahi vazifen, Türk istiklal ve cumhuriyetini kurtarmaktır! ... Ben sporcunun zeki, çevik ve aynı zamanda ahlaklısını severim.\""
+                      : "\"O child of the Turkish future! Even under these circumstances and conditions, your duty is to save Turkish independence and the Republic! ... I like the athlete who is smart, agile, and at the same time moral.\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— GAZİ MUSTAFA KEMAL ATATÜRK • CUMHURİYETİMİZİN KURUCUSU"}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
 
         {/* Kenya 20 Ekim Mashujaa Day (Kahramanlar Günü / Heroes' Day) Banner */}
         {(activeBanners.includes("kenya_mashujaa") || activeBanners.includes("kenya") || activeBanners.includes("mashujaa")) && (

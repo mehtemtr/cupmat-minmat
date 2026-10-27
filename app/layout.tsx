@@ -14,6 +14,7 @@ import AdminBackdoor from "@/components/AdminBackdoor";
 import { AdminNickPanel } from "@/components/AdminNickPanel";
 import IOSInstallPrompt from "@/components/IOSInstallPrompt";
 import BottomNavbar from "@/components/BottomNavbar";
+import { WavingTurkishFlag } from "@/components/WavingTurkishFlag";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -147,6 +148,7 @@ export default async function RootLayout({
           <Providers initialLocale={locale}>
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || "G-4M4KX3LECV"} />
             <DynamicMeta />
+            <WavingTurkishFlag />
             <Header />
             <GamificationManager />
             <AdminBackdoor />

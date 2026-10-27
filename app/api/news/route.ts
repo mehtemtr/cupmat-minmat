@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-29-ekim-cumhuriyet-bayrami-2026",
+    category: "General",
+    source: "Statmatik News / Cumhuriyet Özel",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 30 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "29 Ekim Cumhuriyet Bayramımız Kutlu Olsun: Sporda, Adalette ve Hayatın Her Alanında Temiz Bir Gelecek İçin Atatürk'ün Askerleriyiz!",
+        snippet: "Cumhuriyet, şahsi menfaat odaklarının veya saha arkasında dönen kirli oyunların parçası olamayacak kadar büyüktür. Emanetine sadakatle Cumhuriyetimizin 103. yılını kutluyoruz.",
+      },
+      en: {
+        title: "Happy October 29 Republic Day of Turkey: Standing Firm for Integrity, Justice, and a Clean Future in Sports and Life",
+        snippet: "The Republic is far too great to be part of self-serving interest groups or dirty behind-the-scenes games. Celebrating the 103rd anniversary of the Republic with loyalty to Atatürk's legacy.",
+      },
+      de: {
+        title: "Alles Gute zum 29. Oktober Tag der Republik der Türkei: Für Gerechtigkeit, Fair Play und eine saubere Zukunft",
+        snippet: "Wir feiern den 103. Jahrestag der Türkischen Republik in unerschütterlicher Treue zum Vermächtnis von Mustafa Kemal Atatürk.",
+      },
+      fr: {
+        title: "Joyeuse Fête de la République de Turquie (29 Octobre) : Pour la justice, l'intégrité et un avenir propre dans le sport et la vie",
+        snippet: "Nous célébrons avec fierté le 103e anniversaire de la République de Turquie avec une fidélité inébranlable à l'héritage d'Atatürk.",
+      },
+      es: {
+        title: "¡Feliz Día de la República de Turquía (29 de Octubre)! Por la justicia, el juego limpio y un futuro íntegro",
+        snippet: "Celebramos el 103.º aniversario de la República de Turquía con lealtad inquebrantable al legado de Mustafa Kemal Atatürk.",
+      },
+      it: {
+        title: "Felice Festa della Repubblica di Turchia (29 Ottobre): Per la giustizia, il fair play e un futuro pulito nello sport e nella vita",
+        snippet: "Celebriamo il 103° anniversario della Repubblica di Turchia con incrollabile fedeltà all'eredità di Mustafa Kemal Atatürk.",
+      },
+      pt: {
+        title: "Feliz Dia da República da Turquia (29 de Outubro): Pela justiça, integridade e um futuro limpo no esporte e na vida",
+        snippet: "Celebramos o 103º aniversário da República da Turquia com lealdade inabalável ao legado de Mustafa Kemal Atatürk.",
+      },
+      ar: {
+        title: "عيد جمهورية سعيد لتركيا (29 أكتوبر): من أجل العدالة والنزاهة ومستقبل نظيف في الرياضة والحياة",
+        snippet: "نحتفل بالذكرى الـ 103 لتأسيس الجمهورية التركية بوفاء راسخ لإرث غازي مصطفى كمال أتاتورك.",
+      },
+      ko: {
+        title: "10월 29일 튀르키예 공화국의 날 축하: 스포츠와 삶의 모든 영역에서 정의롭고 깨끗한 미래를 향하여",
+        snippet: "아타튀르크의 유산에 대한 변함없는 충성심으로 튀르키예 공화국 수립 103주년을 기념합니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-kenya-mashujaa-day-2026",
     category: "General",
     source: "Statmatik News / KBC / Global Heritage",
