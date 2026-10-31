@@ -330,6 +330,15 @@ export default function EntryPage() {
       // 29 Ekim Cumhuriyet Bayramı: 28 Ekim 2026 00:00:00 (TR Saati / UTC+3) - 30 Ekim 2026 00:00:00 (TR Saati / UTC+3)
       const cumhuriyetStart = new Date("2026-10-28T00:00:00+03:00").getTime();
       const cumhuriyetEnd = new Date("2026-10-30T00:00:00+03:00").getTime();
+      const allSaintsStart = new Date("2026-11-01T00:00:00+03:00").getTime();
+      const allSaintsEnd = new Date("2026-11-03T00:00:00+03:00").getTime();
+      if (nowTime >= allSaintsStart && nowTime < allSaintsEnd && !banners.includes("allsaints")) {
+        banners.push("allsaints");
+      }
+      if (year === 2026 && month === 10 && (date === 1 || date === 2) && !banners.includes("allsaints")) {
+        banners.push("allsaints");
+      }
+
       if (nowTime >= cumhuriyetStart && nowTime < cumhuriyetEnd && !banners.includes("29ekim")) {
         banners.push("29ekim");
       }
@@ -482,6 +491,175 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 1-2 Kasım All Saints' Day & All Souls' Day (Azizler Günü ve Tüm Ruhları Anma Günü) Banner */}
+        {(activeBanners.includes("allsaints") || activeBanners.includes("allsouls") || activeBanners.includes("all_saints")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-400/40 bg-gradient-to-r from-amber-950/45 via-[#060b14]/95 to-indigo-950/45 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_45px_rgba(245,158,11,0.2)] transition duration-500 hover:border-amber-400/65">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-500 via-yellow-400 to-indigo-600 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Commemorative Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-amber-400/45 shadow-[0_0_35px_rgba(251,191,36,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/all_saints_all_souls_day.jpg"
+                    alt="All Saints' Day & All Souls' Day • 1-2 November • StatMatik"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-400/45 bg-amber-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🕯️ 1–2 KASIM • ALL SAINTS' DAY & ALL SOULS' DAY (AZİZLER VE TÜM RUHLAR GÜNÜ)"
+                    : locale === "es"
+                    ? "🕯️ 1–2 DE NOVIEMBRE • DÍA DE TODOS LOS SANTOS Y FIELES DIFUNTOS"
+                    : locale === "fr"
+                    ? "🕯️ 1–2 NOVEMBRE • LA TOUSSAINT & COMMÉMORATION DES FIDÈLES DÉFUNTS"
+                    : locale === "de"
+                    ? "🕯️ 1.–2. NOVEMBER • ALLERHEILIGEN & ALLERSEELEN"
+                    : locale === "it"
+                    ? "🕯️ 1–2 NOVEMBRE • OGNISSANTI & COMMEMORAZIONE DEI DEFUNTI"
+                    : locale === "pt"
+                    ? "🕯️ 1–2 DE NOVEMBRO • DIA DE TODOS OS SANTOS & DIA DE FINADOS"
+                    : locale === "ko"
+                    ? "🕯️ 11월 1–2일 • 모든 성인의 날 & 위령의 날 (ALL SAINTS' & ALL SOULS' DAY)"
+                    : locale === "ar"
+                    ? "🕯️ 1–2 نوفمبر • عيد جميع القديسين ويوم تذكار الموتى (ALL SAINTS' & ALL SOULS' DAY)"
+                    : "🕯️ NOVEMBER 1–2 • ALL SAINTS' DAY & ALL SOULS' DAY"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Işık, Huzur ve Vefa İle:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`All Saints' & All Souls' Day (1–2 Kasım) 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`Con Luz, Paz y Eterno Recuerdo:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`Día de Todos los Santos y Fieles Difuntos 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Dans la Lumière, la Paix et le Souvenir :`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`La Toussaint & Jour des Défunts 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`In Licht, Frieden und stillem Gedenken:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`Allerheiligen & Allerseelen 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Nella Luce, nella Pace e nel Ricordo:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`Ognissanti e Commemorazione dei Defunti 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Com Luz, Paz e Eterna Saudade:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`Dia de Todos os Santos e Dia de Finados 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`빛과 평화, 그리고 영원한 기억 속에서:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`모든 성인의 날 & 위령의 날 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`بنور السلام والوفاء والذكرى الخالدة:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`عيد جميع القديسين ويوم تذكار الموتى 🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`In Light, Peace, and Eternal Remembrance:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-amber-400">
+                        {`All Saints' Day & All Souls' Day 🕯️🕊️`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[590px]">
+                  {locale === "tr" ? (
+                    "1–2 Kasım tarihlerinde tüm dünyada idrak edilen All Saints' Day (Azizler Günü) ve All Souls' Day (Tüm Ruhları Anma Günü) vesilesiyle; iyiliğin, merhametin ve insanlığa ışık tutan değerlerin mirasını selamlıyor, aramızdan ayrılan tüm sevdiklerimizi sevgi, vefa ve huzurla anıyoruz. StatMatik ailesi olarak bu anlamlı günleri kutlayan tüm dostlarımıza içsel huzur, birlik ve esenlik dileriz."
+                  ) : locale === "es" ? (
+                    "En este 1 y 2 de noviembre, con motivo del Día de Todos los Santos y el Día de los Fieles Difuntos, honramos con amor, gratitud y serenidad la memoria de quienes iluminaron nuestras vidas y ya no están entre nosotros. Desde la familia StatMatik, enviamos nuestros más cálidos deseos de paz, esperanza y unión a todas las familias y comunidades del mundo."
+                  ) : locale === "fr" ? (
+                    "À l'occasion de la Toussaint et de la Commémoration des fidèles défunts les 1er et 2 novembre, nous saluons avec respect, gratitude et sérénité la mémoire de tous nos proches disparus et de ceux qui ont guidé l'humanité par leur bonté. Toute l'équipe de StatMatik souhaite paix, réconfort et fraternité à toutes celles et ceux qui célèbrent ces journées de recueillement."
+                  ) : locale === "de" ? (
+                    "Anlässlich von Allerheiligen und Allerseelen am 1. und 2. November gedenken wir in Liebe, Dankbarkeit und Stille all jener Menschen, die unser Leben bereichert haben und in unseren Herzen weiterleben. Die StatMatik-Familie wünscht allen, die diese besonderen Tage begehen, tiefen Frieden, Trost und Verbundenheit."
+                  ) : locale === "it" ? (
+                    "In occasione di Ognissanti e della Commemorazione dei Defunti (1–2 novembre), ricordiamo con affetto, gratitudine e raccoglimento tutti i nostri cari e coloro che hanno lasciato un'impronta di luce e bontà nel mondo. La famiglia StatMatik augura pace, serenità e vicinanza a tutti coloro che vivono queste giornate della memoria."
+                  ) : locale === "pt" ? (
+                    "Neste 1 e 2 de novembro, celebrando o Dia de Todos os Santos e o Dia de Finados, prestamos uma homenagem repleta de amor, gratidão e paz à memória de todos os entes queridos que permanecem vivos em nossos corações. A família StatMatik deseja serenidade, esperança e união a todos!"
+                  ) : locale === "ko" ? (
+                    "11월 1일과 2일, 모든 성인의 날(All Saints' Day)과 위령의 날(All Souls' Day)을 맞아 인류에게 사랑과 선함의 빛을 남긴 이들과 우리 곁을 떠나간 소중한 이들을 따뜻한 마음으로 추모합니다. StatMatik 가족은 이 뜻깊은 날을 기리는 전 세계 모든 분들의 가정에 평화와 위로, 희망이 가득하기를 기원합니다."
+                  ) : locale === "ar" ? (
+                    "بمناسبة عيد جميع القديسين ويوم تذكار الموتى (1–2 نوفمبر)، نستذكر بكل محبة ووفاء وسكينة أرواح الأحبة الذين رحلوا عن عالمنا وتركوا أثراً طيباً ونوراً خالداً في القلوب. تتمنى أسرة StatMatik السلام والطمأنينة والوئام لجميع الشعوب والمجتمعات حول العالم."
+                  ) : (
+                    "On November 1 and 2, as communities around the world observe All Saints' Day and All Souls' Day, we honor the enduring legacy of kindness, faith, and humanity, and remember with love and gratitude all the cherished souls who have passed before us. The StatMatik family wishes peace, comfort, and serenity to everyone observing these meaningful days of remembrance."
+                  )}
+                </p>
+
+                {/* Universal Quote Block */}
+                <div className="relative border-l-2 border-amber-400/80 pl-4 py-2.5 bg-amber-500/10 rounded-r-xl max-w-[590px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-200 leading-snug">
+                    {locale === "tr"
+                      ? "\"Sevgiyle hatırlananlar asla kaybolmaz; bıraktıkları iyilik ve ışık, kalplerimizde sonsuza dek yaşamaya devam eder.\""
+                      : locale === "es"
+                      ? "\"Aquellos que recordamos con amor nunca desaparecen; su luz y bondad viven para siempre en nuestros corazones.\""
+                      : locale === "fr"
+                      ? "\"Ceux que nous aimons ne disparaissent jamais ; leur lumière et leur bonté continuent de briller éternellement dans nos cœurs.\""
+                      : locale === "de"
+                      ? "\"Wer im Herzen seiner Lieben lebt, ist nicht tot; sein Licht und seine Güte leuchten für immer weiter.\""
+                      : locale === "it"
+                      ? "\"Coloro che ricordiamo con amore non muoiono mai; la loro luce continua a brillare per sempre nei nostri cuori.\""
+                      : locale === "pt"
+                      ? "\"Aqueles que lembramos com amor jamais partem; sua luz e bondade permanecem vivas para sempre em nossos corações.\""
+                      : locale === "ko"
+                      ? "\"사랑으로 기억되는 이들은 결코 사라지지 않습니다. 그들이 남긴 선함과 빛은 우리 마음속에 영원히 살아 숨 쉽니다.\""
+                      : locale === "ar"
+                      ? "\"أولئك الذين نتذكرهم بالمحبة لا يغيبون أبداً؛ فنورهم وخيرهم يبقيان حيّين في قلوبنا إلى الأبد.\""
+                      : "\"Those we hold in loving memory never truly leave us; their kindness and light live on forever in our hearts.\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— STATMATİK • ALL SAINTS' & ALL SOULS' DAY (1–2 NOVEMBER)"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 28-29 Ekim Cumhuriyet Bayramı (Republic Day of Turkey - 103. Yıl) Banner */}
         {(activeBanners.includes("29ekim") || activeBanners.includes("cumhuriyet") || activeBanners.includes("29_ekim")) && (

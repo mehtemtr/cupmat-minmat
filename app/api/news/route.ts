@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-all-saints-all-souls-day-2026",
+    category: "General",
+    source: "Statmatik News / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 10 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Dünyada 1–2 Kasım All Saints' Day (Azizler Günü) ve All Souls' Day (Tüm Ruhları Anma Günü) Huzur ve Vefa İle İdrak Ediliyor",
+        snippet: "1 ve 2 Kasım tarihlerinde tüm dünyada milyonlarca insan, iyiliğin ve merhametin mirasını selamlarken aramızdan ayrılan sevdiklerini mum ışıkları, çiçekler ve dualarla anıyor.",
+      },
+      en: {
+        title: "World Observes All Saints' Day and All Souls' Day (November 1–2): A Global Tribute of Light, Peace, and Eternal Remembrance",
+        snippet: "Across Europe, the Americas, and around the globe, communities gather on November 1 and 2 with glowing candles and flowers to honor saints and cherished loved ones.",
+      },
+      es: {
+        title: "El Mundo Conmemora el Día de Todos los Santos y el Día de los Fieles Difuntos (1–2 de Noviembre) con Luz, Paz y Recuerdo",
+        snippet: "Millones de familias en España, América Latina y todo el mundo honran con velas, flores y amor la memoria eterna de sus seres queridos en estas fechas sagradas.",
+      },
+      fr: {
+        title: "Le Monde célèbre la Toussaint et la Commémoration des Fidèles Défunts (1–2 Novembre) dans la Lumière et le Recueillement",
+        snippet: "Les 1er et 2 novembre, des millions de personnes honorent avec paix, fleurs et bougies la mémoire de leurs proches disparus et l'héritage de bonté universelle.",
+      },
+      de: {
+        title: "Weltweites Gedenken zu Allerheiligen und Allerseelen (1.–2. November): Tage des Lichts, des Friedens und der Erinnerung",
+        snippet: "Am 1. und 2. November versammeln sich Menschen weltweit bei Kerzenschein und Blumen, um der Heiligen und aller verstorbenen geliebten Menschen in Stille zu gedenken.",
+      },
+      it: {
+        title: "Il Mondo celebra Ognissanti e la Commemorazione dei Defunti (1–2 Novembre) tra Luce, Pace e Affetto Eterno",
+        snippet: "L'1 e il 2 novembre comunità in tutto il mondo rendono omaggio con fiori e candele alla memoria dei propri cari e ai valori universali di bontà e speranza.",
+      },
+      pt: {
+        title: "O Mundo celebra o Dia de Todos os Santos e o Dia de Finados (1–2 de Novembro) com Luz, Paz e Eterna Saudade",
+        snippet: "Nos dias 1 e 2 de novembro, famílias em todo o mundo prestam homenagem com velas, flores e orações à memória eterna daqueles que amamos.",
+      },
+      ar: {
+        title: "العالم يحيي عيد جميع القديسين ويوم تذكار الموتى (1–2 نوفمبر) في أجواء من النور والسلام والوفاء",
+        snippet: "يجتمع الملايين حول العالم في الأول والثاني من نوفمبر لإضاءة الشموع وتقديم الزهور إحياءً لذكرى الأحبة الراحلين وترسيخاً لقيم المحبة والسلام.",
+      },
+      ko: {
+        title: "전 세계 11월 1–2일 모든 성인의 날(All Saints' Day) 및 위령의 날(All Souls' Day) 추모: 빛과 평화의 기억",
+        snippet: "11월 1일과 2일, 세계 곳곳에서 촛불과 꽃을 밝히며 인류에 빛을 남긴 성인들과 세상을 떠난 소중한 가족 및 이웃을 따뜻하게 기립니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-29-ekim-cumhuriyet-bayrami-2026",
     category: "General",
     source: "Statmatik News / Cumhuriyet Özel",
