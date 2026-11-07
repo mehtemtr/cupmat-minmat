@@ -339,6 +339,21 @@ export default function EntryPage() {
         banners.push("allsaints");
       }
 
+      // 8 Kasım 2026: Önce Azerbaycan Victory Day (Zafer Günü), arkasından Singapur Deepavali / Diwali (Işık Festivali)
+      const nov8Start = new Date("2026-11-08T00:00:00+03:00").getTime();
+      const nov8End = new Date("2026-11-09T00:00:00+03:00").getTime();
+      if ((nowTime >= nov8Start && nowTime < nov8End) || (year === 2026 && month === 10 && date === 8)) {
+        if (!banners.includes("azerbaijan_victory")) banners.push("azerbaijan_victory");
+        if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
+      }
+
+      // 9 Kasım 2026: Azerbaycan State Flag Day (Devlet Bayrağı Günü / Dövlət Bayrağı Günü)
+      const nov9Start = new Date("2026-11-09T00:00:00+03:00").getTime();
+      const nov9End = new Date("2026-11-10T00:00:00+03:00").getTime();
+      if ((nowTime >= nov9Start && nowTime < nov9End) || (year === 2026 && month === 10 && date === 9)) {
+        if (!banners.includes("azerbaijan_flag")) banners.push("azerbaijan_flag");
+      }
+
       if (nowTime >= cumhuriyetStart && nowTime < cumhuriyetEnd && !banners.includes("29ekim")) {
         banners.push("29ekim");
       }
@@ -491,6 +506,486 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 9 Kasım Azerbaycan Devlet Bayrağı Günü (State Flag Day / Dövlət Bayrağı Günü) Banner */}
+        {(activeBanners.includes("azerbaijan_flag") || activeBanners.includes("bayrak_gunu") || activeBanners.includes("flag_day")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-sky-400/45 bg-gradient-to-r from-sky-950/50 via-[#060b14]/95 to-emerald-950/45 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_45px_rgba(14,165,233,0.22)] transition duration-500 hover:border-sky-400/70">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-sky-500 via-red-500 to-emerald-500 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-sky-400/45 shadow-[0_0_35px_rgba(56,189,248,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/azerbaijan_flag_day.jpg"
+                    alt="Azerbaycan 9 Kasım Devlet Bayrağı Günü • 9 Noyabr Dövlət Bayrağı Günü • Azerbaijan State Flag Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-sky-400/45 bg-sky-500/10 px-3.5 py-1 text-xs font-black text-sky-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇦🇿 9 KASIM • AZERBAYCAN DEVLET BAYRAĞI GÜNÜ (DÖVLƏT BAYRAĞI GÜNÜ)"
+                    : locale === "es"
+                    ? "🇦🇿 9 DE NOVIEMBRE • DÍA DE LA BANDERA ESTATAL DE AZERBAIYÁN"
+                    : locale === "fr"
+                    ? "🇦🇿 9 NOVEMBRE • JOURNÉE DU DRAPEAU NATIONAL DE L'AZERBAÏDJAN"
+                    : locale === "de"
+                    ? "🇦🇿 9. NOVEMBER • TAG DER STAATSFLAGGE ASERBAIDSCHANS"
+                    : locale === "it"
+                    ? "🇦🇿 9 NOVEMBRE • GIORNATA DELLA BANDIERA NAZIONALE DELL'AZERBAIGIAN"
+                    : locale === "pt"
+                    ? "🇦🇿 9 DE NOVEMBRO • DIA DA BANDEIRA NACIONAL DO AZERBAIJÃO"
+                    : locale === "ko"
+                    ? "🇦🇿 11월 9일 • 아제르바이잔 국기의 날 (STATE FLAG DAY)"
+                    : locale === "ar"
+                    ? "🇦🇿 9 نوفمبر • يوم العلم الوطني لجمهورية أذربيجان (STATE FLAG DAY)"
+                    : "🇦🇿 NOVEMBER 9 • AZERBAIJAN STATE FLAG DAY (DÖVLƏT BAYRAĞI GÜNÜ)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Can Azerbaycan'ın 9 Kasım`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`Devlet Bayrağı Günü Kutlu Olsun! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`¡Feliz Día de la Bandera Estatal (9 de Noviembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`República de Azerbaiyán! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Joyeuse Journée du Drapeau National (9 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`République d'Azerbaïdjan ! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Alles Gute zum Tag der Staatsflagge (9. November),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`Republik Aserbaidschan! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Felice Giornata della Bandiera Nazionale (9 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`Repubblica dell'Azerbaigian! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Feliz Dia da Bandeira Nacional (9 de Novembro),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`República do Azerbaijão! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`아제르바이잔 공화국의 자랑스러운`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`11월 9일 국기의 날(State Flag Day)을 축하합니다! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`تهانينا الحارة لجمهورية أذربيجان الشقيقة`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`بمناسبة يوم العلم الوطني (9 نوفمبر)! 🇦🇿✨`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Happy November 9 State Flag Day,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-red-400 to-emerald-400">
+                        {`Republic of Azerbaijan! 🇦🇿✨`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[590px]">
+                  {locale === "tr" ? (
+                    "Türklüğün gök mavisini, çağdaşlığın ve hürriyetin al rengini, medeniyetin yeşilini ay-yıldızla buluşturan üç renkli şanlı bayrağın kabul edildiği 9 Kasım Devlet Bayrağı Günü'nü (Dövlət Bayrağı Günü) en içten dileklerimizle kutluyoruz. Bakü'den Şuşa'ya göklerde gururla dalgalanan kardeş Azerbaycan bayrağı ebediyen var olsun!"
+                  ) : locale === "es" ? (
+                    "En este 9 de noviembre, Día de la Bandera Estatal (Dövlət Bayrağı Günü), celebramos con orgullo la enseña tricolor azul, roja y verde de la República de Azerbaiyán, símbolo eterno de independencia, modernidad y unidad nacional. ¡Enviamos nuestros mejores deseos de paz y prosperidad al pueblo hermano de Azerbaiyán!"
+                  ) : locale === "fr" ? (
+                    "À l'occasion de la Journée du Drapeau National le 9 novembre (Dövlət Bayrağı Günü), nous saluons avec honneur le drapeau tricolore bleu, rouge et vert de la République d'Azerbaïdjan, symbole éternel d'indépendance, de liberté et d'unité. Excellente fête nationale au peuple azerbaïdjanais !"
+                  ) : locale === "de" ? (
+                    "Zum Tag der Staatsflagge am 9. November (Dövlət Bayrağı Günü) gratulieren wir der Republik Aserbaidschan herzlich! Die blau-rot-grüne Trikolore steht als stolzes Symbol für Souveränität, Freiheit und nationale Einheit. Wir wünschen dem aserbaidschanischen Volk Frieden, Wohlstand und Erfolg!"
+                  ) : locale === "it" ? (
+                    "In occasione della Giornata della Bandiera Nazionale del 9 novembre (Dövlət Bayrağı Günü), celebriamo il tricolore blu, rosso e verde della Repubblica dell'Azerbaigian, simbolo eterno di sovranità, libertà e unità nazionale. Auguri sinceri di pace e prosperità a tutto il popolo azerbaigiano!"
+                  ) : locale === "pt" ? (
+                    "Neste 9 de novembro, Dia da Bandeira Estatal (Dövlət Bayrağı Günü), saudamos com orgulho o pavilhão tricolor azul, vermelho e verde da República do Azerbaijão, símbolo eterno de independência, liberdade e união nacional. Parabéns e muita prosperidade ao povo azerbaijano!"
+                  ) : locale === "ko" ? (
+                    "11월 9일 아제르바이잔 국기의 날(Dövlət Bayrağı Günü)을 맞아 독립과 자유, 민족 단결의 상징인 청·적·녹 삼색기가 영원히 드높이 휘날리기를 기원합니다. 아제르바이잔 국민 여러분께 평화와 번영의 축하 인사를 전합니다!"
+                  ) : locale === "ar" ? (
+                    "بمناسبة يوم العلم الوطني لجمهورية أذربيجان في 9 نوفمبر (Dövlət Bayrağı Günü)، نحيّي بكل فخر واعتزاز الراية ثلاثية الألوان التي تجسد السيادة والحرية والوحدة الوطنية من باكو إلى شوشا. كل عام وشعب أذربيجان الشقيق بخير وازدهار!"
+                  ) : (
+                    "On November 9, State Flag Day (Dövlət Bayrağı Günü), we proudly honor the tricolor national flag of the Republic of Azerbaijan—uniting sky blue, red, and emerald green with the crescent and eight-pointed star as an eternal symbol of sovereignty, freedom, and national unity. Warmest wishes to the people of Azerbaijan!"
+                  )}
+                </p>
+
+                {/* Historic Quote Block */}
+                <div className="relative border-l-2 border-sky-400/80 pl-4 py-2.5 bg-sky-500/10 rounded-r-xl max-w-[590px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-sky-200 leading-snug">
+                    {"\"Bir kərə yüksələn bayraq, bir daha enməz!\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-300 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Bir kere yükselen bayrak, bir daha inmez!\" — 9 Noyabr Dövlət Bayrağı Gününüz Mübarək!"
+                      : locale === "es"
+                      ? "\"¡La bandera que se alza una vez, nunca volverá a bajar!\" — ¡Feliz Día de la Bandera Estatal!"
+                      : locale === "fr"
+                      ? "\"Le drapeau hissé une fois ne redescendra plus jamais !\" — Joyeuse Journée du Drapeau National !"
+                      : locale === "de"
+                      ? "\"Eine einmal gehisste Flagge wird niemals wieder sinken!\" — Alles Gute zum Tag der Staatsflagge!"
+                      : locale === "it"
+                      ? "\"La bandiera innalzata una volta non scenderà mai più!\" — Felice Giornata della Bandiera Nazionale!"
+                      : locale === "pt"
+                      ? "\"A bandeira erguida uma vez jamais voltará a descer!\" — Feliz Dia da Bandeira Nacional!"
+                      : locale === "ko"
+                      ? "\"한 번 높이 올린 깃발은 다시는 내려오지 않는다!\" — 아제르바이잔 국기의 날 경축!"
+                      : locale === "ar"
+                      ? "\"الراية التي ترتفع مرة واحدة لن تنكس أبداً!\" — يوم علم وطني مبارك لأذربيجان!"
+                      : "\"The flag once raised will never fall!\" — Happy State Flag Day of Azerbaijan!"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— MƏHƏMMƏD ƏMİN RƏSULZADƏ • AZƏRBAYCAN DÖVLƏT BAYRAĞI GÜNÜ • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* 8 Kasım Azerbaycan Zafer Günü (Victory Day / Zəfər Günü) Banner */}
+        {(activeBanners.includes("azerbaijan_victory") || activeBanners.includes("zafer_gunu") || activeBanners.includes("zefer_gunu")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-emerald-400/45 bg-gradient-to-r from-sky-950/45 via-[#060b14]/95 to-emerald-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_45px_rgba(16,185,129,0.22)] transition duration-500 hover:border-emerald-400/70">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-sky-500 via-red-500 to-emerald-500 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-emerald-400/45 shadow-[0_0_35px_rgba(16,185,129,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/azerbaijan_victory_day.jpg"
+                    alt="Azerbaycan 8 Kasım Zafer Günü • 8 Noyabr Zəfər Günü • Azerbaijan Victory Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-emerald-400/45 bg-emerald-500/10 px-3.5 py-1 text-xs font-black text-emerald-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇦🇿 8 KASIM • AZERBAYCAN ZAFER GÜNÜ (8 NOYABR ZƏFƏR GÜNÜ)"
+                    : locale === "es"
+                    ? "🇦🇿 8 DE NOVIEMBRE • DÍA DE LA VICTORIA DE AZERBAIYÁN (ZƏFƏR GÜNÜ)"
+                    : locale === "fr"
+                    ? "🇦🇿 8 NOVEMBRE • JOUR DE LA VICTOIRE DE L'AZERBAÏDJAN (ZƏFƏR GÜNÜ)"
+                    : locale === "de"
+                    ? "🇦🇿 8. NOVEMBER • TAG DES SIEGES IN ASERBAIDSCHAN (ZƏFƏR GÜNÜ)"
+                    : locale === "it"
+                    ? "🇦🇿 8 NOVEMBRE • GIORNO DELLA VITTORIA DELL'AZERBAIGIAN (ZƏFƏR GÜNÜ)"
+                    : locale === "pt"
+                    ? "🇦🇿 8 DE NOVEMBRO • DIA DA VITÓRIA DO AZERBAIJÃO (ZƏFƏR GÜNÜ)"
+                    : locale === "ko"
+                    ? "🇦🇿 11월 8일 • 아제르바이잔 전승절 (VICTORY DAY • ZƏFƏR GÜNÜ)"
+                    : locale === "ar"
+                    ? "🇦🇿 8 نوفمبر • يوم النصر في أذربيجان (VICTORY DAY • ZƏFƏR GÜNÜ)"
+                    : "🇦🇿 NOVEMBER 8 • AZERBAIJAN VICTORY DAY (ZƏFƏR GÜNÜ)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Can Azerbaycan'ın 8 Kasım`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`Zafer Günü (Zəfər Günü) Kutlu Olsun! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`¡Feliz Día de la Victoria (8 de Noviembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`República de Azerbaiyán! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Joyeux Jour de la Victoire (8 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`République d'Azerbaïdjan ! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Alles Gute zum Tag des Sieges (8. November),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`Republik Aserbaidschan! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Felice Giorno della Vittoria (8 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`Repubblica dell'Azerbaigian! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Feliz Dia da Vitória (8 de Novembro),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`República do Azerbaijão! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`아제르바이잔 공화국의 영광스러운`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`11월 8일 전승절(Zəfər Günü)을 축하합니다! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`تهانينا الخالصة لجمهورية أذربيجان الشقيقة`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`بمناسبة يوم النصر المجيد (8 نوفمبر)! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Happy November 8 Victory Day (Zəfər Günü),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-red-300 to-emerald-400">
+                        {`Republic of Azerbaijan! 🇦🇿🌺`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[590px]">
+                  {locale === "tr" ? (
+                    "\"Bir millet, iki devlet\" şiarıyla kalplerimizin bir attığı kardeş Azerbaycan'ın, Karabağ'ın incisi ve kültür başkenti Şuşa'yı özgürlüğüne kavuşturarak tarihi zaferini taçlandırdığı 8 Kasım Zafer Günü'nü (Zəfər Günü) büyük bir gurur ve coşkuyla kutluyoruz. Vatan toprağı uğruna can veren tüm aziz şehitlerimizi rahmetle, kahraman gazilerimizi minnetle anıyoruz."
+                  ) : locale === "es" ? (
+                    "Celebramos con profundo orgullo el 8 de noviembre, Día de la Victoria de Azerbaiyán (Zəfər Günü), fecha histórica marcada por la liberación de Shusha, joya cultural de Karabaj. Honramos con respeto la memoria de los héroes y deseamos paz duradera, unidad y prosperidad al pueblo hermano de Azerbaiyán."
+                  ) : locale === "fr" ? (
+                    "Nous célébrons avec une grande fierté le 8 novembre, Jour de la Victoire en Azerbaïdjan (Zəfər Günü), commémorant le triomphe historique de Choucha, perle culturelle du Karabagh. Sous le symbole de la fleur Khari Bulbul, nous souhaitons paix, unité et prospérité éternelles au peuple azerbaïdjanais."
+                  ) : locale === "de" ? (
+                    "Zum Tag des Sieges am 8. November (Zəfər Günü) sprechen wir der Republik Aserbaidschan unsere herzlichsten Glückwünsche aus. Im Zeichen der traditionsreichen Chari-Bülbül-Blume und der Kulturhauptstadt Schuscha gedenken wir der Helden und wünschen dem aserbaidschanischen Volk dauerhaften Frieden und Einheit."
+                  ) : locale === "it" ? (
+                    "Celebriamo con orgoglio l'8 novembre, Giorno della Vittoria dell'Azerbaigian (Zəfər Günü), che ricorda lo storico trionfo nella perla culturale di Shusha. Nel segno del fiore simbolo Khari Bulbul, auguriamo pace duratura, fratellanza e prosperità a tutto il popolo azerbaigiano."
+                  ) : locale === "pt" ? (
+                    "Celebramos com grande orgulho o dia 8 de novembro, Dia da Vitória do Azerbaijão (Zəfər Günü), data histórica coroada na joia cultural de Shusha. Sob o símbolo da flor Khari Bulbul, desejamos paz duradoura, união e prosperidade ao povo irmão do Azerbaijão!"
+                  ) : locale === "ko" ? (
+                    "카라바흐의 문화 수도 슈샤의 역사적인 승리를 기념하는 11월 8일 아제르바이잔 전승절(Zəfər Günü)을 진심으로 축하합니다. 평화와 승리의 상징인 하리뷜뷜(Khari Bulbul) 꽃과 함께 모든 영웅들을 기리며 아제르바이잔 국민의 영원한 평화와 번영을 기원합니다."
+                  ) : locale === "ar" ? (
+                    "نحتفي بكل فخر واعتزاز بيوم النصر في جمهورية أذربيجان الشقيقة (8 نوفمبر - Zəfər Günü)، الذي تُوّج بتحرير مدينة شوشا التاريخية جوهرة قره باغ. نستذكر تضحيات الشهداء الأبرار ونتمنى لشعب أذربيجان الشقيق دوام العزة والسلام والازدهار."
+                  ) : (
+                    "On November 8, we proudly celebrate Victory Day of the Republic of Azerbaijan (Zəfər Günü), commemorating the historic liberation of Shusha—the cultural pearl of Karabakh. Under the enduring symbol of the Khari Bulbul flower, we honor the memory of all fallen heroes and wish everlasting peace, unity, and prosperity to the people of Azerbaijan."
+                  )}
+                </p>
+
+                {/* Karabakh / Brotherhood Quote Block */}
+                <div className="relative border-l-2 border-emerald-400/80 pl-4 py-2.5 bg-emerald-500/10 rounded-r-xl max-w-[590px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-emerald-200 leading-snug">
+                    {"\"Bir millət, iki dövlət! Qarabağ Azərbaycandır! Zəfər Gününüz Mübarək Olsun!\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— 8 NOYABR ZƏFƏR GÜNÜ • XARIBÜLBÜL • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* 8 Kasım Singapur Deepavali / Diwali (Işık Festivali) Banner */}
+        {(activeBanners.includes("singapore_deepavali") || activeBanners.includes("deepavali") || activeBanners.includes("diwali")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-400/45 bg-gradient-to-r from-amber-950/50 via-[#060b14]/95 to-purple-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_45px_rgba(245,158,11,0.22)] transition duration-500 hover:border-amber-400/70">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-500 via-fuchsia-500 to-yellow-400 opacity-20 blur transition duration-500 group-hover:opacity-30" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-amber-400/45 shadow-[0_0_35px_rgba(251,191,36,0.3)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/singapore_deepavali.jpg"
+                    alt="Singapur 8 Kasım Deepavali / Diwali (Işık Festivali) • Singapore Festival of Lights"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-400/45 bg-amber-500/10 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇸🇬 8 KASIM • SİNGAPUR DEEPAVALI / DIWALI (IŞIK FESTİVALİ)"
+                    : locale === "es"
+                    ? "🇸🇬 8 DE NOVIEMBRE • SINGAPUR DEEPAVALI / DIWALI (FESTIVAL DE LAS LUCES)"
+                    : locale === "fr"
+                    ? "🇸🇬 8 NOVEMBRE • SINGAPOUR DEEPAVALI / DIWALI (FÊTE DES LUMIÈRES)"
+                    : locale === "de"
+                    ? "🇸🇬 8. NOVEMBER • SINGAPUR DEEPAVALI / DIWALI (LICHTERFEST)"
+                    : locale === "it"
+                    ? "🇸🇬 8 NOVEMBRE • SINGAPORE DEEPAVALI / DIWALI (FESTA DELLE LUCI)"
+                    : locale === "pt"
+                    ? "🇸🇬 8 DE NOVEMBRO • SINGAPURA DEEPAVALI / DIWALI (FESTIVAL DAS LUZES)"
+                    : locale === "ko"
+                    ? "🇸🇬 11월 8일 • 싱가포르 디파발리 / 디왈리 (빛의 축제)"
+                    : locale === "ar"
+                    ? "🇸🇬 8 نوفمبر • سنغافورة ديبافالي / ديوالي (مهرجان الأنوار)"
+                    : "🇸🇬 NOVEMBER 8 • SINGAPORE DEEPAVALI / DIWALI (FESTIVAL OF LIGHTS)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Singapur'da Işığın ve Umudun Bayramı:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`Deepavali / Diwali (Işık Festivali) Kutlu Olsun! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`Fiesta de la Luz y la Armonía en Singapur:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`¡Feliz Deepavali / Diwali (Festival de las Luces)! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Célébration de la Lumière et de l'Harmonie à Singapour :`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`Joyeux Deepavali / Diwali (Fête des Lumières) ! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Fest des Lichts und der Harmonie in Singapur:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`Frohes Deepavali / Diwali (Lichterfest)! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Festa della Luce e dell'Armonia a Singapore:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`Felice Deepavali / Diwali (Festa delle Luci)! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Celebração da Luz e da Harmonia em Singapura:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`Feliz Deepavali / Diwali (Festival das Luzes)! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`싱가포르를 수놓는 빛과 희망의 향연:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`디파발리 / 디왈리(Deepavali) 빛의 축제를 축하합니다! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`إشراقة النور والأمل والوئام في سنغافورة:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`مهرجان ديبافالي / ديوالي (مهرجان الأنوار) سعيد! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Radiant Celebration of Light & Harmony in Singapore:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-fuchsia-300">
+                        {`Happy Deepavali / Diwali (Festival of Lights)! 🇸🇬🪔✨`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[590px]">
+                  {locale === "tr" ? (
+                    "Işığın karanlığa, iyiliğin kötülüğe ve bilginin cehalete karşı zaferini simgeleyen Deepavali (Diwali / Işık Festivali) vesilesiyle; Little India'nın ışıltılı sokaklarından Marina Bay'e kadar bu anlamlı günü büyük bir çok kültürlü uyum içinde kutlayan dost Singapur halkına ve tüm dünyadaki dostlarımıza sağlık, barış, bereket ve mutluluk dileriz."
+                  ) : locale === "es" ? (
+                    "Con motivo de Deepavali (Diwali / Festival de las Luces), que simboliza el triunfo de la luz sobre la oscuridad y del bien sobre el mal, enviamos nuestros más cálidos deseos de paz, alegría y prosperidad al pueblo de Singapur y a todas las comunidades que celebran esta festividad luminosa en el mundo."
+                  ) : locale === "fr" ? (
+                    "À l'occasion de Deepavali (Diwali / Fête des Lumières), célébrant la victoire de la lumière sur les ténèbres et du bien sur le mal, nous adressons nos vœux les plus chaleureux de paix, de joie et d'harmonie au peuple de Singapour ainsi qu'à toutes celles et ceux qui fêtent cette journée lumineuse."
+                  ) : locale === "de" ? (
+                    "Anlässlich von Deepavali (Diwali / Lichterfest), dem strahlenden Symbol für den Sieg des Lichts über die Dunkelheit und des Guten über das Böse, wünschen wir den Menschen in Singapur und allen Feiernden weltweit Frieden, Freude, Harmonie und Wohlstand!"
+                  ) : locale === "it" ? (
+                    "In occasione di Deepavali (Diwali / Festa delle Luci), che celebra il trionfo della luce sull'oscurità e del bene sul male, rivolgiamo i nostri più calorosi auguri di pace, gioia, armonia e prosperità al popolo di Singapore e a tutti coloro che festeggiano nel mondo."
+                  ) : locale === "pt" ? (
+                    "Por ocasião do Deepavali (Diwali / Festival das Luzes), que celebra o triunfo da luz sobre a escuridão e do bem sobre o mal, enviamos nossos votos mais calorosos de paz, alegria e prosperidade ao povo de Singapura e a todos que celebram esta data especial!"
+                  ) : locale === "ko" ? (
+                    "어둠에 대한 빛의 승리, 악에 대한 선의 승리를 상징하는 디파발리(Deepavali / 디왈리 빛의 축제)를 맞아 다문화 화합 속에 축제를 즐기는 싱가포르 국민들과 전 세계 모든 분들의 가정에 평화와 기쁨, 풍요가 가득하기를 기원합니다."
+                  ) : locale === "ar" ? (
+                    "بمناسبة مهرجان ديبافالي / ديوالي (مهرجان الأنوار) الذي يرمز إلى انتصار النور على الظلام والخير على الشر، نتقدم بأطيب التمنيات بالسلام والسعادة والازدهار لشعب سنغافورة الصديق ولجميع المحتفلين بهذا اليوم المشرق حول العالم."
+                  ) : (
+                    "Celebrating the triumph of light over darkness, good over evil, and knowledge over ignorance! As glowing clay lamps (diyas) and vibrant Rangoli art illuminate Singapore from Little India to Marina Bay, the StatMatik family wishes a joyous, peaceful, and prosperous Deepavali (Diwali) to Singapore and everyone celebrating worldwide!"
+                  )}
+                </p>
+
+                {/* Universal Light Quote Block */}
+                <div className="relative border-l-2 border-amber-400/80 pl-4 py-2.5 bg-amber-500/10 rounded-r-xl max-w-[590px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-200 leading-snug">
+                    {locale === "tr"
+                      ? "\"Binlerce kandilin ışığı tek bir mumdan yakılabilir ve o mumun ömrü bundan eksilmez. Paylaşılan mutluluk ve ışık daima çoğalır.\" — Deepavali Nalvazhthukkal!"
+                      : "\"Thousands of lamps can be lit from a single candle, and the life of the candle will not be shortened. Happiness and light never decrease by being shared.\" — Happy Deepavali!"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— SINGAPORE DEEPAVALI / DIWALI (FESTIVAL OF LIGHTS) • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 1-2 Kasım All Saints' Day & All Souls' Day (Azizler Günü ve Tüm Ruhları Anma Günü) Banner */}
         {(activeBanners.includes("allsaints") || activeBanners.includes("allsouls") || activeBanners.includes("all_saints")) && (

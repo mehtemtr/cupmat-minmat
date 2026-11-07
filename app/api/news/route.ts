@@ -19,11 +19,146 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-azerbaijan-victory-day-2026",
+    category: "General",
+    source: "Statmatik News / AZERTAC / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 5 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Can Azerbaycan'ın 8 Kasım Zafer Günü (Zəfər Günü) Kutlu Olsun: Karabağ'ın İncisi Şuşa'dan Yükselen Ebedi Kardeşlik ve Zafer!",
+        snippet: "Tek millet, iki devlet! Azerbaycan'ın tarihi topraklarını özgürlüğüne kavuşturduğu 44 günlük Vatan Muharebesi'nin taçlandığı 8 Kasım Zafer Günü büyük bir gurur ve coşkuyla kutlanıyor.",
+      },
+      en: {
+        title: "Azerbaijan Celebrates November 8 Victory Day (Zəfər Günü): Honoring Heroism, Peace, and the Liberation of Shusha",
+        snippet: "Across Azerbaijan and the Turkic world, November 8 marks Victory Day—commemorating the historic triumph in Shusha, national unity, and the enduring symbol of the Khari Bulbul flower.",
+      },
+      es: {
+        title: "Azerbaiyán conmemora el Día de la Victoria (8 de Noviembre): Homenaje al heroísmo, la paz y la liberación de Shusha",
+        snippet: "El 8 de noviembre, Azerbaiyán celebra con orgullo el Día de la Victoria (Zəfər Günü), honrando la unidad nacional y la memoria de sus héroes con el símbolo de la flor Khari Bulbul.",
+      },
+      fr: {
+        title: "L'Azerbaïdjan célèbre le Jour de la Victoire (8 Novembre) : Hommage à l'héroïsme, à la paix et à la perle culturelle Choucha",
+        snippet: "Le 8 novembre marque Zəfər Günü en Azerbaïdjan, journée de fierté nationale célébrant le triomphe historique de Choucha et la fraternité autour du symbole de la fleur Khari Bulbul.",
+      },
+      de: {
+        title: "Aserbaidschan feiert den Tag des Sieges am 8. November (Zəfər Günü): Würdigung von Heldentum, Einheit und Frieden",
+        snippet: "Am 8. November begeht Aserbaidschan den Tag des Sieges zur Erinnerung an die Befreiung der Kulturhauptstadt Schuscha im Zeichen der traditionsreichen Chari-Bülbül-Blume.",
+      },
+      it: {
+        title: "L'Azerbaigian celebra il Giorno della Vittoria (8 Novembre): Omaggio all'eroismo, alla pace e alla storica Shusha",
+        snippet: "L'8 novembre l'Azerbaigian festeggia con orgoglio Zəfər Günü, celebrando l'unità nazionale, la memoria dei martiri e il fiore simbolo Khari Bulbul.",
+      },
+      pt: {
+        title: "Azerbaijão celebra o Dia da Vitória em 8 de Novembro (Zəfər Günü): Homenagem ao heroísmo, à paz e a Shusha",
+        snippet: "Em 8 de novembro, o Azerbaijão comemora com orgulho o Dia da Vitória, exaltando a união nacional e a flor Khari Bulbul como símbolo de paz e triunfo.",
+      },
+      ar: {
+        title: "أذربيجان تحتفل بيوم النصر (8 نوفمبر - Zəfər Günü): اعتزاز بالبطولة والوحدة الوطنية في ربوع شوشا وقره باغ",
+        snippet: "تحتفل جمهورية أذربيجان في الثامن من نوفمبر بيوم النصر المجيد تخليداً لملحمة تحرير مدينة شوشا التاريخية وتكريماً لشهداء الوطن.",
+      },
+      ko: {
+        title: "아제르바이잔 11월 8일 전승절(Victory Day • Zəfər Günü) 기념: 슈샤의 영광과 하리뷜뷜 꽃의 평화 메시지",
+        snippet: "11월 8일 아제르바이잔이 역사적인 슈샤 해방과 국가적 단결을 기리는 전승절(Zəfər Günü)을 맞이하여 영웅들에게 경의를 표합니다.",
+      },
+    },
+  },
+  {
+    id: "newsglo-singapore-deepavali-2026",
+    category: "General",
+    source: "Statmatik News / CNA / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 8 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Singapur'da 8 Kasım Deepavali / Diwali (Işık Festivali) Coşkusu: Işığın Karanlığa, İyiliğin Kötülüğe Zaferi Kutlanıyor!",
+        snippet: "Singapur'da Little India sokaklarından Marina Bay kıyılarına kadar binlerce kandil (diya) ve rengârenk Rangoli motifleriyle Deepavali Işık Festivali büyük bir uyum ve neşeyle kutlanıyor.",
+      },
+      en: {
+        title: "Singapore Celebrates Deepavali / Diwali (Festival of Lights) on November 8: A Radiant Triumph of Light, Hope, and Harmony",
+        snippet: "From the dazzling street arches of Little India to Marina Bay, Singaporeans gather with glowing oil lamps (diyas) and vibrant Rangoli art to celebrate Deepavali.",
+      },
+      es: {
+        title: "Singapur celebra Deepavali / Diwali (Festival de las Luces) el 8 de Noviembre: El triunfo de la luz, la esperanza y la armonía",
+        snippet: "Desde Little India hasta Marina Bay, Singapur se ilumina con lámparas tradicionales (diyas) y coloridos diseños Rangoli para festejar el Festival de las Luces.",
+      },
+      fr: {
+        title: "Singapour célèbre Deepavali / Diwali (Fête des Lumières) le 8 Novembre : Le triomphe éclatant de la lumière et de l'harmonie",
+        snippet: "Des arches illuminées de Little India jusqu'à Marina Bay, Singapour célèbre Deepavali avec des lampes à huile (diyas) et des motifs floraux Rangoli.",
+      },
+      de: {
+        title: "Singapur feiert Deepavali / Diwali (Lichterfest) am 8. November: Ein strahlendes Fest des Lichts, der Hoffnung und Harmonie",
+        snippet: "Von den festlich beleuchteten Straßen in Little India bis zur Marina Bay feiert Singapur mit leuchtenden Öllampen (Diyas) und farbenfrohen Rangoli-Kunstwerken Deepavali.",
+      },
+      it: {
+        title: "Singapore celebra Deepavali / Diwali (Festa delle Luci) l'8 Novembre: Il trionfo della luce, della speranza e dell'armonia",
+        snippet: "Dalle luminarie di Little India fino a Marina Bay, Singapore festeggia Deepavali con lampade tradizionali (diya) e splendidi mosaici floreali Rangoli.",
+      },
+      pt: {
+        title: "Singapura celebra Deepavali / Diwali (Festival das Luzes) em 8 de Novembro: O triunfo da luz, da esperança e da harmonia",
+        snippet: "Das ruas iluminadas de Little India à Marina Bay, Singapura comemora o Deepavali com lâmpadas tradicionais (diyas) e vibrantes artes Rangoli.",
+      },
+      ar: {
+        title: "سنغافورة تحتفل بمهرجان ديوالي / ديبافالي (مهرجان الأنوار) في 8 نوفمبر: احتفالية مضيئة بالأمل والوئام الثقافي",
+        snippet: "تزدهر شوارع سنغافورة من ليتل إنديا إلى مارينا باي بآلاف المصابيح المضيئة والزخارف الملونة احتفالاً بمهرجان الأنوار (Deepavali).",
+      },
+      ko: {
+        title: "싱가포르 11월 8일 디파발리 / 디왈리(Deepavali • 빛의 축제) 경축: 어둠을 밝히는 빛과 화합의 축제",
+        snippet: "리틀 인디아의 화려한 불빛 아치부터 마리나 베이까지, 싱가포르 전역이 전통 등불(Diya)과 랑골리 예술로 빛의 축제 디파발리를 축하합니다.",
+      },
+    },
+  },
+  {
+    id: "newsglo-azerbaijan-flag-day-2026",
+    category: "General",
+    source: "Statmatik News / AZERTAC / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 10 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Kardeş Azerbaycan'da 9 Kasım Devlet Bayrağı Günü (Dövlət Bayrağı Günü) Gururla Kutlanıyor: 'Bir Kere Yükselen Bayrak Bir Daha İnmez!'",
+        snippet: "Azerbaycan Cumhuriyeti, bağımsızlığının ve milli birliğinin simgesi olan üç renkli şanlı bayrağını 9 Kasım Devlet Bayrağı Günü'nde Bakü'den Şuşa'ya tüm yurtta büyük bir coşkuyla selamlıyor.",
+      },
+      en: {
+        title: "Azerbaijan Celebrates November 9 State Flag Day (Dövlət Bayrağı Günü): Tri-Color Banner Waves High from Baku to Shusha",
+        snippet: "The Republic of Azerbaijan proudly marks State Flag Day on November 9, honoring the historic adoption of its blue, red, and green national flag as an eternal symbol of sovereignty and unity.",
+      },
+      es: {
+        title: "Azerbaiyán celebra el Día de la Bandera Estatal (9 de Noviembre): Orgullo nacional y soberanía desde Bakú hasta Shusha",
+        snippet: "La República de Azerbaiyán conmemora el 9 de noviembre el Día de la Bandera Estatal, honrando su enseña tricolor como símbolo eterno de independencia y unidad.",
+      },
+      fr: {
+        title: "L'Azerbaïdjan célèbre la Journée du Drapeau National (9 Novembre) : Fierté et souveraineté de Bakou à Choucha",
+        snippet: "La République d'Azerbaïdjan honore le 9 novembre son drapeau tricolore bleu, rouge et vert, symbole éternel d'indépendance, de modernité et d'unité nationale.",
+      },
+      de: {
+        title: "Aserbaidschan feiert den Tag der Staatsflagge (9. November): Die Trikolore weht stolz von Baku bis Schuscha",
+        snippet: "Am 9. November begeht die Republik Aserbaidschan feierlich den Tag der Staatsflagge als zeitloses Symbol für Souveränität, Freiheit und nationale Einheit.",
+      },
+      it: {
+        title: "L'Azerbaigian celebra la Giornata della Bandiera Nazionale (9 Novembre): Orgoglio e sovranità da Baku a Shusha",
+        snippet: "Il 9 novembre la Repubblica dell'Azerbaigian rende omaggio al suo tricolore blu, rosso e verde, simbolo eterno di indipendenza e identità nazionale.",
+      },
+      pt: {
+        title: "Azerbaijão celebra o Dia da Bandeira Nacional (9 de Novembro): Orgulho e soberania de Baku a Shusha",
+        snippet: "A República do Azerbaijão comemora em 9 de novembro o Dia da Bandeira Estatal, exaltando seu pavilhão tricolor como símbolo de liberdade e união.",
+      },
+      ar: {
+        title: "أذربيجان تحتفل بيوم العلم الوطني (9 نوفمبر): الراية ثلاثية الألوان ترفرف بشموخ من باكو إلى شوشا",
+        snippet: "تحتفي جمهورية أذربيجان في التاسع من نوفمبر بيوم العلم الوطني اعتزازاً برايتها ذات الألوان الأزرق والأحمر والأخضر رمزاً خالداً للسيادة والوحدة.",
+      },
+      ko: {
+        title: "아제르바이잔 11월 9일 국기의 날(State Flag Day) 경축: 바쿠에서 슈샤까지 휘날리는 삼색기",
+        snippet: "아제르바이잔 공화국이 11월 9일 국기의 날을 맞아 주권과 민족 단결의 영원한 상징인 청·적·녹 삼색기를 자랑스럽게 기립니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-all-saints-all-souls-day-2026",
     category: "General",
     source: "Statmatik News / Global Heritage",
     link: "https://statmatik.com",
-    published_at: new Date(Date.now() - 10 * 1000).toISOString(),
+    published_at: new Date(Date.now() - 20 * 1000).toISOString(),
     translations: {
       tr: {
         title: "Dünyada 1–2 Kasım All Saints' Day (Azizler Günü) ve All Souls' Day (Tüm Ruhları Anma Günü) Huzur ve Vefa İle İdrak Ediliyor",
