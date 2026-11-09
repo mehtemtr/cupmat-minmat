@@ -23,7 +23,7 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
     category: "General",
     source: "Statmatik News / 10 Kasım Özel",
     link: "https://statmatik.com",
-    published_at: new Date().toISOString(),
+    published_at: new Date(Date.now() - 10 * 1000).toISOString(),
     translations: {
       tr: {
         title: "10 Kasım Atatürk'ü Anma Günü: Saat 09:05'te Duran Zaman Değil, Sonsuzluğa Uzanan Sarsılmaz Vefamızdır! (1881–193∞)",
@@ -784,7 +784,7 @@ export async function GET(request: Request) {
                     source: nov10Base.source,
                     category: nov10Base.category,
                     link: nov10Base.link,
-                    published_at: new Date().toISOString(),
+                    published_at: new Date(Date.now() - 10 * 1000).toISOString(),
                     title: cleanText(trans.title),
                     snippet: cleanText(trans.snippet),
                   });

@@ -582,7 +582,7 @@ export default function HaberlerPage() {
                         <Clock className="w-3.5 h-3.5" />
                         {new Date(article.published_at) > new Date() ? (
                           <span className="text-amber-400 font-semibold flex items-center gap-1">
-                            📌 {currentLang === 'tr' ? 'Sabitlendi' : 'Pinned'}
+                            📌 {lang === "tr" ? "Sabitlendi" : "Pinned"}
                           </span>
                         ) : (
                           formatRelativeTime(article.published_at)
