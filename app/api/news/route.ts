@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-10-kasim-ataturk-2026",
+    category: "General",
+    source: "Statmatik News / 10 Kasım Özel",
+    link: "https://statmatik.com",
+    published_at: new Date().toISOString(),
+    translations: {
+      tr: {
+        title: "10 Kasım Atatürk'ü Anma Günü: Saat 09:05'te Duran Zaman Değil, Sonsuzluğa Uzanan Sarsılmaz Vefamızdır! (1881–193∞)",
+        snippet: "Cumhuriyetimizin kurucusu Büyük Önder Gazi Mustafa Kemal Atatürk'ü ebediyete irtihalinin 88. yıl dönümünde sonsuz saygı, minnet ve özlemle anıyoruz. Saat 09:05'te tüm ziyaretçilerimizi 1 dakikalık saygı duruşuna davet ediyoruz.",
+      },
+      en: {
+        title: "November 10 Atatürk Memorial Day: At 09:05 AM, A Nation Stands in Eternal Gratitude and Respect for Mustafa Kemal Atatürk (1881–193∞)",
+        snippet: "On the 88th anniversary of the passing of Gazi Mustafa Kemal Atatürk, founder of the Republic of Turkey, we remember his timeless vision of science, justice, and morality with boundless respect and invite everyone to a 1-minute moment of silence at 09:05 AM.",
+      },
+      de: {
+        title: "10. November Gedenktag für Atatürk: Um 09:05 Uhr steht eine ganze Nation in ewiger Dankbarkeit und Ehrfurcht (1881–193∞)",
+        snippet: "Am 88. Jahrestag des Todes von Gazi Mustafa Kemal Atatürk, dem Gründer der Republik Türkei, gedenken wir seines zeitlosen Vermächtnisses mit tiefem Respekt und laden um 09:05 Uhr zu einer Schweigeminute ein.",
+      },
+      fr: {
+        title: "10 Novembre Journée de Commémoration d'Atatürk : À 09h05, l'hommage éternel d'une nation à Mustafa Kemal Atatürk (1881–193∞)",
+        snippet: "À l'occasion du 88e anniversaire de la disparition de Gazi Mustafa Kemal Atatürk, fondateur de la République de Turquie, nous saluons sa vision éternelle avec respect et invitons chacun à une minute de silence à 09h05.",
+      },
+      es: {
+        title: "10 de Noviembre Día de Conmemoración de Atatürk: A las 09:05, el homenaje eterno de una nación a Mustafa Kemal Atatürk (1881–193∞)",
+        snippet: "En el 88.º aniversario del fallecimiento de Gazi Mustafa Kemal Atatürk, fundador de la República de Turquía, honramos su legado eterno con profundo respeto e invitamos a un minuto de silencio a las 09:05.",
+      },
+      it: {
+        title: "10 Novembre Giorno della Memoria di Atatürk: Alle 09:05, il tributo eterno di una nazione a Mustafa Kemal Atatürk (1881–193∞)",
+        snippet: "Nell'88° anniversario della scomparsa di Gazi Mustafa Kemal Atatürk, fondatore della Repubblica di Turchia, ricordiamo la sua visione immortale con profondo rispetto e invitiamo a un minuto di silenzio alle 09:05.",
+      },
+      pt: {
+        title: "10 de Novembro Dia em Memória de Atatürk: Às 09:05, a eterna gratidão de uma nação a Mustafa Kemal Atatürk (1881–193∞)",
+        snippet: "No 88º aniversário do falecimento de Gazi Mustafa Kemal Atatürk, fundador da República da Turquia, honramos seu legado imortal com profundo respeito e convidamos a um minuto de silêncio às 09:05.",
+      },
+      ar: {
+        title: "10 نوفمبر ذكرى رحيل مصطفى كمال أتاتورك: في الساعة 09:05 تقف الأمة وفاءً وإجلالاً لمؤسس الجمهورية (1881–193∞)",
+        snippet: "في الذكرى الثامنة والثمانين لرحيل الغازي مصطفى كمال أتاتورك مؤسس الجمهورية التركية، نستذكر إرثه الخالد بكل احترام وندعو الجميع للوقوف دقيقة صمت في تمام الساعة 09:05 صباحاً.",
+      },
+      ko: {
+        title: "11월 10일 무스타파 케말 아타튀르크 추모의 날: 오전 09시 05분, 영원한 존경과 감사의 1분 묵념 (1881–193∞)",
+        snippet: "튀르키예 공화국의 국부 가즈 무스타파 케말 아타튀르크 서거 88주기를 맞아 그의 시대를 초월한 비전을 기리며 오전 09시 05분 1분간의 추모 묵념에 여러분을 초대합니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-azerbaijan-victory-day-2026",
     category: "General",
     source: "Statmatik News / AZERTAC / Global Heritage",
@@ -718,6 +763,37 @@ export async function GET(request: Request) {
                 };
               })
             );
+
+            // 10 Kasım Atatürk'ü Anma Günü özel haberini ilk sayfada en üste sabitle (NewsGlo Akış Bandı ve /haberler için)
+            const now = new Date();
+            const isNov10Window =
+              now.getFullYear() === 2026 &&
+              now.getMonth() === 10 &&
+              (now.getDate() === 9 || now.getDate() === 10);
+
+            if (page === 1 && (category === "all" || category.toLowerCase() === "general") && !search && isNov10Window) {
+              const nov10Base = MULTILINGUAL_NEWS_DATASET[0];
+              if (nov10Base && nov10Base.id === "newsglo-10-kasim-ataturk-2026") {
+                const trans =
+                  nov10Base.translations[lang] ||
+                  nov10Base.translations["en"] ||
+                  nov10Base.translations["tr"];
+                if (trans && !cleanedDbNews.some((n) => n.id === nov10Base.id || (n.title && n.title.includes("10 Kasım")))) {
+                  cleanedDbNews.unshift({
+                    id: nov10Base.id,
+                    source: nov10Base.source,
+                    category: nov10Base.category,
+                    link: nov10Base.link,
+                    published_at: new Date().toISOString(),
+                    title: cleanText(trans.title),
+                    snippet: cleanText(trans.snippet),
+                  });
+                  if (cleanedDbNews.length > limit) {
+                    cleanedDbNews.pop();
+                  }
+                }
+              }
+            }
 
             return NextResponse.json({
               success: true,

@@ -347,6 +347,13 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 10 Kasım 2026: Gazi Mustafa Kemal Atatürk'ü Anma Günü (9 Kasım 18:00'dan 11 Kasım 00:00'a kadar)
+      const nov10Start = new Date("2026-11-09T18:00:00+03:00").getTime();
+      const nov10End = new Date("2026-11-11T00:00:00+03:00").getTime();
+      if ((nowTime >= nov10Start && nowTime < nov10End) || (year === 2026 && month === 10 && (date === 9 || date === 10))) {
+        if (!banners.includes("10kasim")) banners.push("10kasim");
+      }
+
       // 9 Kasım 2026: Azerbaycan State Flag Day (Devlet Bayrağı Günü / Dövlət Bayrağı Günü)
       const nov9Start = new Date("2026-11-09T00:00:00+03:00").getTime();
       const nov9End = new Date("2026-11-10T00:00:00+03:00").getTime();
@@ -506,6 +513,181 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 10 Kasım Gazi Mustafa Kemal Atatürk'ü Anma Günü & Saat 09:05 Siren ("Tİ" Sesi) ve Saygı Duruşu Daveti */}
+        {(activeBanners.includes("10kasim") || activeBanners.includes("10_kasim") || activeBanners.includes("ataturk")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/45 bg-gradient-to-r from-zinc-950/95 via-[#070b14]/98 to-red-950/45 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_55px_rgba(245,158,11,0.22)] transition duration-500 hover:border-amber-400/70">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-500/30 via-red-600/25 to-zinc-800/40 opacity-30 blur transition duration-500 group-hover:opacity-45" />
+            <div className="relative flex flex-col lg:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Left Column: 09:05 Invitation & Siren ("Tİ") Video + Portrait */}
+              <div className="w-full lg:w-[46%] flex flex-col items-center gap-3.5 relative">
+                <div className="relative w-full aspect-square max-w-[440px] rounded-2xl overflow-hidden border-2 border-amber-400/50 shadow-[0_0_40px_rgba(245,158,11,0.3)] bg-zinc-950">
+                  <video
+                    id="ataturk-0905-video"
+                    src="/10_kasim_0905_siren.mp4"
+                    poster="/10_kasim_ataturk.jpg"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Quick Interactive Invitation + 09:05 "Tİ" Siren Trigger Bar */}
+                <div className="w-full max-w-[440px] flex flex-col sm:flex-row items-center justify-between gap-2.5 rounded-2xl border border-amber-400/35 bg-zinc-900/90 px-4 py-3 shadow-lg">
+                  <div className="flex items-center gap-2.5 text-left">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-600/25 border border-red-500/50 text-sm animate-pulse">
+                      🔊
+                    </span>
+                    <div>
+                      <div className="text-xs font-black text-amber-300 tracking-wide uppercase">
+                        {locale === "tr"
+                          ? "Saat 09:05 • Saygı Duruşu & Siren ('Tİ' Sesi)"
+                          : "09:05 AM • Moment of Silence & Memorial Siren"}
+                      </div>
+                      <div className="text-[11px] text-zinc-300">
+                        {locale === "tr"
+                          ? "Önce 1 dk saygı duruşuna davet, ardından 09:05 Tİ sesi"
+                          : "Invitation to 1-min silence followed by the 09:05 siren"}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const vid = document.getElementById("ataturk-0905-video") as HTMLVideoElement | null;
+                      if (vid) {
+                        vid.currentTime = 0;
+                        vid.muted = false;
+                        vid.volume = 1;
+                        vid.play().catch(() => {});
+                      }
+                    }}
+                    className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-red-600 via-red-500 to-amber-500 px-3.5 py-2 text-xs font-black text-white shadow-md shadow-red-600/30 transition hover:scale-105 active:scale-95 cursor-pointer"
+                  >
+                    <span>▶</span>
+                    <span>{locale === "tr" ? "Sesli Başlat (09:05)" : "Play with Siren"}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Column: Multilingual 10 Kasım Commemoration & Invitation to 1-Minute Silence */}
+              <div className="w-full lg:w-[54%] text-center lg:text-left flex flex-col justify-center">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-3.5">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/50 bg-amber-500/15 px-3.5 py-1 text-xs font-black text-amber-300 tracking-wider uppercase select-none">
+                    {locale === "tr"
+                      ? "🇹🇷 10 KASIM • 1881 – 193∞ • ATATÜRK'Ü ANMA GÜNÜ"
+                      : locale === "de"
+                      ? "🇹🇷 10. NOVEMBER • 1881 – 193∞ • GEDENKTAG FÜR ATATÜRK"
+                      : locale === "fr"
+                      ? "🇹🇷 10 NOVEMBRE • 1881 – 193∞ • HOMMAGE À ATATÜRK"
+                      : locale === "es"
+                      ? "🇹🇷 10 DE NOVIEMBRE • 1881 – 193∞ • HOMENAJE A ATATÜRK"
+                      : locale === "pt"
+                      ? "🇹🇷 10 DE NOVEMBRO • 1881 – 193∞ • HOMENAGEM A ATATÜRK"
+                      : locale === "it"
+                      ? "🇹🇷 10 NOVEMBRE • 1881 – 193∞ • COMMEMORAZIONE DI ATATÜRK"
+                      : locale === "ko"
+                      ? "🇹🇷 11월 10일 • 1881 – 193∞ • 아타튀르크 추모의 날"
+                      : locale === "ar"
+                      ? "🇹🇷 10 نوفمبر • 1881 – 193∞ • ذكرى رحيل مصطفى كمال أتاتورك"
+                      : "🇹🇷 NOVEMBER 10 • 1881 – 193∞ • ATATÜRK MEMORIAL DAY"}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/50 bg-red-500/15 px-3 py-1 text-xs font-black text-red-300 tracking-wider uppercase animate-pulse">
+                    {locale === "tr" ? "🕘 SAAT 09:05 SAYGI DURUŞU DAVETİ" : "🕘 09:05 AM MOMENT OF SILENCE"}
+                  </span>
+                </div>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Saat 09:05'te Duran Zaman Değil,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-red-400">
+                        {`Sonsuzluğa Uzanan Sarsılmaz Vefamızdır! 🇹🇷♾️`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Um 09:05 Uhr steht nicht die Zeit still,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-red-400">
+                        {`Sondern unsere ewige Treue zu Mustafa Kemal Atatürk! 🇹🇷♾️`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`À 09h05, ce n'est pas le temps qui s'arrête,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-red-400">
+                        {`Mais l'hommage éternel d'une nation à Atatürk ! 🇹🇷♾️`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`A las 09:05 no se detiene el tiempo,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-red-400">
+                        {`¡Sino nuestra lealtad eterna a Mustafa Kemal Atatürk! 🇹🇷♾️`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`At 09:05 AM, It Is Not Time That Stops—`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-red-400">
+                        {`It Is a Nation's EternalGratitude to Atatürk! 🇹🇷♾️`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                {/* 09:05 Pre-Siren Invitation Box */}
+                <div className="mb-4 rounded-2xl border border-red-500/40 bg-gradient-to-r from-red-950/60 via-zinc-900/90 to-amber-950/40 p-3.5 sm:p-4 text-left shadow-inner">
+                  <div className="flex items-center gap-2 text-xs font-black text-amber-300 uppercase tracking-wider mb-1">
+                    <span>🕯️</span>
+                    <span>
+                      {locale === "tr"
+                        ? "SAAT 09:05 ÖNCESİ 1 DAKİKALIK SAYGI DURUŞUNA DAVET"
+                        : "INVITATION TO 1-MINUTE MOMENT OF SILENCE AT 09:05 AM"}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-zinc-100 font-semibold leading-relaxed">
+                    {locale === "tr"
+                      ? "Cumhuriyetimizin kurucusu, Büyük Önder Gazi Mustafa Kemal Atatürk'ün ebediyete irtihalinin 88. yıl dönümünde; saat 09:05'te siren ('Tİ') sesiyle birlikte tüm ziyaretçilerimizi ve milletimizi Atamızın aziz hatırası önünde 1 dakikalık saygı duruşuna davet ediyoruz."
+                      : "On the 88th anniversary of the passing of Gazi Mustafa Kemal Atatürk, founder of the Republic of Turkey, we invite all our visitors to join a 1-minute moment of silence accompanied by the 09:05 AM memorial siren in honor of his eternal memory."}
+                  </p>
+                </div>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[600px]">
+                  {locale === "tr" ? (
+                    <>
+                      Sporda, bilimde, adalette ve hayatın her alanında bizlere hedef gösterdiğin <span className="text-amber-300 font-bold">&ldquo;zeki, çevik ve aynı zamanda ahlaklı&rdquo;</span> olma vizyonu, yürüyüşümüzün değişmez pusulasıdır. Bir çift mavi gözün ışığı 88 yıldır hiç sönmedi, sonsuza dek sönmeyecek. Ruhu şad olsun.
+                    </>
+                  ) : (
+                    <>
+                      Your timeless vision of being <span className="text-amber-300 font-bold">&ldquo;smart, agile, and moral&rdquo;</span> in sports, science, justice, and every sphere of life remains our guiding compass. We remember Gazi Mustafa Kemal Atatürk with boundless respect, gratitude, and longing.
+                    </>
+                  )}
+                </p>
+
+                {/* Atatürk Immortal Quote Block */}
+                <div className="relative border-l-2 border-amber-400/90 pl-4 py-2.5 bg-amber-500/10 rounded-r-xl max-w-[600px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-100 leading-snug">
+                    {locale === "tr"
+                      ? "\"Benim naçiz vücudum elbet bir gün toprak olacaktır, fakat Türkiye Cumhuriyeti ilelebet payidar kalacaktır. ... Beni görmek demek mutlaka yüzümü görmek demek değildir. Benim fikirlerimi, benim duygularımı anlıyorsanız ve hissediyorsanız bu kafidir.\""
+                      : "\"My mortal body will surely turn to dust one day, but the Republic of Turkey will stand forever. ... To see me does not necessarily mean to see my face. If you understand and feel my thoughts and my feelings, that is enough.\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— GAZİ MUSTAFA KEMAL ATATÜRK (1881 – 193∞) • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 9 Kasım Azerbaycan Devlet Bayrağı Günü (State Flag Day / Dövlət Bayrağı Günü) Banner */}
         {(activeBanners.includes("azerbaijan_flag") || activeBanners.includes("bayrak_gunu") || activeBanners.includes("flag_day")) && (
