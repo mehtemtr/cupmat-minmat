@@ -19,6 +19,51 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   translations: Record<string, { title: string; snippet: string }>;
 }> = [
   {
+    id: "newsglo-poland-independence-day-2026",
+    category: "General",
+    source: "Statmatik News / PAP / Global Heritage",
+    link: "https://statmatik.com",
+    published_at: new Date(Date.now() - 5 * 1000).toISOString(),
+    translations: {
+      tr: {
+        title: "Dost Polonya'nın 11 Kasım Ulusal Bağımsızlık Günü (Narodowe Święto Niepodległości) Kutlu Olsun: Varşova'da Beyaz-Kırmızı Coşku!",
+        snippet: "123 yıllık ayrılığın ardından 11 Kasım 1918'de bağımsızlığına kavuşan Polonya Cumhuriyeti, 600 yılı aşkın Türk–Leh dostluğunun da sıcak selamlarıyla Ulusal Bağımsızlık Günü'nü büyük bir gururla kutluyor.",
+      },
+      en: {
+        title: "Poland Celebrates November 11 National Independence Day (Narodowe Święto Niepodległości): White-and-Red Pride Across Warsaw",
+        snippet: "On November 11, the Republic of Poland commemorates the historic restoration of its sovereignty in 1918 after 123 years of partition, celebrating freedom, unity, and national heritage.",
+      },
+      de: {
+        title: "Polen feiert den Nationalen Unabhängigkeitstag am 11. November (Narodowe Święto Niepodległości): Weiß-Rote Freude in Warschau",
+        snippet: "Am 11. November würdigt die Republik Polen die Wiedererlangung ihrer staatlichen Unabhängigkeit im Jahr 1918 nach 123 Jahren der Teilung im Zeichen von Freiheit und Einheit.",
+      },
+      fr: {
+        title: "La Pologne célèbre la Fête Nationale de l'Indépendance (11 Novembre - Narodowe Święto Niepodległości) avec fierté à Varsovie",
+        snippet: "Le 11 novembre, la République de Pologne commémore le retour historique de sa souveraineté en 1918 après 123 ans de partitions, célébrant la liberté et l'unité nationale.",
+      },
+      es: {
+        title: "Polonia celebra el Día de la Independencia Nacional (11 de Noviembre - Narodowe Święto Niepodległości) con orgullo blanco y rojo",
+        snippet: "El 11 de noviembre, la República de Polonia conmemora la restauración histórica de su soberanía en 1918 tras 123 años de particiones, exaltando la libertad y la fraternidad.",
+      },
+      it: {
+        title: "La Polonia celebra la Festa Nazionale dell'Indipendenza (11 Novembre - Narodowe Święto Niepodległości) tra bianco e rosso a Varsavia",
+        snippet: "L'11 novembre la Repubblica di Polonia festeggia con orgoglio la rinascita della propria sovranità nel 1918 dopo 123 anni di spartizioni, simbolo di libertà e unità.",
+      },
+      pt: {
+        title: "Polônia celebra o Dia da Independência Nacional (11 de Novembro - Narodowe Święto Niepodległości) com festa em Varsóvia",
+        snippet: "Em 11 de novembro, a República da Polônia comemora a restauração histórica de sua soberania em 1918 após 123 anos de partições, celebrando a liberdade e a união.",
+      },
+      ar: {
+        title: "بولندا تحتفل بعيد الاستقلال الوطني (11 نوفمبر - Narodowe Święto Niepodległości): اعتزاز بالحرية والسيادة في وارسو",
+        snippet: "تحتفي جمهورية بولندا في الحادي عشر من نوفمبر بذكرى استعادة استقلالها الوطني عام 1918 بعد 123 عاماً من التقسيم، وسط أجواء احتفالية بالأبيض والأحمر.",
+      },
+      ko: {
+        title: "폴란드 11월 11일 독립기념일(Narodowe Święto Niepodległości) 경축: 바르샤바를 수놓은 백적기의 물결",
+        snippet: "123년의 분할 통치를 이겨내고 1918년 11월 11일 주권을 회복한 폴란드 공화국이 자유와 단결의 독립기념일을 성대하게 기념합니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-10-kasim-ataturk-2026",
     category: "General",
     source: "Statmatik News / 10 Kasım Özel",
@@ -764,15 +809,43 @@ export async function GET(request: Request) {
               })
             );
 
-            // 10 Kasım Atatürk'ü Anma Günü özel haberini ilk sayfada en üste sabitle (NewsGlo Akış Bandı ve /haberler için)
+            // 10 Kasım Atatürk'ü Anma Günü ve 11 Kasım Polonya Ulusal Bağımsızlık Günü özel haberlerini ilk sayfada en üste sabitle (NewsGlo Akış Bandı ve /haberler için)
             const now = new Date();
             const isNov10Window =
               now.getFullYear() === 2026 &&
               now.getMonth() === 10 &&
               (now.getDate() === 9 || now.getDate() === 10);
+            const isNov11Window =
+              now.getFullYear() === 2026 &&
+              now.getMonth() === 10 &&
+              now.getDate() === 11;
+
+            if (page === 1 && (category === "all" || category.toLowerCase() === "general") && !search && isNov11Window) {
+              const nov11Base = MULTILINGUAL_NEWS_DATASET.find((item) => item.id === "newsglo-poland-independence-day-2026");
+              if (nov11Base) {
+                const trans =
+                  nov11Base.translations[lang] ||
+                  nov11Base.translations["en"] ||
+                  nov11Base.translations["tr"];
+                if (trans && !cleanedDbNews.some((n) => n.id === nov11Base.id || (n.title && n.title.includes("Niepodległości")))) {
+                  cleanedDbNews.unshift({
+                    id: nov11Base.id,
+                    source: nov11Base.source,
+                    category: nov11Base.category,
+                    link: nov11Base.link,
+                    published_at: new Date(Date.now() - 5 * 1000).toISOString(),
+                    title: cleanText(trans.title),
+                    snippet: cleanText(trans.snippet),
+                  });
+                  if (cleanedDbNews.length > limit) {
+                    cleanedDbNews.pop();
+                  }
+                }
+              }
+            }
 
             if (page === 1 && (category === "all" || category.toLowerCase() === "general") && !search && isNov10Window) {
-              const nov10Base = MULTILINGUAL_NEWS_DATASET[0];
+              const nov10Base = MULTILINGUAL_NEWS_DATASET.find((item) => item.id === "newsglo-10-kasim-ataturk-2026");
               if (nov10Base && nov10Base.id === "newsglo-10-kasim-ataturk-2026") {
                 const trans =
                   nov10Base.translations[lang] ||

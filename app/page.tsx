@@ -347,6 +347,13 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 11 Kasım 2026: Polonya Ulusal Bağımsızlık Günü (Narodowe Święto Niepodległości / Polish Independence Day)
+      const nov11Start = new Date("2026-11-11T00:00:00+03:00").getTime();
+      const nov11End = new Date("2026-11-12T03:00:00+03:00").getTime();
+      if ((nowTime >= nov11Start && nowTime < nov11End) || (year === 2026 && month === 10 && date === 11)) {
+        if (!banners.includes("poland_independence")) banners.push("poland_independence");
+      }
+
       // 10 Kasım 2026: Gazi Mustafa Kemal Atatürk'ü Anma Günü (9 Kasım 18:00'dan 11 Kasım 00:00'a kadar)
       const nov10Start = new Date("2026-11-09T18:00:00+03:00").getTime();
       const nov10End = new Date("2026-11-11T00:00:00+03:00").getTime();
@@ -513,6 +520,178 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 11 Kasım Polonya Ulusal Bağımsızlık Günü (11 Listopada • Narodowe Święto Niepodległości) Banner */}
+        {(activeBanners.includes("poland_independence") || activeBanners.includes("polonya") || activeBanners.includes("poland")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-rose-500/45 bg-gradient-to-r from-rose-950/55 via-[#070b14]/95 to-red-950/45 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_50px_rgba(225,29,72,0.22)] transition duration-500 hover:border-rose-400/75">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-white/30 via-rose-500/35 to-amber-500/25 opacity-25 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-rose-400/50 shadow-[0_0_35px_rgba(244,63,94,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/poland_independence_day.jpg"
+                    alt="Polonya 11 Kasım Ulusal Bağımsızlık Günü • 11 Listopada Narodowe Święto Niepodległości • Polish Independence Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-rose-400/50 bg-rose-500/15 px-3.5 py-1 text-xs font-black text-rose-200 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇵🇱 11 KASIM • POLONYA ULUSAL BAĞIMSIZLIK GÜNÜ (NARODOWE ŚWIĘTO NIEPODLEGŁOŚCI)"
+                    : locale === "es"
+                    ? "🇵🇱 11 DE NOVIEMBRE • DÍA DE LA INDEPENDENCIA NACIONAL DE POLONIA"
+                    : locale === "fr"
+                    ? "🇵🇱 11 NOVEMBRE • FÊTE NATIONALE DE L'INDÉPENDANCE DE LA POLOGNE"
+                    : locale === "de"
+                    ? "🇵🇱 11. NOVEMBER • NATIONALER UNABHÄNGIGKEITSTAG POLENS"
+                    : locale === "it"
+                    ? "🇵🇱 11 NOVEMBRE • FESTA NAZIONALE DELL'INDIPENDENZA DELLA POLONIA"
+                    : locale === "pt"
+                    ? "🇵🇱 11 DE NOVEMBRO • DIA DA INDEPENDÊNCIA NACIONAL DA POLÔNIA"
+                    : locale === "ko"
+                    ? "🇵🇱 11월 11일 • 폴란드 독립기념일 (NARODOWE ŚWIĘTO NIEPODLEGŁOŚCI)"
+                    : locale === "ar"
+                    ? "🇵🇱 11 نوفمبر • عيد الاستقلال الوطني لجمهورية بولندا"
+                    : "🇵🇱 NOVEMBER 11 • POLAND NATIONAL INDEPENDENCE DAY (NARODOWE ŚWIĘTO NIEPODLEGŁOŚCI)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Dost Polonya'nın 11 Kasım`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`Ulusal Bağımsızlık Günü Kutlu Olsun! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`¡Feliz Día de la Independencia Nacional (11 de Noviembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`República de Polonia! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Joyeuse Fête Nationale de l'Indépendance (11 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`République de Pologne ! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Alles Gute zum Nationalen Unabhängigkeitstag (11. November),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`Republik Polen! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Felice Festa Nazionale dell'Indipendenza (11 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`Repubblica di Polonia! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Feliz Dia da Independência Nacional (11 de Novembro),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`República da Polônia! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`자유와 불굴의 의지로 되찾은 주권,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`11월 11일 폴란드 독립기념일을 축하합니다! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`تهانينا الحارة لجمهورية بولندا الصديقة`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`بمناسبة عيد الاستقلال الوطني (11 نوفمبر)! 🇵🇱✨`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Happy November 11 National Independence Day,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-300 to-red-500">
+                        {`Republic of Poland! 🇵🇱✨`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[595px]">
+                  {locale === "tr" ? (
+                    "123 yıllık esaretin ardından 11 Kasım 1918'de yeniden bağımsızlığına kavuşan, tarih boyunca 'Lehistan sefiri yoldadır' sözüyle hafızalara kazınan 600 yılı aşkın kadim Türk–Leh dostluğunun ortağı Polonya Cumhuriyeti'nin ve dost Polonya halkının Ulusal Bağımsızlık Günü'nü (Narodowe Święto Niepodległości) en içten dileklerimizle kutluyoruz. Beyaz-kırmızı bayrak Varşova'dan tüm dünyaya barış, özgürlük ve gururla dalgalansın!"
+                  ) : locale === "es" ? (
+                    "En este 11 de noviembre, Día de la Independencia Nacional de Polonia (Narodowe Święto Niepodległości), celebramos el renacimiento de la soberanía polaca en 1918 tras 123 años de particiones. ¡Enviamos nuestros mejores deseos de paz, libertad y prosperidad al pueblo amigo de Polonia!"
+                  ) : locale === "fr" ? (
+                    "À l'occasion du 11 novembre, Fête Nationale de l'Indépendance de la Pologne (Narodowe Święto Niepodległości), nous saluons le courage historique d'une nation qui a retrouvé sa souveraineté en 1918 après 123 ans de partitions. Excellente fête nationale et prospérité au peuple polonais !"
+                  ) : locale === "de" ? (
+                    "Zum Nationalen Unabhängigkeitstag am 11. November (Narodowe Święto Niepodległości) gratulieren wir der Republik Polen herzlich! Wir würdigen die Wiedererlangung der staatlichen Souveränität im Jahr 1918 nach 123 Jahren der Teilung und wünschen dem polnischen Volk Frieden, Freiheit und Wohlstand!"
+                  ) : locale === "it" ? (
+                    "In occasione dell'11 novembre, Festa Nazionale dell'Indipendenza della Polonia (Narodowe Święto Niepodległości), celebriamo la rinascita della sovranità polacca nel 1918 dopo 123 anni di spartizioni. Auguri sinceri di pace, libertà e prosperità a tutto il popolo polacco!"
+                  ) : locale === "pt" ? (
+                    "Neste 11 de novembro, Dia da Independência Nacional da Polônia (Narodowe Święto Niepodległości), celebramos a restauração da soberania polonesa em 1918 após 123 anos de partições. Parabéns, paz, liberdade e muita prosperidade ao povo polonês!"
+                  ) : locale === "ko" ? (
+                    "123년의 시련을 이겨내고 1918년 11월 11일 주권을 되찾은 폴란드 공화국의 독립기념일(Narodowe Święto Niepodległości)을 진심으로 축하합니다. 백적기가 바르샤바 하늘 아래 영원히 자유와 평화로 휘날리기를 기원합니다!"
+                  ) : locale === "ar" ? (
+                    "بمناسبة عيد الاستقلال الوطني لجمهورية بولندا في 11 نوفمبر (Narodowe Święto Niepodległości)، نحيّي المسيرة التاريخية للشعب البولندي الصديق واستعادة سيادته عام 1918، متمنين لبولندا دوام السلام والحرية والازدهار!"
+                  ) : (
+                    "On November 11, Poland's National Independence Day (Narodowe Święto Niepodległości), we proudly honor the historic restoration of Polish sovereignty in 1918 after 123 years of partition—and over six centuries of enduring diplomatic friendship. May the white-and-red banner wave high forever in freedom, unity, and peace!"
+                  )}
+                </p>
+
+                {/* Historic Polish National Anthem & Friendship Quote Block */}
+                <div className="relative border-l-2 border-rose-400/85 pl-4 py-2.5 bg-rose-500/10 rounded-r-xl max-w-[595px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-rose-200 leading-snug">
+                    {"\"Jeszcze Polska nie zginęła, kiedy my żyjemy!\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-300 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Biz yaşadığımız sürece Polonya henüz ölmedi!\" — 11 Listopada Narodowe Święto Niepodległości Kutlu Olsun!"
+                      : locale === "es"
+                      ? "\"¡Polonia aún no ha perecido mientras nosotros vivamos!\" — ¡Feliz 11 Listopada, Día de la Independencia!"
+                      : locale === "fr"
+                      ? "\"La Pologne n'a pas encore péri tant que nous vivons !\" — Joyeux 11 Listopada, Fête de l'Indépendance !"
+                      : locale === "de"
+                      ? "\"Noch ist Polen nicht verloren, solange wir leben!\" — Alles Gute zum 11. Listopada!"
+                      : locale === "it"
+                      ? "\"La Polonia non è ancora perita finché noi viviamo!\" — Felice 11 Listopada, Festa dell'Indipendenza!"
+                      : locale === "pt"
+                      ? "\"A Polônia ainda não pereceu enquanto nós vivermos!\" — Feliz 11 Listopada, Dia da Independência!"
+                      : locale === "ko"
+                      ? "\"우리가 살아 있는 한 폴란드는 결코 무너지지 않았다!\" — 11월 11일 폴란드 독립기념일 경축!"
+                      : locale === "ar"
+                      ? "\"لم تندثر بولندا ما دمنا نحن أحياء!\" — عيد استقلال وطني سعيد لجمهورية بولندا!"
+                      : "\"Poland has not yet perished, so long as we still live!\" — Happy November 11 Polish Independence Day!"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— MAZUREK DĄBROWSKIEGO (1797 / 1918) • NARODOWE ŚWIĘTO NIEPODLEGŁOŚCI • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 10 Kasım Gazi Mustafa Kemal Atatürk'ü Anma Günü & Saat 09:05 Siren ("Tİ" Sesi) ve Saygı Duruşu Daveti */}
         {(activeBanners.includes("10kasim") || activeBanners.includes("10_kasim") || activeBanners.includes("ataturk")) && (
