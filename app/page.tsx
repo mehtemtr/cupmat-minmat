@@ -347,6 +347,13 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 15 Kasım 2026: Fildişi Sahili Ulusal Barış Günü (Journée Nationale de la Paix / Côte d'Ivoire National Peace Day) - 1 Gün Boyunca
+      const nov15Start = new Date("2026-11-15T00:00:00+03:00").getTime();
+      const nov15End = new Date("2026-11-16T00:00:00+03:00").getTime();
+      if ((nowTime >= nov15Start && nowTime < nov15End) || (year === 2026 && month === 10 && date === 15)) {
+        if (!banners.includes("ivory_coast_peace")) banners.push("ivory_coast_peace");
+      }
+
       // 11 Kasım 2026: Polonya Ulusal Bağımsızlık Günü (Narodowe Święto Niepodległości / Polish Independence Day)
       const nov11Start = new Date("2026-11-11T00:00:00+03:00").getTime();
       const nov11End = new Date("2026-11-12T03:00:00+03:00").getTime();
@@ -520,6 +527,178 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 15 Kasım Fildişi Sahili Ulusal Barış Günü (15 Novembre • Journée Nationale de la Paix - Côte d'Ivoire) Banner */}
+        {(activeBanners.includes("ivory_coast_peace") || activeBanners.includes("cote_divoire") || activeBanners.includes("fildisi") || activeBanners.includes("peace_day")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-orange-500/45 bg-gradient-to-r from-orange-950/55 via-[#070b14]/95 to-emerald-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_50px_rgba(249,115,22,0.22)] transition duration-500 hover:border-emerald-400/75">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-orange-500/35 via-white/25 to-emerald-500/35 opacity-25 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-orange-400/50 shadow-[0_0_35px_rgba(16,185,129,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/ivory_coast_peace_day.jpg"
+                    alt="Fildişi Sahili 15 Kasım Ulusal Barış Günü • Côte d'Ivoire 15 Novembre Journée Nationale de la Paix • National Peace Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-orange-400/50 bg-orange-500/15 px-3.5 py-1 text-xs font-black text-orange-200 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇨🇮 15 KASIM • FİLDİŞİ SAHİLİ ULUSAL BARIŞ GÜNÜ (JOURNÉE NATIONALE DE LA PAIX)"
+                    : locale === "es"
+                    ? "🇨🇮 15 DE NOVIEMBRE • DÍA NACIONAL DE LA PAZ DE COSTA DE MARFIL"
+                    : locale === "fr"
+                    ? "🇨🇮 15 NOVEMBRE • JOURNÉE NATIONALE DE LA PAIX EN CÔTE D'IVOIRE"
+                    : locale === "de"
+                    ? "🇨🇮 15. NOVEMBER • NATIONALER FRIEDENSTAG DER CÔTE D'IVOIRE (ELFENBEINKÜSTE)"
+                    : locale === "it"
+                    ? "🇨🇮 15 NOVEMBRE • GIORNATA NAZIONALE DELLA PACE IN COSTA D'AVORIO"
+                    : locale === "pt"
+                    ? "🇨🇮 15 DE NOVEMBRO • DIA NACIONAL DA PAZ DA COSTA DO MARFIM"
+                    : locale === "ko"
+                    ? "🇨🇮 11월 15일 • 코트디부아르 국가 평화의 날 (JOURNÉE NATIONALE DE LA PAIX)"
+                    : locale === "ar"
+                    ? "🇨🇮 15 نوفمبر • اليوم الوطني للسلام في جمهورية كوت ديفوار (ساحل العاج)"
+                    : "🇨🇮 NOVEMBER 15 • CÔTE D'IVOIRE NATIONAL PEACE DAY (JOURNÉE NATIONALE DE LA PAIX)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Fildişi Sahili'nin 15 Kasım`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`Ulusal Barış Günü Kutlu Olsun! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`¡Feliz Día Nacional de la Paz (15 de Noviembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`República de Costa de Marfil! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Bonne et Heureuse Journée Nationale de la Paix (15 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`République de Côte d'Ivoire ! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Alles Gute zum Nationalen Friedenstag (15. November),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`Republik Côte d'Ivoire! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Felice Giornata Nazionale della Pace (15 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`Repubblica della Costa d'Avorio! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Feliz Dia Nacional da Paz (15 de Novembro),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`República da Costa do Marfim! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`화합과 형제애로 빛나는 평화의 대지,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`11월 15일 코트디부아르 국가 평화의 날을 축하합니다! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`تهانينا الحارة لجمهورية كوت ديفوار الصديقة`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`بمناسبة اليوم الوطني للسلام (15 نوفمبر)! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Happy November 15 National Peace Day,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-white to-emerald-400">
+                        {`Republic of Côte d'Ivoire! 🇨🇮🕊️`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[595px]">
+                  {locale === "tr" ? (
+                    "Batı Afrika'nın misafirperverliği, kardeşliği ve birliğiyle parlayan ülkesi Fildişi Sahili Cumhuriyeti'nin (Côte d'Ivoire) 15 Kasım Ulusal Barış Günü'nü (Journée Nationale de la Paix) en içten dileklerimizle kutluyoruz. Yamoussoukro Barış Bazilikası'ndan Abidjan kıyılarına kadar uzanan hoşgörü, toplumsal uyum ve dayanışma ruhunun; turuncu, beyaz ve yeşil bayrak altında Fildişi Sahili halkına daima huzur, birlik ve refah getirmesini diliyoruz!"
+                  ) : locale === "es" ? (
+                    "En este 15 de noviembre, Día Nacional de la Paz de Costa de Marfil (Journée Nationale de la Paix), celebramos el espíritu de fraternidad, reconciliación, hospitalidad y armonía del pueblo marfileño. ¡Que la bandera naranja, blanca y verde ondee siempre con paz, unidad y prosperidad desde Yamoussoukro y Abiyán hacia todo el mundo!"
+                  ) : locale === "fr" ? (
+                    "À l'occasion du 15 novembre, Journée Nationale de la Paix en République de Côte d'Ivoire, nous saluons avec émotion l'esprit de fraternité, de dialogue, d'hospitalité et de cohésion nationale du peuple ivoirien. Que les couleurs orange, blanc et vert rayonnent toujours de paix, d'union et de prospérité de Yamoussoukro à Abidjan !"
+                  ) : locale === "de" ? (
+                    "Zum Nationalen Friedenstag am 15. November (Journée Nationale de la Paix) gratulieren wir der Republik Côte d'Ivoire herzlich! Wir würdigen das Engagement des ivorischen Volkes für Brüderlichkeit, Dialog, Gastfreundschaft und gesellschaftlichen Zusammenhalt und wünschen dauerhaften Frieden, Einheit und Wohlstand!"
+                  ) : locale === "it" ? (
+                    "In occasione del 15 novembre, Giornata Nazionale della Pace in Costa d'Avorio (Journée Nationale de la Paix), rendiamo omaggio allo spirito di fratellanza, ospitalità, dialogo e armonia del popolo ivoriano. Auguri sinceri di pace duratura, unità e prosperità sotto il tricolore arancione, bianco e verde!"
+                  ) : locale === "pt" ? (
+                    "Neste 15 de novembro, Dia Nacional da Paz da Costa do Marfim (Journée Nationale de la Paix), celebramos o espírito de fraternidade, hospitalidade, reconciliação e união do povo marfinense. Desejamos paz duradoura, harmonia e muita prosperidade a toda a nação da Costa do Marfim!"
+                  ) : locale === "ko" ? (
+                    "11월 15일 코트디부아르 공화국의 국가 평화의 날(Journée Nationale de la Paix)을 진심으로 축하합니다. 야무수크로 평화의 대성당에서 아비장에 이르기까지 코트디부아르 국민의 환대와 연대, 평화의 정신이 주황·하양·초록 삼색기 아래 영원히 빛나기를 기원합니다!"
+                  ) : locale === "ar" ? (
+                    "بمناسبة اليوم الوطني للسلام في جمهورية كوت ديفوار (ساحل العاج) في 15 نوفمبر (Journée Nationale de la Paix)، نحيّي قيم الإخاء والتسامح والضيافة والوئام الوطني لدى الشعب الإيفواري الصديق، متمنين لكوت ديفوار دوام السلام والوحدة والازدهار!"
+                  ) : (
+                    "On November 15, National Peace Day of the Republic of Côte d'Ivoire (Journée Nationale de la Paix), we warmly celebrate the enduring spirit of brotherhood, hospitality, national harmony, and reconciliation of the Ivorian people. From the Basilica of Our Lady of Peace in Yamoussoukro to the vibrant shores of Abidjan, may the orange, white, and green banner forever wave in unity, peace, and prosperity!"
+                  )}
+                </p>
+
+                {/* Historic Côte d'Ivoire Peace Motto & Quote Block */}
+                <div className="relative border-l-2 border-emerald-400/85 pl-4 py-2.5 bg-emerald-500/10 rounded-r-xl max-w-[595px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-orange-200 leading-snug">
+                    {"\"La paix n'est pas un vain mot, c'est un comportement.\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-300 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Barış boş bir söz değil, bir davranış biçimidir.\" — 15 Kasım Fildişi Sahili Ulusal Barış Günü Kutlu Olsun!"
+                      : locale === "es"
+                      ? "\"La paz no es una palabra vacía, es un comportamiento.\" — ¡Feliz 15 de Noviembre, Día Nacional de la Paz!"
+                      : locale === "fr"
+                      ? "\"Salut ô terre d'espérance, pays de l'hospitalité !\" — Bonne Journée Nationale de la Paix en Côte d'Ivoire !"
+                      : locale === "de"
+                      ? "\"Frieden ist kein leeres Wort, sondern eine Haltung.\" — Alles Gute zum Nationalen Friedenstag am 15. November!"
+                      : locale === "it"
+                      ? "\"La pace non è una parola vana, è un comportamento.\" — Felice 15 Novembre, Giornata Nazionale della Pace!"
+                      : locale === "pt"
+                      ? "\"A paz não é uma palavra vã, é um comportamento.\" — Feliz 15 de Novembro, Dia Nacional da Paz!"
+                      : locale === "ko"
+                      ? "\"평화는 빈말이 아니라 행동 양식이다.\" — 11월 15일 코트디부아르 국가 평화의 날 경축!"
+                      : locale === "ar"
+                      ? "\"السلام ليس مجرد كلمة عابرة، بل هو سلوك ومنهج حياة.\" — يوم وطني سعيد للسلام في كوت ديفوار!"
+                      : "\"Peace is not an empty word, it is a way of behavior.\" — Happy November 15 Côte d'Ivoire National Peace Day!"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-emerald-400 uppercase mt-2">
+                    {"— CÔTE D'IVOIRE • UNION – DISCIPLINE – TRAVAIL • 15 NOVEMBRE JOURNÉE NATIONALE DE LA PAIX • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 11 Kasım Polonya Ulusal Bağımsızlık Günü (11 Listopada • Narodowe Święto Niepodległości) Banner */}
         {(activeBanners.includes("poland_independence") || activeBanners.includes("polonya") || activeBanners.includes("poland")) && (
