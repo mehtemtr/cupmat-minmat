@@ -347,6 +347,13 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 17 Kasım 2026: Slovakya Özgürlük ve Demokrasi Günü (Deň boja za slobodu a demokraciu / Freedom and Democracy Day) - 1 Gün Boyunca
+      const nov17Start = new Date("2026-11-17T00:00:00+03:00").getTime();
+      const nov17End = new Date("2026-11-18T00:00:00+03:00").getTime();
+      if ((nowTime >= nov17Start && nowTime < nov17End) || (year === 2026 && month === 10 && date === 17)) {
+        if (!banners.includes("slovakia_freedom")) banners.push("slovakia_freedom");
+      }
+
       // 15 Kasım 2026: Fildişi Sahili Ulusal Barış Günü (Journée Nationale de la Paix / Côte d'Ivoire National Peace Day) - 1 Gün Boyunca
       const nov15Start = new Date("2026-11-15T00:00:00+03:00").getTime();
       const nov15End = new Date("2026-11-16T00:00:00+03:00").getTime();
@@ -527,6 +534,178 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 17 Kasım Slovakya Özgürlük ve Demokrasi Günü (17. November • Deň boja za slobodu a demokraciu - Slovensko) Banner */}
+        {(activeBanners.includes("slovakia_freedom") || activeBanners.includes("slovakia") || activeBanners.includes("slovakya") || activeBanners.includes("freedom_day")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-blue-500/45 bg-gradient-to-r from-blue-950/60 via-[#070b14]/95 to-rose-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_50px_rgba(59,130,246,0.22)] transition duration-500 hover:border-rose-400/75">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-white/25 via-blue-500/35 to-rose-500/35 opacity-25 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-blue-400/50 shadow-[0_0_35px_rgba(59,130,246,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/slovakia_freedom_day.jpg"
+                    alt="Slovakya 17 Kasım Özgürlük ve Demokrasi Günü • Slovensko 17. November Deň boja za slobodu a demokraciu • Freedom and Democracy Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-sky-400/50 bg-blue-500/15 px-3.5 py-1 text-xs font-black text-sky-200 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇸🇰 17 KASIM • SLOVAKYA ÖZGÜRLÜK VE DEMOKRASİ GÜNÜ (DEŇ BOJA ZA SLOBODU A DEMOKRACIU)"
+                    : locale === "es"
+                    ? "🇸🇰 17 DE NOVIEMBRE • DÍA DE LA LUCHA POR LA LIBERTAD Y LA DEMOCRACIA EN ESLOVAQUIA"
+                    : locale === "fr"
+                    ? "🇸🇰 17 NOVEMBRE • JOURNÉE DE LUTTE POUR LA LIBERTÉ ET LA DÉMOCRATIE EN SLOVAQUIE"
+                    : locale === "de"
+                    ? "🇸🇰 17. NOVEMBER • TAG DES KAMPFES FÜR FREIHEIT UND DEMOKRATIE IN DER SLOWAKEI"
+                    : locale === "it"
+                    ? "🇸🇰 17 NOVEMBRE • GIORNATA DELLA LOTTA PER LA LIBERTÀ E LA DEMOCRAZIA IN SLOVACCHIA"
+                    : locale === "pt"
+                    ? "🇸🇰 17 DE NOVEMBRO • DIA DA LUTA PELA LIBERDADE E DEMOCRACIA NA ESLOVÁQUIA"
+                    : locale === "ko"
+                    ? "🇸🇰 11월 17일 • 슬로바키아 자유와 민주주의 투쟁의 날 (DEŇ BOJA ZA SLOBODU A DEMOKRACIU)"
+                    : locale === "ar"
+                    ? "🇸🇰 17 نوفمبر • يوم النضال من أجل الحرية والديمقراطية في جمهورية سلوفاكيا"
+                    : "🇸🇰 NOVEMBER 17 • SLOVAKIA FREEDOM AND DEMOCRACY DAY (DEŇ BOJA ZA SLOBODU A DEMOKRACIU)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Slovakya'nın 17 Kasım`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`Özgürlük ve Demokrasi Günü Kutlu Olsun! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`¡Feliz Día de la Libertad y la Democracia (17 de Noviembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`República Eslovaca! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Bonne Journée de la Liberté et de la Démocratie (17 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`République Slovaque ! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Alles Gute zum Tag für Freiheit und Demokratie (17. November),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`Slowakische Republik! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Felice Giornata della Libertà e della Democrazia (17 Novembre),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`Repubblica Slovacca! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Feliz Dia da Liberdade e da Democracia (17 de Novembro),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`República Eslovaca! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`평화로운 연대와 시민의 용기로 빛나는 날,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`11월 17일 슬로바키아 자유와 민주주의의 날을 축하합니다! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`تهانينا الحارة لجمهورية سلوفاكيا الصديقة`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`بمناسبة يوم الحرية والديمقراطية (17 نوفمبر)! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Happy November 17 Freedom and Democracy Day,`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 to-rose-400">
+                        {`Slovak Republic! 🇸🇰🕊️`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[595px]">
+                  {locale === "tr" ? (
+                    "Orta Avrupa'nın kalbinde barışçıl dayanışma, sivil cesaret ve özgürlük iradesiyle tarih yazan Slovakya Cumhuriyeti'nin (Slovenská republika) 17 Kasım Özgürlük ve Demokrasi Günü'nü (Deň boja za slobodu a demokraciu) en içten dileklerimizle kutluyoruz. 1989 Kadife Devrimi'nin (Nežná revolúcia) umut dolu ruhundan Bratislava Kalesi'ne ve Yüksek Tatra Dağları'nın zirvelerine uzanan beyaz, mavi ve kırmızı bayrağın; Slovak halkına daima özgürlük, demokrasi, huzur ve refah getirmesini diliyoruz!"
+                  ) : locale === "es" ? (
+                    "En este 17 de noviembre, Día de la Lucha por la Libertad y la Democracia en Eslovaquia (Deň boja za slobodu a demokraciu), celebramos el coraje cívico, la solidaridad pacífica y el espíritu de la Revolución de Terciopelo (Nežná revolúcia). ¡Que la bandera blanca, azul y roja ondee siempre con libertad, paz y prosperidad desde el Castillo de Bratislava hasta los Altos Tatras!"
+                  ) : locale === "fr" ? (
+                    "À l'occasion du 17 novembre, Journée de lutte pour la liberté et la démocratie en République slovaque (Deň boja za slobodu a demokraciu), nous saluons avec émotion le courage civique, l'unité pacifique et l'héritage de la Révolution de velours (Nežná revolúcia). Que le drapeau blanc, bleu et rouge rayonne toujours de liberté, de paix et de prospérité de Bratislava aux Hautes Tatras !"
+                  ) : locale === "de" ? (
+                    "Zum Tag des Kampfes für Freiheit und Demokratie am 17. November (Deň boja za slobodu a demokraciu) gratulieren wir der Slowakischen Republik herzlich! Wir würdigen den friedlichen Mut der Sanften Revolution (Nežná revolúcia) sowie das Engagement des slowakischen Volkes für Freiheit, Demokratie und Zusammenhalt von Bratislava bis zur Hohen Tatra!"
+                  ) : locale === "it" ? (
+                    "In occasione del 17 novembre, Giornata della lotta per la libertà e la democrazia in Slovacchia (Deň boja za slobodu a demokraciu), rendiamo omaggio al coraggio civile, all'unità pacifica e allo spirito della Rivoluzione di velluto (Nežná revolúcia). Auguri sinceri di libertà, pace e prosperità sotto il tricolore bianco, blu e rosso!"
+                  ) : locale === "pt" ? (
+                    "Neste 17 de novembro, Dia da Luta pela Liberdade e Democracia na Eslováquia (Deň boja za slobodu a demokraciu), celebramos a coragem cívica, a união pacífica e o legado da Revolução de Veludo (Nežná revolúcia). Desejamos liberdade duradoura, paz e prosperidade a toda a nação eslovaca!"
+                  ) : locale === "ko" ? (
+                    "11월 17일 슬로바키아 공화국의 자유와 민주주의 투쟁의 날(Deň boja za slobodu a demokraciu)을 진심으로 축하합니다. 1989년 벨벳 혁명(Nežná revolúcia)의 평화로운 용기와 연대 정신이 브라티슬라바 성에서 타트라 산맥까지 하양·파랑·빨강 삼색기 아래 영원히 빛나기를 기원합니다!"
+                  ) : locale === "ar" ? (
+                    "بمناسبة يوم النضال من أجل الحرية والديمقراطية في جمهورية سلوفاكيا في 17 نوفمبر (Deň boja za slobodu a demokraciu)، نحيّي روح الشجاعة المدنية والتضامن السلمي للشعب السلوفاكي الصديق، متمنين لسلوفاكيا دوام الحرية والسلام والازدهار!"
+                  ) : (
+                    "On November 17, Freedom and Democracy Day of the Slovak Republic (Deň boja za slobodu a demokraciu), we warmly honor the civic courage, peaceful solidarity, and enduring legacy of the 1989 Gentle/Velvet Revolution (Nežná revolúcia). From Bratislava Castle along the Danube to the majestic peaks of the High Tatras, may the white, blue, and red banner forever wave in freedom, democracy, and prosperity!"
+                  )}
+                </p>
+
+                {/* Historic Slovakia Freedom & Velvet Revolution Motto Block */}
+                <div className="relative border-l-2 border-rose-400/85 pl-4 py-2.5 bg-blue-500/10 rounded-r-xl max-w-[595px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-sky-200 leading-snug">
+                    {"\"Sloboda a demokracia sa rodia z odvahy, pravdy a pokojnej jednoty ľudu.\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-300 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Özgürlük ve demokrasi; halkın cesaretinden, hakikatten ve barışçıl birliğinden doğar.\" — 17 Kasım Slovakya Özgürlük ve Demokrasi Günü Kutlu Olsun!"
+                      : locale === "es"
+                      ? "\"La libertad y la democracia nacen del coraje, la verdad y la unidad pacífica del pueblo.\" — ¡Feliz 17 de Noviembre, Día de la Libertad y la Democracia!"
+                      : locale === "fr"
+                      ? "\"La liberté et la démocratie naissent du courage, de la vérité et de l'unité pacifique du peuple.\" — Joyeux 17 Novembre en Slovaquie !"
+                      : locale === "de"
+                      ? "\"Freiheit und Demokratie entstehen aus Mut, Wahrheit und friedlicher Einheit des Volkes.\" — Alles Gute zum 17. November in der Slowakei!"
+                      : locale === "it"
+                      ? "\"La libertà e la democrazia nascono dal coraggio, dalla verità e dall'unità pacifica del popolo.\" — Felice 17 Novembre in Slovacchia!"
+                      : locale === "pt"
+                      ? "\"A liberdade e a democracia nascem da coragem, da verdade e da união pacífica do povo.\" — Feliz 17 de Novembro na Eslováquia!"
+                      : locale === "ko"
+                      ? "\"자유와 민주주의는 국민의 용기와 진실, 그리고 평화로운 연대에서 탄생한다.\" — 11월 17일 슬로바키아 자유와 민주주의의 날 경축!"
+                      : locale === "ar"
+                      ? "\"الحرية والديمقراطية تولدان من الشجاعة والحقيقة والوحدة السلمية للشعب.\" — يوم سعيد للحرية والديمقراطية في سلوفاكيا!"
+                      : "\"Freedom and democracy are born from courage, truth, and the peaceful unity of the people.\" — Happy November 17 Slovakia Freedom and Democracy Day!"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-rose-400 uppercase mt-2">
+                    {"— SLOVENSKÁ REPUBLIKA • NEŽNÁ REVOLÚCIA • 17. NOVEMBER DEŇ BOJA ZA SLOBODU A DEMOKRACIU • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 15 Kasım Fildişi Sahili Ulusal Barış Günü (15 Novembre • Journée Nationale de la Paix - Côte d'Ivoire) Banner */}
         {(activeBanners.includes("ivory_coast_peace") || activeBanners.includes("cote_divoire") || activeBanners.includes("fildisi") || activeBanners.includes("peace_day")) && (
