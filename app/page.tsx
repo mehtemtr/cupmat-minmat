@@ -347,6 +347,13 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 18 Kasım 2026: Hırvatistan Anma Günü (Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje / Croatia Remembrance Day) - 1 Gün Boyunca
+      const nov18Start = new Date("2026-11-18T00:00:00+03:00").getTime();
+      const nov18End = new Date("2026-11-19T00:00:00+03:00").getTime();
+      if ((nowTime >= nov18Start && nowTime < nov18End) || (year === 2026 && month === 10 && date === 18)) {
+        if (!banners.includes("croatia_remembrance")) banners.push("croatia_remembrance");
+      }
+
       // 17 Kasım 2026: Slovakya Özgürlük ve Demokrasi Günü (Deň boja za slobodu a demokraciu / Freedom and Democracy Day) - 1 Gün Boyunca
       const nov17Start = new Date("2026-11-17T00:00:00+03:00").getTime();
       const nov17End = new Date("2026-11-18T00:00:00+03:00").getTime();
@@ -534,6 +541,178 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 18 Kasım Hırvatistan Anma Günü (18. studenoga • Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje - Hrvatska) Banner */}
+        {(activeBanners.includes("croatia_remembrance") || activeBanners.includes("croatia") || activeBanners.includes("hirvatistan") || activeBanners.includes("remembrance_day")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-rose-500/45 bg-gradient-to-r from-rose-950/60 via-[#070b14]/95 to-blue-950/55 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_50px_rgba(244,63,94,0.22)] transition duration-500 hover:border-amber-400/75">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-rose-500/35 via-white/25 to-blue-500/35 opacity-25 blur transition duration-500 group-hover:opacity-40" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Commemoration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-rose-400/50 shadow-[0_0_35px_rgba(244,63,94,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/croatia_remembrance_day.jpg"
+                    alt="Hırvatistan 18 Kasım Anma Günü • Hrvatska 18. studenoga Dan sjećanja na žrtvu Vukovara i Škabrnje • Croatia Remembrance Day"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-400/50 bg-rose-500/15 px-3.5 py-1 text-xs font-black text-amber-200 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇭🇷 18 KASIM • HIRVATİSTAN ANMA GÜNÜ (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "es"
+                    ? "🇭🇷 18 DE NOVIEMBRE • DÍA DEL RECUERDO EN CROACIA (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "fr"
+                    ? "🇭🇷 18 NOVEMBRE • JOURNÉE DU SOUVENIR EN CROATIE (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "de"
+                    ? "🇭🇷 18. NOVEMBER • GEDENKTAG IN KROATIEN (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "it"
+                    ? "🇭🇷 18 NOVEMBRE • GIORNATA DELLA MEMORIA IN CROAZIA (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "pt"
+                    ? "🇭🇷 18 DE NOVEMBRO • DIA DA MEMÓRIA NA CROÁCIA (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "ko"
+                    ? "🇭🇷 11월 18일 • 크로아티아 현충일 및 추모의 날 (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"
+                    : locale === "ar"
+                    ? "🇭🇷 18 نوفمبر • يوم الذكرى الوطني في جمهورية كرواتيا (DAN SJEĆANJA)"
+                    : "🇭🇷 NOVEMBER 18 • CROATIA REMEMBRANCE DAY (DAN SJEĆANJA • VUKOVAR & ŠKABRNJA)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`18 Kasım Hırvatistan Anma Günü'nde`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`Hırvat Halkının Yanındayız 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`18 de Noviembre • Día del Recuerdo:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`Honramos la Memoria de Croacia 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`18 Novembre • Journée du Souvenir :`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`Hommage et Solidarité avec la Croatie 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`18. November • Kroatischer Gedenktag:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`In stillem Gedenken mit Kroatien 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`18 Novembre • Giornata della Memoria:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`Onore e Vicinanza alla Croazia 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`18 de Novembro • Dia da Memória:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`Homenagem e Respeito à Croácia 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`11월 18일 크로아티아 추모의 날(Dan sjećanja),`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`숭고한 희생과 평화를 깊이 기립니다 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`18 نوفمبر • يوم الذكرى في جمهورية كرواتيا:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`تحية إجلال وتضامن مع الشعب الكرواتي 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`November 18 • Croatia Remembrance Day:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-200 to-sky-400">
+                        {`Honoring Vukovar, Škabrnja & Eternal Peace 🇭🇷🕯️🕊️`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[595px]">
+                  {locale === "tr" ? (
+                    "Hırvatistan Cumhuriyeti'nin (Republika Hrvatska) 18 Kasım Anma Günü'nde (Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje); bağımsızlık ve özgürlük uğruna hayatını kaybedenleri derin bir saygıyla anıyor, dost Hırvat halkının acısını ve onurlu hatırasını yürekten paylaşıyoruz. Tuna (Dunav) kıyısında yükselen tarihi Vukovar Su Kulesi'nin (Vukovarski vodotoranj) sarsılmaz direncinden gecenin karanlığını aydınlatan anma fenerlerine (Vukovarski lampioni) uzanan bu anlamlı günde, Hırvatistan'a daima barış, birlik ve huzur diliyoruz."
+                  ) : locale === "es" ? (
+                    "En este 18 de noviembre, Día del Recuerdo de las Víctimas de la Guerra de la Patria y del Sacrificio de Vukovar y Škabrnja (Dan sjećanja), acompañamos con profundo respeto al pueblo de la República de Croacia. Desde la histórica Torre de Agua de Vukovar (Vukovarski vodotoranj) junto al Danubio hasta la luz de las linternas conmemorativas, deseamos paz eterna, unidad y esperanza para toda la nación croata."
+                  ) : locale === "fr" ? (
+                    "En ce 18 novembre, Journée du souvenir des victimes de la guerre de Patrie et du sacrifice de Vukovar et Škabrnja (Dan sjećanja), nous nous associons avec un profond respect au recueillement de la République de Croatie. Du château d'eau de Vukovar (Vukovarski vodotoranj), symbole d'unité sur les rives du Danube, aux lanternes du souvenir, que la paix et la fraternité éclairent toujours le peuple croate."
+                  ) : locale === "de" ? (
+                    "Am 18. November, dem Gedenktag für die Opfer des Heimatkrieges und für das Opfer von Vukovar und Škabrnja (Dan sjećanja), gedenken wir in tiefer Verbundenheit mit der Republik Kroatien. Vom ikonischen Wasserturm von Vukovar (Vukovarski vodotoranj) an der Donau bis zum warmen Licht der Gedenklaternen wünschen wir dem kroatischen Volk beständigen Frieden, Einheit und Zuversicht."
+                  ) : locale === "it" ? (
+                    "In questo 18 novembre, Giornata della memoria per le vittime della Guerra patriottica e per il sacrificio di Vukovar e Škabrnja (Dan sjećanja), esprimiamo profondo rispetto e vicinanza alla Repubblica di Croazia. Dalla storica Torre dell'Acqua di Vukovar (Vukovarski vodotoranj) lungo il Danubio alle lanterne commemorative, auguriamo pace duratura, unità e serenità al popolo croato."
+                  ) : locale === "pt" ? (
+                    "Neste 18 de novembro, Dia da Memória das Vítimas da Guerra da Pátria e do Sacrifício de Vukovar e Škabrnja (Dan sjećanja), prestamos nossa solidariedade e profundo respeito à República da Croácia. Da histórica Torre de Água de Vukovar (Vukovarski vodotoranj) às margens do Danúbio até as lanternas memoriais, desejamos paz perpétua, união e esperança ao povo croata."
+                  ) : locale === "ko" ? (
+                    "11월 18일 크로아티아 공화국의 조국전쟁 희생자 및 부코바르·슈카브르냐 추모의 날(Dan sjećanja)을 맞아, 자유와 독립을 위해 헌신한 분들을 깊은 경의로 추모합니다. 다뉴브강 변의 상징인 부코바르 급수탑(Vukovarski vodotoranj)과 추모 등불(lampioni)의 빛처럼 크로아티아 국민에게 영원한 평화와 단결이 함께하기를 기원합니다."
+                  ) : locale === "ar" ? (
+                    "في يوم الذكرى الوطني في جمهورية كرواتيا يوم 18 نوفمبر (Dan sjećanja)، نشارك الشعب الكرواتي الصديق مشاعر الوفاء والاحترام لإحياء ذكرى التضحيات من أجل الحرية والاستقلال في فوكوفار وشكابرنيا، متمنين لكرواتيا دوام السلام والوحدة والازدهار."
+                  ) : (
+                    "On November 18, Croatia's Remembrance Day for the Victims of the Homeland War and the Sacrifice of Vukovar and Škabrnja (Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje), we stand in solemn respect and solidarity with the people of the Republic of Croatia. From the iconic Vukovar Water Tower (Vukovarski vodotoranj) along the Danube to the glowing memorial lanterns (lampioni), may the Croatian tricolor forever stand for unity, dignity, and lasting peace."
+                  )}
+                </p>
+
+                {/* Historic Croatia & Vukovar Remembrance Motto Block */}
+                <div className="relative border-l-2 border-amber-400/85 pl-4 py-2.5 bg-rose-500/10 rounded-r-xl max-w-[595px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-200 leading-snug">
+                    {"\"Navik on živi ki zgine pošteno. — Zapamtite Vukovar.\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-300 mt-1 italic">
+                    {locale === "tr"
+                      ? "\"Onuruyla can veren, ebediyen yaşar. — Vukovar'ı Unutmayın.\" — 18 Kasım Hırvatistan Anma Günü'nde Saygı ve Rahmetle"
+                      : locale === "es"
+                      ? "\"Vive para siempre quien muere con honor. — Recuerden Vukovar.\" — 18 de Noviembre, Día del Recuerdo en Croacia"
+                      : locale === "fr"
+                      ? "\"Il vit éternellement, celui qui meurt avec honneur. — Souvenez-vous de Vukovar.\" — 18 Novembre en Croatie"
+                      : locale === "de"
+                      ? "\"Ewig lebt, wer ehrenvoll stirbt. — Gedenkt Vukovar.\" — 18. November Gedenktag in Kroatien"
+                      : locale === "it"
+                      ? "\"Vive in eterno chi muore con onore. — Ricordate Vukovar.\" — 18 Novembre Giornata della Memoria in Croazia"
+                      : locale === "pt"
+                      ? "\"Vive para sempre quem morre com honra. — Lembrem-se de Vukovar.\" — 18 de Novembro na Croácia"
+                      : locale === "ko"
+                      ? "\"명예롭게 스러진 이는 영원히 살아 숨 쉰다. — 부코바르를 기억하라.\" — 11월 18일 크로아티아 추모의 날"
+                      : locale === "ar"
+                      ? "\"يحيا إلى الأبد من يموت بشرف. — تذكروا فوكوفار.\" — 18 نوفمبر يوم الذكرى في كرواتيا"
+                      : "\"Forever lives he who dies with honor. — Remember Vukovar.\" — November 18 Croatia Remembrance Day"}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-rose-400 uppercase mt-2">
+                    {"— REPUBLIKA HRVATSKA • VUKOVAR & ŠKABRNJA • 18. STUDENOGA DAN SJEĆANJA • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
 
         {/* 17 Kasım Slovakya Özgürlük ve Demokrasi Günü (17. November • Deň boja za slobodu a demokraciu - Slovensko) Banner */}
         {(activeBanners.includes("slovakia_freedom") || activeBanners.includes("slovakia") || activeBanners.includes("slovakya") || activeBanners.includes("freedom_day")) && (
