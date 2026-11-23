@@ -347,6 +347,13 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 24 Kasım Öğretmenler Günü: 23 Kasım 2026 20:00:00 (TR Saati / UTC+3) - 24 Kasım 2026 23:59:59 (TR Saati / UTC+3)
+      const nov24TeachersStart = new Date("2026-11-23T20:00:00+03:00").getTime();
+      const nov24TeachersEnd = new Date("2026-11-24T23:59:59+03:00").getTime();
+      if (nowTime >= nov24TeachersStart && nowTime <= nov24TeachersEnd) {
+        if (!banners.includes("24kasim_ogretmenler")) banners.push("24kasim_ogretmenler");
+      }
+
       // 18 Kasım 2026: Hırvatistan Anma Günü (Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje / Croatia Remembrance Day) - 1 Gün Boyunca
       const nov18Start = new Date("2026-11-18T00:00:00+03:00").getTime();
       const nov18End = new Date("2026-11-19T00:00:00+03:00").getTime();
@@ -541,6 +548,176 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 24 Kasım Öğretmenler Günü (Başöğretmen Gazi Mustafa Kemal Atatürk & Şehit Öğretmenlerimiz) Banner */}
+        {(activeBanners.includes("24kasim_ogretmenler") || activeBanners.includes("24kasim") || activeBanners.includes("ogretmenlergunu")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-rose-500/50 bg-gradient-to-r from-red-950/65 via-[#070b14]/95 to-amber-950/50 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_55px_rgba(225,29,72,0.25)] transition duration-500 hover:border-amber-400/80">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-red-600/35 via-amber-400/25 to-rose-600/35 opacity-25 blur transition duration-500 group-hover:opacity-45" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Commemoration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-amber-400/50 shadow-[0_0_35px_rgba(245,158,11,0.28)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/24_kasim_ogretmenler_gunu.jpg"
+                    alt="24 Kasım Öğretmenler Günü • Başöğretmen Gazi Mustafa Kemal Atatürk"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-400/50 bg-rose-500/15 px-3.5 py-1 text-xs font-black text-amber-200 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🇹🇷 24 KASIM ÖĞRETMENLER GÜNÜ • BAŞÖĞRETMENİN İZİNDE, SAYGI VE MİNNETLE"
+                    : locale === "es"
+                    ? "🇹🇷 24 DE NOVIEMBRE DÍA DEL MAESTRO • EN EL CAMINO DE ATATÜRK CON RESPETO Y GRATITUD"
+                    : locale === "fr"
+                    ? "🇹🇷 24 NOVEMBRE JOURNÉE DES ENSEIGNANTS • SUR LA VOIE D'ATATÜRK AVEC RESPECT ET GRATITUDE"
+                    : locale === "de"
+                    ? "🇹🇷 24. NOVEMBER TAG DER LEHRER • AUF DEM WEG VON HAUPTLEHRER ATATÜRK"
+                    : locale === "it"
+                    ? "🇹🇷 24 NOVEMBRE FESTA DEGLI INSEGNANTI • SULLE ORME DI ATATÜRK CON RISPETTO E GRATITUDINE"
+                    : locale === "pt"
+                    ? "🇹🇷 24 DE NOVEMBRO DIA DOS PROFESSORES • NO CAMINHO DE ATATÜRK COM RESPEITO E GRATIDÃO"
+                    : locale === "ko"
+                    ? "🇹🇷 11월 24일 스승의 날 • 위대한 스승 아타튀르크의 길을 따라 존경과 감사를 담아"
+                    : locale === "ar"
+                    ? "🇹🇷 24 نوفمبر يوم المعلم • على خطى المعلم الأول مصطفى كمال أتاتورك بكل وفاء وتقدير"
+                    : "🇹🇷 NOVEMBER 24 TEACHERS' DAY • IN THE FOOTSTEPS OF HEAD TEACHER ATATÜRK"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Başöğretmen Gazi Mustafa Kemal Atatürk’ün Emanetini Taşıyan`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`Tüm Öğretmenlerimizin 24 Kasım Öğretmenler Günü Kutlu Olsun! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`Honrando el Legado del Maestro Principal Mustafa Kemal Atatürk:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`¡Feliz 24 de Noviembre, Día del Maestro! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Porteurs de l'Héritage du Premier Enseignant Mustafa Kemal Atatürk :`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`Joyeuse Journée des Enseignants du 24 Novembre ! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Im Geiste des Hauptlehrers Gazi Mustafa Kemal Atatürk:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`Alles Gute zum Tag der Lehrer am 24. November! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Custodi dell'Eredità del Primo Insegnante Mustafa Kemal Atatürk:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`Buona Festa degli Insegnanti del 24 Novembre! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Honrando o Legado do Professor Principal Mustafa Kemal Atatürk:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`Feliz 24 de Novembro, Dia dos Professores! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`영원한 스승 가즈 무스타파 케말 아타튀르크의 유산을 이어가는`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`모든 선생님들의 11월 24일 스승의 날을 축하합니다! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`حملة أمانة المعلم الأول الغازي مصطفى كمال أتاتورك:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`كل عام وجميع معلمينا بخير في يوم المعلم 24 نوفمبر! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Carrying the Legacy of Head Teacher Gazi Mustafa Kemal Atatürk:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200">
+                        {`Happy November 24 Teachers' Day to All Our Devoted Teachers! 🇹🇷🕯️📚`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[595px]">
+                  {locale === "tr" ? (
+                    "Başta ebedi Başöğretmenimiz Gazi Mustafa Kemal Atatürk olmak üzere; cehaletin ve karanlığın karşısında dimdik dururken hain terör örgütlerinin saldırılarıyla görevi başında şehit edilen kahraman öğretmenlerimizi ve ebediyete irtihal eden tüm eğitim çınarlarımızı rahmet, saygı ve minnetle anıyoruz. Ay-yıldızlı bayrağımızın dalgalandığı her köşede “aklı hür, vicdanı hür, irfanı hür” nesiller yetiştirerek geleceğimize ışık tutan tüm fedakâr öğretmenlerimizin 24 Kasım Öğretmenler Günü kutlu olsun!"
+                  ) : locale === "es" ? (
+                    "Recordamos con profundo respeto, misericordia y gratitud a nuestro eterno Maestro Principal Gazi Mustafa Kemal Atatürk, a nuestros heroicos maestros martirizados en cumplimiento de su deber por ataques terroristas mientras permanecían firmes contra la ignorancia y la oscuridad, y a todos los educadores fallecidos. ¡Feliz 24 de Noviembre a todos nuestros maestros que iluminan el futuro formando generaciones de «mente libre, conciencia libre y sabiduría libre» en cada rincón donde ondea nuestra bandera!"
+                  ) : locale === "fr" ? (
+                    "Nous rendons un hommage empreint de respect et de gratitude à notre éternel Premier Enseignant Gazi Mustafa Kemal Atatürk, à nos enseignants héroïques tombés en martyrs dans l'exercice de leurs fonctions lors d'attaques terroristes alors qu'ils se dressaient contre l'ignorance, ainsi qu'à tous nos éducateurs disparus. Joyeuse Journée des Enseignants du 24 Novembre à tous ceux qui forment des générations « libres d'esprit, libres de conscience et libres de savoir » !"
+                  ) : locale === "de" ? (
+                    "In tiefem Respekt und ewiger Dankbarkeit gedenken wir unseres Hauptlehrers Gazi Mustafa Kemal Atatürk, unserer heldenhaften Lehrerinnen und Lehrer, die im Kampf gegen Unwissenheit und Dunkelheit durch heimtückische Terroranschläge im Dienst zu Märtyrern wurden, sowie aller verstorbenen Pädagogen. Alles Gute zum Tag der Lehrer am 24. November an alle Lehrkräfte, die Generationen mit „freiem Geist, freiem Gewissen und freiem Wissen“ erziehen!"
+                  ) : locale === "it" ? (
+                    "Ricordiamo con profondo rispetto e gratitudine il nostro eterno Primo Insegnante Gazi Mustafa Kemal Atatürk, i nostri eroici insegnanti caduti martiri in servizio a causa di vili attacchi terroristici mentre combattevano l'ignoranza, e tutti gli educatori scomparsi. Buona Festa degli Insegnanti del 24 Novembre a tutti i docenti che crescono generazioni «libere nella mente, libere nella coscienza e libere nella conoscenza»!"
+                  ) : locale === "pt" ? (
+                    "Lembramos com profundo respeito e gratidão o nosso eterno Professor Principal Gazi Mustafa Kemal Atatürk, os nossos heroicos professores martirizados no cumprimento do dever por ataques terroristas enquanto permaneciam firmes contra a ignorância, e todos os educadores falecidos. Feliz 24 de Novembro a todos os professores que iluminam o futuro formando gerações de «mente livre, consciência livre e sabedoria livre»!"
+                  ) : locale === "ko" ? (
+                    "영원한 스승 가즈 무스타파 케말 아타튀르크를 비롯하여, 무지와 어둠에 맞서 사명을 다하다 비열한 테러 공격으로 순직한 영웅적인 교사들과 세상을 떠난 모든 교육자들을 깊은 존경과 감사로 추모합니다. 국기가 휘날리는 모든 곳에서 ‘자유로운 지성, 자유로운 양심, 자유로운 지혜’를 지닌 세대를 길러내는 모든 선생님들의 11월 24일 스승의 날을 진심으로 축하합니다!"
+                  ) : locale === "ar" ? (
+                    "نستذكر بكل إجلال ورحمة وامتنان معلمنا الأول الخالد الغازي مصطفى كمال أتاتورك، ومعلمينا الأبطال الذين استشهدوا أثناء أداء واجبهم جراء هجمات إرهابية غادرة وهم يقفون بشموخ في وجه الجهل والظلام، وجميع رواد التعليم الراحلين. كل عام وجميع معلمينا المخلصين الذين ينيرون مستقبلنا بتربية أجيال «حرة الفكر، حرة الضمير، حرة العرفان» بألف خير في يوم المعلم 24 نوفمبر!"
+                  ) : (
+                    "With boundless respect, mercy, and gratitude, we commemorate our eternal Head Teacher Gazi Mustafa Kemal Atatürk, our heroic teachers martyred in the line of duty by treacherous terrorist attacks while standing firm against ignorance and darkness, and all departed educators. Happy November 24 Teachers' Day to all devoted teachers who illuminate our future by raising generations of 'free mind, free conscience, and free wisdom' under our starry flag!"
+                  )}
+                </p>
+
+                {/* Atatürk Quote Block */}
+                <div className="relative border-l-2 border-amber-400/85 pl-4 py-2.5 bg-rose-500/10 rounded-r-xl max-w-[595px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-200 leading-snug">
+                    {locale === "tr"
+                      ? "\"Unutmayınız ki cumhurbaşkanı bile sınıfta öğretmenden sonra gelir.\""
+                      : locale === "es"
+                      ? "\"No olvidéis que incluso el Presidente de la República viene después del maestro en el aula.\""
+                      : locale === "fr"
+                      ? "\"N'oubliez pas que même le Président de la République vient après l'enseignant dans la salle de classe.\""
+                      : locale === "de"
+                      ? "\"Vergessen Sie nicht, dass selbst der Staatspräsident im Klassenzimmer nach dem Lehrer kommt.\""
+                      : locale === "it"
+                      ? "\"Non dimenticate che persino il Presidente della Repubblica, in classe, viene dopo l'insegnante.\""
+                      : locale === "pt"
+                      ? "\"Não se esqueçam de que até mesmo o Presidente da República vem depois do professor na sala de aula.\""
+                      : locale === "ko"
+                      ? "\"교실에서는 대통령조차 교사 다음이라는 사실을 잊지 마십시오.\""
+                      : locale === "ar"
+                      ? "\"لا تنسوا أن رئيس الجمهورية نفسه يأتي بعد المعلم داخل الفصل الدراسي.\""
+                      : "\"Do not forget that even the President of the Republic comes after the teacher in the classroom.\""}
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-zinc-300 mt-1 italic font-bold">
+                    {locale === "tr"
+                      ? "— Başöğretmen Gazi Mustafa Kemal Atatürk"
+                      : "— Head Teacher Gazi Mustafa Kemal Atatürk"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* 18 Kasım Hırvatistan Anma Günü (18. studenoga • Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje - Hrvatska) Banner */}
         {(activeBanners.includes("croatia_remembrance") || activeBanners.includes("croatia") || activeBanners.includes("hirvatistan") || activeBanners.includes("remembrance_day")) && (

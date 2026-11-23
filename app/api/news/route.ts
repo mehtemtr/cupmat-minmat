@@ -81,6 +81,52 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
     },
   },
   {
+    id: "newsglo-24-kasim-ogretmenler-gunu-2026",
+    category: "General",
+    source: "Statmatik News / 24 Kasım Özel",
+    link: "https://statmatik.com",
+    image: "/24_kasim_ogretmenler_gunu.jpg",
+    published_at: new Date().toISOString(),
+    translations: {
+      tr: {
+        title: "Başöğretmen Gazi Mustafa Kemal Atatürk’ün Emanetini Taşıyan Tüm Öğretmenlerimizin 24 Kasım Öğretmenler Günü Kutlu Olsun!",
+        snippet: "Başta ebedi Başöğretmenimiz Gazi Mustafa Kemal Atatürk olmak üzere; cehaletin ve karanlığın karşısında dimdik dururken hain terör örgütlerinin saldırılarıyla görevi başında şehit edilen kahraman öğretmenlerimizi ve ebediyete irtihal eden tüm eğitim çınarlarımızı rahmet, saygı ve minnetle anıyoruz. Ay-yıldızlı bayrağımızın dalgalandığı her köşede “aklı hür, vicdanı hür, irfanı hür” nesiller yetiştirerek geleceğimize ışık tutan tüm fedakâr öğretmenlerimizin 24 Kasım Öğretmenler Günü kutlu olsun! — “Unutmayınız ki cumhurbaşkanı bile sınıfta öğretmenden sonra gelir.” (Başöğretmen Gazi Mustafa Kemal Atatürk)",
+      },
+      en: {
+        title: "Happy November 24 Teachers' Day to All Our Devoted Teachers Carrying the Legacy of Head Teacher Gazi Mustafa Kemal Atatürk!",
+        snippet: "With boundless respect, mercy, and gratitude, we commemorate our eternal Head Teacher Gazi Mustafa Kemal Atatürk, our heroic teachers martyred in the line of duty by treacherous terrorist attacks while standing firm against ignorance and darkness, and all departed educators. Happy November 24 Teachers' Day to all teachers raising generations of 'free mind, free conscience, and free wisdom'! — 'Do not forget that even the President of the Republic comes after the teacher in the classroom.' (Head Teacher Gazi Mustafa Kemal Atatürk)",
+      },
+      de: {
+        title: "Alles Gute zum Tag der Lehrer am 24. November im Geiste des Hauptlehrers Gazi Mustafa Kemal Atatürk!",
+        snippet: "In tiefem Respekt gedenken wir unseres Hauptlehrers Gazi Mustafa Kemal Atatürk, unserer heldenhaften Lehrkräfte, die durch heimtückische Terroranschläge im Dienst zu Märtyrern wurden, sowie aller verstorbenen Pädagogen. Alles Gute zum 24. November an alle Lehrerinnen und Lehrer, die Generationen mit ‚freiem Geist, freiem Gewissen und freiem Wissen‘ erziehen! — ‚Vergessen Sie nicht, dass selbst der Staatspräsident im Klassenzimmer nach dem Lehrer kommt.‘",
+      },
+      fr: {
+        title: "Joyeuse Journée des Enseignants du 24 Novembre aux Porteurs de l'Héritage du Premier Enseignant Gazi Mustafa Kemal Atatürk !",
+        snippet: "Nous rendons hommage à notre éternel Premier Enseignant Gazi Mustafa Kemal Atatürk, à nos enseignants héroïques tombés en martyrs lors d'attaques terroristes dans l'exercice de leurs fonctions, ainsi qu'à tous nos éducateurs disparus. Joyeuse Journée des Enseignants à tous ceux qui forment des générations « libres d'esprit, libres de conscience et libres de savoir » ! — « N'oubliez pas que même le Président de la République vient après l'enseignant dans la salle de classe. »",
+      },
+      es: {
+        title: "¡Feliz 24 de Noviembre, Día del Maestro, en el Camino del Maestro Principal Gazi Mustafa Kemal Atatürk!",
+        snippet: "Recordamos con respeto y gratitud a nuestro eterno Maestro Principal Gazi Mustafa Kemal Atatürk, a nuestros heroicos maestros martirizados en cumplimiento de su deber por ataques terroristas y a todos los educadores fallecidos. ¡Feliz Día del Maestro a quienes forman generaciones de «mente libre, conciencia libre y sabiduría libre»! — «No olvidéis que incluso el Presidente de la República viene después del maestro en el aula.»",
+      },
+      it: {
+        title: "Buona Festa degli Insegnanti del 24 Novembre sulle Orme del Primo Insegnante Gazi Mustafa Kemal Atatürk!",
+        snippet: "Ricordiamo con profondo rispetto il nostro eterno Primo Insegnante Gazi Mustafa Kemal Atatürk, i nostri eroici insegnanti caduti martiri in servizio a causa di attacchi terroristici e tutti gli educatori scomparsi. Buona Festa degli Insegnanti a chi cresce generazioni «libere nella mente, nella coscienza e nella conoscenza»! — «Non dimenticate che persino il Presidente della Repubblica, in classe, viene dopo l'insegnante.»",
+      },
+      pt: {
+        title: "Feliz 24 de Novembro, Dia dos Professores, Honrando o Legado do Professor Principal Gazi Mustafa Kemal Atatürk!",
+        snippet: "Lembramos com respeito e gratidão o nosso eterno Professor Principal Gazi Mustafa Kemal Atatürk, os nossos heroicos professores martirizados no cumprimento do dever por ataques terroristas e todos os educadores falecidos. Feliz Dia dos Professores a todos que formam gerações de «mente livre, consciência livre e sabedoria livre»! — «Não se esqueçam de que até mesmo o Presidente da República vem depois do professor na sala de aula.»",
+      },
+      ar: {
+        title: "كل عام وجميع معلمينا بخير في يوم المعلم 24 نوفمبر على خطى المعلم الأول الغازي مصطفى كمال أتاتورك!",
+        snippet: "نستذكر بكل إجلال ورحمة معلمنا الأول الخالد الغازي مصطفى كمال أتاتورك، ومعلمينا الأبطال الذين استشهدوا أثناء أداء واجبهم جراء هجمات إرهابية غادرة، وجميع رواد التعليم الراحلين. كل عام ومعلمينا الذين يربون أجيالاً «حرة الفكر، حرة الضمير، حرة العرفان» بألف خير! — «لا تنسوا أن رئيس الجمهورية نفسه يأتي بعد المعلم داخل الفصل الدراسي.»",
+      },
+      ko: {
+        title: "영원한 스승 가즈 무스타파 케말 아타튀르크의 유산을 이어가는 모든 선생님들의 11월 24일 스승의 날을 축하합니다!",
+        snippet: "영원한 스승 아타튀르크와 테러 공격으로 임무 중 순직한 영웅적인 교사들을 깊은 존경과 감사로 추모합니다. ‘자유로운 지성, 자유로운 양심, 자유로운 지혜’를 지닌 세대를 길러내는 모든 선생님들의 스승의 날을 축하합니다! — “교실에서는 대통령조차 교사 다음이라는 사실을 잊지 마십시오.”",
+      },
+    },
+  },
+  {
     id: "newsglo-poland-independence-day-2026",
     category: "General",
     source: "Statmatik News / PAP / Global Heritage",
@@ -935,6 +981,39 @@ export async function GET(request: Request) {
                     title: cleanText(trans.title),
                     snippet: cleanText(trans.snippet),
                     content: trans.content,
+                  });
+                  if (cleanedDbNews.length > limit) {
+                    cleanedDbNews.pop();
+                  }
+                }
+              }
+            }
+
+            // 24 Kasım Öğretmenler Günü (23 Kasım 2026 20:00 - 24 Kasım 2026 23:59 TR Saati) özel haberini zaman penceresi içinde en üste sabitle
+            const nov24TeachersStartMs = new Date("2026-11-23T20:00:00+03:00").getTime();
+            const nov24TeachersEndMs = new Date("2026-11-24T23:59:59+03:00").getTime();
+            const isNov24TeachersWindow =
+              now.getTime() >= nov24TeachersStartMs &&
+              now.getTime() <= nov24TeachersEndMs;
+
+            if (page === 1 && (category === "all" || category.toLowerCase() === "general") && !search && isNov24TeachersWindow) {
+              const nov24Base = MULTILINGUAL_NEWS_DATASET.find((item) => item.id === "newsglo-24-kasim-ogretmenler-gunu-2026");
+              if (nov24Base) {
+                const trans =
+                  nov24Base.translations[lang] ||
+                  nov24Base.translations["en"] ||
+                  nov24Base.translations["tr"];
+                if (trans && !cleanedDbNews.some((n) => n.id === nov24Base.id || (n.title && n.title.includes("24 Kasım")))) {
+                  cleanedDbNews.unshift({
+                    id: nov24Base.id,
+                    source: nov24Base.source,
+                    category: nov24Base.category,
+                    link: nov24Base.link,
+                    image: nov24Base.image,
+                    published_at: new Date().toISOString(),
+                    featured_order: 1,
+                    title: cleanText(trans.title),
+                    snippet: cleanText(trans.snippet),
                   });
                   if (cleanedDbNews.length > limit) {
                     cleanedDbNews.pop();
