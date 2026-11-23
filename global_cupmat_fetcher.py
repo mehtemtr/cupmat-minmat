@@ -127,7 +127,127 @@ TEAM_COUNTRY_CODES = {
     "Panama": "PAN", "Jamaika": "JAM", "Jamaica": "JAM"
 }
 
+TEAM_CANONICAL_NAMES = {
+    "Man City": "Manchester City", "Manchester City FC": "Manchester City",
+    "Man United": "Manchester United", "Man Utd": "Manchester United", "Manchester United FC": "Manchester United", "Man. United": "Manchester United",
+    "Borussia Dortmund": "Borussia Dortmund", "B. Dortmund": "Borussia Dortmund", "Dortmund": "Borussia Dortmund", "BVB": "Borussia Dortmund",
+    "Bayern Munich": "Bayern Munich", "Bayern München": "Bayern Munich", "FC Bayern München": "Bayern Munich", "Bayern": "Bayern Munich",
+    "Real Madrid CF": "Real Madrid", "Real Madrid C.F.": "Real Madrid",
+    "FC Barcelona": "Barcelona", "Barça": "Barcelona",
+    "Atletico Madrid": "Atlético Madrid", "Atleti": "Atlético Madrid", "Club Atlético de Madrid": "Atlético Madrid", "Atlético de Madrid": "Atlético Madrid",
+    "Real Betis Balompié": "Real Betis", "Betis": "Real Betis",
+    "Villarreal CF": "Villarreal",
+    "Aston Villa FC": "Aston Villa",
+    "Arsenal FC": "Arsenal",
+    "Liverpool FC": "Liverpool",
+    "Chelsea FC": "Chelsea",
+    "Tottenham Hotspur": "Tottenham", "Tottenham Hotspur FC": "Tottenham",
+    "Inter Milan": "Inter", "FC Internazionale Milano": "Inter",
+    "Milan": "AC Milan",
+    "Juventus FC": "Juventus",
+    "SSC Napoli": "Napoli",
+    "AS Roma": "Roma",
+    "PSG": "Paris Saint-Germain", "Paris": "Paris Saint-Germain", "Paris Saint Germain": "Paris Saint-Germain", "Paris Saint-Germain FC": "Paris Saint-Germain",
+    "LOSC Lille": "Lille",
+    "Olympique Lyonnais": "Lyon",
+    "AS Monaco": "Monaco", "AS Monaco FC": "Monaco",
+    "Stade Brestois 29": "Brest",
+    "RC Lens": "Lens",
+    "AFC Ajax": "Ajax",
+    "PSV Eindhoven": "PSV",
+    "Feyenoord Rotterdam": "Feyenoord",
+    "Sporting": "Sporting CP", "Sporting Clube de Portugal": "Sporting CP",
+    "SL Benfica": "Benfica",
+    "Porto": "FC Porto",
+    "Club Brugge KV": "Club Brugge",
+    "Royale Union Saint-Gilloise": "Union SG", "R. Union Saint-Gilloise": "Union SG", "Union Saint-Gilloise": "Union SG", "Union St. Gilloise": "Union SG",
+    "Celtic FC": "Celtic",
+    "Rangers FC": "Rangers",
+    "Red Bull Salzburg": "Salzburg", "FC Red Bull Salzburg": "Salzburg",
+    "SK Sturm Graz": "Sturm Graz",
+    "Lask Linz": "LASK", "LASK Linz": "LASK",
+    "GNK Dinamo Zagreb": "Dinamo Zagreb", "GNK Dinamo": "Dinamo Zagreb",
+    "Red Star Belgrade": "Kızılyıldız", "FK Crvena Zvezda": "Kızılyıldız", "Crvena Zvezda": "Kızılyıldız",
+    "BSC Young Boys": "Young Boys",
+    "AC Sparta Praha": "Sparta Prag", "Sparta Praha": "Sparta Prag",
+    "SK Slavia Praha": "Slavia Prag", "Slavia Praha": "Slavia Prag", "Slavia Prague": "Slavia Prag",
+    "FC Viktoria Plzeň": "Viktoria Plzen", "Viktoria Plzeň": "Viktoria Plzen", "Plzen": "Viktoria Plzen",
+    "Bodo/Glimt": "Bodø/Glimt", "FK Bodø/Glimt": "Bodø/Glimt",
+    "Viking FK": "Viking",
+    "FC Shakhtar Donetsk": "Shakhtar Donetsk", "Shaktar": "Shakhtar Donetsk", "Shakhtar": "Shakhtar Donetsk",
+    "ŠK Slovan Bratislava": "Slovan Bratislava", "Sl. Bratislava": "Slovan Bratislava", "S. Bratislava": "Slovan Bratislava", "SK Slovan Bratislava": "Slovan Bratislava",
+    "AEK Athens FC": "AEK Athens", "PAE AEK": "AEK Athens",
+    "Galatasaray SK": "Galatasaray", "Galatasaray A.Ş.": "Galatasaray",
+    "Fenerbahce SK": "Fenerbahçe",
+    "Stuttgart": "VfB Stuttgart",
+    "RasenBallsport Leipzig": "RB Leipzig", "Leipzig": "RB Leipzig",
+    "Sabah": "Sabah FK", "Sabah FA": "Sabah FK", "Sabah FC": "Sabah FK",
+    "Como": "Como 1907",
+    "Estudiantes LP": "Estudiantes L.P.",
+    "LDU Quito": "LDU de Quito",
+    "Celta": "Celta Vigo", "Real Club Celta": "Celta Vigo",
+    "Ferencváros": "Ferencvarosi TC", "Ferencvaros": "Ferencvarosi TC",
+    "H. Beer-Sheva": "Hapoel Beer Sheva", "Hapoel Beer-Sheva FC": "Hapoel Beer Sheva",
+    "Hoffenheim": "TSG Hoffenheim", "1899 Hoffenheim": "TSG Hoffenheim", "TSG 1899 Hoffenheim": "TSG Hoffenheim",
+    "Jagiellonia": "Jagiellonia Białystok",
+    "Lech Poznań": "Lech Poznan",
+    "Leverkusen": "Bayer Leverkusen", "Bayer 04 Leverkusen": "Bayer Leverkusen",
+    "Lillestrøm": "Lillestrom",
+    "N.E.C.": "NEC Nijmegen", "N.E.C. Nijmegen": "NEC Nijmegen",
+    "OFI": "OFI Crete",
+    "Olympiacos": "Olympiakos Piraeus", "Olympiakos": "Olympiakos Piraeus",
+    "Omonia": "Omonia Nicosia",
+    "Aarhus": "AGF Aarhus",
+    "Borac": "Borac Banja Luka",
+    "Braga": "Sporting Braga",
+    "Brann": "SK Brann",
+    "Brighton": "Brighton & Hove Albion",
+    "Copenhagen": "FC Copenhagen",
+    "Egnatia": "Egnatia Rrogozhinë",
+    "Freiburg": "SC Freiburg",
+    "Gent": "KAA Gent",
+    "Hearts": "Heart of Midlothian",
+    "Iberia Tbilisi": "FC Iberia 1999", "FC Iberia 1999 Tbilisi": "FC Iberia 1999",
+    "Inter Escaldes": "Inter Club d'Escaldes",
+    "Jablonec": "FK Jablonec",
+    "KuPS Kuopio": "KuPS",
+    "L. Red Imps": "Lincoln Red Imps",
+    "Lugano": "FC Lugano",
+    "Midtjylland": "FC Midtjylland",
+    "Mjällby": "Mjällby AIF",
+    "Nordsjælland": "FC Nordsjælland",
+    "Pafos": "Pafos FC",
+    "Riga": "Riga FC",
+    "Sint-Truidense": "Sint-Truidense VV",
+    "Thun": "FC Thun",
+    "Twente": "FC Twente",
+    "Univ. Craiova": "Universitatea Craiova",
+    "Türki̇ye": "Turkey", "Türkiye": "Turkey",
+    "Czechia": "Czech Republic",
+    "Bosnia and Herzegovina": "Bosnia & Herzegovina"
+}
+
+UEFA_TO_TR_COUNTRY = {
+    "TUR": "TÜR", "ENG": "İNG", "ESP": "İSP", "GER": "ALM", "FRA": "FRA", "ITA": "İTA",
+    "NED": "HOL", "POR": "POR", "SCO": "İSK", "BEL": "BEL", "AUT": "AVU", "CZE": "ÇEK",
+    "CRO": "HIR", "SRB": "SIR", "SUI": "İSV", "NOR": "NOR", "SWE": "İSVE", "DEN": "DAN",
+    "UKR": "UKR", "AZE": "AZE", "SVK": "SVK", "GRE": "YUN", "SVN": "SVN", "BUL": "BUL",
+    "ISR": "İSR", "POL": "POL", "HUN": "MAC", "ROU": "ROM", "CYP": "KIB", "GEO": "GÜR",
+    "KAZ": "KAZ", "ALB": "ARN", "BIH": "BOS", "KOS": "KOS", "ARM": "ERM", "IRL": "İRL",
+    "NIR": "K.İR", "WAL": "GAL", "FIN": "FİN", "ISL": "İZL", "LUX": "LÜK", "MLT": "MLT",
+    "AND": "AND", "SMR": "SMR", "FRO": "FAR", "GIB": "CEB", "MDA": "MOL", "EST": "EST",
+    "LVA": "LET", "LTU": "LİT", "BLR": "BLR", "MNE": "KRD", "MKD": "K.MK", "LIE": "LİH"
+}
+
+def normalize_team_name(name):
+    if not name:
+        return ""
+    trimmed = name.strip()
+    return TEAM_CANONICAL_NAMES.get(trimmed, trimmed)
+
 def get_country_code(team_name, fallback=""):
+    if fallback and fallback.upper() in UEFA_TO_TR_COUNTRY:
+        return UEFA_TO_TR_COUNTRY[fallback.upper()]
     if not team_name:
         return (fallback or "UNK")[:10]
     name_clean = team_name.strip()
@@ -191,10 +311,10 @@ def fetch_uefa_official_matches(tournament_map):
     """UEFA Resmi Açık API'sinden bu sezonun tüm maçlarını çeker."""
     print("\n--- UEFA RESMİ API MAÇLARI ÇEKİLİYOR ---")
     uefa_comps = [
-        {"uefa_id": "1", "api_id": 2, "name": "UEFA Şampiyonlar Ligi"},
-        {"uefa_id": "3", "api_id": 3, "name": "UEFA Avrupa Ligi"},
-        {"uefa_id": "19", "api_id": 848, "name": "UEFA Konferans Ligi"},
-        {"uefa_id": "13", "api_id": 5, "name": "UEFA Uluslar Ligi"}
+        {"uefa_id": "1", "api_id": 2, "season_year": 2027, "name": "UEFA Şampiyonlar Ligi"},
+        {"uefa_id": "14", "api_id": 3, "season_year": 2027, "name": "UEFA Avrupa Ligi"},
+        {"uefa_id": "2019", "api_id": 848, "season_year": 2027, "name": "UEFA Konferans Ligi"},
+        {"uefa_id": "2014", "api_id": 5, "season_year": 2027, "name": "UEFA Uluslar Ligi"}
     ]
 
     total_inserted = 0
@@ -205,17 +325,23 @@ def fetch_uefa_official_matches(tournament_map):
             continue
 
         print(f"[+] {comp['name']} taranıyor...")
-        url = f"https://match.uefa.com/v5/matches?competitionId={comp['uefa_id']}&seasonYear=2025&limit=100&offset=0"
-        
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
-        try:
-            with urllib.request.urlopen(req) as resp:
-                matches_data = json.loads(resp.read().decode())
-        except Exception as e:
-            print(f"[!] UEFA API hatası ({comp['name']}): {e}")
-            continue
+        matches_list = []
+        for offset in range(0, 500, 100):
+            url = f"https://match.uefa.com/v5/matches?competitionId={comp['uefa_id']}&seasonYear={comp['season_year']}&limit=100&offset={offset}"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+            try:
+                with urllib.request.urlopen(req) as resp:
+                    matches_data = json.loads(resp.read().decode())
+                batch = matches_data if isinstance(matches_data, list) else matches_data.get("matches", [])
+                if not batch:
+                    break
+                matches_list.extend(batch)
+                if len(batch) < 100:
+                    break
+            except Exception as e:
+                print(f"[!] UEFA API hatası ({comp['name']}): {e}")
+                break
 
-        matches_list = matches_data if isinstance(matches_data, list) else matches_data.get("matches", [])
         print(f"    -> {len(matches_list)} maç bulundu.")
 
         db_records = []
@@ -226,35 +352,87 @@ def fetch_uefa_official_matches(tournament_map):
 
             h_team = m.get("homeTeam", {})
             a_team = m.get("awayTeam", {})
-            h_name = h_team.get("internationalName") or h_team.get("name") or "TBD"
-            a_name = a_team.get("internationalName") or a_team.get("name") or "TBD"
+            raw_h = h_team.get("internationalName") or h_team.get("name") or "TBD"
+            raw_a = a_team.get("internationalName") or a_team.get("name") or "TBD"
 
-            if h_name == "TBD" and a_name == "TBD":
+            if raw_h == "TBD" or raw_a == "TBD":
                 continue
 
-            round_info = m.get("round", {})
-            round_name = round_info.get("name") or m.get("roundName") or "Lig Aşaması"
-            matchday = m.get("matchday")
-            if matchday:
-                round_name = f"{matchday}. Hafta"
+            h_name = normalize_team_name(raw_h)
+            a_name = normalize_team_name(raw_a)
 
-            score = m.get("score", {})
-            total_score = score.get("total", {})
+            round_info = m.get("round", {}) or {}
+            phase = round_info.get("phase") or ""
+            r_meta_name = (round_info.get("metaData", {}) or {}).get("name") or ""
+            matchday_obj = m.get("matchday") or {}
+            md_seq = matchday_obj.get("sequenceNumber") if isinstance(matchday_obj, dict) else str(matchday_obj or "")
+
+            if comp["api_id"] == 5:
+                grp = m.get("group", {}) or {}
+                lg_name = ((grp.get("league", {}) or {}).get("metaData", {}) or {}).get("leagueName") or "League A"
+                grp_short = ((grp.get("translations", {}) or {}).get("shortName", {}) or {}).get("EN") or (grp.get("metaData", {}) or {}).get("groupShortName") or "A1"
+                lg_letter = lg_name.replace("League ", "").strip()[:1].upper() or "A"
+                grp_num = "".join([c for c in grp_short if c.isdigit()])[:1] or "1"
+                week_num = md_seq or "1"
+                round_name = f"Lig {lg_letter} - {grp_num}. Grup - {week_num}. Hafta"
+            elif phase == "QUALIFYING":
+                r_low = r_meta_name.lower()
+                if "first qualifying" in r_low:
+                    round_name = "1. Eleme Turu" if comp["api_id"] == 2 else "1. Ön Eleme"
+                elif "second qualifying" in r_low:
+                    round_name = "2. Eleme Turu" if comp["api_id"] == 2 else "2. Ön Eleme"
+                elif "third qualifying" in r_low:
+                    round_name = "3. Eleme Turu" if comp["api_id"] == 2 else "3. Ön Eleme"
+                elif "play-off" in r_low or "playoff" in r_low:
+                    round_name = "Play-off"
+                else:
+                    round_name = r_meta_name or "Ön Eleme"
+            elif "league phase" in r_meta_name.lower() and md_seq:
+                round_name = f"{md_seq}. Hafta"
+            else:
+                round_name = f"{md_seq}. Hafta" if md_seq else (r_meta_name or "Normal Sezon")
+
+            score = m.get("score", {}) or {}
+            total_score = score.get("total", {}) or {}
+            reg_score = score.get("regular", {}) or {}
+            pen_score = score.get("penalty", {}) or {}
+            agg_score = score.get("aggregate", {}) or {}
+
             h_score = total_score.get("home")
             a_score = total_score.get("away")
+            h_score_90 = reg_score.get("home") if reg_score.get("home") is not None else h_score
+            a_score_90 = reg_score.get("away") if reg_score.get("away") is not None else a_score
+            h_pen = pen_score.get("home")
+            a_pen = pen_score.get("away")
 
             status = "NS"
             status_raw = m.get("status", "")
             if status_raw in ["FINISHED", "FT"]:
-                status = "FT"
-            elif status_raw in ["LIVE", "IN_PLAY"]:
+                if h_pen is not None and a_pen is not None:
+                    status = "PEN"
+                elif h_score is not None and h_score_90 is not None and (h_score != h_score_90 or a_score != a_score_90):
+                    status = "AET"
+                else:
+                    status = "FT"
+            elif status_raw in ["LIVE", "IN_PLAY", "PAUSED"]:
                 status = "LIVE"
             elif status_raw in ["POSTPONED"]:
                 status = "PST"
 
-            utc_date = m.get("kickOffTime", {}).get("dateTime") or m.get("matchDate") or datetime.datetime.now().isoformat()
+            home_winner = None
+            away_winner = None
+            if h_score is not None and a_score is not None and status in ["FT", "AET", "PEN"]:
+                if h_pen is not None and a_pen is not None:
+                    home_winner = h_pen > a_pen
+                    away_winner = a_pen > h_pen
+                else:
+                    home_winner = h_score > a_score
+                    away_winner = a_score > h_score
 
+            utc_date = (m.get("kickOffTime", {}) or {}).get("dateTime") or m.get("matchDate") or datetime.datetime.now().isoformat()
             int_api_id = int(str(match_id)[:9]) if str(match_id).isdigit() else abs(hash(str(match_id))) % 100000000
+            stadium = m.get("stadium", {}) or {}
+            venue_name = ((stadium.get("translations", {}) or {}).get("name", {}) or {}).get("EN") or stadium.get("address")
 
             db_records.append({
                 "api_id": int_api_id,
@@ -263,35 +441,41 @@ def fetch_uefa_official_matches(tournament_map):
                 "round": str(round_name)[:250],
                 "date": utc_date,
                 "status": str(status)[:50],
-                "home_team_id": h_team.get("id") or 0,
+                "venue_name": str(venue_name)[:250] if venue_name else None,
+                "home_team_id": int(h_team.get("id") or 0),
                 "home_team_name": str(h_name)[:250],
                 "home_team_country_code": str(get_country_code(h_name, h_team.get("countryCode")))[:10],
-                "home_team_logo": str(h_team.get("logoUrl") or f"https://media.api-sports.io/football/teams/{h_team.get('id', 0)}.png"),
+                "home_team_logo": str(h_team.get("mediumLogoUrl") or h_team.get("logoUrl") or ""),
                 "home_score": h_score,
-                "home_is_winner": (h_score > a_score) if (h_score is not None and a_score is not None) else None,
-                "away_team_id": a_team.get("id") or 0,
+                "home_penalty_score": h_pen,
+                "home_is_winner": home_winner,
+                "away_team_id": int(a_team.get("id") or 0),
                 "away_team_name": str(a_name)[:250],
                 "away_team_country_code": str(get_country_code(a_name, a_team.get("countryCode")))[:10],
-                "away_team_logo": str(a_team.get("logoUrl") or f"https://media.api-sports.io/football/teams/{a_team.get('id', 0)}.png"),
+                "away_team_logo": str(a_team.get("mediumLogoUrl") or a_team.get("logoUrl") or ""),
                 "away_score": a_score,
-                "away_is_winner": (a_score > h_score) if (h_score is not None and a_score is not None) else None,
-                "home_score_90": h_score,
-                "away_score_90": a_score,
+                "away_penalty_score": a_pen,
+                "away_is_winner": away_winner,
+                "aggregate_home_score": agg_score.get("home"),
+                "aggregate_away_score": agg_score.get("away"),
+                "home_score_90": h_score_90,
+                "away_score_90": a_score_90,
                 "updated_at": datetime.datetime.now().isoformat()
             })
 
         if db_records:
-            cnt = supabase_upsert("cupmat_matches", db_records, on_conflict="api_id")
-            total_inserted += cnt
-            print(f"    [+] {cnt} maç veritabanına kaydedildi/güncellendi.")
+            for idx in range(0, len(db_records), 100):
+                chunk = db_records[idx:idx+100]
+                cnt = supabase_upsert("cupmat_matches", chunk, on_conflict="api_id")
+                total_inserted += cnt
+            print(f"    [+] {len(db_records)} maç veritabanına kaydedildi/güncellendi.")
 
     return total_inserted
 
 def fetch_football_data_matches(tournament_map):
-    """Football-Data.org üzerinden Şampiyonlar Ligi ve Copa Libertadores maçlarını çeker."""
+    """Football-Data.org üzerinden Copa Libertadores maçlarını çeker."""
     print("\n--- FOOTBALL-DATA.ORG MAÇLARI ÇEKİLİYOR ---")
     comps = [
-        {"code": "CL", "target_api_id": 2, "name": "UEFA Şampiyonlar Ligi"},
         {"code": "CLI", "target_api_id": 13, "name": "Copa Libertadores"}
     ]
     

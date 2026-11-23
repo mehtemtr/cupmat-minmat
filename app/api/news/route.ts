@@ -26,7 +26,7 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
     id: "newsglo-parody-kartal-aslan-sariyer-2026",
     category: "Parody",
     source: "Aslan KORKAK (Statmatik İstihbarat Şefi)",
-    link: "https://statmatik.com/haberler#parodi-kartal-aslan",
+    link: "#parodi-kartal-aslan",
     image: "/parodi-kartal-aslan.jpg",
     published_at: new Date().toISOString(),
     isParody: true,

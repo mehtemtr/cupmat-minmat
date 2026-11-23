@@ -660,12 +660,38 @@ export default function CupMatMatchCenter() {
     return Array.from(roundSet).sort((a, b) => getRoundSortOrder(a) - getRoundSortOrder(b));
   }, [filteredMatches]);
 
-  // Turnuva değiştiğinde haftayı otomatik geçerli haftaya çek
+  // Turnuva değiştiğinde haftayı otomatik olarak en son oynanan veya canlı maçların olduğu aktif haftaya çek
   useEffect(() => {
-    if (availableWeeks.length > 0 && selectedLeagueWeek && !availableWeeks.includes(selectedLeagueWeek)) {
-      setSelectedLeagueWeek(availableWeeks[0]);
+    if (availableWeeks.length === 0) return;
+
+    // 1. Önce CANLI (LIVE/1H/2H/HT) maç olan haftayı kontrol et
+    let activeWeek: string | null = null;
+    for (const w of availableWeeks) {
+      const weekMatches = groupedByRound[w] || [];
+      if (weekMatches.some(m => ["LIVE", "1H", "2H", "HT"].includes(m.status))) {
+        activeWeek = w;
+        break;
+      }
     }
-  }, [activeTournament, availableWeeks]);
+
+    // 2. Canlı maç yoksa, en az bir maçı oynanmış (FT/AET/PEN) veya bugün oynanacak olan en son haftayı seç
+    if (!activeWeek) {
+      const todayStr = new Date().toISOString().split("T")[0];
+      for (let i = availableWeeks.length - 1; i >= 0; i--) {
+        const w = availableWeeks[i];
+        const weekMatches = groupedByRound[w] || [];
+        const hasPlayedOrToday = weekMatches.some(
+          m => ["FT", "AET", "PEN"].includes(m.status) || (m.date && m.date.startsWith(todayStr))
+        );
+        if (hasPlayedOrToday) {
+          activeWeek = w;
+          break;
+        }
+      }
+    }
+
+    setSelectedLeagueWeek(activeWeek || availableWeeks[0]);
+  }, [activeTournament, availableWeeks.length]);
 
   // Çok Dilli Tur İsimlendirme Fonksiyonu
   const getLocalizedRoundName = (roundKey: string, lang: string = "tr") => {

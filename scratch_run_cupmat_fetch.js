@@ -15,12 +15,14 @@ const getEnv = (key) => {
   return val.replace(/^['"]|['"]$/g, '');
 };
 
-process.env.FOOTBALL_DATA_TOKEN = getEnv('FOOTBALL_DATA_TOKEN');
-process.env.API_FOOTBALL_KEY = getEnv('API_FOOTBALL_KEY') || process.env.FOOTBALL_DATA_TOKEN;
-process.env.NEXT_PUBLIC_SUPABASE_URL = getEnv('NEXT_PUBLIC_SUPABASE_URL');
-process.env.SUPABASE_SERVICE_ROLE_KEY = getEnv('SUPABASE_SERVICE_ROLE_KEY');
+process.env.FOOTBALL_DATA_TOKEN = process.env.FOOTBALL_DATA_TOKEN || getEnv('FOOTBALL_DATA_TOKEN');
+process.env.API_FOOTBALL_KEY = process.env.API_FOOTBALL_KEY || getEnv('API_FOOTBALL_KEY') || process.env.FOOTBALL_DATA_TOKEN;
+process.env.NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || getEnv('NEXT_PUBLIC_SUPABASE_URL');
+process.env.SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || getEnv('SUPABASE_SERVICE_ROLE_KEY');
 
 const scriptCode = `
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 import { fetchAndStoreDailyMatches } from "./lib/api-football-cupmat";
 
 async function run() {

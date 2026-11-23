@@ -70,12 +70,12 @@ const TEAM_COUNTRY_CODES: Record<string, string> = {
 
 const TEAM_CANONICAL_NAMES: Record<string, string> = {
   "Man City": "Manchester City", "Manchester City FC": "Manchester City",
-  "Man United": "Manchester United", "Manchester United FC": "Manchester United", "Man. United": "Manchester United",
-  "Borussia Dortmund": "Borussia Dortmund", "Dortmund": "Borussia Dortmund", "BVB": "Borussia Dortmund",
+  "Man United": "Manchester United", "Man Utd": "Manchester United", "Manchester United FC": "Manchester United", "Man. United": "Manchester United",
+  "Borussia Dortmund": "Borussia Dortmund", "B. Dortmund": "Borussia Dortmund", "Dortmund": "Borussia Dortmund", "BVB": "Borussia Dortmund",
   "Bayern Munich": "Bayern Munich", "Bayern München": "Bayern Munich", "FC Bayern München": "Bayern Munich", "Bayern": "Bayern Munich",
-  "Real Madrid CF": "Real Madrid",
+  "Real Madrid CF": "Real Madrid", "Real Madrid C.F.": "Real Madrid",
   "FC Barcelona": "Barcelona", "Barça": "Barcelona",
-  "Atletico Madrid": "Atlético Madrid", "Atleti": "Atlético Madrid", "Club Atlético de Madrid": "Atlético Madrid",
+  "Atletico Madrid": "Atlético Madrid", "Atleti": "Atlético Madrid", "Club Atlético de Madrid": "Atlético Madrid", "Atlético de Madrid": "Atlético Madrid",
   "Real Betis Balompié": "Real Betis", "Betis": "Real Betis",
   "Villarreal CF": "Villarreal",
   "Aston Villa FC": "Aston Villa",
@@ -88,7 +88,7 @@ const TEAM_CANONICAL_NAMES: Record<string, string> = {
   "Juventus FC": "Juventus",
   "SSC Napoli": "Napoli",
   "AS Roma": "Roma",
-  "PSG": "Paris Saint-Germain", "Paris Saint Germain": "Paris Saint-Germain", "Paris Saint-Germain FC": "Paris Saint-Germain",
+  "PSG": "Paris Saint-Germain", "Paris": "Paris Saint-Germain", "Paris Saint Germain": "Paris Saint-Germain", "Paris Saint-Germain FC": "Paris Saint-Germain",
   "LOSC Lille": "Lille",
   "Olympique Lyonnais": "Lyon",
   "AS Monaco": "Monaco", "AS Monaco FC": "Monaco",
@@ -101,31 +101,71 @@ const TEAM_CANONICAL_NAMES: Record<string, string> = {
   "SL Benfica": "Benfica",
   "Porto": "FC Porto",
   "Club Brugge KV": "Club Brugge",
-  "Royale Union Saint-Gilloise": "Union SG",
+  "Royale Union Saint-Gilloise": "Union SG", "R. Union Saint-Gilloise": "Union SG", "Union Saint-Gilloise": "Union SG", "Union St. Gilloise": "Union SG",
   "Celtic FC": "Celtic",
   "Rangers FC": "Rangers",
   "Red Bull Salzburg": "Salzburg", "FC Red Bull Salzburg": "Salzburg",
   "SK Sturm Graz": "Sturm Graz",
   "Lask Linz": "LASK", "LASK Linz": "LASK",
-  "GNK Dinamo Zagreb": "Dinamo Zagreb",
-  "Red Star Belgrade": "Kızılyıldız", "FK Crvena Zvezda": "Kızılyıldız",
+  "GNK Dinamo Zagreb": "Dinamo Zagreb", "GNK Dinamo": "Dinamo Zagreb",
+  "Red Star Belgrade": "Kızılyıldız", "FK Crvena Zvezda": "Kızılyıldız", "Crvena Zvezda": "Kızılyıldız",
   "BSC Young Boys": "Young Boys",
   "AC Sparta Praha": "Sparta Prag", "Sparta Praha": "Sparta Prag",
   "SK Slavia Praha": "Slavia Prag", "Slavia Praha": "Slavia Prag", "Slavia Prague": "Slavia Prag",
-  "FC Viktoria Plzeň": "Viktoria Plzen",
+  "FC Viktoria Plzeň": "Viktoria Plzen", "Viktoria Plzeň": "Viktoria Plzen", "Plzen": "Viktoria Plzen",
   "Bodo/Glimt": "Bodø/Glimt", "FK Bodø/Glimt": "Bodø/Glimt",
   "Viking FK": "Viking",
-  "FC Shakhtar Donetsk": "Shakhtar Donetsk", "Shaktar": "Shakhtar Donetsk",
-  "ŠK Slovan Bratislava": "Slovan Bratislava", "Sl. Bratislava": "Slovan Bratislava",
+  "FC Shakhtar Donetsk": "Shakhtar Donetsk", "Shaktar": "Shakhtar Donetsk", "Shakhtar": "Shakhtar Donetsk",
+  "ŠK Slovan Bratislava": "Slovan Bratislava", "Sl. Bratislava": "Slovan Bratislava", "S. Bratislava": "Slovan Bratislava", "SK Slovan Bratislava": "Slovan Bratislava",
   "AEK Athens FC": "AEK Athens", "PAE AEK": "AEK Athens",
-  "Galatasaray SK": "Galatasaray",
+  "Galatasaray SK": "Galatasaray", "Galatasaray A.Ş.": "Galatasaray",
   "Fenerbahce SK": "Fenerbahçe",
   "Stuttgart": "VfB Stuttgart",
-  "RasenBallsport Leipzig": "RB Leipzig",
-  "Sabah": "Sabah FK", "Sabah FA": "Sabah FK",
+  "RasenBallsport Leipzig": "RB Leipzig", "Leipzig": "RB Leipzig",
+  "Sabah": "Sabah FK", "Sabah FA": "Sabah FK", "Sabah FC": "Sabah FK",
   "Como": "Como 1907",
   "Estudiantes LP": "Estudiantes L.P.",
-  "LDU Quito": "LDU de Quito"
+  "LDU Quito": "LDU de Quito",
+  "Celta": "Celta Vigo", "Real Club Celta": "Celta Vigo",
+  "Ferencváros": "Ferencvarosi TC", "Ferencvaros": "Ferencvarosi TC",
+  "H. Beer-Sheva": "Hapoel Beer Sheva", "Hapoel Beer-Sheva FC": "Hapoel Beer Sheva",
+  "Hoffenheim": "TSG Hoffenheim", "1899 Hoffenheim": "TSG Hoffenheim", "TSG 1899 Hoffenheim": "TSG Hoffenheim",
+  "Jagiellonia": "Jagiellonia Białystok",
+  "Lech Poznań": "Lech Poznan",
+  "Leverkusen": "Bayer Leverkusen", "Bayer 04 Leverkusen": "Bayer Leverkusen",
+  "Lillestrøm": "Lillestrom",
+  "N.E.C.": "NEC Nijmegen", "N.E.C. Nijmegen": "NEC Nijmegen",
+  "OFI": "OFI Crete",
+  "Olympiacos": "Olympiakos Piraeus", "Olympiakos": "Olympiakos Piraeus",
+  "Omonia": "Omonia Nicosia",
+  "Aarhus": "AGF Aarhus",
+  "Borac": "Borac Banja Luka",
+  "Braga": "Sporting Braga",
+  "Brann": "SK Brann",
+  "Brighton": "Brighton & Hove Albion",
+  "Copenhagen": "FC Copenhagen",
+  "Egnatia": "Egnatia Rrogozhinë",
+  "Freiburg": "SC Freiburg",
+  "Gent": "KAA Gent",
+  "Hearts": "Heart of Midlothian",
+  "Iberia Tbilisi": "FC Iberia 1999", "FC Iberia 1999 Tbilisi": "FC Iberia 1999",
+  "Inter Escaldes": "Inter Club d'Escaldes",
+  "Jablonec": "FK Jablonec",
+  "KuPS Kuopio": "KuPS",
+  "L. Red Imps": "Lincoln Red Imps",
+  "Lugano": "FC Lugano",
+  "Midtjylland": "FC Midtjylland",
+  "Mjällby": "Mjällby AIF",
+  "Nordsjælland": "FC Nordsjælland",
+  "Pafos": "Pafos FC",
+  "Riga": "Riga FC",
+  "Sint-Truidense": "Sint-Truidense VV",
+  "Thun": "FC Thun",
+  "Twente": "FC Twente",
+  "Univ. Craiova": "Universitatea Craiova",
+  "Türki̇ye": "Turkey", "Türkiye": "Turkey",
+  "Czechia": "Czech Republic",
+  "Bosnia and Herzegovina": "Bosnia & Herzegovina"
 };
 
 export function normalizeCupMatTeam(name: string): string {
@@ -169,13 +209,264 @@ export function normalizeCupMatRound(round: string): string {
 }
 
 export function getCleanCountryCode(teamName: string, fallback?: string): string {
-  if (fallback && fallback !== "TBD" && fallback !== "UNK" && fallback.length === 3) return fallback;
+  const UEFA_TO_TR_COUNTRY: Record<string, string> = {
+    "TUR": "TÜR", "ENG": "İNG", "ESP": "İSP", "GER": "ALM", "FRA": "FRA", "ITA": "İTA",
+    "NED": "HOL", "POR": "POR", "SCO": "İSK", "BEL": "BEL", "AUT": "AVU", "CZE": "ÇEK",
+    "CRO": "HIR", "SRB": "SIR", "SUI": "İSV", "NOR": "NOR", "SWE": "İSVE", "DEN": "DAN",
+    "UKR": "UKR", "AZE": "AZE", "SVK": "SVK", "GRE": "YUN", "SVN": "SVN", "BUL": "BUL",
+    "ISR": "İSR", "POL": "POL", "HUN": "MAC", "ROU": "ROM", "CYP": "KIB", "GEO": "GÜR",
+    "KAZ": "KAZ", "ALB": "ARN", "BIH": "BOS", "KOS": "KOS", "ARM": "ERM", "IRL": "İRL",
+    "NIR": "K.İR", "WAL": "GAL", "FIN": "FİN", "ISL": "İZL", "LUX": "LÜK", "MLT": "MLT",
+    "AND": "AND", "SMR": "SMR", "FRO": "FAR", "GIB": "CEB", "MDA": "MOL", "EST": "EST",
+    "LVA": "LET", "LTU": "LİT", "BLR": "BLR", "MNE": "KRD", "MKD": "K.MK", "LIE": "LİH"
+  };
+  if (fallback && UEFA_TO_TR_COUNTRY[fallback.toUpperCase()]) {
+    return UEFA_TO_TR_COUNTRY[fallback.toUpperCase()];
+  }
   for (const [key, code] of Object.entries(TEAM_COUNTRY_CODES)) {
     if (teamName.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(teamName.toLowerCase())) {
       return code;
     }
   }
+  if (fallback && fallback !== "TBD" && fallback !== "UNK" && fallback.length === 3) return fallback;
   return fallback || "";
+}
+
+/**
+ * UEFA Resmi Açık API'sinden (match.uefa.com) Şampiyonlar Ligi, Avrupa Ligi, Konferans Ligi ve Uluslar Ligi
+ * tüm sezon maçlarını ve canlı/bitmiş sonuçlarını toplu (batch) olarak çeker ve Supabase'e yazar.
+ */
+export async function syncUefaOfficialCompetitions() {
+  const logs: string[] = [];
+  let inserted = 0;
+  let updated = 0;
+
+  const uefaComps = [
+    { uefaId: "1", targetApiId: 2, seasonYear: 2027, region: "europe", defaultName: "UEFA Champions League" },
+    { uefaId: "14", targetApiId: 3, seasonYear: 2027, region: "europe", defaultName: "UEFA Avrupa Ligi" },
+    { uefaId: "2019", targetApiId: 848, seasonYear: 2027, region: "europe", defaultName: "UEFA Konferans Ligi" },
+    { uefaId: "2014", targetApiId: 5, seasonYear: 2027, region: "europe", defaultName: "UEFA Uluslar Ligi" },
+  ];
+
+  try {
+    const { data: allTournaments } = await supabaseAdmin.from("cupmat_tournaments").select("id, api_id");
+    const tournamentMap = new Map<number, string>();
+    if (allTournaments) {
+      allTournaments.forEach(t => tournamentMap.set(t.api_id, t.id));
+    }
+
+    for (const comp of uefaComps) {
+      let tournamentId = tournamentMap.get(comp.targetApiId);
+      if (!tournamentId) {
+        const { data: newT } = await supabaseAdmin.from("cupmat_tournaments").insert({
+          api_id: comp.targetApiId,
+          name: comp.defaultName,
+          type: "Cup",
+          region: comp.region
+        }).select("id").single();
+        if (newT) {
+          tournamentId = newT.id;
+          tournamentMap.set(comp.targetApiId, tournamentId);
+        }
+      }
+      if (!tournamentId) continue;
+
+      const uefaMatches: any[] = [];
+      for (let offset = 0; offset < 500; offset += 100) {
+        const url = `https://match.uefa.com/v5/matches?competitionId=${comp.uefaId}&seasonYear=${comp.seasonYear}&limit=100&offset=${offset}`;
+        const res = await fetch(url, {
+          headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
+        });
+        if (!res.ok) {
+          logs.push(`[UEFA-API] HTTP ${res.status} for comp ${comp.uefaId}`);
+          break;
+        }
+        const arr = await res.json();
+        if (!Array.isArray(arr) || arr.length === 0) break;
+        uefaMatches.push(...arr);
+        if (arr.length < 100) break;
+      }
+
+      logs.push(`[UEFA-API] Fetched ${uefaMatches.length} matches for ${comp.defaultName}`);
+      if (uefaMatches.length === 0) continue;
+
+      const { data: dbMatches } = await supabaseAdmin
+        .from("cupmat_matches")
+        .select("id, api_id, home_team_name, away_team_name, date, round, status, home_score, away_score, home_team_logo, away_team_logo, home_team_country_code, away_team_country_code")
+        .eq("tournament_id", tournamentId)
+        .gte("date", "2026-06-01");
+
+      const toUpdate: any[] = [];
+      const toInsert: any[] = [];
+      const matchedDbIds = new Set<string>();
+
+      for (const m of uefaMatches) {
+        const rawHome = m.homeTeam?.internationalName || m.homeTeam?.translations?.displayOfficialName?.EN || "";
+        const rawAway = m.awayTeam?.internationalName || m.awayTeam?.translations?.displayOfficialName?.EN || "";
+        if (!rawHome || !rawAway || rawHome === "TBD" || rawAway === "TBD") continue;
+
+        const homeName = normalizeCupMatTeam(rawHome);
+        const awayName = normalizeCupMatTeam(rawAway);
+
+        // Determine round name
+        let roundName = "Normal Sezon";
+        const phase = m.round?.phase || "";
+        const rMetaName = m.round?.metaData?.name || "";
+        const mdSeq = m.matchday?.sequenceNumber || "";
+
+        if (comp.targetApiId === 5) {
+          // UEFA Nations League: "Lig A - 1. Grup - 1. Hafta"
+          const lgName = m.group?.league?.metaData?.leagueName || ""; // "League A"
+          const grpShort = m.group?.translations?.shortName?.EN || m.group?.metaData?.groupShortName || ""; // "A1" or "GrpA1"
+          const lgLetterMatch = lgName.match(/League\s+([A-D])/i) || grpShort.match(/([A-D])\d/i);
+          const grpNumMatch = grpShort.match(/[A-D](\d)/i) || (m.group?.metaData?.groupName || "").match(/(\d)/);
+          const lgLetter = lgLetterMatch ? lgLetterMatch[1].toUpperCase() : "A";
+          const grpNum = grpNumMatch ? grpNumMatch[1] : "1";
+          const weekNum = mdSeq || "1";
+          roundName = `Lig ${lgLetter} - ${grpNum}. Grup - ${weekNum}. Hafta`;
+        } else if (phase === "QUALIFYING") {
+          if (/first\s+qualifying/i.test(rMetaName)) {
+            roundName = comp.targetApiId === 2 ? "1. Eleme Turu" : "1. Ön Eleme";
+          } else if (/second\s+qualifying/i.test(rMetaName)) {
+            roundName = comp.targetApiId === 2 ? "2. Eleme Turu" : "2. Ön Eleme";
+          } else if (/third\s+qualifying/i.test(rMetaName)) {
+            roundName = comp.targetApiId === 2 ? "3. Eleme Turu" : "3. Ön Eleme";
+          } else if (/play-?off/i.test(rMetaName)) {
+            roundName = "Play-off";
+          } else {
+            roundName = normalizeCupMatRound(rMetaName);
+          }
+        } else if (/league\s+phase/i.test(rMetaName) && mdSeq) {
+          roundName = `${mdSeq}. Hafta`;
+        } else {
+          roundName = normalizeCupMatRound(rMetaName || (mdSeq ? `${mdSeq}. Hafta` : "Normal Sezon"));
+        }
+
+        // Determine status & scores
+        const totalScore = m.score?.total;
+        const regScore = m.score?.regular;
+        const penScore = m.score?.penalty;
+        const aggScore = m.score?.aggregate;
+
+        const homeScore = totalScore?.home !== undefined ? totalScore.home : null;
+        const awayScore = totalScore?.away !== undefined ? totalScore.away : null;
+        const homeScore90 = regScore?.home !== undefined ? regScore.home : homeScore;
+        const awayScore90 = regScore?.away !== undefined ? regScore.away : awayScore;
+        const homePen = penScore?.home !== undefined ? penScore.home : null;
+        const awayPen = penScore?.away !== undefined ? penScore.away : null;
+
+        let status = "NS";
+        if (m.status === "FINISHED") {
+          if (homePen !== null && awayPen !== null) status = "PEN";
+          else if (homeScore !== null && homeScore90 !== null && (homeScore !== homeScore90 || awayScore !== awayScore90)) status = "AET";
+          else status = "FT";
+        } else if (m.status === "LIVE" || m.status === "IN_PLAY" || m.status === "PAUSED") {
+          status = "LIVE";
+        } else if (m.status === "POSTPONED") {
+          status = "PST";
+        } else if (m.status === "CANCELLED" || m.status === "SUSPENDED") {
+          status = "CANC";
+        }
+
+        let homeWinner: boolean | null = null;
+        let awayWinner: boolean | null = null;
+        if (homeScore !== null && awayScore !== null && ["FT", "AET", "PEN"].includes(status)) {
+          if (homePen !== null && awayPen !== null) {
+            homeWinner = homePen > awayPen;
+            awayWinner = awayPen > homePen;
+          } else {
+            homeWinner = homeScore > awayScore;
+            awayWinner = awayScore > homeScore;
+          }
+        }
+
+        const utcDate = m.kickOffTime?.dateTime || (m.kickOffTime?.date ? `${m.kickOffTime.date}T19:00:00Z` : new Date().toISOString());
+        const uefaIntId = parseInt(String(m.id), 10);
+        const venueName = m.stadium?.translations?.name?.EN || m.stadium?.address || null;
+
+        // Match against existing DB record for this tournament
+        // First by api_id, then by normalized home & away team + same round (or qualifying phase)
+        const hNorm = homeName.toLowerCase();
+        const aNorm = awayName.toLowerCase();
+
+        let existing = (dbMatches || []).find((dbM: any) => !matchedDbIds.has(dbM.id) && dbM.api_id === uefaIntId);
+        if (!existing) {
+          existing = (dbMatches || []).find((dbM: any) => {
+            if (matchedDbIds.has(dbM.id)) return false;
+            const dbH = normalizeCupMatTeam(dbM.home_team_name || "").toLowerCase();
+            const dbA = normalizeCupMatTeam(dbM.away_team_name || "").toLowerCase();
+            if (dbH !== hNorm || dbA !== aNorm) return false;
+            // If both are league phase or UNL, match by week number
+            const w1 = roundName.match(/(\d+)\.\s*Hafta/i)?.[1];
+            const w2 = (dbM.round || "").match(/(\d+)\.\s*Hafta/i)?.[1];
+            if (w1 && w2) return w1 === w2;
+            return true;
+          });
+        }
+
+        const recordPayload: any = {
+          api_id: existing ? existing.api_id : uefaIntId,
+          tournament_id: tournamentId,
+          season: 2026,
+          round: roundName,
+          date: utcDate,
+          status: status,
+          venue_name: venueName,
+          home_team_id: parseInt(String(m.homeTeam?.id || 0), 10) || 0,
+          home_team_name: homeName,
+          home_team_country_code: getCleanCountryCode(homeName, existing?.home_team_country_code || m.homeTeam?.countryCode),
+          home_team_logo: existing?.home_team_logo || m.homeTeam?.mediumLogoUrl || m.homeTeam?.logoUrl || null,
+          home_score: homeScore,
+          home_penalty_score: homePen,
+          home_is_winner: homeWinner,
+          away_team_id: parseInt(String(m.awayTeam?.id || 0), 10) || 0,
+          away_team_name: awayName,
+          away_team_country_code: getCleanCountryCode(awayName, existing?.away_team_country_code || m.awayTeam?.countryCode),
+          away_team_logo: existing?.away_team_logo || m.awayTeam?.mediumLogoUrl || m.awayTeam?.logoUrl || null,
+          away_score: awayScore,
+          away_penalty_score: awayPen,
+          away_is_winner: awayWinner,
+          aggregate_home_score: aggScore?.home ?? null,
+          aggregate_away_score: aggScore?.away ?? null,
+          home_score_90: homeScore90,
+          away_score_90: awayScore90,
+          updated_at: new Date().toISOString()
+        };
+
+        if (existing) {
+          matchedDbIds.add(existing.id);
+          toUpdate.push({ id: existing.id, ...recordPayload });
+        } else {
+          toInsert.push(recordPayload);
+        }
+      }
+
+      // Batch upsert updates in chunks of 100 (Cloudflare Worker fast batching)
+      for (let i = 0; i < toUpdate.length; i += 100) {
+        const chunk = toUpdate.slice(i, i + 100);
+        const { error: uErr } = await supabaseAdmin
+          .from("cupmat_matches")
+          .upsert(chunk, { onConflict: "id" });
+        if (!uErr) updated += chunk.length;
+        else logs.push(`[UEFA-API] Upsert update error (${comp.defaultName}): ${uErr.message}`);
+      }
+
+      for (let i = 0; i < toInsert.length; i += 100) {
+        const chunk = toInsert.slice(i, i + 100);
+        const { error: iErr } = await supabaseAdmin
+          .from("cupmat_matches")
+          .upsert(chunk, { onConflict: "api_id" });
+        if (!iErr) inserted += chunk.length;
+        else logs.push(`[UEFA-API] Upsert insert error (${comp.defaultName}): ${iErr.message}`);
+      }
+    }
+
+    logs.push(`[UEFA-API] Complete. Inserted: ${inserted}, Updated: ${updated}`);
+    return { success: true, inserted, updated, logs };
+  } catch (err: any) {
+    logs.push(`[UEFA-API] Exception: ${err.message}`);
+    return { success: false, inserted, updated, logs };
+  }
 }
 
 /**
@@ -192,7 +483,6 @@ export async function syncFootballDataCompetitions() {
   }
 
   const comps = [
-    { code: "CL", targetApiId: 2, region: "europe", defaultName: "UEFA Champions League" },
     { code: "CLI", targetApiId: 13, region: "america", defaultName: "Copa Libertadores" },
   ];
 
@@ -507,22 +797,25 @@ export async function fetchAndStoreDailyMatches(dateStr?: string) {
 }
 
 /**
- * Master Sync: Runs both Football-Data (season schedule) & API-Football (daily scores)
+ * Master Sync: Runs UEFA Official API (all European cups), Football-Data (Libertadores) & API-Football (daily scores)
  */
 export async function syncCupMatAll(specificDate?: string) {
   const allLogs: string[] = [];
-  
-  const apiRes = await syncApiFootballDays(specificDate ? [specificDate] : undefined);
-  allLogs.push(...apiRes.logs);
+
+  const uefaRes = await syncUefaOfficialCompetitions();
+  allLogs.push(...uefaRes.logs);
 
   const fdRes = await syncFootballDataCompetitions();
   allLogs.push(...fdRes.logs);
 
-  const totalInserted = (apiRes.inserted || 0) + (fdRes.inserted || 0);
-  const totalUpdated = (apiRes.updated || 0) + (fdRes.updated || 0);
+  const apiRes = await syncApiFootballDays(specificDate ? [specificDate] : undefined);
+  allLogs.push(...apiRes.logs);
+
+  const totalInserted = (uefaRes.inserted || 0) + (fdRes.inserted || 0) + (apiRes.inserted || 0);
+  const totalUpdated = (uefaRes.updated || 0) + (fdRes.updated || 0) + (apiRes.updated || 0);
 
   return {
-    success: apiRes.success || fdRes.success,
+    success: uefaRes.success || fdRes.success || apiRes.success,
     inserted: totalInserted,
     updated: totalUpdated,
     logs: allLogs
