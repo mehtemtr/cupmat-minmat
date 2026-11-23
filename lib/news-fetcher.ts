@@ -6,6 +6,7 @@ export type NewsCategory =
   | "Health"
   | "Environment"
   | "Economy"
+  | "Parody"
   | "General"
   | "Statmatik"
   | "Sports"
@@ -182,13 +183,48 @@ async function translateText(text: string, targetLang: string = "tr"): Promise<s
   if (!text) return text;
   try {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
     if (!res.ok) return text;
     const data = await res.json();
     return data[0].map((item: any) => item[0]).join("");
   } catch (e) {
     return text;
   }
+}
+
+/**
+ * Batch-translate multiple clean single-line strings in minimal HTTP subrequests
+ * (Critical for staying within Cloudflare Workers' 50 subrequest limit).
+ */
+async function translateBatch(texts: string[], targetLang: string = "tr"): Promise<string[]> {
+  if (texts.length === 0) return [];
+  const results = [...texts];
+  const CHUNK_SIZE = 15;
+
+  for (let i = 0; i < texts.length; i += CHUNK_SIZE) {
+    const chunk = texts.slice(i, i + CHUNK_SIZE).map((t) => t.replace(/[\r\n]+/g, " ").trim());
+    const joined = chunk.join("\n");
+    if (!joined) continue;
+
+    try {
+      const translatedJoined = await translateText(joined, targetLang);
+      const splitLines = translatedJoined.split(/\r?\n/);
+      if (splitLines.length === chunk.length) {
+        for (let j = 0; j < chunk.length; j++) {
+          results[i + j] = splitLines[j].trim() || chunk[j];
+        }
+      } else {
+        const fallback = await Promise.all(chunk.map((t) => translateText(t, targetLang)));
+        for (let j = 0; j < chunk.length; j++) {
+          results[i + j] = fallback[j].trim() || chunk[j];
+        }
+      }
+    } catch {
+      // Keep original text on error
+    }
+  }
+
+  return results;
 }
 
 /**
@@ -294,6 +330,16 @@ export function isRoutineLowPriorityNews(
     "iklim zirvesi",
     "uluslararası sözleşme",
     "tarihi zirve",
+    "world cup",
+    "olympic",
+    "world championship",
+    "peace treaty",
+    "peace deal",
+    "un general assembly",
+    "g7 summit",
+    "g20 summit",
+    "nato summit",
+    "climate summit",
   ];
 
   for (const kw of majorImpactKeywords) {
@@ -340,7 +386,7 @@ export function detectCategory(
 
   // 2. Science (Priority Tier 1)
   if (
-    /bilim|araştırma|keşif|fizik|kimya|biyoloji|genetik|akademik|makale|laboratuvar|nasa|esa\b|science|uzay teleskobu|bilim insanı|bilim insanları|astronomi|nöroloji|kuantum|arkeoloji|biyoteknoloji/.test(
+    /bilim|araştırma|keşif|fizik|kimya|biyoloji|genetik|akademik|makale|laboratuvar|nasa|esa\b|science|uzay teleskobu|bilim insanı|bilim insanları|astronomi|nöroloji|kuantum|arkeoloji|biyoteknoloji|research|discovery|physics|chemistry|biology|genetics|laboratory|space telescope|scientist|astronomy|quantum|archaeology|biotech|spacex|starship|orbit|exoplanet/.test(
       text
     )
   ) {
@@ -349,7 +395,7 @@ export function detectCategory(
 
   // 3. Technology (Priority Tier 1)
   if (
-    /teknoloji|yazılım|yapay zeka|ai\b|openai|dijital|siber|uzay|robot|çip|chip|internet|uygulama|mobil|cyber|tech\b|software|otomasyon|bilişim|yarı iletken|kodlama|siber güvenlik|donanım|algoritma/.test(
+    /teknoloji|yazılım|yapay zeka|ai\b|openai|dijital|siber|uzay|robot|çip|chip|internet|uygulama|mobil|cyber|tech\b|software|otomasyon|bilişim|yarı iletken|kodlama|siber güvenlik|donanım|algoritma|artificial intelligence|semiconductor|robotics|hardware|algorithm|microsoft|google|apple|meta\b|nvidia|anthropic|cloud/.test(
       text
     )
   ) {
@@ -358,7 +404,7 @@ export function detectCategory(
 
   // 4. Health (Priority Tier 1)
   if (
-    /sağlık|hastalık|tıp\b|hastane|doktor|sağlık bakanlığı|aşı\b|tedavi|ilaç|virüs|salgın|kanser|ameliyat|beslenme|obezite|diyabet|bulaşıcı|gen tedavisi|klinik|terapi|organ nakli/.test(
+    /sağlık|hastalık|tıp\b|hastane|doktor|sağlık bakanlığı|aşı\b|tedavi|ilaç|virüs|salgın|kanser|ameliyat|beslenme|obezite|diyabet|bulaşıcı|gen tedavisi|klinik|terapi|organ nakli|health|medical|medicine|hospital|doctor|vaccine|treatment|drug|virus|pandemic|cancer|surgery|nutrition|obesity|diabetes|clinical|therapy|transplant|fda\b|who\b/.test(
       text
     )
   ) {
@@ -367,7 +413,7 @@ export function detectCategory(
 
   // 5. Environment (Priority Tier 1)
   if (
-    /çevre|iklim|doğa\b|sıcaklık|küresel ısınma|yenilenebilir|yeşil enerji|karbon|emisyon|deprem|afet|orman|yangın|kuraklık|deniz|hava\b|hazar|yeşil ekonomi|atık|geri dönüşüm|ekoloji|biyoçeşitlilik|güneş paneli|rüzgar santrali/.test(
+    /çevre|iklim|doğa\b|sıcaklık|küresel ısınma|yenilenebilir|yeşil enerji|karbon|emisyon|deprem|afet|orman|yangın|kuraklık|deniz|hava\b|hazar|yeşil ekonomi|atık|geri dönüşüm|ekoloji|biyoçeşitlilik|güneş paneli|rüzgar santrali|climate|environment|global warming|renewable|green energy|carbon|emission|earthquake|wildfire|drought|ecology|biodiversity|solar|wind power/.test(
       text
     )
   ) {
@@ -376,7 +422,7 @@ export function detectCategory(
 
   // 6. Economy (Priority Tier 2)
   if (
-    /ekonomi|büyüme|enflasyon|faiz|merkez bankası|dolar|euro|borsa|hisse|piyasa|ticaret|ihracat|ithalat|vergi|bütçe|finans|banka|yatırım|kredi|hasılat|ekonomim|döviz|fintech|gdp|portföy/.test(
+    /ekonomi|büyüme|enflasyon|faiz|merkez bankası|dolar|euro|borsa|hisse|piyasa|ticaret|ihracat|ithalat|vergi|bütçe|finans|banka|yatırım|kredi|hasılat|ekonomim|döviz|fintech|gdp|portföy|economy|inflation|interest rate|central bank|fed\b|ecb\b|stock|market|trade|export|import|tax|budget|finance|bank|investment|credit|recession/.test(
       text
     )
   ) {
@@ -385,7 +431,7 @@ export function detectCategory(
 
   // 7. Sports (Priority Tier 3 - Filtered)
   if (
-    /spor|futbol|basketbol|voleybol|maç\b|derbi|lig\b|şampiyonluk|transfer|gol\b|kulüp|stadyum|antrenör|teknik direktör|fenerbahçe|galatasaray|beşiktaş|trabzonspor|nba|uefa|fifa|skor|puan durumu/.test(
+    /spor|futbol|basketbol|voleybol|maç\b|derbi|lig\b|şampiyonluk|transfer|gol\b|kulüp|stadyum|antrenör|teknik direktör|fenerbahçe|galatasaray|beşiktaş|trabzonspor|nba|uefa|fifa|skor|puan durumu|sport|football|soccer|basketball|volleyball|match\b|league|championship|coach|stadium|premier league|champions league/.test(
       text
     )
   ) {
@@ -394,7 +440,7 @@ export function detectCategory(
 
   // 8. Politics (Priority Tier 3 - Filtered)
   if (
-    /siyaset|politika|seçim|parti\b|hükümet|cumhurbaşkanı|başbakan|bakan\b|parlamento|meclis|milletvekili|muhalefet|dışişleri|büyükelçi|yasa tasarısı|diplomasi/.test(
+    /siyaset|politika|seçim|parti\b|hükümet|cumhurbaşkanı|başbakan|bakan\b|parlamento|meclis|milletvekili|muhalefet|dışişleri|büyükelçi|yasa tasarısı|diplomasi|politics|election|government|president|prime minister|parliament|senate|congress|opposition|foreign ministry|ambassador|diplomacy/.test(
       text
     )
   ) {
@@ -534,171 +580,245 @@ export async function fetchAndStoreNews(): Promise<NewsFetchResult> {
     totalScanned = activeCountries.length;
     logs.push(`[NewsFetcher] Found ${totalScanned} active country/countries for news collection.`);
 
-    // 3. Loop over active countries
-    for (const country of activeCountries) {
-      const gl = (country.iso2 || "US").toUpperCase();
-      const queryTerm = country.name_tr || gl;
-      
-      // Determine HL (language code) based on country ISO2
-      let hl = "en-US";
-      const langMap: Record<string, string> = {
-        "TR": "tr", "US": "en-US", "GB": "en-GB", "DE": "de", "FR": "fr",
-        "IT": "it", "ES": "es", "KR": "ko", "JP": "ja", "CN": "zh-CN",
-        "RU": "ru", "SA": "ar", "AE": "ar", "BR": "pt-BR", "PT": "pt-PT",
-        "NL": "nl", "IN": "hi", "MX": "es-419", "AR": "es-419", "GR": "el",
-        "ZA": "en-ZA", "AU": "en-AU", "CA": "en-CA"
-      };
-      if (langMap[gl]) hl = langMap[gl];
+    // 3. Single batch query for existing news to avoid N+1 DB queries & stay under Cloudflare 50 subrequest limit
+    const { data: allExistingDbItems } = await supabaseAdmin
+      .from("news")
+      .select("country_id, title, source, link")
+      .order("published_at", { ascending: false })
+      .limit(600);
 
-      // Fetch Top Headlines of that local country
-      const rssUrl = `https://news.google.com/rss?hl=${hl}&gl=${gl}&ceid=${gl}:${hl}`;
-
-      logs.push(`[NewsFetcher] Fetching local top news for '${country.name_tr || gl}' (gl=${gl}, hl=${hl})...`);
-
-
-      // Fetch recent existing titles from DB for this country to prevent near-duplicates
-      const { data: existingDbItems } = await supabaseAdmin
-        .from("news")
-        .select("title, source")
-        .eq("country_id", country.id)
-        .order("published_at", { ascending: false })
-        .limit(100);
-
-      const existingDbTitles = existingDbItems || [];
-
-      try {
-        const res = await fetch(rssUrl);
-        if (!res.ok) {
-          logs.push(`[NewsFetcher] Warning: Failed RSS fetch for '${queryTerm}' (${res.status})`);
-          continue;
-        }
-
-        const xmlText = await res.text();
-        const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-        let match;
-        const rawCandidates: Array<{
-          country_id: string;
-          category: NewsCategory;
-          title: string;
-          link: string;
-          source: string | null;
-          snippet: string | null;
-          published_at: string;
-        }> = [];
-
-        while ((match = itemRegex.exec(xmlText)) !== null) {
-          const itemXml = match[1];
-          const titleMatch = itemXml.match(/<title>([\s\S]*?)<\/title>/);
-          const linkMatch = itemXml.match(/<link>([\s\S]*?)<\/link>/);
-          const pubDateMatch = itemXml.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
-          const sourceMatch = itemXml.match(/<source[^>]*>([\s\S]*?)<\/source>/);
-          const descriptionMatch = itemXml.match(/<description>([\s\S]*?)<\/description>/);
-
-          const rawTitle = titleMatch ? titleMatch[1] : "";
-          const rawLink = linkMatch ? linkMatch[1] : "";
-          const rawPubDate = pubDateMatch ? pubDateMatch[1] : "";
-          const rawSource = sourceMatch ? sourceMatch[1] : "";
-          const rawSnippet = descriptionMatch ? descriptionMatch[1] : "";
-
-          const enTitle = cleanText(rawTitle);
-          const link = cleanText(rawLink);
-          const source = cleanText(rawSource) || null;
-          const enSnippet = cleanText(rawSnippet) || null;
-
-          if (enTitle && link) {
-            // Translate the English global news into Turkish before processing
-            const title = await translateText(enTitle, "tr");
-            const snippet = enSnippet ? await translateText(enSnippet, "tr") : null;
-            // Check 48-hour published_at cutoff limit (24-48h freshness window)
-            const nowMs = Date.now();
-            const FORTY_EIGHT_HOURS_MS = 48 * 60 * 60 * 1000;
-            const pubTime = rawPubDate ? Date.parse(rawPubDate) : nowMs;
-
-            // Skip invalid pubDate or news older than 48 hours
-            if (isNaN(pubTime) || (nowMs - pubTime) > FORTY_EIGHT_HOURS_MS) {
-              continue;
-            }
-
-            // Apply database-driven filter check from news_filters table
-            const rejectedByDbFilter = isFilteredOut(
-              title,
-              snippet,
-              source,
-              sourceFilters,
-              keywordFilters
-            );
-
-            if (!rejectedByDbFilter) {
-              const category = detectCategory(title, snippet, source);
-
-              // Filter out routine local sports/politics news
-              if (isRoutineLowPriorityNews(category, title, snippet)) {
-                continue;
-              }
-
-              const published_at = new Date(pubTime).toISOString();
-
-              rawCandidates.push({
-                country_id: country.id,
-                category,
-                title,
-                link,
-                source,
-                snippet,
-                published_at,
-              });
-            }
-          }
-        }
-
-        // Sort candidates by Selection Score (Category Tier 1 > Tier 2 > Tier 3, Publisher Rank, Recency)
-        rawCandidates.sort((a, b) => calculateSelectionScore(b) - calculateSelectionScore(a));
-
-        // Apply Near-Duplicate Deduplication Engine (keeps higher authority publishers)
-        const uniqueCandidates = deduplicateNearDuplicates(rawCandidates, existingDbTitles);
-
-        // Limit to top 10 prioritized items per country per run
-        const qualityItems = uniqueCandidates.slice(0, 10);
-
-        const countForCountry = qualityItems.length;
-        totalFound += countForCountry;
-
-        if (countForCountry > 0) {
-          const { data: insertedData, error: insertError } = await supabaseAdmin
-            .from("news")
-            .upsert(qualityItems, { onConflict: "link", ignoreDuplicates: true })
-            .select("id");
-
-          if (insertError) {
-            logs.push(`[NewsFetcher] Upsert error for '${queryTerm}': ${insertError.message}`);
-          } else {
-            const insertedCount = insertedData ? insertedData.length : 0;
-            const skippedCount = countForCountry - insertedCount;
-
-            totalInserted += insertedCount;
-            totalSkipped += skippedCount;
-
-            logs.push(
-              `[NewsFetcher] '${queryTerm}': ${insertedCount} new inserted, ${skippedCount} duplicates skipped.`
-            );
-          }
-        }
-      } catch (err: any) {
-        logs.push(`[NewsFetcher] Error processing '${queryTerm}': ${err.message || err}`);
+    const existingLinks = new Set<string>();
+    const existingByCountry = new Map<string, Array<{ title: string; source: string | null }>>();
+    for (const item of allExistingDbItems || []) {
+      if (item.link) existingLinks.add(item.link);
+      if (item.country_id) {
+        const list = existingByCountry.get(item.country_id) || [];
+        list.push({ title: item.title || "", source: item.source || null });
+        existingByCountry.set(item.country_id, list);
       }
     }
 
-    // 4. Cleanup old news (older than 24 hours)
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const { error: cleanupError, count: deletedCount } = await supabaseAdmin
-      .from("news")
-      .delete({ count: "exact" })
-      .lt("published_at", oneDayAgo);
+    const langMap: Record<string, string> = {
+      TR: "tr", US: "en-US", GB: "en-GB", DE: "de", FR: "fr",
+      IT: "it", ES: "es", KR: "ko", JP: "ja", CN: "zh-CN",
+      RU: "ru", SA: "ar", AE: "ar", BR: "pt-BR", PT: "pt-PT",
+      NL: "nl", IN: "hi", MX: "es-419", AR: "es-419", GR: "el",
+      ZA: "en-ZA", AU: "en-AU", CA: "en-CA",
+    };
 
-    if (cleanupError) {
-      logs.push(`[NewsFetcher] Warning: Failed to cleanup old news: ${cleanupError.message}`);
-    } else {
-      logs.push(`[NewsFetcher] Cleanup: Deleted ${deletedCount || 0} news older than 24 hours.`);
+    type CandidateItem = {
+      country_id: string;
+      gl: string;
+      queryTerm: string;
+      category: NewsCategory;
+      title: string;
+      link: string;
+      source: string | null;
+      snippet: string | null;
+      published_at: string;
+    };
+
+    const nowMs = Date.now();
+    const FORTY_EIGHT_HOURS_MS = 24 * 60 * 60 * 1000; // Keep only fresh 24-hour news
+
+    // Fetch RSS feeds in parallel batches of 5 to keep total subrequests well below Cloudflare's 50 limit
+    const preSelectedCandidates: CandidateItem[] = [];
+    const RSS_BATCH_SIZE = 5;
+
+    for (let b = 0; b < activeCountries.length; b += RSS_BATCH_SIZE) {
+      const countryBatch = activeCountries.slice(b, b + RSS_BATCH_SIZE);
+      const batchResults = await Promise.all(
+        countryBatch.map(async (country) => {
+          const gl = (country.iso2 || "US").toUpperCase();
+          const queryTerm = country.name_tr || gl;
+          const hl = langMap[gl] || "en-US";
+          const rssUrl = `https://news.google.com/rss?hl=${hl}&gl=${gl}&ceid=${gl}:${hl}`;
+
+          try {
+            const res = await fetch(rssUrl, {
+              headers: {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                "Accept": "application/rss+xml, application/xml, text/xml, */*",
+              },
+              cache: "no-store",
+            });
+            if (!res.ok) {
+              logs.push(`[NewsFetcher] Warning: Failed RSS fetch for '${queryTerm}' (${res.status})`);
+              return [];
+            }
+
+            const xmlText = await res.text();
+            const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+            let match;
+            const countryRaw: CandidateItem[] = [];
+
+            while ((match = itemRegex.exec(xmlText)) !== null) {
+              const itemXml = match[1];
+              const titleMatch = itemXml.match(/<title>([\s\S]*?)<\/title>/);
+              const linkMatch = itemXml.match(/<link>([\s\S]*?)<\/link>/);
+              const pubDateMatch = itemXml.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
+              const sourceMatch = itemXml.match(/<source[^>]*>([\s\S]*?)<\/source>/);
+              const descriptionMatch = itemXml.match(/<description>([\s\S]*?)<\/description>/);
+
+              const origTitle = cleanText(titleMatch ? titleMatch[1] : "");
+              const link = cleanText(linkMatch ? linkMatch[1] : "");
+              const rawPubDate = pubDateMatch ? pubDateMatch[1] : "";
+              const source = cleanText(sourceMatch ? sourceMatch[1] : "") || null;
+              const origSnippet = cleanText(descriptionMatch ? descriptionMatch[1] : "") || null;
+
+              if (!origTitle || !link) continue;
+
+              const pubTime = rawPubDate ? Date.parse(rawPubDate) : nowMs;
+              if (isNaN(pubTime) || nowMs - pubTime > FORTY_EIGHT_HOURS_MS) continue;
+
+              // Skip if exact link is already in DB
+              if (existingLinks.has(link)) {
+                totalSkipped++;
+                continue;
+              }
+
+              // Pre-check DB filters on original text/source
+              if (isFilteredOut(origTitle, origSnippet, source, sourceFilters, keywordFilters)) {
+                continue;
+              }
+
+              const category = detectCategory(origTitle, origSnippet, source);
+              if (isRoutineLowPriorityNews(category, origTitle, origSnippet)) {
+                continue;
+              }
+
+              countryRaw.push({
+                country_id: country.id,
+                gl,
+                queryTerm,
+                category,
+                title: origTitle,
+                link,
+                source,
+                snippet: origSnippet,
+                published_at: new Date(pubTime).toISOString(),
+              });
+            }
+
+            countryRaw.sort((a, b) => calculateSelectionScore(b) - calculateSelectionScore(a));
+            const existingForCountry = existingByCountry.get(country.id) || [];
+            const dedupedOrig = deduplicateNearDuplicates(countryRaw, existingForCountry);
+
+            // Take top 6 fresh candidates per country before translation
+            return dedupedOrig.slice(0, 6);
+          } catch (err: any) {
+            logs.push(`[NewsFetcher] Error processing '${queryTerm}': ${err.message || err}`);
+            return [];
+          }
+        })
+      );
+
+      for (const items of batchResults) {
+        preSelectedCandidates.push(...items);
+      }
+    }
+
+    // Batch-translate non-TR candidates (keeps total subrequests well below Cloudflare's 50 limit)
+    const nonTrIndices: number[] = [];
+    const titlesToTranslate: string[] = [];
+    const snippetsToTranslate: string[] = [];
+
+    preSelectedCandidates.forEach((cand, idx) => {
+      if (cand.gl !== "TR") {
+        nonTrIndices.push(idx);
+        titlesToTranslate.push(cand.title);
+        snippetsToTranslate.push(cand.snippet || cand.title);
+      }
+    });
+
+    if (nonTrIndices.length > 0) {
+      const [translatedTitles, translatedSnippets] = await Promise.all([
+        translateBatch(titlesToTranslate, "tr"),
+        translateBatch(snippetsToTranslate, "tr"),
+      ]);
+
+      nonTrIndices.forEach((candIdx, i) => {
+        preSelectedCandidates[candIdx].title = cleanText(translatedTitles[i]) || preSelectedCandidates[candIdx].title;
+        if (preSelectedCandidates[candIdx].snippet) {
+          preSelectedCandidates[candIdx].snippet = cleanText(translatedSnippets[i]) || preSelectedCandidates[candIdx].snippet;
+        }
+      });
+    }
+
+    // Post-translation filter & near-duplicate deduplication against Turkish DB titles
+    const candidatesByCountry = new Map<string, CandidateItem[]>();
+    for (const cand of preSelectedCandidates) {
+      if (isFilteredOut(cand.title, cand.snippet, cand.source, sourceFilters, keywordFilters)) {
+        continue;
+      }
+      cand.category = detectCategory(cand.title, cand.snippet, cand.source);
+      if (isRoutineLowPriorityNews(cand.category, cand.title, cand.snippet)) {
+        continue;
+      }
+      const list = candidatesByCountry.get(cand.country_id) || [];
+      list.push(cand);
+      candidatesByCountry.set(cand.country_id, list);
+    }
+
+    const finalItemsToInsert: Array<{
+      country_id: string;
+      category: NewsCategory;
+      title: string;
+      link: string;
+      source: string | null;
+      snippet: string | null;
+      published_at: string;
+    }> = [];
+
+    for (const [countryId, list] of candidatesByCountry.entries()) {
+      list.sort((a, b) => calculateSelectionScore(b) - calculateSelectionScore(a));
+      const existingForCountry = existingByCountry.get(countryId) || [];
+      const uniqueForCountry = deduplicateNearDuplicates(list, existingForCountry).slice(0, 10);
+      for (const item of uniqueForCountry) {
+        finalItemsToInsert.push({
+          country_id: item.country_id,
+          category: item.category,
+          title: item.title,
+          link: item.link,
+          source: item.source,
+          snippet: item.snippet,
+          published_at: item.published_at,
+        });
+      }
+    }
+
+    totalFound = finalItemsToInsert.length + totalSkipped;
+
+    if (finalItemsToInsert.length > 0) {
+      const { data: insertedData, error: insertError } = await supabaseAdmin
+        .from("news")
+        .upsert(finalItemsToInsert, { onConflict: "link", ignoreDuplicates: true })
+        .select("id");
+
+      if (insertError) {
+        logs.push(`[NewsFetcher] Batch upsert error: ${insertError.message}`);
+      } else {
+        const insertedCount = insertedData ? insertedData.length : 0;
+        const skippedInUpsert = finalItemsToInsert.length - insertedCount;
+        totalInserted += insertedCount;
+        totalSkipped += skippedInUpsert;
+        logs.push(`[NewsFetcher] Batch upsert: ${insertedCount} new inserted, ${totalSkipped} duplicates skipped.`);
+      }
+    }
+
+    // 4. Cleanup old news (older than 48 hours, only if feed scan succeeded)
+    if (totalFound > 0) {
+      const twoDaysAgo = new Date(Date.now() - FORTY_EIGHT_HOURS_MS).toISOString();
+      const { error: cleanupError, count: deletedCount } = await supabaseAdmin
+        .from("news")
+        .delete({ count: "exact" })
+        .lt("published_at", twoDaysAgo);
+
+      if (cleanupError) {
+        logs.push(`[NewsFetcher] Warning: Failed to cleanup old news: ${cleanupError.message}`);
+      } else {
+        logs.push(`[NewsFetcher] Cleanup: Deleted ${deletedCount || 0} news older than 48 hours.`);
+      }
     }
 
     // 5. Log execution run in news_fetch_logs

@@ -14,6 +14,7 @@ export default {
       case "0 * * * *":
         paths.push("/api/cron/cupmat-fetch");
         break;
+      case "30 * * * *":
       case "*/30 * * * *":
         paths.push("/api/cron/fetch-news");
         break;

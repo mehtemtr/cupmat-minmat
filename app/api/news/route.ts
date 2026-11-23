@@ -16,8 +16,70 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
   source: string;
   link: string;
   published_at: string;
-  translations: Record<string, { title: string; snippet: string }>;
+  image?: string;
+  isParody?: boolean;
+  tags?: string[];
+  featured_order?: number;
+  translations: Record<string, { title: string; snippet: string; content?: string }>;
 }> = [
+  {
+    id: "newsglo-parody-kartal-aslan-sariyer-2026",
+    category: "Parody",
+    source: "Aslan KORKAK (Statmatik İstihbarat Şefi)",
+    link: "https://statmatik.com/haberler#parodi-kartal-aslan",
+    image: "/parodi-kartal-aslan.jpg",
+    published_at: new Date().toISOString(),
+    isParody: true,
+    featured_order: 1,
+    tags: ["parodi", "mizah", "diğer", "sarıyer", "kartal", "aslan"],
+    translations: {
+      tr: {
+        title: "Havada Kartalı Gören Aslan Kaçacak Delik Arıyor",
+        snippet: "İstanbul-Sarıyer civarlarında yaşayan aslan, Konya'dan dönen kartalı görünce çalılıklara saklandı; korkuya kapılan aslanı ikna etmek için devreye Galatasaraylı futbolcu Abdülkerim Bardakcı girdi.",
+        content: `İstanbul’un Sarıyer ilçesi semalarında süzülen ve dün akşam Konya’dan dönen kartalı gören aslan, paniğe kapılarak ormanın derinliklerinde kaçacak delik aramaya başladı. "Ormanların kralı" unvanını geçici olarak askıya alan aslan, gökyüzünde tur atan kartalın gölgesini fark ettiği an kendini en yakın çalılığın içine attı.\n\nGece boyunca kendisini arayan ekiplerin termal dronlarını da kartal sanan aslanın büyük bir psikolojik çöküntü yaşadığı öğrenildi. Güvenlik kameralarına yansıyan görüntülerde aslanın yanından geçtiği kümes tavuklarına bile dokunmaması dikkat çekerken, mahalle sakinleri durumu, "Kafasını kaldırıp gökyüzünde süzülen kartala baktı, yutkundu ve usulca ormana kaçtı. Belli ki kartal korkusu iştahını kesmiş" sözleriyle yorumladı.\n\n## Abdülkerim Bardakcı'dan Ormanda Acil Müdahale\n\nGece yarısı bölgeye gelerek arama çalışmalarına katılan Galatasaraylı milli stoper Abdülkerim Bardakcı'nın, moral vermek için ormanlık alana girerek aslana, "Korkunun ecele faydası yok, kaçmak çözüm değil! Çok yemeyiz, çık artık saklandığın yerden" şeklinde seslendiği öğrenildi.\n\nGüvenlik güçleri ise aslanın daha fazla strese girip yerin altına saklanmaması için bölgede yüksek sesle "Kartal" tezahüratı yapılmasını ve siyah-beyaz kıyafetlerle ormana yaklaşılmasını geçici olarak yasakladı.`,
+      },
+      en: {
+        title: "Lion Spotting the Eagle in the Sky Scrambles for a Hiding Spot",
+        snippet: "Living around Istanbul-Sarıyer, the lion hid in the bushes after spotting the eagle returning from Konya; Galatasaray defender Abdülkerim Bardakcı stepped in to persuade the frightened lion.",
+        content: `Spotting the eagle soaring over Istanbul’s Sarıyer district after returning from Konya last night, the lion panicked and began searching for a hiding spot deep in the forest. Temporarily suspending its "King of the Jungle" title, the lion dove into the nearest bush the moment it noticed the shadow of the circling eagle.\n\nMistaking the search teams' thermal drones for eagles throughout the night, the lion reportedly suffered a major psychological breakdown. Security footage showed the lion walking right past coop chickens without touching them, while locals commented: "It looked up at the soaring eagle, gulped, and quietly fled into the woods. Clearly, fear of the eagle ruined its appetite."\n\n## Emergency Forest Intervention by Abdülkerim Bardakcı\n\nArriving at the area at midnight to join the search efforts, Galatasaray national defender Abdülkerim Bardakcı reportedly entered the woods to boost the lion's morale, calling out: "Fear won't change fate, running isn't the solution! We won't concede much, come out of your hiding place now."\n\nMeanwhile, security forces temporarily banned chanting "Eagle" out loud or approaching the forest in black-and-white outfits to prevent the lion from getting more stressed and burrowing underground.`,
+      },
+      de: {
+        title: "Löwe sieht den Adler am Himmel und sucht verzweifelt ein Versteck",
+        snippet: "Ein in Istanbul-Sarıyer lebender Löwe versteckte sich im Gebüsch, als er den aus Konya zurückkehrenden Adler sah; Abdülkerim Bardakcı griff ein, um den verängstigten Löwen zu überzeugen.",
+        content: `Als der Löwe den gestern Abend aus Konya zurückgekehrten Adler über dem Istanbuler Stadtteil Sarıyer kreisen sah, geriet er in Panik und suchte tief im Wald nach einem Versteck. Er legte seinen Titel als "König des Dschungels" vorübergehend ab und sprang in das nächste Gebüsch, sobald er den Schatten des Adlers bemerkte.\n\nDa er die Wärmebilddrohnen der Suchteams die ganze Nacht über für Adler hielt, erlitt der Löwe Berichten zufolge einen psychologischen Zusammenbruch. Auf Überwachungskameras war zu sehen, wie er selbst an Hühnern vorbeiging, ohne sie anzurühren. Anwohner kommentierten: "Er schaute zum Adler hinauf, schluckte schwer und schlich in den Wald. Die Angst vor dem Adler hat ihm wohl den Appetit verdorben."\n\n## Notfalleinsatz im Wald durch Abdülkerim Bardakcı\n\nUm Mitternacht traf Galatasaray-Verteidiger Abdülkerim Bardakcı ein, um dem Löwen Mut zuzusprechen, und rief in den Wald: "Angst hilft nichts, Weglaufen ist keine Lösung! Wir kassieren schon nicht zu viele, komm endlich aus deinem Versteck."\n\nDie Sicherheitskräfte verboten vorübergehend laute "Adler"-Rufe sowie das Betreten des Waldes in schwarz-weißer Kleidung, damit der Löwe nicht noch mehr Stress erleidet.`,
+      },
+      fr: {
+        title: "Voyant l'Aigle dans le ciel, le Lion cherche désespérément une cachette",
+        snippet: "Vivant du côté d'Istanbul-Sarıyer, le lion s'est caché dans les buissons en voyant l'aigle revenir de Konya ; le défenseur Abdülkerim Bardakcı est intervenu pour rassurer le lion effrayé.",
+        content: `En apercevant l'aigle planer dans le ciel de Sarıyer à Istanbul, de retour de Konya hier soir, le lion a paniqué et cherché un trou où se cacher au fond de la forêt. Suspendant temporairement son titre de "Roi de la forêt", il s'est jeté dans le buisson le plus proche dès qu'il a vu l'ombre de l'aigle.\n\nPrenant toute la nuit les drones thermiques des équipes de secours pour des aigles, le lion aurait subi un choc psychologique. Les caméras de sécurité montrent qu'il n'a même pas touché aux poules sur son passage, tandis que les habitants témoignent : "Il a levé la tête vers l'aigle, a dégluti et s'est enfui doucement dans les bois. La peur de l'aigle lui a coupé l'appétit."\n\n## Intervention d'urgence d'Abdülkerim Bardakcı en forêt\n\nArrivé sur place à minuit, le défenseur international de Galatasaray Abdülkerim Bardakcı est entré dans la forêt pour remonter le moral du lion en lui lançant : "La peur n'évite pas le danger, fuir n'est pas la solution ! On n'en prendra pas beaucoup, sors maintenant de ta cachette."\n\nLes forces de sécurité ont temporairement interdit de scander "Aigle" à haute voix et de s'approcher de la forêt en tenue noir et blanc pour éviter au lion un stress supplémentaire.`,
+      },
+      es: {
+        title: "El León que vio al Águila en el cielo busca desesperadamente dónde esconderse",
+        snippet: "El león que vive por Estambul-Sarıyer se escondió en los arbustos al ver al águila que regresaba de Konya; el futbolista Abdülkerim Bardakcı intervino para convencer al asustado león.",
+        content: `Al ver al águila planeando sobre el distrito de Sarıyer en Estambul tras regresar anoche de Konya, el león entró en pánico y comenzó a buscar dónde esconderse en lo profundo del bosque. Suspendiendo temporalmente su título de "Rey de la Selva", se lanzó al arbusto más cercano en cuanto notó la sombra del águila.\n\nConfundiendo los drones térmicos de los equipos de búsqueda con águilas durante toda la noche, el león sufrió un colapso psicológico. Las cámaras mostraron que ni siquiera tocó a las gallinas del corral, y los vecinos comentaron: "Miró al águila en el cielo, tragó saliva y huyó al bosque. Está claro que el miedo al águila le quitó el apetito."\n\n## Intervención de emergencia de Abdülkerim Bardakcı en el bosque\n\nA medianoche, el defensa del Galatasaray Abdülkerim Bardakcı acudió a la zona y entró al bosque para animar al león gritándole: "¡El miedo no sirve de nada, huir no es la solución! No encajaremos muchos, sal ya de tu escondite."\n\nPor su parte, las fuerzas de seguridad prohibieron temporalmente cantar "Águila" en voz alta o acercarse al bosque con ropa blanca y negra para evitar que el león se esconda bajo tierra por el estrés.`,
+      },
+      it: {
+        title: "Il Leone vede l'Aquila in cielo e cerca disperatamente un nascondiglio",
+        snippet: "Il leone che vive nella zona di Istanbul-Sarıyer si è nascosto tra i cespugli vedendo l'aquila tornare da Konya; per convincerlo è intervenuto il difensore Abdülkerim Bardakcı.",
+        content: `Vedendo l'aquila volteggiare nei cieli di Sarıyer a Istanbul, di ritorno ieri sera da Konya, il leone è andato nel panico cercando un nascondiglio nel profondo della foresta. Sospeso temporaneamente il titolo di "Re della Foresta", si è tuffato nel cespuglio più vicino appena ha notato l'ombra dell'aquila.\n\nScambiando per tutta la notte i droni termici dei soccorritori per aquile, il leone ha avuto un crollo psicologico. Le telecamere lo hanno ripreso mentre passava accanto alle galline senza nemmeno toccarle: "Ha guardato l'aquila in cielo, ha deglutito ed è scappato nel bosco. La paura dell'aquila gli ha tolto l'appetito", hanno commentato i residenti.\n\n## Intervento d'emergenza di Abdülkerim Bardakcı nel bosco\n\nGiunto sul posto a mezzanotte, il difensore del Galatasaray Abdülkerim Bardakcı è entrato nel bosco per rincuorare il leone: "La paura non aiuta, scappare non è la soluzione! Non ne prenderemo troppi, esci fuori dal tuo nascondiglio."\n\nLe forze di sicurezza hanno temporaneamente vietato i cori "Aquila" ad alta voce e l'avvicinamento al bosco con abiti bianconeri per non aumentare lo stress del leone.`,
+      },
+      pt: {
+        title: "Leão vê Águia no céu e procura desesperadamente um buraco para se esconder",
+        snippet: "Vivendo nos arredores de Istambul-Sarıyer, o leão escondeu-se nos arbustos ao ver a águia que voltava de Konya; o zagueiro Abdülkerim Bardakcı entrou em ação para convencer o leão assustado.",
+        content: `Ao avistar a águia planando sobre o distrito de Sarıyer, em Istambul, após retornar de Konya ontem à noite, o leão entrou em pânico e correu para o fundo da floresta. Suspendendo temporariamente o título de "Rei da Selva", atirou-se no arbusto mais próximo assim que viu a sombra da águia.\n\nConfundindo os drones térmicos das equipes de busca com águias durante toda a madrugada, o leão sofreu um abalo psicológico. Câmeras de segurança mostraram que ele passou ao lado de galinhas sem tocá-las, e moradores comentaram: "Ele olhou para a águia no céu, engoliu em seco e fugiu para a mata. O medo da águia tirou-lhe o apetite."\n\n## Intervenção de emergência de Abdülkerim Bardakcı na floresta\n\nChegando ao local à meia-noite, o zagueiro do Galatasaray Abdülkerim Bardakcı entrou na mata para dar moral ao leão, gritando: "O medo não resolve, fugir não é solução! Não vamos sofrer muitos, saia já do seu esconderijo."\n\nAs forças de segurança proibiram temporariamente gritos de "Águia" e roupas preto e branco perto da floresta para evitar que o leão fique ainda mais estressado.`,
+      },
+      ar: {
+        title: "الأسد يبحث عن جحر يختبئ فيه بعد رؤية النسر يحلق في السماء",
+        snippet: "أسد يعيش في منطقة ساريير بإسطنبول يختبئ بين الشجيرات بعد رؤية النسر العائد من قونية؛ ومدافع غلطة سراي عبد الكريم بارداكجي يتدخل لإقناع الأسد الخائف بالخروج.",
+        content: `أصيب الأسد بالذعر عندما رأى النسر العائد مساء أمس من قونية يحلق في سماء منطقة ساريير بإسطنبول، وبدأ يبحث عن مكان يختبئ فيه داخل الغابة. وبعد أن علّق مؤقتاً لقبه كـ"ملك الغابة"، ألقى بنفسه في أقرب شجيرة فور لمحه لظل النسر.\n\nوأفادت التقارير أن الأسد ظن الطائرات المسيرة الحرارية لفرق البحث نسوراً طوال الليل، مما أصابه بانهيار نفسي. وأظهرت كاميرات المراقبة مروره بجانب دجاج القن دون أن يمسها، وقال سكان الحي: "رفع رأسه ونظر إلى النسر المحلق، ثم ابتلع ريقه وفرّ بهدوء إلى الغابة؛ يبدو أن خوفه من النسر قد قطع شهيته."\n\n## تدخل عاجل في الغابة من عبد الكريم بارداكجي\n\nفي منتصف الليل وصل مدافع غلطة سراي الدولي عبد الكريم بارداكجي للمشاركة في البحث ودخل الغابة لرفع معنويات الأسد منادياً: "الخوف لا ينفع والهروب ليس حلاً! لن نستقبل الكثير، اخرج الآن من مخبئك."\n\nومنعت قوات الأمن مؤقتاً الهتاف بصوت عالٍ باسم "النسر" أو الاقتراب من الغابة بملابس باللونين الأسود والأبيض حتى لا يزداد توتر الأسد.`,
+      },
+      ko: {
+        title: "하늘의 독수리를 본 사자, 숨을 곳을 찾아 숲속으로 줄행랑",
+        snippet: "이스탄불 사르예르 인근의 사자가 코니아에서 돌아온 독수리를 보고 수풀 속에 숨었으며, 겁에 질린 사자를 설득하기 위해 갈라타사라이 수비수 압둘케림 바르닥즈가 나섰다.",
+        content: `어젯밤 코니아에서 돌아와 이스탄불 사르예르 상공을 유유히 나는 독수리를 본 사자가 패닉에 빠져 숲속 깊은 곳으로 숨을 곳을 찾기 시작했다. '밀림의 왕' 칭호를 잠시 내려놓은 사자는 하늘을 도는 독수리의 그림자를 보자마자 가장 가까운 수풀 속으로 몸을 던졌다.\n\n밤새 자신을 찾는 수색대의 열화상 드론마저 독수리로 착각한 사자는 큰 심리적 충격을 받은 것으로 전해졌다. CCTV 영상에서는 사자가 닭장 옆을 지나가면서도 닭 한 마리 건드리지 못하는 모습이 포착됐고, 주민들은 "하늘의 독수리를 올려다보며 침을 꿀꺽 삼키더니 조용히 숲으로 도망쳤다. 독수리 공포에 입맛마저 잃은 모양"이라고 전했다.\n\n## 압둘케림 바르닥즈의 한밤중 숲속 긴급 출동\n\n자정 무렵 현장에 도착해 수색에 합류한 갈라타사라이 국가대표 수비수 압둘케림 바르닥즈는 사자의 사기를 북돋우기 위해 숲으로 들어가 "두려워도 소용없고 도망치는 건 해결책이 아니다! 많이 안 먹힐 테니 이제 그만 숨은 곳에서 나와라"라고 외친 것으로 알려졌다.\n\n한편 보안 당국은 사자가 더 큰 스트레스를 받아 땅속으로 숨지 않도록 해당 지역에서 큰 소리로 '독수리'를 연호하거나 흑백 옷을 입고 숲에 접근하는 것을 일시적으로 금지했다.`,
+      },
+    },
+  },
   {
     id: "newsglo-poland-independence-day-2026",
     category: "General",
@@ -715,7 +777,7 @@ async function translateText(text: string, targetLang: string): Promise<string> 
       headers: { 
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36' 
       },
-      next: { revalidate: 3600 }
+      cache: "no-store"
     });
     if (!res.ok) return text;
     const data = await res.json();
@@ -746,34 +808,39 @@ export async function GET(request: Request) {
 
     // 1. Try querying Supabase live DB news feed safely
     try {
-        const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-        if (key && key.includes(".")) {
+        const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+        let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+        if ((!supabaseUrl || !supabaseUrl.includes(".supabase.co")) && key && key.includes(".")) {
           // Cloudflare environment base64 decode safe
           const b64 = key.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
           const payload = Buffer.from(b64, "base64").toString("utf8");
           const claims = JSON.parse(payload);
-          const supabaseUrl = `https://${claims.ref}.supabase.co`;
-
-          let fetchUrl = `${supabaseUrl}/rest/v1/news?select=id,title,snippet,source,category,link,published_at,featured_order&order=featured_order.asc.nullslast,published_at.desc&limit=${limit * 2}&offset=${offset}`;
+          if (claims && claims.ref) {
+            supabaseUrl = `https://${claims.ref}.supabase.co`;
+          }
+        }
+        if (supabaseUrl && key) {
+          const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+          let fetchUrl = `${supabaseUrl}/rest/v1/news?select=id,title,snippet,source,category,link,published_at,featured_order&published_at=gte.${encodeURIComponent(twentyFourHoursAgo)}&order=featured_order.asc.nullslast,published_at.desc&limit=${limit * 2}&offset=${offset}`;
           if (category !== "all") fetchUrl += `&category=eq.${encodeURIComponent(category)}`;
           if (search) fetchUrl += `&title=ilike.*${encodeURIComponent(search)}*`;
 
           const res = await fetch(fetchUrl, {
-            headers: { apikey: key, Authorization: `Bearer ${key}` },
-            next: { revalidate: 60 }
+            headers: {
+              apikey: key,
+              Authorization: `Bearer ${key}`,
+              Prefer: "count=exact",
+            },
+            cache: "no-store",
           });
           
           if (res.ok) {
             const dbNews = await res.json();
             if (dbNews && dbNews.length > 0) {
-              const countRes = await fetch(`${supabaseUrl}/rest/v1/news?select=id&limit=1`, {
-                headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact" },
-                next: { revalidate: 120 }
-              });
               let count = dbNews.length;
-              if (countRes.ok) {
-                const range = countRes.headers.get("content-range");
-                if (range) count = parseInt(range.split("/")[1], 10) || count;
+              const range = res.headers.get("content-range");
+              if (range && range.includes("/")) {
+                count = parseInt(range.split("/")[1], 10) || count;
               }
             
             // Ön yüzde tekrar eden haberleri engellemek için benzerlik filtresi (Similarity Filter)
@@ -794,9 +861,36 @@ export async function GET(request: Request) {
             // İstenen limit kadarını alıyoruz
             const paginatedUniqueNews = uniqueDbNews.slice(0, limit);
 
-            // Parallel asynchronous translation with caching (super fast & translates international news)
+            // Parallel asynchronous translation with caching (skip redundant translation when lang === "tr")
             const cleanedDbNews = await Promise.all(
               paginatedUniqueNews.map(async (item) => {
+                // Match against MULTILINGUAL_NEWS_DATASET if it's a curated/parody item so full content & 9-lang translations are attached
+                const matchedCurated = MULTILINGUAL_NEWS_DATASET.find(
+                  (c) => c.link === item.link || c.id === item.id || (item.category === "Parody" && c.category === "Parody")
+                );
+                if (matchedCurated) {
+                  const trans =
+                    matchedCurated.translations[lang] ||
+                    matchedCurated.translations["en"] ||
+                    matchedCurated.translations["tr"];
+                  return {
+                    ...item,
+                    image: matchedCurated.image || undefined,
+                    isParody: matchedCurated.isParody || item.category === "Parody",
+                    tags: matchedCurated.tags || [],
+                    title: cleanText(trans?.title || item.title || ""),
+                    snippet: cleanText(trans?.snippet || item.snippet || ""),
+                    content: trans?.content || undefined,
+                  };
+                }
+
+                if (lang === "tr") {
+                  return {
+                    ...item,
+                    title: cleanText(item.title || ""),
+                    snippet: cleanText(item.snippet || ""),
+                  };
+                }
                 const [translatedTitle, translatedSnippet] = await Promise.all([
                   translateText(item.title || "", lang),
                   translateText(item.snippet || "", lang),
@@ -809,8 +903,47 @@ export async function GET(request: Request) {
               })
             );
 
-            // 10 Kasım Atatürk'ü Anma Günü ve 11 Kasım Polonya Ulusal Bağımsızlık Günü özel haberlerini ilk sayfada en üste sabitle (NewsGlo Akış Bandı ve /haberler için)
+            // Parodi / Mizah ilk haberini birkaç gün boyunca (23-27 Kasım 2026) ilk sayfada en üste sabitle
             const now = new Date();
+            const isParodyPinWindow =
+              now.getTime() <= new Date("2026-11-28T23:59:59+03:00").getTime();
+
+            if (page === 1 && (category === "all" || category.toLowerCase() === "parody") && !search && isParodyPinWindow) {
+              const parodyBase = MULTILINGUAL_NEWS_DATASET.find((item) => item.id === "newsglo-parody-kartal-aslan-sariyer-2026");
+              if (parodyBase) {
+                const trans =
+                  parodyBase.translations[lang] ||
+                  parodyBase.translations["en"] ||
+                  parodyBase.translations["tr"];
+                const existingIdx = cleanedDbNews.findIndex(
+                  (n) => n.link === parodyBase.link || n.id === parodyBase.id || (n.title && n.title.includes("Kartal"))
+                );
+                if (existingIdx > 0) {
+                  const [existingItem] = cleanedDbNews.splice(existingIdx, 1);
+                  cleanedDbNews.unshift(existingItem);
+                } else if (existingIdx === -1 && trans) {
+                  cleanedDbNews.unshift({
+                    id: parodyBase.id,
+                    source: parodyBase.source,
+                    category: parodyBase.category,
+                    link: parodyBase.link,
+                    image: parodyBase.image,
+                    published_at: new Date("2026-11-28T23:59:59+03:00").toISOString(),
+                    featured_order: 1,
+                    isParody: true,
+                    tags: parodyBase.tags,
+                    title: cleanText(trans.title),
+                    snippet: cleanText(trans.snippet),
+                    content: trans.content,
+                  });
+                  if (cleanedDbNews.length > limit) {
+                    cleanedDbNews.pop();
+                  }
+                }
+              }
+            }
+
+            // 10 Kasım Atatürk'ü Anma Günü ve 11 Kasım Polonya Ulusal Bağımsızlık Günü özel haberlerini ilk sayfada en üste sabitle (NewsGlo Akış Bandı ve /haberler için)
             const isNov10Window =
               now.getFullYear() === 2026 &&
               now.getMonth() === 10 &&
@@ -878,7 +1011,7 @@ export async function GET(request: Request) {
               isMock: false,
             }, {
               headers: {
-                "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+                "Cache-Control": "no-store, no-cache, must-revalidate",
               },
             });
             }
@@ -901,9 +1034,14 @@ export async function GET(request: Request) {
         source: base.source,
         category: base.category,
         link: base.link,
+        image: base.image,
         published_at: base.published_at,
+        featured_order: base.featured_order,
+        isParody: base.isParody || base.category === "Parody",
+        tags: base.tags || [],
         title: cleanText(trans.title || ""),
         snippet: cleanText(trans.snippet || ""),
+        content: trans.content || undefined,
       };
     });
 

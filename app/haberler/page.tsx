@@ -17,16 +17,24 @@ import {
   Leaf,
   TrendingUp,
   AlertTriangle,
+  Smile,
+  BookOpen,
+  Tag,
 } from "lucide-react";
 
 interface NewsArticle {
   id: string;
   title: string;
   snippet: string;
+  content?: string;
+  image?: string;
+  tags?: string[];
+  isParody?: boolean;
   source: string;
   category: string;
   link: string;
   published_at: string;
+  featured_order?: number | null;
 }
 
 // Client-side HTML tag stripper helper
@@ -56,6 +64,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Sağlık & Tıp",
     env: "Çevre & İklim",
     economy: "Ekonomi",
+    parody: "Parodi / Mizah",
+    parodyBadge: "🎭 PARODİ / KURGU HABER",
+    parodyCardWarn: "Bu içerik tamamen mizah ve parodi amaçlı kurgulanmıştır; gerçek kişi, kurum veya olayları yansıtmaz.",
+    parodyLegalTitle: "Yasal Uyarı: Parodi & Mizah İçeriği (Kurgusal Haber)",
+    parodyLegalMsg: "Bu haber tamamen eğlence, mizah ve parodi amacıyla kurgulanmış hayali bir içeriktir. Metinde yer alan olaylar, diyaloglar ve senaryolar gerçek dışıdır; hiçbir kişi, kulüp veya kurumu hedef almaz.",
+    readFullParody: "Haberi Oku",
+    closeArticle: "Haberi Kapat",
+    tagsLabel: "Etiketler",
     loadMore: "Daha Fazla Haber Yükle",
     loading: "Yükleniyor...",
     noNewsTitle: "Haber Bulunamadı",
@@ -85,6 +101,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Health & Medicine",
     env: "Environment & Climate",
     economy: "Economy",
+    parody: "Parody / Humor",
+    parodyBadge: "🎭 PARODY / SATIRE NEWS",
+    parodyCardWarn: "This content is purely fictional satire and parody; it does not reflect real events.",
+    parodyLegalTitle: "Legal Disclaimer: Parody & Satire Content (Fictional)",
+    parodyLegalMsg: "This article is a fictional work of satire and humor created solely for entertainment purposes. The events, quotes, and scenarios described are entirely imaginary.",
+    readFullParody: "Read Full Story",
+    closeArticle: "Close Article",
+    tagsLabel: "Tags",
     loadMore: "Load More News",
     loading: "Loading...",
     noNewsTitle: "No News Found",
@@ -114,6 +138,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Gesundheit & Medizin",
     env: "Umwelt & Klima",
     economy: "Wirtschaft",
+    parody: "Parodie / Humor",
+    parodyBadge: "🎭 PARODIE / SATIRE",
+    parodyCardWarn: "Dieser Inhalt ist rein fiktive Satire und Parodie zur Unterhaltung.",
+    parodyLegalTitle: "Rechtlicher Hinweis: Parodie- & Satire-Inhalt (Fiktiv)",
+    parodyLegalMsg: "Dieser Beitrag ist ein rein fiktiver Satire- und Parodietext zu Unterhaltungszwecken. Alle dargestellten Szenarien und Dialoge sind frei erfunden.",
+    readFullParody: "Artikel lesen",
+    closeArticle: "Schließen",
+    tagsLabel: "Tags",
     loadMore: "Mehr Nachrichten laden",
     loading: "Wird geladen...",
     noNewsTitle: "Keine Nachrichten gefunden",
@@ -143,6 +175,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Santé & Médecine",
     env: "Environnement & Climat",
     economy: "Économie",
+    parody: "Parodie / Humour",
+    parodyBadge: "🎭 PARODIE / SATIRE",
+    parodyCardWarn: "Ce contenu est une fiction satirique et parodique à but purement humoristique.",
+    parodyLegalTitle: "Mentions Légales : Contenu Parodique & Satirique (Fiction)",
+    parodyLegalMsg: "Cet article est une œuvre de fiction parodique et humoristique créée uniquement à des fins de divertissement. Les événements et dialogues sont purement imaginaires.",
+    readFullParody: "Lire l'article",
+    closeArticle: "Fermer",
+    tagsLabel: "Étiquettes",
     loadMore: "Charger plus d'actualités",
     loading: "Chargement...",
     noNewsTitle: "Aucune actualité trouvée",
@@ -172,6 +212,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Salud y Medicina",
     env: "Medio Ambiente y Clima",
     economy: "Economía",
+    parody: "Parodia / Humor",
+    parodyBadge: "🎭 PARODIA / SÁTIRA",
+    parodyCardWarn: "Este contenido es ficción satírica y paródica con fines puramente humorísticos.",
+    parodyLegalTitle: "Aviso Legal: Contenido de Parodia y Humor (Ficción)",
+    parodyLegalMsg: "Este artículo es una obra de ficción paródica y humorística creada únicamente con fines de entretenimiento. Los eventos y diálogos descritos son imaginarios.",
+    readFullParody: "Leer noticia",
+    closeArticle: "Cerrar",
+    tagsLabel: "Etiquetas",
     loadMore: "Cargar más noticias",
     loading: "Cargando...",
     noNewsTitle: "No se encontraron noticias",
@@ -201,6 +249,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Salute e Medicina",
     env: "Ambiente e Clima",
     economy: "Economia",
+    parody: "Parodia / Umorismo",
+    parodyBadge: "🎭 PARODIA / SATIRA",
+    parodyCardWarn: "Questo contenuto è pura finzione satirica e parodistica a scopo di intrattenimento.",
+    parodyLegalTitle: "Avviso Legale: Contenuto Parodistico & Umoristico (Finzione)",
+    parodyLegalMsg: "Questo articolo è un'opera di fantasia satirica e umoristica creata esclusivamente a scopo di intrattenimento. Gli eventi e i dialoghi sono del tutto immaginari.",
+    readFullParody: "Leggi articolo",
+    closeArticle: "Chiudi",
+    tagsLabel: "Tag",
     loadMore: "Carica altre notizie",
     loading: "Caricamento...",
     noNewsTitle: "Nessuna notizia trovata",
@@ -230,6 +286,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "Saúde e Medicina",
     env: "Meio Ambiente e Clima",
     economy: "Economia",
+    parody: "Paródia / Humor",
+    parodyBadge: "🎭 PARÓDIA / SÁTIRA",
+    parodyCardWarn: "Este conteúdo é ficção satírica e paródica criada apenas para entretenimento.",
+    parodyLegalTitle: "Aviso Legal: Conteúdo de Paródia e Humor (Ficção)",
+    parodyLegalMsg: "Este artigo é uma obra de ficção humorística e paródica criada exclusivamente para fins de entretenimento. Os eventos e diálogos são inteiramente imaginários.",
+    readFullParody: "Ler notícia",
+    closeArticle: "Fechar",
+    tagsLabel: "Etiquetas",
     loadMore: "Carregar mais notícias",
     loading: "Carregando...",
     noNewsTitle: "Nenhuma notícia encontrada",
@@ -259,6 +323,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "الصحة والطب",
     env: "البيئة والمناخ",
     economy: "الاقتصاد",
+    parody: "محاكاة ساخرة / فكاهة",
+    parodyBadge: "🎭 خبر ساخر / خيالي",
+    parodyCardWarn: "هذا المحتوى عمل فكاهي ساخر وخيالي تماماً لغرض الترفيه ولا يعكس أحداثاً حقيقية.",
+    parodyLegalTitle: "إخلاء مسؤولية قانوني: محتوى ساخر وفكاهي (خيالي)",
+    parodyLegalMsg: "هذا المقال هو عمل خيالي ساخر وفكاهي تم إعداده لغرض الترفيه والدعابة فقط. جميع الأحداث والحوارات الواردة فيه خيالية تماماً.",
+    readFullParody: "قراءة الخبر كاملاً",
+    closeArticle: "إغلاق",
+    tagsLabel: "الوسوم",
     loadMore: "تحميل المزيد من الأخبار",
     loading: "جاري التحميل...",
     noNewsTitle: "لم يتم العثور على أخبار",
@@ -288,6 +360,14 @@ const UI_TEXT: Record<string, Record<string, string>> = {
     health: "건강 및 의학",
     env: "환경 및 기후",
     economy: "경제",
+    parody: "패러디 / 유머",
+    parodyBadge: "🎭 패러디 / 풍자 뉴스",
+    parodyCardWarn: "본 콘텐츠는 오락 및 유머를 목적으로 작성된 가상의 패러디 뉴스이며 실제 사실과 무관합니다.",
+    parodyLegalTitle: "법적 고지: 패러디 및 유머 콘텐츠 (가상 픽션)",
+    parodyLegalMsg: "이 기사는 오락과 유머를 위해 창작된 가상의 패러디 콘텐츠입니다. 본문에 묘사된 상황과 대화는 모두 허구입니다.",
+    readFullParody: "전문 읽기",
+    closeArticle: "닫기",
+    tagsLabel: "태그",
     loadMore: "뉴스 더 불러오기",
     loading: "로딩 중...",
     noNewsTitle: "뉴스를 찾을 수 없습니다",
@@ -415,6 +495,8 @@ export default function HaberlerPage() {
         return "bg-amber-500/10 text-amber-400 border-amber-500/30";
       case "Economy":
         return "bg-blue-500/10 text-blue-400 border-blue-500/30";
+      case "Parody":
+        return "bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/40";
       default:
         return "bg-slate-800 text-slate-300 border-slate-700";
     }
@@ -432,6 +514,8 @@ export default function HaberlerPage() {
         return t.env;
       case "Economy":
         return t.economy;
+      case "Parody":
+        return t.parody;
       default:
         return category;
     }
@@ -439,6 +523,7 @@ export default function HaberlerPage() {
 
   const categoryTabs = [
     { id: "all", label: t.allNews, icon: Globe },
+    { id: "Parody", label: t.parody, icon: Smile },
     { id: "Science", label: t.science, icon: Microscope },
     { id: "Technology", label: t.tech, icon: Cpu },
     { id: "Health", label: t.health, icon: Stethoscope },
@@ -547,22 +632,28 @@ export default function HaberlerPage() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
               {articles.map((article) => {
-                const isInternal = article.link && (article.link.includes("statmatik.com") || article.link.startsWith("/"));
-                const isJustAnnouncement = !article.link || article.link === "https://statmatik.com" || article.link === "https://news.statmatik.com" || article.link === "https://statmatik.com/" || article.category === "Statmatik";
-                const isClickable = !isJustAnnouncement;
+                const isParodyArticle = article.category === "Parody" || Boolean(article.isParody);
+                const hasFullModalContent = isParodyArticle || Boolean(article.content);
+                const isInternal = !hasFullModalContent && article.link && (article.link.includes("statmatik.com") || article.link.startsWith("/"));
+                const isJustAnnouncement = !hasFullModalContent && (!article.link || article.link === "https://statmatik.com" || article.link === "https://news.statmatik.com" || article.link === "https://statmatik.com/" || article.category === "Statmatik");
+                const isClickable = hasFullModalContent || !isJustAnnouncement;
 
                 return (
                 <div
                   key={article.id}
                   onClick={() => {
                     if (!isClickable) return;
-                    if (isInternal) {
+                    if (hasFullModalContent) {
+                      setConfirmRedirectArticle(article);
+                    } else if (isInternal) {
                       window.location.href = article.link;
                     } else {
                       setConfirmRedirectArticle(article);
                     }
                   }}
-                  className={`bg-[#060b14] border border-slate-800/80 rounded-2xl p-5 flex flex-col justify-between group ${
+                  className={`bg-[#060b14] border ${
+                    isParodyArticle ? "border-fuchsia-500/40 shadow-lg shadow-fuchsia-500/5" : "border-slate-800/80"
+                  } rounded-2xl p-5 flex flex-col justify-between group ${
                     isClickable
                       ? "hover:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/5 cursor-pointer"
                       : "cursor-default"
@@ -570,17 +661,24 @@ export default function HaberlerPage() {
                 >
                   <div>
                     {/* Header Badges */}
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span
-                        className={`text-[10px] font-extrabold px-2.5 py-1 rounded-lg border uppercase tracking-wider ${getCategoryBadgeColor(
-                          article.category
-                        )}`}
-                      >
-                        {getCategoryNameLocalized(article.category)}
-                      </span>
-                      <div className="flex items-center gap-1.5 opacity-60">
+                    <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span
+                          className={`text-[10px] font-extrabold px-2.5 py-1 rounded-lg border uppercase tracking-wider ${getCategoryBadgeColor(
+                            article.category
+                          )}`}
+                        >
+                          {getCategoryNameLocalized(article.category)}
+                        </span>
+                        {isParodyArticle && (
+                          <span className="text-[10px] font-black px-2 py-0.5 rounded-lg border bg-amber-500/15 text-amber-300 border-amber-500/40 tracking-wide">
+                            {t.parodyBadge}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1.5 opacity-80 text-xs">
                         <Clock className="w-3.5 h-3.5" />
-                        {new Date(article.published_at) > new Date() ? (
+                        {new Date(article.published_at) > new Date() || article.featured_order === 1 ? (
                           <span className="text-amber-400 font-semibold flex items-center gap-1">
                             📌 {lang === "tr" ? "Sabitlendi" : "Pinned"}
                           </span>
@@ -592,7 +690,7 @@ export default function HaberlerPage() {
 
                     {/* Title (HTML Sanitized) */}
                     <h3 className={`text-sm font-black text-slate-100 mb-2 leading-snug line-clamp-2 ${
-                      isClickable ? "group-hover:text-cyan-400 transition-colors" : ""
+                      isClickable ? (isParodyArticle ? "group-hover:text-fuchsia-300 transition-colors" : "group-hover:text-cyan-400 transition-colors") : ""
                     }`}>
                       {article.title}
                     </h3>
@@ -601,6 +699,13 @@ export default function HaberlerPage() {
                     <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed font-normal">
                       {article.snippet}
                     </p>
+
+                    {/* Legal Parody Disclaimer on Card */}
+                    {isParodyArticle && (
+                      <div className="mt-3 px-2.5 py-1.5 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/25 text-[10px] text-fuchsia-200/90 leading-snug font-medium">
+                        ℹ️ {t.parodyCardWarn}
+                      </div>
+                    )}
                   </div>
 
                   {/* Footer Source & Read Button */}
@@ -610,8 +715,18 @@ export default function HaberlerPage() {
                       {article.source || "NewsGlo"}
                     </span>
                     {isClickable && (
-                      <span className="text-xs text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        {t.inspect} <ExternalLink className="w-3 h-3" />
+                      <span className={`text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform ${
+                        isParodyArticle ? "text-fuchsia-400" : "text-cyan-400"
+                      }`}>
+                        {hasFullModalContent ? (
+                          <>
+                            {t.readFullParody} <BookOpen className="w-3.5 h-3.5" />
+                          </>
+                        ) : (
+                          <>
+                            {t.inspect} <ExternalLink className="w-3 h-3" />
+                          </>
+                        )}
                       </span>
                     )}
                   </div>
@@ -645,10 +760,24 @@ export default function HaberlerPage() {
           </>
         )}
 
-        {/* Single Unified 1-Click News Summary & External Redirect Confirmation Modal */}
-        {confirmRedirectArticle && (
-          <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="w-full max-w-lg bg-[#080d1a] border border-amber-500/40 rounded-3xl p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+        {/* Single Unified 1-Click News Summary / Full Parody Reader & External Redirect Modal */}
+        {confirmRedirectArticle && (() => {
+          const isParodyModal = confirmRedirectArticle.category === "Parody" || Boolean(confirmRedirectArticle.isParody);
+          const hasFullContent = isParodyModal || Boolean(confirmRedirectArticle.content);
+          const rawParagraphs = (confirmRedirectArticle.content || confirmRedirectArticle.snippet || "")
+            .split("\n\n")
+            .map((p) => p.trim())
+            .filter(Boolean);
+
+          return (
+          <div
+            onClick={() => setConfirmRedirectArticle(null)}
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className={`w-full ${hasFullContent ? "max-w-2xl border-fuchsia-500/50" : "max-w-lg border-amber-500/40"} bg-[#080d1a] border rounded-3xl p-6 sm:p-7 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 my-auto max-h-[90vh] flex flex-col`}
+            >
               <button
                 onClick={() => setConfirmRedirectArticle(null)}
                 className="absolute top-4 right-4 p-2 bg-slate-900 border border-slate-800 rounded-xl text-slate-400 hover:text-white transition-all"
@@ -657,7 +786,7 @@ export default function HaberlerPage() {
               </button>
 
               {/* Category & Time */}
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-3 flex-wrap pr-8">
                 <span
                   className={`text-[10px] font-extrabold px-2.5 py-1 rounded-lg border uppercase tracking-wider ${getCategoryBadgeColor(
                     confirmRedirectArticle.category
@@ -665,57 +794,165 @@ export default function HaberlerPage() {
                 >
                   {getCategoryNameLocalized(confirmRedirectArticle.category)}
                 </span>
+                {isParodyModal && (
+                  <span className="text-[10px] font-black px-2.5 py-1 rounded-lg border bg-amber-500/15 text-amber-300 border-amber-500/40 tracking-wide">
+                    {t.parodyBadge}
+                  </span>
+                )}
                 <span className="text-xs text-slate-400 font-medium">
-                  {formatRelativeTime(confirmRedirectArticle.published_at)}
+                  {new Date(confirmRedirectArticle.published_at) > new Date() || confirmRedirectArticle.featured_order === 1
+                    ? `📌 ${lang === "tr" ? "Sabitlendi" : "Pinned"}`
+                    : formatRelativeTime(confirmRedirectArticle.published_at)}
                 </span>
               </div>
 
               {/* News Title */}
-              <h2 className="text-base sm:text-lg font-black text-white leading-snug mb-3">
+              <h2 className="text-lg sm:text-xl font-black text-white leading-snug mb-2">
                 {confirmRedirectArticle.title}
               </h2>
 
-              {/* Summary Snippet */}
-              <div className="p-4 bg-slate-950/80 border border-slate-800/80 rounded-2xl mb-5 max-h-48 overflow-y-auto">
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-                  {confirmRedirectArticle.snippet}
-                </p>
-              </div>
-
-              {/* Legal Redirect Notice Box */}
-              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-2xl mb-6 flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                <div className="text-left">
-                  <span className="text-xs font-bold text-amber-300 block mb-0.5">
-                    {t.redirectTitle}
+              {/* Reporter / Source Byline */}
+              {hasFullContent && (
+                <div className="flex items-center gap-2 mb-3 text-xs text-fuchsia-300/90 font-bold">
+                  <span>✍️ {lang === "tr" ? "Haber:" : "By:"}</span>
+                  <span className="text-white bg-fuchsia-500/15 border border-fuchsia-500/30 px-2.5 py-0.5 rounded-lg">
+                    {confirmRedirectArticle.source || "Aslan KORKAK (Statmatik İstihbarat Şefi)"}
                   </span>
-                  <p className="text-[11px] text-slate-300 leading-normal">
-                    {t.redirectMsg}
-                  </p>
-                  <div className="mt-1 text-[11px] text-slate-400 font-semibold">
-                    {t.source}: <span className="text-white">{confirmRedirectArticle.source || "Official Agency"}</span>
-                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Action Buttons */}
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setConfirmRedirectArticle(null)}
-                  className="flex-1 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold rounded-xl text-xs transition-all"
-                >
-                  {t.cancel}
-                </button>
-                <button
-                  onClick={handleConfirmRedirect}
-                  className="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
-                >
-                  {t.proceed} <ExternalLink className="w-4 h-4" />
-                </button>
-              </div>
+              {hasFullContent ? (
+                <>
+                  {/* Scrollable Full Article Body */}
+                  <div className="overflow-y-auto pr-1 space-y-4 mb-5 flex-1">
+                    {/* Featured Parody / Article Image inside Modal */}
+                    {confirmRedirectArticle.image && (
+                      <div className="relative w-full overflow-hidden rounded-2xl border border-fuchsia-500/40 shadow-lg shadow-fuchsia-500/10 bg-slate-950">
+                        <img
+                          src={confirmRedirectArticle.image}
+                          alt={confirmRedirectArticle.title}
+                          className="w-full h-auto max-h-[340px] object-cover select-none"
+                        />
+                      </div>
+                    )}
+
+                    {/* Spot / Lead Summary */}
+                    <div className="p-3.5 bg-fuchsia-500/10 border-l-4 border-fuchsia-400 rounded-r-xl">
+                      <p className="text-xs sm:text-sm font-bold text-slate-100 leading-relaxed">
+                        {confirmRedirectArticle.snippet}
+                      </p>
+                    </div>
+
+                    {/* Full News Content with Subheadings */}
+                    <div className="p-4 sm:p-5 bg-slate-950/90 border border-slate-800/80 rounded-2xl space-y-3.5">
+                      {rawParagraphs.map((para, idx) => {
+                        const isSubheading = para.startsWith("## ") || (para.length < 75 && !para.endsWith(".") && !para.endsWith('"'));
+                        const cleanPara = para.replace(/^##\s*/, "");
+                        if (isSubheading) {
+                          return (
+                            <h3 key={idx} className="text-sm sm:text-base font-black text-fuchsia-300 pt-2 border-t border-slate-800/70 first:border-t-0 first:pt-0">
+                              {cleanPara}
+                            </h3>
+                          );
+                        }
+                        return (
+                          <p key={idx} className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
+                            {cleanPara}
+                          </p>
+                        );
+                      })}
+                    </div>
+
+                    {/* Tags Section */}
+                    {confirmRedirectArticle.tags && confirmRedirectArticle.tags.length > 0 && (
+                      <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                        <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1 mr-1">
+                          <Tag className="w-3 h-3 text-fuchsia-400" /> {t.tagsLabel}:
+                        </span>
+                        {confirmRedirectArticle.tags.map((tag, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-700/80 text-slate-300"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Legal Parody Disclaimer Box Inside Full View */}
+                    <div className="p-3.5 bg-amber-500/10 border border-amber-500/40 rounded-2xl flex items-start gap-3">
+                      <Smile className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <div className="text-left">
+                        <span className="text-xs font-black text-amber-300 block mb-0.5">
+                          {t.parodyLegalTitle}
+                        </span>
+                        <p className="text-[11px] text-slate-300 leading-normal">
+                          {t.parodyLegalMsg}
+                        </p>
+                        <div className="mt-1 text-[11px] text-slate-400 font-semibold">
+                          {t.source}: <span className="text-white">{confirmRedirectArticle.source || "NewsGlo Parodi Servisi"}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Close Button */}
+                  <div className="flex items-center justify-end">
+                    <button
+                      onClick={() => setConfirmRedirectArticle(null)}
+                      className="w-full py-3 bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white font-black rounded-xl text-xs transition-all shadow-lg shadow-fuchsia-500/20"
+                    >
+                      {t.closeArticle}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Summary Snippet */}
+                  <div className="p-4 bg-slate-950/80 border border-slate-800/80 rounded-2xl mb-5 max-h-48 overflow-y-auto">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                      {confirmRedirectArticle.snippet}
+                    </p>
+                  </div>
+
+                  {/* Legal Redirect Notice Box */}
+                  <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-2xl mb-6 flex items-start gap-3">
+                    <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div className="text-left">
+                      <span className="text-xs font-bold text-amber-300 block mb-0.5">
+                        {t.redirectTitle}
+                      </span>
+                      <p className="text-[11px] text-slate-300 leading-normal">
+                        {t.redirectMsg}
+                      </p>
+                      <div className="mt-1 text-[11px] text-slate-400 font-semibold">
+                        {t.source}: <span className="text-white">{confirmRedirectArticle.source || "Official Agency"}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setConfirmRedirectArticle(null)}
+                      className="flex-1 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold rounded-xl text-xs transition-all"
+                    >
+                      {t.cancel}
+                    </button>
+                    <button
+                      onClick={handleConfirmRedirect}
+                      className="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+                    >
+                      {t.proceed} <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );
