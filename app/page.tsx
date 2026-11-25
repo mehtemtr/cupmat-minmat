@@ -347,6 +347,14 @@ export default function EntryPage() {
         if (!banners.includes("singapore_deepavali")) banners.push("singapore_deepavali");
       }
 
+      // 26 Kasım 2026 Perşembe: Şükran Günü (Thanksgiving Day - ABD, Brezilya, Hollanda/Leiden, Karayipler & Dünya)
+      // 25 Kasım 2026 20:00:00 (TR Saati / UTC+3) - 27 Kasım 2026 09:00:00 (TR Saati / UTC+3, ABD saat dilimlerini kapsayacak şekilde)
+      const nov26ThanksgivingStart = new Date("2026-11-25T20:00:00+03:00").getTime();
+      const nov26ThanksgivingEnd = new Date("2026-11-27T09:00:00+03:00").getTime();
+      if ((nowTime >= nov26ThanksgivingStart && nowTime <= nov26ThanksgivingEnd) || (year === 2026 && month === 10 && date === 26)) {
+        if (!banners.includes("thanksgiving")) banners.push("thanksgiving");
+      }
+
       // 24 Kasım Öğretmenler Günü: 23 Kasım 2026 20:00:00 (TR Saati / UTC+3) - 24 Kasım 2026 23:59:59 (TR Saati / UTC+3)
       const nov24TeachersStart = new Date("2026-11-23T20:00:00+03:00").getTime();
       const nov24TeachersEnd = new Date("2026-11-24T23:59:59+03:00").getTime();
@@ -548,6 +556,174 @@ export default function EntryPage() {
 
 
         {/* Minlan Countdown Section */}
+
+        {/* 26 Kasım Şükran Günü (Thanksgiving Day • ABD, Brezilya, Leiden/Hollanda, Karayipler & Dünya) Banner */}
+        {(activeBanners.includes("thanksgiving") || activeBanners.includes("sukrangunu") || activeBanners.includes("sukran_gunu") || activeBanners.includes("thanksgiving_day")) && (
+          <div className="w-full mb-12 relative group rounded-3xl overflow-hidden border border-amber-500/50 bg-gradient-to-r from-amber-950/65 via-[#070b14]/95 to-orange-950/55 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_55px_rgba(245,158,11,0.25)] transition duration-500 hover:border-amber-400/85">
+            <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-amber-500/35 via-orange-400/25 to-rose-500/35 opacity-25 blur transition duration-500 group-hover:opacity-45" />
+            <div className="relative flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+              
+              {/* Celebration Image */}
+              <div className="w-full md:w-[45%] flex justify-center relative">
+                <div className="relative w-full aspect-square max-w-[420px] rounded-2xl overflow-hidden border border-amber-400/50 shadow-[0_0_35px_rgba(245,158,11,0.3)] bg-zinc-900 group-hover:scale-[1.01] transition-transform duration-300">
+                  <img
+                    src="/thanksgiving_day_2026.jpg"
+                    alt="26 Kasım Şükran Günü • Happy Thanksgiving Day • Dia de Ação de Graças"
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04080e]/35 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Multilingual Message */}
+              <div className="w-full md:w-[55%] text-center md:text-left flex flex-col justify-center">
+                <span className="inline-flex self-center md:self-start items-center gap-1.5 rounded-full border border-amber-400/50 bg-amber-500/15 px-3.5 py-1 text-xs font-black text-amber-200 tracking-wider uppercase mb-3.5 select-none animate-pulse">
+                  {locale === "tr"
+                    ? "🦃🍂 26 KASIM ŞÜKRAN GÜNÜ (THANKSGIVING DAY) • ABD, BREZİLYA & DÜNYA"
+                    : locale === "es"
+                    ? "🦃🍂 26 DE NOVIEMBRE • DÍA DE ACCIÓN DE GRACIAS (THANKSGIVING DAY)"
+                    : locale === "fr"
+                    ? "🦃🍂 26 NOVEMBRE • JOUR DE THANKSGIVING (ACTION DE GRÂCE)"
+                    : locale === "de"
+                    ? "🦃🍂 26. NOVEMBER • THANKSGIVING DAY (ERNTEDANK & DANKBARKEIT)"
+                    : locale === "it"
+                    ? "🦃🍂 26 NOVEMBRE • GIORNO DEL RINGRAZIAMENTO (THANKSGIVING DAY)"
+                    : locale === "pt"
+                    ? "🦃🍂 26 DE NOVEMBRO • DIA DE AÇÃO DE GRAÇAS (THANKSGIVING DAY • EUA & BRASIL)"
+                    : locale === "ko"
+                    ? "🦃🍂 11월 26일 • 추수감사절 (THANKSGIVING DAY • 감사와 나눔의 축제)"
+                    : locale === "ar"
+                    ? "🦃🍂 26 نوفمبر • عيد الشكر (THANKSGIVING DAY • الامتنان والسلام)"
+                    : "🦃🍂 NOVEMBER 26 • HAPPY THANKSGIVING DAY (USA, BRAZIL & GLOBAL)"}
+                </span>
+
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight mb-3">
+                  {locale === "tr" ? (
+                    <>
+                      {`Paylaşmanın, Bereketin ve Dostluğun Bayramı:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`26 Kasım Şükran Günü (Thanksgiving Day) Kutlu Olsun! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "es" ? (
+                    <>
+                      {`Gratitud, Abundancia, Familia y Fraternidad:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`¡Feliz Día de Acción de Gracias (Thanksgiving Day)! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "fr" ? (
+                    <>
+                      {`Gratitude, Partage, Abondance et Fraternité :`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`Joyeux Thanksgiving Day (Fête de l'Action de Grâce) ! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "de" ? (
+                    <>
+                      {`Dankbarkeit, Gemeinschaft, Fülle und Freundschaft:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`Frohes Thanksgiving-Fest (Happy Thanksgiving Day)! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "it" ? (
+                    <>
+                      {`Gratitudine, Condivisione, Abbondanza e Fratellanza:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`Felice Giorno del Ringraziamento (Happy Thanksgiving)! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "pt" ? (
+                    <>
+                      {`Gratidão, Partilha, Abundância e União Familiar:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`Feliz Dia de Ação de Graças (Happy Thanksgiving Day)! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "ko" ? (
+                    <>
+                      {`풍요로운 수확과 따뜻한 나눔, 가족과 우정의 명절:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`행복한 추수감사절(Happy Thanksgiving Day) 보내세요! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : locale === "ar" ? (
+                    <>
+                      {`احتفالية الامتنان والعطاء والمحبة والوئام العائلي:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`عيد شكر سعيد (Happy Thanksgiving Day) للجميع! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {`Celebrating Gratitude, Harvest, Family & Global Fellowship:`}
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200">
+                        {`Happy Thanksgiving Day Across the USA & the World! 🦃🍂🥧`}
+                      </span>
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-sm sm:text-base text-zinc-200 leading-relaxed mb-4 max-w-[595px]">
+                  {locale === "tr" ? (
+                    "Her yıl Kasım ayının dördüncü Perşembe günü başta Amerika Birleşik Devletleri (ABD) ve Brezilya (Dia de Ação de Graças) olmak üzere; Hollanda (Leiden), Karayipler ve dünyanın dört bir yanında aileleri, dostları ve sporseverleri aynı bereket sofrasında buluşturan Şükran Günü'nü (Thanksgiving Day) en içten dileklerimizle kutluyoruz. Geleneksel spor karşılaşmalarının heyecanıyla taçlanan bu anlamlı günde; tüm dünyaya sağlık, bolluk, barış ve paylaşma sevinci diliyoruz."
+                  ) : locale === "es" ? (
+                    "Celebrado el cuarto jueves de noviembre en los Estados Unidos, Brasil (Dia de Ação de Graças), Países Bajos (Leiden), el Caribe y comunidades de todo el mundo, el Día de Acción de Gracias (Thanksgiving Day) reúne a familias, amigos y aficionados al deporte en torno a la gratitud y la solidaridad. ¡Les deseamos a todos un día lleno de paz, salud, abundancia y alegría compartida!"
+                  ) : locale === "fr" ? (
+                    "Célébré le quatrième jeudi de novembre aux États-Unis, au Brésil (Dia de Ação de Graças), aux Pays-Bas (Leyde) et à travers le monde, Thanksgiving rassemble les familles, les amis et les passionnés de sport autour des valeurs de gratitude, d'abondance et de partage. Nous vous souhaitons à tous une merveilleuse fête de Thanksgiving emplie de paix, de joie et de fraternité !"
+                  ) : locale === "de" ? (
+                    "Am vierten Donnerstag im November feiern die Vereinigten Staaten, Brasilien (Dia de Ação de Graças), das niederländische Leiden sowie Gemeinschaften weltweit den Thanksgiving Day im Zeichen der Dankbarkeit, der Ernte und des familiären Zusammenhalts. Wir wünschen allen Familien und Sportfreunden ein herzliches, friedliches und gesegnetes Thanksgiving-Fest!"
+                  ) : locale === "it" ? (
+                    "Celebrato il quarto giovedì di novembre negli Stati Uniti, in Brasile (Dia de Ação de Graças), a Leida (Paesi Bassi) e in tutto il mondo, il Giorno del Ringraziamento (Thanksgiving Day) unisce famiglie, amici e appassionati di sport nel segno della gratitudine e della condivisione. Auguriamo a tutti una giornata ricca di pace, serenità, abbondanza e calore familiare!"
+                  ) : locale === "pt" ? (
+                    "Celebrado na quarta quinta-feira de novembro nos Estados Unidos, no Brasil (Dia Nacional de Ação de Graças), em Leiden (Países Baixos) e em diversas partes do mundo, o Dia de Ação de Graças reúne famílias, amigos e fãs do esporte em torno da gratidão, da colheita e da fraternidade. Desejamos a todos muita paz, saúde, fartura e alegria compartilhada!"
+                  ) : locale === "ko" ? (
+                    "매년 11월 넷째 주 목요일 미국과 브라질(Dia de Ação de Graças), 네덜란드 레이던 및 전 세계 곳곳에서 가족과 이웃, 스포츠 팬들이 한자리에 모여 한 해의 결실과 감사를 나누는 추수감사절(Thanksgiving Day)을 진심으로 축하합니다. 모든 가정에 평화와 건강, 풍요와 따뜻한 행복이 가득하기를 기원합니다!"
+                  ) : locale === "ar" ? (
+                    "في يوم الخميس الرابع من شهر نوفمبر، يجتمع الملايين في الولايات المتحدة الأمريكية والبرازيل (Dia de Ação de Graças) وهولندا (لايدن) ومختلف أنحاء العالم للاحتفال بعيد الشكر (Thanksgiving Day) وتبادل مشاعر الامتنان والعطاء والتآخي العائلي والرياضي. نتمنى لجميع المحتفلين يوماً مليئاً بالسلام والصحة والوفرة والسعادة!"
+                  ) : (
+                    "Observed on the fourth Thursday of November across the United States, Brazil (Dia de Ação de Graças), Leiden in the Netherlands, the Caribbean, and communities worldwide, Thanksgiving Day brings families, friends, and sports fans together in a spirit of gratitude, harvest abundance, and fellowship. From family feasts to iconic Thanksgiving matchday traditions, we wish everyone warmth, peace, joy, and countless blessings!"
+                  )}
+                </p>
+
+                {/* Historic Thanksgiving & Gratitude Quote Block */}
+                <div className="relative border-l-2 border-amber-400/85 pl-4 py-2.5 bg-amber-500/10 rounded-r-xl max-w-[595px] text-left">
+                  <p className="text-xs sm:text-sm font-semibold italic text-amber-200 leading-snug">
+                    {locale === "tr"
+                      ? "\"Şükran; geçmişimizi anlamlı kılar, bugüne huzur verir ve yarın için umut dolu bir vizyon yaratır.\""
+                      : locale === "es"
+                      ? "\"La gratitud da sentido a nuestro pasado, trae paz al día de hoy y crea una visión llena de esperanza para el mañana.\""
+                      : locale === "fr"
+                      ? "\"La gratitude donne un sens à notre passé, apporte la paix à aujourd'hui et crée une vision pleine d'espoir pour demain.\""
+                      : locale === "de"
+                      ? "\"Dankbarkeit gibt unserer Vergangenheit Sinn, bringt Frieden für das Heute und schafft eine hoffnungsvolle Vision für das Morgen.\""
+                      : locale === "it"
+                      ? "\"La gratitudine dà senso al nostro passato, porta pace al presente e crea una visione piena di speranza per il domani.\""
+                      : locale === "pt"
+                      ? "\"A gratidão dá sentido ao nosso passado, traz paz para o hoje e cria uma visão cheia de esperança para o amanhã.\""
+                      : locale === "ko"
+                      ? "\"감사는 우리의 과거에 의미를 부여하고, 오늘에 평화를 가져다주며, 내일을 위한 희망찬 비전을 창조합니다.\""
+                      : locale === "ar"
+                      ? "\"الامتنان يمنح ماضينا معنى، ويجلب السلام ليومنا الحاضر، ويخلق رؤية مشرقة بالأمل للغد.\""
+                      : "\"Gratitude makes sense of our past, brings peace for today, and creates a vision for tomorrow.\""}
+                  </p>
+                  <span className="block text-[10px] font-black tracking-widest text-amber-400 uppercase mt-2">
+                    {"— HAPPY THANKSGIVING DAY • 26 NOVEMBER 2026 • USA, BRAZIL & GLOBAL • STATMATİK"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* 24 Kasım Öğretmenler Günü (Başöğretmen Gazi Mustafa Kemal Atatürk & Şehit Öğretmenlerimiz) Banner */}
         {(activeBanners.includes("24kasim_ogretmenler") || activeBanners.includes("24kasim") || activeBanners.includes("ogretmenlergunu")) && (

@@ -81,6 +81,52 @@ const MULTILINGUAL_NEWS_DATASET: Array<{
     },
   },
   {
+    id: "newsglo-thanksgiving-day-2026",
+    category: "General",
+    source: "Statmatik News / Global Heritage",
+    link: "https://statmatik.com",
+    image: "/thanksgiving_day_2026.jpg",
+    published_at: new Date().toISOString(),
+    translations: {
+      tr: {
+        title: "26 Kasım Şükran Günü (Thanksgiving Day) Kutlu Olsun: ABD, Brezilya ve Dünyada Paylaşma, Bereket ve Spor Coşkusu!",
+        snippet: "Her yıl Kasım ayının dördüncü Perşembe günü başta Amerika Birleşik Devletleri (ABD) ve Brezilya (Dia de Ação de Graças) olmak üzere, Hollanda (Leiden), Karayipler ve dünyanın dört bir yanında milyonlarca insanı aynı bereket sofrasında ve geleneksel Thanksgiving spor karşılaşmaları heyecanında buluşturan Şükran Günü kutlu olsun!",
+      },
+      en: {
+        title: "Happy Thanksgiving Day (November 26): Celebrating Gratitude, Harvest Abundance, Family & Sporting Traditions Across the USA, Brazil & the World!",
+        snippet: "Observed on the fourth Thursday of November across the United States, Brazil (Dia de Ação de Graças), Leiden in the Netherlands, and communities worldwide, Thanksgiving Day unites millions in gratitude, generosity, family feasts, and iconic holiday sporting traditions.",
+      },
+      de: {
+        title: "Frohes Thanksgiving-Fest am 26. November: Ein weltweiter Tag der Dankbarkeit, der Ernte, der Familie und des Sports in den USA, Brasilien und der Welt!",
+        snippet: "Am vierten Donnerstag im November feiern Millionen Menschen in den Vereinigten Staaten, Brasilien (Dia de Ação de Graças), im niederländischen Leiden und weltweit den Thanksgiving Day im Zeichen von Dankbarkeit, Gemeinschaft und sportlicher Tradition.",
+      },
+      fr: {
+        title: "Joyeux Thanksgiving Day (26 Novembre) : Gratitude, Abondance, Partage et Traditions Sportives aux États-Unis, au Brésil et dans le Monde !",
+        snippet: "Célébré le quatrième jeudi de novembre aux États-Unis, au Brésil (Dia de Ação de Graças), à Leyde aux Pays-Bas et à travers le monde, Thanksgiving rassemble des millions de familles autour de la gratitude, du partage et des grandes rencontres sportives.",
+      },
+      es: {
+        title: "¡Feliz Día de Acción de Gracias (26 de Noviembre - Thanksgiving Day)! Gratitud, Abundancia, Familia y Tradición Deportiva en EE. UU., Brasil y el Mundo",
+        snippet: "El cuarto jueves de noviembre, millones de personas en Estados Unidos, Brasil (Dia de Ação de Graças), Leiden (Países Bajos) y todo el mundo se reúnen para celebrar el Día de Acción de Gracias con gratitud, unión familiar y pasión deportiva.",
+      },
+      it: {
+        title: "Felice Giorno del Ringraziamento (26 Novembre - Thanksgiving Day): Gratitudine, Condivisione, Famiglia e Sport negli USA, in Brasile e nel Mondo!",
+        snippet: "Il quarto giovedì di novembre milioni di persone negli Stati Uniti, in Brasile (Dia de Ação de Graças), a Leida nei Paesi Bassi e nel mondo celebrano il Thanksgiving Day all'insegna della gratitudine, dell'abbondanza e delle grandi tradizioni sportive.",
+      },
+      pt: {
+        title: "Feliz Dia de Ação de Graças (26 de Novembro - Thanksgiving Day): Gratidão, Partilha, Família e Esporte nos EUA, no Brasil e no Mundo!",
+        snippet: "Celebrado na quarta quinta-feira de novembro nos Estados Unidos, no Brasil (Dia Nacional de Ação de Graças), em Leiden (Países Baixos) e ao redor do mundo, o Thanksgiving Day une milhões de famílias em torno da gratidão, da fartura e da fraternidade.",
+      },
+      ar: {
+        title: "عيد شكر سعيد (26 نوفمبر - Thanksgiving Day): احتفالية الامتنان والعطاء والتآخي العائلي والرياضي في الولايات المتحدة والبرازيل والعالم!",
+        snippet: "في الخميس الرابع من شهر نوفمبر، يحتفل الملايين في الولايات المتحدة الأمريكية والبرازيل (Dia de Ação de Graças) ولايدن الهولندية ومختلف أنحاء العالم بعيد الشكر وسط أجواء من الامتنان والمحبة والتقاليد الرياضية العريقة.",
+      },
+      ko: {
+        title: "11월 26일 추수감사절(Thanksgiving Day) 경축: 미국·브라질 및 전 세계가 함께하는 감사와 풍요, 가족과 스포츠의 축제!",
+        snippet: "매년 11월 넷째 주 목요일 미국과 브라질(Dia de Ação de Graças), 네덜란드 레이던 및 세계 곳곳에서 수백만 명의 가족과 스포츠 팬들이 한 해의 결실에 감사하고 따뜻한 나눔을 실천하는 추수감사절을 기념합니다.",
+      },
+    },
+  },
+  {
     id: "newsglo-24-kasim-ogretmenler-gunu-2026",
     category: "General",
     source: "Statmatik News / 24 Kasım Özel",
@@ -981,6 +1027,39 @@ export async function GET(request: Request) {
                     title: cleanText(trans.title),
                     snippet: cleanText(trans.snippet),
                     content: trans.content,
+                  });
+                  if (cleanedDbNews.length > limit) {
+                    cleanedDbNews.pop();
+                  }
+                }
+              }
+            }
+
+            // 26 Kasım Şükran Günü / Thanksgiving Day (25 Kasım 2026 20:00 - 27 Kasım 2026 09:00 TR Saati) özel haberini zaman penceresi içinde en üste sabitle
+            const nov26ThanksgivingStartMs = new Date("2026-11-25T20:00:00+03:00").getTime();
+            const nov26ThanksgivingEndMs = new Date("2026-11-27T09:00:00+03:00").getTime();
+            const isNov26ThanksgivingWindow =
+              now.getTime() >= nov26ThanksgivingStartMs &&
+              now.getTime() <= nov26ThanksgivingEndMs;
+
+            if (page === 1 && (category === "all" || category.toLowerCase() === "general") && !search && isNov26ThanksgivingWindow) {
+              const thanksgivingBase = MULTILINGUAL_NEWS_DATASET.find((item) => item.id === "newsglo-thanksgiving-day-2026");
+              if (thanksgivingBase) {
+                const trans =
+                  thanksgivingBase.translations[lang] ||
+                  thanksgivingBase.translations["en"] ||
+                  thanksgivingBase.translations["tr"];
+                if (trans && !cleanedDbNews.some((n) => n.id === thanksgivingBase.id || (n.title && n.title.includes("Thanksgiving")))) {
+                  cleanedDbNews.unshift({
+                    id: thanksgivingBase.id,
+                    source: thanksgivingBase.source,
+                    category: thanksgivingBase.category,
+                    link: thanksgivingBase.link,
+                    image: thanksgivingBase.image,
+                    published_at: new Date().toISOString(),
+                    featured_order: 1,
+                    title: cleanText(trans.title),
+                    snippet: cleanText(trans.snippet),
                   });
                   if (cleanedDbNews.length > limit) {
                     cleanedDbNews.pop();
